@@ -18,7 +18,7 @@ export default class SessionsGridLoading extends Component {
     >
       {{#each (repeat @count)}}
         <div data-test-row>
-          <span class="expand-collapse-control"></span>
+          <span class="expand-collapse-control font-size-medium"></span>
           <span class="session-grid-title">
             {{truncate (repeat (random 3 10) "ilios rocks") 100}}
           </span>

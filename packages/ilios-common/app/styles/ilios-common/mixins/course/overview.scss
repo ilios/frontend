@@ -28,7 +28,6 @@
 
     a,
     span {
-      @include font-size.font-size("medium");
       margin-right: 0.5rem;
 
       &:last-child {

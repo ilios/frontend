@@ -28,7 +28,6 @@
       .editable,
       h3 {
         display: block;
-        @include m.font-size("large");
 
         @include m.for-laptop-and-up {
           display: inline;

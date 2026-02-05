@@ -21,7 +21,6 @@
     }
 
     svg {
-      @include m.font-size("medium");
       margin-left: 0.25rem;
       position: relative;
       top: 2px;

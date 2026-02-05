@@ -131,10 +131,10 @@ export default class DashboardFilterTagsComponent extends Component {
     {{#if this.activeFilters.length}}
       <section class="filters-list" data-test-dashboard-filter-tags>
         {{#if this.filterTags}}
-          <header class="filters-header">
+          <header class="filters-header font-size-small">
             {{t "general.activeFilters"}}:
           </header>
-          <div class="filter-tags">
+          <div class="filter-tags font-size-small">
             {{#each (sortBy "name" this.filterTags) as |tag|}}
               <button
                 class="filter-tag {{tag.class}}"
@@ -148,7 +148,7 @@ export default class DashboardFilterTagsComponent extends Component {
             {{/each}}
             <button
               id="calendar-clear-filters"
-              class="filters-clear-filters"
+              class="filters-clear-filters font-size-small"
               type="button"
               {{on "click" @clearFilters}}
               data-test-clear-filters

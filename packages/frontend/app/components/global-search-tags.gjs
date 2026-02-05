@@ -5,7 +5,7 @@ import { concat } from '@ember/helper';
   {{#if @tags}}
     <div class="global-search-tags" data-test-global-search-tags>
       {{#each @tags as |tag|}}
-        <span class="global-search-tag" data-test-global-search-tag>
+        <span class="global-search-tag font-size-smallest" data-test-global-search-tag>
           {{#if (eq tag "meshdescriptors")}}
             {{t "general.mesh"}}
           {{else if (eq tag "learningmaterials")}}

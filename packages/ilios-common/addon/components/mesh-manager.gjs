@@ -204,7 +204,7 @@ export default class MeshManagerComponent extends Component {
                     <span class="descriptor-name" data-test-name>
                       {{term.name}}
                     </span>
-                    <span class="descriptor-id">
+                    <span class="descriptor-id font-size-small">
                       {{term.id}}
                       {{#if term.trees.length}}
                         -

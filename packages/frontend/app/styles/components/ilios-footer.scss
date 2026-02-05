@@ -16,7 +16,6 @@
     border-radius: 0.2rem;
     color: var(--black);
     display: flex;
-    @include cm.font-size("smallest");
     font-weight: 200;
     justify-content: center;
     margin: 0.25rem;

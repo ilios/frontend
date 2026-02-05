@@ -68,13 +68,11 @@
       .learning-material-description {
         color: var(--grey);
         display: block;
-        @include m.font-size("small");
         margin-left: 1.9em;
       }
 
       .learning-material-status {
         color: var(--red);
-        @include m.font-size("small");
         position: absolute;
         right: 5px;
         top: 0;
@@ -88,7 +86,6 @@
           color: var(--grey);
           cursor: inherit;
           display: list-item;
-          @include m.font-size("small");
           margin: 0;
           min-height: 0;
           padding: 0;

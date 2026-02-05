@@ -121,7 +121,10 @@ export default class DailyCalendarEventComponent extends Component {
   }
   <template>
     <button
-      class="daily-calendar-event{{if this.isIlm ' ilm'}}{{if this.clickable ' clickable'}}"
+      class="daily-calendar-event font-size-small{{if this.isIlm ' ilm'}}{{if
+          this.clickable
+          ' clickable'
+        }}"
       {{! template-lint-disable no-inline-styles }}
       style={{this.style}}
       type="button"
@@ -159,7 +162,7 @@ export default class DailyCalendarEventComponent extends Component {
           <FaIcon @icon={{faClock}} data-test-scheduled-icon />
         {{/if}}
       </span>
-      <span class="ilios-calendar-event-time" data-test-time>
+      <span class="ilios-calendar-event-time font-size-small" data-test-time>
         {{#if this.isIlm}}
           <span class="ilios-calendar-event-start">
             {{t "general.ilmDue"}}:

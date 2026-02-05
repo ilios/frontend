@@ -49,7 +49,7 @@ export default class SchoolSessionTypesCollapseComponent extends Component {
       </div>
 
       <div class="content">
-        <table class="ilios-table ilios-table-colors condensed">
+        <table class="ilios-table ilios-table-colors condensed font-size-small">
           <thead>
             <tr>
               <th class="text-left">

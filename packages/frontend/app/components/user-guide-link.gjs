@@ -5,6 +5,7 @@ import { faQuestion } from '@fortawesome/free-solid-svg-icons';
   <div class="user-guide-link" data-test-user-guide-link>
     <a
       href="https://iliosproject.gitbook.io/ilios-user-guide"
+      class="font-size-small"
       target="_blank"
       title={{t "general.iliosUserGuide"}}
       rel="noopener noreferrer"

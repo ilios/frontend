@@ -7,7 +7,7 @@ import { faUserXmark } from '@fortawesome/free-solid-svg-icons';
     <FaIcon
       @icon={{faUserXmark}}
       @title={{t "general.disabledUserAccount"}}
-      class="user-status"
+      class="user-status font-size-small"
       data-test-user-status
     />
   {{/unless}}

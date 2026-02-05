@@ -8,6 +8,8 @@
   padding: 0;
 }
 
+/* stylelint-disable property-disallowed-list */
+
 @mixin ilios-heading-h1() {
   @include ilios-heading;
   @include font-size.font-size("xxxl");

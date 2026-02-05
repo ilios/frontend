@@ -116,7 +116,7 @@ export default class UserProfileIcsComponent extends Component {
             type="button"
             disabled={{this.refreshKey.isRunning}}
             title={{t "general.refreshIcsFeedKey"}}
-            class="refresh-key"
+            class="refresh-key font-size-base"
             data-test-refresh-key
             {{on "click" (perform this.refreshKey)}}
           >
@@ -128,7 +128,7 @@ export default class UserProfileIcsComponent extends Component {
           <button
             type="button"
             disabled={{this.refreshKey.isRunning}}
-            class="bigcancel"
+            class="bigcancel font-size-base"
             data-test-cancel
             title={{t "general.close"}}
             {{on "click" (fn @setIsManaging false)}}
@@ -138,7 +138,7 @@ export default class UserProfileIcsComponent extends Component {
         {{else if @isManageable}}
           <button
             type="button"
-            class="manage"
+            class="manage font-size-base"
             data-test-manage
             title={{t "general.refreshIcsFeedKey"}}
             {{on "click" (fn @setIsManaging true)}}

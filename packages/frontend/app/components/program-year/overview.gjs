@@ -5,7 +5,7 @@ import { faChartColumn } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="programyear-overview" data-test-program-year-overview ...attributes>
     <div class="programyear-overview-header">
-      <h4 data-test-title>
+      <h4 class="font-size-base" data-test-title>
         {{t "general.overview"}}
       </h4>
       <div class="programyear-overview-actions" data-test-actions>
@@ -13,6 +13,7 @@ import { faChartColumn } from '@fortawesome/free-solid-svg-icons';
           @route="program-year-visualize-objectives"
           @model={{@programYear}}
           title={{t "general.programYearVisualizations"}}
+          class="font-size-medium"
           data-test-go-to-visualizations
         >
           <FaIcon @icon={{faChartColumn}} />

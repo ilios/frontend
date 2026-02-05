@@ -21,7 +21,7 @@ export default class SessionObjectiveListItemParentsComponent extends Component 
 
   <template>
     <div
-      class="session-objective-list-item-parents grid-item"
+      class="session-objective-list-item-parents grid-item font-size-base"
       data-test-objective-list-item-parents
     >
       {{#if @isManaging}}

@@ -64,7 +64,7 @@ export default class ProgramOverviewComponent extends Component {
   }
   <template>
     <div class="program-overview" data-test-program-overview ...attributes>
-      <h2>
+      <h2 class="font-size-base">
         {{t "general.overview"}}
       </h2>
       <div class="program-overview-content">

@@ -51,7 +51,7 @@ export default class SessionOfferingsListComponent extends Component {
         {{#each this.offeringBlocks as |block|}}
           <div class="offering-block">
             <div class="offering-block-date">
-              <span class="offering-block-date-dayofweek">
+              <span class="offering-block-date-dayofweek font-size-medium">
                 {{formatDate block.date weekday="long"}}
               </span>
               <span class="offering-block-date-dayofmonth">

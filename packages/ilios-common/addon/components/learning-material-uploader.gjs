@@ -50,11 +50,11 @@ export default class LearningMaterialUploaderComponent extends Component {
     <span class="learning-material-uploader" data-test-learning-material-uploader ...attributes>
       {{#let (fileQueue name=this.uploadQueueName onFileAdded=(perform this.upload)) as |queue|}}
         {{#if (and (not this.fileUploadErrorMessage) queue.files.length)}}
-          <span class="upload-button">
+          <span class="upload-button font-size-base">
             <LoadingSpinner />{{queue.progress}}%
           </span>
         {{else}}
-          <label class="upload-button" for={{@for}}>
+          <label class="upload-button font-size-base" for={{@for}}>
             {{t "general.chooseFile"}}
             <input type="file" id={{@for}} hidden {{queue.selectFile}} />
           </label>

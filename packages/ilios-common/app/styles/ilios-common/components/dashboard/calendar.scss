@@ -36,13 +36,11 @@
       .calendar-filter-list {
         border: 1px solid var(--light-blue);
         float: left;
-        @include m.font-size("small");
         margin-bottom: 1em;
         width: 33%;
 
         h2 {
           @include m.ilios-heading;
-          @include m.font-size("base");
           display: block;
           background-color: var(--lightest-grey);
           border-bottom: 0.5px solid var(--grey);
@@ -108,13 +106,11 @@
       .filters-header {
         background: var(--lightest-grey);
         border-bottom: 1px solid var(--grey);
-        @include m.font-size("small");
       }
 
       .filter-tags {
         .filter-tag {
           @include m.ilios-button-reset;
-          @include m.font-size("small");
           border-radius: 3px;
           display: inline-block;
           padding: 2px 5px;
@@ -169,7 +165,6 @@
 
         .filters-clear-filters {
           @include m.ilios-button-reset;
-          @include m.font-size("small");
           color: var(--blue);
         }
       }

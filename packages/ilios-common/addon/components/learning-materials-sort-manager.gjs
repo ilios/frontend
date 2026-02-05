@@ -138,7 +138,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
                       {{item.learningMaterial.title}}
                     </span>
                   </span>
-                  <span class="details">
+                  <span class="details font-size-small">
                     {{capitalize item.learningMaterial.type}},
                     {{t "general.ownedBy" owner=item.learningMaterial.owningUser.fullName}},
                     {{t "general.status"}}:

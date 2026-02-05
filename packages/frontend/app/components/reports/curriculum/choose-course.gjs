@@ -130,7 +130,7 @@ export default class ReportsCurriculumChooseCourse extends Component {
           <button
             type="button"
             aria-label={{t "general.deselectAllCourses"}}
-            class="deselect-all"
+            class="deselect-all font-size-small"
             {{on "click" @removeAll}}
             data-test-deselect-all
           >

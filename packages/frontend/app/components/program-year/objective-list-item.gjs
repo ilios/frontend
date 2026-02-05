@@ -301,7 +301,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
           </button>
         {{/if}}
       </div>
-      <div class="description grid-item" data-test-description>
+      <div class="description grid-item font-size-base" data-test-description>
         <FadeText
           @forceExpanded={{this.fadeTextExpanded}}
           @setExpanded={{set this "fadeTextExpanded"}}

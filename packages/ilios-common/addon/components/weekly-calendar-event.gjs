@@ -130,7 +130,7 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
   <template>
     <button
-      class="weekly-calendar-event day-{{@day}}{{if this.isIlm ' ilm'}}{{if
+      class="weekly-calendar-event font-size-small day-{{@day}}{{if this.isIlm ' ilm'}}{{if
           this.clickable
           ' clickable'
         }}"

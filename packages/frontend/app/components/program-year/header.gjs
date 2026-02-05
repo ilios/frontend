@@ -35,7 +35,7 @@ export default class ProgramYearHeaderComponent extends Component {
             <FaIcon @icon={{faLock}} data-test-lock />
           {{/if}}
           {{#if @programYear}}
-            <h3 data-test-matriculation-year>
+            <h3 class="font-size-large" data-test-matriculation-year>
               {{t "general.matriculationYear"}}
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
                 {{@programYear.startYear}}
@@ -45,7 +45,7 @@ export default class ProgramYearHeaderComponent extends Component {
                 {{@programYear.startYear}}
               {{/if}}
             </h3>
-            <h3 data-test-cohort>
+            <h3 class="font-size-large" data-test-cohort>
               {{#if @programYear.cohort.title}}
                 ({{@programYear.cohort.title}})
               {{else}}

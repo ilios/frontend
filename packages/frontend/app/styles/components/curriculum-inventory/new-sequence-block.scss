@@ -23,12 +23,6 @@
     }
   }
 
-  .course {
-    .details {
-      @include m.font-size("small");
-    }
-  }
-
   .description {
     grid-column: 1 / -1;
     min-height: 10rem;

@@ -58,7 +58,7 @@ export default class ProgramYearCollapsedObjectivesComponent extends Component {
         </button>
       </div>
       <div class="content">
-        <table class="ilios-table ilios-table-colors">
+        <table class="ilios-table ilios-table-colors font-size-small">
           <thead>
             <tr>
               <th class="text-left">

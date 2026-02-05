@@ -69,7 +69,7 @@ export default class SessionsGridRowComponent extends Component {
         }}"
       data-test-sessions-grid-row
     >
-      <span class="expand-collapse-control" data-test-expand-collapse-control>
+      <span class="expand-collapse-control font-size-medium" data-test-expand-collapse-control>
         {{#if (includes @session.id @expandedSessionIds)}}
           <button
             class="link-button"

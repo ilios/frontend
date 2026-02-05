@@ -94,21 +94,21 @@ export default class IliosCalendarEventMonthComponent extends Component {
             @title={{t "general.newUpdates"}}
           />
         {{/if}}
-        <span class="ilios-calendar-event-time">
-          <span class="ilios-calendar-event-start">
+        <span class="ilios-calendar-event-time font-size-smallest">
+          <span class="ilios-calendar-event-start font-size-smallest">
             {{formatDate @event.startDate hour12=true hour="2-digit" minute="2-digit"}}
           </span>
-          <span class="ilios-calendar-event-end">
+          <span class="ilios-calendar-event-end font-size-smallest">
             -
             {{formatDate @event.endDate hour12=true hour="2-digit" minute="2-digit"}}
           </span>
         </span>
         {{#unless @event.isMulti}}
-          <span class="ilios-calendar-event-location">
+          <span class="ilios-calendar-event-location font-size-smallest">
             {{@event.location}}:
           </span>
         {{/unless}}
-        <span class="ilios-calendar-event-name">
+        <span class="ilios-calendar-event-name font-size-smallest">
           {{#if @event.isMulti}}
             {{@event.name}},
             <em>

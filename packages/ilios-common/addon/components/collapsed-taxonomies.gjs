@@ -23,7 +23,7 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
     </div>
     {{#if @subject.associatedVocabularies}}
       <div class="content">
-        <table class="ilios-table ilios-table-colors condensed">
+        <table class="ilios-table ilios-table-colors condensed font-size-small">
           <thead>
             <tr>
               <th class="text-left">

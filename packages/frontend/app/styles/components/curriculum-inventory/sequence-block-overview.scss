@@ -21,10 +21,6 @@
         span {
           display: flex;
         }
-
-        .details {
-          @include m.font-size("small");
-        }
       }
 
       &.description {
@@ -49,10 +45,6 @@
 
       &.sessions {
         grid-column: 1 / -1;
-      }
-
-      &.title {
-        @include m.ilios-overview-title;
       }
     }
 

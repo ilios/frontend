@@ -52,23 +52,23 @@ export default class SessionsGridOfferingTable extends Component {
     >
       <thead class={{if @headerIsLocked "locked"}}>
         <tr>
-          <th colspan="2">
+          <th colspan="2" class="font-size-small">
             {{t "general.when"}}
           </th>
-          <th>
+          <th class="font-size-small">
             {{t "general.location"}}
           </th>
-          <th colspan="2">
+          <th colspan="2" class="font-size-small">
             {{t "general.learners"}}
           </th>
-          <th colspan="2">
+          <th colspan="2" class="font-size-small">
             {{t "general.learnerGroups"}}
           </th>
-          <th colspan="2">
+          <th colspan="2" class="font-size-small">
             {{t "general.instructors"}}
           </th>
           {{#if this.canUpdate}}
-            <th class="text-center">
+            <th class="text-center font-size-small">
               {{t "general.actions"}}
             </th>
           {{/if}}

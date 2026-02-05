@@ -173,7 +173,7 @@ class FadedTextComponent extends Component {
       data-test-done={{this.sanitizerData.isResolved}}
       id={{@id}}
     >
-      <div class="display-text" {{onResize @resize}} data-test-text>
+      <div class="display-text font-size-base" {{onResize @resize}} data-test-text>
         {{this.displayText}}
       </div>
     </div>
