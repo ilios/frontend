@@ -1,13 +1,8 @@
 @use "sass:math";
 
 .breadcrumbs {
-  $breadcrumb-border-color: var(--blue);
-  $breadcrumb-border: 1px solid $breadcrumb-border-color;
+  $breadcrumb-border: 1px solid var(--blue);
   $breadcrumb-height: 2rem;
-  $breadcrumb-arrow-color: $breadcrumb-border-color;
-  $breadcrumb-background: var(--white);
-  $breadcrumb-color: var(--blue);
-  $breadcrumb-link-color-hover: var(--orange);
 
   display: inline-block;
   margin: 0.8rem;
@@ -16,16 +11,17 @@
   a {
     &:focus,
     &:hover {
-      color: $breadcrumb-link-color-hover;
+      color: var(--white);
+      text-decoration: none;
     }
   }
 
   /* stylelint-disable property-disallowed-list */
   span {
-    background-color: $breadcrumb-background;
+    background-color: var(--white);
     border: $breadcrumb-border;
     border-left: 0;
-    color: $breadcrumb-color;
+    color: var(--blue);
     cursor: pointer;
     display: inline-block;
     font-size: 0.8rem;
@@ -35,13 +31,6 @@
     padding: 0 math.div($breadcrumb-height, 4) 0 math.div($breadcrumb-height, 2);
     position: relative;
     text-decoration: none;
-
-    &:first-child {
-      border-bottom-left-radius: 3px;
-      border-left: $breadcrumb-border;
-      border-top-left-radius: 3px;
-      padding-left: math.div($breadcrumb-height, 2);
-    }
 
     &::after,
     &::before {
@@ -60,20 +49,45 @@
     }
 
     &::before {
-      border-left-color: $breadcrumb-arrow-color;
+      border-left-color: var(--blue);
       margin-left: 1px;
       z-index: 1;
     }
 
     &::after {
-      border-left-color: $breadcrumb-background;
+      border-left-color: var(--white);
     }
 
-    &:last-child,
-    &:last-child:hover {
+    &:hover {
+      background-color: var(--blue);
+      color: var(--white);
+
+      a,
+      button {
+        color: var(--white);
+      }
+
+      &::after {
+        border-left-color: var(--blue);
+      }
+    }
+
+    &:first-child {
+      border-bottom-left-radius: 3px;
+      border-left: $breadcrumb-border;
+      border-top-left-radius: 3px;
+      padding-left: math.div($breadcrumb-height, 2);
+    }
+
+    &:last-child {
+      background-color: inherit;
+      border-color: var(--lighter-grey);
       border-bottom-right-radius: 3px;
       border-top-right-radius: 3px;
+      color: var(--black);
       cursor: default;
+      /* stylelint-disable scales/font-weights */
+      font-weight: 700;
       padding-right: math.div($breadcrumb-height, 2);
     }
 
