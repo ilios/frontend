@@ -1,5 +1,16 @@
 .back-to-session {
+  display: flex;
+  gap: 5px;
   margin-bottom: 1rem;
+
+  .course-and-status {
+    display: flex;
+    gap: 5px;
+
+    .status {
+      display: flex;
+    }
+  }
 }
 
 .session-details {

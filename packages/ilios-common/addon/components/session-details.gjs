@@ -20,6 +20,7 @@ import DetailTaxonomies from 'ilios-common/components/detail-taxonomies';
 import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
 import DetailMesh from 'ilios-common/components/detail-mesh';
 import SessionOfferings from 'ilios-common/components/session-offerings';
+import PublicationStatus from 'ilios-common/components/publication-status';
 import { pageTitle } from 'ember-page-title';
 
 export default class SessionDetailsComponent extends Component {
@@ -28,17 +29,21 @@ export default class SessionDetailsComponent extends Component {
     return new TrackedAsyncData(this.args.session.course);
   }
 
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
+
   @cached
   get cohortsData() {
     return new TrackedAsyncData(this.course?.cohorts);
   }
 
-  get course() {
-    return this.courseData.isResolved ? this.courseData.value : null;
-  }
-
   get cohorts() {
     return this.cohortsData.isResolved ? this.cohortsData.value : null;
+  }
+
+  get courseTitle() {
+    return this.course.externalId?.trim() || this.course.title;
   }
   <template>
     {{pageTitle " | Session: " @session.title}}
@@ -47,6 +52,14 @@ export default class SessionDetailsComponent extends Component {
       <LinkTo @route="course" @model={{@session.course}} data-test-back-to-sessions>
         {{t "general.backToSessionList"}}
       </LinkTo>
+      {{#if this.course}}
+        <span class="course-and-status" data-test-course-and-status>
+          <span data-test-title>({{this.courseTitle}}</span>
+          <span class="status" data-test-status>
+            <PublicationStatus @item={{this.course}} @showText={{false}} />)
+          </span>
+        </span>
+      {{/if}}
     </div>
 
     <section class="session-details" data-test-session-details>
