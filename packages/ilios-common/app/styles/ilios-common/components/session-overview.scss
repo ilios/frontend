@@ -104,10 +104,6 @@
     color: var(--green);
   }
 
-  .post-requisite-edit {
-    @include m.ilios-link-button;
-  }
-
   @include m.for-desktop-and-up {
     .session-overview-ilm-duedate {
       grid-column: 2 / -1;

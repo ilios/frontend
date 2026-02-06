@@ -128,10 +128,6 @@ b {
   margin: 0.5rem;
 }
 
-.link-button {
-  @include m.ilios-link-button;
-}
-
 .hide-from-small-screen {
   @include m.hide-from-small-screen;
 }

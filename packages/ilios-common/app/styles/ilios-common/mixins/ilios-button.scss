@@ -34,9 +34,3 @@
   cursor: pointer;
   white-space: normal;
 }
-
-@mixin ilios-link-button() {
-  @include ilios-button-reset;
-  color: var(--blue);
-  text-align: left;
-}

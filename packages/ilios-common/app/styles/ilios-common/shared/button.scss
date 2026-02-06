@@ -1,0 +1,13 @@
+button {
+  &.link-button {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+    color: var(--blue);
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    white-space: normal;
+  }
+}

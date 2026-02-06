@@ -171,6 +171,7 @@ export default class WeeklyCalendarComponent extends Component {
         {{#each this.week as |day|}}
           <div class="day-heading day-{{day.dayOfWeek}}">
             <button
+              class="link-button"
               type="button"
               {{on "click" (fn this.changeToDayView day.date)}}
               tabindex="-1"

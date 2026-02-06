@@ -10,7 +10,6 @@
   }
 
   a {
-    @include cm.ilios-link-button;
     background-color: var(--super-light-grey);
     border: 1px solid var(--super-light-grey);
     border-radius: 0.2rem;

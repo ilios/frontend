@@ -95,6 +95,7 @@ export default class MonthlyCalendarComponent extends Component {
           <div class="day week-{{day.weekOfMonth}} day-{{day.dayOfWeek}}" data-test-day>
             <h3 class="day-number" aria-label={{day.name}} data-test-number>
               <button
+                class="link-button"
                 type="button"
                 aria-label={{concat (t "general.view") " " day.name}}
                 {{on "click" (fn this.changeToDayView day.date)}}

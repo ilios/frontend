@@ -37,7 +37,6 @@
     }
   }
   button.remove {
-    @include m.ilios-link-button;
     color: var(--red);
   }
   .info {
