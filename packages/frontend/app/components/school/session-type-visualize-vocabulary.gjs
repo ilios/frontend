@@ -5,7 +5,8 @@ import { pageTitle } from 'ember-page-title';
 import VisualizeSessionTypeVocabularyGraph from 'frontend/components/school/visualize-session-type-vocabulary-graph';
 <template>
   {{pageTitle
-    "Schools | "
+    (t "general.schools")
+    " | "
     @model.vocabulary.school.title
     " | "
     (t "general.visualizations")
