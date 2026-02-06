@@ -70,7 +70,7 @@ export default class TruncateTextComponent extends Component {
         {{#if this.isTruncated}}
           <FaIcon @icon={{faEllipsis}} @transform="down-4" />
           <button
-            class="expand-buttons"
+            class="link-button"
             aria-label={{t "general.expand"}}
             title={{t "general.expand"}}
             type="button"
@@ -82,7 +82,7 @@ export default class TruncateTextComponent extends Component {
         {{else}}
           {{#if this.expanded}}
             <button
-              class="expand-buttons"
+              class="link-button"
               aria-label={{t "general.collapse"}}
               title={{t "general.collapse"}}
               type="button"

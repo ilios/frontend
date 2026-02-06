@@ -552,7 +552,7 @@ export default class SessionOverview extends Component {
                       {{/if}}
                     </label>
                     <button
-                      class="post-requisite-edit"
+                      class="link-button"
                       type="button"
                       {{on "click" (toggle "isEditingPostRequisite" this)}}
                       data-test-edit

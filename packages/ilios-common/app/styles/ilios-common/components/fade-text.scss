@@ -16,15 +16,7 @@
   button {
     &.expand-text-button,
     &.collapse-text-button {
-      @include m.ilios-link-button;
       display: block;
-    }
-  }
-
-  .fade-text-control {
-    padding: 0;
-    button {
-      @include m.ilios-link-button;
     }
   }
 }

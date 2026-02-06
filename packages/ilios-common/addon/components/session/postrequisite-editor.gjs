@@ -85,7 +85,7 @@ export default class SessionPostrequisiteEditorComponent extends Component {
             <span data-test-title>{{this.selectedPostrequisite.title}}</span>
             <button
               {{on "click" (set this "userSelectedPostrequisite" null)}}
-              class="remove"
+              class="link-button remove"
               type="button"
               title={{t "general.remove"}}
               data-test-remove

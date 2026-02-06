@@ -32,7 +32,7 @@ export default class OfferingUrlDisplayComponent extends Component {
         <CopyButton
           @getClipboardText={{this.getOfferingLink}}
           @success={{perform this.copy}}
-          class={{if this.copy.isRunning "copying"}}
+          class="link-button{{if this.copy.isRunning ' copying'}}"
           id={{this.copyButtonId}}
           title={{t "general.copyLink"}}
           data-test-copy-url

@@ -106,7 +106,7 @@ export default class FadeTextComponent extends Component {
 const Controls = <template>
   {{#if @expandable}}
     <button
-      class="expand-text-button"
+      class="link-button expand-text-button"
       title={{t "general.expand"}}
       type="button"
       data-test-expand
@@ -120,7 +120,7 @@ const Controls = <template>
   {{else}}
     {{#if @collapsible}}
       <button
-        class="collapse-text-button"
+        class="link-button collapse-text-button"
         title={{t "general.collapse"}}
         type="button"
         data-test-collapse
