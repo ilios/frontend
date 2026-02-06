@@ -259,7 +259,7 @@ export default class OfferingManagerComponent extends Component {
                   title={{t "general.remove"}}
                   {{on "click" (set0 this "showRemoveConfirmation" true)}}
                 >
-                  <FaIcon @icon={{faTrash}} class="enabled" />
+                  <FaIcon @icon={{faTrash}} class="enabled remove" />
                 </button>
               {{else}}
                 <FaIcon @icon={{faTrash}} class="disabled" />

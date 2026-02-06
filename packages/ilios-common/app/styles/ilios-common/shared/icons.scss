@@ -2,6 +2,10 @@
 .svg-inline--fa {
   &.enabled {
     color: var(--light-blue);
+
+    &.remove {
+      color: var(--red);
+    }
   }
 
   &.disabled {

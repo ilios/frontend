@@ -180,7 +180,7 @@ export default class LearnerGroupListItemComponent extends Component {
             title={{t "general.remove"}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} />
+            <FaIcon @icon={{faTrash}} class="enabled remove" />
           </button>
         {{else}}
           <FaIcon @icon={{faTrash}} class="disabled" />
