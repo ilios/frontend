@@ -5,10 +5,9 @@
 
   .course-and-status {
     display: flex;
-    gap: 5px;
 
-    .status {
-      display: flex;
+    .course {
+      padding-right: 5px;
     }
   }
 }

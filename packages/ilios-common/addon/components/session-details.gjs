@@ -54,10 +54,12 @@ export default class SessionDetailsComponent extends Component {
       </LinkTo>
       {{#if this.course}}
         <span class="course-and-status" data-test-course-and-status>
-          <span data-test-title>({{this.courseTitle}}</span>
+          (
+          <span class="course" data-test-course>{{this.courseTitle}}</span>
           <span class="status" data-test-status>
-            <PublicationStatus @item={{this.course}} @showText={{false}} />)
+            <PublicationStatus @item={{this.course}} @showText={{false}} />
           </span>
+          )
         </span>
       {{/if}}
     </div>
