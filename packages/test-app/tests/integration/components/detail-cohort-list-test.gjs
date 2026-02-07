@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import DetailCohortList from 'ilios-common/components/detail-cohort-list';
+import { component } from 'ilios-common/page-objects/components/detail-cohort-list';
 
 module('Integration | Component | detail cohort list', function (hooks) {
   setupRenderingTest(hooks);
@@ -45,15 +46,15 @@ module('Integration | Component | detail cohort list', function (hooks) {
 
     this.set('cohorts', cohorts);
     await render(<template><DetailCohortList @cohorts={{this.cohorts}} /></template>);
-    assert.dom('th').hasText('School');
-    assert.dom(findAll('th')[1]).hasText('Program');
-    assert.dom(findAll('th')[2]).hasText('Cohort');
-    assert.dom('tbody tr').exists({ count: 2 });
-    assert.dom('tbody tr:nth-of-type(1) td').hasText('School of Life');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('Professional Pie Eating');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText('Aardvark');
-    assert.dom('tbody tr:nth-of-type(2) td').hasText('Starfleet Academy');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('Doctor of Rocket Surgery');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText('Class of 2011');
+    assert.strictEqual(component.header.school, 'School');
+    assert.strictEqual(component.header.program, 'Program');
+    assert.strictEqual(component.header.cohort, 'Cohort');
+    assert.strictEqual(component.cohorts.length, 2);
+    assert.strictEqual(component.cohorts[0].school, 'School of Life');
+    assert.strictEqual(component.cohorts[0].program, 'Professional Pie Eating');
+    assert.strictEqual(component.cohorts[0].cohort, 'Aardvark');
+    assert.strictEqual(component.cohorts[1].school, 'Starfleet Academy');
+    assert.strictEqual(component.cohorts[1].program, 'Doctor of Rocket Surgery');
+    assert.strictEqual(component.cohorts[1].cohort, 'Class of 2011');
   });
 });
