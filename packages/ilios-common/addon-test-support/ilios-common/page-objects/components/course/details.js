@@ -1,4 +1,4 @@
-import { clickable, count, create, collection, text } from 'ember-cli-page-object';
+import { clickable, count, create } from 'ember-cli-page-object';
 import objectives from './objectives';
 import learningMaterials from '../detail-learning-materials';
 import meshTerms from '../mesh-terms';
@@ -9,6 +9,7 @@ import leadershipExpanded from '../leadership-expanded';
 import collapsedCompetencies from '../collapsed-competencies';
 import overview from './overview';
 import header from './header';
+import detailCohorts from './../detail-cohorts';
 
 export default create({
   scope: '[data-test-ilios-course-details]',
@@ -23,25 +24,6 @@ export default create({
   meshTerms,
   taxonomies,
   collapsedTaxonomies,
-  cohorts: {
-    scope: '[data-test-detail-cohorts]',
-    manage: clickable('.actions button'),
-    save: clickable('.actions button.bigadd'),
-    cancel: clickable('.actions button.bigcancel'),
-    current: collection('table tbody tr', {
-      school: text('td', { at: 0 }),
-      program: text('td', { at: 1 }),
-      cohort: text('td', { at: 2 }),
-      level: text('td', { at: 3 }),
-    }),
-    selected: collection('.selected-cohorts li', {
-      name: text(),
-      remove: clickable('button'),
-    }),
-    selectable: collection('.selectable-cohorts li', {
-      name: text(),
-      add: clickable('button'),
-    }),
-  },
+  detailCohorts,
   collapsedCompetencies,
 });

@@ -46,10 +46,10 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
 
     assert.ok(m.hasNoCohortWarning);
 
-    await page.details.cohorts.manage();
-    await page.details.cohorts.selectable[0].add();
-    await page.details.cohorts.save();
-    assert.strictEqual(page.details.cohorts.current.length, 1);
+    await page.details.detailCohorts.manage();
+    await page.details.detailCohorts.manager.selectableCohorts[0].add();
+    await page.details.detailCohorts.save();
+    assert.strictEqual(page.details.detailCohorts.list.cohorts.length, 1);
     await firstObjective.parents.manage();
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
@@ -60,10 +60,10 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
     assert.strictEqual(m.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(m.competencies[0].objectives[0].notSelected);
 
-    await page.details.cohorts.manage();
-    await page.details.cohorts.selected[0].remove();
-    await page.details.cohorts.save();
-    assert.strictEqual(page.details.cohorts.current.length, 0);
+    await page.details.detailCohorts.manage();
+    await page.details.detailCohorts.manager.selectedCohorts[0].remove();
+    await page.details.detailCohorts.save();
+    assert.strictEqual(page.details.detailCohorts.list.cohorts.length, 0);
     await firstObjective.parents.manage();
     assert.ok(m.hasNoCohortWarning);
   });

@@ -82,49 +82,58 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   test('list cohorts', async function (assert) {
     await page.visit({ courseId: this.course.id, details: true });
-    assert.strictEqual(page.details.cohorts.current.length, 1);
-    assert.strictEqual(page.details.cohorts.current[0].school, 'school 0');
-    assert.strictEqual(page.details.cohorts.current[0].program, 'program 0');
-    assert.strictEqual(page.details.cohorts.current[0].cohort, 'cohort 0');
+    assert.strictEqual(page.details.detailCohorts.list.cohorts.length, 1);
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[0].school, 'school 0');
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[0].program, 'program 0');
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[0].cohort, 'cohort 0');
   });
 
   test('manage cohorts', async function (assert) {
     await page.visit({ courseId: this.course.id, details: true });
-    await page.details.cohorts.manage();
+    await page.details.detailCohorts.manage();
     await takeScreenshot(assert);
     await percySnapshot(assert);
 
-    assert.strictEqual(page.details.cohorts.selected.length, 1);
-    assert.strictEqual(page.details.cohorts.selected[0].name, 'school 0 | program 0 | cohort 0');
-    assert.strictEqual(page.details.cohorts.selectable.length, 2);
-    assert.strictEqual(page.details.cohorts.selectable[0].name, 'school 0 | program 0 | cohort 3');
-    assert.strictEqual(page.details.cohorts.selectable[1].name, 'school 0 | program 0 | cohort 1');
+    assert.strictEqual(page.details.detailCohorts.manager.selectedCohorts.length, 1);
+    assert.strictEqual(
+      page.details.detailCohorts.manager.selectedCohorts[0].text,
+      'school 0 | program 0 | cohort 0',
+    );
+    assert.strictEqual(page.details.detailCohorts.manager.selectableCohorts.length, 2);
+    assert.strictEqual(
+      page.details.detailCohorts.manager.selectableCohorts[0].text,
+      'school 0 | program 0 | cohort 3',
+    );
+    assert.strictEqual(
+      page.details.detailCohorts.manager.selectableCohorts[1].text,
+      'school 0 | program 0 | cohort 1',
+    );
   });
 
   test('save cohort changes', async function (assert) {
     await page.visit({ courseId: this.course.id, details: true });
-    await page.details.cohorts.manage();
-    await page.details.cohorts.selected[0].remove();
-    await page.details.cohorts.selectable[0].add();
-    await page.details.cohorts.save();
+    await page.details.detailCohorts.manage();
+    await page.details.detailCohorts.manager.selectedCohorts[0].remove();
+    await page.details.detailCohorts.manager.selectableCohorts[0].add();
+    await page.details.detailCohorts.save();
 
-    assert.strictEqual(page.details.cohorts.current.length, 1);
-    assert.strictEqual(page.details.cohorts.current[0].school, 'school 0');
-    assert.strictEqual(page.details.cohorts.current[0].program, 'program 0');
-    assert.strictEqual(page.details.cohorts.current[0].cohort, 'cohort 3');
+    assert.strictEqual(page.details.detailCohorts.list.cohorts.length, 1);
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[0].school, 'school 0');
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[0].program, 'program 0');
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[0].cohort, 'cohort 3');
   });
 
   test('cancel cohort changes', async function (assert) {
     await page.visit({ courseId: this.course.id, details: true });
-    await page.details.cohorts.manage();
-    await page.details.cohorts.selected[0].remove();
-    await page.details.cohorts.selectable[0].add();
-    await page.details.cohorts.cancel();
+    await page.details.detailCohorts.manage();
+    await page.details.detailCohorts.manager.selectedCohorts[0].remove();
+    await page.details.detailCohorts.manager.selectableCohorts[0].add();
+    await page.details.detailCohorts.cancel();
 
-    assert.strictEqual(page.details.cohorts.current.length, 1);
-    assert.strictEqual(page.details.cohorts.current[0].school, 'school 0');
-    assert.strictEqual(page.details.cohorts.current[0].program, 'program 0');
-    assert.strictEqual(page.details.cohorts.current[0].cohort, 'cohort 0');
+    assert.strictEqual(page.details.detailCohorts.list.cohorts.length, 1);
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[0].school, 'school 0');
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[0].program, 'program 0');
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[0].cohort, 'cohort 0');
   });
 
   test('removing a cohort remove course objectives parents linked to that cohort', async function (assert) {
@@ -144,9 +153,9 @@ module('Acceptance | Course - Cohorts', function (hooks) {
       'program-year objective 1',
     );
 
-    await page.details.cohorts.manage();
-    await page.details.cohorts.selected[0].remove();
-    await page.details.cohorts.save();
+    await page.details.detailCohorts.manage();
+    await page.details.detailCohorts.manager.selectedCohorts[0].remove();
+    await page.details.detailCohorts.save();
 
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 3);
