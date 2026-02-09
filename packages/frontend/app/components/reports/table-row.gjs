@@ -34,7 +34,7 @@ export default class ReportsListRowComponent extends Component {
           {{on "click" (fn @confirmRemoval @decoratedReport.report)}}
           data-test-remove
         >
-          <FaIcon @icon={{faTrash}} class="enabled" />
+          <FaIcon @icon={{faTrash}} class="enabled remove" />
         </button>
       </td>
     </tr>

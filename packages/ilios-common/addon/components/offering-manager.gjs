@@ -249,6 +249,7 @@ export default class OfferingManagerComponent extends Component {
                 type="button"
                 title={{t "general.edit"}}
                 {{on "click" this.toggleIsEditing}}
+                data-test-edit
               >
                 <FaIcon @icon={{faPenToSquare}} class="enabled" />
               </button>
@@ -258,8 +259,9 @@ export default class OfferingManagerComponent extends Component {
                   type="button"
                   title={{t "general.remove"}}
                   {{on "click" (set0 this "showRemoveConfirmation" true)}}
+                  data-test-remove
                 >
-                  <FaIcon @icon={{faTrash}} class="enabled" />
+                  <FaIcon @icon={{faTrash}} class="enabled remove" />
                 </button>
               {{else}}
                 <FaIcon @icon={{faTrash}} class="disabled" />

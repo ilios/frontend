@@ -141,7 +141,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
             {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} />
+            <FaIcon @icon={{faTrash}} class="enabled remove" />
           </button>
         {{else}}
           <FaIcon @icon={{faTrash}} class="disabled" />

@@ -112,7 +112,7 @@ export default class CoursesListItemComponent extends Component {
               {{on "click" (fn @confirmRemoval @course)}}
               data-test-remove
             >
-              <FaIcon @icon={{faTrash}} class="enabled" />
+              <FaIcon @icon={{faTrash}} class="enabled remove" />
             </button>
           {{else}}
             <FaIcon @icon={{faTrash}} class="disabled" />
