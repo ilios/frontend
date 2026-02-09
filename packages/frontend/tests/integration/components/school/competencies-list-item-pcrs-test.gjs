@@ -3,11 +3,11 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/school-competencies-list-item-pcrs';
-import SchoolCompetenciesListItemPcrs from 'frontend/components/school-competencies-list-item-pcrs';
+import { component } from 'frontend/tests/pages/components/school/competencies-list-item-pcrs';
+import CompetenciesListItemPcrs from 'frontend/components/school/competencies-list-item-pcrs';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | school-competencies-list-item-pcrs', function (hooks) {
+module('Integration | Component | school/competencies-list-item-pcrs', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -32,7 +32,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     this.set('competency', this.competencyModel);
     await render(
       <template>
-        <SchoolCompetenciesListItemPcrs
+        <CompetenciesListItemPcrs
           @competency={{this.competency}}
           @canUpdate={{true}}
           @setIsManaging={{(noop)}}
@@ -55,7 +55,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     this.set('competency', this.competencyModel);
     await render(
       <template>
-        <SchoolCompetenciesListItemPcrs
+        <CompetenciesListItemPcrs
           @competency={{this.competency}}
           @canUpdate={{true}}
           @setIsManaging={{(noop)}}
@@ -81,7 +81,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     this.set('competency', this.competencyModel);
     await render(
       <template>
-        <SchoolCompetenciesListItemPcrs
+        <CompetenciesListItemPcrs
           @competency={{this.competency}}
           @canUpdate={{true}}
           @setIsManaging={{this.manage}}
@@ -104,7 +104,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     this.set('competency', this.competencyModel);
     await render(
       <template>
-        <SchoolCompetenciesListItemPcrs
+        <CompetenciesListItemPcrs
           @competency={{this.competency}}
           @canUpdate={{true}}
           @setIsManaging={{(noop)}}
@@ -126,7 +126,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     this.set('competency', this.competencyModel);
     await render(
       <template>
-        <SchoolCompetenciesListItemPcrs
+        <CompetenciesListItemPcrs
           @competency={{this.competency}}
           @canUpdate={{true}}
           @setIsManaging={{(noop)}}
@@ -145,7 +145,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     this.set('competency', this.competencyModel);
     await render(
       <template>
-        <SchoolCompetenciesListItemPcrs
+        <CompetenciesListItemPcrs
           @competency={{this.competencyModel}}
           @canUpdate={{true}}
           @setIsManaging={{(noop)}}
@@ -164,7 +164,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     this.set('competency', this.competencyModel);
     await render(
       <template>
-        <SchoolCompetenciesListItemPcrs
+        <CompetenciesListItemPcrs
           @competency={{this.competencyModel}}
           @canUpdate={{false}}
           @setIsManaging={{(noop)}}
