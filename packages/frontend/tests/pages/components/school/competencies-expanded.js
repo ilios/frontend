@@ -1,6 +1,6 @@
 import { clickable, create, text } from 'ember-cli-page-object';
-import competenciesManager from './school-competencies-manager';
-import competenciesList from './school-competencies-list';
+import competenciesManager from './competencies-manager';
+import competenciesList from './competencies-list';
 
 const definition = {
   scope: '[data-test-school-competencies-expanded]',

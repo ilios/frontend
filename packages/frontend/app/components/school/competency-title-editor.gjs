@@ -13,7 +13,7 @@ import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import focus from 'ilios-common/modifiers/focus';
 
-export default class CompetencyTitleEditorComponent extends Component {
+export default class SchoolCompetencyTitleEditorComponent extends Component {
   @tracked title;
 
   constructor() {
@@ -40,7 +40,7 @@ export default class CompetencyTitleEditorComponent extends Component {
     this.validations.clearErrorDisplay();
   });
   <template>
-    <span class="competency-title-editor" data-test-competency-title-editor>
+    <span class="school-competency-title-editor" data-test-school-competency-title-editor>
       {{#if @canUpdate}}
         <EditableField
           @value={{this.title}}

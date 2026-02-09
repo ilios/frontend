@@ -1,7 +1,7 @@
 import { create, hasClass } from 'ember-cli-page-object';
 
-import pcrs from './school-competencies-list-item-pcrs';
-import mapper from './school-competencies-pcrs-mapper';
+import pcrs from './competencies-list-item-pcrs';
+import mapper from './competencies-pcrs-mapper';
 
 const definition = {
   scope: '[data-test-school-competencies-list-item]',
