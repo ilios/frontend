@@ -13,12 +13,17 @@ export default class Event {
   /** @var { String } slug the event's slug - its unique identifier. */
   slug;
 
+  /** @var { Boolean } showAsBlockedTime if TRUE, then the event will be styled de-emphasized on the calendar grid. */
+  showAsBlockedTime;
+
   /**
    * @param { Object } data A plain-old JS object, containing all the event's data.
    * @param { Boolean } isUserEvent TRUE if the given object represents a user event, FALSE if it represents a school event.
+   * @param { Boolean } showAsBlockedTime TRUE if this is event should be styled de-emphasized on the calendar grid.
    */
-  constructor(data, isUserEvent) {
+  constructor(data, isUserEvent, showAsBlockedTime) {
     this.isUserEvent = isUserEvent;
+    this.showAsBlockedTime = showAsBlockedTime;
     // copies all attributes of the given data input to this Event object.
     Object.assign(this, data);
     // set the slug.

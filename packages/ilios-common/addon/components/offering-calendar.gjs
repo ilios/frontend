@@ -41,6 +41,7 @@ export default class OfferingCalendar extends Component {
         const offerings = await learnerGroup.offerings;
         return await map(offerings, async (offering) => {
           const session = await offering.session;
+          const sessionType = await session.sessionType;
           const course = await session.course;
           const school = await course.school;
           return new Event(
@@ -52,11 +53,12 @@ export default class OfferingCalendar extends Component {
               name: session.title,
               offering: offering.id,
               location: offering.location,
-              color: '#84c444',
+              color: sessionType.calendarColor,
               postrequisites: [],
               prerequisites: [],
             },
             false,
+            true,
           );
         });
       });
@@ -84,11 +86,12 @@ export default class OfferingCalendar extends Component {
             name: session.title,
             offering: offering.id,
             location: offering.location,
-            color: '#f6f6f6',
+            color: sessionType.calendarColor,
             postrequisites: [],
             prerequisites: [],
           },
           false,
+          true,
         );
       });
 
@@ -106,6 +109,7 @@ export default class OfferingCalendar extends Component {
           postrequisites: [],
           prerequisites: [],
         },
+        false,
         false,
       );
     }
