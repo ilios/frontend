@@ -92,23 +92,4 @@ export default class CourseObjective extends Model {
 
     return uniqueValues(this._allTermCompetencies.value);
   }
-
-  /**
-   * Unlink any linked program-year objectives from this course objective
-   * if they belong to any program years in the given list.
-   */
-  async removeParentWithProgramYears(programYearsToRemove) {
-    const programYearObjectives = (await this.programYearObjectives).slice();
-
-    for (let i = 0; i < programYearObjectives.length; i++) {
-      const programYearObjective = programYearObjectives[i];
-      const programYear = await programYearObjective.programYear;
-      if (programYearsToRemove.includes(programYear)) {
-        programYearObjectives.splice(programYearObjectives.indexOf(programYear), 1);
-        const courseObjectives = await programYearObjective.courseObjectives;
-        courseObjectives.splice(courseObjectives.indexOf(this), 1);
-      }
-    }
-    await this.save();
-  }
 }
