@@ -13,4 +13,18 @@ module('Unit | Service | server variables', function (hooks) {
     const service = this.owner.lookup('service:server-variables');
     assert.deepEqual(service.errorCaptureEnvironment, 'test');
   });
+
+  test('setting apiVariables works', function (assert) {
+    const service = this.owner.lookup('service:server-variables');
+    assert.deepEqual(service.apiNameSpace, 'api');
+    assert.deepEqual(service.apiHost, '');
+
+    service.setApiVariables('new-host', 'new-namespace');
+    assert.deepEqual(service.apiHost, 'new-host');
+    assert.deepEqual(service.apiNameSpace, 'new-namespace');
+
+    service.setApiVariables(null, null);
+    assert.deepEqual(service.apiNameSpace, 'api');
+    assert.deepEqual(service.apiHost, '');
+  });
 });

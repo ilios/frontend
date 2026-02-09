@@ -1,13 +1,21 @@
 import Service from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
 import { getValueFromHtml } from 'ilios-common/utils/html-server-variables';
 
 export default class ServerVariablesService extends Service {
+  @tracked localApiNameSpace = null;
+  @tracked localApiHost = null;
+
   get config() {
     return getOwner(this).resolveRegistration('config:environment');
   }
 
   get apiNameSpace() {
+    if (this.localApiNameSpace) {
+      return this.localApiNameSpace;
+    }
+
     if (this.config.apiNameSpace) {
       return this.config.apiNameSpace;
     }
@@ -20,6 +28,10 @@ export default class ServerVariablesService extends Service {
   }
 
   get apiHost() {
+    if (this.localApiHost) {
+      return this.localApiHost;
+    }
+
     if (this.config.apiHost) {
       return this.config.apiHost;
     }
@@ -29,6 +41,11 @@ export default class ServerVariablesService extends Service {
     }
 
     return '';
+  }
+
+  setApiVariables(apiHost, apiNameSpace) {
+    this.localApiHost = apiHost?.replace(/\/+$/, '');
+    this.localApiNameSpace = apiNameSpace?.replace(/\/+$/, '');
   }
 
   get errorCaptureEnabled() {
