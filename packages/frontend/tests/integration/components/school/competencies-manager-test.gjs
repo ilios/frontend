@@ -2,11 +2,11 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
-import { component } from 'frontend/tests/pages/components/school-competencies-manager';
-import SchoolCompetenciesManager from 'frontend/components/school-competencies-manager';
+import { component } from 'frontend/tests/pages/components/school/competencies-manager';
+import CompetenciesManager from 'frontend/components/school/competencies-manager';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | school competencies manager', function (hooks) {
+module('Integration | Component | school/competencies-manager', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -35,7 +35,7 @@ module('Integration | Component | school competencies manager', function (hooks)
     this.set('competencies', competencies);
     await render(
       <template>
-        <SchoolCompetenciesManager
+        <CompetenciesManager
           @canUpdate={{true}}
           @canDelete={{true}}
           @canCreate={{true}}
@@ -70,7 +70,7 @@ module('Integration | Component | school competencies manager', function (hooks)
     });
     await render(
       <template>
-        <SchoolCompetenciesManager
+        <CompetenciesManager
           @canUpdate={{true}}
           @canDelete={{true}}
           @canCreate={{true}}
@@ -101,7 +101,7 @@ module('Integration | Component | school competencies manager', function (hooks)
     });
     await render(
       <template>
-        <SchoolCompetenciesManager
+        <CompetenciesManager
           @canUpdate={{true}}
           @canDelete={{true}}
           @canCreate={{true}}
@@ -133,7 +133,7 @@ module('Integration | Component | school competencies manager', function (hooks)
     });
     await render(
       <template>
-        <SchoolCompetenciesManager
+        <CompetenciesManager
           @canUpdate={{true}}
           @canDelete={{true}}
           @canCreate={{true}}

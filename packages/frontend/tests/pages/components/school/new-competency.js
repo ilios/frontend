@@ -1,7 +1,7 @@
 import { clickable, create, fillable, isPresent, text, triggerable } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-new-competency]',
+  scope: '[data-test-school-new-competency]',
   title: {
     scope: '[data-test-title]',
     set: fillable(),

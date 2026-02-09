@@ -12,8 +12,8 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
-import SchoolCompetenciesManager from 'frontend/components/school-competencies-manager';
-import SchoolCompetenciesList from 'frontend/components/school-competencies-list';
+import CompetenciesManager from 'frontend/components/school/competencies-manager';
+import CompetenciesList from 'frontend/components/school/competencies-list';
 import {
   faArrowRotateLeft,
   faCaretDown,
@@ -190,7 +190,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
       </div>
       <div class="school-competencies-expanded-content">
         {{#if @isManaging}}
-          <SchoolCompetenciesManager
+          <CompetenciesManager
             @canUpdate={{@canUpdate}}
             @canDelete={{@canDelete}}
             @canCreate={{@canCreate}}
@@ -199,7 +199,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
             @remove={{this.removeCompetency}}
           />
         {{else if this.domains.length}}
-          <SchoolCompetenciesList @domains={{this.domains}} @canUpdate={{@canUpdate}} />
+          <CompetenciesList @domains={{this.domains}} @canUpdate={{@canUpdate}} />
         {{/if}}
       </div>
     </section>
