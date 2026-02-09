@@ -204,9 +204,6 @@ importers:
       ember-cli-sass:
         specifier: ^11.0.1
         version: 11.0.1
-      ember-cli-server-variables:
-        specifier: 4.0.0
-        version: 4.0.0(@glint/template@1.7.4)(ember-source@6.10.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.104.1)
       ember-cli-terser:
         specifier: ^4.0.2
         version: 4.0.2
@@ -1264,9 +1261,6 @@ importers:
       ember-cli-sass:
         specifier: 11.0.1
         version: 11.0.1
-      ember-cli-server-variables:
-        specifier: ^4.0.0
-        version: 4.0.0(@glint/template@1.7.4)(ember-source@6.10.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.104.1)
       ember-cli-terser:
         specifier: ^4.0.2
         version: 4.0.2
@@ -5679,12 +5673,6 @@ packages:
   ember-cli-sass@11.0.1:
     resolution: {integrity: sha512-RMlFPMK4kaB+67seF/IIoY3EC4rRd+L58q+lyElrxB3FcQTgph/qmGwtqf9Up7m3SDbPiA7cccCOSmgReMgCXA==}
     engines: {node: '>= 10.*'}
-
-  ember-cli-server-variables@4.0.0:
-    resolution: {integrity: sha512-pZAg8W6e+cJf/DZzWX/HFaEBww/6Y0PR4qG5J9yP75moxnbVmq16eewzocsJIpgeeeXGLldKDzaUtkbXrLceSQ==}
-    engines: {node: '>= 18'}
-    peerDependencies:
-      ember-source: '>= 4.0.0'
 
   ember-cli-string-utils@1.1.0:
     resolution: {integrity: sha512-PlJt4fUDyBrC/0X+4cOpaGCiMawaaB//qD85AXmDRikxhxVzfVdpuoec02HSiTGTTB85qCIzWBIh8lDOiMyyFg==}
@@ -16881,20 +16869,6 @@ snapshots:
       ember-cli-version-checker: 2.2.0
     transitivePeerDependencies:
       - supports-color
-
-  ember-cli-server-variables@4.0.0(@glint/template@1.7.4)(ember-source@6.10.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.104.1):
-    dependencies:
-      '@babel/core': 7.29.0(supports-color@8.1.1)
-      '@ember/string': 4.0.1
-      ember-auto-import: 2.12.0(@glint/template@1.7.4)(webpack@5.104.1)
-      ember-cli-babel: 8.3.1(@babel/core@7.29.0)
-      ember-cli-htmlbars: 6.3.0
-      ember-source: 6.10.0(@glimmer/component@2.0.0)(rsvp@4.8.5)
-      lodash: 4.17.23
-    transitivePeerDependencies:
-      - '@glint/template'
-      - supports-color
-      - webpack
 
   ember-cli-string-utils@1.1.0: {}
 

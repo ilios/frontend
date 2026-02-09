@@ -62,7 +62,7 @@ export default class IliosConfigService extends Service {
   }
 
   get apiNameSpace() {
-    const apiNameSpace = this.serverVariables.get('apiNameSpace');
+    const apiNameSpace = this.serverVariables.apiNameSpace;
     if (apiNameSpace) {
       //remove trailing slashes
       return apiNameSpace.replace(/\/+$/, '');
@@ -71,7 +71,7 @@ export default class IliosConfigService extends Service {
   }
 
   get apiHost() {
-    const apiHost = this.serverVariables.get('apiHost');
+    const apiHost = this.serverVariables.apiHost;
     if (apiHost) {
       //remove trailing slashes
       return apiHost.replace(/\/+$/, '');
@@ -80,7 +80,7 @@ export default class IliosConfigService extends Service {
   }
 
   get errorCaptureEnabled() {
-    const errorCaptureEnabled = this.serverVariables.get('errorCaptureEnabled');
+    const errorCaptureEnabled = this.serverVariables.errorCaptureEnabled;
     if (typeof errorCaptureEnabled === 'boolean') {
       return errorCaptureEnabled;
     }

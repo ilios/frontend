@@ -16,18 +16,6 @@ module.exports = function (environment) {
     i18n: {
       defaultLocale: 'en',
     },
-    serverVariables: {
-      tagPrefix: 'iliosconfig',
-      vars: ['api-host', 'api-name-space', 'error-capture-enabled'],
-      defaults: {
-        'api-name-space': process.env.ILIOS_FRONTEND_API_NAMESPACE || 'api/v3',
-        'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
-        'error-capture-enabled':
-          process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENABLED || environment === 'production',
-        'error-capture-environment':
-          process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENVIRONMENT || environment,
-      },
-    },
     'ember-qunit-nice-errors': {
       completeExistingMessages: true,
       showFileInfo: true,
@@ -43,6 +31,10 @@ module.exports = function (environment) {
       placeIn: 'body-footer',
     },
     disableServiceWorker: [true, 'true'].includes(process.env.SW_DISABLED),
+    apiNameSpace: process.env.ILIOS_FRONTEND_API_NAMESPACE ?? 'api/v3',
+    apiHost: process.env.ILIOS_FRONTEND_API_HOST ?? false,
+    errorCaptureEnabled: process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENABLED ?? false,
+    errorCaptureEnvironment: process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENVIRONMENT ?? false,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -87,8 +79,8 @@ module.exports = function (environment) {
     ENV.APP.rootElement = '#ember-testing';
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
-    ENV.serverVariables.defaults['api-name-space'] = 'api';
-    ENV.serverVariables.defaults['api-host'] = '';
+    ENV.apiHost = '';
+    ENV.apiNameSpace = 'api';
     ENV.disableServiceWorker = true;
 
     ENV.APP.autoboot = false;

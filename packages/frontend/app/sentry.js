@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/ember';
 import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
+import { getValueFromHtml } from 'ilios-common/utils/html-server-variables';
 
 function startSentry(config) {
   const [captureErrors, environment] = errorCaptureConfig(config);
@@ -21,26 +22,13 @@ function errorCaptureConfig(config) {
   const errorCaptureName = 'error-capture-enabled';
   const errorEnvironmentName = 'error-capture-environment';
 
-  const { modulePrefix, serverVariables } = config;
-  const prefix = serverVariables.tagPrefix || modulePrefix;
-
-  const errorCaptureValue = document
-    ? document.querySelector(`head meta[name=${prefix}-${errorCaptureName}]`)
-    : null;
-  const errorCaptureContent = errorCaptureValue
-    ? errorCaptureValue.content
-    : serverVariables.defaults[errorCaptureName];
-
-  const errorEnvironmentValue = document
-    ? document.querySelector(`head meta[name=${prefix}-${errorEnvironmentName}]`)
-    : null;
-  const errorEnvironmentContent = errorEnvironmentValue
-    ? errorEnvironmentValue.content
-    : serverVariables.defaults[errorEnvironmentName];
+  const errorCaptureValue =
+    getValueFromHtml(errorCaptureName) ?? config.environment === 'production';
+  const errorEnvironmentValue = getValueFromHtml(errorEnvironmentName) ?? config.environment;
 
   return [
-    JSON.parse(errorCaptureContent),
-    errorEnvironmentContent?.length ? errorEnvironmentContent : null,
+    JSON.parse(errorCaptureValue),
+    errorEnvironmentValue.length ? errorEnvironmentValue : null,
   ];
 }
 
