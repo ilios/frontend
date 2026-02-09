@@ -4,7 +4,7 @@ import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/school';
 
-module('Acceptance | school/emails', function (hooks) {
+module('Acceptance | School - Emails', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {

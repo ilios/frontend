@@ -14,82 +14,67 @@ module('Acceptance | School - Institutional Information', function (hooks) {
   test('create new institutional information', async function (assert) {
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.text,
+      page.manager.institutionalInformationDetails.content.text,
       'No institutional information has been configured for this school.',
     );
 
-    await page.manager.schoolInstitutionalInformationDetails.header.manage();
-    assert.strictEqual(page.manager.schoolInstitutionalInformationManager.content.name.value, '');
+    await page.manager.institutionalInformationDetails.header.manage();
+    assert.strictEqual(page.manager.institutionalInformationManager.content.name.value, '');
+    assert.strictEqual(page.manager.institutionalInformationManager.content.aamcCode.value, '');
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.aamcCode.value,
+      page.manager.institutionalInformationManager.content.addressStreet.value,
+      '',
+    );
+    assert.strictEqual(page.manager.institutionalInformationManager.content.addressCity.value, '');
+    assert.strictEqual(
+      page.manager.institutionalInformationManager.content.addressStateOrProvince.value,
       '',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.addressStreet.value,
+      page.manager.institutionalInformationManager.content.addressZipCode.value,
       '',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.addressCity.value,
-      '',
-    );
-    assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.addressStateOrProvince.value,
-      '',
-    );
-    assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.addressZipCode.value,
-      '',
-    );
-    assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.addressCountryCode.value,
+      page.manager.institutionalInformationManager.content.addressCountryCode.value,
       '',
     );
 
-    await page.manager.schoolInstitutionalInformationManager.content.name.change(
+    await page.manager.institutionalInformationManager.content.name.change(
       'Rocket Surgery Academy',
     );
-    await page.manager.schoolInstitutionalInformationManager.content.aamcCode.change('11111');
-    await page.manager.schoolInstitutionalInformationManager.content.addressStreet.change(
+    await page.manager.institutionalInformationManager.content.aamcCode.change('11111');
+    await page.manager.institutionalInformationManager.content.addressStreet.change(
       'Yellow Brick Road 1',
     );
-    await page.manager.schoolInstitutionalInformationManager.content.addressCity.change(
-      'Sunnyvale',
-    );
-    await page.manager.schoolInstitutionalInformationManager.content.addressStateOrProvince.change(
-      'AB',
-    );
-    await page.manager.schoolInstitutionalInformationManager.content.addressZipCode.change('22222');
-    await page.manager.schoolInstitutionalInformationManager.content.addressCountryCode.change(
-      'CA',
-    );
-    await page.manager.schoolInstitutionalInformationManager.header.save();
+    await page.manager.institutionalInformationManager.content.addressCity.change('Sunnyvale');
+    await page.manager.institutionalInformationManager.content.addressStateOrProvince.change('AB');
+    await page.manager.institutionalInformationManager.content.addressZipCode.change('22222');
+    await page.manager.institutionalInformationManager.content.addressCountryCode.change('CA');
+    await page.manager.institutionalInformationManager.header.save();
 
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.name,
+      page.manager.institutionalInformationDetails.content.name,
       'Rocket Surgery Academy',
     );
+    assert.strictEqual(page.manager.institutionalInformationDetails.content.aamcCode, '11111');
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.aamcCode,
-      '11111',
-    );
-    assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressStreet,
+      page.manager.institutionalInformationDetails.content.addressStreet,
       'Yellow Brick Road 1',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressCity,
+      page.manager.institutionalInformationDetails.content.addressCity,
       'Sunnyvale',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressStateOrProvince,
+      page.manager.institutionalInformationDetails.content.addressStateOrProvince,
       'AB',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressZipCode,
+      page.manager.institutionalInformationDetails.content.addressZipCode,
       '22222',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressCountryCode,
+      page.manager.institutionalInformationDetails.content.addressCountryCode,
       'CA',
     );
   });
@@ -107,109 +92,97 @@ module('Acceptance | School - Institutional Information', function (hooks) {
     });
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.name,
+      page.manager.institutionalInformationDetails.content.name,
       'School of Rocket Surgery',
     );
+    assert.strictEqual(page.manager.institutionalInformationDetails.content.aamcCode, '12345');
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.aamcCode,
-      '12345',
-    );
-    assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressStreet,
+      page.manager.institutionalInformationDetails.content.addressStreet,
       '123 Main Street',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressCity,
+      page.manager.institutionalInformationDetails.content.addressCity,
       'Browntown',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressStateOrProvince,
+      page.manager.institutionalInformationDetails.content.addressStateOrProvince,
       'XY',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressZipCode,
+      page.manager.institutionalInformationDetails.content.addressZipCode,
       '99999',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressCountryCode,
+      page.manager.institutionalInformationDetails.content.addressCountryCode,
       'US',
     );
 
-    await page.manager.schoolInstitutionalInformationDetails.header.manage();
+    await page.manager.institutionalInformationDetails.header.manage();
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.name.value,
+      page.manager.institutionalInformationManager.content.name.value,
       'School of Rocket Surgery',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.aamcCode.value,
+      page.manager.institutionalInformationManager.content.aamcCode.value,
       '12345',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.addressStreet.value,
+      page.manager.institutionalInformationManager.content.addressStreet.value,
       '123 Main Street',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.addressCity.value,
+      page.manager.institutionalInformationManager.content.addressCity.value,
       'Browntown',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.addressStateOrProvince.value,
+      page.manager.institutionalInformationManager.content.addressStateOrProvince.value,
       'XY',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.addressZipCode.value,
+      page.manager.institutionalInformationManager.content.addressZipCode.value,
       '99999',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationManager.content.addressCountryCode.value,
+      page.manager.institutionalInformationManager.content.addressCountryCode.value,
       'US',
     );
 
-    await page.manager.schoolInstitutionalInformationManager.content.name.change(
+    await page.manager.institutionalInformationManager.content.name.change(
       'Rocket Surgery Academy',
     );
-    await page.manager.schoolInstitutionalInformationManager.content.aamcCode.change('11111');
-    await page.manager.schoolInstitutionalInformationManager.content.addressStreet.change(
+    await page.manager.institutionalInformationManager.content.aamcCode.change('11111');
+    await page.manager.institutionalInformationManager.content.addressStreet.change(
       'Yellow Brick Road 1',
     );
-    await page.manager.schoolInstitutionalInformationManager.content.addressCity.change(
-      'Sunnyvale',
-    );
-    await page.manager.schoolInstitutionalInformationManager.content.addressStateOrProvince.change(
-      'AB',
-    );
-    await page.manager.schoolInstitutionalInformationManager.content.addressZipCode.change('22222');
-    await page.manager.schoolInstitutionalInformationManager.content.addressCountryCode.change(
-      'CA',
-    );
-    await page.manager.schoolInstitutionalInformationManager.header.save();
+    await page.manager.institutionalInformationManager.content.addressCity.change('Sunnyvale');
+    await page.manager.institutionalInformationManager.content.addressStateOrProvince.change('AB');
+    await page.manager.institutionalInformationManager.content.addressZipCode.change('22222');
+    await page.manager.institutionalInformationManager.content.addressCountryCode.change('CA');
+    await page.manager.institutionalInformationManager.header.save();
 
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.name,
+      page.manager.institutionalInformationDetails.content.name,
       'Rocket Surgery Academy',
     );
+    assert.strictEqual(page.manager.institutionalInformationDetails.content.aamcCode, '11111');
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.aamcCode,
-      '11111',
-    );
-    assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressStreet,
+      page.manager.institutionalInformationDetails.content.addressStreet,
       'Yellow Brick Road 1',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressCity,
+      page.manager.institutionalInformationDetails.content.addressCity,
       'Sunnyvale',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressStateOrProvince,
+      page.manager.institutionalInformationDetails.content.addressStateOrProvince,
       'AB',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressZipCode,
+      page.manager.institutionalInformationDetails.content.addressZipCode,
       '22222',
     );
     assert.strictEqual(
-      page.manager.schoolInstitutionalInformationDetails.content.addressCountryCode,
+      page.manager.institutionalInformationDetails.content.addressCountryCode,
       'CA',
     );
   });

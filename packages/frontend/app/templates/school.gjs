@@ -1,10 +1,10 @@
 import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
-import SchoolManager from 'frontend/components/school-manager';
+import Manager from 'frontend/components/school/manager';
 import set from 'ember-set-helper/helpers/set';
 <template>
   {{pageTitle (t "general.schools")}}
-  <SchoolManager
+  <Manager
     @school={{@model}}
     @canUpdateSchool={{@controller.canUpdateSchool}}
     @canUpdateCompetency={{@controller.canUpdateCompetency}}

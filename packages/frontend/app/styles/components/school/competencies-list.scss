@@ -1,0 +1,103 @@
+@use "../../ilios-common/mixins" as m;
+
+@use "sass:color";
+
+.school-competencies-list {
+  .headers {
+    font-weight: 600;
+  }
+  .grid-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    margin-right: 0.5rem;
+
+    .grid-item {
+      border-bottom: 1px solid var(--grey);
+      padding: 0.5rem 0.25rem;
+
+      &.competency {
+        padding-left: 2rem;
+      }
+
+      ul {
+        @include m.ilios-list-reset;
+
+        li {
+          padding-bottom: 1rem;
+
+          &:last-of-type {
+            padding-bottom: 0;
+          }
+        }
+      }
+
+      .link-button {
+        text-align: left;
+      }
+
+      .bigadd {
+        background-color: var(--green);
+        color: var(--white);
+      }
+
+      .bigcancel {
+        background-color: var(--red);
+        color: var(--white);
+        margin-left: 0.5rem;
+      }
+    }
+
+    &:last-of-type {
+      .grid-item {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  .competency-row {
+    transition: background-color 1s ease-out;
+
+    &.highlight-ok {
+      transition: none;
+      background-color: var(--transparent-green);
+    }
+
+    &.is-managing {
+      border: 2px solid var(--light-blue);
+      .grid-item {
+        background-color: var(--lightest-grey);
+        border: 0;
+      }
+    }
+
+    &.confirm-removal {
+      background-color: var(--lightest-red);
+
+      .grid-item {
+        border: 0;
+      }
+
+      .confirm-message {
+        color: var(--light-red);
+        grid-column: 1 / -1;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .remove {
+        background-color: var(--white);
+        color: var(--light-red);
+
+        &:hover {
+          background-color: var(--light-red);
+          color: white;
+        }
+      }
+    }
+  }
+  .actions {
+    text-align: right;
+  }
+}

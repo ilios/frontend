@@ -1,0 +1,17 @@
+@use "../../ilios-common/mixins" as m;
+
+.school-learning-material-attributes-collapsed {
+  @include m.collapsed-container(var(--orange));
+
+  .title {
+    @include m.collapsed-container-title;
+  }
+
+  .content {
+    @include m.collapsed-container-content;
+
+    table {
+      @include m.collapsed-container-table;
+    }
+  }
+}

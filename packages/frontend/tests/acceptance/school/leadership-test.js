@@ -4,7 +4,7 @@ import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/school';
 
-module('Acceptance | school/leadership', function (hooks) {
+module('Acceptance | School - Leadership', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
@@ -29,19 +29,16 @@ module('Acceptance | school/leadership', function (hooks) {
     assert.strictEqual(currentURL(), '/schools/1');
     await takeScreenshot(assert);
 
-    assert.strictEqual(page.manager.schoolLeadershipCollapsed.title, 'Leadership (4)');
-    assert.strictEqual(page.manager.schoolLeadershipCollapsed.headers.length, 1);
-    assert.strictEqual(page.manager.schoolLeadershipCollapsed.headers[0].title, 'Summary');
+    assert.strictEqual(page.manager.leadershipCollapsed.title, 'Leadership (4)');
+    assert.strictEqual(page.manager.leadershipCollapsed.headers.length, 1);
+    assert.strictEqual(page.manager.leadershipCollapsed.headers[0].title, 'Summary');
 
-    assert.strictEqual(page.manager.schoolLeadershipCollapsed.summary.length, 2);
-    assert.strictEqual(page.manager.schoolLeadershipCollapsed.summary[0].name, 'Directors');
+    assert.strictEqual(page.manager.leadershipCollapsed.summary.length, 2);
+    assert.strictEqual(page.manager.leadershipCollapsed.summary[0].name, 'Directors');
+    assert.strictEqual(page.manager.leadershipCollapsed.summary[0].value, 'There are 2 directors');
+    assert.strictEqual(page.manager.leadershipCollapsed.summary[1].name, 'Administrators');
     assert.strictEqual(
-      page.manager.schoolLeadershipCollapsed.summary[0].value,
-      'There are 2 directors',
-    );
-    assert.strictEqual(page.manager.schoolLeadershipCollapsed.summary[1].name, 'Administrators');
-    assert.strictEqual(
-      page.manager.schoolLeadershipCollapsed.summary[1].value,
+      page.manager.leadershipCollapsed.summary[1].value,
       'There are 2 administrators',
     );
   });
@@ -53,8 +50,8 @@ module('Acceptance | school/leadership', function (hooks) {
     });
     await takeScreenshot(assert);
 
-    assert.strictEqual(page.manager.schoolLeadershipExpanded.title, 'Leadership (4)');
-    const { directors, administrators } = page.manager.schoolLeadershipExpanded.leadershipList;
+    assert.strictEqual(page.manager.leadershipExpanded.title, 'Leadership (4)');
+    const { directors, administrators } = page.manager.leadershipExpanded.leadershipList;
     assert.strictEqual(directors.length, 2);
     assert.strictEqual(directors[0].text, '1 guy M. Mc1son');
     assert.strictEqual(directors[1].text, '2 guy M. Mc2son');
@@ -69,8 +66,8 @@ module('Acceptance | school/leadership', function (hooks) {
       schoolId: this.school.id,
       schoolLeadershipDetails: true,
     });
-    await page.manager.schoolLeadershipExpanded.manage();
-    const manager = page.manager.schoolLeadershipExpanded.leadershipManager;
+    await page.manager.leadershipExpanded.manage();
+    const manager = page.manager.leadershipExpanded.leadershipManager;
     await manager.administratorSearch.search('guy');
     assert.strictEqual(manager.administratorSearch.results.length, 6);
     assert.strictEqual(
@@ -110,8 +107,8 @@ module('Acceptance | school/leadership', function (hooks) {
       schoolId: this.school.id,
       schoolLeadershipDetails: true,
     });
-    await page.manager.schoolLeadershipExpanded.manage();
-    const manager = page.manager.schoolLeadershipExpanded.leadershipManager;
+    await page.manager.leadershipExpanded.manage();
+    const manager = page.manager.leadershipExpanded.leadershipManager;
     await manager.directorSearch.search('guy');
     assert.strictEqual(manager.directorSearch.results.length, 6);
     assert.strictEqual(manager.directorSearch.results[0].text, '0 guy M. Mc0son user@example.edu');
@@ -133,8 +130,8 @@ module('Acceptance | school/leadership', function (hooks) {
       schoolId: this.school.id,
       schoolLeadershipDetails: true,
     });
-    await page.manager.schoolLeadershipExpanded.manage();
-    const manager = page.manager.schoolLeadershipExpanded.leadershipManager;
+    await page.manager.leadershipExpanded.manage();
+    const manager = page.manager.leadershipExpanded.leadershipManager;
 
     const { selectedDirectors, selectedAdministrators } = manager;
     assert.strictEqual(selectedDirectors.length, 2);
@@ -167,8 +164,8 @@ module('Acceptance | school/leadership', function (hooks) {
       schoolId: this.school.id,
       schoolLeadershipDetails: true,
     });
-    await page.manager.schoolLeadershipExpanded.manage();
-    const manager = page.manager.schoolLeadershipExpanded.leadershipManager;
+    await page.manager.leadershipExpanded.manage();
+    const manager = page.manager.leadershipExpanded.leadershipManager;
     const { selectedDirectors, selectedAdministrators } = manager;
     await selectedDirectors[0].remove();
     await selectedAdministrators[1].remove();
@@ -179,8 +176,8 @@ module('Acceptance | school/leadership', function (hooks) {
     await manager.administratorSearch.search('guy');
     await manager.administratorSearch.results[1].add();
 
-    await page.manager.schoolLeadershipExpanded.cancel();
-    const { directors, administrators } = page.manager.schoolLeadershipExpanded.leadershipList;
+    await page.manager.leadershipExpanded.cancel();
+    const { directors, administrators } = page.manager.leadershipExpanded.leadershipList;
     assert.strictEqual(directors.length, 2);
     assert.strictEqual(directors[0].text, '1 guy M. Mc1son');
     assert.strictEqual(directors[1].text, '2 guy M. Mc2son');
@@ -195,8 +192,8 @@ module('Acceptance | school/leadership', function (hooks) {
       schoolId: this.school.id,
       schoolLeadershipDetails: true,
     });
-    await page.manager.schoolLeadershipExpanded.manage();
-    const manager = page.manager.schoolLeadershipExpanded.leadershipManager;
+    await page.manager.leadershipExpanded.manage();
+    const manager = page.manager.leadershipExpanded.leadershipManager;
     const { selectedDirectors, selectedAdministrators } = manager;
     await selectedDirectors[0].remove();
     await selectedAdministrators[1].remove();
@@ -206,8 +203,8 @@ module('Acceptance | school/leadership', function (hooks) {
     await manager.administratorSearch.search('guy');
     await manager.administratorSearch.results[1].add();
 
-    await page.manager.schoolLeadershipExpanded.save();
-    const { directors, administrators } = page.manager.schoolLeadershipExpanded.leadershipList;
+    await page.manager.leadershipExpanded.save();
+    const { directors, administrators } = page.manager.leadershipExpanded.leadershipList;
     assert.strictEqual(directors.length, 2);
     assert.strictEqual(directors[0].text, '0 guy M. Mc0son');
     assert.strictEqual(directors[1].text, '2 guy M. Mc2son');

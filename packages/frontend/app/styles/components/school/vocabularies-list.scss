@@ -1,0 +1,28 @@
+@use "../../ilios-common/mixins" as m;
+
+.school-vocabularies-list {
+  .school-vocabularies-list-header {
+    background-color: var(--lightest-grey);
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem 1rem;
+  }
+
+  .school-vocabularies-list-new {
+    .form {
+      @include m.ilios-form;
+
+      .item {
+        @include m.ilios-form-item;
+      }
+
+      .buttons {
+        @include m.ilios-form-buttons;
+      }
+    }
+
+    .savedvocabulary {
+      @include m.main-list-saved-new;
+    }
+  }
+}
