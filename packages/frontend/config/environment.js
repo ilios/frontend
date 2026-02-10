@@ -33,8 +33,9 @@ module.exports = function (environment) {
     disableServiceWorker: [true, 'true'].includes(process.env.SW_DISABLED),
     apiNameSpace: process.env.ILIOS_FRONTEND_API_NAMESPACE ?? 'api/v3',
     apiHost: process.env.ILIOS_FRONTEND_API_HOST ?? false,
-    errorCaptureEnabled: process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENABLED ?? false,
-    errorCaptureEnvironment: process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENVIRONMENT ?? false,
+    errorCaptureEnabled:
+      process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENABLED ?? environment === 'production',
+    errorCaptureEnvironment: process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENVIRONMENT ?? environment,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

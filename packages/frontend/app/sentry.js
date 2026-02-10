@@ -19,12 +19,9 @@ function startSentry(config) {
  * we can't load a service here in the pre-boot setup
  */
 function errorCaptureConfig(config) {
-  const errorCaptureName = 'error-capture-enabled';
-  const errorEnvironmentName = 'error-capture-environment';
-
-  const errorCaptureValue =
-    getValueFromHtml(errorCaptureName) ?? config.environment === 'production';
-  const errorEnvironmentValue = getValueFromHtml(errorEnvironmentName) ?? config.environment;
+  const errorCaptureValue = getValueFromHtml('error-capture-enabled') ?? config.errorCaptureEnabled;
+  const errorEnvironmentValue =
+    getValueFromHtml('error-capture-environment') ?? config.errorCaptureEnvironment;
 
   return [
     JSON.parse(errorCaptureValue),
