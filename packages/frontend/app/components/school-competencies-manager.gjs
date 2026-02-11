@@ -56,7 +56,7 @@ export default class SchoolCompetenciesManagerComponent extends Component {
                 {{on "click" (fn @remove obj.domain)}}
                 data-test-remove-domain
               >
-                <FaIcon @icon={{faTrash}} />
+                <FaIcon @icon={{faTrash}} class="enabled remove" />
               </button>
             {{else}}
               <FaIcon @icon={{faTrash}} class="disabled" />
@@ -74,7 +74,7 @@ export default class SchoolCompetenciesManagerComponent extends Component {
                     {{on "click" (fn @remove competency)}}
                     data-test-remove-competency
                   >
-                    <FaIcon @icon={{faTrash}} />
+                    <FaIcon @icon={{faTrash}} class="enabled remove" />
                   </button>
                 {{else}}
                   <FaIcon @icon={{faTrash}} class="disabled" />
