@@ -19,6 +19,10 @@ updates:
         patterns:
           - "@ember-data/*"
           - "@warp-drive/*"
+      ember-intl:
+        patterns:
+          - "ember-intl"
+          - "@ember-intl/*"
       fontawesome:
         patterns:
           - "@fortawesome/*"
