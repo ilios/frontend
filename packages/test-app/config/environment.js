@@ -6,16 +6,8 @@ module.exports = function (environment) {
     environment,
     rootURL: '/',
     locationType: 'history',
-    serverVariables: {
-      tagPrefix: 'iliosconfig',
-      vars: ['api-host', 'api-name-space', 'error-capture-enabled'],
-      defaults: {
-        'api-name-space': process.env.ILIOS_FRONTEND_API_NAMESPACE || 'api/v3',
-        'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
-        'error-capture-enabled':
-          process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENABLED || environment === 'production',
-      },
-    },
+    apiNameSpace: process.env.ILIOS_FRONTEND_API_NAMESPACE ?? 'api/v3',
+    apiHost: process.env.ILIOS_FRONTEND_API_HOST ?? false,
     EmberENV: {
       EXTEND_PROTOTYPES: false,
       FEATURES: {
@@ -47,8 +39,8 @@ module.exports = function (environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.serverVariables.defaults['api-name-space'] = 'api';
-    ENV.serverVariables.defaults['api-host'] = '';
+    ENV.apiHost = '';
+    ENV.apiNameSpace = 'api';
     ENV.APP.autoboot = false;
   }
 
