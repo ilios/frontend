@@ -265,8 +265,8 @@ importers:
         specifier: ^8.2.5
         version: 8.2.5(eslint@9.39.2)
       eslint-plugin-yml:
-        specifier: ^3.0.0
-        version: 3.0.0(eslint@9.39.2)
+        specifier: ^3.1.2
+        version: 3.1.2(eslint@9.39.2)
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -629,8 +629,8 @@ importers:
         specifier: ^8.2.5
         version: 8.2.5(eslint@9.39.2)
       eslint-plugin-yml:
-        specifier: ^3.0.0
-        version: 3.0.0(eslint@9.39.2)
+        specifier: ^3.1.2
+        version: 3.1.2(eslint@9.39.2)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -851,8 +851,8 @@ importers:
         specifier: ^8.2.5
         version: 8.2.5(eslint@9.39.2)
       eslint-plugin-yml:
-        specifier: ^3.0.0
-        version: 3.0.0(eslint@9.39.2)
+        specifier: ^3.1.2
+        version: 3.1.2(eslint@9.39.2)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -1088,8 +1088,8 @@ importers:
         specifier: ^8.2.5
         version: 8.2.5(eslint@9.39.2)
       eslint-plugin-yml:
-        specifier: ^3.0.0
-        version: 3.0.0(eslint@9.39.2)
+        specifier: ^3.1.2
+        version: 3.1.2(eslint@9.39.2)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -1310,8 +1310,8 @@ importers:
         specifier: ^8.2.5
         version: 8.2.5(eslint@9.39.2)
       eslint-plugin-yml:
-        specifier: ^3.0.0
-        version: 3.0.0(eslint@9.39.2)
+        specifier: ^3.1.2
+        version: 3.1.2(eslint@9.39.2)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -2452,8 +2452,8 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/plugin-kit@0.5.1':
-    resolution: {integrity: sha512-hZ2uC1jbf6JMSsF2ZklhRQqf6GLpYyux6DlzegnW/aFlpu6qJj5GO7ub7WOETCrEl6pl6DAX7RgTgj/fyG+6BQ==}
+  '@eslint/plugin-kit@0.6.0':
+    resolution: {integrity: sha512-bIZEUzOI1jkhviX2cp5vNyXQc6olzb2ohewQubuYlMXZ2Q/XjBO0x0XhGPvc9fjSIiUN0vw+0hq53BJ4eQSJKQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   '@floating-ui/core@1.7.4':
@@ -6135,8 +6135,8 @@ packages:
     resolution: {integrity: sha512-qr7RJCYImKQjB+39q4q46i1l7p1V3joHzBE5CAYfxn5tfVFjrnjn/tw7q/kDyweU9kAIcLul0Dx/KWVUCb3BgA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
 
-  eslint-plugin-yml@3.0.0:
-    resolution: {integrity: sha512-kuAW6o3hlFHyF5p7TLon+AtvNWnsvRrb88pqywGMSCEqAP5d1gOMvNGgWLVlKHqmx5RbFhQLcxFDGmS4IU9DwA==}
+  eslint-plugin-yml@3.1.2:
+    resolution: {integrity: sha512-n9lxbFrNlGDLOSyIrEYkkYr7icbULMh66wwkIEluisq0lXSu1qVEEXM0g8MM8UQbtd9t1HMgN6bC+DaOe5dWdQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
     peerDependencies:
       eslint: '>=9.38.0'
@@ -12642,7 +12642,7 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
-  '@eslint/plugin-kit@0.5.1':
+  '@eslint/plugin-kit@0.6.0':
     dependencies:
       '@eslint/core': 1.1.0
       levn: 0.4.1
@@ -17844,10 +17844,10 @@ snapshots:
     transitivePeerDependencies:
       - eslint
 
-  eslint-plugin-yml@3.0.0(eslint@9.39.2):
+  eslint-plugin-yml@3.1.2(eslint@9.39.2):
     dependencies:
       '@eslint/core': 1.1.0
-      '@eslint/plugin-kit': 0.5.1
+      '@eslint/plugin-kit': 0.6.0
       debug: 4.4.3(supports-color@8.1.1)
       diff-sequences: 29.6.3
       escape-string-regexp: 5.0.0
