@@ -52,8 +52,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@glint/template@1.7.4))(@glint/template@1.7.4)
       '@ember-intl/lint':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.7.1
+        version: 0.7.1
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
         version: 1.0.5(@glint/template@1.7.4)(webpack@5.104.1)
@@ -554,8 +554,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@glint/template@1.7.4))(@glint/template@1.7.4)
       '@ember-intl/lint':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.7.1
+        version: 0.7.1
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0
@@ -704,8 +704,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@glint/template@1.7.4))(@glint/template@1.7.4)
       '@ember-intl/lint':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.7.1
+        version: 0.7.1
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
         version: 1.0.5(@glint/template@1.7.4)(webpack@5.104.1)
@@ -944,8 +944,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@glint/template@1.7.4))(@glint/template@1.7.4)
       '@ember-intl/lint':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.7.1
+        version: 0.7.1
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
         version: 1.0.5(@glint/template@1.7.4)(webpack@5.104.1)
@@ -1181,8 +1181,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@glint/template@1.7.4))(@glint/template@1.7.4)
       '@ember-intl/lint':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.7.1
+        version: 0.7.1
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
         version: 1.0.5(@glint/template@1.7.4)(webpack@5.104.1)
@@ -2151,24 +2151,24 @@ packages:
     engines: {node: '>=0.1.95'}
     hasBin: true
 
-  '@codemod-utils/ast-javascript@2.1.3':
-    resolution: {integrity: sha512-02aLe8JC9igeDBGVTH9lVUkMUoUmOuhUJ/cMTwMcEfJZFDjrHRRXZJwV3oV9i6Qf5ZFoF/IZRMkgazQCdfJtQA==}
+  '@codemod-utils/ast-javascript@2.1.4':
+    resolution: {integrity: sha512-jLdEDnIehZHXXr3bw8riUv2yAdrx1VUu4VyY6aFqKkF414ttt8oYNohjuPlTTJuBIuNrVlStw0hwzCnmLug3dw==}
     engines: {node: 20.* || >= 22}
 
-  '@codemod-utils/ast-template-tag@1.2.1':
-    resolution: {integrity: sha512-W1iwCzHWnK0gXRDIfKw6yE4sLdTefDKoFe7xoGWXTwYsIaM1/npq2weXOjTji0kli3DII2KFjIqe0byBbJF+oA==}
+  '@codemod-utils/ast-template-tag@1.2.2':
+    resolution: {integrity: sha512-jMuO4GDJbYLTBWHubZWfFp0PlzFVge4RmQKwYLswLABpVI+ap0UxxEP0Iy/5R4ZKstzZ3dNH0vGoI3AI8tUzYA==}
     engines: {node: 20.* || >= 22}
 
   '@codemod-utils/ast-template@2.1.3':
     resolution: {integrity: sha512-BfE1FG/kHiB+YaQGD6Xo5bR5IZB43OXn5rEJl0fsHFzoyTCY7ECxV8PXcXSnwInmL059KkY5sXxidRHoFUYddw==}
     engines: {node: 20.* || >= 22}
 
-  '@codemod-utils/files@3.2.4':
-    resolution: {integrity: sha512-HtZ1Up4moAX6t9f7qMsrzMw0HBFbprN8At8QWsOWxN/mbMMG/VUgBuVOi3qYKCqEjYKd1i/xoh7oF7uBMAx7Bg==}
+  '@codemod-utils/files@3.2.5':
+    resolution: {integrity: sha512-rhY4SLG8GiRk+VK3Y+cXo0bJVm6LOstUKONEzrI0IRh5UdQqVCNl4F6URq74gL/VnAGaSxsXMT3Uly31W3T0tg==}
     engines: {node: 20.* || >= 22}
 
-  '@codemod-utils/package-json@3.3.4':
-    resolution: {integrity: sha512-DDRlI1ubXca9qqV0qhjUmnEn40o2Jk0kmbP2sIYwPg5HZrFTgh9ywq32DIklh7AxSAX9z9k9+Z5hRuKHonrV2Q==}
+  '@codemod-utils/package-json@3.3.5':
+    resolution: {integrity: sha512-GCcvMgT34SqEKIgnkm6D+P5PqO4T6TNW5+LhGjlJqqeM0yDzjMoasocj1qZz9DSIKCHitz+7H2NIQ3nGhoda1g==}
     engines: {node: 20.* || >= 22}
 
   '@colors/colors@1.5.0':
@@ -2266,8 +2266,8 @@ packages:
       '@ember/test-waiters':
         optional: true
 
-  '@ember-intl/lint@0.5.0':
-    resolution: {integrity: sha512-4qWfMg6audE3ywOYPley6pJ9pKAyVky9GsYnlqoYEvO9nuHUBGptcoqVGH39Rrn2zwbYoFM9QowZz9Z11qojYA==}
+  '@ember-intl/lint@0.7.1':
+    resolution: {integrity: sha512-p94OvHps7vuxRryKyLrD5agJ5U9SYgnrST0GPqr4iOuZGNVxsV8/diGr2JXfZ0dz/6AH2SmL8h1sjVGGZ5Ccww==}
     engines: {node: 20.* || >= 22}
     hasBin: true
 
@@ -2919,6 +2919,10 @@ packages:
 
   '@isaacs/brace-expansion@5.0.0':
     resolution: {integrity: sha512-ZT55BDLV0yv0RBm2czMiZ+SqCGO7AvmOM3G/w2xhVPH+te0aKgFjmBvGlL1dH+ql2tgGO3MVrbb3jCKyvpgnxA==}
+    engines: {node: 20 || >=22}
+
+  '@isaacs/brace-expansion@5.0.1':
+    resolution: {integrity: sha512-WMz71T1JS624nWj2n2fnYAuPovhv7EUhk69R6i9dsVyzxt5eM3bjwvgk9L+APE1TRscGysAVMANkB0jh0LQZrQ==}
     engines: {node: 20 || >=22}
 
   '@isaacs/cliui@8.0.2':
@@ -6802,6 +6806,10 @@ packages:
     resolution: {integrity: sha512-tvZgpqk6fz4BaNZ66ZsRaZnbHvP/jG3uKJvAZOwEVUL4RTA5nJeeLYfyN9/VA8NX/V3IBG+hkeuGpKjvELkVhA==}
     engines: {node: 20 || >=22}
 
+  glob@13.0.2:
+    resolution: {integrity: sha512-035InabNu/c1lW0tzPhAgapKctblppqsKKG9ZaNzbr+gXwWMjXoiyGSyB9sArzrjG7jY+zntRq5ZSUYemrnWVQ==}
+    engines: {node: 20 || >=22}
+
   glob@5.0.15:
     resolution: {integrity: sha512-c9IPMazfRITpmAAKi22dK1VKxGDX9ehhqfABDriL/lzO92xcUKEJPQHrVA/2YHSNFB4iFlykVmWvwo48nr3OxA==}
     deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
@@ -8027,6 +8035,10 @@ packages:
 
   minimatch@10.1.1:
     resolution: {integrity: sha512-enIvLvRAFZYXJzkCYG5RKmPfrFArdLv+R+lbQ53BmIMLIry74bjKzX6iHAm8WYamJkhSSEabrWN5D97XnKObjQ==}
+    engines: {node: 20 || >=22}
+
+  minimatch@10.1.2:
+    resolution: {integrity: sha512-fu656aJ0n2kcXwsnwnv9g24tkU5uSmOlTjd6WyyaKm2Z+h1qmY6bAjrcaIxF/BslFqbZ8UBtbJi7KgQOZD2PTw==}
     engines: {node: 20 || >=22}
 
   minimatch@3.1.2:
@@ -10013,8 +10025,8 @@ packages:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
 
-  type-fest@5.4.3:
-    resolution: {integrity: sha512-AXSAQJu79WGc79/3e9/CR77I/KQgeY1AhNvcShIH4PTcGYyC4xv6H4R4AUOwkPS5799KlVDAu8zExeCrkGquiA==}
+  type-fest@5.4.4:
+    resolution: {integrity: sha512-JnTrzGu+zPV3aXIUhnyWJj4z/wigMsdYajGLIYakqyOW1nPllzXEJee0QQbHj+CTIQtXGlAjuK0UY+2xTyjVAw==}
     engines: {node: '>=20'}
 
   type-is@1.6.18:
@@ -12053,14 +12065,14 @@ snapshots:
       exec-sh: 0.3.6
       minimist: 1.2.8
 
-  '@codemod-utils/ast-javascript@2.1.3':
+  '@codemod-utils/ast-javascript@2.1.4':
     dependencies:
       '@babel/parser': 7.29.0
       recast: 0.23.11
 
-  '@codemod-utils/ast-template-tag@1.2.1':
+  '@codemod-utils/ast-template-tag@1.2.2':
     dependencies:
-      '@codemod-utils/ast-javascript': 2.1.3
+      '@codemod-utils/ast-javascript': 2.1.4
       content-tag: 4.1.0
 
   '@codemod-utils/ast-template@2.1.3':
@@ -12069,13 +12081,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@codemod-utils/files@3.2.4':
+  '@codemod-utils/files@3.2.5':
     dependencies:
-      glob: 13.0.0
+      glob: 13.0.2
 
-  '@codemod-utils/package-json@3.3.4':
+  '@codemod-utils/package-json@3.3.5':
     dependencies:
-      type-fest: 5.4.3
+      type-fest: 5.4.4
 
   '@colors/colors@1.5.0':
     optional: true
@@ -12216,13 +12228,13 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@ember-intl/lint@0.5.0':
+  '@ember-intl/lint@0.7.1':
     dependencies:
-      '@codemod-utils/ast-javascript': 2.1.3
+      '@codemod-utils/ast-javascript': 2.1.4
       '@codemod-utils/ast-template': 2.1.3
-      '@codemod-utils/ast-template-tag': 1.2.1
-      '@codemod-utils/files': 3.2.4
-      '@codemod-utils/package-json': 3.3.4
+      '@codemod-utils/ast-template-tag': 1.2.2
+      '@codemod-utils/files': 3.2.5
+      '@codemod-utils/package-json': 3.3.5
       '@formatjs/icu-messageformat-parser': 3.5.1
       js-yaml: 4.1.1
       yargs: 18.0.0
@@ -13121,6 +13133,10 @@ snapshots:
     dependencies:
       '@isaacs/balanced-match': 4.0.1
 
+  '@isaacs/brace-expansion@5.0.1':
+    dependencies:
+      '@isaacs/balanced-match': 4.0.1
+
   '@isaacs/cliui@8.0.2':
     dependencies:
       string-width: 5.1.2
@@ -13945,7 +13961,7 @@ snapshots:
 
   '@types/glob@9.0.0':
     dependencies:
-      glob: 13.0.0
+      glob: 13.0.2
 
   '@types/http-errors@2.0.5': {}
 
@@ -18781,6 +18797,12 @@ snapshots:
       minipass: 7.1.2
       path-scurry: 2.0.1
 
+  glob@13.0.2:
+    dependencies:
+      minimatch: 10.1.2
+      minipass: 7.1.2
+      path-scurry: 2.0.1
+
   glob@5.0.15:
     dependencies:
       inflight: 1.0.6
@@ -20055,6 +20077,10 @@ snapshots:
     dependencies:
       '@isaacs/brace-expansion': 5.0.0
 
+  minimatch@10.1.2:
+    dependencies:
+      '@isaacs/brace-expansion': 5.0.1
+
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.12
@@ -21181,7 +21207,7 @@ snapshots:
 
   rimraf@6.1.2:
     dependencies:
-      glob: 13.0.0
+      glob: 13.0.2
       package-json-from-dist: 1.0.1
 
   ripemd160@2.0.3:
@@ -22502,7 +22528,7 @@ snapshots:
 
   type-fest@4.41.0: {}
 
-  type-fest@5.4.3:
+  type-fest@5.4.4:
     dependencies:
       tagged-tag: 1.0.0
 
