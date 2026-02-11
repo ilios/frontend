@@ -424,8 +424,8 @@ importers:
         specifier: ^8.2.0
         version: 8.3.1(@babel/core@7.29.0)
       ember-cli-flash:
-        specifier: ^6.0.0
-        version: 6.0.0(@ember/string@4.0.1)(@embroider/macros@1.19.6(@glint/template@1.7.4))(ember-modifier@4.2.2(@babel/core@7.29.0))
+        specifier: ^7.0.0
+        version: 7.0.0(@babel/core@7.29.0)(@embroider/macros@1.19.6(@glint/template@1.7.4))(ember-modifier@4.2.2(@babel/core@7.29.0))
       ember-cli-htmlbars:
         specifier: ^6.3.0
         version: 6.3.0
@@ -5615,10 +5615,10 @@ packages:
   ember-cli-deprecation-workflow@4.0.0:
     resolution: {integrity: sha512-HGF7LSz6f8Vx3sISYXnoiuk+8eBULUt7cS/U1YwGMAJtXvL1jvz8PvyAPyrBpcyNP85U+u+3UdKeTWG0HuLbNw==}
 
-  ember-cli-flash@6.0.0:
-    resolution: {integrity: sha512-ig8V5HKqXyTobJgHsIfnViPAmmyqx1c8T77LB5qmarPlVrx1G+EhSjlRcTr/y16Kg/EZalSBldHiLvv9M/5t6g==}
+  ember-cli-flash@7.0.0:
+    resolution: {integrity: sha512-4aTEChF4XOtcBwUJ+HUrwKaMc5U1uT66cBWhMj43yQwLW1maNNeRDj9ibNZRFkgZy1OL++hffHg/jn3EHmJZ1A==}
+    engines: {node: '>= 24', pnpm: '>= 10'}
     peerDependencies:
-      '@ember/string': '>= 3.0.0'
       '@embroider/macros': ^1.13.2
       ember-modifier: '>= 4.0.0'
 
@@ -16751,13 +16751,14 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-cli-flash@6.0.0(@ember/string@4.0.1)(@embroider/macros@1.19.6(@glint/template@1.7.4))(ember-modifier@4.2.2(@babel/core@7.29.0)):
+  ember-cli-flash@7.0.0(@babel/core@7.29.0)(@embroider/macros@1.19.6(@glint/template@1.7.4))(ember-modifier@4.2.2(@babel/core@7.29.0)):
     dependencies:
-      '@ember/string': 4.0.1
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.19.6(@glint/template@1.7.4)
+      decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-modifier: 4.2.2(@babel/core@7.29.0)
     transitivePeerDependencies:
+      - '@babel/core'
       - supports-color
 
   ember-cli-get-component-path-option@1.0.0: {}
