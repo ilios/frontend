@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
-import CompetencyTitleEditor from 'frontend/components/competency-title-editor';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import and from 'ember-truth-helpers/helpers/and';
-import NewCompetency from 'frontend/components/new-competency';
+import CompetencyTitleEditor from 'frontend/components/school/competency-title-editor';
+import NewCompetency from 'frontend/components/school/new-competency';
 import t from 'ember-intl/helpers/t';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
