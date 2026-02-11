@@ -55,8 +55,7 @@
         color: var(--white);
       }
 
-      &:hover,
-      &:focus {
+      &:hover {
         background-color: var(--blue);
         color: var(--white);
         &[aria-checked="true"],
