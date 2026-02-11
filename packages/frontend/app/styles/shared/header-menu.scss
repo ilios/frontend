@@ -53,16 +53,25 @@
       &.active {
         background-color: var(--green);
         color: var(--white);
+        cursor: default;
+        &:hover {
+          border-color: var(--white);
+        }
+        &:focus {
+          background-color: var(--green);
+        }
       }
 
-      &:hover,
+      &:hover {
+        border: 2px dashed var(--black);
+        border-collapse: separate;
+      }
+
       &:focus {
         background-color: var(--blue);
         color: var(--white);
-        &[aria-checked="true"],
-        &.active {
-          background-color: var(--green);
-          cursor: default;
+        &:hover {
+          border-color: var(--white);
         }
       }
     }
