@@ -49,19 +49,17 @@ export default class SessionDetailsComponent extends Component {
     {{pageTitle " | Session: " @session.title}}
 
     <div class="back-to-session" {{scrollIntoView delay=10}}>
-      <LinkTo @route="course" @model={{@session.course}} data-test-back-to-sessions>
-        {{t "general.backToSessionList"}}
-      </LinkTo>
       {{#if this.course}}
         <span class="course-and-status" data-test-course-and-status>
-          (
-          <span class="course" data-test-course>{{this.courseTitle}}</span>
           <span class="status" data-test-status>
             <PublicationStatus @item={{this.course}} @showText={{false}} />
           </span>
-          )
+          <span class="course" data-test-course>{{this.courseTitle}}</span>
         </span>
       {{/if}}
+      <LinkTo @route="course" @model={{@session.course}} data-test-back-to-sessions>
+        {{t "general.backToSessionList"}}
+      </LinkTo>
     </div>
 
     <section class="session-details" data-test-session-details>

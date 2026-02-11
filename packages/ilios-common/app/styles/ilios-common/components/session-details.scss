@@ -6,8 +6,12 @@
   .course-and-status {
     display: flex;
 
+    .status {
+      padding-right: 3px;
+    }
+
     .course {
-      padding-right: 5px;
+      padding-right: 10px;
     }
   }
 }
