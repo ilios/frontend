@@ -44,7 +44,7 @@
     "ember-async-data": "^2.0.0",
     "ember-auto-import": "^2.12.0",
     "ember-cli-babel": "^8.2.0",
-    "ember-cli-flash": "^6.0.0",
+    "ember-cli-flash": "^7.0.0",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-cli-page-object": "^2.3.0",
     "ember-click-outside": "^6.0.0",
