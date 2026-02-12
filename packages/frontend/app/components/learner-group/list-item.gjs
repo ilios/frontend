@@ -210,7 +210,7 @@ export default class LearnerGroupListItemComponent extends Component {
             type="button"
             {{on "click" (set this "showCopyConfirmation" false)}}
             title={{t "general.copy"}}
-            data-test-copy
+            data-test-copy-toggle
           >
             <FaIcon @icon={{faCopy}} />
           </button>
