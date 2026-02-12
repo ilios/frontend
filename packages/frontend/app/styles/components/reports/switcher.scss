@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   margin: 1em;
+
   a {
     background-color: var(--white);
     color: var(--blue);
@@ -16,6 +17,7 @@
 
     &:hover {
       cursor: pointer;
+      text-decoration: none;
     }
 
     &.active {
