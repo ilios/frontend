@@ -21,25 +21,6 @@ module.exports = async function (defaults) {
     babel: {
       plugins: [require.resolve('ember-concurrency/async-arrow-task-transform')],
     },
-    'ember-cli-image-transformer': {
-      images: [
-        {
-          inputFilename: 'lib/images/sunburst.svg',
-          outputFileName: 'sunburst-white-background',
-          background: { r: 255, g: 255, b: 255, alpha: 1 },
-          convertTo: 'png',
-          sizes: [48, 96, 180, 192],
-          quality: 50,
-        },
-        {
-          inputFilename: 'lib/images/sunburst.svg',
-          outputFileName: 'sunburst-transparent',
-          convertTo: 'png',
-          sizes: [16, 32, 48, 96, 150, 512],
-          quality: 50,
-        },
-      ],
-    },
     'ember-cli-qunit': {
       useLintTree: false,
     },

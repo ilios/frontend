@@ -6,10 +6,20 @@
     <meta name="description" content="Curriculum Management for the Health Professions.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{content-for "head"}}
+    <!-- PWA Tags -->
+    <meta name="theme-color" content="#cc6600">
+    <link rel="apple-touch-icon-precomposed" href="/assets/icons/sunburst-white-background192.png" sizes="192x192">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Ilios">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="icon" href="/assets/icons/sunburst-transparent16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/assets/icons/sunburst-transparent32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/assets/icons/sunburst-transparent48.png" sizes="48x48" type="image/png">
+    <link rel="icon" href="/assets/icons/sunburst-transparent96.png" sizes="96x96" type="image/png">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <!-- /PWA Tags -->
 
-    <link rel="manifest" href="{{rootURL}}manifest.webmanifest">
-    <meta name="msapplication-config" content="{{rootURL}}browserconfig.xml">
+    {{content-for "head"}}
 
     {{content-for "head-footer"}}
   </head>
