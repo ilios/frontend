@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import DetailCohorts from 'ilios-common/components/detail-cohorts';
 import { component } from 'ilios-common/page-objects/components/detail-cohorts';
+import { setupAuthentication } from 'ilios-common';
 
 module('Integration | Component | detail cohorts', function (hooks) {
   setupRenderingTest(hooks);
@@ -36,6 +37,7 @@ module('Integration | Component | detail cohorts', function (hooks) {
       course,
       programYearObjectives: [programYearObjective1b, programYearObjective2],
     });
+    await setupAuthentication({ school: school1, directedPrograms: [program1, program2] });
 
     const store = this.owner.lookup('service:store');
     const courseModel = await store.findRecord('course', course.id);
