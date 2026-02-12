@@ -196,7 +196,15 @@ export default class LearnerGroupListItemComponent extends Component {
             <FaIcon @icon={{faCopy}} />
           </button>
         {{else}}
-          <FaIcon @icon={{faCopy}} class="disabled" />
+          <button
+            class="link-button"
+            type="button"
+            {{on "click" (set this "showCopyConfirmation" false)}}
+            title={{t "general.copy"}}
+            data-test-copy
+          >
+            <FaIcon @icon={{faCopy}} />
+          </button>
         {{/if}}
       </td>
     </tr>
@@ -259,14 +267,6 @@ export default class LearnerGroupListItemComponent extends Component {
                 {{t "general.copy"}}
               </button>
             {{/if}}
-            <button
-              type="button"
-              class="cancel text"
-              {{on "click" (set this "showCopyConfirmation" false)}}
-              data-test-cancel
-            >
-              {{t "general.cancel"}}
-            </button>
           </div>
         </td>
         <td class="hide-from-small-screen"></td>
