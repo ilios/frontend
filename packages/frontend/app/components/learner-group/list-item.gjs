@@ -80,6 +80,19 @@ export default class LearnerGroupListItemComponent extends Component {
     return this.canCreateData.isResolved ? this.canCreateData.value && this.school : false;
   }
 
+  get confirmationClasses() {
+    const rhett = [];
+
+    if (this.showRemoveConfirmation) {
+      rhett.push('confirm-removal');
+    } else if (this.showCopyConfirmation) {
+      rhett.push('confirm-copy');
+      rhett.push('content-row');
+    }
+
+    return rhett.join(' ');
+  }
+
   async getSortedTitlesOfSubgroupsInNeedOfAccommodation(groups) {
     const titles = await map(groups, (group) => group.getTitleWithParentTitles());
     return titles.sort().join(', ');
@@ -138,11 +151,7 @@ export default class LearnerGroupListItemComponent extends Component {
     this.showCopyConfirmation = false;
   }
   <template>
-    <tr
-      class="{{if this.showRemoveConfirmation 'confirm-removal'}}
-        {{if this.showCopyConfirmation 'confirm-copy content-row'}}"
-      data-test-learner-group-list-item
-    >
+    <tr class={{this.confirmationClasses}} data-test-learner-group-list-item>
       <td class="text-left" colspan="2" data-test-title>
         <LinkTo @route="learner-group" @model={{@learnerGroup}}>
           {{@learnerGroup.title}}
