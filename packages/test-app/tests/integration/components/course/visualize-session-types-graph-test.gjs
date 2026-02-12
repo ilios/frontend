@@ -275,7 +275,7 @@ module('Integration | Component | course/visualize-session-types-graph', functio
     assert.notOk(component.dataTable.isVisible);
     assert.strictEqual(
       component.noData.text,
-      'No sessions currently linked to instructional time.',
+      'No sessions are currently linked to instructional time.',
     );
   });
 

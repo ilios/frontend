@@ -2,12 +2,9 @@
 
 .course-visualize-objectives-graph {
   .with-hours {
-    p {
-      margin-top: 0.5rem;
-    }
-
     .fa-face-meh {
       @include m.font-size("huge");
+      margin-top: 10px;
     }
   }
 

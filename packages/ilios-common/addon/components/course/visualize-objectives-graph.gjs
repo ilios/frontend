@@ -257,10 +257,8 @@ export default class CourseVisualizeObjectivesGraph extends Component {
           {{else}}
             {{#if @showNoChartDataError}}
               <div class="with-hours" data-test-with-hours>
-                <p>
-                  {{t "general.courseVisualizationsObjectivesGraphNoLink"}}
-                  <FaIcon @icon={{faFaceMeh}} />
-                </p>
+                {{t "general.courseVisualizationsObjectivesGraphNoLink"}}
+                <FaIcon @icon={{faFaceMeh}} />
               </div>
             {{/if}}
           {{/if}}
