@@ -83,11 +83,13 @@ general:
   courseTitle: Course Title
   courseTitlePlaceholder: Enter a title for this course
   courseVisualizations: Course Visualizations
-  courseVisualizationsNoSessions: "This course has no sessions."
-  courseVisualizationsNoSessionVocabularyTerms: No vocabularies have been linked to any sessions in this course.
   courseVisualizationsInstructorNoData: "{instructor} is not instructing any sessions in this course."
   courseVisualizationsInstructorsGraphNoData: No instructors have been linked to any sessions in this course.
+  courseVisualizationsObjectivesGraphNoHours: "The following course objectives are either not linked to any session, or only linked to sessions without offering or duration data."
+  courseVisualizationsObjectivesGraphNoLink: No course objectives are currently linked to instructional time.
   courseVisualizationsSessionTypeGraphNoData: "No vocabulary terms have been linked to any {sessionType} sessions in this course."
+  courseVisualizationsSessionTypesGraphNoData: No sessions are currently linked to instructional time.
+  courseVisualizationsSessionVocabularyTermsGraphNoData: No vocabularies have been linked to any sessions in this course.
   courseVisualizationsTermGraphNoData: "The vocabulary term {term} has not been linked to any sessions in this course."
   courseVisualizationsVocabularyGraphNoData: "No {vocabulary} vocabulary terms have been linked to any sessions in this course."
   currentlySearchingPrompt: searching...
@@ -253,8 +255,6 @@ general:
   notStarted: Not Started
   objectiveCount: "There {count, plural, =1 {is 1 objective} other {are # objectives}}"
   objectives: Objectives
-  objectivesWithNoHours: "The following course objectives are either not linked to any session, or only linked to sessions without offering or duration data."
-  objectivesWithNoLink: No course objectives currently linked to instructional time.
   offering: Offering
   offerings: Offerings
   overview: Overview

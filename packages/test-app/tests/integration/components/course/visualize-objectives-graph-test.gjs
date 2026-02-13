@@ -339,7 +339,7 @@ module('Integration | Component | course/visualize-objectives-graph', function (
     assert.ok(component.unlinkedObjectives.isPresent);
     assert.strictEqual(
       component.unlinkedObjectives.text,
-      'No course objectives currently linked to instructional time.',
+      'No course objectives are currently linked to instructional time.',
     );
   });
 

@@ -217,14 +217,14 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
           {{else}}
             {{#if @showNoChartDataError}}
               <div class="no-data" data-test-no-data>
-                {{t "general.courseVisualizationsNoSessions"}}
+                {{t "general.courseVisualizationsSessionTypesGraphNoData"}}
               </div>
             {{/if}}
           {{/if}}
         {{/if}}
         {{#if (and (not @isIcon) (not this.hasData))}}
           <div class="no-data" data-test-no-data>
-            {{t "general.courseVisualizationsNoSessions"}}
+            {{t "general.courseVisualizationsSessionTypesGraphNoData"}}
           </div>
         {{/if}}
         {{#if (and (not @isIcon) this.hasData @showDataTable)}}

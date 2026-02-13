@@ -273,7 +273,10 @@ module('Integration | Component | course/visualize-session-types-graph', functio
     );
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.dataTable.isVisible);
-    assert.strictEqual(component.noData.text, 'This course has no sessions.');
+    assert.strictEqual(
+      component.noData.text,
+      'No sessions are currently linked to instructional time.',
+    );
   });
 
   test('only zero time data', async function (assert) {
