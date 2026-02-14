@@ -35,7 +35,7 @@
     }
 
     .header-menu-item {
-      border: 0;
+      border: 2px solid var(--super-light-grey);
       background-color: var(--super-light-grey);
       color: var(--black);
       display: block;
@@ -52,17 +52,28 @@
       &[aria-checked="true"],
       &.active {
         background-color: var(--green);
+        border-color: var(--green);
         color: var(--white);
+        cursor: default;
+        &:focus {
+          border-color: var(--white);
+        }
+        &:hover {
+          background-color: var(--green);
+        }
+      }
+      &:focus {
+        border-color: var(--black);
+        border-style: dashed;
+        border-collapse: separate;
       }
 
-      &:hover,
-      &:focus {
+      &:hover {
         background-color: var(--blue);
+        border-color: var(--blue);
         color: var(--white);
-        &[aria-checked="true"],
-        &.active {
-          background-color: var(--green);
-          cursor: default;
+        &:focus {
+          border-color: var(--white);
         }
       }
     }
