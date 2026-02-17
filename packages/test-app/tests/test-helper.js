@@ -8,7 +8,6 @@ import { setup } from 'qunit-dom';
 import { setupEmberOnerrorValidation } from 'ember-qunit';
 
 import {
-  setRunOptions,
   setupGlobalA11yHooks,
   setupQUnitA11yAuditToggle,
   setupConsoleLogger,
@@ -17,9 +16,6 @@ import {
 import start from 'ember-exam/test-support/start';
 
 setupConsoleLogger();
-setRunOptions({
-  preload: false,
-});
 setupGlobalA11yHooks(() => true);
 setupQUnitA11yAuditToggle(QUnit);
 
