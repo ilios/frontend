@@ -25,8 +25,11 @@
       }
 
       .calendar-school-picker {
-        float: right;
         margin: 1em 1em 1em 0;
+
+        @include m.for-tablet-and-up {
+          float: right;
+        }
 
         select {
           @include m.ilios-select;
