@@ -11,6 +11,7 @@ export default class ProgramYearIndexController extends Controller {
     'managePyCompetencies',
     'managePyLeadership',
     'showCourseAssociations',
+    'showCohortMembers',
     'expandedObjectives',
   ];
 
@@ -22,6 +23,7 @@ export default class ProgramYearIndexController extends Controller {
   @tracked managePyCompetencies = false;
   @tracked managePyLeadership = false;
   @tracked showCourseAssociations = false;
+  @tracked showCohortMembers = false;
   @tracked expandedObjectives = null;
 
   @cached

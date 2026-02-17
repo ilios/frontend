@@ -1,7 +1,7 @@
 @use "../../ilios-common/mixins" as m;
 
-.program-year-course-associations {
-  @include m.detail-container(var(--orange));
+.program-year-cohort-members {
+  @include m.detail-container-content;
 
   .header {
     @include m.detail-container-header;
