@@ -162,7 +162,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
                 class="ilios-table ilios-table-colors ilios-zebra-table"
                 data-test-associations
               >
-                <thead>
+                <thead class="locked">
                   <tr>
                     <SortableTh
                       @sortedAscending={{this.sortedAscending}}
