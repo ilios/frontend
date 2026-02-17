@@ -14,7 +14,7 @@ import not from 'ember-truth-helpers/helpers/not';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
-import { faCopy, faTrash, faUniversalAccess } from '@fortawesome/free-solid-svg-icons';
+import { faCancel, faCopy, faTrash, faUniversalAccess } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupListItemComponent extends Component {
   @service permissionChecker;
@@ -209,10 +209,10 @@ export default class LearnerGroupListItemComponent extends Component {
             class="link-button"
             type="button"
             {{on "click" (set this "showCopyConfirmation" false)}}
-            title={{t "general.copy"}}
+            title={{t "general.cancel"}}
             data-test-copy-toggle
           >
-            <FaIcon @icon={{faCopy}} />
+            <FaIcon @icon={{faCancel}} />
           </button>
         {{/if}}
       </td>
