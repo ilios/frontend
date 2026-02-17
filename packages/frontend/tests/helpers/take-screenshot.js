@@ -4,6 +4,8 @@ import { waitForPromise } from '@ember/test-waiters';
 
 let shouldTakeScreenshotsCache;
 
+snapdom.plugins([zoomOutPlugin]);
+
 export const takeScreenshot = async (assert, description = '') => {
   if (!shouldTakeScreenshots()) {
     return;
@@ -32,7 +34,7 @@ async function snap(filename, options) {
     },
     options,
   );
-  const el = document.querySelector('#ember-testing');
+  const el = document.getElementById('ember-testing');
   const result = await snapdom(el, snapOptions);
 
   return waitForPromise(result.download({ format: 'png', filename }));
@@ -55,4 +57,18 @@ function shouldTakeScreenshots() {
   }
 
   return shouldTakeScreenshotsCache;
+}
+
+/**
+ * Before we capture the dom, add styles to zoom out and use the entire page
+ * Based on https://github.com/zumerlab/snapdom?tab=readme-ov-file#example-overlay-filter-plugin
+ */
+function zoomOutPlugin() {
+  return {
+    name: 'zoom-out',
+    async afterClone(context) {
+      const root = context.clone;
+      root.style.zoom = '50%';
+    },
+  };
 }
