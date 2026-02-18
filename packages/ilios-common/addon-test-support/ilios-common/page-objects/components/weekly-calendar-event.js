@@ -3,6 +3,7 @@ import { attribute, create, hasClass, isPresent, text, triggerable } from 'ember
 const definition = {
   scope: '[data-test-weekly-calendar-event]',
   title: text('[data-test-title]'),
+  cssClasses: attribute('class'),
   name: text('[data-test-name]'),
   time: text('[data-test-time]'),
   style: attribute('style'),

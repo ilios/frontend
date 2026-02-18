@@ -20,19 +20,24 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     isScheduled,
     isPublished,
     prerequisites,
+    showAsBlockedTime,
   ) {
     prerequisites = prerequisites ?? [];
-    return new Event({
-      name,
-      startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
-      endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
-      color: '#00cc65',
-      lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toISO(),
-      isPublished,
-      isScheduled,
-      postrequisites: [],
-      prerequisites,
-    });
+    return new Event(
+      {
+        name,
+        startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
+        endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
+        color: '#00cc65',
+        lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toISO(),
+        isPublished,
+        isScheduled,
+        postrequisites: [],
+        prerequisites,
+      },
+      false,
+      showAsBlockedTime,
+    );
   };
 
   this.getStyle = function (rowStart, minutes, columnSpan) {
@@ -588,5 +593,28 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     );
     assert.ok(component.preworkIndicator.isPresent);
     assert.strictEqual(component.preworkIndicator.title, 'Has pre-work');
+  });
+
+  test('show as blocked time', async function (assert) {
+    const event = this.createEvent(
+      'event 0',
+      '2020-02-10 10:40:00',
+      '2020-02-10 12:30:00',
+      '2012-01-09 08:00:00',
+      false,
+      true,
+      [],
+      true,
+    );
+    this.set('event', event);
+    this.set('events', [event]);
+    await render(
+      <template>
+        <WeeklyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />
+      </template>,
+    );
+    assert.ok(component.cssClasses.includes(' blocked-time'));
+    assert.notOk(component.style.includes(' background-color:'));
+    assert.notOk(component.style.includes('; color:'));
   });
 });
