@@ -47,11 +47,19 @@ export default class LearnerGroupListItemComponent extends Component {
     );
   }
 
+  get canDeleteLoading() {
+    return this.canCreateData.isPending;
+  }
+
   @cached
   get canCreateData() {
     return new TrackedAsyncData(
       this.school ? this.permissionChecker.canCreateLearnerGroup(this.school) : false,
     );
+  }
+
+  get canCreateLoading() {
+    return this.canCreateData.isPending;
   }
 
   @cached
@@ -68,16 +76,11 @@ export default class LearnerGroupListItemComponent extends Component {
     return this.schoolData.isResolved ? this.schoolData.value : null;
   }
 
-  @cached
-  get isLinked() {
-    return this.isLinkedData.isResolved ? this.isLinkedData.value : null;
-  }
-
   get canDelete() {
-    if (this.isLinked) {
-      return false;
+    if (this.isLinkedData.isResolved && this.canDeleteData.isResolved) {
+      return !this.isLinkedData.value && this.canDeleteData.value;
     }
-    return this.canDeleteData.isResolved ? this.canDeleteData.value && !this.isLinked : false;
+    return false;
   }
 
   get canCreate() {
@@ -185,39 +188,47 @@ export default class LearnerGroupListItemComponent extends Component {
         {{/if}}
       </td>
       <td class="text-right">
-        {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
-          <button
-            class="link-button"
-            type="button"
-            {{on "click" this.showRemove}}
-            title={{t "general.remove"}}
-            data-test-remove
-          >
-            <FaIcon @icon={{faTrash}} class="enabled remove" />
-          </button>
-        {{else}}
+        {{#if this.canDeleteLoading}}
           <FaIcon @icon={{faTrash}} class="disabled" />
-        {{/if}}
-        {{#if (and this.canCreate (not this.showCopyConfirmation))}}
-          <button
-            class="link-button"
-            type="button"
-            {{on "click" this.showCopy}}
-            title={{t "general.copy"}}
-            data-test-copy
-          >
-            <FaIcon @icon={{faCopy}} />
-          </button>
         {{else}}
-          <button
-            class="link-button"
-            type="button"
-            {{on "click" (set this "showCopyConfirmation" false)}}
-            title={{t "general.cancel"}}
-            data-test-copy-toggle
-          >
-            <FaIcon @icon={{faArrowRotateLeft}} />
-          </button>
+          {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
+            <button
+              class="link-button"
+              type="button"
+              {{on "click" this.showRemove}}
+              title={{t "general.remove"}}
+              data-test-remove
+            >
+              <FaIcon @icon={{faTrash}} class="enabled remove" />
+            </button>
+          {{else}}
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          {{/if}}
+        {{/if}}
+        {{#if this.canCreateLoading}}
+          <FaIcon @icon={{faCopy}} class="disabled" />
+        {{else}}
+          {{#if (and this.canCreate (not this.showCopyConfirmation))}}
+            <button
+              class="link-button"
+              type="button"
+              {{on "click" this.showCopy}}
+              title={{t "general.copy"}}
+              data-test-copy
+            >
+              <FaIcon @icon={{faCopy}} />
+            </button>
+          {{else}}
+            <button
+              class="link-button"
+              type="button"
+              {{on "click" (set this "showCopyConfirmation" false)}}
+              title={{t "general.cancel"}}
+              data-test-copy-toggle
+            >
+              <FaIcon @icon={{faArrowRotateLeft}} />
+            </button>
+          {{/if}}
         {{/if}}
       </td>
     </tr>
