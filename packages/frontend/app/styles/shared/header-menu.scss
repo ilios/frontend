@@ -49,22 +49,8 @@
       text-decoration: none;
       white-space: nowrap;
 
-      &[aria-checked="true"],
-      &.active {
-        background-color: var(--green);
-        border-color: var(--green);
-        color: var(--white);
-        cursor: default;
-        &:focus {
-          border-color: var(--white);
-        }
-        &:hover {
-          background-color: var(--green);
-        }
-      }
       &:focus {
-        border-color: var(--black);
-        border-style: dashed;
+        border-color: var(--grey);
         border-collapse: separate;
       }
 
@@ -73,7 +59,21 @@
         border-color: var(--blue);
         color: var(--white);
         &:focus {
-          border-color: var(--white);
+          border-color: var(--lightest-blue);
+        }
+      }
+
+      &[aria-checked="true"],
+      &.active {
+        background-color: var(--green);
+        border-color: var(--green);
+        color: var(--white);
+        cursor: default;
+        &:focus {
+          border-color: var(--lightest-green);
+        }
+        &:hover {
+          background-color: var(--green);
         }
       }
     }
