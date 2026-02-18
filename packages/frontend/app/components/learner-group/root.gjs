@@ -610,14 +610,16 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </div>
             <span class="actions" data-test-buttons>
-              <input
-                type="text"
-                value={{this.filter}}
-                placeholder={{t "general.filterByNameOrEmail"}}
-                aria-label={{t "general.filterByNameOrEmail"}}
-                {{on "input" (pick "target.value" (set this "filter"))}}
-                data-test-filter
-              />
+              {{#if this.usersForMembersList.length}}
+                <input
+                  type="text"
+                  value={{this.filter}}
+                  placeholder={{t "general.filterByNameOrEmail"}}
+                  aria-label={{t "general.filterByNameOrEmail"}}
+                  {{on "input" (pick "target.value" (set this "filter"))}}
+                  data-test-filter
+                />
+              {{/if}}
               {{#if (or @isEditing @isBulkAssigning)}}
                 <button
                   class="close"
@@ -628,12 +630,14 @@ export default class LearnerGroupRootComponent extends Component {
                   {{t "general.close"}}
                 </button>
               {{else}}
-                <ToggleButtons
-                  @firstOptionSelected={{not @showCalendar}}
-                  @firstLabel={{t "general.hideCalendar"}}
-                  @secondLabel={{t "general.showCalendar"}}
-                  @toggle={{@setShowCalendar}}
-                />
+                {{#if this.usersForMembersList.length}}
+                  <ToggleButtons
+                    @firstOptionSelected={{not @showCalendar}}
+                    @firstLabel={{t "general.hideCalendar"}}
+                    @secondLabel={{t "general.showCalendar"}}
+                    @toggle={{@setShowCalendar}}
+                  />
+                {{/if}}
                 {{#if @canUpdate}}
                   <button
                     class="bulk-assign"
@@ -643,14 +647,16 @@ export default class LearnerGroupRootComponent extends Component {
                   >
                     {{t "general.uploadGroupAssignments"}}
                   </button>
-                  <button
-                    class="manage"
-                    type="button"
-                    data-test-manage
-                    {{on "click" (fn @setIsEditing true)}}
-                  >
-                    {{t "general.manage"}}
-                  </button>
+                  {{#if this.usersForMembersList.length}}
+                    <button
+                      class="manage"
+                      type="button"
+                      data-test-manage
+                      {{on "click" (fn @setIsEditing true)}}
+                    >
+                      {{t "general.manage"}}
+                    </button>
+                  {{/if}}
                 {{/if}}
               {{/if}}
             </span>
