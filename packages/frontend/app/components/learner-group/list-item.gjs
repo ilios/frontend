@@ -14,7 +14,12 @@ import not from 'ember-truth-helpers/helpers/not';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
-import { faCancel, faCopy, faTrash, faUniversalAccess } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRotateLeft,
+  faCopy,
+  faTrash,
+  faUniversalAccess,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupListItemComponent extends Component {
   @service permissionChecker;
@@ -212,7 +217,7 @@ export default class LearnerGroupListItemComponent extends Component {
             title={{t "general.cancel"}}
             data-test-copy-toggle
           >
-            <FaIcon @icon={{faCancel}} />
+            <FaIcon @icon={{faArrowRotateLeft}} />
           </button>
         {{/if}}
       </td>
