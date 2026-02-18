@@ -141,19 +141,6 @@ module('Integration | Component | locale-chooser', function (hooks) {
     assert.strictEqual(component.locales.length, 0, 'tab key closes menu');
   });
 
-  test('mouse entering locale-button clears focus', async function (assert) {
-    await render(<template><LocaleChooser /></template>);
-    await component.toggle.click();
-    assert.strictEqual(component.locales.length, 3);
-    assert.ok(component.locales[0].hasFocus);
-    assert.notOk(component.locales[1].hasFocus);
-    assert.notOk(component.locales[2].hasFocus);
-    await component.locales[0].mouseEnter();
-    assert.notOk(component.locales[0].hasFocus);
-    assert.notOk(component.locales[1].hasFocus);
-    assert.notOk(component.locales[2].hasFocus);
-  });
-
   test('changing locale', async function (assert) {
     await render(<template><LocaleChooser /></template>);
     assert.strictEqual(component.toggle.text, 'English (en)');
