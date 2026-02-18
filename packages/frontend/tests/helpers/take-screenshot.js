@@ -61,6 +61,8 @@ function shouldTakeScreenshots() {
 
 /**
  * Before we capture the dom, add styles to zoom out and use the entire page
+ * We scale the width by our breakpoints so we get more detail in the screenshots
+ * when there is more space on the page.
  * Based on https://github.com/zumerlab/snapdom?tab=readme-ov-file#example-overlay-filter-plugin
  */
 function zoomOutPlugin() {
@@ -68,7 +70,9 @@ function zoomOutPlugin() {
     name: 'zoom-out',
     async afterClone(context) {
       const root = context.clone;
-      root.style.zoom = '50%';
+      const width = screen.width;
+      const zoom = width < 450 ? '35%' : '50%';
+      root.style.zoom = zoom;
     },
   };
 }
