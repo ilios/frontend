@@ -18,13 +18,6 @@
       display: none;
     }
 
-    thead {
-      &.locked {
-        position: sticky;
-        top: 0;
-      }
-    }
-
     tbody {
       td {
         vertical-align: top;

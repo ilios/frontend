@@ -160,10 +160,10 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
               hidden={{@isExpanded}}
             >
               <table
-                class="ilios-table ilios-table-colors ilios-zebra-table"
+                class="ilios-table ilios-table-colors ilios-zebra-table sticky-header"
                 data-test-associations
               >
-                <thead class="locked">
+                <thead>
                   <tr>
                     <SortableTh
                       @sortedAscending={{this.sortedAscending}}

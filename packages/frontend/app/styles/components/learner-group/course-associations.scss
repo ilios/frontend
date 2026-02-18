@@ -26,13 +26,6 @@
     table {
       margin-bottom: 0;
 
-      thead {
-        &.locked {
-          position: sticky;
-          top: 0;
-        }
-      }
-
       tbody {
         td {
           vertical-align: top;

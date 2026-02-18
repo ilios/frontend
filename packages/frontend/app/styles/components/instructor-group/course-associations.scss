@@ -22,13 +22,6 @@
       @include m.ilios-list-reset;
     }
 
-    thead {
-      &.locked {
-        position: sticky;
-        top: 0;
-      }
-    }
-
     tbody {
       td {
         vertical-align: top;
