@@ -10,7 +10,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
-import or from 'ember-truth-helpers/helpers/or';
+import { or } from 'ember-truth-helpers';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import load from 'ember-async-data/helpers/load';

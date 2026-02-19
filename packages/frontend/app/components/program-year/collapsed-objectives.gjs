@@ -5,8 +5,7 @@ import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import { get } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import eq from 'ember-truth-helpers/helpers/eq';
-import gte from 'ember-truth-helpers/helpers/gte';
+import { eq, gte } from 'ember-truth-helpers';
 import { faBan, faCaretRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearCollapsedObjectivesComponent extends Component {

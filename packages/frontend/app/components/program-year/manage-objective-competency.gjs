@@ -1,6 +1,5 @@
 import sortBy from 'ilios-common/helpers/sort-by';
-import or from 'ember-truth-helpers/helpers/or';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq, or } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import { on } from '@ember/modifier';

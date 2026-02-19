@@ -8,7 +8,7 @@ import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import or from 'ember-truth-helpers/helpers/or';
+import { or } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import LearnergroupSelectionManager from 'ilios-common/components/learnergroup-selection-manager';

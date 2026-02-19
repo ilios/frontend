@@ -6,14 +6,12 @@ import includes from 'ilios-common/helpers/includes';
 import { on } from '@ember/modifier';
 import { fn, array } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { and, eq, not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
 import truncate from 'ilios-common/helpers/truncate';
 import formatDate from 'ember-intl/helpers/format-date';
-import and from 'ember-truth-helpers/helpers/and';
 import PublicationStatus from 'ilios-common/components/publication-status';
-import not from 'ember-truth-helpers/helpers/not';
 import {
   faArrowRightToBracket,
   faCaretDown,

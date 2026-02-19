@@ -17,11 +17,10 @@ import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import isEmpty from 'ember-truth-helpers/helpers/is-empty';
 import sortBy from 'ilios-common/helpers/sort-by';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { and, eq } from 'ember-truth-helpers';
 import formatDate from 'ember-intl/helpers/format-date';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import DatePicker from 'ilios-common/components/date-picker';
-import and from 'ember-truth-helpers/helpers/and';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 

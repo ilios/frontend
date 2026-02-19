@@ -15,7 +15,7 @@ import { hash } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import SubjectResults from 'frontend/components/reports/subject-results';
 import set from 'ember-set-helper/helpers/set';
-import and from 'ember-truth-helpers/helpers/and';
+import { and } from 'ember-truth-helpers';
 import Table from 'frontend/components/reports/table';
 import ListLoading from 'frontend/components/reports/list-loading';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';

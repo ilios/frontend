@@ -7,7 +7,7 @@ import t from 'ember-intl/helpers/t';
 import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
 import LmTypeIcon from 'ilios-common/components/lm-type-icon';
 import lmType from 'ilios-common/helpers/lm-type';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import isEmpty from 'ember-truth-helpers/helpers/is-empty';
 import TruncateText from 'ilios-common/components/truncate-text';
 import join from 'ilios-common/helpers/join';

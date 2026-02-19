@@ -10,7 +10,7 @@ import includes from 'ilios-common/helpers/includes';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import sortBy from 'ilios-common/helpers/sort-by';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 

@@ -15,9 +15,8 @@ import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import isEmpty from 'ember-truth-helpers/helpers/is-empty';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq, not } from 'ember-truth-helpers';
 import add from 'ember-math-helpers/helpers/add';
-import not from 'ember-truth-helpers/helpers/not';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 

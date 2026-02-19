@@ -13,9 +13,7 @@ import pick from 'ilios-common/helpers/pick';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
-import and from 'ember-truth-helpers/helpers/and';
-import eq from 'ember-truth-helpers/helpers/eq';
-import gt from 'ember-truth-helpers/helpers/gt';
+import { and, eq, gt } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import { faCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 

@@ -23,10 +23,9 @@ import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import add from 'ember-math-helpers/helpers/add';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import DatePicker from 'ilios-common/components/date-picker';
-import not from 'ember-truth-helpers/helpers/not';
+import { not, or } from 'ember-truth-helpers';
 import toggle from 'ilios-common/helpers/toggle';
 import DetailCohortManager from 'ilios-common/components/detail-cohort-manager';
-import or from 'ember-truth-helpers/helpers/or';
 import perform from 'ember-concurrency/helpers/perform';
 
 export default class CourseRolloverComponent extends Component {

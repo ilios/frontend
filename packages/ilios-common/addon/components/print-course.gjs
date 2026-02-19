@@ -8,7 +8,7 @@ import PublicationStatus from 'ilios-common/components/publication-status';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import { sortBy as sortArrayBy } from 'ilios-common/utils/array-helpers';
-import and from 'ember-truth-helpers/helpers/and';
+import { and } from 'ember-truth-helpers';
 import sortBy from 'ilios-common/helpers/sort-by';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import ObjectiveList from 'ilios-common/components/course/objective-list';

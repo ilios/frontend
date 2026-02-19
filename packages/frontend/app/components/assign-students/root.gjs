@@ -11,7 +11,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import sortBy0 from 'ilios-common/helpers/sort-by';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import Manager from 'frontend/components/assign-students/manager';
 import WaitSaving from 'ilios-common/components/wait-saving';

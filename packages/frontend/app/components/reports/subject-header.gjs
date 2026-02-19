@@ -6,7 +6,7 @@ import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
-import and from 'ember-truth-helpers/helpers/and';
+import { and } from 'ember-truth-helpers';
 import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';

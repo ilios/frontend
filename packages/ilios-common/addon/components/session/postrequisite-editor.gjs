@@ -9,7 +9,7 @@ import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import pick from 'ilios-common/helpers/pick';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import formatDate from 'ember-intl/helpers/format-date';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';

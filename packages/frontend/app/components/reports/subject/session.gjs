@@ -8,7 +8,7 @@ import { camelize } from '@ember/string';
 import { action } from '@ember/object';
 import striptags from 'striptags';
 import SubjectHeader from 'frontend/components/reports/subject-header';
-import and from 'ember-truth-helpers/helpers/and';
+import { and } from 'ember-truth-helpers';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import add from 'ember-math-helpers/helpers/add';
 import { LinkTo } from '@ember/routing';

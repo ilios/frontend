@@ -5,7 +5,7 @@ import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
-import or from 'ember-truth-helpers/helpers/or';
+import { or } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';

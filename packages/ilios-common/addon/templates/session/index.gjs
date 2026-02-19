@@ -1,7 +1,7 @@
 import SessionDetails from 'ilios-common/components/session-details';
 import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 <template>
   <SessionDetails
     @session={{@model}}

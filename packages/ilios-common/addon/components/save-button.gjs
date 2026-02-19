@@ -1,4 +1,4 @@
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 <template>

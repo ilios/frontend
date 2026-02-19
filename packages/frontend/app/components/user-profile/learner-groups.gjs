@@ -1,6 +1,6 @@
 import load from 'ember-async-data/helpers/load';
 import t from 'ember-intl/helpers/t';
-import gt from 'ember-truth-helpers/helpers/gt';
+import { gt } from 'ember-truth-helpers';
 import sortBy from 'ilios-common/helpers/sort-by';
 import LearnerGroup from 'frontend/components/user-profile/learner-group';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';

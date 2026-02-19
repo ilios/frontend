@@ -4,7 +4,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import sortBy from 'ilios-common/helpers/sort-by';
-import and from 'ember-truth-helpers/helpers/and';
+import { and } from 'ember-truth-helpers';
 
 export default class ProgramYearCompetencyListItemComponent extends Component {
   @cached

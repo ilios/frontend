@@ -18,16 +18,12 @@ import mapBy0 from 'ilios-common/helpers/map-by';
 import { LinkTo } from '@ember/routing';
 import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
 import set from 'ember-set-helper/helpers/set';
-import not from 'ember-truth-helpers/helpers/not';
+import { eq, gte, lt, not, or } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import gte from 'ember-truth-helpers/helpers/gte';
 import includes from 'ilios-common/helpers/includes';
-import eq from 'ember-truth-helpers/helpers/eq';
-import or from 'ember-truth-helpers/helpers/or';
-import lt from 'ember-truth-helpers/helpers/lt';
 import WaitSaving from 'ilios-common/components/wait-saving';
 
 export default class BulkNewUsersComponent extends Component {

@@ -4,7 +4,7 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import GlobalSearchTags from 'frontend/components/global-search-tags';
 import { array } from '@ember/helper';
-import gt from 'ember-truth-helpers/helpers/gt';
+import { gt } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';

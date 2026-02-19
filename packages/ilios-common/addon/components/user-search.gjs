@@ -7,9 +7,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import SearchBox from 'ilios-common/components/search-box';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import and from 'ember-truth-helpers/helpers/and';
-import gt from 'ember-truth-helpers/helpers/gt';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { and, eq, gt } from 'ember-truth-helpers';
 import UserSearchResultUser from 'ilios-common/components/user-search-result-user';
 import UserSearchResultInstructorGroup from 'ilios-common/components/user-search-result-instructor-group';
 

@@ -6,7 +6,7 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import sortBy from 'ilios-common/helpers/sort-by';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import { LinkTo } from '@ember/routing';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import { concat } from '@ember/helper';

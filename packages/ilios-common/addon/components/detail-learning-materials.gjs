@@ -15,14 +15,12 @@ import perform from 'ember-concurrency/helpers/perform';
 import { on } from '@ember/modifier';
 import { fn, array } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import and from 'ember-truth-helpers/helpers/and';
-import not from 'ember-truth-helpers/helpers/not';
+import { and, gt, not } from 'ember-truth-helpers';
 import ChooseMaterialType from 'ilios-common/components/choose-material-type';
 import LearningmaterialManager from 'ilios-common/components/learningmaterial-manager';
 import LearningMaterialsSortManager from 'ilios-common/components/learning-materials-sort-manager';
 import set from 'ember-set-helper/helpers/set';
 import NewLearningmaterial from 'ilios-common/components/new-learningmaterial';
-import gt from 'ember-truth-helpers/helpers/gt';
 import DetailLearningMaterialsItem from 'ilios-common/components/detail-learning-materials-item';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
 

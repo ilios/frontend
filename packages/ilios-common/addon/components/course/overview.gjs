@@ -20,7 +20,7 @@ import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import isEmpty from 'ember-truth-helpers/helpers/is-empty';
 import sortBy from 'ilios-common/helpers/sort-by';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import formatDate from 'ember-intl/helpers/format-date';
 import DatePicker from 'ilios-common/components/date-picker';
 import pipe from 'ilios-common/helpers/pipe';

@@ -2,10 +2,8 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { concat, fn } from '@ember/helper';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq, not, or } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
-import or from 'ember-truth-helpers/helpers/or';
-import not from 'ember-truth-helpers/helpers/not';
 import t from 'ember-intl/helpers/t';
 
 export default class DashboardUserContextFilterComponent extends Component {

@@ -9,10 +9,9 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import gt from 'ember-truth-helpers/helpers/gt';
+import { eq, gt } from 'ember-truth-helpers';
 import pick from 'ilios-common/helpers/pick';
 import sortBy from 'ilios-common/helpers/sort-by';
-import eq from 'ember-truth-helpers/helpers/eq';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import {
   faBuildingColumns,

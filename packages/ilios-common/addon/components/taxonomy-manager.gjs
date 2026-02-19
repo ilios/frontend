@@ -11,7 +11,7 @@ import { uniqueId } from '@ember/helper';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import sortBy from 'ilios-common/helpers/sort-by';
 import SelectableTermsListItem from 'ilios-common/components/selectable-terms-list-item';

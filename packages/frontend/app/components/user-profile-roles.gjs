@@ -11,8 +11,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
-import not from 'ember-truth-helpers/helpers/not';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq, not } from 'ember-truth-helpers';
 import YesNo from 'frontend/components/yes-no';
 import {
   faArrowRotateLeft,

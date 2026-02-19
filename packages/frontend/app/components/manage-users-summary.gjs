@@ -16,7 +16,7 @@ import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
 import onKey from 'ember-keyboard/modifiers/on-key';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import UserStatus from 'ilios-common/components/user-status';
 
 const DEBOUNCE_MS = 250;

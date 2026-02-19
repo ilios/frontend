@@ -5,7 +5,7 @@ import { task, timeout } from 'ember-concurrency';
 import createDownloadFile from 'ilios-common/utils/create-download-file';
 import PapaParse from 'papaparse';
 import { TrackedAsyncData } from 'ember-async-data';
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';

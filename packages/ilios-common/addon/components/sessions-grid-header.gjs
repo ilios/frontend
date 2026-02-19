@@ -7,8 +7,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import SortableHeading from 'ilios-common/components/sortable-heading';
 import { fn } from '@ember/helper';
-import or from 'ember-truth-helpers/helpers/or';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq, or } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 

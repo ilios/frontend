@@ -8,19 +8,15 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import and from 'ember-truth-helpers/helpers/and';
+import { and, eq, gt, not, or } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
-import not from 'ember-truth-helpers/helpers/not';
 import SortableTh from 'ilios-common/components/sortable-th';
-import or from 'ember-truth-helpers/helpers/or';
-import eq from 'ember-truth-helpers/helpers/eq';
 import sortBy from 'ilios-common/helpers/sort-by';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
-import gt from 'ember-truth-helpers/helpers/gt';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupCohortUserManagerComponent extends Component {

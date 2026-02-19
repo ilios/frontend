@@ -6,7 +6,7 @@ import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 
 export default class LearnerGroupBulkGroupMatcherComponent extends Component {
   get matchedGroupId() {

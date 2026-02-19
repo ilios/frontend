@@ -15,9 +15,7 @@ import { pageTitle } from 'ember-page-title';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import or from 'ember-truth-helpers/helpers/or';
-import and from 'ember-truth-helpers/helpers/and';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { and, eq, not, or } from 'ember-truth-helpers';
 import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
 import { fn } from '@ember/helper';
 import LeadershipCollapsed from 'ilios-common/components/leadership-collapsed';
@@ -26,7 +24,6 @@ import SchoolCompetenciesExpanded from 'frontend/components/school-competencies-
 import SchoolCompetenciesCollapsed from 'frontend/components/school-competencies-collapsed';
 import SchoolVocabulariesExpanded from 'frontend/components/school-vocabularies-expanded';
 import SchoolVocabulariesCollapsed from 'frontend/components/school-vocabularies-collapsed';
-import not from 'ember-truth-helpers/helpers/not';
 import SchoolSessionTypesExpanded from 'frontend/components/school-session-types-expanded';
 import SchoolSessionTypesCollapsed from 'frontend/components/school-session-types-collapsed';
 import SchoolSessionAttributes from 'frontend/components/school-session-attributes';

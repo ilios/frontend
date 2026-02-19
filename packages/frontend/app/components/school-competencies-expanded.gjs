@@ -10,7 +10,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
-import or from 'ember-truth-helpers/helpers/or';
+import { or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import SchoolCompetenciesManager from 'frontend/components/school-competencies-manager';
 import SchoolCompetenciesList from 'frontend/components/school-competencies-list';

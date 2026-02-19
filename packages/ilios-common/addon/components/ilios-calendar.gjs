@@ -9,7 +9,7 @@ import { hash, concat } from '@ember/helper';
 import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 export default class IliosCalendarComponent extends Component {

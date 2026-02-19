@@ -11,7 +11,7 @@ import UserProfileRoles from 'frontend/components/user-profile-roles';
 import sortBy from 'ilios-common/helpers/sort-by';
 import UserProfilePermissions from 'frontend/components/user-profile-permissions';
 import LearnerGroups from 'frontend/components/user-profile/learner-groups';
-import or from 'ember-truth-helpers/helpers/or';
+import { or } from 'ember-truth-helpers';
 import CopyButton from 'ilios-common/components/copy-button';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';

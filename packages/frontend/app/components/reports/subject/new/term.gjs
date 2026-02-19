@@ -8,7 +8,7 @@ import { hash } from 'rsvp';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import isEmpty from 'ember-truth-helpers/helpers/is-empty';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectNewProgramYearComponent extends Component {

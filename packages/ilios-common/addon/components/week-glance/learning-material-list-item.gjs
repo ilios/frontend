@@ -1,10 +1,8 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import UserMaterialStatus from 'ilios-common/components/user-material-status';
-import not from 'ember-truth-helpers/helpers/not';
+import { and, eq, not } from 'ember-truth-helpers';
 import LmIcons from 'ilios-common/components/lm-icons';
-import and from 'ember-truth-helpers/helpers/and';
-import eq from 'ember-truth-helpers/helpers/eq';
 import { concat } from '@ember/helper';
 import TruncateText from 'ilios-common/components/truncate-text';
 import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';

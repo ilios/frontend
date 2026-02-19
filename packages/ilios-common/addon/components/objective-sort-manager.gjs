@@ -8,7 +8,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import FadeText from 'ilios-common/components/fade-text';

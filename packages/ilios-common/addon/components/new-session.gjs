@@ -13,7 +13,7 @@ import focus from 'ilios-common/modifiers/focus';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import sortBy from 'ilios-common/helpers/sort-by';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
 
