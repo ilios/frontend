@@ -384,9 +384,9 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.supplemental.isVisible);
-    assert.strictEqual(page.details.overview.supplemental.yesNoToggle.checked, 'false');
-    await page.details.overview.supplemental.yesNoToggle.click();
-    assert.strictEqual(page.details.overview.supplemental.yesNoToggle.checked, 'true');
+    assert.notOk(page.details.overview.supplemental.checked);
+    await page.details.overview.supplemental.click();
+    assert.ok(page.details.overview.supplemental.checked);
   });
 
   test('change special attire', async function (assert) {
@@ -409,9 +409,9 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.specialAttire.isVisible);
-    assert.strictEqual(page.details.overview.specialAttire.yesNoToggle.checked, 'false');
-    await page.details.overview.specialAttire.yesNoToggle.click();
-    assert.strictEqual(page.details.overview.specialAttire.yesNoToggle.checked, 'true');
+    assert.notOk(page.details.overview.specialAttire.checked);
+    await page.details.overview.specialAttire.click();
+    assert.ok(page.details.overview.specialAttire.checked);
   });
 
   test('change special equipment', async function (assert) {
@@ -434,9 +434,9 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.specialEquipment.isVisible);
-    assert.strictEqual(page.details.overview.specialEquipment.yesNoToggle.checked, 'false');
-    await page.details.overview.specialEquipment.yesNoToggle.click();
-    assert.strictEqual(page.details.overview.specialEquipment.yesNoToggle.checked, 'true');
+    assert.notOk(page.details.overview.specialEquipment.checked);
+    await page.details.overview.specialEquipment.click();
+    assert.ok(page.details.overview.specialEquipment.checked);
   });
 
   test('change attendance required', async function (assert) {
@@ -459,9 +459,9 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.attendanceRequired.isVisible);
-    assert.strictEqual(page.details.overview.attendanceRequired.yesNoToggle.checked, 'false');
-    await page.details.overview.attendanceRequired.yesNoToggle.click();
-    assert.strictEqual(page.details.overview.attendanceRequired.yesNoToggle.checked, 'true');
+    assert.notOk(page.details.overview.attendanceRequired.checked);
+    await page.details.overview.attendanceRequired.click();
+    assert.ok(page.details.overview.attendanceRequired.checked);
   });
 
   test('change description', async function (assert) {

@@ -9,7 +9,6 @@ import {
 } from 'ember-cli-page-object';
 import { pageObjectFillInQuillEditor } from 'ilios-common';
 import postrequisiteEditor from './postrequisite-editor';
-import yesNoToggle from '../toggle-yesno';
 import ilm from './ilm';
 import publicationStatus from '../publication-status';
 import publicationMenu from './publication-menu';
@@ -61,19 +60,19 @@ const definition = {
   ilm,
   supplemental: {
     scope: '[data-test-supplemental]',
-    yesNoToggle,
+    checked: property('checked', 'input'),
   },
   specialAttire: {
     scope: '[data-test-special-attire]',
-    yesNoToggle,
+    checked: property('checked', 'input'),
   },
   specialEquipment: {
     scope: '[data-test-special-equipment]',
-    yesNoToggle,
+    checked: property('checked', 'input'),
   },
   attendanceRequired: {
     scope: '[data-test-attendance-required]',
-    yesNoToggle,
+    checked: property('checked', 'input'),
   },
   prerequisites: {
     scope: '[data-test-prerequisites]',

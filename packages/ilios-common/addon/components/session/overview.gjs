@@ -16,12 +16,10 @@ import formatDate from 'ember-intl/helpers/format-date';
 import { LinkTo } from '@ember/routing';
 import EditableField from 'ilios-common/components/editable-field';
 import { on } from '@ember/modifier';
-import { eq } from 'ember-truth-helpers';
-import ToggleYesno from 'ilios-common/components/toggle-yesno';
+import { eq, notEq } from 'ember-truth-helpers';
 import Ilm from 'ilios-common/components/session/ilm';
 import PostrequisiteEditor from 'ilios-common/components/session/postrequisite-editor';
 import toggle from 'ilios-common/helpers/toggle';
-import notEq from 'ember-truth-helpers/helpers/not-eq';
 import sub_ from 'ember-math-helpers/helpers/sub';
 import perform from 'ember-concurrency/helpers/perform';
 import HtmlEditor from 'ilios-common/components/html-editor';
@@ -227,6 +225,14 @@ export default class SessionOverview extends Component {
     );
   }
 
+  get sessionAttributeDisabled() {
+    if (!this.args.editable) {
+      return true;
+    }
+
+    return this.toggleSessionAttribute.isRunning;
+  }
+
   /**
    * Check if a user is allowed to create a session anywhere
    * Try and do this by loading as little data as possible, but in the
@@ -293,29 +299,10 @@ export default class SessionOverview extends Component {
     this.localSessionType = undefined;
   }
 
-  @action
-  changeSupplemental(value) {
-    this.args.session.supplemental = value;
-    this.args.session.save();
-  }
-
-  @action
-  changeSpecialEquipment(value) {
-    this.args.session.equipmentRequired = value;
-    this.args.session.save();
-  }
-
-  @action
-  changeSpecialAttire(value) {
-    this.args.session.attireRequired = value;
-    this.args.session.save();
-  }
-
-  @action
-  changeAttendanceRequired(value) {
-    this.args.session.attendanceRequired = value;
-    this.args.session.save();
-  }
+  toggleSessionAttribute = task(async (attribute, { target }) => {
+    this.args.session[attribute] = target.checked;
+    await this.args.session.save();
+  });
 
   saveDescription = task(async () => {
     this.validations.addErrorDisplayFor('description');
@@ -452,83 +439,53 @@ export default class SessionOverview extends Component {
                   {{/if}}
                 </span>
               </div>
-              {{#if this.showSupplemental}}
-                <div class="sessionsupplemental block" data-test-supplemental>
-                  <label>{{t "general.supplementalCurriculum"}}:</label>
-                  <span>
-                    {{#if @editable}}
-                      <ToggleYesno
-                        @yes={{@session.supplemental}}
-                        @toggle={{this.changeSupplemental}}
-                      />
-                    {{else}}
-                      {{#if @session.supplemental}}
-                        <span class="add">{{t "general.yes"}}</span>
-                      {{else}}
-                        <span class="remove">{{t "general.no"}}</span>
-                      {{/if}}
-                    {{/if}}
-                  </span>
-                </div>
-              {{/if}}
-              {{#if this.showSpecialAttireRequired}}
-                <div class="sessionspecialattire block" data-test-special-attire>
-                  <label>{{t "general.specialAttireRequired"}}:</label>
-                  <span>
-                    {{#if @editable}}
-                      <ToggleYesno
-                        @yes={{@session.attireRequired}}
-                        @toggle={{this.changeSpecialAttire}}
-                      />
-                    {{else}}
-                      {{#if @session.attireRequired}}
-                        <span class="add">{{t "general.yes"}}</span>
-                      {{else}}
-                        <span class="remove">{{t "general.no"}}</span>
-                      {{/if}}
-                    {{/if}}
-                  </span>
-                </div>
-              {{/if}}
-              {{#if this.showSpecialEquipmentRequired}}
-                <div class="sessionspecialequipment block" data-test-special-equipment>
-                  <label>{{t "general.specialEquipmentRequired"}}:</label>
-                  <span>
-                    {{#if @editable}}
-                      <ToggleYesno
-                        @yes={{@session.equipmentRequired}}
-                        @toggle={{this.changeSpecialEquipment}}
-                      />
-                    {{else}}
-                      {{#if @session.equipmentRequired}}
-                        <span class="add">{{t "general.yes"}}</span>
-                      {{else}}
-                        <span class="remove">{{t "general.no"}}</span>
-                      {{/if}}
-                    {{/if}}
-                  </span>
-                </div>
-              {{/if}}
-              {{#if this.showAttendanceRequired}}
-                <div class="sessionattendancerequired block" data-test-attendance-required>
-                  <label>{{t "general.attendanceRequired"}}:</label>
-                  <span>
-                    {{#if @editable}}
-                      <ToggleYesno
-                        @yes={{@session.attendanceRequired}}
-                        @toggle={{this.changeAttendanceRequired}}
-                      />
-                    {{else}}
-                      {{#if @session.attendanceRequired}}
-                        <span class="add">{{t "general.yes"}}</span>
-                      {{else}}
-                        <span class="remove">{{t "general.no"}}</span>
-                      {{/if}}
-                    {{/if}}
-                  </span>
-                </div>
-              {{/if}}
-              <hr />
+              <fieldset class="session-attributes">
+                <legend>{{t "general.sessionAttributes"}}</legend>
+                {{#if this.showSupplemental}}
+                  <label data-test-supplemental>
+                    <input
+                      type="checkbox"
+                      checked={{@session.supplemental}}
+                      disabled={{this.sessionAttributeDisabled}}
+                      {{on "change" (perform this.toggleSessionAttribute "supplemental")}}
+                    />
+                    {{t "general.supplementalCurriculum"}}
+                  </label>
+                {{/if}}
+                {{#if this.showSpecialAttireRequired}}
+                  <label data-test-special-attire>
+                    <input
+                      type="checkbox"
+                      checked={{@session.attireRequired}}
+                      disabled={{this.sessionAttributeDisabled}}
+                      {{on "change" (perform this.toggleSessionAttribute "attireRequired")}}
+                    />
+                    {{t "general.specialAttireRequired"}}
+                  </label>
+                {{/if}}
+                {{#if this.showSpecialEquipmentRequired}}
+                  <label data-test-special-equipment>
+                    <input
+                      type="checkbox"
+                      checked={{@session.equipmentRequired}}
+                      disabled={{this.sessionAttributeDisabled}}
+                      {{on "change" (perform this.toggleSessionAttribute "equipmentRequired")}}
+                    />
+                    {{t "general.specialEquipmentRequired"}}
+                  </label>
+                {{/if}}
+                {{#if this.showAttendanceRequired}}
+                  <label data-test-attendance-required>
+                    <input
+                      type="checkbox"
+                      checked={{@session.attendanceRequired}}
+                      disabled={{this.sessionAttributeDisabled}}
+                      {{on "change" (perform this.toggleSessionAttribute "attendanceRequired")}}
+                    />
+                    {{t "general.attendanceRequired"}}
+                  </label>
+                {{/if}}
+              </fieldset>
               <Ilm @session={{@session}} @editable={{@editable}} />
               <div class="postrequisite block" data-test-postrequisite>
                 {{#if @editable}}
@@ -600,7 +557,6 @@ export default class SessionOverview extends Component {
                   {{t "general.none"}}
                 {{/if}}
               </div>
-              <hr />
               <div class="sessiondescription normalize-external-editor" data-test-description>
                 <label>{{t "general.description"}}:</label>
                 <FadeText @text={{this.description}} as |ft|>
