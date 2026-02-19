@@ -1,7 +1,7 @@
-@use "font-size";
-@use "media";
+@use "../mixins/font-size";
+@use "../mixins/media";
 
-@mixin multi-button {
+.multi-button {
   display: flex;
 
   input {
