@@ -14,7 +14,12 @@ import not from 'ember-truth-helpers/helpers/not';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
-import { faCopy, faTrash, faUniversalAccess } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRotateLeft,
+  faCopy,
+  faTrash,
+  faUniversalAccess,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupListItemComponent extends Component {
   @service permissionChecker;
@@ -80,6 +85,19 @@ export default class LearnerGroupListItemComponent extends Component {
     return this.canCreateData.isResolved ? this.canCreateData.value && this.school : false;
   }
 
+  get confirmationClasses() {
+    const rhett = [];
+
+    if (this.showRemoveConfirmation) {
+      rhett.push('confirm-removal');
+    } else if (this.showCopyConfirmation) {
+      rhett.push('confirm-copy');
+      rhett.push('content-row');
+    }
+
+    return rhett.join(' ');
+  }
+
   async getSortedTitlesOfSubgroupsInNeedOfAccommodation(groups) {
     const titles = await map(groups, (group) => group.getTitleWithParentTitles());
     return titles.sort().join(', ');
@@ -138,11 +156,7 @@ export default class LearnerGroupListItemComponent extends Component {
     this.showCopyConfirmation = false;
   }
   <template>
-    <tr
-      class="{{if this.showRemoveConfirmation 'confirm-removal'}}
-        {{if this.showCopyConfirmation 'confirm-copy content-row'}}"
-      data-test-learner-group-list-item
-    >
+    <tr class={{this.confirmationClasses}} data-test-learner-group-list-item>
       <td class="text-left" colspan="2" data-test-title>
         <LinkTo @route="learner-group" @model={{@learnerGroup}}>
           {{@learnerGroup.title}}
@@ -196,7 +210,15 @@ export default class LearnerGroupListItemComponent extends Component {
             <FaIcon @icon={{faCopy}} />
           </button>
         {{else}}
-          <FaIcon @icon={{faCopy}} class="disabled" />
+          <button
+            class="link-button"
+            type="button"
+            {{on "click" (set this "showCopyConfirmation" false)}}
+            title={{t "general.cancel"}}
+            data-test-copy-toggle
+          >
+            <FaIcon @icon={{faArrowRotateLeft}} />
+          </button>
         {{/if}}
       </td>
     </tr>
@@ -259,14 +281,6 @@ export default class LearnerGroupListItemComponent extends Component {
                 {{t "general.copy"}}
               </button>
             {{/if}}
-            <button
-              type="button"
-              class="cancel text"
-              {{on "click" (set this "showCopyConfirmation" false)}}
-              data-test-cancel
-            >
-              {{t "general.cancel"}}
-            </button>
           </div>
         </td>
         <td class="hide-from-small-screen"></td>

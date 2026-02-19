@@ -41,8 +41,8 @@ const definition = {
     canCopyWithoutLearners: isPresent('[data-test-confirm-without-learners]'),
     copyWithLearners: clickable('[data-test-confirm-with-learners]'),
     copyWithoutLearners: clickable('[data-test-confirm-without-learners]'),
-    cancel: clickable('[data-test-cancel]'),
   },
+  copyToggle: clickable('[data-test-copy-toggle]'),
 };
 
 export default definition;

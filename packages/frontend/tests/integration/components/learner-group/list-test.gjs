@@ -285,7 +285,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
     await component.items[0].copy();
     assert.ok(component.confirmCopy.isPresent);
     assert.ok(component.confirmCopy.canCopyWithLearners);
-    await component.confirmCopy.cancel();
+    await component.copyToggle();
     assert.notOk(component.confirmCopy.isPresent);
     assert.verifySteps([]);
   });
@@ -311,7 +311,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
     await component.items[0].copy();
     assert.ok(component.confirmCopy.isPresent);
     assert.notOk(component.confirmCopy.canCopyWithLearners);
-    await component.confirmCopy.cancel();
+    await component.copyToggle();
     assert.notOk(component.confirmCopy.isPresent);
     assert.verifySteps([]);
   });

@@ -33,18 +33,30 @@
     .list {
       @include m.main-list-box-table;
 
+      .confirm-copy td:first-child {
+        padding: 0.1rem 0 0 0.4rem;
+      }
+
+      .confirm-copy td:last-child {
+        padding: 0.3rem 0.3rem 0 0;
+      }
+
       .confirm-copy,
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd) {
         background-color: var(--lightest-blue);
         border: 2px solid var(--light-blue);
 
-        &.actions-row {
-          border-top: 0;
-        }
-
         &.content-row {
           border-bottom: 0;
+        }
+
+        &.actions-row {
+          border-top: 0;
+
+          .confirm-buttons {
+            padding: 0 0 0.3rem 0;
+          }
         }
       }
     }
