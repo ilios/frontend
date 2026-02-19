@@ -9,7 +9,11 @@
     .calendar-controls {
       .calendar-options-control {
         float: left;
-        margin: 1em 1em 1em 0;
+        margin: 1em 1em 0 0;
+
+        @include m.for-tablet-and-up {
+          margin: 1em 1em 1.5em 0;
+        }
       }
 
       .calendar-clear-filters {
@@ -25,8 +29,12 @@
       }
 
       .calendar-school-picker {
-        float: right;
-        margin-right: 5em;
+        margin: 1em 1em 1em 0;
+
+        @include m.for-tablet-and-up {
+          float: right;
+          margin: 1em 1em 1em 0;
+        }
 
         select {
           @include m.ilios-select;
