@@ -35,7 +35,7 @@ export default class CourseLoaderComponent extends Component {
           @setCourseManageLeadership={{@setCourseManageLeadership}}
         />
       {{else}}
-        <BackToCourses />
+        <BackToCourses @course={{@course}} />
 
         <section
           aria-hidden="true"
