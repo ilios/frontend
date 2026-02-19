@@ -1,4 +1,5 @@
 @use "font-size";
+@use "media";
 
 @mixin multi-button {
   display: flex;
@@ -17,12 +18,17 @@
     color: var(--blue);
     border: 1px solid var(--very-transparent-black);
     display: inline-block;
-    @include font-size.font-size("small");
+    @include font-size.font-size("base");
     font-weight: 600;
     min-width: 3em;
     padding: 0.25em 0.5em;
     text-align: center;
     text-shadow: none;
+
+    @include media.for-phone-only {
+      /* stylelint-disable property-disallowed-list */
+      font-size: 3vw;
+    }
 
     &:hover {
       cursor: pointer;
