@@ -225,7 +225,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
                 ({{this.groupUsers.length}})
               </div>
               <table
-                class="ilios-table ilios-table-colors ilios-zebra-table"
+                class="ilios-table ilios-table-colors ilios-zebra-table sticky-header"
                 data-test-assigned-users
               >
                 <thead>
@@ -353,7 +353,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
                 ({{this.nonGroupUsers.length}})
               </div>
               <table
-                class="ilios-table ilios-table-colors ilios-zebra-table"
+                class="ilios-table ilios-table-colors ilios-zebra-table sticky-header"
                 data-test-assignable-users
               >
                 <thead>
