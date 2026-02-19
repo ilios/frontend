@@ -1,4 +1,3 @@
-/* eslint-env node */
 /* eslint n/no-extraneous-require: 0 */
 'use strict';
 
