@@ -4,7 +4,7 @@ import Root from 'frontend/components/courses/root';
 import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
 import perform from 'ember-concurrency/helpers/perform';
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 <template>
   {{pageTitle (t "general.courses")}}
   <Root

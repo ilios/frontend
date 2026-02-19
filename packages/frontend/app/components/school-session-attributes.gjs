@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import or from 'ember-truth-helpers/helpers/or';
+import { or } from 'ember-truth-helpers';
 import SchoolSessionAttributesExpanded from 'frontend/components/school-session-attributes-expanded';
 import perform from 'ember-concurrency/helpers/perform';
 import SchoolSessionAttributesCollapsed from 'frontend/components/school-session-attributes-collapsed';

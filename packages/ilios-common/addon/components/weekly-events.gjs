@@ -5,7 +5,7 @@ import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import WeekGlance from 'ilios-common/components/week-glance';
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
 import { fn } from '@ember/helper';
 import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';

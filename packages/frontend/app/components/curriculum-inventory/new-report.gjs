@@ -14,7 +14,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class CurriculumInventoryNewReportComponent extends Component {

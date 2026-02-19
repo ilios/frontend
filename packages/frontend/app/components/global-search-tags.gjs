@@ -1,4 +1,4 @@
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import { concat } from '@ember/helper';
 <template>

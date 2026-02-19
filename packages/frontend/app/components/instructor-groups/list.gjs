@@ -3,8 +3,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import SortableTh from 'ilios-common/components/sortable-th';
 import { fn } from '@ember/helper';
-import or from 'ember-truth-helpers/helpers/or';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq, or } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import ListItem from 'frontend/components/instructor-groups/list-item';
 

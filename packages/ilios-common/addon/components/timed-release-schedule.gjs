@@ -1,9 +1,8 @@
 import Component from '@glimmer/component';
 import { DateTime } from 'luxon';
-import and from 'ember-truth-helpers/helpers/and';
+import { and, not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
-import not from 'ember-truth-helpers/helpers/not';
 
 export default class TimedReleaseSchedule extends Component {
   get show() {

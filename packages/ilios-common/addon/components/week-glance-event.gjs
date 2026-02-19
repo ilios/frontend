@@ -11,7 +11,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import join from 'ilios-common/helpers/join';
 import sortBy from 'ilios-common/helpers/sort-by';
 import TruncateText from 'ilios-common/components/truncate-text';
-import or from 'ember-truth-helpers/helpers/or';
+import { or } from 'ember-truth-helpers';
 import LearningMaterialList from 'ilios-common/components/week-glance/learning-material-list';
 import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
 import { faCalendarCheck, faCalendarMinus, faFlask } from '@fortawesome/free-solid-svg-icons';

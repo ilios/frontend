@@ -7,7 +7,7 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import isEmpty from 'ember-truth-helpers/helpers/is-empty';
 import sortBy from 'ilios-common/helpers/sort-by';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 
 export default class ReportsSubjectYearFilter extends Component {
   @service store;

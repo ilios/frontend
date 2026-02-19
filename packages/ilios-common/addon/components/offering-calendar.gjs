@@ -8,7 +8,7 @@ import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 import toggle from 'ilios-common/helpers/toggle';
 import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';

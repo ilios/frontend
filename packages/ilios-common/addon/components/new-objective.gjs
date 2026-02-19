@@ -5,7 +5,7 @@ import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import HtmlEditor from 'ilios-common/components/html-editor';
-import or from 'ember-truth-helpers/helpers/or';
+import { or } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';

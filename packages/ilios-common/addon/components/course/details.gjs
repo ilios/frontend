@@ -7,7 +7,7 @@ import BackToCourses from 'ilios-common/components/course/back-to-courses';
 import animateLoading from 'ilios-common/modifiers/animate-loading';
 import scrollIntoView from 'ilios-common/utils/scroll-into-view';
 import Header from 'ilios-common/components/course/header';
-import and from 'ember-truth-helpers/helpers/and';
+import { and } from 'ember-truth-helpers';
 import Overview from 'ilios-common/components/course/overview';
 import Editing from 'ilios-common/components/course/editing';
 import { on } from '@ember/modifier';

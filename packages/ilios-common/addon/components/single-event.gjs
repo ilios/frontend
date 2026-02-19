@@ -9,14 +9,11 @@ import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-le
 import { TrackedAsyncData } from 'ember-async-data';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import not from 'ember-truth-helpers/helpers/not';
-import and from 'ember-truth-helpers/helpers/and';
+import { and, eq, gt, not } from 'ember-truth-helpers';
 import { LinkTo } from '@ember/routing';
 import { array, get } from '@ember/helper';
-import gt from 'ember-truth-helpers/helpers/gt';
 import objectAt from 'ilios-common/helpers/object-at';
 import formatDate from 'ember-intl/helpers/format-date';
-import eq from 'ember-truth-helpers/helpers/eq';
 import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';

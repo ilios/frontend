@@ -9,7 +9,7 @@ import { on } from '@ember/modifier';
 import toggle from 'ilios-common/helpers/toggle';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import focus from 'ilios-common/modifiers/focus';
 import { faGlobe, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 

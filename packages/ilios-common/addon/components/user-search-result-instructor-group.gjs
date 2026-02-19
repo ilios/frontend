@@ -1,4 +1,4 @@
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';

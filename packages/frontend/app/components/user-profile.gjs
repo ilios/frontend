@@ -6,13 +6,12 @@ import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';
 import PendingSingleUserUpdate from 'frontend/components/pending-single-user-update';
 import ToggleButtons from 'ilios-common/components/toggle-buttons';
-import not from 'ember-truth-helpers/helpers/not';
+import { and, not } from 'ember-truth-helpers';
 import UserProfileCalendar from 'frontend/components/user-profile-calendar';
 import UserProfileBio from 'frontend/components/user-profile-bio';
 import UserProfileRoles from 'frontend/components/user-profile-roles';
 import UserProfileCohorts from 'frontend/components/user-profile-cohorts';
 import UserProfileIcs from 'frontend/components/user-profile-ics';
-import and from 'ember-truth-helpers/helpers/and';
 import UserProfilePermissions from 'frontend/components/user-profile-permissions';
 import LearnerGroups from 'frontend/components/user-profile/learner-groups';
 

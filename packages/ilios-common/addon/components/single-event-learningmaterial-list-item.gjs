@@ -1,9 +1,8 @@
 import { uniqueId, concat } from '@ember/helper';
 import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
 import UserMaterialStatus from 'ilios-common/components/user-material-status';
-import not from 'ember-truth-helpers/helpers/not';
+import { eq, not } from 'ember-truth-helpers';
 import LmIcons from 'ilios-common/components/lm-icons';
-import eq from 'ember-truth-helpers/helpers/eq';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import filesize from 'ilios-common/helpers/filesize';

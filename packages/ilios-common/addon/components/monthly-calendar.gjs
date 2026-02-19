@@ -10,7 +10,7 @@ import { concat, fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import slice from 'ilios-common/helpers/slice';
 import IliosCalendarEventMonth from 'ilios-common/components/ilios-calendar-event-month';
-import gt from 'ember-truth-helpers/helpers/gt';
+import { gt } from 'ember-truth-helpers';
 import { faAnglesDown, faEllipsis, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class MonthlyCalendarComponent extends Component {

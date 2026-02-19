@@ -4,9 +4,7 @@ import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { action } from '@ember/object';
 import SearchBox from 'ilios-common/components/search-box';
 import t from 'ember-intl/helpers/t';
-import and from 'ember-truth-helpers/helpers/and';
-import gt from 'ember-truth-helpers/helpers/gt';
-import not from 'ember-truth-helpers/helpers/not';
+import { and, gt, not } from 'ember-truth-helpers';
 
 export default class ReportsSubjectNewSearchInputComponent extends Component {
   @tracked showMoreInputPrompt;

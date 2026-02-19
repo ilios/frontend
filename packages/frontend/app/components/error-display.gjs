@@ -5,7 +5,7 @@ import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import NotFound from 'ilios-common/components/not-found';
 import set from 'ember-set-helper/helpers/set';
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 import formatTime from 'ember-intl/helpers/format-time';
 import { faRotate } from '@fortawesome/free-solid-svg-icons';
 

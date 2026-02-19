@@ -17,7 +17,7 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import HtmlEditor from 'ilios-common/components/html-editor';
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import LearningMaterialUploader from 'ilios-common/components/learning-material-uploader';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';

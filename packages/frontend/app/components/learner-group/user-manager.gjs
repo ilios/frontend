@@ -7,8 +7,7 @@ import { uniqueId, fn, hash } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import SortableTh from 'ilios-common/components/sortable-th';
-import or from 'ember-truth-helpers/helpers/or';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq, gt, or } from 'ember-truth-helpers';
 import sortBy from 'ilios-common/helpers/sort-by';
 import includes from 'ilios-common/helpers/includes';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -17,7 +16,6 @@ import UserStatus from 'ilios-common/components/user-status';
 import { LinkTo } from '@ember/routing';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
-import gt from 'ember-truth-helpers/helpers/gt';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupUserManagerComponent extends Component {

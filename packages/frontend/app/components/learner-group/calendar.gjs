@@ -10,7 +10,7 @@ import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import set from 'ember-set-helper/helpers/set';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';

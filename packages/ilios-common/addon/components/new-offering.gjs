@@ -7,7 +7,7 @@ import t from 'ember-intl/helpers/t';
 import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
 import set from 'ember-set-helper/helpers/set';
 import OfferingForm from 'ilios-common/components/offering-form';
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 
 export default class NewObjectiveComponent extends Component {
   @service store;

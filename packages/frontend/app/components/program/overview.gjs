@@ -13,7 +13,7 @@ import set from 'ember-set-helper/helpers/set';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import focus from 'ilios-common/modifiers/focus';
 
 export default class ProgramOverviewComponent extends Component {

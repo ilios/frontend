@@ -18,10 +18,8 @@ import perform from 'ember-concurrency/helpers/perform';
 import DatePicker from 'ilios-common/components/date-picker';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import and from 'ember-truth-helpers/helpers/and';
-import not from 'ember-truth-helpers/helpers/not';
+import { and, eq, not } from 'ember-truth-helpers';
 import pick from 'ilios-common/helpers/pick';
-import eq from 'ember-truth-helpers/helpers/eq';
 import focus from 'ilios-common/modifiers/focus';
 import { faShuffle, faTable } from '@fortawesome/free-solid-svg-icons';
 

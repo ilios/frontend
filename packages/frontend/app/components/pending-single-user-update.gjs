@@ -5,7 +5,7 @@ import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import { concat } from '@ember/helper';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';

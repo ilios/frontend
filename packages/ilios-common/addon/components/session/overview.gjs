@@ -16,7 +16,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 import { LinkTo } from '@ember/routing';
 import EditableField from 'ilios-common/components/editable-field';
 import { on } from '@ember/modifier';
-import eq from 'ember-truth-helpers/helpers/eq';
+import { eq } from 'ember-truth-helpers';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import Ilm from 'ilios-common/components/session/ilm';
 import PostrequisiteEditor from 'ilios-common/components/session/postrequisite-editor';

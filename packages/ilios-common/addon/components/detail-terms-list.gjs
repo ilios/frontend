@@ -3,8 +3,7 @@ import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import and from 'ember-truth-helpers/helpers/and';
-import not from 'ember-truth-helpers/helpers/not';
+import { and, not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import DetailTermsListItem from 'ilios-common/components/detail-terms-list-item';
 

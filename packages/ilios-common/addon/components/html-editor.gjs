@@ -8,7 +8,7 @@ import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import not from 'ember-truth-helpers/helpers/not';
+import { not } from 'ember-truth-helpers';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';

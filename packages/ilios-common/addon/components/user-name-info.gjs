@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
-import and from 'ember-truth-helpers/helpers/and';
+import { and } from 'ember-truth-helpers';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
