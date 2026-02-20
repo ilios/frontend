@@ -2,8 +2,6 @@
 
 .sessions-grid-loading {
   div {
-    @include m.sessions-grid;
-
     &:nth-child(even) {
       background-color: var(--lightest-grey);
     }

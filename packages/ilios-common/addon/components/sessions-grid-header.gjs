@@ -30,7 +30,7 @@ export default class SessionsGridHeader extends Component {
   });
   <template>
     <div
-      class="sessions-grid-header{{if @headerIsLocked ' locked'}}"
+      class="sessions-grid-row sessions-grid-header-row{{if @headerIsLocked ' locked'}}"
       data-test-sessions-grid-header
     >
       <span class="expand-collapse-control" data-test-expand-collapse-all>

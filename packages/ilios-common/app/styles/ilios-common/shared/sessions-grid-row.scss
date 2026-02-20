@@ -1,7 +1,7 @@
-@use "font-size";
-@use "media";
+@use "../mixins/font-size";
+@use "../mixins/media";
 
-@mixin sessions-grid() {
+.sessions-grid-row {
   display: grid;
   grid-template-columns: 1fr 8fr 2fr 1fr;
   gap: 0.5rem;

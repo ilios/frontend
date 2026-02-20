@@ -1,8 +1,7 @@
 @use "../mixins" as m;
 
-.sessions-grid-row {
+.sessions-grid-session-row {
   padding: 0.25rem 0;
-  @include m.sessions-grid;
 
   &.confirm {
     background-color: var(--lightest-red);

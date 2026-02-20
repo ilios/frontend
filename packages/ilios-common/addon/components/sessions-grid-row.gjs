@@ -61,7 +61,7 @@ export default class SessionsGridRowComponent extends Component {
   }
   <template>
     <div
-      class="sessions-grid-row{{if
+      class="sessions-grid-row sessions-grid-session-row{{if
           (includes @session.id @sessionsForRemovalConfirmation)
           ' confirm'
         }}"
