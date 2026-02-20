@@ -7,6 +7,8 @@ import {
   isPresent,
   text,
 } from 'ember-cli-page-object';
+import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import userStatus from 'ilios-common/page-objects/components/user-status';
 
 const definition = {
   scope: '[data-test-program-year-cohort-members]',
@@ -39,6 +41,8 @@ const definition = {
       member: {
         scope: 'td:nth-of-type(1)',
         link: attribute('href', 'a'),
+        userStatus,
+        userNameInfo,
       },
     }),
   },

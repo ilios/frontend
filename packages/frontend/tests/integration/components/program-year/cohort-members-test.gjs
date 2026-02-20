@@ -25,6 +25,7 @@ module('Integration | Component | program-year/cohort-members', function (hooks)
     this.server.createList('user', 3, {
       cohorts: [this.cohort],
     });
+    this.server.create('user', { enabled: false, cohorts: [this.cohort] });
     this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
 
     const programYear = await this.owner
@@ -46,17 +47,35 @@ module('Integration | Component | program-year/cohort-members', function (hooks)
     assert.ok(component.header.toggle.isExpanded);
     assert.strictEqual(component.header.toggle.ariaExpanded, 'true');
     assert.notOk(component.content.isHidden);
-    assert.strictEqual(component.header.title, 'Members (3)');
+    assert.strictEqual(component.header.title, 'Members (4)');
 
     assert.strictEqual(component.content.headers.member.text, 'Name');
 
-    assert.strictEqual(component.content.members.length, 3);
-    assert.strictEqual(component.content.members[0].member.text, '0 guy M. Mc0son');
+    assert.strictEqual(component.content.members.length, 4);
+    assert.strictEqual(
+      component.content.members[0].member.userNameInfo.fullName,
+      '0 guy M. Mc0son',
+    );
     assert.strictEqual(component.content.members[0].member.link, '/users/1');
-    assert.strictEqual(component.content.members[1].member.text, '1 guy M. Mc1son');
+    assert.notOk(component.content.members[0].member.userStatus.accountIsDisabled);
+    assert.strictEqual(
+      component.content.members[1].member.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
     assert.strictEqual(component.content.members[1].member.link, '/users/2');
-    assert.strictEqual(component.content.members[2].member.text, '2 guy M. Mc2son');
+    assert.notOk(component.content.members[1].member.userStatus.accountIsDisabled);
+    assert.strictEqual(
+      component.content.members[2].member.userNameInfo.fullName,
+      '2 guy M. Mc2son',
+    );
     assert.strictEqual(component.content.members[2].member.link, '/users/3');
+    assert.notOk(component.content.members[2].member.userStatus.accountIsDisabled);
+    assert.strictEqual(
+      component.content.members[3].member.userNameInfo.fullName,
+      '3 guy M. Mc3son',
+    );
+    assert.strictEqual(component.content.members[3].member.link, '/users/4');
+    assert.ok(component.content.members[3].member.userStatus.accountIsDisabled);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -133,18 +152,36 @@ module('Integration | Component | program-year/cohort-members', function (hooks)
 
     assert.strictEqual(component.content.members.length, 2);
     assert.ok(component.content.headers.member.isSortedAscending);
-    assert.strictEqual(component.content.members[0].member.text, '0 guy M. Mc0son');
-    assert.strictEqual(component.content.members[1].member.text, '1 guy M. Mc1son');
+    assert.strictEqual(
+      component.content.members[0].member.userNameInfo.fullName,
+      '0 guy M. Mc0son',
+    );
+    assert.strictEqual(
+      component.content.members[1].member.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
 
     await component.content.headers.member.sort();
     assert.ok(component.content.headers.member.isSortedDescending);
-    assert.strictEqual(component.content.members[0].member.text, '1 guy M. Mc1son');
-    assert.strictEqual(component.content.members[1].member.text, '0 guy M. Mc0son');
+    assert.strictEqual(
+      component.content.members[0].member.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
+    assert.strictEqual(
+      component.content.members[1].member.userNameInfo.fullName,
+      '0 guy M. Mc0son',
+    );
 
     await component.content.headers.member.sort();
     assert.ok(component.content.headers.member.isSortedAscending);
-    assert.strictEqual(component.content.members[0].member.text, '0 guy M. Mc0son');
-    assert.strictEqual(component.content.members[1].member.text, '1 guy M. Mc1son');
+    assert.strictEqual(
+      component.content.members[0].member.userNameInfo.fullName,
+      '0 guy M. Mc0son',
+    );
+    assert.strictEqual(
+      component.content.members[1].member.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
   });
 
   test('collapse action fires', async function (assert) {

@@ -13,6 +13,7 @@ import SortableTh from 'ilios-common/components/sortable-th';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import UserStatus from 'ilios-common/components/user-status';
 
 export default class ProgramYearCohortMembersComponent extends Component {
   @service iliosConfig;
@@ -115,6 +116,7 @@ export default class ProgramYearCohortMembersComponent extends Component {
                         <LinkTo @route="user" @model={{user}} data-test-user-link>
                           <UserNameInfo @user={{user}} />
                         </LinkTo>
+                        <UserStatus @user={{user}} />
                       </td>
                     </tr>
                   {{/each}}
