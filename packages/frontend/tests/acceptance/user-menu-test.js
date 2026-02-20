@@ -14,9 +14,23 @@ module('Acceptance | user menu', function (hooks) {
   test('my-profile link is active on my-profile page', async function (assert) {
     await myprofilePage.visit();
     await myprofilePage.iliosHeader.userMenu.toggle.down();
-    assert.strictEqual(myprofilePage.iliosHeader.userMenu.links.length, 2);
-    assert.strictEqual(myprofilePage.iliosHeader.userMenu.links[0].text, 'My Profile');
-    assert.ok(myprofilePage.iliosHeader.userMenu.links[0].link.isActive);
+
+    // await this.pauseTest();
+
+    assert.strictEqual(
+      myprofilePage.iliosHeader.userMenu.links.length,
+      2,
+      'user menu has correct number of links',
+    );
+    assert.strictEqual(
+      myprofilePage.iliosHeader.userMenu.links[0].text,
+      'My Profile',
+      'first user menu link title is correct',
+    );
+    assert.ok(
+      myprofilePage.iliosHeader.userMenu.links[0].link.isActive,
+      'first user menu link is active',
+    );
   });
 
   test('my-profile link is not active on dashboard page', async function (assert) {
