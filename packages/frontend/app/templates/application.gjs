@@ -10,46 +10,48 @@ import ErrorDisplay from 'frontend/components/error-display';
 import FlashMessages from 'frontend/components/flash-messages';
 <template>
   {{pageTitle (t "general.ilios") separator=" " front=true}}
-  <ConnectionStatus />
-  <ApiVersionNotice />
-  <UpdateNotification />
-  <div
-    class="application-wrapper{{if
-        @controller.currentUser.performsNonLearnerFunction
-        ' show-navigation'
-      }}"
-  >
-    <IliosHeader />
-    <div class="ilios-logo">
-      <LinkTo @route="dashboard" title={{t "general.dashboard"}}>
-        <picture>
-          <source
-            srcset="/assets/images/ilios-logo.svg"
-            media="(min-width: 400px)"
-            alt={{t "general.logo"}}
-          />
-          <img src="/assets/images/sunburst.svg" alt={{t "general.logo"}} />
-        </picture>
+  <div id="ilios">
+    <ConnectionStatus />
+    <ApiVersionNotice />
+    <UpdateNotification />
+    <div
+      class="application-wrapper{{if
+          @controller.currentUser.performsNonLearnerFunction
+          ' show-navigation'
+        }}"
+    >
+      <IliosHeader />
+      <div class="ilios-logo">
+        <LinkTo @route="dashboard" title={{t "general.dashboard"}}>
+          <picture>
+            <source
+              srcset="/assets/images/ilios-logo.svg"
+              media="(min-width: 400px)"
+              alt={{t "general.logo"}}
+            />
+            <img src="/assets/images/sunburst.svg" alt={{t "general.logo"}} />
+          </picture>
 
-      </LinkTo>
-    </div>
-    {{#if @controller.session.isAuthenticated}}
-      <IliosNavigation />
-    {{/if}}
-    <main id="main">
-      {{#if @controller.showErrorDisplay}}
-        <ErrorDisplay @errors={{@controller.errors}} @clearErrors={{@controller.clearErrors}} />
-      {{else}}
-        {{outlet}}
-      {{/if}}
-    </main>
-    <footer class="ilios-footer">
-      <div class="version">
-        {{@controller.iliosVersionTag}}
-        {{@controller.apiVersionTag}}
-        {{@controller.frontendVersionTag}}
+        </LinkTo>
       </div>
-    </footer>
+      {{#if @controller.session.isAuthenticated}}
+        <IliosNavigation />
+      {{/if}}
+      <main id="main">
+        {{#if @controller.showErrorDisplay}}
+          <ErrorDisplay @errors={{@controller.errors}} @clearErrors={{@controller.clearErrors}} />
+        {{else}}
+          {{outlet}}
+        {{/if}}
+      </main>
+      <footer class="ilios-footer">
+        <div class="version">
+          {{@controller.iliosVersionTag}}
+          {{@controller.apiVersionTag}}
+          {{@controller.frontendVersionTag}}
+        </div>
+      </footer>
+    </div>
+    <FlashMessages />
   </div>
-  <FlashMessages />
 </template>
