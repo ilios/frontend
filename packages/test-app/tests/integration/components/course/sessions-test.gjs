@@ -42,7 +42,7 @@ module('Integration | Component | course/sessions', function (hooks) {
     );
 
     assert.strictEqual(component.header.title, 'Sessions (0)');
-    assert.notOk(component.sessionsGridHeader.expandCollapse.toggle.isVisible);
+    assert.notOk(component.sessionsGridHeaderRow.expandCollapse.toggle.isVisible);
   });
 
   test('expand/collapse all session not visible if no session with offerings in list', async function (assert) {
@@ -65,7 +65,7 @@ module('Integration | Component | course/sessions', function (hooks) {
     );
 
     assert.strictEqual(component.header.title, 'Sessions (2)');
-    assert.notOk(component.sessionsGridHeader.expandCollapse.toggle.isVisible);
+    assert.notOk(component.sessionsGridHeaderRow.expandCollapse.toggle.isVisible);
   });
 
   test('expand/collapse all session is visible if at least one session in list has offerings', async function (assert) {
@@ -94,7 +94,7 @@ module('Integration | Component | course/sessions', function (hooks) {
 
     assert.strictEqual(component.header.title, 'Sessions (2)', 'header title is correct');
     assert.ok(
-      component.sessionsGridHeader.expandCollapse.toggle.isVisible,
+      component.sessionsGridHeaderRow.expandCollapse.toggle.isVisible,
       'expand all toggle is visible',
     );
   });

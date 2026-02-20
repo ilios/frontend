@@ -2,17 +2,19 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
-import { component } from 'ilios-common/page-objects/components/sessions-grid-header';
-import SessionsGridHeader from 'ilios-common/components/sessions-grid-header';
+import { component } from 'ilios-common/page-objects/components/sessions-grid-header-row';
+import SessionsGridHeaderRow from 'ilios-common/components/sessions-grid-header-row';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | sessions-grid-header', function (hooks) {
+module('Integration | Component | sessions-grid-header-row', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
     await render(
-      <template><SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{(noop)}} /></template>,
+      <template>
+        <SessionsGridHeaderRow @toggleExpandAll={{(noop)}} @setSortBy={{(noop)}} />
+      </template>,
     );
     assert.strictEqual(component.title.text, 'Title');
     assert.strictEqual(component.sessionType.text, 'Type');
@@ -30,7 +32,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridHeader
+        <SessionsGridHeaderRow
           @toggleExpandAll={{this.expandCollapse}}
           @showExpandAll={{true}}
           @setSortBy={{(noop)}}
@@ -48,7 +50,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
+        <SessionsGridHeaderRow @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
       </template>,
     );
     await component.title.click();
@@ -62,7 +64,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
+        <SessionsGridHeaderRow @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
       </template>,
     );
     await component.sessionType.click();
@@ -76,7 +78,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
+        <SessionsGridHeaderRow @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
       </template>,
     );
     await component.learnerGroupCount.click();
@@ -90,7 +92,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
+        <SessionsGridHeaderRow @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
       </template>,
     );
     await component.objectiveCount.click();
@@ -104,7 +106,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
+        <SessionsGridHeaderRow @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
       </template>,
     );
     await component.termCount.click();
@@ -118,7 +120,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
+        <SessionsGridHeaderRow @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
       </template>,
     );
     await component.firstOffering.click();
@@ -132,7 +134,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
+        <SessionsGridHeaderRow @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
       </template>,
     );
     await component.offeringCount.click();

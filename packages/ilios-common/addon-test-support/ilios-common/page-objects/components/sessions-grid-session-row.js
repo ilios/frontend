@@ -10,7 +10,7 @@ import {
 import publicationStatus from './publication-status';
 
 const definition = {
-  scope: '[data-test-sessions-grid-row]',
+  scope: '[data-test-sessions-grid-session-row]',
   expand: clickable('[data-test-expand-collapse-control] [data-test-expand]'),
   collapse: clickable('[data-test-expand-collapse-control] [data-test-collapse]'),
   isCollapsed: isVisible('[data-test-expand-collapse-control] [data-test-expand]'),

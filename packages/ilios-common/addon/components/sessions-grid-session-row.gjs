@@ -21,7 +21,7 @@ import {
   faUserClock,
 } from '@fortawesome/free-solid-svg-icons';
 
-export default class SessionsGridRowComponent extends Component {
+export default class SessionsGridSessionRowComponent extends Component {
   @service permissionChecker;
   @service intl;
 
@@ -65,7 +65,7 @@ export default class SessionsGridRowComponent extends Component {
           (includes @session.id @sessionsForRemovalConfirmation)
           ' confirm'
         }}"
-      data-test-sessions-grid-row
+      data-test-sessions-grid-session-row
     >
       <span class="expand-collapse-control" data-test-expand-collapse-control>
         {{#if (includes @session.id @expandedSessionIds)}}

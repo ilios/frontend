@@ -4,12 +4,12 @@ import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { DateTime } from 'luxon';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
-import { component } from 'ilios-common/page-objects/components/sessions-grid-row';
-import SessionsGridRow from 'ilios-common/components/sessions-grid-row';
+import { component } from 'ilios-common/page-objects/components/sessions-grid-session-row';
+import SessionsGridSessionRow from 'ilios-common/components/sessions-grid-session-row';
 import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
 
-module('Integration | Component | sessions-grid-row', function (hooks) {
+module('Integration | Component | sessions-grid-session-row', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -44,7 +44,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     this.set('session', model);
     await render(
       <template>
-        <SessionsGridRow
+        <SessionsGridSessionRow
           @session={{this.session}}
           @confirmDelete={{(noop)}}
           @closeSession={{(noop)}}
@@ -81,7 +81,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     this.set('expandedSessionIds', [session.id]);
     await render(
       <template>
-        <SessionsGridRow
+        <SessionsGridSessionRow
           @session={{this.session}}
           @confirmDelete={{(noop)}}
           @closeSession={{(noop)}}
@@ -113,7 +113,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridRow
+        <SessionsGridSessionRow
           @session={{this.session}}
           @confirmDelete={{this.confirmDelete}}
           @closeSession={{(noop)}}
@@ -138,7 +138,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridRow
+        <SessionsGridSessionRow
           @session={{this.session}}
           @confirmDelete={{(noop)}}
           @closeSession={{this.closeSession}}
@@ -164,7 +164,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     });
     await render(
       <template>
-        <SessionsGridRow
+        <SessionsGridSessionRow
           @session={{this.session}}
           @confirmDelete={{(noop)}}
           @closeSession={{(noop)}}
