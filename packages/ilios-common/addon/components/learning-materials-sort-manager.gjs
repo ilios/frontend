@@ -88,7 +88,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
     }
   }
   <template>
-    <div class="learning-materials-sort-manager" data-test-detail-learning-materials-sort-manager>
+    <div class="sort-manager" data-test-detail-learning-materials-sort-manager>
       {{#if this.learningMaterials.isResolved}}
         <div class="actions">
           <button

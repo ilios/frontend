@@ -113,7 +113,7 @@ export default class ObjectiveSortManagerComponent extends Component {
     }
   }
   <template>
-    <div class="objective-sort-manager">
+    <div class="sort-manager">
       <div class="actions">
         <button
           class="bigadd"

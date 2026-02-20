@@ -1,6 +1,6 @@
-@use "font-size";
+@use "../mixins/font-size";
 
-@mixin sort-manager() {
+.sort-manager {
   .actions {
     display: flex;
     justify-content: flex-end;
