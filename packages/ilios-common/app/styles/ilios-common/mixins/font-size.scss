@@ -1,5 +1,4 @@
 /* stylelint-disable property-disallowed-list */
-
 @mixin font-size($step) {
   font-size: var(--fs-#{$step});
   line-height: calc(4px + 2ex);
