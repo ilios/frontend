@@ -192,16 +192,16 @@ export default class DashboardMaterialsComponent extends Component {
         {{t "general.myMaterials"}}
       </h2>
       <div class="dashboard-materials-content">
+        <div class="header" data-test-materials-header>
+          <ToggleButtons
+            @firstOptionSelected={{not @showAllMaterials}}
+            @firstLabel={{t "general.nextXDays" days=this.daysInAdvance}}
+            @secondLabel={{t "general.allMaterials"}}
+            @toggle={{@toggleMaterialsMode}}
+          />
+        </div>
         {{#if this.materialsLoaded}}
           {{#if this.materials.length}}
-            <div class="header" data-test-materials-header>
-              <ToggleButtons
-                @firstOptionSelected={{not @showAllMaterials}}
-                @firstLabel={{t "general.nextXDays" days=this.daysInAdvance}}
-                @secondLabel={{t "general.allMaterials"}}
-                @toggle={{@toggleMaterialsMode}}
-              />
-            </div>
             <div class="material-list" data-test-materials-list>
               <span class="course-filter" data-test-course-filter>
                 <select
