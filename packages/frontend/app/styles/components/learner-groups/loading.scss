@@ -1,5 +1,0 @@
-@use "../../ilios-common/mixins" as m;
-
-.learner-groups-loading {
-  @include m.main-list-loading-table;
-}
