@@ -2,14 +2,12 @@
 
 .ilios-header {
   background-color: var(--orange);
-  display: grid;
   align-content: center;
 
   // Elements on the far right
   .tools {
     align-items: center;
     background: transparent;
-    grid-area: tools;
     margin-right: 0.25rem;
     padding: 0.25rem 0;
     display: grid;
