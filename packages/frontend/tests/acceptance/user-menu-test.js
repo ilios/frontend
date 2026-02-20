@@ -15,8 +15,6 @@ module('Acceptance | user menu', function (hooks) {
     await myprofilePage.visit();
     await myprofilePage.iliosHeader.userMenu.toggle.down();
 
-    // await this.pauseTest();
-
     assert.strictEqual(
       myprofilePage.iliosHeader.userMenu.links.length,
       2,
