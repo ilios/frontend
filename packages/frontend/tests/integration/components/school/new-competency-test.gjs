@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/new-competency';
-import NewCompetency from 'frontend/components/new-competency';
+import { component } from 'frontend/tests/pages/components/school/new-competency';
+import NewCompetency from 'frontend/components/school/new-competency';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | new competency', function (hooks) {
+module('Integration | Component | school/new-competency', function (hooks) {
   setupRenderingTest(hooks);
 
   test('save', async function (assert) {

@@ -20,8 +20,8 @@ import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
 import { fn } from '@ember/helper';
 import LeadershipCollapsed from 'ilios-common/components/leadership-collapsed';
 import hasManyLength from 'ilios-common/helpers/has-many-length';
-import SchoolCompetenciesExpanded from 'frontend/components/school-competencies-expanded';
-import SchoolCompetenciesCollapsed from 'frontend/components/school-competencies-collapsed';
+import CompetenciesExpanded from 'frontend/components/school/competencies-expanded';
+import CompetenciesCollapsed from 'frontend/components/school/competencies-collapsed';
 import SchoolVocabulariesExpanded from 'frontend/components/school-vocabularies-expanded';
 import SchoolVocabulariesCollapsed from 'frontend/components/school-vocabularies-collapsed';
 import SchoolSessionTypesExpanded from 'frontend/components/school-session-types-expanded';
@@ -180,7 +180,7 @@ export default class SchoolManagerComponent extends Component {
           />
         {{/if}}
         {{#if (or (eq @school.competencies.length 0) @schoolCompetencyDetails)}}
-          <SchoolCompetenciesExpanded
+          <CompetenciesExpanded
             @school={{@school}}
             @canUpdate={{@canUpdateCompetency}}
             @canDelete={{@canDeleteCompetency}}
@@ -191,7 +191,7 @@ export default class SchoolManagerComponent extends Component {
             @setSchoolManageCompetencies={{@setSchoolManageCompetencies}}
           />
         {{else}}
-          <SchoolCompetenciesCollapsed
+          <CompetenciesCollapsed
             @school={{@school}}
             @expand={{fn @setSchoolCompetencyDetails true}}
           />

@@ -2,11 +2,11 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/school-competencies-collapsed';
-import SchoolCompetenciesCollapsed from 'frontend/components/school-competencies-collapsed';
+import { component } from 'frontend/tests/pages/components/school/competencies-collapsed';
+import CompetenciesCollapsed from 'frontend/components/school/competencies-collapsed';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | school competencies collapsed', function (hooks) {
+module('Integration | Component | school/competencies-collapsed', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -21,9 +21,7 @@ module('Integration | Component | school competencies collapsed', function (hook
 
     this.set('school', schoolModel);
     await render(
-      <template>
-        <SchoolCompetenciesCollapsed @school={{this.school}} @expand={{(noop)}} />
-      </template>,
+      <template><CompetenciesCollapsed @school={{this.school}} @expand={{(noop)}} /></template>,
     );
 
     assert.strictEqual(component.title.text, 'Competencies (3/4)');
@@ -44,7 +42,7 @@ module('Integration | Component | school competencies collapsed', function (hook
     this.set('expand', () => assert.step('expand called'));
     await render(
       <template>
-        <SchoolCompetenciesCollapsed @school={{this.school}} @expand={{this.expand}} />
+        <CompetenciesCollapsed @school={{this.school}} @expand={{this.expand}} />
       </template>,
     );
     await component.title.click();

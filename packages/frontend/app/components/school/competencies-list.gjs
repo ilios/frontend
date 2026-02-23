@@ -4,7 +4,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { map } from 'rsvp';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
-import SchoolCompetenciesListItem from 'frontend/components/school-competencies-list-item';
+import CompetenciesListItem from 'frontend/components/school/competencies-list-item';
 
 export default class SchoolCompetenciesListComponent extends Component {
   @cached
@@ -32,13 +32,13 @@ export default class SchoolCompetenciesListComponent extends Component {
         <div class="grid-item">{{t "general.aamcPcrs"}}</div>
       </div>
       {{#each this.proxies as |proxy|}}
-        <SchoolCompetenciesListItem
+        <CompetenciesListItem
           @competency={{proxy.domain}}
           @isDomain={{true}}
           @canUpdate={{@canUpdate}}
         />
         {{#each proxy.competencies as |competency|}}
-          <SchoolCompetenciesListItem
+          <CompetenciesListItem
             @competency={{competency}}
             @isDomain={{false}}
             @canUpdate={{@canUpdate}}

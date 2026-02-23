@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/school-competencies-list';
-import SchoolCompetenciesList from 'frontend/components/school-competencies-list';
+import { component } from 'frontend/tests/pages/components/school/competencies-list';
+import CompetenciesList from 'frontend/components/school/competencies-list';
 
-module('Integration | Component | school competencies list', function (hooks) {
+module('Integration | Component | school/competencies-list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -30,7 +30,7 @@ module('Integration | Component | school competencies list', function (hooks) {
       .findRecord('competency', domain.id);
 
     this.set('domains', [domainModel]);
-    await render(<template><SchoolCompetenciesList @domains={{this.domains}} /></template>);
+    await render(<template><CompetenciesList @domains={{this.domains}} /></template>);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title.text, 'domain 0');
     assert.strictEqual(component.items[0].pcrs.items.length, 1);

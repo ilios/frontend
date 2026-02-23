@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/school-competencies-pcrs-mapper';
-import SchoolCompetenciesPcrsMapper from 'frontend/components/school-competencies-pcrs-mapper';
+import { component } from 'frontend/tests/pages/components/school/competencies-pcrs-mapper';
+import CompetenciesPcrsMapper from 'frontend/components/school/competencies-pcrs-mapper';
 import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
 
-module('Integration | Component | school-competencies-pcrs-mapper', function (hooks) {
+module('Integration | Component | school/competencies-pcrs-mapper', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -48,7 +48,7 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
 
     await render(
       <template>
-        <SchoolCompetenciesPcrsMapper
+        <CompetenciesPcrsMapper
           @allPcrses={{this.allPcrses}}
           @selectedPcrses={{this.selectedPcrses}}
           @add={{(noop)}}
@@ -80,7 +80,7 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
     });
     await render(
       <template>
-        <SchoolCompetenciesPcrsMapper
+        <CompetenciesPcrsMapper
           @allPcrses={{this.allPcrses}}
           @selectedPcrses={{(array)}}
           @add={{this.add}}
@@ -103,7 +103,7 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
     });
     await render(
       <template>
-        <SchoolCompetenciesPcrsMapper
+        <CompetenciesPcrsMapper
           @allPcrses={{this.allPcrses}}
           @selectedPcrses={{this.selectedPcrses}}
           @add={{(noop)}}

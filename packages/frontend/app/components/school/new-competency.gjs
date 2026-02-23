@@ -11,7 +11,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 
-export default class NewCompetencyComponent extends Component {
+export default class SchoolNewCompetencyComponent extends Component {
   @tracked title;
 
   validations = new YupValidations(this, {
@@ -44,7 +44,7 @@ export default class NewCompetencyComponent extends Component {
     this.title = null;
   });
   <template>
-    <div class="new-competency" data-test-new-competency ...attributes>
+    <div class="school-new-competency" data-test-school-new-competency ...attributes>
       <input
         type="text"
         value={{this.title}}

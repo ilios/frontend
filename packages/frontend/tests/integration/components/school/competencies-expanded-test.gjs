@@ -3,11 +3,11 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/school-competencies-expanded';
-import SchoolCompetenciesExpanded from 'frontend/components/school-competencies-expanded';
+import { component } from 'frontend/tests/pages/components/school/competencies-expanded';
+import CompetenciesExpanded from 'frontend/components/school/competencies-expanded';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | school competencies expanded', function (hooks) {
+module('Integration | Component | school/competencies-expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -31,7 +31,7 @@ module('Integration | Component | school competencies expanded', function (hooks
     this.set('school', schoolModel);
     await render(
       <template>
-        <SchoolCompetenciesExpanded
+        <CompetenciesExpanded
           @school={{this.school}}
           @canUpdate={{true}}
           @canDelete={{true}}
@@ -58,7 +58,7 @@ module('Integration | Component | school competencies expanded', function (hooks
     this.set('school', schoolModel);
     await render(
       <template>
-        <SchoolCompetenciesExpanded
+        <CompetenciesExpanded
           @school={{this.school}}
           @canUpdate={{true}}
           @canDelete={{true}}

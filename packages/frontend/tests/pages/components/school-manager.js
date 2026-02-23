@@ -1,6 +1,6 @@
 import { clickable, create, isPresent, fillable, text } from 'ember-cli-page-object';
-import schoolCompetenciesExpanded from './school-competencies-expanded';
-import schoolCompetenciesCollapsed from './school-competencies-collapsed';
+import schoolCompetenciesExpanded from './school/competencies-expanded';
+import schoolCompetenciesCollapsed from './school/competencies-collapsed';
 import schoolVocabulariesExpanded from './school-vocabularies-expanded';
 import schoolVocabulariesCollapsed from './school-vocabularies-collapsed';
 import schoolSessionTypesExpanded from './school-session-types-expanded';
