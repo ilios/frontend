@@ -1,7 +1,8 @@
 name: Visual Diff
 
 on:
-  pull_request: {}
+  pull_request:
+    types: [labeled, unlabeled, opened, synchronize, reopened]
 
 concurrency:
   group: visual-diff-${{ github.head_ref || github.ref }}
@@ -132,21 +133,36 @@ jobs:
           mkdir -p ./results
           echo ${{ github.event.pull_request.number }} > ./results/pr_number
       - name: Create Visual Diff
-        run: npx visual-differ baseline-frontend candidate-frontend ${{ env.OUTPUT_DIR }} > results/visual-diff.txt
-      - if: always()
-        run: cp ${{ env.OUTPUT_DIR }}/report.md results/
-      - if: always()
-        run: cat results/report.md results/visual-diff.txt
+        id: diff
+        run: |
+          set +e
+          npx visual-differ baseline-frontend candidate-frontend ${{ env.OUTPUT_DIR }} > results/visual-diff.txt
+          exit_code=$?
+          echo "$exit_code" > results/exit-code.txt
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+      - run: echo ${{ steps.diff.outputs.exit_code }}
+      - run: cp ${{ env.OUTPUT_DIR }}/report.md results/
+      - run: cat results/report.md results/visual-diff.txt
       - uses: actions/upload-artifact@v6
         id: upload-output
-        if: always()
         with:
           name: ${{ env.OUTPUT_DIR }}
           path: ${{ env.OUTPUT_DIR }}
-      - if: always()
-        run: echo ${{ steps.upload-output.outputs.artifact-url }} > ./results/artifact_url
+      - run: |
+          echo ${{ steps.upload-output.outputs.artifact-url }} > ./results/artifact_url
+          echo ${{ steps.diff.outputs.exit_code }} > ./results/exit_code
+          echo ${{ contains(github.event.pull_request.labels.*.name, 'approve visual diff') }} > ./results/approved
       - uses: actions/upload-artifact@v6
-        if: always()
         with:
           name: results
           path: results
+      - name: Check Status
+        run: |
+          exitCode="${{ steps.diff.outputs.exit_code }}"
+          approved="${{ contains(github.event.pull_request.labels.*.name, 'approve visual diff') }}"
+          echo "visual-differ exit code: $exitCode"
+          echo "approve visual diff label present: $approved"
+          if [ "$exitCode" != "0" ] && [ "$approved" != "true" ]; then
+            echo "Visual diff detected and 'approve visual diff' label not present."
+            exit 1
+          fi
