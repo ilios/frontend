@@ -45,7 +45,7 @@ export default class UserMenuComponent extends Component {
   }
 
   @action
-  keyUp(evt) {
+  keyDown(evt) {
     const button = evt.target.tagName.toLowerCase() === 'button' ? evt.target : null;
     let item;
     if (!button) {
@@ -54,9 +54,11 @@ export default class UserMenuComponent extends Component {
 
     switch (evt.key) {
       case 'ArrowDown':
+        evt.preventDefault();
         this.handleArrowDown(evt, item);
         break;
       case 'ArrowUp':
+        evt.preventDefault();
         this.handleArrowUp(item);
         break;
       case 'Escape':
@@ -96,7 +98,7 @@ export default class UserMenuComponent extends Component {
         class="user-menu header-menu{{if this.isOpen ' is-open'}}"
         aria-label={{t "general.userMenu"}}
         {{! template-lint-disable no-invalid-interactive }}
-        {{on "keyup" this.keyUp}}
+        {{on "keydown" this.keyDown}}
         data-test-user-menu
       >
         <button

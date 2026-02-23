@@ -103,9 +103,11 @@ export default class LocaleChooserComponent extends Component {
     }
   }
   @action
-  toggleMenu({ key }) {
+  toggleMenu(event) {
+    const { key } = event;
     switch (key) {
       case 'ArrowDown':
+        event.preventDefault();
         this.isOpen = true;
         break;
       case 'Escape':
@@ -127,7 +129,7 @@ export default class LocaleChooserComponent extends Component {
         data-level="toggle"
         data-test-toggle
         {{on "click" (toggle "isOpen" this)}}
-        {{on "keyup" this.toggleMenu}}
+        {{on "keydown" this.toggleMenu}}
       >
         <FaIcon @icon={{faGlobe}} />
         <span id="{{this.uniqueId}}-locale-chooser-title">
@@ -148,7 +150,7 @@ export default class LocaleChooserComponent extends Component {
               data-level="item"
               data-test-item
               {{on "click" (fn this.changeLocale loc.id)}}
-              {{on "keyup" this.moveFocus}}
+              {{on "keydown" this.moveFocus}}
               {{on "mouseenter" this.clearFocus}}
               {{focus (eq index 0)}}
             >

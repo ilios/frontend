@@ -78,55 +78,67 @@ module('Integration | Component | locale-chooser', function (hooks) {
   test('keyboard navigation', async function (assert) {
     await render(<template><LocaleChooser /></template>);
     await component.toggle.click();
-    assert.strictEqual(component.locales.length, 3);
-    assert.ok(component.locales[0].hasFocus);
-    assert.notOk(component.locales[1].hasFocus);
-    assert.notOk(component.locales[2].hasFocus);
+    assert.strictEqual(component.locales.length, 3, 'locale count is correct');
+    assert.ok(component.locales[0].hasFocus, 'first locale has focus');
+    assert.notOk(component.locales[1].hasFocus, 'second locale does not have focus');
+    assert.notOk(component.locales[2].hasFocus, 'third locale does not have focus');
     // regular down/up navigation
     await component.locales[0].down();
-    assert.notOk(component.locales[0].hasFocus);
-    assert.ok(component.locales[1].hasFocus);
-    assert.notOk(component.locales[2].hasFocus);
+    assert.notOk(component.locales[0].hasFocus, 'first locale does not have focus');
+    assert.ok(component.locales[1].hasFocus, 'second locale has focus');
+    assert.notOk(component.locales[2].hasFocus, 'third locale does not have focus');
     await component.locales[1].down();
-    assert.notOk(component.locales[0].hasFocus);
-    assert.notOk(component.locales[1].hasFocus);
-    assert.ok(component.locales[2].hasFocus);
+    assert.notOk(component.locales[0].hasFocus, 'first locale does not have focus');
+    assert.notOk(component.locales[1].hasFocus, 'second locale does not have focus');
+    assert.ok(component.locales[2].hasFocus, 'third locale has focus');
     await component.locales[2].up();
-    assert.notOk(component.locales[0].hasFocus);
-    assert.ok(component.locales[1].hasFocus);
-    assert.notOk(component.locales[2].hasFocus);
+    assert.notOk(component.locales[0].hasFocus, 'first locale does not have focus');
+    assert.ok(component.locales[1].hasFocus, 'second locale has focus');
+    assert.notOk(component.locales[2].hasFocus, 'third locale does not have focus');
     await component.locales[1].up();
-    assert.ok(component.locales[0].hasFocus);
-    assert.notOk(component.locales[1].hasFocus);
-    assert.notOk(component.locales[2].hasFocus);
+    assert.ok(component.locales[0].hasFocus, 'first locale has focus');
+    assert.notOk(component.locales[1].hasFocus, 'second locale does not have focus');
+    assert.notOk(component.locales[2].hasFocus, 'third locale does not havefocus');
     // wrap-around navigation from first to last menu item
     await component.locales[0].up();
-    assert.notOk(component.locales[0].hasFocus);
-    assert.notOk(component.locales[1].hasFocus);
-    assert.ok(component.locales[2].hasFocus);
+    assert.notOk(component.locales[0].hasFocus, 'first locale does not have focus');
+    assert.notOk(component.locales[1].hasFocus, 'second locale does not have focus');
+    assert.ok(component.locales[2].hasFocus, 'third locale has focus');
     // wrap-around navigation from last to first menu item
     await component.locales[2].down();
-    assert.ok(component.locales[0].hasFocus);
-    assert.notOk(component.locales[1].hasFocus);
-    assert.notOk(component.locales[2].hasFocus);
+    assert.ok(component.locales[0].hasFocus, 'first locale has focus');
+    assert.notOk(component.locales[1].hasFocus, 'second locale does not have focus');
+    assert.notOk(component.locales[2].hasFocus, 'third locale does not have focus');
     // close menu on escape, left, right, and tab keys.
     await component.locales[0].esc();
-    assert.strictEqual(component.locales.length, 0);
+    assert.strictEqual(component.locales.length, 0, 'escape key on first locale closes menu');
     await component.toggle.click();
-    assert.strictEqual(component.locales.length, 3);
-    assert.ok(component.locales[0].hasFocus);
+    assert.strictEqual(
+      component.locales.length,
+      3,
+      'locale count is correct after clicking toggle',
+    );
+    assert.ok(component.locales[0].hasFocus, 'first locale has focus');
     await component.locales[0].left();
-    assert.strictEqual(component.locales.length, 0);
+    assert.strictEqual(component.locales.length, 0, 'left key closes menu');
     await component.toggle.click();
-    assert.strictEqual(component.locales.length, 3);
-    assert.ok(component.locales[0].hasFocus);
+    assert.strictEqual(
+      component.locales.length,
+      3,
+      'locale count is correct after clicking toggle',
+    );
+    assert.ok(component.locales[0].hasFocus, 'first locale has focus');
     await component.locales[0].right();
-    assert.strictEqual(component.locales.length, 0);
+    assert.strictEqual(component.locales.length, 0, 'right key closes menu');
     await component.toggle.click();
-    assert.strictEqual(component.locales.length, 3);
-    assert.ok(component.locales[0].hasFocus);
+    assert.strictEqual(
+      component.locales.length,
+      3,
+      'locale count is correct after clicking toggle',
+    );
+    assert.ok(component.locales[0].hasFocus, 'first locale has focus');
     await component.locales[0].tab();
-    assert.strictEqual(component.locales.length, 0);
+    assert.strictEqual(component.locales.length, 0, 'tab key closes menu');
   });
 
   test('mouse entering locale-button clears focus', async function (assert) {
