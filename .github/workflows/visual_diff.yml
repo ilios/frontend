@@ -31,16 +31,25 @@ jobs:
       - uses: actions/checkout@v6
         with:
           ref: "master"
+      - name: Cache Screenshots
+        id: screenshot-cache
+        uses: actions/cache@v5
+        with:
+          path: build
+          key: screenshots-${{ github.sha }}-${{ matrix.name }}
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: pnpm
       - name: Install Dependencies
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm install
       - name: Capture Screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem.screenshots.js
       - name: Rename screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
           cd build/screenshots
           for file in *; do
@@ -69,16 +78,25 @@ jobs:
       MOZ_HEADLESS_WIDTH: ${{ matrix.width }}
     steps:
       - uses: actions/checkout@v6
+      - name: Cache Screenshots
+        id: screenshot-cache
+        uses: actions/cache@v5
+        with:
+          path: build
+          key: screenshots-${{ github.event.pull_request.head.sha }}-${{ matrix.name }}
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: pnpm
       - name: Install Dependencies
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm install
       - name: Capture Screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem.screenshots.js
       - name: Rename screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
           cd build/screenshots
           for file in *; do
