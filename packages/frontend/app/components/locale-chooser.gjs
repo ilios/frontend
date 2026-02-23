@@ -145,7 +145,6 @@ export default class LocaleChooserComponent extends Component {
               data-test-item
               {{on "click" (fn this.changeLocale loc.id)}}
               {{on "keydown" this.moveFocus}}
-              {{on "keyup" this.moveFocus}}
               {{focus (eq index 0)}}
             >
               {{loc.text}}
