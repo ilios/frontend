@@ -20,6 +20,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
+import PasswordValidator from 'frontend/components/password-validator';
 
 export default class NewUserComponent extends Component {
   @service intl;
@@ -408,22 +409,7 @@ export default class NewUserComponent extends Component {
             />
           </div>
           <div class="item" data-test-password>
-            <label for="password-{{templateId}}">
-              {{t "general.password"}}:
-            </label>
-            <input
-              id="password-{{templateId}}"
-              type="text"
-              value={{this.password}}
-              {{on "input" (pick "target.value" (set this "password"))}}
-              {{on "keyup" (perform this.saveOrCancel)}}
-              {{this.validations.attach "password"}}
-            />
-            <YupValidationMessage
-              @description={{t "general.password"}}
-              @validationErrors={{this.validations.errors.password}}
-              data-test-password-validation-error-message
-            />
+            <PasswordValidator {{on "keyup" (pick this.password this.setPassword)}} />
           </div>
           <div class="item" data-test-school>
             <label for="primary-school-{{templateId}}">
