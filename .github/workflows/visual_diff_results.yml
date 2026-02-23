@@ -54,6 +54,8 @@ jobs:
             const temp = '${{ runner.temp }}/artifacts';
             const report = fs.readFileSync(path.join(temp, 'report.md'), "utf8");
             const issue_number = Number(fs.readFileSync(path.join(temp, 'pr_number')));
+            const exit_code = Number(fs.readFileSync(path.join(temp, 'exit_code')));
+            const approved = fs.readFileSync(path.join(temp, 'approved'));
             const url = fs.readFileSync(path.join(temp, 'artifact_url'), "utf8");
 
             return { report, issue_number, url };
@@ -63,11 +65,15 @@ jobs:
           JSON='${{ steps.data.outputs.result }}'
 
           ISSUE_NUMBER="$(echo "$JSON" | jq -r '.issue_number')"
+          EXIT_CODE="$(echo "$JSON" | jq -r '.exit_code')"
+          APPROVED="$(echo "$JSON" | jq -r '.approved')"
           URL="$(echo "$JSON" | jq -r '.url')"
           REPORT="$(echo "$JSON" | jq -r '.report')"
 
           {
             echo "issue_number=$ISSUE_NUMBER"
+            echo "exit_code=$EXIT_CODE"
+            echo "approved=$APPROVED"
             echo "url=$URL"
             echo "report<<EOF"
             echo "$REPORT"
@@ -78,11 +84,30 @@ jobs:
           echo "issue_number:"
           echo "${{ steps.decoded.outputs.issue_number }}"
 
+          echo "exit_code:"
+          echo "${{ steps.decoded.outputs.exit_code }}"
+
+          echo "approved:"
+          echo "${{ steps.decoded.outputs.approved }}"
+
           echo "url:"
           echo "${{ steps.decoded.outputs.url }}"
 
           echo "report:"
           echo "${{ steps.decoded.outputs.report }}"
+      - name: Approval Results
+        id: approval-results
+        run: |
+          exitCode="${{ steps.decoded.outputs.exit_code }}"
+          approved="${{ steps.decoded.outputs.approved }}"
+          echo "visual-differ exit code: $exitCode"
+          echo "approve visual diff label present: $approved"
+          if [ "$exitCode" != "0" ] && [ "$approved" == "true" ]; then
+            $APPROVAL_RESULTS = "### ✅ Visual Diff Approved"
+          else
+            $APPROVAL_RESULTS = ""
+          fi
+          echo "results=$APPROVAL_RESULTS" >> "$GITHUB_OUTPUT"
       - name: Find Previous Comment
         uses: peter-evans/find-comment@v4
         id: find
@@ -95,6 +120,7 @@ jobs:
           comment-id: ${{ steps.find.outputs.comment-id }}
           issue-number: ${{ steps.decoded.outputs.issue_number }}
           body: |
+            ${{ steps.approval-results.outputs.results }}
             ${{ steps.decoded.outputs.report }}
 
             Download the [results](${{ steps.decoded.outputs.url }}).
