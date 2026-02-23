@@ -52,11 +52,11 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             const temp = '${{ runner.temp }}/artifacts';
-            const results = fs.readFileSync(path.join(temp, 'visual-diff.txt'), "utf8");
+            const report = fs.readFileSync(path.join(temp, 'report.md'), "utf8");
             const issue_number = Number(fs.readFileSync(path.join(temp, 'pr_number')));
             const url = fs.readFileSync(path.join(temp, 'artifact_url'), "utf8");
 
-            return { results, issue_number, url };
+            return { report, issue_number, url };
       - name: Decode Output
         id: decoded
         run: |
@@ -64,13 +64,13 @@ jobs:
 
           ISSUE_NUMBER="$(echo "$JSON" | jq -r '.issue_number')"
           URL="$(echo "$JSON" | jq -r '.url')"
-          RESULTS="$(echo "$JSON" | jq -r '.results')"
+          REPORT="$(echo "$JSON" | jq -r '.report')"
 
           {
             echo "issue_number=$ISSUE_NUMBER"
             echo "url=$URL"
-            echo "results<<EOF"
-            echo "$RESULTS"
+            echo "report<<EOF"
+            echo "$REPORT"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
       - name: Show Output
@@ -81,8 +81,8 @@ jobs:
           echo "url:"
           echo "${{ steps.decoded.outputs.url }}"
 
-          echo "results:"
-          echo "${{ steps.decoded.outputs.results }}"
+          echo "report:"
+          echo "${{ steps.decoded.outputs.report }}"
       - name: Find Previous Comment
         uses: peter-evans/find-comment@v4
         id: find
@@ -95,9 +95,7 @@ jobs:
           comment-id: ${{ steps.find.outputs.comment-id }}
           issue-number: ${{ steps.decoded.outputs.issue_number }}
           body: |
-            ### Visual Diff Results
-
-            ${{ steps.decoded.outputs.results }}
+            ${{ steps.decoded.outputs.report }}
 
             Download the [results](${{ steps.decoded.outputs.url }}).
 

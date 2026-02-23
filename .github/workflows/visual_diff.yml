@@ -111,6 +111,8 @@ jobs:
     name: Visual Diff
     needs: [baseline, candidate]
     runs-on: ubuntu-latest
+    env:
+      OUTPUT_DIR: visual-diff-${{ github.event.pull_request.number }}
     steps:
       - uses: actions/download-artifact@v7
         with:
@@ -130,15 +132,17 @@ jobs:
           mkdir -p ./results
           echo ${{ github.event.pull_request.number }} > ./results/pr_number
       - name: Create Visual Diff
-        run: npx visual-differ baseline-frontend candidate-frontend visual-diff-${{ github.event.pull_request.number }} > results/visual-diff.txt
+        run: npx visual-differ baseline-frontend candidate-frontend ${{ env.OUTPUT_DIR }} > results/visual-diff.txt
       - if: always()
-        run: cat results/visual-diff.txt
+        run: cp ${{ env.OUTPUT_DIR }}/report.md results/
+      - if: always()
+        run: cat results/report.md results/visual-diff.txt
       - uses: actions/upload-artifact@v6
         id: upload-output
         if: always()
         with:
-          name: visual-diff-${{ github.event.pull_request.number }}
-          path: visual-diff-${{ github.event.pull_request.number }}
+          name: ${{ env.OUTPUT_DIR }}
+          path: ${{ env.OUTPUT_DIR }}
       - if: always()
         run: echo ${{ steps.upload-output.outputs.artifact-url }} > ./results/artifact_url
       - uses: actions/upload-artifact@v6
