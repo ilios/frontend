@@ -1,6 +1,6 @@
 @use "../mixins" as m;
 
-.sessions-grid-header {
+.sessions-grid-header-row {
   background-color: var(--blue);
   border-bottom: 1px solid var(--grey);
   color: var(--white);
@@ -8,7 +8,6 @@
   top: 0;
   z-index: 1;
   @include m.font-size("small");
-  @include m.sessions-grid;
 
   &.locked {
     position: sticky;

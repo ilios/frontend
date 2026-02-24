@@ -1,7 +1,7 @@
 import { create, hasClass } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-sessions-grid-header]',
+  scope: '[data-test-sessions-grid-header-row]',
   expandCollapse: {
     scope: '[data-test-expand-collapse-all]',
     toggle: {

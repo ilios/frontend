@@ -11,7 +11,7 @@ import { eq, or } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
-export default class SessionsGridHeader extends Component {
+export default class SessionsGridHeaderRow extends Component {
   get sortedAscending() {
     return this.args.sortBy.search(/desc/) === -1;
   }
@@ -30,8 +30,8 @@ export default class SessionsGridHeader extends Component {
   });
   <template>
     <div
-      class="sessions-grid-header{{if @headerIsLocked ' locked'}}"
-      data-test-sessions-grid-header
+      class="sessions-grid-row sessions-grid-header-row{{if @headerIsLocked ' locked'}}"
+      data-test-sessions-grid-header-row
     >
       <span class="expand-collapse-control" data-test-expand-collapse-all>
         {{#if @showExpandAll}}

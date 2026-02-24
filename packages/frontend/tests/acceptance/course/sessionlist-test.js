@@ -231,17 +231,17 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(expandedSessions.length, 0);
-    assert.notOk(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
-    await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
+    assert.notOk(page.courseSessions.sessionsGridHeaderRow.expandCollapse.allAreExpanded);
+    await page.courseSessions.sessionsGridHeaderRow.expandCollapse.toggle.click();
     await percySnapshot(getUniqueName(assert, 'not expanded'));
     await takeScreenshot(assert, 'not expanded');
     assert.strictEqual(expandedSessions.length, 4);
-    assert.ok(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
-    await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
+    assert.ok(page.courseSessions.sessionsGridHeaderRow.expandCollapse.allAreExpanded);
+    await page.courseSessions.sessionsGridHeaderRow.expandCollapse.toggle.click();
     await percySnapshot(getUniqueName(assert, 'expanded'));
     await takeScreenshot(assert, 'expanded');
     assert.strictEqual(expandedSessions.length, 0);
-    assert.notOk(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
+    assert.notOk(page.courseSessions.sessionsGridHeaderRow.expandCollapse.allAreExpanded);
   });
 
   test('expand all sessions does not expand sessions with no offerings', async function (assert) {
@@ -251,10 +251,10 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(expandedSessions.length, 0);
-    assert.notOk(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
-    await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
+    assert.notOk(page.courseSessions.sessionsGridHeaderRow.expandCollapse.allAreExpanded);
+    await page.courseSessions.sessionsGridHeaderRow.expandCollapse.toggle.click();
     assert.strictEqual(expandedSessions.length, 3);
-    assert.ok(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
+    assert.ok(page.courseSessions.sessionsGridHeaderRow.expandCollapse.allAreExpanded);
   });
 
   test('expand all sessions with one session expanded already', async function (assert) {
@@ -267,9 +267,9 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(expandedSessions.length, 0);
     await sessions[0].row.expand();
     assert.strictEqual(expandedSessions.length, 1);
-    await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
+    await page.courseSessions.sessionsGridHeaderRow.expandCollapse.toggle.click();
     assert.strictEqual(expandedSessions.length, 4);
-    await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
+    await page.courseSessions.sessionsGridHeaderRow.expandCollapse.toggle.click();
     assert.strictEqual(expandedSessions.length, 0);
   });
 
@@ -286,8 +286,8 @@ module('Acceptance | Course - Session List', function (hooks) {
     await sessions[2].row.expand();
     await sessions[3].row.expand();
     assert.strictEqual(expandedSessions.length, 4);
-    assert.ok(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
-    await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
+    assert.ok(page.courseSessions.sessionsGridHeaderRow.expandCollapse.allAreExpanded);
+    await page.courseSessions.sessionsGridHeaderRow.expandCollapse.toggle.click();
     assert.strictEqual(expandedSessions.length, 0);
   });
 
@@ -451,7 +451,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     await page.visit({ courseId: this.course.id });
     assert.strictEqual(currentURL(), '/courses/1');
     const { sessions } = page.courseSessions.sessionsGrid;
-    const header = page.courseSessions.sessionsGridHeader;
+    const header = page.courseSessions.sessionsGridHeaderRow;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(sessions[0].row.title, 'session 0');
     assert.strictEqual(sessions[1].row.title, 'session 1');

@@ -2,7 +2,7 @@ import { clickable, create, fillable, text } from 'ember-cli-page-object';
 
 import newSession from '../new-session';
 import sessionsGrid from '../sessions-grid';
-import sessionsGridHeader from '../sessions-grid-header';
+import sessionsGridHeaderRow from '../sessions-grid-header-row';
 
 const definition = {
   scope: '[data-test-course-sessions]',
@@ -18,7 +18,7 @@ const definition = {
   },
   filter: fillable('[data-test-session-filter]'),
   newSession,
-  sessionsGridHeader,
+  sessionsGridHeaderRow,
   sessionsGrid,
 };
 

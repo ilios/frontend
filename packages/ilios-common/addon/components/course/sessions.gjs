@@ -17,7 +17,7 @@ import set from 'ember-set-helper/helpers/set';
 import { array, get, fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
-import SessionsGridHeader from 'ilios-common/components/sessions-grid-header';
+import SessionsGridHeaderRow from 'ilios-common/components/sessions-grid-header-row';
 import SessionsGrid from 'ilios-common/components/sessions-grid';
 import SessionsGridLoading from 'ilios-common/components/sessions-grid-loading';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
@@ -220,7 +220,7 @@ export default class CourseSessionsComponent extends Component {
 
       {{#if this.sessionsCount}}
         <section>
-          <SessionsGridHeader
+          <SessionsGridHeaderRow
             @showExpandAll={{this.showExpandAll}}
             @setSortBy={{@setSortBy}}
             @sortBy={{@sortBy}}

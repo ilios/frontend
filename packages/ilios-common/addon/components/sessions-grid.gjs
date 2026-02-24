@@ -11,7 +11,7 @@ import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import includes from 'ilios-common/helpers/includes';
-import SessionsGridRow from 'ilios-common/components/sessions-grid-row';
+import SessionsGridSessionRow from 'ilios-common/components/sessions-grid-session-row';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
@@ -220,7 +220,7 @@ export default class SessionsGrid extends Component {
           data-test-expanded-session={{includes session.id @expandedSessionIds}}
           data-test-session
         >
-          <SessionsGridRow
+          <SessionsGridSessionRow
             @session={{session}}
             @sessionsForRemovalConfirmation={{this.confirmDeleteSessionIds}}
             @confirmDelete={{this.confirmDelete}}

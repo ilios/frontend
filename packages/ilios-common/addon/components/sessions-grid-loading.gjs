@@ -17,7 +17,7 @@ export default class SessionsGridLoading extends Component {
       {{animateLoading "course" finalOpacity=".75"}}
     >
       {{#each (repeat @count)}}
-        <div data-test-row>
+        <div class="sessions-grid" data-test-row>
           <span class="expand-collapse-control"></span>
           <span class="session-grid-title">
             {{truncate (repeat (random 3 10) "ilios rocks") 100}}

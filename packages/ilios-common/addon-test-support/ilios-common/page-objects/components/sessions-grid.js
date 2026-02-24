@@ -1,6 +1,6 @@
 import { clickable, create, collection, text } from 'ember-cli-page-object';
 import offerings from './sessions-grid-offering-table';
-import row from './sessions-grid-row';
+import row from './sessions-grid-session-row';
 
 const definition = {
   scope: '[data-test-sessions-grid]',
