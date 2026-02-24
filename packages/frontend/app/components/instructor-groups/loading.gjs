@@ -4,7 +4,7 @@ import truncate from 'ilios-common/helpers/truncate';
 import random from 'ember-math-helpers/helpers/random';
 <template>
   <table
-    class="ilios-table ilios-table-colors ilios-zebra-table instructor-groups-loading"
+    class="ilios-table ilios-table-colors ilios-zebra-table loading-text loading-shimmer"
     ...attributes
   >
     <thead>

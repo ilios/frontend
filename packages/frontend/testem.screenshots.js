@@ -26,6 +26,7 @@ user_pref("browser.download.useDownloadDir", true);
 user_pref("browser.helperApps.neverAsk.saveToDisk", "image/png");
 user_pref("browser.download.manager.showWhenStarting", false);
 user_pref("pdfjs.disabled", true);
+user_pref("ui.prefersReducedMotion", 1);
 `.trim();
 
 fs.writeFileSync(firefoxUserJsPath, userJsContent);
