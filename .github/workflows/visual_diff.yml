@@ -1,7 +1,8 @@
 name: Visual Diff
 
 on:
-  pull_request: {}
+  pull_request:
+    types: [labeled, unlabeled, opened, synchronize, reopened]
 
 concurrency:
   group: visual-diff-${{ github.head_ref || github.ref }}
@@ -27,20 +28,35 @@ jobs:
             width: 1920
     env:
       MOZ_HEADLESS_WIDTH: ${{ matrix.width }}
+    outputs:
+      ref: ${{ steps.ref.outputs.ref }}
     steps:
       - uses: actions/checkout@v6
         with:
           ref: "master"
+      - id: ref
+        run: |
+          echo "$(git rev-parse HEAD)"
+          echo "ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Cache Screenshots
+        id: screenshot-cache
+        uses: actions/cache@v5
+        with:
+          path: build
+          key: screenshots-${{ steps.ref.outputs.ref }}-${{ matrix.name }}
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: pnpm
       - name: Install Dependencies
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm install
       - name: Capture Screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem.screenshots.js
       - name: Rename screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
           cd build/screenshots
           for file in *; do
@@ -67,18 +83,33 @@ jobs:
             width: 1920
     env:
       MOZ_HEADLESS_WIDTH: ${{ matrix.width }}
+    outputs:
+      ref: ${{ steps.ref.outputs.ref }}
     steps:
       - uses: actions/checkout@v6
+      - id: ref
+        run: |
+          echo "$(git rev-parse HEAD)"
+          echo "ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Cache Screenshots
+        id: screenshot-cache
+        uses: actions/cache@v5
+        with:
+          path: build
+          key: screenshots-${{ steps.ref.outputs.ref }}-${{ matrix.name }}
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: pnpm
       - name: Install Dependencies
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm install
       - name: Capture Screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem.screenshots.js
       - name: Rename screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
           cd build/screenshots
           for file in *; do
@@ -93,18 +124,32 @@ jobs:
     name: Visual Diff
     needs: [baseline, candidate]
     runs-on: ubuntu-latest
+    env:
+      OUTPUT_DIR: visual-diff-${{ github.event.pull_request.number }}
+      BASELINE_REF: ${{needs.baseline.outputs.ref}}
+      CANDIDATE_REF: ${{needs.candidate.outputs.ref}}
     steps:
+      - name: Restore Comparison Cache
+        id: comparison-cache
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            ${{ env.OUTPUT_DIR }}
+            results
+          key: comparison-${{ env.BASELINE_REF }}-${{ env.CANDIDATE_REF }}
       - uses: actions/download-artifact@v7
+        if: steps.comparison-cache.outputs.cache-hit != 'true'
         with:
           pattern: baseline-frontend-*
           path: baseline-frontend
           merge-multiple: true
       - uses: actions/download-artifact@v7
+        if: steps.comparison-cache.outputs.cache-hit != 'true'
         with:
           pattern: candidate-frontend-*
           path: candidate-frontend
           merge-multiple: true
-      - run: ls -lh baseline-frontend candidate-frontend
+      - run: ls -lh baseline-frontend candidate-frontend 2>/dev/null || true
       - uses: actions/setup-node@v6
         with:
           node-version: 24
@@ -112,19 +157,41 @@ jobs:
           mkdir -p ./results
           echo ${{ github.event.pull_request.number }} > ./results/pr_number
       - name: Create Visual Diff
-        run: npx visual-differ baseline-frontend candidate-frontend visual-diff-${{ github.event.pull_request.number }} > results/visual-diff.txt
-      - if: always()
-        run: cat results/visual-diff.txt
+        if: steps.comparison-cache.outputs.cache-hit != 'true'
+        run: |
+          set +e
+          npx visual-differ baseline-frontend candidate-frontend ${{ env.OUTPUT_DIR }} > results/visual-diff.txt
+          exit_code=$?
+          echo exit_code > ./results/exit_code
+          cp ${{ env.OUTPUT_DIR }}/report.md results/
+          cat results/report.md results/visual-diff.txt
       - uses: actions/upload-artifact@v6
         id: upload-output
-        if: always()
         with:
-          name: visual-diff-${{ github.event.pull_request.number }}
-          path: visual-diff-${{ github.event.pull_request.number }}
-      - if: always()
-        run: echo ${{ steps.upload-output.outputs.artifact-url }} > ./results/artifact_url
+          name: ${{ env.OUTPUT_DIR }}
+          path: ${{ env.OUTPUT_DIR }}
+      - run: |
+          echo ${{ steps.upload-output.outputs.artifact-url }} > ./results/artifact_url
+          echo ${{ contains(github.event.pull_request.labels.*.name, 'approve visual diff') }} > ./results/approved
+      - name: Save Comparison Cache
+        if: steps.comparison-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            ${{ env.OUTPUT_DIR }}
+            results
+          key: ${{ steps.comparison-cache.outputs.cache-primary-key }}
       - uses: actions/upload-artifact@v6
-        if: always()
         with:
           name: results
           path: results
+      - name: Check Status
+        run: |
+          exitCode=$(cat ./results/exit_code)
+          approved=$(cat ./results/approved)
+          echo "visual-differ exit code: $exitCode"
+          echo "approve visual diff label present: $approved"
+          if [ "$exitCode" != "0" ] && [ "$approved" != "true" ]; then
+            echo "Visual diff detected and 'approve visual diff' label not present."
+            exit 1
+          fi
