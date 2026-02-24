@@ -56,7 +56,7 @@ importers:
         version: 0.7.2
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
-        version: 1.0.6(@glint/template@1.7.4)(webpack@5.105.2)
+        version: 1.0.7(@glint/template@1.7.4)(webpack@5.105.2)
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0
@@ -260,7 +260,7 @@ importers:
         version: 8.2.6(eslint@9.39.3)
       eslint-plugin-yml:
         specifier: ^3.1.2
-        version: 3.2.2(eslint@9.39.3)
+        version: 3.3.0(eslint@9.39.3)
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -449,7 +449,7 @@ importers:
         version: 5.0.2(@babel/core@7.29.0)
       ember-intl:
         specifier: ^8.0.5
-        version: 8.1.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(typescript@5.9.3)
+        version: 8.1.1(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(typescript@5.9.3)
       ember-keyboard:
         specifier: ^9.0.4
         version: 9.0.4(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))
@@ -624,7 +624,7 @@ importers:
         version: 8.2.6(eslint@9.39.3)
       eslint-plugin-yml:
         specifier: ^3.1.2
-        version: 3.2.2(eslint@9.39.3)
+        version: 3.3.0(eslint@9.39.3)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -702,7 +702,7 @@ importers:
         version: 0.7.2
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
-        version: 1.0.6(@glint/template@1.7.4)(webpack@5.105.2)
+        version: 1.0.7(@glint/template@1.7.4)(webpack@5.105.2)
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0
@@ -843,7 +843,7 @@ importers:
         version: 8.2.6(eslint@9.39.3)
       eslint-plugin-yml:
         specifier: ^3.1.2
-        version: 3.2.2(eslint@9.39.3)
+        version: 3.3.0(eslint@9.39.3)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -939,7 +939,7 @@ importers:
         version: 0.7.2
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
-        version: 1.0.6(@glint/template@1.7.4)(webpack@5.105.2)
+        version: 1.0.7(@glint/template@1.7.4)(webpack@5.105.2)
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0
@@ -1077,7 +1077,7 @@ importers:
         version: 8.2.6(eslint@9.39.3)
       eslint-plugin-yml:
         specifier: ^3.1.2
-        version: 3.2.2(eslint@9.39.3)
+        version: 3.3.0(eslint@9.39.3)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -1173,7 +1173,7 @@ importers:
         version: 0.7.2
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
-        version: 1.0.6(@glint/template@1.7.4)(webpack@5.105.2)
+        version: 1.0.7(@glint/template@1.7.4)(webpack@5.105.2)
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0
@@ -1299,7 +1299,7 @@ importers:
         version: 8.2.6(eslint@9.39.3)
       eslint-plugin-yml:
         specifier: ^3.1.2
-        version: 3.2.2(eslint@9.39.3)
+        version: 3.3.0(eslint@9.39.3)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -2263,8 +2263,8 @@ packages:
     engines: {node: 20.* || >= 22}
     hasBin: true
 
-  '@ember-intl/v1-compat@1.0.6':
-    resolution: {integrity: sha512-DQQGUITVKU3obojN34LJjldf2Y+/YOJJ4aG3KWSgwRGe7jCWjm9BX7wvu1QEF4Z47DL7cTyX1DUdJeSHaekZJg==}
+  '@ember-intl/v1-compat@1.0.7':
+    resolution: {integrity: sha512-oIq0wzclBRXQ1kGoUvnjr7Wyj5sa24XjIE54+RZkBV250VCEsX5h8/MgPwl1j1aTsaqdRmAZT+NE/pqyHKmCNg==}
     engines: {node: 20.* || >= 22}
 
   '@ember-tooling/blueprint-blueprint@0.2.1':
@@ -4029,8 +4029,8 @@ packages:
     resolution: {integrity: sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg==}
     engines: {node: '>= 0.8'}
 
-  basic-ftp@5.1.0:
-    resolution: {integrity: sha512-RkaJzeJKDbaDWTIPiJwubyljaEPwpVWkm9Rt5h9Nd6h7tEXTJ3VB4qxdZBioV7JO5yLUaOKwz7vDOzlncUsegw==}
+  basic-ftp@5.2.0:
+    resolution: {integrity: sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==}
     engines: {node: '>=10.0.0'}
 
   better-path-resolve@1.0.0:
@@ -5589,8 +5589,8 @@ packages:
   ember-inflector@5.0.2:
     resolution: {integrity: sha512-aoPaT7B3pbUHSi4ulf02iRaMMvPteuDBO8jA1SLLOl/JwnO2YI5F/MhNPaolxp8DWwAd/P6MNN+wD5bLwmiUIA==}
 
-  ember-intl@8.1.0:
-    resolution: {integrity: sha512-2JQavcYYbMN9UJZDG3aUjz0wQ79ycGbyRetikyF/a2SZ4jTEoRZOaDrwNrIMGg+HGZpbYkOHZM4GnE2AzXDWEw==}
+  ember-intl@8.1.1:
+    resolution: {integrity: sha512-OgvCxDwyq2Sa2IljvtG7hBX066VArtGI/X6LkLtbR/s9IHs3Ir/60pzLGO/b9c03PKat0/Zxudl8LpDYDQ5kPw==}
     engines: {node: 20.* || >= 22}
     peerDependencies:
       '@ember/test-helpers': ^4.0.0 || ^5.0.0
@@ -5924,8 +5924,8 @@ packages:
     peerDependencies:
       eslint: '>=8.38.0'
 
-  eslint-plugin-yml@3.2.2:
-    resolution: {integrity: sha512-vMluBBMGecygLzeOly0EnDhudQb9CNEXEUokTap93oF/KyASAADed4xRlFBQQNuzJK3N6u5s3M/IjIKPGZZOKA==}
+  eslint-plugin-yml@3.3.0:
+    resolution: {integrity: sha512-kRja5paNrMfZnbNqDbZSFrSHz5x7jmGBQq7d6z/+wRvWD4Y0yb1fbjojBg3ReMewFhBB7nD2nPC86+m3HmILJA==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
     peerDependencies:
       eslint: '>=9.38.0'
@@ -11906,7 +11906,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@ember-intl/v1-compat@1.0.6(@glint/template@1.7.4)(webpack@5.105.2)':
+  '@ember-intl/v1-compat@1.0.7(@glint/template@1.7.4)(webpack@5.105.2)':
     dependencies:
       '@babel/core': 7.29.0(supports-color@8.1.1)
       broccoli-caching-writer: 3.1.0
@@ -14380,7 +14380,7 @@ snapshots:
     dependencies:
       safe-buffer: 5.1.2
 
-  basic-ftp@5.1.0: {}
+  basic-ftp@5.2.0: {}
 
   better-path-resolve@1.0.0:
     dependencies:
@@ -16775,7 +16775,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-intl@8.1.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(typescript@5.9.3):
+  ember-intl@8.1.1(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(typescript@5.9.3):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       '@formatjs/intl': 4.1.2(typescript@5.9.3)
@@ -17362,7 +17362,7 @@ snapshots:
       eslint: 9.39.3
       requireindex: 1.2.0
 
-  eslint-plugin-yml@3.2.2(eslint@9.39.3):
+  eslint-plugin-yml@3.3.0(eslint@9.39.3):
     dependencies:
       '@eslint/core': 1.1.0
       '@eslint/plugin-kit': 0.6.0
@@ -18241,7 +18241,7 @@ snapshots:
 
   get-uri@6.0.5:
     dependencies:
-      basic-ftp: 5.1.0
+      basic-ftp: 5.2.0
       data-uri-to-buffer: 6.0.2
       debug: 4.4.3(supports-color@8.1.1)
     transitivePeerDependencies:
