@@ -1,7 +1,10 @@
 @use "../mixins" as m;
 
 .pagedlist-controls {
+  align-items: center;
+  display: flex;
   float: right;
+  gap: 5px;
 
   .forward {
     padding-right: 0.75rem;

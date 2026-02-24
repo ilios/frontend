@@ -325,7 +325,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(component.text, 'My Materials None');
+    assert.strictEqual(component.text, 'My Materials Next 60 days All Materials None');
     assert.verifySteps(['API called']);
   });
 
