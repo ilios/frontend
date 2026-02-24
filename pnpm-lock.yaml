@@ -220,7 +220,7 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.10.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-modifier:
-        specifier: ^4.2.2
+        specifier: 4.2.2
         version: 4.2.2(@babel/core@7.29.0)
       ember-noscript:
         specifier: ^4.1.0
@@ -806,7 +806,7 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.10.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-modifier:
-        specifier: ^4.2.2
+        specifier: 4.2.2
         version: 4.2.2(@babel/core@7.29.0)
       ember-page-title:
         specifier: ^9.0.3
@@ -1040,7 +1040,7 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.10.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-modifier:
-        specifier: ^4.2.2
+        specifier: 4.2.2
         version: 4.2.2(@babel/core@7.29.0)
       ember-page-title:
         specifier: ^9.0.3
@@ -1262,7 +1262,7 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.10.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-modifier:
-        specifier: ^4.2.2
+        specifier: 4.2.2
         version: 4.2.2(@babel/core@7.29.0)
       ember-page-title:
         specifier: ^9.0.3
