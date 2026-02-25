@@ -53,7 +53,7 @@ export default class CourseDetailsComponent extends Component {
   <template>
     {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
       {{pageTitle "Courses | " @course.title " " this.academicYearDisplay}}
-      <BackToCourses />
+      <BackToCourses @course={{@course}} />
 
       <section
         class="course-details main-section"

@@ -128,6 +128,18 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
   });
 
+  test('back to courses link contains year of given course as query param', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const year = 2013;
+    const course = this.server.create('course', {
+      year,
+      school: this.school,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    await page.visit({ courseId: courseModel.id, details: true });
+    assert.strictEqual(page.backToCourses.url, `/courses?year=${year}`);
+  });
+
   test('pick clerkship type', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
