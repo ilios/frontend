@@ -24,7 +24,7 @@ export default class ToggleButtons extends Component {
     }
   }
   <template>
-    <span class="toggle-buttons" data-test-toggle-buttons ...attributes>
+    <span class="multi-button" data-test-toggle-buttons ...attributes>
       <input
         type="radio"
         id={{concat "first-toggle-" this.uniqueId}}

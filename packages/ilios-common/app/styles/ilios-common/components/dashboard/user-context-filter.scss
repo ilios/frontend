@@ -1,8 +1,6 @@
 @use "../../mixins" as m;
 
 .dashboard-user-context-filter {
-  @include m.multi-button;
-
   label.active {
     background-color: var(--blue);
     color: var(--white);

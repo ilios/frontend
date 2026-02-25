@@ -1,7 +1,7 @@
 @use "../../ilios-common/mixins" as cm;
 
 .courses-loading {
-  .toggle-mycourses .toggle-buttons label {
+  .toggle-mycourses .multi-buttons label {
     cursor: default;
     background-color: var(--lightest-grey);
     color: transparent;

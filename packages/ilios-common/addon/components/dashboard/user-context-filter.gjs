@@ -17,7 +17,7 @@ export default class DashboardUserContextFilterComponent extends Component {
     this.args.setUserContext(newUserContext);
   }
   <template>
-    <div class="dashboard-user-context-filter" data-test-dashboard-user-context-filter>
+    <div class="dashboard-user-context-filter multi-button" data-test-dashboard-user-context-filter>
       <input
         type="checkbox"
         id={{concat "instructing-toggle-" this.uniqueId}}
