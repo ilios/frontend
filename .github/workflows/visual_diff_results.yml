@@ -58,7 +58,9 @@ jobs:
             const approved = fs.readFileSync(path.join(temp, 'approved'));
             const url = fs.readFileSync(path.join(temp, 'artifact_url'), "utf8");
 
-            return { report, issue_number, url };
+            const rhett = { report, issue_number, exit_code, approved, url };
+            console.log(rhett);
+            return rhett;
       - name: Decode Output
         id: decoded
         run: |
