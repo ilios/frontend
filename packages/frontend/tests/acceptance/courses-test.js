@@ -4,8 +4,6 @@ import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { DateTime } from 'luxon';
 import page from 'frontend/tests/pages/courses';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 module('Acceptance | Courses', function (hooks) {
   setupApplicationTest(hooks);
@@ -19,7 +17,6 @@ module('Acceptance | Courses', function (hooks) {
   test('visiting /courses', async function (assert) {
     await page.visit();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/courses');
   });
 
@@ -86,7 +83,6 @@ module('Acceptance | Courses', function (hooks) {
       archived: true,
     });
     await page.visit();
-    await percySnapshot(getUniqueName(assert, 'default'));
     await takeScreenshot(assert, 'default');
     assert.strictEqual(page.root.list.courses.length, 5);
     assert.strictEqual(page.root.list.courses[0].title, regexCourse.title);
@@ -117,7 +113,6 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(page.root.headerTitle, 'Courses (2)');
 
     await page.root.filterByTitle('course');
-    await percySnapshot(getUniqueName(assert, 'filterByTitle'));
     await takeScreenshot(assert, 'filterByTitle');
     assert.strictEqual(page.root.list.courses.length, 4);
     assert.strictEqual(page.root.list.courses[0].title, lastCourse.title);

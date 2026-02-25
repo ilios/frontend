@@ -3,7 +3,6 @@ import { currentURL } from '@ember/test-helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/school';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | school/emails', function (hooks) {
   setupApplicationTest(hooks);
@@ -20,7 +19,6 @@ module('Acceptance | school/emails', function (hooks) {
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     const { emails: c } = page.manager;
 
     assert.strictEqual(c.title, 'Emails');
@@ -34,7 +32,6 @@ module('Acceptance | school/emails', function (hooks) {
   test('manage', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolManageEmails: true });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     const { emailsEditor: c } = page.manager;
 
     await c.administratorEmail.set('new-admin@school.edu');

@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program-year';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program Year - Terms', function (hooks) {
   setupApplicationTest(hooks);
@@ -41,7 +40,6 @@ module('Acceptance | Program Year - Terms', function (hooks) {
       pyTaxonomyDetails: true,
     });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.details.detailTaxonomies.vocabularies.length, 1);
     assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms.length, 1);
     assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms[0].name, 'term 0');
@@ -56,7 +54,6 @@ module('Acceptance | Program Year - Terms', function (hooks) {
     });
     await page.details.detailTaxonomies.manage();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.details.detailTaxonomies.manager.selectedTerms.length, 1);
     assert.strictEqual(
       page.details.detailTaxonomies.manager.selectedTerms[0].title,

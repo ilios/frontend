@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/reports-subject';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Reports - Subject Report', function (hooks) {
   setupApplicationTest(hooks);
@@ -97,7 +96,6 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     });
     await page.visit({ reportId: this.courseReport.id });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/1');
     assert.strictEqual(page.report.title.text, 'my report 0');
     assert.strictEqual(page.report.results.length, 1);
@@ -108,7 +106,6 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   test('term report works', async function (assert) {
     await page.visit({ reportId: this.termReport.id });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/2');
     assert.strictEqual(page.report.title.text, 'All Sessions for Term term 0 in school 0');
     assert.strictEqual(

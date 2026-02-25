@@ -3,7 +3,6 @@ import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Competencies', function (hooks) {
   setupApplicationTest(hooks);
@@ -54,7 +53,6 @@ module('Acceptance | Course - Competencies', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.details.collapsedCompetencies.title, 'Competencies (1)');
     assert.strictEqual(page.details.collapsedCompetencies.headers[0].text, 'School');
     assert.strictEqual(page.details.collapsedCompetencies.headers[1].text, 'Competencies');

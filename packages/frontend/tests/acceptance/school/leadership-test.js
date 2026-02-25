@@ -3,7 +3,6 @@ import { currentURL } from '@ember/test-helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/school';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | school/leadership', function (hooks) {
   setupApplicationTest(hooks);
@@ -29,7 +28,6 @@ module('Acceptance | school/leadership', function (hooks) {
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
     await takeScreenshot(assert);
-    await percySnapshot(assert);
 
     assert.strictEqual(page.manager.schoolLeadershipCollapsed.title, 'Leadership (4)');
     assert.strictEqual(page.manager.schoolLeadershipCollapsed.headers.length, 1);
@@ -54,7 +52,6 @@ module('Acceptance | school/leadership', function (hooks) {
       schoolLeadershipDetails: true,
     });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
 
     assert.strictEqual(page.manager.schoolLeadershipExpanded.title, 'Leadership (4)');
     const { directors, administrators } = page.manager.schoolLeadershipExpanded.leadershipList;

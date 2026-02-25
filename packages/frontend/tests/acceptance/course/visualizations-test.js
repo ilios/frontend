@@ -3,7 +3,6 @@ import { currentURL } from '@ember/test-helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations';
 import { setupAuthentication } from 'ilios-common';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | course visualizations', function (hooks) {
   setupApplicationTest(hooks);
@@ -20,7 +19,6 @@ module('Acceptance | course visualizations', function (hooks) {
   test('visiting /data/courses/1', async function (assert) {
     await page.visit({ courseId: 1 });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/data/courses/1');
     assert.ok(page.visualizations.objectives.isVisible);
     assert.ok(page.visualizations.sessionTypes.isVisible);

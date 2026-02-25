@@ -1,9 +1,7 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import { getUniqueName } from '../../helpers/percy-snapshot-name';
 import page from 'ilios-common/page-objects/course';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
@@ -104,10 +102,8 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0',
     );
-    await percySnapshot(getUniqueName(assert, 'objective list'));
     await takeScreenshot(assert, 'objective list');
     await page.details.objectives.objectiveList.objectives[0].parents.manage();
-    await percySnapshot(getUniqueName(assert, 'objective manager'));
     await takeScreenshot(assert, 'objective manager');
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
@@ -149,10 +145,8 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       'program-year objective 0',
     );
 
-    await percySnapshot(getUniqueName(assert, 'default background color'));
     await takeScreenshot(assert, 'default background color');
     await page.details.objectives.objectiveList.objectives[0].parents.manage();
-    await percySnapshot(getUniqueName(assert, 'managed background color'));
     await takeScreenshot(assert, 'managed background color');
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;

@@ -3,7 +3,6 @@ import { currentURL, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-objectives';
 import { setupAuthentication } from 'ilios-common';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | course visualizations - objectives', function (hooks) {
   setupApplicationTest(hooks);
@@ -70,7 +69,6 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
     await waitFor('.loaded');
     await waitFor('svg .chart');
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.root.objectivesChart.chart.slices.length, 2);
     assert.ok(page.root.objectivesChart.chart.slices[0].label.startsWith('77.8%'));
     assert.strictEqual(

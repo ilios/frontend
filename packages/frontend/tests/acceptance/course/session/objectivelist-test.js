@@ -3,7 +3,6 @@ import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/session';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Objective List', function (hooks) {
   setupApplicationTest(hooks);
@@ -51,7 +50,6 @@ module('Acceptance | Session - Objective List', function (hooks) {
       sessionObjectiveDetails: true,
     });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 13);
 
     assert.strictEqual(

@@ -17,7 +17,6 @@ import {
 } from 'ember-a11y-testing/test-support';
 
 import start from 'ember-exam/test-support/start';
-import './helpers/percy-snapshot-name';
 
 setupConsoleLogger();
 setRunOptions({

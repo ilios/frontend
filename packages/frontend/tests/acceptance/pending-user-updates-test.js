@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/pending-user-updates';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | pending user updates', function (hooks) {
   setupApplicationTest(hooks);
@@ -20,7 +19,6 @@ module('Acceptance | pending user updates', function (hooks) {
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.schoolFilter.text, 'school 0');
     assert.notOk(page.schoolFilter.isSelectable);
   });
@@ -47,7 +45,6 @@ module('Acceptance | pending user updates', function (hooks) {
     await setupAuthentication({ school: schools[0], administeredSchools: schools });
     await page.visit();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.ok(page.schoolFilter.isSelectable);
     assert.strictEqual(page.schoolFilter.options.length, 3);
     assert.ok(page.schoolFilter.options[0].selected);

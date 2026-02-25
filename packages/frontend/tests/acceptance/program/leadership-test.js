@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/program';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program - Leadership', function (hooks) {
   setupApplicationTest(hooks);
@@ -23,7 +22,6 @@ module('Acceptance | Program - Leadership', function (hooks) {
   test('collapsed leadership', async function (assert) {
     await page.visit({ programId: 1 });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.root.leadershipCollapsed.title, 'Leadership (2)');
     assert.strictEqual(page.root.leadershipCollapsed.headers.length, 1);
     assert.strictEqual(page.root.leadershipCollapsed.headers[0].title, 'Summary');
@@ -35,7 +33,6 @@ module('Acceptance | Program - Leadership', function (hooks) {
   test('list leadership', async function (assert) {
     await page.visit({ programId: 1, leadershipDetails: true });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.root.leadershipExpanded.title, 'Leadership (2)');
     const { directors } = page.root.leadershipExpanded.leadershipList;
     assert.strictEqual(directors.length, 2);
@@ -73,7 +70,6 @@ module('Acceptance | Program - Leadership', function (hooks) {
     await manager.directorSearch.search('guy');
     await manager.directorSearch.results[0].add();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(selectedDirectors.length, 2);
     assert.strictEqual(selectedDirectors[0].text, '0 guy M. Mc0son');
     assert.strictEqual(selectedDirectors[1].text, '3 guy M. Mc3son');

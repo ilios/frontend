@@ -5,8 +5,6 @@ import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/sessions';
 import sessionPage from 'ilios-common/page-objects/session';
-import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | Course - Session List', function (hooks) {
   setupApplicationTest(hooks);
@@ -89,7 +87,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   test('session list', async function (assert) {
     await page.visit({ courseId: this.course.id, details: true });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     const { sessions } = page.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
@@ -233,12 +230,10 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(expandedSessions.length, 0);
     assert.notOk(page.courseSessions.sessionsGridHeaderRow.expandCollapse.allAreExpanded);
     await page.courseSessions.sessionsGridHeaderRow.expandCollapse.toggle.click();
-    await percySnapshot(getUniqueName(assert, 'not expanded'));
     await takeScreenshot(assert, 'not expanded');
     assert.strictEqual(expandedSessions.length, 4);
     assert.ok(page.courseSessions.sessionsGridHeaderRow.expandCollapse.allAreExpanded);
     await page.courseSessions.sessionsGridHeaderRow.expandCollapse.toggle.click();
-    await percySnapshot(getUniqueName(assert, 'expanded'));
     await takeScreenshot(assert, 'expanded');
     assert.strictEqual(expandedSessions.length, 0);
     assert.notOk(page.courseSessions.sessionsGridHeaderRow.expandCollapse.allAreExpanded);

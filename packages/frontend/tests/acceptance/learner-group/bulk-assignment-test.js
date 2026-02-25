@@ -3,8 +3,6 @@ import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { triggerEvent, waitFor } from '@ember/test-helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from '../../pages/learner-group';
-import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   setupApplicationTest(hooks);
@@ -60,7 +58,6 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
 
   test('upload users', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
-    await percySnapshot(getUniqueName(assert, 'learnerGroupId 1'));
     await takeScreenshot(assert, 'learnerGroupId 1');
     await page.root.actions.buttons.bulkAssignment.click();
     this.server.create('user', {
@@ -81,7 +78,6 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     ];
     await triggerUpload(users);
     await waitFor('[data-test-upload-data-valid-users]');
-    await percySnapshot(getUniqueName(assert, 'upload users'));
     await takeScreenshot(assert, 'upload users');
 
     assert.strictEqual(page.root.bulkAssignment.validUploadedUsers.length, 2);
@@ -221,7 +217,6 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     );
     assert.notOk(page.root.bulkAssignment.showConfirmUploadButton);
     await takeScreenshot(assert);
-    await percySnapshot(assert);
   });
 
   test('choose small group match', async function (assert) {
@@ -301,14 +296,12 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.strictEqual(this.server.db.learnerGroups[0].userIds, null);
     assert.strictEqual(this.server.db.learnerGroups[1].userIds, null);
     assert.strictEqual(this.server.db.learnerGroups[2].userIds, null);
-    await percySnapshot(getUniqueName(assert, 'pre-bulkAssignment'));
     await takeScreenshot(assert, 'pre-bulkAssignment');
 
     await page.root.bulkAssignment.submitFinalData();
     assert.deepEqual(this.server.db.learnerGroups[0].userIds, ['2', '3']);
     assert.deepEqual(this.server.db.learnerGroups[1].userIds, null);
     assert.deepEqual(this.server.db.learnerGroups[2].userIds, ['3']);
-    await percySnapshot(getUniqueName(assert, 'post-bulkAssignment'));
     await takeScreenshot(assert, 'post-bulkAssignment');
   });
 

@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'ilios-common/page-objects/session';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Leadership', function (hooks) {
   setupApplicationTest(hooks);
@@ -36,7 +35,6 @@ module('Acceptance | Session - Leadership', function (hooks) {
   test('collapsed leadership', async function (assert) {
     await page.visit({ courseId: 1, sessionId: 1 });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
 
     assert.strictEqual(page.details.leadershipCollapsed.title, 'Leadership (3)');
     assert.strictEqual(page.details.leadershipCollapsed.headers.length, 1);

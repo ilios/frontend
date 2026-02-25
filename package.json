@@ -36,7 +36,6 @@
   "pnpm": {
     "ignoredBuiltDependencies": [
       "@parcel/watcher",
-      "@percy/core",
       "core-js"
     ],
     "onlyBuiltDependencies": [

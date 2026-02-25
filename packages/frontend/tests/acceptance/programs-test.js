@@ -4,8 +4,6 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/programs';
 import detailPage from 'frontend/tests/pages/program';
-import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 module('Acceptance | Programs', function (hooks) {
   setupApplicationTest(hooks);
@@ -19,7 +17,6 @@ module('Acceptance | Programs', function (hooks) {
     test('visiting /programs', async function (assert) {
       await page.visit();
       await takeScreenshot(assert);
-      await percySnapshot(assert);
       assert.strictEqual(currentRouteName(), 'programs');
     });
 
@@ -29,11 +26,9 @@ module('Acceptance | Programs', function (hooks) {
 
       assert.ok(page.root.toggleNewProgramFormExists);
       await page.root.toggleNewProgramForm();
-      await percySnapshot(getUniqueName(assert, 'expandButton'));
       await takeScreenshot(assert, 'expandButton');
       await page.root.newProgramForm.title.set('Test Title');
       await page.root.newProgramForm.done.click();
-      await percySnapshot(getUniqueName(assert, 'saveButton'));
       await takeScreenshot(assert, 'saveButton');
       assert.strictEqual(this.server.db.programs.length, 1);
       assert.strictEqual(page.root.list.items.length, 1);
