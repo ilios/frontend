@@ -162,7 +162,7 @@ jobs:
           set +e
           npx visual-differ baseline-frontend candidate-frontend ${{ env.OUTPUT_DIR }} > results/visual-diff.txt
           exit_code=$?
-          echo exit_code > ./results/exit_code
+          echo $exit_code > ./results/exit_code
           cp ${{ env.OUTPUT_DIR }}/report.md results/
           cat results/report.md results/visual-diff.txt
       - uses: actions/upload-artifact@v6
