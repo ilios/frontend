@@ -105,9 +105,9 @@ jobs:
           echo "visual-differ exit code: $exitCode"
           echo "approve visual diff label present: $approved"
           if [ "$exitCode" != "0" ] && [ "$approved" == "true" ]; then
-            $APPROVAL_RESULTS = "### ✅ Visual Diff Approved"
+            APPROVAL_RESULTS="### ✅ Visual Diff Approved"
           else
-            $APPROVAL_RESULTS = ""
+            APPROVAL_RESULTS=""
           fi
           echo "results=$APPROVAL_RESULTS" >> "$GITHUB_OUTPUT"
       - name: Find Previous Comment
