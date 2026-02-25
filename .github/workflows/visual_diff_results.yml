@@ -55,7 +55,7 @@ jobs:
             const report = fs.readFileSync(path.join(temp, 'report.md'), "utf8");
             const issue_number = Number(fs.readFileSync(path.join(temp, 'pr_number')));
             const exit_code = Number(fs.readFileSync(path.join(temp, 'exit_code')));
-            const approved = fs.readFileSync(path.join(temp, 'approved'));
+            const approved = fs.readFileSync(path.join(temp, 'approved'), "utf8");
             const url = fs.readFileSync(path.join(temp, 'artifact_url'), "utf8");
 
             const rhett = { report, issue_number, exit_code, approved, url };
