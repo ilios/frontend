@@ -35,7 +35,7 @@
     }
 
     .header-menu-item {
-      border: 0;
+      border: 2px solid var(--super-light-grey);
       background-color: var(--super-light-grey);
       color: var(--black);
       display: block;
@@ -49,20 +49,31 @@
       text-decoration: none;
       white-space: nowrap;
 
+      &:focus {
+        border-color: var(--grey);
+        border-collapse: separate;
+      }
+
+      &:hover {
+        background-color: var(--blue);
+        border-color: var(--blue);
+        color: var(--white);
+        &:focus {
+          border-color: var(--lightest-blue);
+        }
+      }
+
       &[aria-checked="true"],
       &.active {
         background-color: var(--green);
+        border-color: var(--green);
         color: var(--white);
-      }
-
-      &:hover,
-      &:focus {
-        background-color: var(--blue);
-        color: var(--white);
-        &[aria-checked="true"],
-        &.active {
+        cursor: default;
+        &:focus {
+          border-color: var(--lightest-green);
+        }
+        &:hover {
           background-color: var(--green);
-          cursor: default;
         }
       }
     }

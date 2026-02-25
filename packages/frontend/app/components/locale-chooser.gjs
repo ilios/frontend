@@ -95,13 +95,7 @@ export default class LocaleChooserComponent extends Component {
         break;
     }
   }
-  @action
-  clearFocus(event) {
-    const buttons = event.target.parentElement.children;
-    for (let i = 0; i < buttons.length; i++) {
-      buttons[i].blur();
-    }
-  }
+
   @action
   toggleMenu(event) {
     const { key } = event;
@@ -151,7 +145,6 @@ export default class LocaleChooserComponent extends Component {
               data-test-item
               {{on "click" (fn this.changeLocale loc.id)}}
               {{on "keydown" this.moveFocus}}
-              {{on "mouseenter" this.clearFocus}}
               {{focus (eq index 0)}}
             >
               {{loc.text}}
