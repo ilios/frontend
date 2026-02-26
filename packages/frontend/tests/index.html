@@ -19,6 +19,19 @@
     {{content-for "body"}}
     {{content-for "test-body"}}
 
+    <style>
+      #ember-testing {
+        @media (prefers-reduced-motion: reduce) {
+          *,
+          *::before,
+          *::after {
+            transition: none;
+            animation: none;
+          }
+        }
+      }
+    </style>
+
     <div id="qunit"></div>
     <div id="qunit-fixture">
       <div id="ember-testing-container">
