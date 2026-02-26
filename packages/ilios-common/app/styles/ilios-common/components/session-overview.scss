@@ -77,6 +77,10 @@
         justify-content: space-around;
       }
 
+      &.hidden {
+        display: none;
+      }
+
       label {
         white-space: nowrap;
         @include m.for-laptop-and-up {

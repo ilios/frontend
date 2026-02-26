@@ -58,21 +58,24 @@ const definition = {
     hasError: isVisible('.validation-error-message'),
   },
   ilm,
-  supplemental: {
-    scope: '[data-test-supplemental]',
-    checked: property('checked', 'input'),
-  },
-  specialAttire: {
-    scope: '[data-test-special-attire]',
-    checked: property('checked', 'input'),
-  },
-  specialEquipment: {
-    scope: '[data-test-special-equipment]',
-    checked: property('checked', 'input'),
-  },
-  attendanceRequired: {
-    scope: '[data-test-attendance-required]',
-    checked: property('checked', 'input'),
+  attributes: {
+    scope: '[data-test-attributes]',
+    supplemental: {
+      scope: '[data-test-supplemental]',
+      checked: property('checked', 'input'),
+    },
+    specialAttire: {
+      scope: '[data-test-special-attire]',
+      checked: property('checked', 'input'),
+    },
+    specialEquipment: {
+      scope: '[data-test-special-equipment]',
+      checked: property('checked', 'input'),
+    },
+    attendanceRequired: {
+      scope: '[data-test-attendance-required]',
+      checked: property('checked', 'input'),
+    },
   },
   prerequisites: {
     scope: '[data-test-prerequisites]',

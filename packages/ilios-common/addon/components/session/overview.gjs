@@ -153,6 +153,16 @@ export default class SessionOverview extends Component {
   }
 
   @cached
+  get showAttributes() {
+    return (
+      this.showAttendanceRequired ||
+      this.showSupplemental ||
+      this.showSpecialAttireRequired ||
+      this.showSpecialEquipmentRequired
+    );
+  }
+
+  @cached
   get showCopyData() {
     return new TrackedAsyncData(this.getShowCopy(this.args.session));
   }
@@ -439,7 +449,10 @@ export default class SessionOverview extends Component {
                   {{/if}}
                 </span>
               </div>
-              <fieldset class="session-attributes">
+              <fieldset
+                class="session-attributes{{unless this.showAttributes ' hidden'}}"
+                data-test-attributes
+              >
                 <legend>{{t "general.sessionAttributes"}}</legend>
                 {{#if this.showSupplemental}}
                   <label data-test-supplemental>

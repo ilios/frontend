@@ -310,10 +310,10 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.ok(page.details.overview.supplemental.isVisible);
-    assert.ok(page.details.overview.specialAttire.isVisible);
-    assert.ok(page.details.overview.specialEquipment.isVisible);
-    assert.ok(page.details.overview.attendanceRequired.isVisible);
+    assert.ok(page.details.overview.attributes.supplemental.isVisible);
+    assert.ok(page.details.overview.attributes.specialAttire.isVisible);
+    assert.ok(page.details.overview.attributes.specialEquipment.isVisible);
+    assert.ok(page.details.overview.attributes.attendanceRequired.isVisible);
   });
 
   test('session attributes are hidden by school config', async function (assert) {
@@ -344,10 +344,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.notOk(page.details.overview.supplemental.isVisible);
-    assert.notOk(page.details.overview.specialAttire.isVisible);
-    assert.notOk(page.details.overview.specialEquipment.isVisible);
-    assert.notOk(page.details.overview.attendanceRequired.isVisible);
+    assert.notOk(page.details.overview.attributes.isVisible);
+    assert.notOk(page.details.overview.attributes.supplemental.isVisible);
+    assert.notOk(page.details.overview.attributes.specialAttire.isVisible);
+    assert.notOk(page.details.overview.attributes.specialEquipment.isVisible);
+    assert.notOk(page.details.overview.attributes.attendanceRequired.isVisible);
   });
 
   test('session attributes are hidden when there is no school config', async function (assert) {
@@ -358,10 +359,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.notOk(page.details.overview.supplemental.isVisible);
-    assert.notOk(page.details.overview.specialAttire.isVisible);
-    assert.notOk(page.details.overview.specialEquipment.isVisible);
-    assert.notOk(page.details.overview.attendanceRequired.isVisible);
+    assert.notOk(page.details.overview.attributes.isVisible);
+    assert.notOk(page.details.overview.attributes.supplemental.isVisible);
+    assert.notOk(page.details.overview.attributes.specialAttire.isVisible);
+    assert.notOk(page.details.overview.attributes.specialEquipment.isVisible);
+    assert.notOk(page.details.overview.attributes.attendanceRequired.isVisible);
   });
 
   test('change supplemental', async function (assert) {
@@ -383,10 +385,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.ok(page.details.overview.supplemental.isVisible);
-    assert.notOk(page.details.overview.supplemental.checked);
-    await page.details.overview.supplemental.click();
-    assert.ok(page.details.overview.supplemental.checked);
+    assert.ok(page.details.overview.attributes.isVisible);
+    assert.ok(page.details.overview.attributes.supplemental.isVisible);
+    assert.notOk(page.details.overview.attributes.supplemental.checked);
+    await page.details.overview.attributes.supplemental.click();
+    assert.ok(page.details.overview.attributes.supplemental.checked);
   });
 
   test('change special attire', async function (assert) {
@@ -408,10 +411,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.ok(page.details.overview.specialAttire.isVisible);
-    assert.notOk(page.details.overview.specialAttire.checked);
-    await page.details.overview.specialAttire.click();
-    assert.ok(page.details.overview.specialAttire.checked);
+    assert.ok(page.details.overview.attributes.isVisible);
+    assert.ok(page.details.overview.attributes.specialAttire.isVisible);
+    assert.notOk(page.details.overview.attributes.specialAttire.checked);
+    await page.details.overview.attributes.specialAttire.click();
+    assert.ok(page.details.overview.attributes.specialAttire.checked);
   });
 
   test('change special equipment', async function (assert) {
@@ -433,10 +437,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.ok(page.details.overview.specialEquipment.isVisible);
-    assert.notOk(page.details.overview.specialEquipment.checked);
-    await page.details.overview.specialEquipment.click();
-    assert.ok(page.details.overview.specialEquipment.checked);
+    assert.ok(page.details.overview.attributes.isVisible);
+    assert.ok(page.details.overview.attributes.specialEquipment.isVisible);
+    assert.notOk(page.details.overview.attributes.specialEquipment.checked);
+    await page.details.overview.attributes.specialEquipment.click();
+    assert.ok(page.details.overview.attributes.specialEquipment.checked);
   });
 
   test('change attendance required', async function (assert) {
@@ -458,10 +463,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.ok(page.details.overview.attendanceRequired.isVisible);
-    assert.notOk(page.details.overview.attendanceRequired.checked);
-    await page.details.overview.attendanceRequired.click();
-    assert.ok(page.details.overview.attendanceRequired.checked);
+    assert.ok(page.details.overview.attributes.isVisible);
+    assert.ok(page.details.overview.attributes.attendanceRequired.isVisible);
+    assert.notOk(page.details.overview.attributes.attendanceRequired.checked);
+    await page.details.overview.attributes.attendanceRequired.click();
+    assert.ok(page.details.overview.attributes.attendanceRequired.checked);
   });
 
   test('change description', async function (assert) {
