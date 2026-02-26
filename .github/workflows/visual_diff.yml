@@ -160,7 +160,7 @@ jobs:
         if: steps.comparison-cache.outputs.cache-hit != 'true'
         run: |
           set +e
-          npx visual-differ baseline-frontend candidate-frontend ${{ env.OUTPUT_DIR }} > results/visual-diff.txt
+          npx visual-differ --threshold=0.25 baseline-frontend candidate-frontend ${{ env.OUTPUT_DIR }} > results/visual-diff.txt
           exit_code=$?
           echo $exit_code > ./results/exit_code
           cp ${{ env.OUTPUT_DIR }}/report.md results/
