@@ -1,5 +1,5 @@
 import { snapdom } from '@zumer/snapdom';
-import { getUniqueName } from './percy-snapshot-name';
+import { getUniqueName } from './screenshot-name';
 import { waitForPromise } from '@ember/test-waiters';
 
 let shouldTakeScreenshotsCache;
@@ -31,7 +31,7 @@ async function snap(element, filename, options) {
       placeholders: false,
       embedFonts: true,
       height: 1000,
-      exclude: ['.ilios-logo picture'],
+      exclude: ['.ilios-logo picture', '.ilios-footer .version'],
     },
     options,
   );

@@ -2,7 +2,6 @@ import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import config from 'frontend/config/environment';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Update Notification', function (hooks) {
   setupApplicationTest(hooks);
@@ -33,7 +32,6 @@ module('Acceptance | Update Notification', function (hooks) {
     await visit('/');
     await this.service.updateVersion.perform();
     assert.dom('[data-test-update-notification]').exists();
-    await percySnapshot(assert);
     await takeScreenshot(assert);
     assert.verifySteps(['version.txt called']);
   });

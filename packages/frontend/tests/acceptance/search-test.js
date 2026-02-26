@@ -4,7 +4,6 @@ import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/search';
 import dashboardPage from 'frontend/tests/pages/dashboard';
-import percySnapshot from '@percy/ember';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
 module('Acceptance | search', function (hooks) {
@@ -275,7 +274,6 @@ module('Acceptance | search', function (hooks) {
       schools: '2',
     });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.globalSearch.searchResults.length, 1);
     assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, `${year} Course 1`);
     assert.strictEqual(page.globalSearch.schoolFilters.length, 3);

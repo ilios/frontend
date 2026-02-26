@@ -5,7 +5,6 @@ import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/dashboard-week';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   setupApplicationTest(hooks);
@@ -54,7 +53,6 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     });
     await page.visit({ show: 'week' });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 
     assert.strictEqual(page.week.weekGlance.eventsByDate.length, 2);
@@ -116,7 +114,6 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     });
     await page.visit();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 
     assert.strictEqual(page.week.weekGlance.eventsByDate.length, 1);

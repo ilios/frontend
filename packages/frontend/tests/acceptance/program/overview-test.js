@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program - Overview', function (hooks) {
   setupApplicationTest(hooks);
@@ -19,7 +18,6 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'program.index');
     assert.strictEqual(page.root.overview.shortTitle.text, 'Title (short): short_0');
     assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 4');
@@ -32,7 +30,6 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'program.index');
     assert.strictEqual(page.root.overview.shortTitle.text, 'Title (short): short_0');
     assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 4');

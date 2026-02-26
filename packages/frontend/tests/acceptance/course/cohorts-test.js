@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'ilios-common/page-objects/course';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Cohorts', function (hooks) {
   setupApplicationTest(hooks);
@@ -92,7 +91,6 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     await page.visit({ courseId: this.course.id, details: true });
     await page.details.detailCohorts.manage();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
 
     assert.strictEqual(page.details.detailCohorts.manager.selectedCohorts.length, 1);
     assert.strictEqual(

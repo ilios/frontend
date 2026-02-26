@@ -2,8 +2,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/school';
-import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | School - Session Attributes', function (hooks) {
   setupApplicationTest(hooks);
@@ -26,7 +24,6 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     });
     await page.visit({ schoolId: this.school.id });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.collapsed.attendanceRequired.label,
       'Attendance Required',
@@ -62,7 +59,6 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     });
     await page.visit({ schoolId: this.school.id, schoolSessionAttributesDetails: true });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.label,
       'Attendance Required',
@@ -107,7 +103,6 @@ module('Acceptance | School - Session Attributes', function (hooks) {
       schoolSessionAttributesDetails: true,
       schoolManageSessionAttributes: true,
     });
-    await percySnapshot(getUniqueName(assert, 'default'));
     await takeScreenshot(assert, 'default');
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.label,
@@ -138,7 +133,6 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     await page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.check();
     await page.manager.schoolSessionAttributes.expanded.manager.supplemental.check();
     await page.manager.schoolSessionAttributes.expanded.manager.specialEquipmentRequired.check();
-    await percySnapshot(getUniqueName(assert, 'session attributes checked'));
     await takeScreenshot(assert, 'session attributes checked');
     await page.manager.schoolSessionAttributes.expanded.save();
     assert.strictEqual(

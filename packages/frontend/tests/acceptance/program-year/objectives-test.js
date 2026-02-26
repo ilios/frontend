@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program-year';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program Year - Objectives', function (hooks) {
   setupApplicationTest(hooks);
@@ -70,7 +69,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
@@ -148,7 +146,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   test('list not editable', async function (assert) {
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,

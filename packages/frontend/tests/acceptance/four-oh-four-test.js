@@ -2,7 +2,6 @@ import { currentRouteName, currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | FourOhFour', function (hooks) {
   setupApplicationTest(hooks);
@@ -14,7 +13,6 @@ module('Acceptance | FourOhFour', function (hooks) {
   test('visiting /four-oh-four', async function (assert) {
     await visit('/four-oh-four');
     await takeScreenshot(assert);
-    await percySnapshot(assert);
 
     assert.strictEqual(currentRouteName(), 'four-oh-four');
     assert

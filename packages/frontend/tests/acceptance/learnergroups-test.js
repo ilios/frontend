@@ -4,8 +4,6 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/learner-groups';
 import learnerGroupPage from 'frontend/tests/pages/learner-group';
-import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 module('Acceptance | Learner Groups', function (hooks) {
   setupApplicationTest(hooks);
@@ -51,7 +49,6 @@ module('Acceptance | Learner Groups', function (hooks) {
 
     await page.visit();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.ok(page.list.isPresent);
     assert.strictEqual(page.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(page.list.items.length, 2);
@@ -69,7 +66,6 @@ module('Acceptance | Learner Groups', function (hooks) {
     this.server.create('cohort', { programYear });
     await page.visit();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.notOk(page.schoolFilter.hasMany);
     assert.strictEqual(page.schoolFilter.text, 'school 0');
     assert.notOk(page.programFilter.hasMany);
@@ -93,7 +89,6 @@ module('Acceptance | Learner Groups', function (hooks) {
 
     await page.visit();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.ok(page.schoolFilter.hasMany);
     assert.strictEqual(page.schoolFilter.schools.length, 2);
     assert.strictEqual(page.schoolFilter.schools[0].text, 'school 0');
@@ -203,7 +198,6 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.notOk(page.list.isPresent);
     await page.toggleNewLearnerGroupForm();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.ok(page.newLearnerGroupForm.single.isVisible);
     await page.newLearnerGroupForm.single.title(newTitle);
     assert.notOk(page.newLearnerGroupForm.single.willFill);
@@ -255,7 +249,6 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.ok(page.list.items[0].canBeDeleted);
     await page.list.items[0].remove();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     await page.list.confirmRemoval.confirm();
     assert.strictEqual(page.headerTitle, 'Learner Groups (0)');
     assert.notOk(page.list.isPresent);
@@ -359,7 +352,6 @@ module('Acceptance | Learner Groups', function (hooks) {
     });
     await page.visit();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.list.items.length, 4);
     assert.strictEqual(page.list.items[0].title, 'has sub-group linked to ilm');
     assert.notOk(page.list.items[0].canBeDeleted);
@@ -467,10 +459,8 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.list.items[0].copy();
     assert.ok(page.list.confirmCopy.canCopyWithoutLearners);
     assert.ok(page.list.confirmCopy.canCopyWithLearners);
-    await percySnapshot(getUniqueName(assert, 'canCopyWithLearners'));
     await takeScreenshot(assert, 'canCopyWithLearners');
     await page.list.confirmCopy.copyWithoutLearners();
-    await percySnapshot(getUniqueName(assert, 'copyWithoutLearners'));
     await takeScreenshot(assert, 'copyWithoutLearners');
 
     assert.strictEqual(page.list.items.length, 2);
@@ -533,10 +523,8 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.list.items[0].copy();
     assert.ok(page.list.confirmCopy.canCopyWithoutLearners);
     assert.ok(page.list.confirmCopy.canCopyWithLearners);
-    await percySnapshot(getUniqueName(assert, 'canCopyWithLearners'));
     await takeScreenshot(assert, 'canCopyWithLearners');
     await page.list.confirmCopy.copyWithLearners();
-    await percySnapshot(getUniqueName(assert, 'copyWithLearners'));
     await takeScreenshot(assert, 'copyWithLearners');
 
     assert.strictEqual(page.list.items.length, 2);

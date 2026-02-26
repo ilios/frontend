@@ -4,8 +4,6 @@ import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import page from 'ilios-common/page-objects/dashboard-materials';
-import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | Dashboard Materials', function (hooks) {
   setupApplicationTest(hooks);
@@ -163,7 +161,6 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     });
     await page.visit();
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.ok(page.navigation.materials.isActive);
     assert.notOk(page.navigation.calendar.isActive);
     assert.notOk(page.navigation.week.isActive);
@@ -312,7 +309,6 @@ module('Acceptance | Dashboard Materials', function (hooks) {
 
     await page.visit({ showAll: true });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.ok(page.navigation.isVisible);
     assert.ok(page.materials.header.displayToggle.secondButton.isChecked);
     assert.strictEqual(page.materials.courseFilter.options.length, 6);
@@ -553,7 +549,6 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       };
     });
     await page.visit();
-    await percySnapshot(getUniqueName(assert, 'default'));
     await takeScreenshot(assert, 'default');
 
     const materials = page.materials.table.rows;
@@ -571,7 +566,6 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     await materials[4].status.click();
     await materials[4].status.click();
     await materials[5].status.click();
-    await percySnapshot(getUniqueName(assert, 'checkbox status'));
     await takeScreenshot(assert, 'checkbox status');
 
     assert.ok(materials[0].status.isChecked);

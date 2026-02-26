@@ -1,5 +1,4 @@
 import { currentURL } from '@ember/test-helpers';
-import percySnapshot from '@percy/ember';
 import { test, module } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
@@ -22,7 +21,6 @@ module('Acceptance | Program Year - Cohort members', function (hooks) {
   test('expand and collapse cohort members', async function (assert) {
     await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(
       currentURL(),
       `/programs/${this.program.id}/programyears/${this.programYear.id}`,
@@ -52,7 +50,6 @@ module('Acceptance | Program Year - Cohort members', function (hooks) {
       showCohortMembers: 'true',
     });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(
       currentURL(),
       `/programs/${this.program.id}/programyears/${this.programYear.id}?showCohortMembers=true`,

@@ -13,7 +13,6 @@ open source software, ilios would be nowhere, so if you have a chance to pay the
 - [GitHub](https://github.com)
 - [Sentry](https://sentry.io/for/open-source/)
 - [Netlify](https://www.netlify.com)
-- [BrowserStack](https://www.browserstack.com)
 
 ## Reporting Issue
 

@@ -2,7 +2,6 @@ import { find, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Print Course', function (hooks) {
   setupApplicationTest(hooks);
@@ -62,7 +61,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   test('print course header', async function (assert) {
     await visit('/course/1/print');
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.dom('[data-test-course-header] [data-test-course-title]').hasText('Back to the Future');
     assert.dom('[data-test-course-header] [data-test-course-year]').hasText('2013');
   });

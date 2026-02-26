@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { component } from 'ilios-common/page-objects/components/api-version-notice';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | API Version Check', function (hooks) {
   setupApplicationTest(hooks);
@@ -52,7 +51,6 @@ module('Acceptance | API Version Check', function (hooks) {
     await visit('/');
     await waitFor('[data-test-load-finished]');
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.ok(component.mismatched);
     assert.verifySteps(['API called']);
   });

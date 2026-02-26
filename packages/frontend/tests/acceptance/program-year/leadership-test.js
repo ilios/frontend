@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/program-year';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program Year - Leadership', function (hooks) {
   setupApplicationTest(hooks);
@@ -27,7 +26,6 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
   test('collapsed leadership', async function (assert) {
     await page.visit({ programId: 1, programYearId: 1 });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.details.collapsedLeadership.title, 'Leadership (2)');
     assert.strictEqual(page.details.collapsedLeadership.headers.length, 1);
     assert.strictEqual(page.details.collapsedLeadership.headers[0].title, 'Summary');
@@ -39,7 +37,6 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
   test('list leadership', async function (assert) {
     await page.visit({ programId: 1, programYearId: 1, pyLeadershipDetails: true });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.details.expandedLeadership.title, 'Leadership (2)');
     const { directors } = page.details.expandedLeadership.leadershipList;
     assert.strictEqual(directors.length, 2);

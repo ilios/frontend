@@ -4,8 +4,6 @@ import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import { t } from 'ember-intl/test-support';
 import page from 'ilios-common/page-objects/course';
-import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);
@@ -43,7 +41,6 @@ module('Acceptance | Course - Overview', function (hooks) {
         .findRecord('course-clerkship-type', this.clerkshipType.id);
       await page.visit({ courseId: courseModel.id });
       await takeScreenshot(assert);
-      await percySnapshot(assert);
       assert.strictEqual(
         page.details.overview.startDate.text,
         'Start Date: ' +
@@ -80,7 +77,6 @@ module('Acceptance | Course - Overview', function (hooks) {
         .findRecord('course-clerkship-type', this.clerkshipType.id);
       await page.visit({ courseId: courseModel.id, details: true });
       await takeScreenshot(assert);
-      await percySnapshot(assert);
       assert.strictEqual(
         page.details.overview.startDate.text,
         'Start Date: ' +
@@ -116,12 +112,10 @@ module('Acceptance | Course - Overview', function (hooks) {
       assert.strictEqual(page.details.titles, 2);
       assert.strictEqual(currentURL(), '/courses/1');
       await page.details.collapseControl();
-      await percySnapshot(getUniqueName(assert, '/courses/1'));
       await takeScreenshot(assert, '/courses/1');
       assert.ok(page.details.titles > 2);
       assert.strictEqual(currentURL(), '/courses/1?details=true');
       await page.details.collapseControl();
-      await percySnapshot(getUniqueName(assert, '/courses/1?details=true'));
       await takeScreenshot(assert, '/courses/1?details=true');
       assert.strictEqual(page.details.titles, 2);
       assert.strictEqual(currentURL(), '/courses/1');

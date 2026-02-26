@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Objective List', function (hooks) {
   setupApplicationTest(hooks);
@@ -52,7 +51,6 @@ module('Acceptance | Course - Objective List', function (hooks) {
       courseObjectiveDetails: true,
     });
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 13);
 
     assert.strictEqual(
@@ -157,7 +155,6 @@ module('Acceptance | Course - Objective List', function (hooks) {
       longTitle,
     );
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     await page.details.objectives.objectiveList.objectives[0].description.openEditor();
     assert.strictEqual(
       await page.details.objectives.objectiveList.objectives[0].description.editorContents(),

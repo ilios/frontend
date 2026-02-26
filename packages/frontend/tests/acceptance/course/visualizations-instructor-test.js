@@ -4,7 +4,6 @@ import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-instructor';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | course visualizations - instructor', function (hooks) {
   setupApplicationTest(hooks);
@@ -79,7 +78,6 @@ module('Acceptance | course visualizations - instructor', function (hooks) {
     await waitFor('svg .bars');
     await waitFor('svg .slice');
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.root.termsChart.chart.bars.length, 3);
     assert.strictEqual(page.root.termsChart.chart.labels.length, 3);
     assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'Vocabulary 1 - term 0\u200b');

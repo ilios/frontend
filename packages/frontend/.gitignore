@@ -18,6 +18,3 @@
 # broccoli-debug
 /DEBUG/
 
-#browserstack via ember-cli-browserstack
-browserstack-local.pid
-local.log

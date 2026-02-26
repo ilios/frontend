@@ -4,7 +4,6 @@ import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-session-types';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | course visualizations - session-types', function (hooks) {
   setupApplicationTest(hooks);
@@ -69,7 +68,6 @@ module('Acceptance | course visualizations - session-types', function (hooks) {
     await waitFor('.loaded');
     await waitFor('svg .bars');
     await takeScreenshot(assert);
-    await percySnapshot(assert);
     assert.strictEqual(page.root.title, 'course 0 2022');
     assert.strictEqual(page.root.sessionTypesChart.chart.bars.length, 3);
     assert.strictEqual(
