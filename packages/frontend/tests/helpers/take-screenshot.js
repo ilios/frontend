@@ -1,6 +1,7 @@
 import { snapdom } from '@zumer/snapdom';
 import { getUniqueName } from './screenshot-name';
 import { waitForPromise } from '@ember/test-waiters';
+import { settled } from '@ember/test-helpers';
 
 let shouldTakeScreenshotsCache;
 
@@ -35,6 +36,7 @@ async function snap(element, filename, options) {
     },
     options,
   );
+  await settled();
   const result = await snapdom(element, snapOptions);
 
   return waitForPromise(result.download({ format: 'png', filename }));
