@@ -129,7 +129,7 @@ jobs:
             -Dsonar.projectKey=ilios_frontend_27a24e39-b0ec-405a-91a6-b6392ffcdd30
 
   cache-baseline:
-    name: Cache Baseline (${{ matrix.name }})
+    name: Cache Baseline
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     strategy:
