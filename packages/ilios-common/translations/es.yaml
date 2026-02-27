@@ -312,6 +312,7 @@ general:
   selectedMeshFor: "MeSH seleccionado para: {title}"
   selectVocabulary: Seleccione un Vocabulario
   session: Sessión
+  sessionAttributes: Atributos de la Sesión
   sessionLearningMaterials: Materiales de Aprendizaje de la Sesión
   sessions: Sesiones
   sessionTitle: Titulo de Sesión

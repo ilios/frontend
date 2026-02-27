@@ -3,10 +3,11 @@
 @mixin ilios-fieldset {
   border: 1px solid var(--light-blue);
   border-radius: 10px;
-  margin-top: 1em;
 
   legend {
     @include ilios-heading.ilios-heading;
     font-weight: 600;
+    margin: 0 -0.5rem;
+    padding: 0 0.5rem;
   }
 }

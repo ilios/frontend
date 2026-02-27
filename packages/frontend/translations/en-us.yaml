@@ -341,7 +341,6 @@ general:
   sequenceBlocks: Sequence Blocks
   sequenceBlockTitlePlaceholder: Enter a title for this sequence block
   sequenceNumber: "Sequence #"
-  sessionAttributes: Session Attributes
   sessionObjective: Session Objective
   sessionObjectives: Session Objectives
   sessionObjectivesReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each session objective is listed along with instructors and course data."
