@@ -58,7 +58,8 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.ilm.ilmHours.isVisible);
     assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
-    assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), ilmSession.hours);
+    assert.ok(page.details.overview.ilm.isIlm);
+    assert.strictEqual(Number(page.details.overview.ilm.ilmHours.value), ilmSession.hours);
     assert.strictEqual(
       page.details.overview.ilm.ilmDueDateAndTime.value,
       this.intl.formatDate(ilmSession.dueDate, {
@@ -71,8 +72,10 @@ module('Acceptance | Session - Overview', function (hooks) {
       }),
     );
 
-    await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
+    await page.details.overview.ilm.removeIlm();
+    await page.details.overview.ilm.confirm();
 
+    assert.notOk(page.details.overview.ilm.isIlm);
     assert.notOk(page.details.overview.ilm.ilmHours.isVisible);
     assert.notOk(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
   });
@@ -94,12 +97,14 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.notOk(page.details.overview.ilm.ilmHours.isVisible);
     assert.notOk(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
+    assert.notOk(page.details.overview.ilm.isIlm);
 
-    await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
+    await page.details.overview.ilm.addIlm();
 
     assert.ok(page.details.overview.ilm.ilmHours.isVisible);
     assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
-    assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), 1);
+    assert.ok(page.details.overview.ilm.isIlm);
+    assert.strictEqual(Number(page.details.overview.ilm.ilmHours.value), 1);
     assert.strictEqual(
       page.details.overview.ilm.ilmDueDateAndTime.value,
       this.intl.formatDate(DateTime.fromObject({ hour: 17, minute: 0 }).plus({ weeks: 6 }), {

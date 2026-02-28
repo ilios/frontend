@@ -19,20 +19,18 @@ module('Integration | Component | session/ilm', function (hooks) {
     assert.notOk(component.ilmHours.edit.isVisible);
     assert.ok(component.ilmDueDateAndTime.isVisible);
     assert.notOk(component.ilmDueDateAndTime.isEditable);
-    assert.notOk(component.toggleIlm.yesNoToggle.isVisible);
+    assert.notOk(component.canAdd);
+    assert.notOk(component.canRemove);
     assert.ok(component.isIlm);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it renders and is accessible when not editable with no ILM', async function (assert) {
+  test('it does not render when not editable with no ILM', async function (assert) {
     this.set('session', this.server.create('session'));
     await render(<template><Ilm @session={{this.session}} @editable={{false}} /></template>);
-    assert.notOk(component.ilmHours.isVisible);
-    assert.notOk(component.ilmDueDateAndTime.isVisible);
-    assert.notOk(component.toggleIlm.yesNoToggle.isVisible);
-    assert.notOk(component.isIlm);
+    assert.notOk(component.isVisible);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -44,8 +42,8 @@ module('Integration | Component | session/ilm', function (hooks) {
     await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
     assert.ok(component.ilmHours.isVisible);
     assert.ok(component.ilmDueDateAndTime.isVisible);
-    assert.ok(component.toggleIlm.yesNoToggle.isVisible);
-    assert.strictEqual(component.toggleIlm.yesNoToggle.checked, 'true');
+    assert.notOk(component.canAdd);
+    assert.ok(component.canRemove);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -56,8 +54,8 @@ module('Integration | Component | session/ilm', function (hooks) {
     await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
     assert.notOk(component.ilmHours.isVisible);
     assert.notOk(component.ilmDueDateAndTime.isVisible);
-    assert.ok(component.toggleIlm.yesNoToggle.isVisible);
-    assert.strictEqual(component.toggleIlm.yesNoToggle.checked, 'false');
+    assert.ok(component.canAdd);
+    assert.notOk(component.canRemove);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -83,5 +81,57 @@ module('Integration | Component | session/ilm', function (hooks) {
     await component.ilmHours.cancel();
     await component.ilmHours.edit();
     assert.notOk(component.ilmHours.hasError);
+  });
+
+  test('remove and confirm', async function (assert) {
+    const ilmSession = this.server.create('ilmSession');
+    const session = this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
+    await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
+    assert.ok(component.isIlm);
+    assert.ok(component.canRemove);
+    await component.removeIlm();
+    assert.ok(component.confirmationMessage.isVisible);
+
+    await a11yAudit(this.element);
+    await component.confirm();
+
+    assert.notOk(component.isIlm);
+    assert.ok(component.canAdd);
+    assert.strictEqual(this.server.db.ilmSessions.length, 0);
+  });
+
+  test('remove and cancel', async function (assert) {
+    const ilmSession = this.server.create('ilmSession');
+    const session = this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
+    await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
+    assert.ok(component.isIlm);
+    assert.ok(component.canRemove);
+    await component.removeIlm();
+    assert.ok(component.confirmationMessage.isVisible);
+    await component.cancel();
+
+    assert.ok(component.isIlm);
+    assert.notOk(component.canAdd);
+    assert.ok(component.canRemove);
+    assert.strictEqual(this.server.db.ilmSessions.length, 1);
+  });
+
+  test('remove and undo', async function (assert) {
+    const ilmSession = this.server.create('ilmSession');
+    const session = this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
+    await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
+    assert.ok(component.isIlm);
+    assert.ok(component.canRemove);
+    await component.removeIlm();
+    assert.ok(component.confirmationMessage.isVisible);
+    await component.undo();
+
+    assert.ok(component.isIlm);
+    assert.notOk(component.canAdd);
+    assert.ok(component.canRemove);
+    assert.strictEqual(this.server.db.ilmSessions.length, 1);
   });
 });
