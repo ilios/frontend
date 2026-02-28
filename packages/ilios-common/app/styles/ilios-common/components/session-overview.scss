@@ -112,13 +112,6 @@
     grid-column: 1/-1;
   }
 
-  hr {
-    background: 0;
-    grid-column: 1 / -1;
-    height: 0;
-    margin: 1rem;
-  }
-
   .sessiondescription,
   .instructional-notes {
     grid-column: 1 / -1;
@@ -130,11 +123,5 @@
 
   .fa-copy {
     color: var(--green);
-  }
-
-  @include m.for-desktop-and-up {
-    .session-overview-ilm-duedate {
-      grid-column: 2 / -1;
-    }
   }
 }

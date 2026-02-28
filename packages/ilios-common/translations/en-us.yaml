@@ -4,6 +4,7 @@ general:
   actions: Actions
   activeFilters: Active Filters
   add: Add
+  addIlm: Add ILM to {session}
   addNew: Add New
   admin: Admin
   administratorCount: "There {count, plural, =1 {is 1 administrator} other {are # administrators}}"
@@ -51,6 +52,7 @@ general:
   competencies: Competencies
   complete: Complete
   completeSessions: "Sessions Complete: ready to publish"
+  confirmRemoveIlm: "Are you sure you want to delete this ILM? This action cannot be undone and will remove all learners and instructors linked directly to this session."
   confirmRemoveLearningMaterial: Are you sure you want to remove this learning material? This action cannot be undone.
   confirmRemoveObjective: Are you sure you want to delete this objective? This action cannot be undone.
   confirmRemoveSession: Are you sure you want to delete this session? This action cannot be undone.
