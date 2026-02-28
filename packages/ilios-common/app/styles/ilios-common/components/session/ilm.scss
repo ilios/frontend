@@ -1,0 +1,96 @@
+@use "../../mixins" as m;
+
+.session-ilm {
+  @include m.ilios-fieldset;
+  display: flex;
+  flex-direction: column;
+  margin: 0.25rem 0.5rem 0.25rem 0;
+  align-items: flex-start;
+
+  @include m.for-tablet-and-up {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  legend {
+    display: flex;
+    align-items: center;
+
+    button {
+      background-color: transparent;
+      padding: 0;
+      margin-left: 0.25rem;
+      color: var(--blue);
+
+      &.remove {
+        color: var(--red);
+      }
+    }
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  &.not-ilm {
+    justify-content: flex-start;
+    button {
+      background-color: var(--green);
+      margin-left: 1rem;
+    }
+  }
+
+  &.is-ilm {
+    @include m.for-tablet-and-up {
+      min-height: 4rem;
+    }
+
+    &.recently-added {
+      transition: background-color 3s ease-in;
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+    }
+
+    .hours {
+      input {
+        width: 3rem;
+      }
+    }
+  }
+
+  &.is-new {
+    background-color: var(--transparent-green);
+  }
+
+  &.confirm-removal {
+    flex-direction: column;
+    background-color: var(--lightest-red);
+    color: var(--light-red);
+    font-weight: 600;
+
+    p {
+      text-align: center;
+    }
+
+    .confirm-buttons {
+      button {
+        margin: 0.5rem;
+      }
+
+      .remove {
+        background-color: var(--white);
+        color: var(--light-red);
+
+        &:hover {
+          background-color: var(--light-red);
+          color: white;
+        }
+      }
+    }
+  }
+}
