@@ -20,14 +20,12 @@
     {{content-for "test-body"}}
 
     <style>
-      #ember-testing {
-        @media (prefers-reduced-motion: reduce) {
-          *,
-          *::before,
-          *::after {
-            transition: none;
-            animation: none;
-          }
+      @media (prefers-reduced-motion: reduce) {
+        #ember-testing *,
+        #ember-testing *::before,
+        #ember-testing *::after {
+          transition: none;
+          animation: none;
         }
       }
     </style>
