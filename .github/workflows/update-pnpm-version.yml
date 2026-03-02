@@ -44,9 +44,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Enable Pull Request Automerge and Label for Tests
         if: steps.cpr.outputs.pull-request-operation == 'created'
-        run: |
-          gh pr edit --add-label "run ui tests" ${{ steps.cpr.outputs.pull-request-number }}
-          gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
+        run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
         env:
           GH_TOKEN: ${{ secrets.ZORGBORT_TOKEN }}
       - uses: act10ns/slack@v2
