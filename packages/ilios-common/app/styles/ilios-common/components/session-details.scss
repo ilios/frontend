@@ -1,5 +1,19 @@
 .back-to-session {
+  display: flex;
+  gap: 5px;
   margin-bottom: 1rem;
+
+  .course-and-status {
+    display: flex;
+
+    .status {
+      padding-right: 3px;
+    }
+
+    .course {
+      padding-right: 10px;
+    }
+  }
 }
 
 .session-details {
