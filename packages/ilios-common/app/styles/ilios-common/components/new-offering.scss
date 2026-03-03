@@ -1,7 +1,7 @@
 @use "../mixins" as m;
 
 .new-offering {
-  margin-top: 2rem;
+  margin-top: -1.65rem;
 
   .new-offering-title {
     @include m.ilios-heading-h5;
