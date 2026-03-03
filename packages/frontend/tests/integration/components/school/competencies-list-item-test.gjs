@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/school-competencies-list-item';
-import SchoolCompetenciesListItem from 'frontend/components/school-competencies-list-item';
+import { component } from 'frontend/tests/pages/components/school/competencies-list-item';
+import CompetenciesListItem from 'frontend/components/school/competencies-list-item';
 
-module('Integration | Component | school-competencies-list-item', function (hooks) {
+module('Integration | Component | school/competencies-list-item', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -33,7 +33,7 @@ module('Integration | Component | school-competencies-list-item', function (hook
     this.set('competency', this.domainModel);
     await render(
       <template>
-        <SchoolCompetenciesListItem
+        <CompetenciesListItem
           @competency={{this.competency}}
           @isDomain={{true}}
           @canUpdate={{true}}
@@ -54,7 +54,7 @@ module('Integration | Component | school-competencies-list-item', function (hook
     this.set('competency', this.competencyModel);
     await render(
       <template>
-        <SchoolCompetenciesListItem
+        <CompetenciesListItem
           @competency={{this.competency}}
           @isDomain={{false}}
           @canUpdate={{true}}
@@ -74,7 +74,7 @@ module('Integration | Component | school-competencies-list-item', function (hook
     this.set('competency', this.competencyModel);
     await render(
       <template>
-        <SchoolCompetenciesListItem
+        <CompetenciesListItem
           @competency={{this.competency}}
           @isDomain={{false}}
           @canUpdate={{true}}
@@ -98,7 +98,7 @@ module('Integration | Component | school-competencies-list-item', function (hook
     this.set('competency', this.domainModel);
     await render(
       <template>
-        <SchoolCompetenciesListItem
+        <CompetenciesListItem
           @competency={{this.competency}}
           @isDomain={{false}}
           @canUpdate={{true}}

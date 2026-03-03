@@ -4,8 +4,8 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
-import SchoolCompetenciesListItemPcrs from 'frontend/components/school-competencies-list-item-pcrs';
-import SchoolCompetenciesPcrsMapper from 'frontend/components/school-competencies-pcrs-mapper';
+import CompetenciesListItemPcrs from 'frontend/components/school/competencies-list-item-pcrs';
+import CompetenciesPcrsMapper from 'frontend/components/school/competencies-pcrs-mapper';
 
 export default class SchoolCompetenciesListItemComponent extends Component {
   @service store;
@@ -96,7 +96,7 @@ export default class SchoolCompetenciesListItemComponent extends Component {
       <div class="grid-item {{if this.isDomain 'domain' 'competency'}}" data-test-title>
         {{@competency.title}}
       </div>
-      <SchoolCompetenciesListItemPcrs
+      <CompetenciesListItemPcrs
         @competency={{@competency}}
         @canUpdate={{@canUpdate}}
         @setIsManaging={{this.setIsManaging}}
@@ -105,7 +105,7 @@ export default class SchoolCompetenciesListItemComponent extends Component {
         @cancel={{this.cancel}}
       />
       {{#if this.isManaging}}
-        <SchoolCompetenciesPcrsMapper
+        <CompetenciesPcrsMapper
           @allPcrses={{this.allPcrses}}
           @selectedPcrses={{this.selectedPcrses}}
           @add={{this.addPcrsToBuffer}}
