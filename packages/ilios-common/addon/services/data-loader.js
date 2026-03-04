@@ -105,6 +105,7 @@ export default class DataLoaderService extends Service {
         'offerings.learners',
         'offerings.instructors',
         'offerings.instructorGroups.users',
+        'offerings.learnerGroups.offerings',
         'offerings.learnerGroups.users',
         'ilmSession.learners',
         'ilmSession.instructors',
