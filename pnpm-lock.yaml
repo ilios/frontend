@@ -124,8 +124,8 @@ importers:
         specifier: ^1.0.30001776
         version: 1.0.30001776
       ember-a11y-refocus:
-        specifier: 5.2.0
-        version: 5.2.0(@babel/core@7.29.0)
+        specifier: 5.2.1
+        version: 5.2.1(@babel/core@7.29.0)
       ember-a11y-testing:
         specifier: ^8.0.0
         version: 8.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.4))(axe-core@4.11.1)(qunit@2.25.0)
@@ -5140,8 +5140,9 @@ packages:
   elliptic@6.6.1:
     resolution: {integrity: sha512-RaddvvMatK2LJHqFJ+YA4WysVN5Ita9E35botqIYspQ4TkRAlCicdzKOjlyv/1Za5RyTNn7di//eEV0uTAfe3g==}
 
-  ember-a11y-refocus@5.2.0:
-    resolution: {integrity: sha512-hA/jG7Dw9B/uJ2MBA5GOdC5Ge2KEhrmuXf/+i2NxD67YyYtuMtSIp60YuJHMOKrJ+NCFurjwxWSj2vdKv9DWuA==}
+  ember-a11y-refocus@5.2.1:
+    resolution: {integrity: sha512-vlAygMfm34n/aFrgJE6CDDjIAmZPQEpIaNjNKYO9fEajGhWNhlZmdUgmXip9Yt3cmXYkpIh1NcFgpUsvCtAqUQ==}
+    engines: {node: 22.x, pnpm: '>= 10'}
 
   ember-a11y-testing@8.0.0:
     resolution: {integrity: sha512-eKUzRPpMRliMqsWMl8MExKjCyAqgJUk6IlLKsyFKGf2dvDJwMH495MDY/XRw0Y9HhG+GXMw756YNtup01cLu9Q==}
@@ -15390,7 +15391,7 @@ snapshots:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
 
-  ember-a11y-refocus@5.2.0(@babel/core@7.29.0):
+  ember-a11y-refocus@5.2.1(@babel/core@7.29.0):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
