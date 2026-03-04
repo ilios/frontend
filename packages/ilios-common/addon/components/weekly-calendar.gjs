@@ -10,6 +10,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import WeeklyCalendarEvent from 'ilios-common/components/weekly-calendar-event';
+import Event from 'ilios-common/classes/event';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class WeeklyCalendarComponent extends Component {
@@ -74,6 +75,35 @@ export default class WeeklyCalendarComponent extends Component {
       day.events = this.sortedEvents.filter((e) =>
         dt.hasSame(DateTime.fromISO(e.startDate), 'day'),
       );
+
+      if (this.args.isUserProfileCalendar) {
+        day.events = day.events.map((event) => {
+          const dayEvent = new Event(
+            {
+              startDate: event.startDate,
+              endDate: event.endDate,
+              lastModified: event.lastModified,
+              courseTitle: event.courseTitle,
+              name: event.name,
+              offering: event.offering,
+              location: event.location,
+              school: event.school,
+              color: event.color,
+              prerequisites: [],
+              postrequisites: [],
+              isScheduled: event.isScheduled,
+              isPublished: event.isPublished,
+              sessionTypeTitle: event.sessionTypeTitle,
+              instructors: event.instructors,
+            },
+            false,
+            event.showAsBlockedTime,
+          );
+
+          return dayEvent;
+        });
+      }
+
       return day;
     });
   }
