@@ -113,6 +113,7 @@ export default class UserProfileCalendar extends Component {
           @areDaysSelectable={{false}}
           @isLoadingEvents={{this.eventsData.isPending}}
           @selectEvent={{this.selectEvent}}
+          @isUserProfileCalendar={{true}}
         />
       </div>
     </div>
