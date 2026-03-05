@@ -34,6 +34,7 @@ import SaveButton from 'ilios-common/components/save-button';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
@@ -144,6 +145,10 @@ export default class OfferingForm extends Component {
         },
       ),
   });
+
+  scrollOpts = {
+    behavior: 'smooth',
+  };
 
   hasZeroDuration(hours, minutes) {
     const hrs = parseInt(hours, 10) || 0;
@@ -629,7 +634,7 @@ export default class OfferingForm extends Component {
     <div class="offering-form" data-test-offering-form>
       {{#if this.offeringFormData.isResolved}}
         {{#let (uniqueId) as |templateId|}}
-          <div class="toggle-offering-calendar">
+          <div class="toggle-offering-calendar" {{scrollIntoView opts=this.scrollOpts}}>
             <ToggleButtons
               @firstLabel={{t "general.hideCalendar"}}
               @firstOptionSelected={{not this.showOfferingCalendar}}
