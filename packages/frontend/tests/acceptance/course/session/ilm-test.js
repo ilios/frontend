@@ -610,14 +610,18 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
 
     assert.ok(page.details.learnersAreVisible);
     assert.ok(page.details.instructorsAreVisible);
+    assert.ok(page.details.overview.ilm.isIlm);
 
-    await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
+    await page.details.overview.ilm.removeIlm();
+    await page.details.overview.ilm.confirm();
 
+    assert.notOk(page.details.overview.ilm.isIlm);
     assert.notOk(page.details.learnersAreVisible);
     assert.notOk(page.details.instructorsAreVisible);
 
-    await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
+    await page.details.overview.ilm.addIlm();
 
+    assert.ok(page.details.overview.ilm.isIlm);
     assert.ok(page.details.learnersAreVisible);
     assert.ok(page.details.instructorsAreVisible);
   });
