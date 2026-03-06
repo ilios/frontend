@@ -67,7 +67,6 @@
 
       .results {
         @include m.ilios-list-reset;
-        margin-top: -0.25rem;
         grid-column: 2;
         background: var(--white);
         border-width: 0 1px 1px 1px;
