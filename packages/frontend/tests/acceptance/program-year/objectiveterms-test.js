@@ -59,28 +59,19 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
     assert.ok(page.details.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms.length,
-      2,
+      1,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].title,
-      'Resources (school 0)',
+      'Topics (school 0)',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms
         .length,
-      0,
-    );
-    assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[1].title,
-      'Topics (school 0)',
-    );
-    assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[1].terms
-        .length,
       1,
     );
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[1].terms[0]
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0]
         .name,
       'term 0',
     );
@@ -141,7 +132,7 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
       page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3]
         .isSelected,
     );
-    await page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[1].terms[0].remove();
+    await page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].remove();
     await page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3].toggle();
     await page.details.objectives.objectiveList.objectives[0].selectedTerms.save();
     assert.strictEqual(
@@ -186,19 +177,19 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
     assert.ok(page.details.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms.length,
-      2,
+      1,
     );
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[1].title,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].title,
       'Topics (school 0)',
     );
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[1].terms
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms
         .length,
       1,
     );
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[1].terms[0]
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0]
         .name,
       'term 0',
     );
@@ -245,7 +236,7 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
       page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3]
         .isSelected,
     );
-    await page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[1].terms[0].remove();
+    await page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].remove();
     await page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3].toggle();
     await page.details.objectives.objectiveList.objectives[0].selectedTerms.cancel();
     assert.strictEqual(

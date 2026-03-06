@@ -61,6 +61,11 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       title: 'Gamma',
       vocabulary: vocab2,
     });
+    this.server.create('term', {
+      active: true,
+      title: 'Banana',
+      vocabulary: vocab3,
+    });
 
     this.vocabModel1 = await this.owner.lookup('service:store').findRecord('vocabulary', vocab1.id);
     this.vocabModel2 = await this.owner.lookup('service:store').findRecord('vocabulary', vocab2.id);
@@ -92,10 +97,12 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     assert.strictEqual(component.selectedTerms[1].title, 'Bar (Medicine) (inactive)');
     assert.strictEqual(component.selectedTerms[1].terms[0].name, 'Gamma');
 
-    assert.strictEqual(component.vocabulary.options.length, 1);
+    assert.strictEqual(component.vocabulary.options.length, 2);
     assert.strictEqual(component.vocabulary.options[0].value, '1');
     assert.strictEqual(component.vocabulary.options[0].text, 'Foo (Medicine)');
     assert.ok(component.vocabulary.options[0].isSelected);
+    assert.strictEqual(component.vocabulary.options[1].value, '3');
+    assert.strictEqual(component.vocabulary.options[1].text, 'Baz (Medicine)');
 
     assert.strictEqual(component.availableTerms.length, 2);
     assert.strictEqual(component.availableTerms[0].name, 'Alpha');
@@ -247,7 +254,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(component.vocabulary.options.length, 2);
+    assert.strictEqual(component.vocabulary.options.length, 3);
     assert.notOk(component.vocabulary.options[0].isSelected);
     assert.ok(component.vocabulary.options[1].isSelected);
     assert.strictEqual(component.availableTerms.length, 1);
