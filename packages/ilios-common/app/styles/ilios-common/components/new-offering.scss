@@ -1,7 +1,11 @@
 @use "../mixins" as m;
 
 .new-offering {
-  margin-top: 2rem;
+  margin-top: 1rem;
+
+  @include m.for-phone-and-up {
+    margin-top: -1.65rem;
+  }
 
   .new-offering-title {
     @include m.ilios-heading-h5;
@@ -9,7 +13,7 @@
   }
 
   .choose-offering-type {
-    margin-top: 0.5rem;
+    margin: 0.5rem 0;
     text-align: center;
 
     label {
