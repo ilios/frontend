@@ -92,7 +92,7 @@ export default class SessionIlmComponent extends Component {
     this.localHours = undefined;
   };
   <template>
-    <div class="session-ilm block" data-test-session-ilm>
+    <div class="session-ilm" data-test-session-ilm>
       <label>{{t "general.independentLearning"}}:</label>
       <span class="ilm-value" data-test-ilm-value>
         {{#if @editable}}
@@ -111,7 +111,7 @@ export default class SessionIlmComponent extends Component {
       </span>
     </div>
     {{#if this.isIndependentLearning}}
-      <div class="hours block" data-test-ilm-hours>
+      <div class="overview-block hours" data-test-ilm-hours>
         <label for="hours-{{this.uniqueId}}">{{t "general.hours"}}:</label>
         <span>
           {{#if @editable}}
@@ -145,7 +145,7 @@ export default class SessionIlmComponent extends Component {
         <SessionOverviewIlmDuedate
           @ilmSession={{this.ilmSession}}
           @editable={{@editable}}
-          class="block"
+          class="overview-block"
         />
       {{/unless}}
     {{/if}}

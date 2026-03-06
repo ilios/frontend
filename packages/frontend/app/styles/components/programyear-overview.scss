@@ -1,28 +1,16 @@
 @use "../ilios-common/mixins" as m;
-@use "../ilios-common/constants";
 
 .programyear-overview {
-  @include m.ilios-overview(var(--orange));
   background: var(--white);
   border-top: 1px dotted var(--orange);
   border-bottom: 0;
   margin: 0 0.5rem;
   padding: 0 0 1rem 0;
 
-  .programyear-overview-header {
-    @include m.ilios-overview-header;
-
-    h4 {
-      @include m.ilios-overview-title;
-    }
-
-    .programyear-overview-actions {
-      @include m.ilios-overview-actions;
-
-      a {
-        color: var(--light-blue);
-        @include m.font-size("medium");
-      }
+  .actions {
+    a {
+      color: var(--light-blue);
+      @include m.font-size("medium");
     }
   }
 }

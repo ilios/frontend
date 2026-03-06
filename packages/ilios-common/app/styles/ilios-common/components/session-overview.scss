@@ -31,7 +31,7 @@
 }
 
 .session-overview {
-  @include m.ilios-overview(var(--orange));
+  padding: 0.5rem 0;
 
   .last-update {
     color: var(--grey);
@@ -39,27 +39,12 @@
     text-align: right;
   }
 
-  .session-overview-header {
-    @include m.ilios-overview-header;
+  .overview-header {
     padding-left: 0.5rem;
-
-    .title {
-      @include m.ilios-overview-title;
-    }
-
-    .session-overview-actions {
-      @include m.ilios-overview-actions;
-
-      a {
-        @include m.font-size("medium");
-        margin-right: 0.5rem;
-      }
-    }
   }
 
-  .session-overview-content {
+  .overview-content {
     padding-left: 0.5rem;
-    @include m.ilios-overview-content;
 
     .session-attributes {
       @include m.ilios-fieldset;
@@ -90,10 +75,6 @@
     }
   }
 
-  .block {
-    @include m.ilios-overview-block;
-  }
-
   .sessiontype {
     grid-column: 1 / -1;
 
@@ -122,6 +103,7 @@
   .sessiondescription,
   .instructional-notes {
     grid-column: 1 / -1;
+    display: block;
   }
 
   .sessionassociatedgroups {
