@@ -24,13 +24,11 @@ module('Acceptance | Course - Publication Check', function (hooks) {
     const term = this.server.create('term', {
       vocabulary,
     });
-    const meshDescriptor = this.server.create('mesh-descriptor');
     this.fullCourse = this.server.create('course', {
       year: 2013,
       school,
       cohorts: [cohort],
       terms: [term],
-      meshDescriptors: [meshDescriptor],
     });
     this.server.create('course-objective', { course: this.fullCourse });
     this.emptyCourse = this.server.create('course', {
@@ -47,7 +45,6 @@ module('Acceptance | Course - Publication Check', function (hooks) {
     assert.strictEqual(page.publicationcheck.cohorts, 'Yes (1)');
     assert.strictEqual(page.publicationcheck.terms, 'Yes (1)');
     assert.strictEqual(page.publicationcheck.objectives, 'Yes (1)');
-    assert.strictEqual(page.publicationcheck.mesh, 'Yes (1)');
   });
 
   test('empty course count', async function (assert) {
@@ -57,7 +54,6 @@ module('Acceptance | Course - Publication Check', function (hooks) {
     assert.strictEqual(page.publicationcheck.cohorts, 'No');
     assert.strictEqual(page.publicationcheck.terms, 'No');
     assert.strictEqual(page.publicationcheck.objectives, 'No');
-    assert.strictEqual(page.publicationcheck.mesh, 'No');
   });
 
   test('unlink icon transitions properly', async function (assert) {

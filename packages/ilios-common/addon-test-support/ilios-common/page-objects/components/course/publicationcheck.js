@@ -14,7 +14,6 @@ const definition = {
   unlink: {
     scope: '[data-test-unlink]',
   },
-  mesh: text('[data-test-mesh]'),
 };
 
 export default definition;

@@ -214,9 +214,6 @@ export default class Course extends Model {
     if (!this.courseObjectives.length) {
       issues.push('courseObjectives');
     }
-    if (!this.meshDescriptors.length) {
-      issues.push('meshDescriptors');
-    }
 
     return issues;
   }

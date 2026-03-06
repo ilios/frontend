@@ -17,14 +17,12 @@ module('Acceptance | Session - Publication Check', function (hooks) {
       school,
     });
     this.term = this.server.create('term', { vocabulary });
-    this.meshDescriptor = this.server.create('mesh-descriptor');
   });
 
   test('full session count', async function (assert) {
     const session = this.server.create('session', {
       course: this.course,
       terms: [this.term],
-      meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
     });
     this.server.create('session-objective', { session });
@@ -36,7 +34,6 @@ module('Acceptance | Session - Publication Check', function (hooks) {
     assert.strictEqual(page.offerings, 'Yes (1)');
     assert.strictEqual(page.terms, 'Yes (1)');
     assert.strictEqual(page.objectives, 'Yes (1)');
-    assert.strictEqual(page.mesh, 'Yes (1)');
   });
 
   test('empty session count', async function (assert) {
@@ -48,7 +45,6 @@ module('Acceptance | Session - Publication Check', function (hooks) {
     assert.strictEqual(page.offerings, 'No');
     assert.strictEqual(page.terms, 'No');
     assert.strictEqual(page.objectives, 'No');
-    assert.strictEqual(page.mesh, 'No');
   });
 
   test('unlink icon transitions properly', async function (assert) {

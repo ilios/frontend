@@ -505,10 +505,6 @@ export default class SessionModel extends Model {
       issues.push('sessionObjectives');
     }
 
-    if (this.meshDescriptors.length === 0) {
-      issues.push('meshDescriptors');
-    }
-
     return issues;
   }
 
