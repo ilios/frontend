@@ -6,8 +6,14 @@
   .header {
     @include m.course-header;
   }
-  .overview {
-    @include m.course-overview;
+  .ilios-overview {
+    padding: 0.5rem 0;
+
+    .overview-header {
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 }
 

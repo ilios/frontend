@@ -487,8 +487,8 @@ export default class LearnerGroupRootComponent extends Component {
           @sortUsersBy={{this.sortUsersBy}}
           @canUpdate={{@canUpdate}}
         />
-        <section class="learner-group-overview" data-test-overview>
-          <div class="block" data-test-needs-accommodation>
+        <section class="ilios-overview learner-group-overview" data-test-overview>
+          <div class="overview-block" data-test-needs-accommodation>
             <label>{{t "general.accommodationIsRequiredForLearnersInThisGroup"}}:</label>
             <span>
               {{#if @canUpdate}}
@@ -505,7 +505,7 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </span>
           </div>
-          <div class="block defaultlocation" data-test-location>
+          <div class="overview-block" data-test-location>
             <label for="location-{{templateId}}">
               {{t "general.defaultLocation"}}:
             </label>
@@ -538,7 +538,7 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </span>
           </div>
-          <div class="block defaulturl" data-test-url>
+          <div class="overview-block defaulturl" data-test-url>
             <label for="link-{{templateId}}">
               {{t "general.defaultVirtualLearningLink"}}:
             </label>
@@ -661,7 +661,7 @@ export default class LearnerGroupRootComponent extends Component {
               @done={{fn @setIsBulkAssigning false}}
             />
           {{else if @isEditing}}
-            <div class="learner-group-overview-content">
+            <div class="overview-content">
               <UserManager
                 @filter={{this.filter}}
                 @learnerGroupId={{this.learnerGroupId}}
@@ -681,7 +681,7 @@ export default class LearnerGroupRootComponent extends Component {
             {{#if @showCalendar}}
               <Calendar @learnerGroup={{@learnerGroup}} />
             {{/if}}
-            <div class="learner-group-overview-content">
+            <div class="overview-content">
               <Members
                 @filter={{this.filter}}
                 @learnerGroupId={{this.learnerGroupId}}

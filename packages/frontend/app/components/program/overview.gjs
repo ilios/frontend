@@ -63,12 +63,14 @@ export default class ProgramOverviewComponent extends Component {
     this.duration = Number(ev.target.value);
   }
   <template>
-    <div class="program-overview" data-test-program-overview ...attributes>
-      <h2>
-        {{t "general.overview"}}
-      </h2>
-      <div class="program-overview-content">
-        <div class="block programtitleshort" data-test-short-title>
+    <div class="ilios-overview" data-test-program-overview ...attributes>
+      <div class="overview-header">
+        <h2 class="overview-title">
+          {{t "general.overview"}}
+        </h2>
+      </div>
+      <div class="overview-content">
+        <div class="overview-block" data-test-short-title>
           <label for={{concat this.id "short-title"}}>
             {{t "general.programTitleShort"}}:
           </label>
@@ -101,7 +103,7 @@ export default class ProgramOverviewComponent extends Component {
             {{/if}}
           </span>
         </div>
-        <div class="block programduration" data-test-duration>
+        <div class="overview-block" data-test-duration>
           <label for={{concat this.id "duration"}}>
             {{t "general.durationInYears"}}:
           </label>

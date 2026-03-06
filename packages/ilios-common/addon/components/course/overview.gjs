@@ -234,13 +234,13 @@ export default class CourseOverview extends Component {
     this.level = this.args.course.level;
   }
   <template>
-    <section class="course-overview" data-test-course-overview>
+    <section class="ilios-overview" data-test-course-overview>
       {{#let (uniqueId) as |templateId|}}
-        <div class="course-overview-header">
-          <div class="title">
+        <div class="overview-header">
+          <div class="overview-title" data-test-title>
             {{t "general.overview"}}
           </div>
-          <div class="course-overview-actions">
+          <div class="overview-actions">
             <LinkTo
               @route="course-materials"
               @model={{@course}}
@@ -277,8 +277,8 @@ export default class CourseOverview extends Component {
             </LinkTo>
           </div>
         </div>
-        <div class="course-overview-content">
-          <div class="block courseexternalid">
+        <div class="overview-content">
+          <div class="overview-block courseexternalid">
             <label for="external-id-{{templateId}}">{{t "general.externalId"}}:</label>
             <span>
               {{#if @editable}}
@@ -308,7 +308,7 @@ export default class CourseOverview extends Component {
               {{/if}}
             </span>
           </div>
-          <div class="block clerkshiptype">
+          <div class="overview-block clerkshiptype">
             <label for="clerkship-type-{{templateId}}">{{t "general.clerkshipType"}}:</label>
             <span>
               {{#if @editable}}
@@ -342,7 +342,7 @@ export default class CourseOverview extends Component {
               {{/if}}
             </span>
           </div>
-          <div class="block coursestartdate">
+          <div class="overview-block coursestartdate">
             <label>{{t "general.startDate"}}:</label>
             <span>
               {{#if @editable}}
@@ -374,7 +374,7 @@ export default class CourseOverview extends Component {
               {{/if}}
             </span>
           </div>
-          <div class="block courseenddate">
+          <div class="overview-block courseenddate">
             <label>{{t "general.endDate"}}:</label>
             <span>
               {{#if @editable}}
@@ -401,7 +401,7 @@ export default class CourseOverview extends Component {
               {{/if}}
             </span>
           </div>
-          <div class="block courselevel">
+          <div class="overview-block courselevel">
             <label for="level-{{templateId}}">{{t "general.level"}}:</label>
             <span>
               {{#if @editable}}
@@ -423,7 +423,7 @@ export default class CourseOverview extends Component {
               {{/if}}
             </span>
           </div>
-          <div class="block">
+          <div class="overview-block">
             <label>{{t "general.universalLocator"}}:</label>
             <span class="universallocator">
               <strong>
