@@ -30,22 +30,23 @@ export default class CourseSummaryHeaderComponent extends Component {
     return this.permissionChecker.canCreateCourse(school);
   }
   <template>
-    <div class="course-summary-header" ...attributes>
+    <div class="course-summary-header" data-test-course-summary-header ...attributes>
       <div class="course-summary-header-top">
-        <h2>
+        <h2 data-test-title>
           {{@course.title}}
         </h2>
-        <div class="course-summary-actions">
+        <div class="course-summary-actions" data-test-actions>
           <LinkTo
             @route="print-course"
             @model={{@course}}
             @query={{hash unpublished=true}}
             class="print"
+            data-test-print
           >
             <FaIcon @icon={{faPrint}} @title={{t "general.printSummary"}} @fixedWidth={{true}} />
           </LinkTo>
           {{#if this.canRollover}}
-            <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
+            <LinkTo @route="course.rollover" @model={{@course}} class="rollover" data-test-rollover>
               <FaIcon
                 @icon={{faShuffle}}
                 @title={{t "general.courseRollover"}}
@@ -56,7 +57,7 @@ export default class CourseSummaryHeaderComponent extends Component {
         </div>
       </div>
       <div class="course-summary-content">
-        <div class="block">
+        <div class="block" data-test-start>
           <label>
             {{t "general.startDate"}}:
           </label>
@@ -64,7 +65,7 @@ export default class CourseSummaryHeaderComponent extends Component {
             {{formatDate @course.startDate day="2-digit" month="2-digit" year="numeric"}}
           </span>
         </div>
-        <div class="block">
+        <div class="block" data-test-external-id>
           <label>
             {{t "general.externalId"}}:
           </label>
@@ -72,7 +73,7 @@ export default class CourseSummaryHeaderComponent extends Component {
             {{@course.externalId}}
           </span>
         </div>
-        <div class="block">
+        <div class="block" data-test-end>
           <label>
             {{t "general.endDate"}}:
           </label>
@@ -80,7 +81,7 @@ export default class CourseSummaryHeaderComponent extends Component {
             {{formatDate @course.endDate day="2-digit" month="2-digit" year="numeric"}}
           </span>
         </div>
-        <div class="block">
+        <div class="block" data-test-level>
           <label>
             {{t "general.level"}}:
           </label>
@@ -88,7 +89,7 @@ export default class CourseSummaryHeaderComponent extends Component {
             {{@course.level}}
           </span>
         </div>
-        <div class="block">
+        <div class="block" data-test-status>
           <label>
             {{t "general.publicationStatus"}}:
           </label>
