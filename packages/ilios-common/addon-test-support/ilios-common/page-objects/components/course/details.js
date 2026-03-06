@@ -14,7 +14,7 @@ import detailCohorts from './../detail-cohorts';
 export default create({
   scope: '[data-test-ilios-course-details]',
   collapseControl: clickable('[data-test-expand-course-details]'),
-  titles: count('.title'),
+  titles: count('[data-test-title]'),
   header,
   overview,
   leadershipCollapsed,
