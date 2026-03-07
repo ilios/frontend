@@ -29,12 +29,10 @@ module('Unit | Model | Course', function (hooks) {
   test('check optional publication items', async function (assert) {
     const course = this.store.createRecord('course');
 
-    assert.strictEqual(course.get('optionalPublicationIssues').length, 3);
-    this.store.createRecord('term', { courses: [course] });
     assert.strictEqual(course.get('optionalPublicationIssues').length, 2);
-    this.store.createRecord('course-objective', { course });
+    this.store.createRecord('term', { courses: [course] });
     assert.strictEqual(course.get('optionalPublicationIssues').length, 1);
-    this.store.createRecord('mesh-descriptor', { courses: [course] });
+    this.store.createRecord('course-objective', { course });
     assert.strictEqual(course.get('optionalPublicationIssues').length, 0);
   });
 

@@ -71,7 +71,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.strictEqual(page.details.overview.publicationMenu.buttons.length, 3);
     assert.strictEqual(
       page.details.overview.publicationMenu.buttons[0].text,
-      'Review 3 Missing Items',
+      'Review 2 Missing Items',
     );
     assert.strictEqual(page.details.overview.publicationMenu.buttons[1].text, 'Mark as Scheduled');
     assert.strictEqual(page.details.overview.publicationMenu.buttons[2].text, 'UnPublish Session');
@@ -85,7 +85,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish As-is');
     assert.strictEqual(
       page.details.overview.publicationMenu.buttons[1].text,
-      'Review 3 Missing Items',
+      'Review 2 Missing Items',
     );
     assert.strictEqual(page.details.overview.publicationMenu.buttons[2].text, 'UnPublish Session');
   });
@@ -98,7 +98,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish As-is');
     assert.strictEqual(
       page.details.overview.publicationMenu.buttons[1].text,
-      'Review 3 Missing Items',
+      'Review 2 Missing Items',
     );
     assert.strictEqual(page.details.overview.publicationMenu.buttons[2].text, 'Mark as Scheduled');
   });
@@ -159,7 +159,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish As-is');
     assert.strictEqual(
       page.details.overview.publicationMenu.buttons[1].text,
-      'Review 3 Missing Items',
+      'Review 2 Missing Items',
     );
     assert.strictEqual(page.details.overview.publicationMenu.buttons[2].text, 'Mark as Scheduled');
   });

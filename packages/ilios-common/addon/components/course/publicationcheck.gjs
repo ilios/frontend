@@ -60,9 +60,6 @@ export default class CoursePublicationCheckComponent extends Component {
                 <th>
                   {{t "general.objectives"}}
                 </th>
-                <th>
-                  {{t "general.meshTerms"}}
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -108,16 +105,6 @@ export default class CoursePublicationCheckComponent extends Component {
                   </td>
                 {{else}}
                   <td class="no" data-test-objectives>
-                    {{t "general.no"}}
-                  </td>
-                {{/if}}
-                {{#if @course.meshDescriptors.length}}
-                  <td class="yes" data-test-mesh>
-                    {{t "general.yes"}}
-                    ({{@course.meshDescriptors.length}})
-                  </td>
-                {{else}}
-                  <td class="no" data-test-mesh>
                     {{t "general.no"}}
                   </td>
                 {{/if}}

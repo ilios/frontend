@@ -32,19 +32,12 @@ module('Unit | Model | Session', function (hooks) {
   test('check optional publication items', async function (assert) {
     const session = this.store.createRecord('session');
 
-    assert.strictEqual(session.optionalPublicationIssues.length, 3);
-    assert.deepEqual(session.optionalPublicationIssues, [
-      'terms',
-      'sessionObjectives',
-      'meshDescriptors',
-    ]);
-    this.store.createRecord('term', { sessions: [session] });
     assert.strictEqual(session.optionalPublicationIssues.length, 2);
-    assert.deepEqual(session.optionalPublicationIssues, ['sessionObjectives', 'meshDescriptors']);
-    this.store.createRecord('session-objective', { session });
+    assert.deepEqual(session.optionalPublicationIssues, ['terms', 'sessionObjectives']);
+    this.store.createRecord('term', { sessions: [session] });
     assert.strictEqual(session.optionalPublicationIssues.length, 1);
-    assert.deepEqual(session.optionalPublicationIssues, ['meshDescriptors']);
-    this.store.createRecord('mesh-descriptor', { sessions: [session] });
+    assert.deepEqual(session.optionalPublicationIssues, ['sessionObjectives']);
+    this.store.createRecord('session-objective', { session });
     assert.strictEqual(session.optionalPublicationIssues.length, 0);
   });
 
