@@ -85,18 +85,8 @@ export default class TaxonomyManager extends Component {
 
   get listableVocabularies() {
     return this.nonEmptyVocabularies.filter((vocab) => {
-      if (vocab.active) {
-        return true;
-      }
       const terms = this.args.selectedTerms;
-      let hasTerms = false;
-      terms.forEach((term) => {
-        if (term.belongsTo('vocabulary').id() === vocab.id) {
-          hasTerms = true;
-        }
-      });
-
-      return hasTerms;
+      return terms.some((term) => term.belongsTo('vocabulary').id() === vocab.id);
     });
   }
 
