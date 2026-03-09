@@ -1,10 +1,10 @@
 @use "../mixins" as m;
 
 .new-offering {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 
   @include m.for-phone-and-up {
-    margin-top: -1.65rem;
+    margin-top: 0;
   }
 
   .new-offering-title {
