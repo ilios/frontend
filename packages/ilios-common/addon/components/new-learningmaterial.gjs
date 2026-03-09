@@ -94,6 +94,28 @@ export default class NewLearningmaterialComponent extends Component {
           (value) => this.copyrightRationale || value === true,
         ),
     }),
+    accessibilityRationale: string().when(
+      ['$isFile', 'accessibilityPermission', '$afterGovtCutoff'],
+      ([isFile, accessibilityPermission, afterGovtCutoff], schema) => {
+        if (isFile && !accessibilityPermission && afterGovtCutoff) {
+          return schema.required().min(2).max(65000);
+        }
+      },
+    ),
+    accessibilityPermission: boolean().when(['$isFile', '$afterGovtCutoff'], {
+      is: true,
+      then: (schema) =>
+        schema.test(
+          'is-true',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.agreementRequired',
+            };
+          },
+          (value) => this.accessibilityRationale || value === true,
+        ),
+    }),
     fileHash: string()
       .nullable()
       .when('$isFile', {
@@ -102,6 +124,11 @@ export default class NewLearningmaterialComponent extends Component {
       }),
   });
   userModel = new TrackedAsyncData(this.currentUser.getModel());
+
+  // https://www.ada.gov/law-and-regs/regulations/title-ii-2010-regulations/#-35200-requirements-for-web-and-mobile-accessibility
+  get afterGovtCutoff() {
+    return new Date() >= new Date('April 24, 2026');
+  }
 
   get uniqueId() {
     return guidFor(this);
@@ -440,7 +467,7 @@ export default class NewLearningmaterialComponent extends Component {
           </span>
         </div>
         {{#unless this.copyrightPermission}}
-          <div class="item" data-test-copyright-rationale>
+          <div class="item copyright-rationale" data-test-copyright-rationale>
             <label for="copyright-rationale-{{this.uniqueId}}">
               {{t "general.copyrightRationale"}}:
             </label>
@@ -458,6 +485,61 @@ export default class NewLearningmaterialComponent extends Component {
                 @description={{t "general.copyrightRationale"}}
                 @validationErrors={{this.validations.errors.copyrightRationale}}
                 data-test-copyright-rationale-validation-error-message
+              />
+            </span>
+          </div>
+        {{/unless}}
+        <div class="item accessibility" data-test-accessibility-permission>
+          <label for="accessibility-permission-{{this.uniqueId}}">
+            {{t "general.accessibilityPermission"}}:
+          </label>
+          <span>
+            <p id="lm-accessibility-permissions-text">
+              <input
+                id="accessibility-permission-{{this.uniqueId}}"
+                aria-invalid={{if this.validations.errors.accessibilityPermission "true" "false"}}
+                aria-errormessage="accessibility-permission-error-{{this.uniqueId}}"
+                class={{if this.validations.errors.accessibilityPermission "error"}}
+                type="checkbox"
+                checked={{this.accessibilityPermission}}
+                {{on
+                  "click"
+                  (set this "accessibilityPermission" (not this.accessibilityPermission))
+                }}
+                {{on "change" (perform this.validations.runValidator)}}
+                data-test-accessibility-permission
+              />
+              {{t "general.accessibilityAgreement"}}
+              {{#if this.validations.errors.accessibilityPermission}}
+                <br />
+              {{/if}}
+              <YupValidationMessage
+                id="accessibility-permission-error-{{this.uniqueId}}"
+                @validationErrors={{this.validations.errors.accessibilityPermission}}
+                data-test-accessibility-permission-validation-error-message
+              />
+            </p>
+          </span>
+        </div>
+        {{#unless this.accessibilityPermission}}
+          <div class="item accessibility-rationale" data-test-accessibility-permission>
+            <label for="accessibility-rationale-{{this.uniqueId}}">
+              {{t "general.accessibilityRationale"}}:
+            </label>
+            <span>
+              <textarea
+                id="accessibility-rationale-{{this.uniqueId}}"
+                aria-invalid={{if this.validations.errors.accessibilityRationale "true" "false"}}
+                aria-errormessage="accessibility-rationale-error-{{this.uniqueId}}"
+                class={{if this.validations.errors.accessibilityRationale "error"}}
+                {{on "input" (pick "target.value" (set this "accessibilityRationale"))}}
+                {{this.validations.attach "accessibilityRationale"}}
+              >{{this.accessibilityRationale}}</textarea>
+              <YupValidationMessage
+                id="accessibility-rationale-error-{{this.uniqueId}}"
+                @description={{t "general.accessibilityRationale"}}
+                @validationErrors={{this.validations.errors.accessibilityRationale}}
+                data-test-accessibility-rationale-validation-error-message
               />
             </span>
           </div>
