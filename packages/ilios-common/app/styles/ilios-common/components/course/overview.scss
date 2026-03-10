@@ -1,7 +1,7 @@
 @use "../../mixins" as m;
 
 .course-overview {
-  @include m.course-overview;
+  @include m.ilios-form-error;
 
   .courseexternalid {
     input {
@@ -10,7 +10,7 @@
     }
   }
 
-  .block {
+  .overview-block {
     align-items: center;
   }
 

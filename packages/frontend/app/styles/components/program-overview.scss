@@ -1,20 +1,5 @@
 @use "../ilios-common/mixins" as m;
 
 .program-overview {
-  @include m.ilios-overview(var(--lightest-grey));
-
-  h2 {
-    margin-top: 0.5rem;
-    @include m.ilios-overview-title;
-  }
-
-  .program-overview-content {
-    @include m.ilios-overview-content {
-      padding-top: 0.5rem;
-    }
-
-    .block {
-      @include m.ilios-overview-block;
-    }
-  }
+  border-bottom: 1px dotted var(--lightest-grey);
 }

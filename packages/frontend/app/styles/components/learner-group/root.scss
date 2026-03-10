@@ -4,26 +4,49 @@
 
 .learner-group-root {
   .learner-group-overview {
-    @include m.ilios-overview(var(--orange));
-    padding: 0;
-
+    margin-top: 0.5rem;
     .block {
-      @include m.ilios-overview-block;
+      display: flex;
+      align-items: flex-start;
 
-      &.defaulturl {
-        padding-bottom: 0.5rem;
+      label {
+        @include m.ilios-label;
+        margin: 0 0.5rem 0 0;
+      }
+
+      &.accommodation-required {
+        margin-bottom: 0.5rem;
       }
     }
 
     .learner-group-overview-actions {
-      padding: 0.5rem 0;
-      @include m.detail-container-header;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      @include m.for-tablet-and-up {
+        flex-direction: row;
+        justify-content: space-between;
+      }
 
       .title {
+        @include m.detail-container-header;
         @include m.detail-container-title;
       }
 
       .actions {
+        display: flex;
+        padding: 0.5rem 0;
+        align-items: center;
+        vertical-align: middle;
+        gap: 0.5rem;
+        flex-direction: column;
+
+        @include m.for-tablet-and-up {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+
         .multi-button {
           display: inline-flex;
 
@@ -38,10 +61,6 @@
           margin-right: 1rem;
         }
       }
-    }
-
-    .learner-group-overview-content {
-      border-bottom: 1px dotted var(--orange);
     }
   }
 

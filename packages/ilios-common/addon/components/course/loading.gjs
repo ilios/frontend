@@ -11,30 +11,30 @@ import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
       <div class="header">
         <span class="title loading-text">&nbsp;</span>
       </div>
-      <div class="overview">
-        <div class="course-overview-header">
-          <div class="title loading-text">
+      <div class="ilios-overview">
+        <div class="overview-header">
+          <div class="overview-title loading-text">
             {{t "general.overview"}}
           </div>
-          <div class="course-overview-actions"></div>
+          <div class="overview-actions"></div>
         </div>
-        <div class="course-overview-content">
-          <div class="block">
+        <div class="overview-content">
+          <div class="overview-block">
             <label>{{t "general.externalId"}}:</label>
           </div>
-          <div class="block">
+          <div class="overview-block">
             <label>{{t "general.clerkshipType"}}:</label>
           </div>
-          <div class="block">
+          <div class="overview-block">
             <label>{{t "general.start"}}:</label>
           </div>
-          <div class="block">
+          <div class="overview-block">
             <label>{{t "general.end"}}:</label>
           </div>
-          <div class="block">
+          <div class="overview-block">
             <label>{{t "general.level"}}:</label>
           </div>
-          <div class="block">
+          <div class="overview-block">
             <label>{{t "general.universalLocator"}}:</label>
           </div>
         </div>

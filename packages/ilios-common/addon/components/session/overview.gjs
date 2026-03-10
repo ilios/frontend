@@ -378,7 +378,7 @@ export default class SessionOverview extends Component {
         {{#if this.isLoaded}}
           <Header @session={{@session}} @editable={{@editable}} @hideCheckLink={{@hideCheckLink}} />
 
-          <section class="session-overview">
+          <section class="ilios-overview session-overview">
             <div class="last-update" data-test-last-update>
               <FaIcon @icon={{faClockRotateLeft}} @title={{t "general.lastUpdate"}} />
               {{t "general.lastUpdate"}}:
@@ -392,13 +392,13 @@ export default class SessionOverview extends Component {
               }}
             </div>
 
-            <div class="session-overview-header">
+            <div class="overview-header">
 
-              <div class="title">
+              <div class="overview-title">
                 {{t "general.overview"}}
               </div>
 
-              <div class="session-overview-actions">
+              <div class="overview-actions">
                 {{#if this.showCopy}}
                   <LinkTo
                     @route="session.copy"
@@ -413,8 +413,8 @@ export default class SessionOverview extends Component {
               </div>
             </div>
 
-            <div class="session-overview-content">
-              <div class="sessiontype block" data-test-session-type>
+            <div class="overview-content">
+              <div class="overview-block sessiontype" data-test-session-type>
                 <label for="session-type-{{templateId}}">{{t "general.sessionType"}}:</label>
                 <span>
                   {{#if @editable}}
@@ -500,7 +500,7 @@ export default class SessionOverview extends Component {
                 {{/if}}
               </fieldset>
               <Ilm @session={{@session}} @editable={{@editable}} />
-              <div class="postrequisite block" data-test-postrequisite>
+              <div class="postrequisite" data-test-postrequisite>
                 {{#if @editable}}
                   {{#if this.isEditingPostRequisite}}
                     <PostrequisiteEditor
@@ -555,7 +555,7 @@ export default class SessionOverview extends Component {
                   {{/if}}
                 {{/if}}
               </div>
-              <div class="prerequisites block" data-test-prerequisites>
+              <div class="prerequisites" data-test-prerequisites>
                 <label>{{t "general.prerequisites"}}:</label>
                 {{#if @session.hasPrerequisites}}
                   <span>

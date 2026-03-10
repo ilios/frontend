@@ -488,7 +488,7 @@ export default class LearnerGroupRootComponent extends Component {
           @canUpdate={{@canUpdate}}
         />
         <section class="learner-group-overview" data-test-overview>
-          <div class="block" data-test-needs-accommodation>
+          <div class="block accommodation-required" data-test-needs-accommodation>
             <label>{{t "general.accommodationIsRequiredForLearnersInThisGroup"}}:</label>
             <span>
               {{#if @canUpdate}}
@@ -505,7 +505,7 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </span>
           </div>
-          <div class="block defaultlocation" data-test-location>
+          <div class="block" data-test-location>
             <label for="location-{{templateId}}">
               {{t "general.defaultLocation"}}:
             </label>
@@ -609,7 +609,7 @@ export default class LearnerGroupRootComponent extends Component {
                 ({{this.usersForMembersList.length}})
               {{/if}}
             </div>
-            <span class="actions" data-test-buttons>
+            <div class="actions" data-test-buttons>
               <input
                 type="text"
                 value={{this.filter}}
@@ -653,7 +653,7 @@ export default class LearnerGroupRootComponent extends Component {
                   </button>
                 {{/if}}
               {{/if}}
-            </span>
+            </div>
           </div>
           {{#if @isBulkAssigning}}
             <BulkAssignment
@@ -661,35 +661,31 @@ export default class LearnerGroupRootComponent extends Component {
               @done={{fn @setIsBulkAssigning false}}
             />
           {{else if @isEditing}}
-            <div class="learner-group-overview-content">
-              <UserManager
-                @filter={{this.filter}}
-                @learnerGroupId={{this.learnerGroupId}}
-                @learnerGroupTitle={{this.learnerGroupTitle}}
-                @topLevelGroupTitle={{this.topLevelGroupTitle}}
-                @cohortTitle={{this.cohortTitle}}
-                @users={{this.usersForUserManager}}
-                @sortBy={{this.sortUsersBy}}
-                @setSortBy={{@setSortUsersBy}}
-                @addUserToGroup={{perform this.addUserToGroup}}
-                @removeUserFromGroup={{perform this.removeUserToCohort}}
-                @addUsersToGroup={{perform this.addUsersToGroup}}
-                @removeUsersFromGroup={{perform this.removeUsersToCohort}}
-              />
-            </div>
+            <UserManager
+              @filter={{this.filter}}
+              @learnerGroupId={{this.learnerGroupId}}
+              @learnerGroupTitle={{this.learnerGroupTitle}}
+              @topLevelGroupTitle={{this.topLevelGroupTitle}}
+              @cohortTitle={{this.cohortTitle}}
+              @users={{this.usersForUserManager}}
+              @sortBy={{this.sortUsersBy}}
+              @setSortBy={{@setSortUsersBy}}
+              @addUserToGroup={{perform this.addUserToGroup}}
+              @removeUserFromGroup={{perform this.removeUserToCohort}}
+              @addUsersToGroup={{perform this.addUsersToGroup}}
+              @removeUsersFromGroup={{perform this.removeUsersToCohort}}
+            />
           {{else}}
             {{#if @showCalendar}}
               <Calendar @learnerGroup={{@learnerGroup}} />
             {{/if}}
-            <div class="learner-group-overview-content">
-              <Members
-                @filter={{this.filter}}
-                @learnerGroupId={{this.learnerGroupId}}
-                @setSortBy={{@setSortUsersBy}}
-                @sortBy={{this.sortUsersBy}}
-                @users={{this.usersForMembersList}}
-              />
-            </div>
+            <Members
+              @filter={{this.filter}}
+              @learnerGroupId={{this.learnerGroupId}}
+              @setSortBy={{@setSortUsersBy}}
+              @sortBy={{this.sortUsersBy}}
+              @users={{this.usersForMembersList}}
+            />
           {{/if}}
           <section class="subgroups" data-test-subgroups>
             <div class="header">

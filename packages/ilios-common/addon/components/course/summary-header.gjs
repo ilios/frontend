@@ -30,12 +30,12 @@ export default class CourseSummaryHeaderComponent extends Component {
     return this.permissionChecker.canCreateCourse(school);
   }
   <template>
-    <div class="course-summary-header" data-test-course-summary-header ...attributes>
-      <div class="course-summary-header-top">
-        <h2 data-test-title>
+    <div class="ilios-overview course-summary-header" data-test-course-summary-header ...attributes>
+      <div class="overview-header">
+        <h2 class="overview-title" data-test-title>
           {{@course.title}}
         </h2>
-        <div class="course-summary-actions" data-test-actions>
+        <div class="overview-actions" data-test-actions>
           <LinkTo
             @route="print-course"
             @model={{@course}}
@@ -56,8 +56,8 @@ export default class CourseSummaryHeaderComponent extends Component {
           {{/if}}
         </div>
       </div>
-      <div class="course-summary-content">
-        <div class="block" data-test-start>
+      <div class="overview-content">
+        <div class="overview-block" data-test-start>
           <label>
             {{t "general.startDate"}}:
           </label>
@@ -65,7 +65,7 @@ export default class CourseSummaryHeaderComponent extends Component {
             {{formatDate @course.startDate day="2-digit" month="2-digit" year="numeric"}}
           </span>
         </div>
-        <div class="block" data-test-external-id>
+        <div class="overview-block" data-test-external-id>
           <label>
             {{t "general.externalId"}}:
           </label>
@@ -73,7 +73,7 @@ export default class CourseSummaryHeaderComponent extends Component {
             {{@course.externalId}}
           </span>
         </div>
-        <div class="block" data-test-end>
+        <div class="overview-block" data-test-end>
           <label>
             {{t "general.endDate"}}:
           </label>
@@ -81,7 +81,7 @@ export default class CourseSummaryHeaderComponent extends Component {
             {{formatDate @course.endDate day="2-digit" month="2-digit" year="numeric"}}
           </span>
         </div>
-        <div class="block" data-test-level>
+        <div class="overview-block" data-test-level>
           <label>
             {{t "general.level"}}:
           </label>
@@ -89,7 +89,7 @@ export default class CourseSummaryHeaderComponent extends Component {
             {{@course.level}}
           </span>
         </div>
-        <div class="block" data-test-status>
+        <div class="overview-block" data-test-status>
           <label>
             {{t "general.publicationStatus"}}:
           </label>

@@ -2,6 +2,7 @@
 
 .learner-group-course-associations {
   border-top: 1px dotted (var(--orange));
+  margin-top: 0.5rem;
   @include m.detail-container-content;
 
   .header {
