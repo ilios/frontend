@@ -126,8 +126,21 @@ export default class NewLearningmaterialComponent extends Component {
   userModel = new TrackedAsyncData(this.currentUser.getModel());
 
   @cached
+  get subjectData() {
+    return new TrackedAsyncData(this.args.subject);
+  }
+
+  @cached
   get schoolData() {
-    return new TrackedAsyncData(this.args.subject.school);
+    if (this.subjectData.isResolved) {
+      if (!this.args.isCourse) {
+        return new TrackedAsyncData(this.subjectData.value.course.get('school'));
+      } else {
+        return new TrackedAsyncData(this.subjectData.value.school);
+      }
+    } else {
+      return [];
+    }
   }
 
   // https://www.ada.gov/law-and-regs/regulations/title-ii-2010-regulations/#-35200-requirements-for-web-and-mobile-accessibility
@@ -503,7 +516,7 @@ export default class NewLearningmaterialComponent extends Component {
             </span>
           </div>
         {{/unless}}
-        {{#if this.accessibilityRequired}}
+        {{#if this.accessibilityRequiredData.isResolved}}
           <div class="item accessibility" data-test-accessibility-permission>
             <label for="accessibility-permission-{{this.uniqueId}}">
               {{t "general.accessibilityPermission"}}:
@@ -536,30 +549,30 @@ export default class NewLearningmaterialComponent extends Component {
               </p>
             </span>
           </div>
+          {{#unless this.accessibilityPermission}}
+            <div class="item accessibility-rationale" data-test-accessibility-permission>
+              <label for="accessibility-rationale-{{this.uniqueId}}">
+                {{t "general.accessibilityRationale"}}:
+              </label>
+              <span>
+                <textarea
+                  id="accessibility-rationale-{{this.uniqueId}}"
+                  aria-invalid={{if this.validations.errors.accessibilityRationale "true" "false"}}
+                  aria-errormessage="accessibility-rationale-error-{{this.uniqueId}}"
+                  class={{if this.validations.errors.accessibilityRationale "error"}}
+                  {{on "input" (pick "target.value" (set this "accessibilityRationale"))}}
+                  {{this.validations.attach "accessibilityRationale"}}
+                >{{this.accessibilityRationale}}</textarea>
+                <YupValidationMessage
+                  id="accessibility-rationale-error-{{this.uniqueId}}"
+                  @description={{t "general.accessibilityRationale"}}
+                  @validationErrors={{this.validations.errors.accessibilityRationale}}
+                  data-test-accessibility-rationale-validation-error-message
+                />
+              </span>
+            </div>
+          {{/unless}}
         {{/if}}
-        {{#unless this.accessibilityPermission}}
-          <div class="item accessibility-rationale" data-test-accessibility-permission>
-            <label for="accessibility-rationale-{{this.uniqueId}}">
-              {{t "general.accessibilityRationale"}}:
-            </label>
-            <span>
-              <textarea
-                id="accessibility-rationale-{{this.uniqueId}}"
-                aria-invalid={{if this.validations.errors.accessibilityRationale "true" "false"}}
-                aria-errormessage="accessibility-rationale-error-{{this.uniqueId}}"
-                class={{if this.validations.errors.accessibilityRationale "error"}}
-                {{on "input" (pick "target.value" (set this "accessibilityRationale"))}}
-                {{this.validations.attach "accessibilityRationale"}}
-              >{{this.accessibilityRationale}}</textarea>
-              <YupValidationMessage
-                id="accessibility-rationale-error-{{this.uniqueId}}"
-                @description={{t "general.accessibilityRationale"}}
-                @validationErrors={{this.validations.errors.accessibilityRationale}}
-                data-test-accessibility-rationale-validation-error-message
-              />
-            </span>
-          </div>
-        {{/unless}}
       {{/if}}
 
       <div class="buttons">
