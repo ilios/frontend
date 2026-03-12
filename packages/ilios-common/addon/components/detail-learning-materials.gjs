@@ -74,9 +74,6 @@ export default class DetailLearningMaterialsComponent extends Component {
     return !!this.managingMaterial;
   }
 
-  get isSession() {
-    return !this.args.isCourse;
-  }
   get displaySearchBox() {
     return !this.isManaging && !this.displayAddNewForm && !this.isSorting && this.args.editable;
   }
