@@ -4,6 +4,7 @@ general:
   aamcSchoolId: 'Identifiant d''école AAMC ("Identifiant d''institution")'
   academicYear: Année Scolaire
   academicYears: Années Scolaire
+  accessibilityRequired: Accessibilité requise
   accommodationIsRequiredForLearnersInThisGroup: Des aménagements sont nécessaires pour les apprenants de ce groupe
   accommodationIsRequiredForLearnersInSubgroups: "Des aménagements sont nécessaires pour les apprenants des sous-groupes suivants: {groups}"
   accountEnabled: Compte Activé
@@ -186,6 +187,7 @@ general:
   learnerGroupTitleFilterPlaceholder: "Filtre par titre de groupe d'apprenants"
   learnerGroupTitlePlaceholder: "Ajoutez une titre pour cette groupe d'apprenants"
   learningMaterial: "Matériel d'Étude"
+  learningMaterialAttributes: "Attributs du Matériels d'Étude"
   linkedCompetencies: Compétences Liés
   linkedCompetencyCount: "{count, plural, =1 {1 présente un compétence líé} other {# présentes des compétences líés}}"
   lock: Verrouiller
@@ -200,6 +202,7 @@ general:
   manageEmails: Gérer les emails
   manageGroupMembership: "Gérer l'appartenance au groupe"
   manageInstitutionalInformation: Manager les informations institutionnelles
+  manageLearningMaterialAttributes: "Gérer Attributs du Matériel d'Étude"
   manageSessionAttributes: Gérer Attributs de Séance
   manageUsersSummaryTitle: "utilisateurs d'Ilios"
   matchGroups: "Départagez les Groupes "

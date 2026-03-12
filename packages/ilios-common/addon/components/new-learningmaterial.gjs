@@ -95,14 +95,14 @@ export default class NewLearningmaterialComponent extends Component {
         ),
     }),
     accessibilityRationale: string().when(
-      ['$isFile', 'accessibilityPermission', '$afterGovtCutoff'],
-      ([isFile, accessibilityPermission, afterGovtCutoff], schema) => {
-        if (isFile && !accessibilityPermission && afterGovtCutoff) {
+      ['$isFile', 'accessibilityPermission', '$accessibilityRequired'],
+      ([isFile, accessibilityPermission, accessibilityRequired], schema) => {
+        if (isFile && !accessibilityPermission && accessibilityRequired) {
           return schema.required().min(2).max(65000);
         }
       },
     ),
-    accessibilityPermission: boolean().when(['$isFile', '$afterGovtCutoff'], {
+    accessibilityPermission: boolean().when(['$isFile', '$accessibilityRequired'], {
       is: true,
       then: (schema) =>
         schema.test(
@@ -125,9 +125,23 @@ export default class NewLearningmaterialComponent extends Component {
   });
   userModel = new TrackedAsyncData(this.currentUser.getModel());
 
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.args.subject.school);
+  }
+
   // https://www.ada.gov/law-and-regs/regulations/title-ii-2010-regulations/#-35200-requirements-for-web-and-mobile-accessibility
-  get afterGovtCutoff() {
-    return new Date() >= new Date('April 24, 2026');
+  @cached
+  get accessibilityRequiredData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved
+        ? this.schoolData.value?.getConfigValue('showLearningMaterialAccessibilityRequired')
+        : false,
+    );
+  }
+
+  get accessibilityRequired() {
+    return this.accessibilityRequiredData.isResolved ? this.accessibilityRequiredData.value : false;
   }
 
   get uniqueId() {
@@ -489,38 +503,40 @@ export default class NewLearningmaterialComponent extends Component {
             </span>
           </div>
         {{/unless}}
-        <div class="item accessibility" data-test-accessibility-permission>
-          <label for="accessibility-permission-{{this.uniqueId}}">
-            {{t "general.accessibilityPermission"}}:
-          </label>
-          <span>
-            <p id="lm-accessibility-permissions-text">
-              <input
-                id="accessibility-permission-{{this.uniqueId}}"
-                aria-invalid={{if this.validations.errors.accessibilityPermission "true" "false"}}
-                aria-errormessage="accessibility-permission-error-{{this.uniqueId}}"
-                class={{if this.validations.errors.accessibilityPermission "error"}}
-                type="checkbox"
-                checked={{this.accessibilityPermission}}
-                {{on
-                  "click"
-                  (set this "accessibilityPermission" (not this.accessibilityPermission))
-                }}
-                {{on "change" (perform this.validations.runValidator)}}
-                data-test-accessibility-permission
-              />
-              {{t "general.accessibilityAgreement"}}
-              {{#if this.validations.errors.accessibilityPermission}}
-                <br />
-              {{/if}}
-              <YupValidationMessage
-                id="accessibility-permission-error-{{this.uniqueId}}"
-                @validationErrors={{this.validations.errors.accessibilityPermission}}
-                data-test-accessibility-permission-validation-error-message
-              />
-            </p>
-          </span>
-        </div>
+        {{#if this.accessibilityRequired}}
+          <div class="item accessibility" data-test-accessibility-permission>
+            <label for="accessibility-permission-{{this.uniqueId}}">
+              {{t "general.accessibilityPermission"}}:
+            </label>
+            <span>
+              <p id="lm-accessibility-permissions-text">
+                <input
+                  id="accessibility-permission-{{this.uniqueId}}"
+                  aria-invalid={{if this.validations.errors.accessibilityPermission "true" "false"}}
+                  aria-errormessage="accessibility-permission-error-{{this.uniqueId}}"
+                  class={{if this.validations.errors.accessibilityPermission "error"}}
+                  type="checkbox"
+                  checked={{this.accessibilityPermission}}
+                  {{on
+                    "click"
+                    (set this "accessibilityPermission" (not this.accessibilityPermission))
+                  }}
+                  {{on "change" (perform this.validations.runValidator)}}
+                  data-test-accessibility-permission
+                />
+                {{t "general.accessibilityAgreement"}}
+                {{#if this.validations.errors.accessibilityPermission}}
+                  <br />
+                {{/if}}
+                <YupValidationMessage
+                  id="accessibility-permission-error-{{this.uniqueId}}"
+                  @validationErrors={{this.validations.errors.accessibilityPermission}}
+                  data-test-accessibility-permission-validation-error-message
+                />
+              </p>
+            </span>
+          </div>
+        {{/if}}
         {{#unless this.accessibilityPermission}}
           <div class="item accessibility-rationale" data-test-accessibility-permission>
             <label for="accessibility-rationale-{{this.uniqueId}}">

@@ -1,0 +1,21 @@
+@use "../ilios-common/mixins" as m;
+
+.school-learning-material-attributes-expanded {
+  @include m.detail-container(var(--orange));
+
+  .school-learning-material-attributes-expanded-header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .school-session-attributes-expanded-content {
+    @include m.detail-container-content;
+  }
+}

@@ -248,6 +248,7 @@ export default class DetailLearningMaterialsComponent extends Component {
         {{else if this.displayAddNewForm}}
           <NewLearningmaterial
             @type={{this.type}}
+            @subject={{@subject}}
             @learningMaterialStatuses={{this.learningMaterialStatuses}}
             @learningMaterialUserRoles={{this.learningMaterialUserRoles}}
             @save={{perform this.saveNewLearningMaterial}}

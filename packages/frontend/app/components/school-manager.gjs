@@ -27,6 +27,7 @@ import SchoolVocabulariesCollapsed from 'frontend/components/school-vocabularies
 import SchoolSessionTypesExpanded from 'frontend/components/school-session-types-expanded';
 import SchoolSessionTypesCollapsed from 'frontend/components/school-session-types-collapsed';
 import SchoolSessionAttributes from 'frontend/components/school-session-attributes';
+import SchoolLearningMaterialAttributes from 'frontend/components/school-learning-material-attributes';
 import EmailsEditor from 'frontend/components/school/emails-editor';
 import Emails from 'frontend/components/school/emails';
 import SchoolInstitutionalInformationManager from 'frontend/components/school-institutional-information-manager';
@@ -243,6 +244,15 @@ export default class SchoolManagerComponent extends Component {
             />
           {{/if}}
         {{/if}}
+        <SchoolLearningMaterialAttributes
+          @school={{@school}}
+          @canUpdate={{@canUpdateSchoolConfig}}
+          @collapse={{fn @setSchoolLearningMaterialAttributesDetails false}}
+          @expand={{fn @setSchoolLearningMaterialAttributesDetails true}}
+          @details={{@schoolLearningMaterialAttributesDetails}}
+          @isManaging={{@schoolManageLearningMaterialAttributes}}
+          @manage={{@setSchoolManageLearningMaterialAttributes}}
+        />
         <SchoolSessionAttributes
           @school={{@school}}
           @canUpdate={{@canUpdateSchoolConfig}}
