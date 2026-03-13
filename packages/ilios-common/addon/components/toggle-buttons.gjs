@@ -5,7 +5,7 @@ import { concat } from '@ember/helper';
 import { eq } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 
-export default class ToggleButtons extends Component {
+export default class ToggleButtonsComponent extends Component {
   get uniqueId() {
     return guidFor(this);
   }

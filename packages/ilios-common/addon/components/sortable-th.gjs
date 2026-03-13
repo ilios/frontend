@@ -10,7 +10,7 @@ import {
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
 
-export default class SortableTh extends Component {
+export default class SortableThComponent extends Component {
   get align() {
     return this.args.align || 'left';
   }

@@ -8,7 +8,7 @@ import { not } from 'ember-truth-helpers';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faIndent, faList, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
-export default class SingleEventObjectiveList extends Component {
+export default class SingleEventObjectiveListComponent extends Component {
   @tracked groupByCompetencies = true;
   @tracked isExpanded = !!this.args.isExpandedByDefault;
 

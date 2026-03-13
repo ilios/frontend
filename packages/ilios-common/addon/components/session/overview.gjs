@@ -30,7 +30,7 @@ import FadeText from 'ilios-common/components/fade-text';
 import focus from 'ilios-common/modifiers/focus';
 import { faClockRotateLeft, faCopy, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
-export default class SessionOverview extends Component {
+export default class SessionOverviewComponent extends Component {
   @service currentUser;
   @service router;
   @service permissionChecker;

@@ -7,7 +7,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
 
-export default class SessionsGridLoading extends Component {
+export default class SessionsGridLoadingComponent extends Component {
   now = new Date();
   <template>
     <div

@@ -17,7 +17,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import SelectableTermsListItem from 'ilios-common/components/selectable-terms-list-item';
 import SelectableTermsList from 'ilios-common/components/selectable-terms-list';
 
-export default class TaxonomyManager extends Component {
+export default class TaxonomyManagerComponent extends Component {
   @service store;
   @service intl;
   @service flashMessages;

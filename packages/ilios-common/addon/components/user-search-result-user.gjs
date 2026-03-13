@@ -5,7 +5,7 @@ import { fn } from '@ember/helper';
 import Component from '@glimmer/component';
 import UserStatus from 'ilios-common/components/user-status';
 
-export default class UserSearchResultUser extends Component {
+export default class UserSearchResultUserComponent extends Component {
   get canAddUser() {
     return this.args.user.enabled || this.args.canAddDisabledUser;
   }

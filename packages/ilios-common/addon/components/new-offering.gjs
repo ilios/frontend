@@ -9,7 +9,7 @@ import set from 'ember-set-helper/helpers/set';
 import OfferingForm from 'ilios-common/components/offering-form';
 import { not } from 'ember-truth-helpers';
 
-export default class NewObjectiveComponent extends Component {
+export default class NewOfferingComponent extends Component {
   @service store;
   @tracked smallGroupMode = true;
 

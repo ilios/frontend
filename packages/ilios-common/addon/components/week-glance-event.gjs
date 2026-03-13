@@ -16,7 +16,7 @@ import LearningMaterialList from 'ilios-common/components/week-glance/learning-m
 import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
 import { faCalendarCheck, faCalendarMinus, faFlask } from '@fortawesome/free-solid-svg-icons';
 
-export default class WeekGlanceEvent extends Component {
+export default class WeekGlanceEventComponent extends Component {
   @service intl;
 
   sortString(a, b) {

@@ -4,7 +4,7 @@ import { and, not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 
-export default class TimedReleaseSchedule extends Component {
+export default class TimedReleaseScheduleComponent extends Component {
   get show() {
     return this.showNoSchedule || this.args.endDate || this.startDateInTheFuture;
   }

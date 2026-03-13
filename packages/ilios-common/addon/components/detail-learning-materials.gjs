@@ -24,7 +24,7 @@ import NewLearningmaterial from 'ilios-common/components/new-learningmaterial';
 import DetailLearningMaterialsItem from 'ilios-common/components/detail-learning-materials-item';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
-export default class DetailCohortsComponent extends Component {
+export default class DetailLearningMaterialsComponent extends Component {
   @service currentUser;
   @service store;
   @service intl;

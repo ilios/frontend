@@ -20,7 +20,7 @@ import { fn } from '@ember/helper';
 import SessionsGridLastUpdated from 'ilios-common/components/sessions-grid-last-updated';
 import SessionsGridOfferingTable from 'ilios-common/components/sessions-grid-offering-table';
 
-export default class SessionsGrid extends Component {
+export default class SessionsGridComponent extends Component {
   @service router;
   @service preserveScroll;
   @service intl;

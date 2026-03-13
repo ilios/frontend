@@ -36,7 +36,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
 
-export default class SingleEvent extends Component {
+export default class SingleEventComponent extends Component {
   @service currentUser;
   @service intl;
   @service store;

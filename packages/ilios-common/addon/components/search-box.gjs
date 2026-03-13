@@ -12,7 +12,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 const DEBOUNCE_TIMEOUT = 250;
 
-export default class SearchBox extends Component {
+export default class SearchBoxComponent extends Component {
   @service intl;
   @tracked value = '';
 

@@ -8,7 +8,7 @@ import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import SessionsGridOfferingTableOfferings from 'ilios-common/components/sessions-grid-offering-table-offerings';
 
-export default class SessionsGridOfferingTable extends Component {
+export default class SessionsGridOfferingTableComponent extends Component {
   @service permissionChecker;
 
   @cached

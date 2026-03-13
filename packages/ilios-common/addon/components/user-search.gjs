@@ -11,7 +11,7 @@ import { and, eq, gt } from 'ember-truth-helpers';
 import UserSearchResultUser from 'ilios-common/components/user-search-result-user';
 import UserSearchResultInstructorGroup from 'ilios-common/components/user-search-result-instructor-group';
 
-export default class UserSearch extends Component {
+export default class UserSearchComponent extends Component {
   @service store;
   @service intl;
   @tracked showMoreInputPrompt = false;

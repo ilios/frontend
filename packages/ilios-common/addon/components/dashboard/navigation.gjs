@@ -6,7 +6,7 @@ import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
 import IcsFeed from 'ilios-common/components/ics-feed';
 
-export default class NavigationComponent extends Component {
+export default class DashboardNavigationComponent extends Component {
   @service currentUser;
   @service iliosConfig;
   @service intl;

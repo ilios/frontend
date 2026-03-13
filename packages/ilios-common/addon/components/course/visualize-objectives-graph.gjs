@@ -25,7 +25,7 @@ import sub_ from 'ember-math-helpers/helpers/sub';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { faDownload, faFaceMeh, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-export default class CourseVisualizeObjectivesGraph extends Component {
+export default class CourseVisualizeObjectivesGraphComponent extends Component {
   @service router;
   @service intl;
   @service dataLoader;

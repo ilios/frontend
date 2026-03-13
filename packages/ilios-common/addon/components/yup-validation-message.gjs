@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 
-export default class YupValidationMessage extends Component {
+export default class YupValidationMessageComponent extends Component {
   @service intl;
 
   get messages() {

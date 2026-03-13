@@ -10,7 +10,7 @@ import {
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
 
-export default class SortableHeading extends Component {
+export default class SortableHeadingComponent extends Component {
   get align() {
     return this.args.align || 'left';
   }
