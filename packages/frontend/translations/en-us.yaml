@@ -5,6 +5,7 @@ general:
   academicYear: Academic Year
   academicYears: Academic Years
   accessibilityRequired: Accessibility Required
+  accessibilityRequiredMessage: Accessibility Required Message
   accommodationIsRequiredForLearnersInThisGroup: Accommodation is required for learners in this group
   accommodationIsRequiredForLearnersInSubgroups: "Accommodation is required for learners in the following subgroups: {groups}"
   accountEnabled: Account Enabled

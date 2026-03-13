@@ -18,23 +18,30 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolLearningMaterialAttributesExpandedComponent extends Component {
-  @tracked flippedShowLearningMaterialAccessibilityRequired = false;
+  @tracked flippedLearningMaterialAccessibilityRequired = false;
+  @tracked learningMaterialAccessibilityRequiredMessage =
+    this.args.learningMaterialAccessibilityRequiredMessage || '';
 
-  get showLearningMaterialAccessibilityRequired() {
-    if (this.flippedShowLearningMaterialAccessibilityRequired) {
-      return !this.args.showLearningMaterialAccessibilityRequired;
+  get learningMaterialAccessibilityRequired() {
+    if (this.flippedLearningMaterialAccessibilityRequired) {
+      return !this.args.learningMaterialAccessibilityRequired;
     }
-    return this.args.showLearningMaterialAccessibilityRequired;
+    return this.args.learningMaterialAccessibilityRequired;
   }
 
   resetFlipped() {
-    this.flippedShowLearningMaterialAccessibilityRequired = false;
+    this.flippedLearningMaterialAccessibilityRequired = false;
   }
 
   @action
   cancel() {
     this.args.manage(false);
     this.resetFlipped();
+  }
+
+  @action
+  updateLearningMaterialRequiredMessage(msg) {
+    this.learningMaterialAccessibilityRequiredMessage = msg;
   }
 
   @action
@@ -52,7 +59,8 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
   save = task({ drop: true }, async () => {
     //read the flipped values before we reset them
     const all = {
-      showLearningMaterialAccessibilityRequired: this.showLearningMaterialAccessibilityRequired,
+      learningMaterialAccessibilityRequired: this.learningMaterialAccessibilityRequired,
+      learningMaterialAccessibilityRequiredMessage: `"${this.learningMaterialAccessibilityRequiredMessage}"`, //make sure text is in quotes so db value is valid
     };
     this.resetFlipped(); //reset before we save, otherwise there will be a flash of the old values
     await this.args.saveAll(all);
@@ -113,9 +121,11 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
       <div class="school-learning-material-attributes-expanded-content" data-test-expanded>
         {{#if @isManaging}}
           <SchoolLearningMaterialAttributesManager
-            @showLearningMaterialAccessibilityRequired={{this.showLearningMaterialAccessibilityRequired}}
+            @learningMaterialAccessibilityRequired={{this.learningMaterialAccessibilityRequired}}
+            @learningMaterialAccessibilityRequiredMessage={{@learningMaterialAccessibilityRequiredMessage}}
             @enable={{this.enableLearningMaterialAttributeConfig}}
             @disable={{this.disableLearningMaterialAttributeConfig}}
+            @update={{this.updateLearningMaterialRequiredMessage}}
           />
         {{else}}
           <table class="ilios-table ilios-table-colors" data-test-attributes>
@@ -136,9 +146,19 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
                 </td>
                 <td>
                   <FaIcon
-                    @icon={{if this.showLearningMaterialAccessibilityRequired faCheck faBan}}
-                    class={{if this.showLearningMaterialAccessibilityRequired "yes" "no"}}
+                    @icon={{if this.learningMaterialAccessibilityRequired faCheck faBan}}
+                    class={{if this.learningMaterialAccessibilityRequired "yes" "no"}}
                   />
+                </td>
+              </tr>
+              <tr data-test-accessibility-required-message>
+                <td>
+                  {{t "general.accessibilityRequiredMessage"}}
+                </td>
+                <td>
+                  <span>
+                    {{@learningMaterialAccessibilityRequiredMessage}}
+                  </span>
                 </td>
               </tr>
             </tbody>

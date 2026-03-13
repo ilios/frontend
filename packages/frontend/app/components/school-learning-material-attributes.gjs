@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
+import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { or } from 'ember-truth-helpers';
@@ -8,7 +9,12 @@ import SchoolLearningMaterialAttributesCollapsed from 'frontend/components/schoo
 import SchoolLearningMaterialAttributesExpanded from 'frontend/components/school-learning-material-attributes-expanded';
 
 export default class SchoolLearningMaterialAttributesComponent extends Component {
-  schoolConfigNames = ['showLearningMaterialAccessibilityRequired'];
+  @service intl;
+
+  schoolConfigNames = [
+    'learningMaterialAccessibilityRequired',
+    'learningMaterialAccessibilityRequiredMessage',
+  ];
 
   @cached
   get schoolConfigsData() {
@@ -26,8 +32,15 @@ export default class SchoolLearningMaterialAttributesComponent extends Component
     return rhett;
   }
 
-  get showLearningMaterialAccessibilityRequired() {
-    return this.schoolConfigs.get('showLearningMaterialAccessibilityRequired') || null;
+  get learningMaterialAccessibilityRequired() {
+    return this.schoolConfigs.get('learningMaterialAccessibilityRequired') || false;
+  }
+
+  get learningMaterialAccessibilityRequiredMessage() {
+    return (
+      this.schoolConfigs.get('learningMaterialAccessibilityRequiredMessage') ||
+      this.intl.t('general.accessibilityAgreement')
+    );
   }
 
   save = task({ drop: true }, async (newValues) => {
@@ -57,7 +70,8 @@ export default class SchoolLearningMaterialAttributesComponent extends Component
         {{#if @details}}
           <SchoolLearningMaterialAttributesExpanded
             @canUpdate={{@canUpdate}}
-            @showLearningMaterialAccessibilityRequired={{this.showLearningMaterialAccessibilityRequired}}
+            @learningMaterialAccessibilityRequired={{this.learningMaterialAccessibilityRequired}}
+            @learningMaterialAccessibilityRequiredMessage={{this.learningMaterialAccessibilityRequiredMessage}}
             @collapse={{@collapse}}
             @isManaging={{@isManaging}}
             @manage={{@manage}}
@@ -65,7 +79,8 @@ export default class SchoolLearningMaterialAttributesComponent extends Component
           />
         {{else}}
           <SchoolLearningMaterialAttributesCollapsed
-            @showLearningMaterialAccessibilityRequired={{this.showLearningMaterialAccessibilityRequired}}
+            @learningMaterialAccessibilityRequired={{this.learningMaterialAccessibilityRequired}}
+            @learningMaterialAccessibilityRequiredMessage={{this.learningMaterialAccessibilityRequiredMessage}}
             @expand={{@expand}}
           />
         {{/if}}

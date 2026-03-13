@@ -15,7 +15,19 @@
     }
   }
 
-  .school-session-attributes-expanded-content {
+  .school-learning-material-attributes-expanded-content {
     @include m.detail-container-content;
+
+    .form {
+      @include m.ilios-form;
+    }
+
+    .validation-error-message {
+      color: var(--red);
+      display: block;
+      @include m.font-size("small");
+      font-style: italic;
+      margin-top: 0.25rem;
+    }
   }
 }

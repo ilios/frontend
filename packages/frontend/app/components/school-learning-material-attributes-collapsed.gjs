@@ -39,9 +39,19 @@ import { faCaretRight, faBan, faCheck } from '@fortawesome/free-solid-svg-icons'
             </td>
             <td>
               <FaIcon
-                @icon={{if @showLearningMaterialAccessibilityRequired faCheck faBan}}
-                class={{if @showLearningMaterialAccessibilityRequired "yes" "no"}}
+                @icon={{if @learningMaterialAccessibilityRequired faCheck faBan}}
+                class={{if @learningMaterialAccessibilityRequired "yes" "no"}}
               />
+            </td>
+          </tr>
+          <tr data-test-accessibility-required-message>
+            <td>
+              {{t "general.accessibilityRequiredMessage"}}
+            </td>
+            <td>
+              <span>
+                {{@learningMaterialAccessibilityRequiredMessage}}
+              </span>
             </td>
           </tr>
         </tbody>

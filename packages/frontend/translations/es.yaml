@@ -4,7 +4,8 @@ general:
   aamcSchoolId: 'Identificación de la escuela AAMC ("ID de la institución")'
   academicYear: Año Academico
   academicYears: Años Academicos
-  accessibilityRequired: Se Requiere Accesibilidad
+  accessibilityRequired: Accesibilidad Requerida
+  accessibilityRequiredMessage: Mensaje de Accesibilidad Requerida
   accommodationIsRequiredForLearnersInThisGroup: Se requiere alojamiento para los estudiantes de este grupo
   accommodationIsRequiredForLearnersInSubgroups: "Se requiere alojamiento para los estudiantes de los siguientes subgrupos: {groups}"
   accountEnabled: Cuenta Activa

@@ -148,13 +148,28 @@ export default class NewLearningmaterialComponent extends Component {
   get accessibilityRequiredData() {
     return new TrackedAsyncData(
       this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showLearningMaterialAccessibilityRequired')
+        ? this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequired')
         : false,
     );
   }
 
   get accessibilityRequired() {
     return this.accessibilityRequiredData.isResolved ? this.accessibilityRequiredData.value : false;
+  }
+
+  @cached
+  get accessibilityRequiredMessageData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved
+        ? this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequiredMessage')
+        : false,
+    );
+  }
+
+  get accessibilityRequiredMessage() {
+    return this.accessibilityRequiredMessageData.isResolved
+      ? this.accessibilityRequiredMessageData.value
+      : false;
   }
 
   get uniqueId() {
@@ -537,7 +552,11 @@ export default class NewLearningmaterialComponent extends Component {
                   {{on "change" (perform this.validations.runValidator)}}
                   data-test-accessibility-permission
                 />
-                {{t "general.accessibilityAgreement"}}
+                {{#if this.accessibilityRequiredMessage}}
+                  {{this.accessibilityRequiredMessage}}
+                {{else}}
+                  {{t "general.accessibilityAgreement"}}
+                {{/if}}
                 {{#if this.validations.errors.accessibilityPermission}}
                   <br />
                 {{/if}}
