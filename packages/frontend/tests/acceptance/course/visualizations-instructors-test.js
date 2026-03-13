@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL, waitFor } from '@ember/test-helpers';
+import timeout from 'ember-simple-charts/utils/timeout';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-instructors';
 import { setupAuthentication } from 'ilios-common';
@@ -99,6 +100,7 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
     await waitFor('svg .bars');
     assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '1 guy M. Mc1son\u200b');
     await page.root.instructorsChart.chart.bars[0].click();
+    await timeout(500, this);
     assert.strictEqual(currentURL(), '/data/courses/1/instructors/2');
   });
 });

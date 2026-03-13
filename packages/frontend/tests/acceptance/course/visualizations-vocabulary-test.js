@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL, waitFor } from '@ember/test-helpers';
+import timeout from 'ember-simple-charts/utils/timeout';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-vocabulary';
 import { setupAuthentication } from 'ilios-common';
@@ -88,6 +89,7 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
     await waitFor('svg .bars');
     assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1\u200b');
     await page.root.termsChart.chart.bars[0].click();
+    await timeout(500, this);
     assert.strictEqual(currentURL(), '/data/courses/1/terms/2');
   });
 });
