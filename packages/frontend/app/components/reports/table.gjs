@@ -10,7 +10,7 @@ import TableRow from 'frontend/components/reports/table-row';
 import includes from 'ilios-common/helpers/includes';
 import { on } from '@ember/modifier';
 
-export default class ReportsListComponent extends Component {
+export default class ReportsTableComponent extends Component {
   @tracked reportsForRemovalConfirmation = [];
 
   get sortedAscending() {

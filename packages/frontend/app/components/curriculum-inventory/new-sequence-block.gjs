@@ -24,7 +24,7 @@ import DatePicker from 'ilios-common/components/date-picker';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
-export default class CurriculumInventoryNewSequenceBlock extends Component {
+export default class CurriculumInventoryNewSequenceBlockComponent extends Component {
   @service intl;
   @service store;
 

@@ -13,7 +13,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import includes from 'ilios-common/helpers/includes';
 import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
 
-export default class SequenceBlockSessionManagerComponent extends Component {
+export default class CurriculumInventorySequenceBlockSessionManagerComponent extends Component {
   @service store;
   @tracked excludedSessions = [];
   @tracked linkedSessions = [];

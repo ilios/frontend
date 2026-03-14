@@ -9,7 +9,7 @@ import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
-export default class LearnergroupBulkFinalizeUsersComponent extends Component {
+export default class LearnerGroupBulkFinalizeUsersComponent extends Component {
   @service flashMessages;
   @service intl;
 

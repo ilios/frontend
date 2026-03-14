@@ -15,7 +15,7 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
-export default class NewProgramComponent extends Component {
+export default class ProgramNewComponent extends Component {
   @service store;
 
   @tracked title;

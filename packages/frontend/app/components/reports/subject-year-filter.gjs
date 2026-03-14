@@ -9,7 +9,7 @@ import isEmpty from 'ember-truth-helpers/helpers/is-empty';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { eq } from 'ember-truth-helpers';
 
-export default class ReportsSubjectYearFilter extends Component {
+export default class ReportsSubjectYearFilterComponent extends Component {
   @service store;
 
   @cached

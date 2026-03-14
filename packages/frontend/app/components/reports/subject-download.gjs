@@ -12,7 +12,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { faCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
 
-export default class ReportsSubjectDownload extends Component {
+export default class ReportsSubjectDownloadComponent extends Component {
   @service reporting;
   @tracked finishedBuildingReport = false;
 

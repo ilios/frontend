@@ -12,7 +12,7 @@ import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 import Event from 'ilios-common/classes/event';
 import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
-export default class UserProfileCalendar extends Component {
+export default class UserProfileCalendarComponent extends Component {
   @service fetch;
   @service router;
   @service iliosConfig;

@@ -11,7 +11,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import MeshManager from 'ilios-common/components/mesh-manager';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-export default class ReportsSubjectNewProgramComponent extends Component {
+export default class ReportsSubjectNewMeshTermComponent extends Component {
   @service store;
 
   @cached

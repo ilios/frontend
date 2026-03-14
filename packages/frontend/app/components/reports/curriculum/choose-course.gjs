@@ -15,7 +15,7 @@ import { fn } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
 import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
-export default class ReportsCurriculumChooseCourse extends Component {
+export default class ReportsCurriculumChooseCourseComponent extends Component {
   @service iliosConfig;
   @service currentUser;
 

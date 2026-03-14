@@ -11,7 +11,7 @@ import onKey from 'ember-keyboard/modifiers/on-key';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-export default class GlobalSearchBox extends Component {
+export default class GlobalSearchBoxComponent extends Component {
   @service router;
 
   @tracked internalQuery;

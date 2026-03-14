@@ -21,7 +21,7 @@ import SubjectYearFilter from 'frontend/components/reports/subject-year-filter';
 import SubjectDescription from 'frontend/components/reports/subject-description';
 import focus from 'ilios-common/modifiers/focus';
 
-export default class ReportsSubjectHeader extends Component {
+export default class ReportsSubjectHeaderComponent extends Component {
   @service router;
   @service reporting;
   @tracked title = this.args.report?.title ?? '';

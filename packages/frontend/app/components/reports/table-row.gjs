@@ -6,7 +6,7 @@ import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-export default class ReportsListRowComponent extends Component {
+export default class ReportsTableRowComponent extends Component {
   get showRemoveConfirmation() {
     return this.args.reportsForRemovalConfirmation.includes(this.args.decoratedReport.report.id);
   }

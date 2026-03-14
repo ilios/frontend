@@ -8,7 +8,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import LoadingList from 'frontend/components/courses/loading-list';
 import { faBuildingColumns, faCalendar } from '@fortawesome/free-solid-svg-icons';
 
-export default class CoursesLoading extends Component {
+export default class CoursesLoadingComponent extends Component {
   @service store;
 
   today = new Date();

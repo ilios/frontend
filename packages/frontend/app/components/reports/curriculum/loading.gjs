@@ -11,7 +11,7 @@ import truncate from 'ilios-common/helpers/truncate';
 import random from 'ember-math-helpers/helpers/random';
 import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
-export default class ReportsCurriculumLoading extends Component {
+export default class ReportsCurriculumLoadingComponent extends Component {
   @service router;
   @service intl;
   @service store;

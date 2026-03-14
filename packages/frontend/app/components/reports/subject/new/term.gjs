@@ -11,7 +11,7 @@ import isEmpty from 'ember-truth-helpers/helpers/is-empty';
 import { eq } from 'ember-truth-helpers';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
-export default class ReportsSubjectNewProgramYearComponent extends Component {
+export default class ReportsSubjectNewTermComponent extends Component {
   @service store;
 
   @cached

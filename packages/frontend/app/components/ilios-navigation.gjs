@@ -23,7 +23,7 @@ import {
   faUserDoctor,
 } from '@fortawesome/free-solid-svg-icons';
 
-export default class IliosNavigation extends Component {
+export default class IliosNavigationComponent extends Component {
   @service currentUser;
   @tracked expanded = false;
   <template>

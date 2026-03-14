@@ -13,7 +13,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import { faCheck, faCopy, faDownload, faPlay, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-export default class ReportsCurriculumHeader extends Component {
+export default class ReportsCurriculumHeaderComponent extends Component {
   @service flashMessages;
   @service intl;
   @service store;
