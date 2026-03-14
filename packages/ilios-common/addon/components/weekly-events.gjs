@@ -10,7 +10,7 @@ import includes from 'ilios-common/helpers/includes';
 import { fn } from '@ember/helper';
 import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
-export default class WeeklyEvents extends Component {
+export default class WeeklyEventsComponent extends Component {
   get weeksInYear() {
     const { weeksInWeekYear } = DateTime.fromObject({ weekYear: this.args.year });
     const weeks = [];

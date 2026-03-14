@@ -6,7 +6,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
 
-export default class TimePicker extends Component {
+export default class TimePickerComponent extends Component {
   constructor() {
     super(...arguments);
     this.now = new Date();

@@ -5,7 +5,7 @@ import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-export default class ToggleYesno extends Component {
+export default class ToggleYesnoComponent extends Component {
   get yes() {
     return !!this.args.yes;
   }

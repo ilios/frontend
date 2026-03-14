@@ -13,7 +13,7 @@ import LmTypeIcon from 'ilios-common/components/lm-type-icon';
 import formatDate from 'ember-intl/helpers/format-date';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
-export default class LearningMaterialSearchComponent extends Component {
+export default class LearningmaterialSearchComponent extends Component {
   @service store;
   @service intl;
   @tracked query = '';

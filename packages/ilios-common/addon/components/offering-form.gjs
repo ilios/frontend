@@ -39,7 +39,7 @@ import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
 
-export default class OfferingForm extends Component {
+export default class OfferingFormComponent extends Component {
   @service currentUser;
   @service timezone;
   @service intl;

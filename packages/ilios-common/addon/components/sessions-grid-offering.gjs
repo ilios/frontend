@@ -24,7 +24,7 @@ import { string } from 'yup';
 import focus from 'ilios-common/modifiers/focus';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
-export default class SessionsGridOffering extends Component {
+export default class SessionsGridOfferingComponent extends Component {
   @tracked roomBuffer;
   @tracked isEditing = false;
   @tracked wasUpdated = false;

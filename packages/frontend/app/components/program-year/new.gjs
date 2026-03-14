@@ -14,7 +14,7 @@ import { eq } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
-export default class NewProgramYearComponent extends Component {
+export default class ProgramYearNewComponent extends Component {
   allYears = [];
   @tracked year;
 

@@ -4,7 +4,7 @@ import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
-export default class LeadershipCollapsed extends Component {
+export default class LeadershipCollapsedComponent extends Component {
   get count() {
     const administratorsCount = this.args.showAdministrators
       ? (this.args.administratorsCount ?? 0)

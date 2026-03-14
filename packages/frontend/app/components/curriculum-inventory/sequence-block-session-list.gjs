@@ -9,7 +9,7 @@ import { eq, or } from 'ember-truth-helpers';
 import sortBy from 'ilios-common/helpers/sort-by';
 import includes from 'ilios-common/helpers/includes';
 
-export default class SequenceBlockSessionListComponent extends Component {
+export default class CurriculumInventorySequenceBlockSessionListComponent extends Component {
   @cached
   get sessionsData() {
     return new TrackedAsyncData(this.args.sequenceBlock.sessions);

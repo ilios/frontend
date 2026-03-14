@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import popperTooltip from 'ember-popper-modifier/modifiers/popper-tooltip';
 
-export default class TooltipComponent extends Component {
+export default class IliosTooltipComponent extends Component {
   get applicationElement() {
     return document.querySelector('.ember-application');
   }

@@ -13,7 +13,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import SequenceBlockListItem from 'frontend/components/curriculum-inventory/sequence-block-list-item';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
-export default class SequenceBlockListComponent extends Component {
+export default class CurriculumInventorySequenceBlockListComponent extends Component {
   @service store;
 
   @tracked editorOn = false;

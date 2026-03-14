@@ -15,7 +15,7 @@ import WeekGlanceEvent from 'ilios-common/components/week-glance-event';
 import formatDate from 'ember-intl/helpers/format-date';
 import { faSpinner, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
-export default class WeeklyGlance extends Component {
+export default class WeeklyGlanceComponent extends Component {
   @service userEvents;
   @service intl;
   @service localeDays;

@@ -6,7 +6,7 @@ import PulseLoader from 'ilios-common/components/pulse-loader';
 import t from 'ember-intl/helpers/t';
 import ProgressBar from 'ilios-common/components/progress-bar';
 
-export default class WaitSaving extends Component {
+export default class WaitSavingComponent extends Component {
   get contentId() {
     return `wait-saving-${guidFor(this)}`;
   }

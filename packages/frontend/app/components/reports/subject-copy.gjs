@@ -7,7 +7,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 
-export default class ReportsSubjectCopy extends Component {
+export default class ReportsSubjectCopyComponent extends Component {
   @service reporting;
   @service intl;
 

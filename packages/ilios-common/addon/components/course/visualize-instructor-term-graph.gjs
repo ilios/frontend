@@ -25,7 +25,7 @@ import sub_ from 'ember-math-helpers/helpers/sub';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
-export default class CourseVisualizeInstructorTermGraph extends Component {
+export default class CourseVisualizeInstructorTermGraphComponent extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;

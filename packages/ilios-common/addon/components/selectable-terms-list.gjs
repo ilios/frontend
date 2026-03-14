@@ -7,7 +7,7 @@ import SelectableTermsListItem from 'ilios-common/components/selectable-terms-li
 import SelectableTermsList0 from 'ilios-common/components/selectable-terms-list';
 import add from 'ember-math-helpers/helpers/add';
 
-export default class SelectableTermsList extends Component {
+export default class SelectableTermsListComponent extends Component {
   @cached
   get termsData() {
     return new TrackedAsyncData(this.getFilteredTerms(this.args.parent, this.args.termFilter));

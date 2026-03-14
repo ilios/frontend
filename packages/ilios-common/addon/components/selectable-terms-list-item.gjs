@@ -9,7 +9,7 @@ import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-export default class SelectableTermsListItem extends Component {
+export default class SelectableTermsListItemComponent extends Component {
   @tracked isHovering;
 
   get selectableTermsListItemButtonId() {

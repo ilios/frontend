@@ -11,7 +11,7 @@ import UserNameInfo from 'ilios-common/components/user-name-info';
 import SortableTh from 'ilios-common/components/sortable-th';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
-export default class UserList extends Component {
+export default class UserListComponent extends Component {
   get sortedAscending() {
     return this.args.sortBy.search(/desc/) === -1;
   }

@@ -14,7 +14,7 @@ import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import Event from 'ilios-common/classes/event';
 
-export default class OfferingCalendar extends Component {
+export default class OfferingCalendarComponent extends Component {
   @tracked showLearnerGroupEvents = true;
   @tracked showSessionEvents = true;
   @tracked learnerGroupEvents = [];

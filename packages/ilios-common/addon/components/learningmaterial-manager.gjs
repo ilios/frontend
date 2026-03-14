@@ -28,7 +28,7 @@ import MeshManager from 'ilios-common/components/mesh-manager';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { faCopy, faDownload } from '@fortawesome/free-solid-svg-icons';
 
-export default class LearningMaterialManagerComponent extends Component {
+export default class LearningmaterialManagerComponent extends Component {
   @service store;
   @service flashMessages;
   @service intl;

@@ -7,7 +7,7 @@ import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
-export default class SchoolSessionTypesCollapseComponent extends Component {
+export default class SchoolSessionTypesCollapsedComponent extends Component {
   @cached
   get sessionTypesData() {
     return new TrackedAsyncData(this.args.school.sessionTypes);

@@ -13,6 +13,7 @@ import t from 'ember-intl/helpers/t';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import ObjectiveListItem from 'ilios-common/components/course/objective-list-item';
 import ObjectiveListLoading from 'ilios-common/components/course/objective-list-loading';
+
 export default class CourseObjectiveListComponent extends Component {
   @service store;
   @service intl;
