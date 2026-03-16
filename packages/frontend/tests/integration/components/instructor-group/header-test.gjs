@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -32,6 +32,7 @@ module('Integration | Component | instructor-group/header', function (hooks) {
         <Header @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />
       </template>,
     );
+    await takeComponentScreenshot(assert);
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
     assert.ok(component.title.isEditable);
@@ -54,6 +55,7 @@ module('Integration | Component | instructor-group/header', function (hooks) {
       </template>,
     );
 
+    await takeComponentScreenshot(assert);
     assert.strictEqual(component.title.text, 'lorem ipsum');
     assert.notOk(component.title.isEditable);
     assert.ok(component.members, 'Members: 3');
@@ -96,6 +98,7 @@ module('Integration | Component | instructor-group/header', function (hooks) {
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('a'.repeat(61));
     await component.title.save();
+    await takeComponentScreenshot(assert);
     assert.strictEqual(component.title.error, 'Title is too long (maximum is 60 characters)');
   });
 
@@ -115,6 +118,7 @@ module('Integration | Component | instructor-group/header', function (hooks) {
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('AB');
     await component.title.save();
+    await takeComponentScreenshot(assert);
     assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 
@@ -134,6 +138,7 @@ module('Integration | Component | instructor-group/header', function (hooks) {
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('');
     await component.title.save();
+    await takeComponentScreenshot(assert);
     assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 

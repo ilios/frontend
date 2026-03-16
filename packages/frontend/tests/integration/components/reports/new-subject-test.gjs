@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/reports/new-subject';
@@ -70,6 +70,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       'subject dropdown value is correct',
     );
     await component.subjects.choose(subjectVal);
+    await takeComponentScreenshot(assert);
     await component.objects.choose('null');
     if (!exceptedSubjects.includes(subjectVal)) {
       assert.strictEqual(component.objects.items[0].value, '', '"Anything" is first object option');
@@ -111,6 +112,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
 
     await render(<template><NewSubject @close={{(noop)}} /></template>);
+    await takeComponentScreenshot(assert);
 
     assert.strictEqual(component.componentTitle, 'New Report');
     assert.strictEqual(component.schools.items.length, 4);
@@ -196,7 +198,9 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     await component.objects.choose('mesh term');
     assert.notOk(component.meshTerm.hasSelectedTerm, 'no mesh term selected');
     await component.meshTerm.meshManager.search.set('descriptor 0');
+    await takeComponentScreenshot(assert, 'with descriptor');
     await component.meshTerm.meshManager.searchResults[0].add();
+    await takeComponentScreenshot(assert, 'with term selected');
     assert.strictEqual(
       component.meshTerm.selectedTerm,
       'descriptor 0',
@@ -241,7 +245,9 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     await component.objects.choose('instructor');
     assert.notOk(component.instructor.hasSelectedInstructor);
     await component.instructor.userSearch.searchBox.set('Rusty');
+    await takeComponentScreenshot(assert, 'with instructor');
     await component.instructor.userSearch.results.items[0].click();
+    await takeComponentScreenshot(assert, 'with instructor selected');
     assert.strictEqual(component.instructor.selectedInstructor, 'Rusty M. Mc0son');
     await component.instructor.removeSelectedInstructor();
     assert.notOk(component.instructor.hasSelectedInstructor);
@@ -413,8 +419,33 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     await component.objects.choose('instructor');
     assert.ok(component.instructor.userSearch.isVisible);
     await component.instructor.userSearch.searchBox.set('test');
+    await takeComponentScreenshot(assert);
+
     await component.instructor.userSearch.results.items[0].click();
     assert.strictEqual(component.instructor.selectedInstructor, 'Aardvark');
+  });
+
+  test('can search for course', async function (assert) {
+    const school = this.server.create('school', { title: 'first' });
+    this.server.createList('course', 3, { school });
+    await render(
+      <template>
+        <NewSubject
+          @close={{(noop)}}
+          @setSelectedSchoolId={{(noop)}}
+          @setSelectedSchool={{(noop)}}
+          @selectedSubject="session"
+          @selectedPrepositionalObject="course"
+        />
+      </template>,
+    );
+    assert.ok(component.course.isVisible);
+    await component.course.input('course');
+    await takeComponentScreenshot(assert);
+    assert.deepEqual(component.course.results.length, 3);
+    assert.deepEqual(component.course.results[0].text, '2013 course 0');
+    assert.deepEqual(component.course.results[1].text, '2013 course 1');
+    assert.deepEqual(component.course.results[2].text, '2013 course 2');
   });
 
   test('cancel', async function (assert) {
@@ -497,6 +528,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     await component.title.set(this.title.repeat(25));
     await component.save();
     assert.strictEqual(component.title.error, 'Title is too long (maximum is 240 characters)');
+    await takeComponentScreenshot(assert);
     assert.verifySteps(['setTitle called']);
   });
 
