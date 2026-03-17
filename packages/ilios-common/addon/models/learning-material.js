@@ -18,8 +18,6 @@ export default class LearningMaterial extends Model {
   @attr('boolean')
   accessibilityPermission;
   @attr('string')
-  accessibilityRationale;
-  @attr('string')
   filename;
   @attr('string')
   mimetype;

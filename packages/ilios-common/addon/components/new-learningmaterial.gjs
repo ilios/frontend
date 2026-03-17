@@ -94,14 +94,6 @@ export default class NewLearningmaterialComponent extends Component {
           (value) => this.copyrightRationale || value === true,
         ),
     }),
-    accessibilityRationale: string().when(
-      ['$isFile', 'accessibilityPermission', '$accessibilityRequired'],
-      ([isFile, accessibilityPermission, accessibilityRequired], schema) => {
-        if (isFile && !accessibilityPermission && accessibilityRequired) {
-          return schema.required().min(2).max(65000);
-        }
-      },
-    ),
     accessibilityPermission: boolean().when(['$isFile', '$accessibilityRequired'], {
       is: true,
       then: (schema) =>
@@ -568,29 +560,6 @@ export default class NewLearningmaterialComponent extends Component {
               </p>
             </span>
           </div>
-          {{#unless this.accessibilityPermission}}
-            <div class="item accessibility-rationale" data-test-accessibility-permission>
-              <label for="accessibility-rationale-{{this.uniqueId}}">
-                {{t "general.accessibilityRationale"}}:
-              </label>
-              <span>
-                <textarea
-                  id="accessibility-rationale-{{this.uniqueId}}"
-                  aria-invalid={{if this.validations.errors.accessibilityRationale "true" "false"}}
-                  aria-errormessage="accessibility-rationale-error-{{this.uniqueId}}"
-                  class={{if this.validations.errors.accessibilityRationale "error"}}
-                  {{on "input" (pick "target.value" (set this "accessibilityRationale"))}}
-                  {{this.validations.attach "accessibilityRationale"}}
-                >{{this.accessibilityRationale}}</textarea>
-                <YupValidationMessage
-                  id="accessibility-rationale-error-{{this.uniqueId}}"
-                  @description={{t "general.accessibilityRationale"}}
-                  @validationErrors={{this.validations.errors.accessibilityRationale}}
-                  data-test-accessibility-rationale-validation-error-message
-                />
-              </span>
-            </div>
-          {{/unless}}
         {{/if}}
       {{/if}}
 

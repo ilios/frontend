@@ -82,7 +82,6 @@ export default class LearningmaterialManagerComponent extends Component {
   @tracked copyrightPermission;
   @tracked copyrightRationale;
   @tracked accessibilityPermission;
-  @tracked accessibilityRationale;
   @tracked citation;
   @tracked link;
   @tracked mimetype;
@@ -248,7 +247,6 @@ export default class LearningmaterialManagerComponent extends Component {
     this.copyrightPermission = parentMaterial.copyrightPermission;
     this.copyrightRationale = parentMaterial.copyrightRationale;
     this.accessibilityPermission = parentMaterial.accessibilityPermission;
-    this.accessibilityRationale = parentMaterial.accessibilityRationale;
     this.citation = parentMaterial.citation;
     this.link = parentMaterial.link;
     this.mimetype = parentMaterial.mimetype;
@@ -527,32 +525,20 @@ export default class LearningmaterialManagerComponent extends Component {
             </div>
           {{/if}}
 
-          {{#if this.accessibilityPermission}}
-            <div class="item">
-              <label>
-                {{t "general.accessibilityPermission"}}:
-              </label>
-              {{#if this.accessibilityPermission}}
-                <span class="accessibilityPermission add">
-                  {{t "general.yes"}}
-                </span>
-              {{else}}
-                <span class="accessibilityPermission remove">
-                  {{t "general.no"}}
-                </span>
-              {{/if}}
-            </div>
-          {{/if}}
-          {{#if this.accessibilityRationale}}
-            <div class="item">
-              <label>
-                {{t "general.accessibilityRationale"}}:
-              </label>
-              <span class="accessibilityRationale">
-                {{this.accessibilityRationale}}
+          <div class="item">
+            <label>
+              {{t "general.accessibilityPermission"}}:
+            </label>
+            {{#if this.accessibilityPermission}}
+              <span class="accessibilityPermission add">
+                {{t "general.yes"}}
               </span>
-            </div>
-          {{/if}}
+            {{else}}
+              <span class="accessibilityPermission remove">
+                {{t "general.no"}}
+              </span>
+            {{/if}}
+          </div>
 
           <div class="item timed-release">
             <label>
