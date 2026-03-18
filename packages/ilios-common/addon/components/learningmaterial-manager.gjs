@@ -280,6 +280,7 @@ export default class LearningmaterialManagerComponent extends Component {
     this.parentMaterial.set('status', this.currentStatus);
     this.parentMaterial.set('title', this.title);
     this.parentMaterial.set('description', this.description);
+    this.parentMaterial.set('accessibilityPermission', this.accessibilityPermission);
 
     this.args.learningMaterial.set('meshDescriptors', this.terms);
     await this.args.learningMaterial.save();
@@ -529,15 +530,20 @@ export default class LearningmaterialManagerComponent extends Component {
             <label>
               {{t "general.accessibilityPermission"}}:
             </label>
-            {{#if this.accessibilityPermission}}
-              <span class="accessibilityPermission add">
-                {{t "general.yes"}}
-              </span>
-            {{else}}
-              <span class="accessibilityPermission remove">
-                {{t "general.no"}}
-              </span>
-            {{/if}}
+            {{#if @editable}}
+              <ToggleYesno
+                @yes={{this.accessibilityPermission}}
+                @toggle={{set this "accessibilityPermission"}}
+              />
+            {{else}}{{#this.accessibilityPermission}}
+                <span class="accessibilityPermission add">
+                  {{t "general.yes"}}
+                </span>
+              {{else}}
+                <span class="accessibilityPermission remove">
+                  {{t "general.no"}}
+                </span>
+              {{/this.accessibilityPermission}}{{/if}}
           </div>
 
           <div class="item timed-release">
