@@ -269,7 +269,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
           {{t "general.canNotContinueWithInvalidRecords"}}
         </p>
         <table
-          class="ilios-table ilios-table-colors invalid-users"
+          class="ilios-table ilios-table-colors ilios-zebra-table invalid-users"
           data-test-upload-data-invalid-users
         >
           <caption>
@@ -324,7 +324,10 @@ export default class LearnerGroupUploadDataComponent extends Component {
         </table>
       {{/if}}
       {{#if this.validUsers}}
-        <table class="ilios-table ilios-table-colors valid-users" data-test-upload-data-valid-users>
+        <table
+          class="ilios-table ilios-table-colors ilios-zebra-table valid-users"
+          data-test-upload-data-valid-users
+        >
           <caption>
             {{t "general.validUsers"}}
             ({{this.validUsers.length}})
@@ -389,18 +392,20 @@ export default class LearnerGroupUploadDataComponent extends Component {
         </table>
       {{/if}}
       {{#if (and (eq this.invalidUsers.length 0) (gt this.validUsers.length 0))}}
-        <button
-          type="button"
-          disabled={{this.continue.isRunning}}
-          data-test-upload-data-confirm
-          {{on "click" (perform this.continue)}}
-        >
-          {{#if this.continue.isRunning}}
-            <LoadingSpinner />
-          {{else}}
-            {{t "general.continue"}}
-          {{/if}}
-        </button>
+        <p>
+          <button
+            type="button"
+            disabled={{this.continue.isRunning}}
+            data-test-upload-data-confirm
+            {{on "click" (perform this.continue)}}
+          >
+            {{#if this.continue.isRunning}}
+              <LoadingSpinner />
+            {{else}}
+              {{t "general.continue"}}
+            {{/if}}
+          </button>
+        </p>
       {{/if}}
     </div>
   </template>

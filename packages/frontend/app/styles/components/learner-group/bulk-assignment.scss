@@ -4,11 +4,16 @@
 
 .learner-group-bulk-assignment {
   border-bottom: 1px solid var(--orange);
-  margin-bottom: 2rem;
-  padding: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem 0;
 
   .learner-group-upload-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
     .loading-file {
+      display: flex;
       padding: 1rem;
       text-align: center;
       width: 100%;
@@ -25,6 +30,10 @@
     .issue {
       color: var(--grey);
       margin-left: 1rem;
+    }
+
+    p:has(button) {
+      margin: 0;
     }
   }
 
