@@ -15,6 +15,10 @@ module('Integration | Component | new learningmaterial', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
+    this.course = this.server.create('course', {
+      published: true,
+      year: 2026,
+    });
     await setupAuthentication({
       school,
       displayName: 'Clem Chowder',
@@ -53,6 +57,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.course}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -60,8 +66,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.url.errorMessage.isPresent);
-    assert.strictEqual(component.url.ariaInvalid, 'false');
+    assert.notOk(component.url.errorMessage.isPresent, 'no error message present');
+    assert.strictEqual(component.url.ariaInvalid, 'false', 'link aria not invalid');
 
     await component.save();
     assert.strictEqual(component.url.ariaErrorMessage, component.url.errorMessage.id);
@@ -86,6 +92,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.course}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -104,6 +112,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.course}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -144,6 +154,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.course}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -183,6 +195,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.course}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -223,6 +237,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.course}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
