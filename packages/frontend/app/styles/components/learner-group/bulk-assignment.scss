@@ -38,20 +38,16 @@
   }
 
   .group-matcher {
-    border: 1px solid var(--grey);
-
     th:nth-child(1),
     td:nth-child(1) {
       width: 60%;
 
-      span {
-        padding-right: 2rem;
+      button {
+        margin-left: 2rem;
       }
     }
 
     .learner-group-bulk-group-matcher {
-      border: 1px solid var(--grey);
-
       select {
         width: 100%;
       }
