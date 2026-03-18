@@ -251,9 +251,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
             rel="noopener noreferrer"
             download="SampleUserUpload.tsv"
             href="data:application/octet-stream;charset=utf-8;base64,{{this.sampleData}}"
-          >
-            {{t "general.sampleFile"}}
-          </a>)
+          >{{t "general.sampleFile"}}</a>)
         </label>
         <input
           id="user-file"
