@@ -26,7 +26,11 @@ export default class SchoolLearningMaterialAttributesComponent extends Component
     const rhett = new Map();
     if (this.schoolConfigsData.isResolved) {
       this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, JSON.parse(config.value));
+        try {
+          rhett.set(config.name, JSON.parse(config.value));
+        } catch {
+          rhett.set(config.name, config.value);
+        }
       });
     }
     return rhett;

@@ -11,6 +11,10 @@ export default class SchoolConfig extends Model {
   school;
 
   get parsedValue() {
-    return JSON.parse(this.value ?? null);
+    try {
+      return JSON.parse(this.value ?? null);
+    } catch {
+      return this.value ?? null;
+    }
   }
 }
