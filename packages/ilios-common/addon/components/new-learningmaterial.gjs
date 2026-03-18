@@ -105,7 +105,7 @@ export default class NewLearningmaterialComponent extends Component {
               messageKey: 'errors.agreementRequired',
             };
           },
-          (value) => this.accessibilityRationale || value === true,
+          (value) => value === true,
         ),
     }),
     fileHash: string()
