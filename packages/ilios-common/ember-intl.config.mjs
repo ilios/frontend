@@ -6,6 +6,7 @@ export default {
         'errors.accepted',
         'errors.after',
         'errors.agreementRequired',
+        'errors.agreementRequiredOrRationale',
         'errors.before',
         'errors.blank',
         'errors.collection',

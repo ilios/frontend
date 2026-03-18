@@ -88,7 +88,7 @@ export default class NewLearningmaterialComponent extends Component {
           (d) => {
             return {
               path: d.path,
-              messageKey: 'errors.agreementRequired',
+              messageKey: 'errors.agreementRequiredOrRationale',
             };
           },
           (value) => this.copyrightRationale || value === true,
