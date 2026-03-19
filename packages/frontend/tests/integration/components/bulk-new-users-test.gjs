@@ -83,7 +83,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
 
     const content = this.element.textContent.trim();
-    assert.notEqual(content.search(/File with user data/), -1);
+    assert.notEqual(content.search(/Provide file with user data/), -1);
     assert.notEqual(content.search(/Primary School/), -1);
 
     const schools = 'select:nth-of-type(1) option';
@@ -98,7 +98,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
     await click('.click-choice-buttons .second-button');
     const content = this.element.textContent.trim();
-    assert.notEqual(content.search(/File with user data/), -1);
+    assert.notEqual(content.search(/Provide file with user data/), -1);
     assert.notEqual(content.search(/Primary School/), -1);
     assert.notEqual(content.search(/Primary Cohort/), -1);
 
