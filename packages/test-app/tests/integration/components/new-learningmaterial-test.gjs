@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import { render } from '@ember/test-helpers';
@@ -14,13 +14,16 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    this.store = this.owner.lookup('service:store');
+    this.school = this.server.create('school');
+    this.schoolModel = await this.store.findRecord('school', this.school.id);
     this.course = this.server.create('course', {
       published: true,
       year: 2026,
+      school: this.school,
     });
     await setupAuthentication({
-      school,
+      school: this.school,
       displayName: 'Clem Chowder',
     });
   });
@@ -187,6 +190,68 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     assert.notOk(component.copyrightPermission.errorMessage.isPresent);
     assert.notOk(component.copyrightRationale.errorMessage.isPresent);
     assert.strictEqual(component.copyrightRationale.ariaInvalid, 'false');
+  });
+
+  skip('validate accessibility permission enabled', async function (assert) {
+    // global failure: TypeError: this.schoolData.value?.getConfigValue is not a function
+    // are my data getters in new-learningmaterial.gjs correct?
+
+    this.schoolConfig = this.store.createRecord('school-config', {
+      name: 'learningMaterialAccessibilityRequired',
+      value: true,
+      school: this.schoolModel,
+    });
+
+    this.set('type', 'file');
+    await render(
+      <template>
+        <NewLearningmaterial
+          @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.course}}
+          @learningMaterialStatuses={{(array)}}
+          @learningMaterialUserRoles={{(array)}}
+          @save={{(noop)}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+    assert.notOk(
+      component.accessibilityPermission.errorMessage.isPresent,
+      'error message not present',
+    );
+    assert.strictEqual(
+      component.accessibilityPermission.ariaInvalid,
+      'false',
+      'link aria not invalid',
+    );
+
+    await component.save();
+    assert.strictEqual(
+      component.accessibilityPermission.ariaErrorMessage,
+      component.accessibilityPermission.errorMessage.id,
+      'error message id is correct',
+    );
+    assert.strictEqual(
+      component.accessibilityPermission.errorMessage.text,
+      'Agreement is required for upload',
+      'error message text is correct',
+    );
+    assert.strictEqual(
+      component.accessibilityPermission.ariaInvalid,
+      'true',
+      'link aria is invalid',
+    );
+
+    await component.accessibilityPermission.toggle();
+    assert.notOk(
+      component.accessibilityPermission.errorMessage.isPresent,
+      'error message no longer present',
+    );
+    assert.strictEqual(
+      component.accessibilityPermission.ariaInvalid,
+      'link aria no longer invalid',
+    );
   });
 
   test('validate original author', async function (assert) {
