@@ -22,6 +22,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       year: 2026,
       school: this.school,
     });
+    this.courseModel = await this.store.findRecord('course', this.course.id);
     await setupAuthentication({
       school: this.school,
       displayName: 'Clem Chowder',
@@ -61,7 +62,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         <NewLearningmaterial
           @type={{this.type}}
           @isCourse={{true}}
-          @subject={{this.course}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -96,7 +97,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         <NewLearningmaterial
           @type={{this.type}}
           @isCourse={{true}}
-          @subject={{this.course}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -116,7 +117,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         <NewLearningmaterial
           @type={{this.type}}
           @isCourse={{true}}
-          @subject={{this.course}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -158,7 +159,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         <NewLearningmaterial
           @type={{this.type}}
           @isCourse={{true}}
-          @subject={{this.course}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -261,7 +262,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         <NewLearningmaterial
           @type={{this.type}}
           @isCourse={{true}}
-          @subject={{this.course}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -303,7 +304,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         <NewLearningmaterial
           @type={{this.type}}
           @isCourse={{true}}
-          @subject={{this.course}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
