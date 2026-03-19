@@ -527,19 +527,28 @@ export default class LearningmaterialManagerComponent extends Component {
           {{/if}}
 
           <div class="item">
-            <label>
-              {{t "general.accessibilityPermission"}}:
-            </label>
             {{#if @editable}}
-              <ToggleYesno
-                @yes={{this.accessibilityPermission}}
-                @toggle={{set this "accessibilityPermission"}}
-              />
+              <div class="accessibility-permission-toggle">
+                <label>
+                  {{t "general.accessibilityPermission"}}:
+                </label>
+                <ToggleYesno
+                  @yes={{this.accessibilityPermission}}
+                  @toggle={{set this "accessibilityPermission"}}
+                />
+              </div>
+              <span>{{t "general.accessibilityAgreement"}}</span>
             {{else}}{{#this.accessibilityPermission}}
+                <label>
+                  {{t "general.accessibilityPermission"}}:
+                </label>
                 <span class="accessibilityPermission add">
                   {{t "general.yes"}}
                 </span>
               {{else}}
+                <label>
+                  {{t "general.accessibilityPermission"}}:
+                </label>
                 <span class="accessibilityPermission remove">
                   {{t "general.no"}}
                 </span>
