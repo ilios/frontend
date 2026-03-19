@@ -1,7 +1,7 @@
 general:
   accessAllMaterialsForThisCourse: Access All Materials for this Course
-  accessibilityAgreement: "The file I am uploading is accessible."
-  accessibilityPermission: Accessibility Permission
+  accessibilityAgreement: "The file upload is accessible."
+  accessibilityPermission: Accessibility
   accommodationIsRequiredForLearnersInThisGroup: Accommodation is required for learners in this group
   actions: Actions
   activeFilters: Active Filters

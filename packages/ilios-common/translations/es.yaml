@@ -1,7 +1,7 @@
 general:
   accessAllMaterialsForThisCourse: Acceso Todos los Materiales para este Curso
-  accessibilityAgreement: "El archivo que estoy cargando es accesible."
-  accessibilityPermission: Permiso de Accesibilidad
+  accessibilityAgreement: "El archivo es accesible."
+  accessibilityPermission: Accesibilidad
   accommodationIsRequiredForLearnersInThisGroup: Se requiere alojamiento para los estudiantes de este grupo
   actions: Acciones
   activeFilters: Filtros Activos
