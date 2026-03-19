@@ -81,7 +81,7 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
         </p>
         {{#if this.unmatchedGroups.length}}
           <table
-            class="ilios-table ilios-table-colors group-matcher"
+            class="ilios-table ilios-table-colors ilios-zebra-table group-matcher"
             data-test-match-groups-unmatched
           >
             <caption>
@@ -89,12 +89,12 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
             </caption>
             <thead>
               <tr>
-                <td>
+                <th>
                   {{t "general.uploadedGroup"}}
-                </td>
-                <td>
+                </th>
+                <th>
                   {{t "general.existingGroup"}}
-                </td>
+                </th>
               </tr>
             </thead>
             <tbody>

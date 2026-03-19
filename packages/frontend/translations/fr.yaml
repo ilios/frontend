@@ -408,7 +408,7 @@ general:
   updateUserFromDirectory: Mettez à jour cet enregistrement utilisateur de la répertoire de campus
   uploadedGroup: groupe a été téléversée
   uploadGroupAssignments: téléversez travaux des groupes
-  uploadUsers: "fichier de donnée utilisateurs (csv, tsv, txt)"
+  uploadUsers: "Fournir fichier de donnée utilisateurs (csv, tsv, txt)"
   userExistsInGroupHierarchy: "L'utilisateur existe déjà dans le groupe de niveau supérieur {groupTitle} ou dans l'un de ses sous-groupes."
   userExistsMultipleTimesInUpload: Cet utilisateur existe déjà dans le téléchargement.
   userMenu: Menu utilisateur

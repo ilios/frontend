@@ -50,7 +50,7 @@ export default class LearnerGroupBulkFinalizeUsersComponent extends Component {
       <h2>
         {{t "general.finalResults"}}
       </h2>
-      <table class="ilios-table ilios-table-colors" data-test-final-data>
+      <table class="ilios-table ilios-table-colors ilios-zebra-table" data-test-final-data>
         <thead>
           <tr>
             <th>

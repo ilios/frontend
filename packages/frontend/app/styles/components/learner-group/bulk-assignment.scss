@@ -3,12 +3,16 @@
 @use "sass:color";
 
 .learner-group-bulk-assignment {
-  border-bottom: 1px solid var(--orange);
-  margin-bottom: 2rem;
-  padding: 1rem;
+  border-bottom: 1px dotted var(--orange);
+  padding: 1rem 0;
 
   .learner-group-upload-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
     .loading-file {
+      display: flex;
       padding: 1rem;
       text-align: center;
       width: 100%;
@@ -26,23 +30,23 @@
       color: var(--grey);
       margin-left: 1rem;
     }
+
+    p:has(button) {
+      margin: 0;
+    }
   }
 
   .group-matcher {
-    border: 1px solid var(--grey);
-
     th:nth-child(1),
     td:nth-child(1) {
       width: 60%;
 
-      span {
-        padding-right: 2rem;
+      button {
+        margin-left: 2rem;
       }
     }
 
     .learner-group-bulk-group-matcher {
-      border: 1px solid var(--grey);
-
       select {
         width: 100%;
       }
@@ -55,7 +59,7 @@
 
   .bulk-finalize-users {
     h2 {
-      @include m.ilios-heading-h4;
+      @include m.ilios-heading-h5;
       margin-top: 1rem;
     }
   }
