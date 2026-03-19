@@ -255,6 +255,7 @@ export default class NewLearningmaterialComponent extends Component {
         learningMaterial.setProperties({
           copyrightRationale: this.copyrightRationale,
           copyrightPermission: this.copyrightPermission,
+          accessibilityPermission: this.accessibilityPermission,
           filename: this.filename,
           fileHash: this.fileHash,
         });
