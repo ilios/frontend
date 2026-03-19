@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import { render } from '@ember/test-helpers';
@@ -193,10 +193,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     assert.strictEqual(component.copyrightRationale.ariaInvalid, 'false');
   });
 
-  skip('validate accessibility permission enabled', async function (assert) {
-    // global failure: TypeError: this.schoolData.value?.getConfigValue is not a function
-    // are my data getters in new-learningmaterial.gjs correct?
-
+  test('validate accessibility permission enabled', async function (assert) {
     this.schoolConfig = this.store.createRecord('school-config', {
       name: 'learningMaterialAccessibilityRequired',
       value: true,
@@ -209,7 +206,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         <NewLearningmaterial
           @type={{this.type}}
           @isCourse={{true}}
-          @subject={{this.course}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -251,7 +248,51 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     );
     assert.strictEqual(
       component.accessibilityPermission.ariaInvalid,
+      'false',
       'link aria no longer invalid',
+    );
+  });
+
+  test('validate accessibility permission disabled', async function (assert) {
+    this.schoolConfig = this.store.createRecord('school-config', {
+      name: 'learningMaterialAccessibilityRequired',
+      value: false,
+      school: this.schoolModel,
+    });
+
+    this.set('type', 'file');
+    await render(
+      <template>
+        <NewLearningmaterial
+          @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
+          @learningMaterialStatuses={{(array)}}
+          @learningMaterialUserRoles={{(array)}}
+          @save={{(noop)}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+    assert.notOk(
+      component.accessibilityPermission.errorMessage.isPresent,
+      'error message not present',
+    );
+    assert.strictEqual(
+      component.accessibilityPermission.ariaInvalid,
+      'false',
+      'link aria not invalid',
+    );
+
+    await component.save();
+    assert.notOk(
+      component.accessibilityPermission.errorMessage.isPresent,
+      'error message still not present',
+    );
+    assert.strictEqual(
+      component.accessibilityPermission.ariaInvalid,
+      'false',
+      'link aria still invalid',
     );
   });
 
