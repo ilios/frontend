@@ -457,8 +457,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.1(@glint/template@1.7.4)(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.105.4)
       ember-primitives:
-        specifier: ^0.53.1
-        version: 0.53.1(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@glimmer/component@2.0.0)(@glint/template@1.7.4)(ember-modifier@4.2.2(@babel/core@7.29.0))(ember-resources@7.0.7(@babel/core@7.29.0)(@glimmer/component@2.0.0)(@glint/template@1.7.4))
+        specifier: ^0.54.0
+        version: 0.54.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@glimmer/component@2.0.0)(@glint/template@1.7.4)(ember-modifier@4.2.2(@babel/core@7.29.0))(ember-resources@7.0.7(@babel/core@7.29.0)(@glimmer/component@2.0.0)(@glint/template@1.7.4))
       ember-set-helper:
         specifier: ^3.1.0
         version: 3.1.0(@babel/core@7.29.0)
@@ -2091,6 +2091,10 @@ packages:
 
   '@babel/runtime@7.28.6':
     resolution: {integrity: sha512-05WQkdpL9COIMz4LjTxGpPNCdlpyimKppYNoJ5Di5EUObifl8t4tuLuUBBZEpoLYOmfvIWrsp9fCl0HoPRVTdA==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/runtime@7.29.2':
+    resolution: {integrity: sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.28.6':
@@ -5496,8 +5500,8 @@ packages:
     peerDependencies:
       ember-source: '>= 4.8.0'
 
-  ember-primitives@0.53.1:
-    resolution: {integrity: sha512-Jb5MBilMTWJFaDhw3Z/uL3s3Y+G/HzmfLX8eTECkyBoQibApuvA5CMwVHmkDU1ItvndXqBqT0ougAdLqotW+Xg==}
+  ember-primitives@0.54.0:
+    resolution: {integrity: sha512-qFWeZxWSC12WAvIFpjsFA6y+RkB1hZj5Z3YLLWqIYR9rYkx2TdK14wT5cb2a7vyGjB9vTi1OfXI/F2jJGzgwIQ==}
     hasBin: true
     peerDependencies:
       '@ember/test-helpers': '>= 3.2.0'
@@ -11312,6 +11316,8 @@ snapshots:
 
   '@babel/runtime@7.28.6': {}
 
+  '@babel/runtime@7.29.2': {}
+
   '@babel/template@7.28.6':
     dependencies:
       '@babel/code-frame': 7.29.0
@@ -16205,9 +16211,9 @@ snapshots:
       - supports-color
       - webpack
 
-  ember-primitives@0.53.1(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@glimmer/component@2.0.0)(@glint/template@1.7.4)(ember-modifier@4.2.2(@babel/core@7.29.0))(ember-resources@7.0.7(@babel/core@7.29.0)(@glimmer/component@2.0.0)(@glint/template@1.7.4)):
+  ember-primitives@0.54.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@glimmer/component@2.0.0)(@glint/template@1.7.4)(ember-modifier@4.2.2(@babel/core@7.29.0))(ember-resources@7.0.7(@babel/core@7.29.0)(@glimmer/component@2.0.0)(@glint/template@1.7.4)):
     dependencies:
-      '@babel/runtime': 7.28.6
+      '@babel/runtime': 7.29.2
       '@ember/test-waiters': 4.1.1(@babel/core@7.29.0)(@glint/template@1.7.4)
       '@embroider/addon-shim': 1.10.2
       '@embroider/macros': 1.20.1(@babel/core@7.29.0)(@glint/template@1.7.4)
