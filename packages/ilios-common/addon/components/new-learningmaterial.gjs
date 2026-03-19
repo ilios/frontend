@@ -123,16 +123,25 @@ export default class NewLearningmaterialComponent extends Component {
   }
 
   @cached
-  get schoolData() {
+  get courseData() {
     if (this.subjectData.isResolved) {
       if (!this.args.isCourse) {
-        return new TrackedAsyncData(this.subjectData.value.course.get('school'));
+        return new TrackedAsyncData(this.subjectData.value.course);
       } else {
-        return new TrackedAsyncData(this.subjectData.value.school);
+        return new TrackedAsyncData(this.subjectData.value);
       }
-    } else {
-      return new TrackedAsyncData(null);
     }
+
+    return null;
+  }
+
+  @cached
+  get schoolData() {
+    if (this.courseData.isResolved) {
+      return new TrackedAsyncData(this.courseData.value.school);
+    }
+
+    return null;
   }
 
   // https://www.ada.gov/law-and-regs/regulations/title-ii-2010-regulations/#-35200-requirements-for-web-and-mobile-accessibility
@@ -161,7 +170,7 @@ export default class NewLearningmaterialComponent extends Component {
   get accessibilityRequiredMessage() {
     return this.accessibilityRequiredMessageData.isResolved
       ? this.accessibilityRequiredMessageData.value
-      : '';
+      : this.intl.t('general.accessibilityAgreement');
   }
 
   get uniqueId() {
