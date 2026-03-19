@@ -131,7 +131,7 @@ export default class NewLearningmaterialComponent extends Component {
         return new TrackedAsyncData(this.subjectData.value.school);
       }
     } else {
-      return null;
+      return new TrackedAsyncData(null);
     }
   }
 
@@ -139,9 +139,9 @@ export default class NewLearningmaterialComponent extends Component {
   @cached
   get accessibilityRequiredData() {
     return new TrackedAsyncData(
-      this.schoolData && this.schoolData.isResolved
+      this.schoolData.isResolved && this.schoolData.value
         ? this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequired')
-        : false,
+        : null,
     );
   }
 
@@ -152,16 +152,16 @@ export default class NewLearningmaterialComponent extends Component {
   @cached
   get accessibilityRequiredMessageData() {
     return new TrackedAsyncData(
-      this.schoolData && this.schoolData.isResolved
+      this.schoolData.isResolved && this.schoolData.value
         ? this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequiredMessage')
-        : false,
+        : null,
     );
   }
 
   get accessibilityRequiredMessage() {
     return this.accessibilityRequiredMessageData.isResolved
       ? this.accessibilityRequiredMessageData.value
-      : false;
+      : '';
   }
 
   get uniqueId() {
