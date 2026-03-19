@@ -408,7 +408,7 @@ general:
   updateUserFromDirectory: Update this user record from the campus directory.
   uploadedGroup: Uploaded Group
   uploadGroupAssignments: Upload Group Assignments
-  uploadUsers: "File with user data (csv, tsv, txt)"
+  uploadUsers: "Provide file with user data (csv, tsv, txt)"
   userExistsInGroupHierarchy: "User already exists in top-level group {groupTitle} or one of its subgroups."
   userExistsMultipleTimesInUpload: This user already exists in the upload.
   userMenu: User menu
