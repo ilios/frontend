@@ -20,7 +20,7 @@ jobs:
         run: |
           rm pnpm-lock.yaml
           pnpm install --fix-lockfile --ignore-scripts
-          pnpm dedupe
+          pnpm dedupe --ignore-scripts
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v8
