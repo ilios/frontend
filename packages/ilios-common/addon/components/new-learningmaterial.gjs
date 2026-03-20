@@ -132,7 +132,7 @@ export default class NewLearningmaterialComponent extends Component {
       }
     }
 
-    return null;
+    return new TrackedAsyncData(null);
   }
 
   @cached
@@ -141,7 +141,7 @@ export default class NewLearningmaterialComponent extends Component {
       return new TrackedAsyncData(this.courseData.value.school);
     }
 
-    return null;
+    return new TrackedAsyncData(null);
   }
 
   // https://www.ada.gov/law-and-regs/regulations/title-ii-2010-regulations/#-35200-requirements-for-web-and-mobile-accessibility
