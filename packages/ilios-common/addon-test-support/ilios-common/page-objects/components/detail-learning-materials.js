@@ -49,6 +49,16 @@ const definition = {
     },
     copyrightPermission: text('.copyrightpermission'),
     copyrightRationale: text('.copyrightrationale'),
+    accessibilityPermission: text('.accessibilitypermission'),
+    accessibilityPermissionToggle: clickable(
+      '.accessibility-permission-toggle button.toggle-yesno .switch-handle',
+    ),
+    accessibilityPermissionToggleYes: isVisible(
+      '.accessibility-permission-toggle button.toggle-yesno.yes',
+    ),
+    accessibilityPermissionToggleNo: isVisible(
+      '.accessibility-permission-toggle button.toggle-yesno.no',
+    ),
     uploadDate: text('.upload-date'),
     downloadText: text('.downloadurl a'),
     downloadUrl: attribute('href', '.downloadurl a'),
@@ -56,6 +66,9 @@ const definition = {
     citation: text('.citation'),
     hasCopyrightPermission: isVisible('.copyrightpermission'),
     hasCopyrightRationale: isVisible('.copyrightrationale'),
+    hasAccessibilityPermissionToggle: isVisible(
+      '.accessibility-permission-toggle button.toggle-yesno',
+    ),
     hasLink: isVisible('.link'),
     hasCitation: isVisible('.citation'),
     hasFile: isVisible('.downloadurl'),
