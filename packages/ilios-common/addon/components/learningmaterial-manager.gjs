@@ -538,21 +538,21 @@ export default class LearningmaterialManagerComponent extends Component {
                 />
               </div>
               <span>{{t "general.accessibilityAgreement"}}</span>
-            {{else}}{{#this.accessibilityPermission}}
-                <label>
-                  {{t "general.accessibilityPermission"}}:
-                </label>
-                <span class="accessibilityPermission add">
-                  {{t "general.yes"}}
-                </span>
-              {{else}}
-                <label>
-                  {{t "general.accessibilityPermission"}}:
-                </label>
-                <span class="accessibilityPermission remove">
-                  {{t "general.no"}}
-                </span>
-              {{/this.accessibilityPermission}}{{/if}}
+            {{else if this.accessibilityPermission}}
+              <label>
+                {{t "general.accessibilityPermission"}}:
+              </label>
+              <span class="accessibilitypermission add">
+                {{t "general.yes"}}
+              </span>
+            {{else}}
+              <label>
+                {{t "general.accessibilityPermission"}}:
+              </label>
+              <span class="accessibilitypermission remove">
+                {{t "general.no"}}
+              </span>
+            {{/if}}
           </div>
 
           <div class="item timed-release">
