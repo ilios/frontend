@@ -26,9 +26,9 @@ export default class SchoolLearningMaterialAttributesComponent extends Component
     const rhett = new Map();
     if (this.schoolConfigsData.isResolved) {
       this.schoolConfigsData.value.forEach((config) => {
-        try {
-          rhett.set(config.name, JSON.parse(config.value));
-        } catch {
+        if (config.value == 'false') {
+          rhett.set(config.name, false);
+        } else {
           rhett.set(config.name, config.value);
         }
       });
@@ -74,8 +74,8 @@ export default class SchoolLearningMaterialAttributesComponent extends Component
         {{#if @details}}
           <SchoolLearningMaterialAttributesExpanded
             @canUpdate={{@canUpdate}}
-            @learningMaterialAccessibilityRequired={{this.learningMaterialAccessibilityRequired}}
-            @learningMaterialAccessibilityRequiredMessage={{this.learningMaterialAccessibilityRequiredMessage}}
+            @accessibilityRequired={{this.learningMaterialAccessibilityRequired}}
+            @accessibilityRequiredMessage={{this.learningMaterialAccessibilityRequiredMessage}}
             @collapse={{@collapse}}
             @isManaging={{@isManaging}}
             @manage={{@manage}}
@@ -83,8 +83,8 @@ export default class SchoolLearningMaterialAttributesComponent extends Component
           />
         {{else}}
           <SchoolLearningMaterialAttributesCollapsed
-            @learningMaterialAccessibilityRequired={{this.learningMaterialAccessibilityRequired}}
-            @learningMaterialAccessibilityRequiredMessage={{this.learningMaterialAccessibilityRequiredMessage}}
+            @accessibilityRequired={{this.learningMaterialAccessibilityRequired}}
+            @accessibilityRequiredMessage={{this.learningMaterialAccessibilityRequiredMessage}}
             @expand={{@expand}}
           />
         {{/if}}

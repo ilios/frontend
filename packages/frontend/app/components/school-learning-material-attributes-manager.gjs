@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { uniqueId, fn } from '@ember/helper';
+import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
@@ -29,20 +29,12 @@ export default class SchoolLearningMaterialAttributesManager extends Component {
                 {{t "general.accessibilityRequired"}}
               </td>
               <td>
-                {{#if @learningMaterialAccessibilityRequired}}
-                  <input
-                    type="checkbox"
-                    checked={{true}}
-                    {{on "click" (fn @disable "learningMaterialAccessibilityRequired")}}
-                    aria-labelledby="accessibility-required-{{templateId}}"
-                  />
-                {{else}}
-                  <input
-                    type="checkbox"
-                    {{on "click" (fn @enable "learningMaterialAccessibilityRequired")}}
-                    aria-labelledby="accessibility-required-{{templateId}}"
-                  />
-                {{/if}}
+                <input
+                  type="checkbox"
+                  checked={{@accessibilityRequired}}
+                  {{on "click" @toggle}}
+                  aria-labelledby="accessibility-required-{{templateId}}"
+                />
               </td>
             </tr>
             <tr data-test-accessibility-required-message>
@@ -52,7 +44,7 @@ export default class SchoolLearningMaterialAttributesManager extends Component {
               <td>
                 <input
                   type="text"
-                  value={{@learningMaterialAccessibilityRequiredMessage}}
+                  value={{@accessibilityRequiredMessage}}
                   {{on "input" (pick "target.value" (pipe @update))}}
                   aria-labelledby="accessibility-required-message-{{templateId}}"
                 />

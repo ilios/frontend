@@ -39,8 +39,8 @@ import { faCaretRight, faBan, faCheck } from '@fortawesome/free-solid-svg-icons'
             </td>
             <td>
               <FaIcon
-                @icon={{if @learningMaterialAccessibilityRequired faCheck faBan}}
-                class={{if @learningMaterialAccessibilityRequired "yes" "no"}}
+                @icon={{if @accessibilityRequired faCheck faBan}}
+                class={{if @accessibilityRequired "yes" "no"}}
               />
             </td>
           </tr>
@@ -50,7 +50,7 @@ import { faCaretRight, faBan, faCheck } from '@fortawesome/free-solid-svg-icons'
             </td>
             <td>
               <span>
-                {{@learningMaterialAccessibilityRequiredMessage}}
+                {{@accessibilityRequiredMessage}}
               </span>
             </td>
           </tr>

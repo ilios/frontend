@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { capitalize } from '@ember/string';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -18,51 +17,29 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolLearningMaterialAttributesExpandedComponent extends Component {
-  @tracked flippedLearningMaterialAccessibilityRequired = false;
-  @tracked learningMaterialAccessibilityRequiredMessage =
-    this.args.learningMaterialAccessibilityRequiredMessage || '';
-
-  get learningMaterialAccessibilityRequired() {
-    if (this.flippedLearningMaterialAccessibilityRequired) {
-      return !this.args.learningMaterialAccessibilityRequired;
-    }
-    return this.args.learningMaterialAccessibilityRequired;
-  }
-
-  resetFlipped() {
-    this.flippedLearningMaterialAccessibilityRequired = false;
-  }
+  @tracked accessibilityRequired = this.args.accessibilityRequired || false;
+  @tracked accessibilityRequiredMessage = this.args.accessibilityRequiredMessage || '';
 
   @action
   cancel() {
     this.args.manage(false);
-    this.resetFlipped();
   }
 
   @action
   updateLearningMaterialRequiredMessage(msg) {
-    this.learningMaterialAccessibilityRequiredMessage = msg;
+    this.accessibilityRequiredMessage = msg;
   }
 
   @action
-  enableLearningMaterialAttributeConfig(name) {
-    const bufferName = 'flipped' + capitalize(name);
-    this[bufferName] = !this.args[name];
-  }
-
-  @action
-  disableLearningMaterialAttributeConfig(name) {
-    const bufferName = 'flipped' + capitalize(name);
-    this[bufferName] = this.args[name];
+  toggleAccessibilityRequired() {
+    this.accessibilityRequired = !this.accessibilityRequired;
   }
 
   save = task({ drop: true }, async () => {
-    //read the flipped values before we reset them
     const all = {
-      learningMaterialAccessibilityRequired: this.learningMaterialAccessibilityRequired,
-      learningMaterialAccessibilityRequiredMessage: `"${this.learningMaterialAccessibilityRequiredMessage}"`, //make sure text is in quotes so db value is valid
+      learningMaterialAccessibilityRequired: this.accessibilityRequired,
+      learningMaterialAccessibilityRequiredMessage: this.accessibilityRequiredMessage,
     };
-    this.resetFlipped(); //reset before we save, otherwise there will be a flash of the old values
     await this.args.saveAll(all);
   });
   <template>
@@ -121,10 +98,9 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
       <div class="school-learning-material-attributes-expanded-content" data-test-expanded>
         {{#if @isManaging}}
           <SchoolLearningMaterialAttributesManager
-            @learningMaterialAccessibilityRequired={{this.learningMaterialAccessibilityRequired}}
-            @learningMaterialAccessibilityRequiredMessage={{@learningMaterialAccessibilityRequiredMessage}}
-            @enable={{this.enableLearningMaterialAttributeConfig}}
-            @disable={{this.disableLearningMaterialAttributeConfig}}
+            @accessibilityRequired={{this.accessibilityRequired}}
+            @accessibilityRequiredMessage={{@accessibilityRequiredMessage}}
+            @toggle={{this.toggleAccessibilityRequired}}
             @update={{this.updateLearningMaterialRequiredMessage}}
           />
         {{else}}
@@ -146,8 +122,8 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
                 </td>
                 <td>
                   <FaIcon
-                    @icon={{if this.learningMaterialAccessibilityRequired faCheck faBan}}
-                    class={{if this.learningMaterialAccessibilityRequired "yes" "no"}}
+                    @icon={{if this.accessibilityRequired faCheck faBan}}
+                    class={{if this.accessibilityRequired "yes" "no"}}
                   />
                 </td>
               </tr>
@@ -157,7 +133,7 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
                 </td>
                 <td>
                   <span>
-                    {{@learningMaterialAccessibilityRequiredMessage}}
+                    {{@accessibilityRequiredMessage}}
                   </span>
                 </td>
               </tr>
