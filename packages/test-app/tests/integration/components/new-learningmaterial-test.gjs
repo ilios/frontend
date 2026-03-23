@@ -214,40 +214,29 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(
-      component.accessibilityPermission.errorMessage.isPresent,
-      'error message not present',
-    );
-    assert.strictEqual(
-      component.accessibilityPermission.ariaInvalid,
-      'false',
-      'link aria not invalid',
-    );
+    assert.notOk(component.markedAccessible.errorMessage.isPresent, 'error message not present');
+    assert.strictEqual(component.markedAccessible.ariaInvalid, 'false', 'link aria not invalid');
 
     await component.save();
     assert.strictEqual(
-      component.accessibilityPermission.ariaErrorMessage,
-      component.accessibilityPermission.errorMessage.id,
+      component.markedAccessible.ariaErrorMessage,
+      component.markedAccessible.errorMessage.id,
       'error message id is correct',
     );
     assert.strictEqual(
-      component.accessibilityPermission.errorMessage.text,
+      component.markedAccessible.errorMessage.text,
       'Agreement is required for upload',
       'error message text is correct',
     );
-    assert.strictEqual(
-      component.accessibilityPermission.ariaInvalid,
-      'true',
-      'link aria is invalid',
-    );
+    assert.strictEqual(component.markedAccessible.ariaInvalid, 'true', 'link aria is invalid');
 
-    await component.accessibilityPermission.toggle();
+    await component.markedAccessible.toggle();
     assert.notOk(
-      component.accessibilityPermission.errorMessage.isPresent,
+      component.markedAccessible.errorMessage.isPresent,
       'error message no longer present',
     );
     assert.strictEqual(
-      component.accessibilityPermission.ariaInvalid,
+      component.markedAccessible.ariaInvalid,
       'false',
       'link aria no longer invalid',
     );
@@ -274,26 +263,15 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(
-      component.accessibilityPermission.errorMessage.isPresent,
-      'error message not present',
-    );
-    assert.strictEqual(
-      component.accessibilityPermission.ariaInvalid,
-      'false',
-      'link aria not invalid',
-    );
+    assert.notOk(component.markedAccessible.errorMessage.isPresent, 'error message not present');
+    assert.strictEqual(component.markedAccessible.ariaInvalid, 'false', 'link aria not invalid');
 
     await component.save();
     assert.notOk(
-      component.accessibilityPermission.errorMessage.isPresent,
+      component.markedAccessible.errorMessage.isPresent,
       'error message still not present',
     );
-    assert.strictEqual(
-      component.accessibilityPermission.ariaInvalid,
-      'false',
-      'link aria still invalid',
-    );
+    assert.strictEqual(component.markedAccessible.ariaInvalid, 'false', 'link aria still invalid');
   });
 
   test('validate original author', async function (assert) {

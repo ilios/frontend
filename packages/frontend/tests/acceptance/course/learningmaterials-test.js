@@ -27,7 +27,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       status: statuses[0],
       userRole: roles[0],
       copyrightPermission: true,
-      accessibilityPermission: false,
+      markedAccessible: false,
       filename: 'something.pdf',
       absoluteFileUri: 'http://somethingsomething.com/something.pdf',
       uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toJSDate(),
@@ -39,7 +39,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       userRole: roles[0],
       copyrightPermission: false,
       copyrightRationale: 'reason is thus',
-      accessibilityPermission: true,
+      markedAccessible: true,
       filename: 'filename',
       absoluteFileUri: 'http://example.com/file',
       uploadDate: DateTime.fromObject({ year: 2011, month: 3, day: 14, hour: 8 }).toJSDate(),
@@ -330,15 +330,15 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     );
     assert.ok(page.details.learningMaterials.manager.hasFile, 'lm has a file');
     assert.ok(
-      page.details.learningMaterials.manager.hasAccessibilityPermissionToggle,
+      page.details.learningMaterials.manager.hasMarkedAccessibleToggle,
       'lm has an a11y toggle',
     );
     assert.notOk(
-      page.details.learningMaterials.manager.accessibilityPermissionToggleYes,
+      page.details.learningMaterials.manager.markedAccessibleToggleYes,
       'lm a11y toggle is not set to yes',
     );
     assert.ok(
-      page.details.learningMaterials.manager.accessibilityPermissionToggleNo,
+      page.details.learningMaterials.manager.markedAccessibleToggleNo,
       'lm a11y toggle is set to no',
     );
     assert.notOk(page.details.learningMaterials.manager.hasLink, 'lm does not have link');
@@ -364,15 +364,15 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     );
     assert.ok(page.details.learningMaterials.manager.hasFile, 'lm has a file');
     assert.ok(
-      page.details.learningMaterials.manager.hasAccessibilityPermissionToggle,
+      page.details.learningMaterials.manager.hasMarkedAccessibleToggle,
       'lm has an a11y toggle',
     );
     assert.ok(
-      page.details.learningMaterials.manager.accessibilityPermissionToggleYes,
+      page.details.learningMaterials.manager.markedAccessibleToggleYes,
       'lm a11y toggle is set to yes',
     );
     assert.notOk(
-      page.details.learningMaterials.manager.accessibilityPermissionToggleNo,
+      page.details.learningMaterials.manager.markedAccessibleToggleNo,
       'lm a11y toggle is not set to no',
     );
     assert.notOk(page.details.learningMaterials.manager.hasLink, 'lm does not have link');
@@ -386,33 +386,33 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.details.learningMaterials.current[0].details();
 
     assert.ok(
-      page.details.learningMaterials.manager.hasAccessibilityPermissionToggle,
+      page.details.learningMaterials.manager.hasMarkedAccessibleToggle,
       'lm has an a11y toggle',
     );
     assert.notOk(
-      page.details.learningMaterials.manager.accessibilityPermissionToggleYes,
+      page.details.learningMaterials.manager.markedAccessibleToggleYes,
       'lm a11y toggle is not set to yes',
     );
     assert.ok(
-      page.details.learningMaterials.manager.accessibilityPermissionToggleNo,
+      page.details.learningMaterials.manager.markedAccessibleToggleNo,
       'lm a11y toggle is set to no',
     );
 
-    await page.details.learningMaterials.manager.accessibilityPermissionToggle();
+    await page.details.learningMaterials.manager.markedAccessibleToggle();
     await page.details.learningMaterials.manager.save();
 
     await page.details.learningMaterials.current[0].details();
 
     assert.ok(
-      page.details.learningMaterials.manager.hasAccessibilityPermissionToggle,
+      page.details.learningMaterials.manager.hasMarkedAccessibleToggle,
       'lm has an a11y toggle',
     );
     assert.ok(
-      page.details.learningMaterials.manager.accessibilityPermissionToggleYes,
+      page.details.learningMaterials.manager.markedAccessibleToggleYes,
       'lm a11y toggle is set to yes',
     );
     assert.notOk(
-      page.details.learningMaterials.manager.accessibilityPermissionToggleNo,
+      page.details.learningMaterials.manager.markedAccessibleToggleNo,
       'lm a11y toggle is not set to no',
     );
   });

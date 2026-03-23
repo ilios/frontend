@@ -1,7 +1,6 @@
 general:
   accessAllMaterialsForThisCourse: Access All Materials for this Course
   accessibilityAgreement: "The file upload is accessible."
-  accessibilityPermission: Accessibility
   accommodationIsRequiredForLearnersInThisGroup: Accommodation is required for learners in this group
   actions: Actions
   activeFilters: Active Filters
@@ -213,6 +212,7 @@ general:
   makeRecurring: Make Recurring
   manageLeadership: Manage Leadership
   manageLearners: Manage Learners
+  markedAccessible: Accessibile
   markAsScheduled: Mark as Scheduled
   materials: Materials
   mesh: MeSH

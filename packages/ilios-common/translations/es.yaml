@@ -1,7 +1,6 @@
 general:
   accessAllMaterialsForThisCourse: Acceso Todos los Materiales para este Curso
   accessibilityAgreement: "El archivo es accesible."
-  accessibilityPermission: Accesibilidad
   accommodationIsRequiredForLearnersInThisGroup: Se requiere alojamiento para los estudiantes de este grupo
   actions: Acciones
   activeFilters: Filtros Activos
@@ -213,6 +212,7 @@ general:
   makeRecurring: Hacer Recurrente
   manageLeadership: Maneje el Liderazgo
   manageLearners: Administrar Aprendedores
+  markedAccessible: Accesibile
   markAsScheduled: Marque Como Programado
   materials: Materiales
   mesh: MeSH

@@ -1,7 +1,6 @@
 general:
   accessAllMaterialsForThisCourse: "Accéder à tout le matériel d'étude pour ce cours"
   accessibilityAgreement: "Le fichier est accessible."
-  accessibilityPermission: Accessibilité
   accommodationIsRequiredForLearnersInThisGroup: Des aménagements sont nécessaires pour les apprenants de ce groupe
   actions: Actions
   activeFilters: Filtres actifs
@@ -214,6 +213,7 @@ general:
   manageLeadership: Gérer Dirigeants
   manageLearners: Manager Étudiants
   markAsScheduled: Faire à prévu
+  markedAccessible: Accessibile
   materials: Matériels
   mesh: MeSH
   meshCount: "{count, plural, =1 {1 a des MeSH} other {# ont MeSH}}"

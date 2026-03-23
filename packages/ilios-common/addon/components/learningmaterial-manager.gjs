@@ -81,7 +81,7 @@ export default class LearningmaterialManagerComponent extends Component {
   @tracked description;
   @tracked copyrightPermission;
   @tracked copyrightRationale;
-  @tracked accessibilityPermission;
+  @tracked markedAccessible;
   @tracked citation;
   @tracked link;
   @tracked mimetype;
@@ -246,7 +246,7 @@ export default class LearningmaterialManagerComponent extends Component {
     this.description = parentMaterial.description;
     this.copyrightPermission = parentMaterial.copyrightPermission;
     this.copyrightRationale = parentMaterial.copyrightRationale;
-    this.accessibilityPermission = parentMaterial.accessibilityPermission;
+    this.markedAccessible = parentMaterial.markedAccessible;
     this.citation = parentMaterial.citation;
     this.link = parentMaterial.link;
     this.mimetype = parentMaterial.mimetype;
@@ -280,7 +280,7 @@ export default class LearningmaterialManagerComponent extends Component {
     this.parentMaterial.set('status', this.currentStatus);
     this.parentMaterial.set('title', this.title);
     this.parentMaterial.set('description', this.description);
-    this.parentMaterial.set('accessibilityPermission', this.accessibilityPermission);
+    this.parentMaterial.set('markedAccessible', this.markedAccessible);
 
     this.args.learningMaterial.set('meshDescriptors', this.terms);
     await this.args.learningMaterial.save();
@@ -528,28 +528,28 @@ export default class LearningmaterialManagerComponent extends Component {
 
           <div class="item">
             {{#if @editable}}
-              <div class="accessibility-permission-toggle">
+              <div class="marked-accessible-toggle">
                 <label>
-                  {{t "general.accessibilityPermission"}}:
+                  {{t "general.markedAccessible"}}:
                 </label>
                 <ToggleYesno
-                  @yes={{this.accessibilityPermission}}
-                  @toggle={{set this "accessibilityPermission"}}
+                  @yes={{this.markedAccessible}}
+                  @toggle={{set this "markedAccessible"}}
                 />
               </div>
               <span>{{t "general.accessibilityAgreement"}}</span>
-            {{else if this.accessibilityPermission}}
+            {{else if this.markedAccessible}}
               <label>
-                {{t "general.accessibilityPermission"}}:
+                {{t "general.markedAccessible"}}:
               </label>
-              <span class="accessibilitypermission add">
+              <span class="markedaccessible add">
                 {{t "general.yes"}}
               </span>
             {{else}}
               <label>
-                {{t "general.accessibilityPermission"}}:
+                {{t "general.markedAccessible"}}:
               </label>
-              <span class="accessibilitypermission remove">
+              <span class="markedaccessible remove">
                 {{t "general.no"}}
               </span>
             {{/if}}

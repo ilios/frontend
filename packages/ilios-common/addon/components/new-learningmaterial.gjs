@@ -94,7 +94,7 @@ export default class NewLearningmaterialComponent extends Component {
           (value) => this.copyrightRationale || value === true,
         ),
     }),
-    accessibilityPermission: boolean().when(['$isFile', '$accessibilityRequired'], {
+    markedAccessible: boolean().when(['$isFile', '$accessibilityRequired'], {
       is: true,
       then: (schema) =>
         schema.test(
@@ -264,7 +264,7 @@ export default class NewLearningmaterialComponent extends Component {
         learningMaterial.setProperties({
           copyrightRationale: this.copyrightRationale,
           copyrightPermission: this.copyrightPermission,
-          accessibilityPermission: this.accessibilityPermission,
+          markedAccessible: this.markedAccessible,
           filename: this.filename,
           fileHash: this.fileHash,
         });
@@ -534,38 +534,35 @@ export default class NewLearningmaterialComponent extends Component {
           </div>
         {{/unless}}
         {{#if this.accessibilityRequiredData.isResolved}}
-          <div class="item accessibility" data-test-accessibility-permission>
-            <label for="accessibility-permission-{{this.uniqueId}}">
-              {{t "general.accessibilityPermission"}}:
+          <div class="item accessibility" data-test-marked-accessible>
+            <label for="marked-accessible-{{this.uniqueId}}">
+              {{t "general.markedAccessible"}}:
             </label>
             <span>
               <p id="lm-accessibility-permissions-text">
                 <input
-                  id="accessibility-permission-{{this.uniqueId}}"
-                  aria-invalid={{if this.validations.errors.accessibilityPermission "true" "false"}}
-                  aria-errormessage="accessibility-permission-error-{{this.uniqueId}}"
-                  class={{if this.validations.errors.accessibilityPermission "error"}}
+                  id="marked-accessible-{{this.uniqueId}}"
+                  aria-invalid={{if this.validations.errors.markedAccessible "true" "false"}}
+                  aria-errormessage="marked-accessible-error-{{this.uniqueId}}"
+                  class={{if this.validations.errors.markedAccessible "error"}}
                   type="checkbox"
-                  checked={{this.accessibilityPermission}}
-                  {{on
-                    "click"
-                    (set this "accessibilityPermission" (not this.accessibilityPermission))
-                  }}
+                  checked={{this.markedAccessible}}
+                  {{on "click" (set this "markedAccessible" (not this.markedAccessible))}}
                   {{on "change" (perform this.validations.runValidator)}}
-                  data-test-accessibility-permission
+                  data-test-marked-accessible
                 />
                 {{#if this.accessibilityRequiredMessage}}
                   {{this.accessibilityRequiredMessage}}
                 {{else}}
                   {{t "general.accessibilityAgreement"}}
                 {{/if}}
-                {{#if this.validations.errors.accessibilityPermission}}
+                {{#if this.validations.errors.markedAccessible}}
                   <br />
                 {{/if}}
                 <YupValidationMessage
-                  id="accessibility-permission-error-{{this.uniqueId}}"
-                  @validationErrors={{this.validations.errors.accessibilityPermission}}
-                  data-test-accessibility-permission-validation-error-message
+                  id="marked-accessible-error-{{this.uniqueId}}"
+                  @validationErrors={{this.validations.errors.markedAccessible}}
+                  data-test-marked-accessible-validation-error-message
                 />
               </p>
             </span>
