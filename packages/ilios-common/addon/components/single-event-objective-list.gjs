@@ -64,7 +64,7 @@ export default class SingleEventObjectiveListComponent extends Component {
         >
           {{@title}}
           ({{this.domains.length}})
-          <FaIcon @icon={{if this.isExpanded faCaretRight faCaretDown}} />
+          <FaIcon @icon={{if this.isExpanded faCaretDown faCaretRight}} />
         </button>
         {{#if this.showDisplayModeToggle}}
           <button
