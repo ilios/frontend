@@ -212,8 +212,8 @@ general:
   makeRecurring: Make Recurring
   manageLeadership: Manage Leadership
   manageLearners: Manage Learners
-  markedAccessible: Accessible
   markAsScheduled: Mark as Scheduled
+  markedAccessible: Accessible
   materials: Materials
   mesh: MeSH
   meshCount: "{count, plural, =1 {1 has MeSH} other {# have MesH}}"
