@@ -52,3 +52,7 @@ function setupTest(hooks, options) {
 }
 
 export { setupApplicationTest, setupRenderingTest, setupTest };
+export {
+  takeScreenshot,
+  takeComponentScreenshot,
+} from 'ilios-common/tests/helpers/take-screenshot';

@@ -102,9 +102,6 @@ importers:
       '@warp-drive/ember':
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@glint/template@1.7.4)
-      '@zumer/snapdom':
-        specifier: ^2.0.2
-        version: 2.1.0
       axe-core:
         specifier: ^4.11.1
         version: 4.11.1
@@ -390,6 +387,9 @@ importers:
       '@popperjs/core':
         specifier: '>= 2.1.0'
         version: 2.11.8
+      '@zumer/snapdom':
+        specifier: ^2.0.2
+        version: 2.1.0
       broccoli-file-creator:
         specifier: ^2.1.1
         version: 2.1.1
