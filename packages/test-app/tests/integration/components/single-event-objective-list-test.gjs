@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest, takeComponentScreenshot } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/single-event-objective-list';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
@@ -123,7 +123,7 @@ module('Integration | Component | ilios calendar single event objective list', f
         />
       </template>,
     );
-
+    await takeComponentScreenshot(assert);
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaExpanded, 'false');
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaLabel, 'Show objectives');
     assert.ok(component.title.displayModeSwitcher.isDisabled);
