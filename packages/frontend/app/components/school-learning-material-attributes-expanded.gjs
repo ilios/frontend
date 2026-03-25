@@ -18,7 +18,7 @@ import {
 
 export default class SchoolLearningMaterialAttributesExpandedComponent extends Component {
   @tracked accessibilityRequired = this.args.accessibilityRequired || false;
-  @tracked accessibilityRequiredMessage = this.args.accessibilityRequiredMessage || '';
+  @tracked accessibilityRequirementsLink = this.args.accessibilityRequirementsLink || '';
 
   @action
   cancel() {
@@ -26,8 +26,9 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
   }
 
   @action
-  updateLearningMaterialRequiredMessage(msg) {
-    this.accessibilityRequiredMessage = msg;
+  updateAccessibilityRequirementsLink(link) {
+    // console.log('updateAccessibilityRequirementsLink', link);
+    this.accessibilityRequirementsLink = link;
   }
 
   @action
@@ -38,7 +39,7 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
   save = task({ drop: true }, async () => {
     const all = {
       learningMaterialAccessibilityRequired: this.accessibilityRequired,
-      learningMaterialAccessibilityRequiredMessage: this.accessibilityRequiredMessage,
+      learningMaterialAccessibilityRequirementsLink: this.accessibilityRequirementsLink,
     };
     await this.args.saveAll(all);
   });
@@ -99,9 +100,9 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
         {{#if @isManaging}}
           <SchoolLearningMaterialAttributesManager
             @accessibilityRequired={{this.accessibilityRequired}}
-            @accessibilityRequiredMessage={{@accessibilityRequiredMessage}}
+            @accessibilityRequirementsLink={{@accessibilityRequirementsLink}}
             @toggle={{this.toggleAccessibilityRequired}}
-            @update={{this.updateLearningMaterialRequiredMessage}}
+            @update={{this.updateAccessibilityRequirementsLink}}
           />
         {{else}}
           <table class="ilios-table ilios-table-colors" data-test-attributes>
@@ -127,13 +128,13 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
                   />
                 </td>
               </tr>
-              <tr data-test-accessibility-required-message>
+              <tr data-test-accessibility-requirements-link>
                 <td>
-                  {{t "general.accessibilityRequiredMessage"}}
+                  {{t "general.accessibilityRequirementsLink"}}
                 </td>
                 <td>
                   <span>
-                    {{@accessibilityRequiredMessage}}
+                    {{@accessibilityRequirementsLink}}
                   </span>
                 </td>
               </tr>

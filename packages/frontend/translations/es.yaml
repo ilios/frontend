@@ -5,7 +5,7 @@ general:
   academicYear: Año Academico
   academicYears: Años Academicos
   accessibilityRequired: Accesibilidad Requerida
-  accessibilityRequiredMessage: Mensaje de Accesibilidad Requerida
+  accessibilityRequirementsLink: Enlace a los Requisitos de Accesibilidad
   accommodationIsRequiredForLearnersInThisGroup: Se requiere alojamiento para los estudiantes de este grupo
   accommodationIsRequiredForLearnersInSubgroups: "Se requiere alojamiento para los estudiantes de los siguientes subgrupos: {groups}"
   accountEnabled: Cuenta Activa

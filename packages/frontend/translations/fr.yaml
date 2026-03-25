@@ -5,7 +5,7 @@ general:
   academicYear: Année Scolaire
   academicYears: Années Scolaire
   accessibilityRequired: Accessibilité requise
-  accessibilityRequiredMessage: Message d'accessibilité requis
+  accessibilityRequirementsLink: Lien vers les exigences d'accessibilité
   accommodationIsRequiredForLearnersInThisGroup: Des aménagements sont nécessaires pour les apprenants de ce groupe
   accommodationIsRequiredForLearnersInSubgroups: "Des aménagements sont nécessaires pour les apprenants des sous-groupes suivants: {groups}"
   accountEnabled: Compte Activé

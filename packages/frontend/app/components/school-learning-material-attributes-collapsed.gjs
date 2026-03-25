@@ -44,13 +44,13 @@ import { faCaretRight, faBan, faCheck } from '@fortawesome/free-solid-svg-icons'
               />
             </td>
           </tr>
-          <tr data-test-accessibility-required-message>
+          <tr data-test-accessibility-requirements-link>
             <td>
-              {{t "general.accessibilityRequiredMessage"}}
+              {{t "general.accessibilityRequirementsLink"}}
             </td>
             <td>
               <span>
-                {{@accessibilityRequiredMessage}}
+                {{@accessibilityRequirementsLink}}
               </span>
             </td>
           </tr>

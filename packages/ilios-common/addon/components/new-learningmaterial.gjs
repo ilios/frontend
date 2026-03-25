@@ -21,6 +21,8 @@ import { not } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import LearningMaterialUploader from 'ilios-common/components/learning-material-uploader';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -159,17 +161,17 @@ export default class NewLearningmaterialComponent extends Component {
   }
 
   @cached
-  get accessibilityRequiredMessageData() {
+  get accessibilityRequirementsLinkData() {
     return new TrackedAsyncData(
       this.schoolData.isResolved && this.schoolData.value
-        ? this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequiredMessage')
+        ? this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequirementsLink')
         : null,
     );
   }
 
-  get accessibilityRequiredMessage() {
-    return this.accessibilityRequiredMessageData.isResolved
-      ? this.accessibilityRequiredMessageData.value
+  get accessibilityRequirementsLink() {
+    return this.accessibilityRequirementsLinkData.isResolved
+      ? this.accessibilityRequirementsLinkData.value
       : this.intl.t('general.accessibilityAgreement');
   }
 
@@ -535,9 +537,6 @@ export default class NewLearningmaterialComponent extends Component {
         {{/unless}}
         {{#if this.accessibilityRequiredData.isResolved}}
           <div class="item accessibility" data-test-marked-accessible>
-            <label for="marked-accessible-{{this.uniqueId}}">
-              {{t "general.markedAccessible"}}:
-            </label>
             <span>
               <p id="lm-accessibility-permissions-text">
                 <input
@@ -551,13 +550,17 @@ export default class NewLearningmaterialComponent extends Component {
                   {{on "change" (perform this.validations.runValidator)}}
                   data-test-marked-accessible
                 />
-                {{#if this.accessibilityRequiredMessage}}
-                  {{this.accessibilityRequiredMessage}}
-                {{else}}
+                <label for="marked-accessible-{{this.uniqueId}}">
                   {{t "general.accessibilityAgreement"}}
-                {{/if}}
-                {{#if this.validations.errors.markedAccessible}}
-                  <br />
+                </label>
+                {{#if this.accessibilityRequirementsLink}}
+                  <a
+                    href="{{this.accessibilityRequirementsLink}}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaIcon @icon={{faArrowUpRightFromSquare}} />
+                  </a>
                 {{/if}}
                 <YupValidationMessage
                   id="marked-accessible-error-{{this.uniqueId}}"
