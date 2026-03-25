@@ -388,7 +388,7 @@ importers:
         specifier: '>= 2.1.0'
         version: 2.11.8
       '@zumer/snapdom':
-        specifier: ^2.0.2
+        specifier: ~2.1.0
         version: 2.1.0
       broccoli-file-creator:
         specifier: ^2.1.1
