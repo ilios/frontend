@@ -388,8 +388,8 @@ importers:
         specifier: '>= 2.1.0'
         version: 2.11.8
       '@zumer/snapdom':
-        specifier: ~2.1.0
-        version: 2.1.0
+        specifier: ~2.6.0
+        version: 2.6.0
       broccoli-file-creator:
         specifier: ^2.1.1
         version: 2.1.1
@@ -3454,8 +3454,8 @@ packages:
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
 
-  '@zumer/snapdom@2.1.0':
-    resolution: {integrity: sha512-ZMU7O57xffeNNKwr2kMaeg6Z9b1y3v4UuvggIjgZbTSDa5lpuoiPoqwHrtj3UtoolFKCF49hwS8i2NDXzLFyhA==}
+  '@zumer/snapdom@2.6.0':
+    resolution: {integrity: sha512-JpPPkuMzozRVX6KArgCiMgLpgVW82kWgyoFk5DWGKE5msWGEshXEUdQHLLEyZRO7qioI1pI+yaBJz81tEP9gPg==}
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -13264,7 +13264,7 @@ snapshots:
 
   '@xtuc/long@4.2.2': {}
 
-  '@zumer/snapdom@2.1.0': {}
+  '@zumer/snapdom@2.6.0': {}
 
   abbrev@1.1.1: {}
 
