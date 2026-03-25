@@ -149,9 +149,13 @@ export default class NewLearningmaterialComponent extends Component {
   // https://www.ada.gov/law-and-regs/regulations/title-ii-2010-regulations/#-35200-requirements-for-web-and-mobile-accessibility
   @cached
   get accessibilityRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequired'),
-    );
+    if (this.schoolData.isResolved) {
+      return new TrackedAsyncData(
+        this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequired'),
+      );
+    }
+
+    return new TrackedAsyncData(null);
   }
 
   get accessibilityRequired() {
@@ -160,7 +164,11 @@ export default class NewLearningmaterialComponent extends Component {
 
   @cached
   get accessibilityRequirementsLinkData() {
-    return new TrackedAsyncData('learningMaterialAccessibilityRequirementsLink');
+    if (this.schoolData.isResolved) {
+      return new TrackedAsyncData('learningMaterialAccessibilityRequirementsLink');
+    }
+
+    return new TrackedAsyncData(null);
   }
 
   get accessibilityRequirementsLink() {
