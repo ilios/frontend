@@ -232,6 +232,8 @@ export default class DetailLearningMaterialsComponent extends Component {
         {{#if this.isManaging}}
           <LearningmaterialManager
             @learningMaterial={{this.managingMaterial}}
+            @isCourse={{@isCourse}}
+            @subject={{@subject}}
             @editable={{@editable}}
             @closeManager={{this.closeLearningmaterialManager}}
             @learningMaterialStatuses={{this.learningMaterialStatuses}}
