@@ -52,7 +52,7 @@
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
-    "@sentry/ember": "^10.43.0",
+    "@sentry/ember": "^10.45.0",
     "@warp-drive/build-config": "~5.8.1",
     "@warp-drive/core-types": "~5.8.1",
     "@warp-drive/ember": "~5.8.1",
