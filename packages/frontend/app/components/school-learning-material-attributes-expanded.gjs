@@ -27,7 +27,6 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
 
   @action
   updateAccessibilityRequirementsLink(link) {
-    // console.log('updateAccessibilityRequirementsLink', link);
     this.accessibilityRequirementsLink = link;
   }
 

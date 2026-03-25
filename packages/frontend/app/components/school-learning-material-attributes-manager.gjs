@@ -6,7 +6,6 @@ import { uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
-import pipe from 'ilios-common/helpers/pipe';
 import { string } from 'yup';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
@@ -40,7 +39,6 @@ export default class SchoolLearningMaterialAttributesManager extends Component {
 
   @action
   changeURL(value) {
-    // console.log('changeUrl', value);
     this.validations.addErrorDisplayFor('accessibilityRequirementsLink');
     value = value.trim();
     const regex = RegExp('https://http[s]?:');
@@ -49,6 +47,7 @@ export default class SchoolLearningMaterialAttributesManager extends Component {
     }
     this.accessibilityRequirementsLink = value;
     this.accessibilityRequirementsLinkChanged = true;
+    this.args.update(value);
   }
 
   <template>
@@ -90,9 +89,8 @@ export default class SchoolLearningMaterialAttributesManager extends Component {
                   placeholder="https://example.com"
                   value={{this.bestUrl}}
                   inputmode="url"
-                  {{on "input" (pick "target.value" this.changeUrl)}}
+                  {{on "input" (pick "target.value" this.changeURL)}}
                   {{on "focus" this.selectAllText}}
-                  {{on "keydown" (pick "target.value" (pipe @update))}}
                   aria-labelledby="accessibility-requirements-link-{{templateId}}"
                   {{this.validations.attach "accessibilityRequirementsLink"}}
                 />
