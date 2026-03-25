@@ -28,7 +28,6 @@ const definition = {
           scope: '[data-test-session-link]',
         },
       },
-      meshDescriptors: text('[data-test-mesh-descriptors]'),
     }),
   },
   publishableSessions: {
@@ -49,7 +48,6 @@ const definition = {
           scope: '[data-test-session-link]',
         },
       },
-      meshDescriptors: text('[data-test-mesh-descriptors]'),
     }),
   },
   overridableSessions: {
@@ -83,7 +81,6 @@ const definition = {
           scope: '[data-test-session-link]',
         },
       },
-      meshDescriptors: text('[data-test-mesh-descriptors]'),
     }),
   },
   review: {

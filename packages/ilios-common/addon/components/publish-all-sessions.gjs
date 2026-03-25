@@ -240,9 +240,6 @@ export default class PublishAllSessionsComponent extends Component {
                   <th>
                     {{t "general.objectives"}}
                   </th>
-                  <th>
-                    {{t "general.meshTerms"}}
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -294,16 +291,6 @@ export default class PublishAllSessionsComponent extends Component {
                         {{t "general.no"}}
                       </td>
                     {{/if}}
-                    {{#if session.meshDescriptors.length}}
-                      <td class="yes" data-test-mesh-descriptors>
-                        {{t "general.yes"}}
-                        ({{session.meshDescriptors.length}})
-                      </td>
-                    {{else}}
-                      <td class="no" data-test-mesh-descriptors>
-                        {{t "general.no"}}
-                      </td>
-                    {{/if}}
                   </tr>
                 {{/each}}
               </tbody>
@@ -342,9 +329,6 @@ export default class PublishAllSessionsComponent extends Component {
                   </th>
                   <th>
                     {{t "general.objectives"}}
-                  </th>
-                  <th>
-                    {{t "general.meshTerms"}}
                   </th>
                 </tr>
               </thead>
@@ -397,16 +381,6 @@ export default class PublishAllSessionsComponent extends Component {
                         {{t "general.no"}}
                       </td>
                     {{/if}}
-                    {{#if session.meshDescriptors.length}}
-                      <td class="yes" data-test-mesh-descriptors>
-                        {{t "general.yes"}}
-                        ({{session.meshDescriptors.length}})
-                      </td>
-                    {{else}}
-                      <td class="no" data-test-mesh-descriptors>
-                        {{t "general.no"}}
-                      </td>
-                    {{/if}}
                   </tr>
                 {{/each}}
               </tbody>
@@ -454,9 +428,6 @@ export default class PublishAllSessionsComponent extends Component {
                   </th>
                   <th>
                     {{t "general.objectives"}}
-                  </th>
-                  <th>
-                    {{t "general.meshTerms"}}
                   </th>
                 </tr>
               </thead>
@@ -532,16 +503,6 @@ export default class PublishAllSessionsComponent extends Component {
                       </td>
                     {{else}}
                       <td class="no" data-test-objectives>
-                        {{t "general.no"}}
-                      </td>
-                    {{/if}}
-                    {{#if session.meshDescriptors.length}}
-                      <td class="yes" data-test-mesh-descriptors>
-                        {{t "general.yes"}}
-                        ({{session.meshDescriptors.length}})
-                      </td>
-                    {{else}}
-                      <td class="no" data-test-mesh-descriptors>
                         {{t "general.no"}}
                       </td>
                     {{/if}}

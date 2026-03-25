@@ -12,7 +12,6 @@ module('Integration | Component | publish all sessions', function (hooks) {
   hooks.beforeEach(async function () {
     const programYearObjective = this.server.create('program-year-objective');
     const term = this.server.create('term');
-    const meshDescriptor = this.server.create('mesh-descriptor');
     const linkedCourseObjective = this.server.create('course-objective', {
       programYearObjectives: [programYearObjective],
     });
@@ -20,13 +19,11 @@ module('Integration | Component | publish all sessions', function (hooks) {
     const unpublishableSession = this.server.create('session', {
       title: 'session 1',
       published: false,
-      meshDescriptors: [meshDescriptor],
       terms: [term],
     });
     const completeSession = this.server.create('session', {
       title: 'session 2',
       published: true,
-      meshDescriptors: [meshDescriptor],
       terms: [term],
     });
     const publishableSession = this.server.create('session', {
@@ -83,7 +80,6 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.unpublishableSessions.sessions[0].terms, 'Yes (1)');
     assert.strictEqual(component.unpublishableSessions.sessions[0].objectives.text, 'No');
     assert.notOk(component.unpublishableSessions.sessions[0].objectives.isLinked);
-    assert.strictEqual(component.unpublishableSessions.sessions[0].meshDescriptors, 'Yes (1)');
     assert.strictEqual(
       component.publishableSessions.text,
       'Sessions Complete: ready to publish (1)',
@@ -99,7 +95,6 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.publishableSessions.sessions[0].terms, 'Yes (1)');
     assert.strictEqual(component.publishableSessions.sessions[0].objectives.text, 'Yes (2)');
     assert.ok(component.publishableSessions.sessions[0].objectives.isLinked);
-    assert.strictEqual(component.publishableSessions.sessions[0].meshDescriptors, 'Yes (1)');
     assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
     assert.ok(component.overridableSessions.publishAllAsIs.isVisible);
@@ -113,7 +108,6 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.overridableSessions.sessions[0].terms, 'No');
     assert.strictEqual(component.overridableSessions.sessions[0].objectives.text, 'No');
     assert.notOk(component.overridableSessions.sessions[0].objectives.isLinked);
-    assert.strictEqual(component.overridableSessions.sessions[0].meshDescriptors, 'No');
     assert.ok(component.overridableSessions.sessions[1].publishAsIs.isChecked);
     assert.notOk(component.overridableSessions.sessions[1].markAsScheduled.isChecked);
     assert.strictEqual(component.overridableSessions.sessions[1].title, 'session 4');
@@ -121,7 +115,6 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.overridableSessions.sessions[1].terms, 'No');
     assert.strictEqual(component.overridableSessions.sessions[1].objectives.text, 'No');
     assert.notOk(component.overridableSessions.sessions[1].objectives.isLinked);
-    assert.strictEqual(component.overridableSessions.sessions[1].meshDescriptors, 'No');
     assert.strictEqual(
       component.review.confirmation,
       'Publish 2, schedule 1, and ignore 1 sessions',

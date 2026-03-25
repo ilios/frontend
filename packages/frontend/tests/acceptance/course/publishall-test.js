@@ -14,7 +14,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
   });
 
   test('published sessions do not appear in the cannot publish list #1658', async function (assert) {
-    const meshDescriptor = this.server.create('mesh-descriptor');
     const term = this.server.create('term');
 
     const course = this.server.create('course', {
@@ -27,7 +26,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       course,
       published: true,
       publishedAsTbd: false,
-      meshDescriptors: [meshDescriptor],
       terms: [term],
     });
     this.server.create('session-objective', { session: session1 });
@@ -36,7 +34,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       course,
       published: true,
       publishedAsTbd: false,
-      meshDescriptors: [meshDescriptor],
       terms: [term],
     });
     this.server.create('session-objective', { session: session2 });
@@ -47,7 +44,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       course,
       published: true,
       publishedAsTbd: true,
-      meshDescriptors: [meshDescriptor],
       terms: [term],
     });
     this.server.create('session-objective', { session: session3 });
@@ -81,25 +77,21 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.strictEqual(page.publishAll.publishableSessions.sessions[0].terms, 'Yes (1)');
     assert.strictEqual(page.publishAll.publishableSessions.sessions[0].objectives.text, 'Yes (1)');
     assert.ok(page.publishAll.publishableSessions.sessions[0].objectives.isLinked);
-    assert.strictEqual(page.publishAll.publishableSessions.sessions[0].meshDescriptors, 'Yes (1)');
 
     assert.strictEqual(page.publishAll.publishableSessions.sessions[1].title, 'session 1');
     assert.strictEqual(page.publishAll.publishableSessions.sessions[1].offerings, 'Yes (1)');
     assert.strictEqual(page.publishAll.publishableSessions.sessions[1].terms, 'Yes (1)');
     assert.strictEqual(page.publishAll.publishableSessions.sessions[1].objectives.text, 'Yes (1)');
     assert.ok(page.publishAll.publishableSessions.sessions[1].objectives.isLinked);
-    assert.strictEqual(page.publishAll.publishableSessions.sessions[1].meshDescriptors, 'Yes (1)');
 
     assert.strictEqual(page.publishAll.publishableSessions.sessions[2].title, 'session 2');
     assert.strictEqual(page.publishAll.publishableSessions.sessions[2].offerings, 'Yes (1)');
     assert.strictEqual(page.publishAll.publishableSessions.sessions[2].terms, 'Yes (1)');
     assert.strictEqual(page.publishAll.publishableSessions.sessions[2].objectives.text, 'Yes (1)');
     assert.ok(page.publishAll.publishableSessions.sessions[2].objectives.isLinked);
-    assert.strictEqual(page.publishAll.publishableSessions.sessions[2].meshDescriptors, 'Yes (1)');
   });
 
   test('After publishing user is returned to the courses route #4099', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 1);
     const terms = this.server.createList('term', 1);
 
     const course = this.server.create('course', {
@@ -112,7 +104,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       course,
       published: false,
       publishedAsTbd: false,
-      meshDescriptors,
       terms,
     });
     this.server.create('session-objective', { session });
