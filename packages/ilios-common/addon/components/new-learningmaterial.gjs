@@ -17,6 +17,7 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import HtmlEditor from 'ilios-common/components/html-editor';
+import isEmpty from 'ember-truth-helpers/helpers/is-empty';
 import { not } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import LearningMaterialUploader from 'ilios-common/components/learning-material-uploader';
@@ -165,7 +166,9 @@ export default class NewLearningmaterialComponent extends Component {
   @cached
   get accessibilityRequirementsLinkData() {
     if (this.schoolData.isResolved) {
-      return new TrackedAsyncData('learningMaterialAccessibilityRequirementsLink');
+      return new TrackedAsyncData(
+        this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequirementsLink'),
+      );
     }
 
     return new TrackedAsyncData(null);
@@ -174,7 +177,7 @@ export default class NewLearningmaterialComponent extends Component {
   get accessibilityRequirementsLink() {
     return this.accessibilityRequirementsLinkData.isResolved
       ? this.accessibilityRequirementsLinkData.value
-      : this.intl.t('general.accessibilityAgreement');
+      : '';
   }
 
   get uniqueId() {
@@ -555,12 +558,13 @@ export default class NewLearningmaterialComponent extends Component {
                 <label for="marked-accessible-{{this.uniqueId}}">
                   {{t "general.accessibilityAgreement"}}
                 </label>
-                {{#if this.accessibilityRequirementsLink}}
+                {{#if (not (isEmpty this.accessibilityRequirementsLink))}}
                   <a
                     href="{{this.accessibilityRequirementsLink}}"
                     target="_blank"
                     rel="noopener noreferrer"
                     title={{t "general.accessibilityRequirementsLink"}}
+                    data-test-accessibility-requirements-link
                   >
                     <FaIcon @icon={{faArrowUpRightFromSquare}} />
                   </a>

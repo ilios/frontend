@@ -88,6 +88,9 @@ const definition = {
       scope: '[data-test-marked-accessible-validation-error-message]',
     },
   },
+  accessibilityRequirementsLink: {
+    scope: '[data-test-accessibility-requirements-link]',
+  },
   fileUpload: {
     scope: '[data-test-file]',
     errorMessage: {

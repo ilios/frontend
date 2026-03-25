@@ -274,6 +274,60 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     assert.strictEqual(component.markedAccessible.ariaInvalid, 'false', 'link aria still invalid');
   });
 
+  test('validate accessibility requirements link blank', async function (assert) {
+    this.schoolConfig = this.store.createRecord('school-config', {
+      name: 'learningMaterialAccessibilityRequirementsLink',
+      value: '',
+      school: this.schoolModel,
+    });
+
+    this.set('type', 'file');
+    await render(
+      <template>
+        <NewLearningmaterial
+          @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
+          @learningMaterialStatuses={{(array)}}
+          @learningMaterialUserRoles={{(array)}}
+          @save={{(noop)}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+    assert.notOk(
+      component.accessibilityRequirementsLink.isPresent,
+      'accessibility requirements link not visible',
+    );
+  });
+
+  test('validate accessibility requirements link', async function (assert) {
+    this.schoolConfig = this.store.createRecord('school-config', {
+      name: 'learningMaterialAccessibilityRequirementsLink',
+      value: 'https://iliosproject.org',
+      school: this.schoolModel,
+    });
+
+    this.set('type', 'file');
+    await render(
+      <template>
+        <NewLearningmaterial
+          @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
+          @learningMaterialStatuses={{(array)}}
+          @learningMaterialUserRoles={{(array)}}
+          @save={{(noop)}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+    assert.ok(
+      component.accessibilityRequirementsLink.isPresent,
+      'accessibility requirements link visible',
+    );
+  });
+
   test('validate original author', async function (assert) {
     this.set('type', 'file');
     await render(

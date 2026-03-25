@@ -1,0 +1,141 @@
+import { module, test } from 'qunit';
+import { setupAuthentication } from 'ilios-common';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import page from 'frontend/tests/pages/school';
+
+module('Acceptance | School - Learning Material Attributes', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(async function () {
+    this.school = this.server.create('school');
+    await setupAuthentication({ school: this.school }, true);
+  });
+
+  test('check fields collapsed', async function (assert) {
+    this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'learningMaterialAccessibilityRequired',
+      value: false,
+    });
+    this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'learningMaterialAccessibilityRequirementsLink',
+      value: '',
+    });
+    await page.visit({ schoolId: this.school.id });
+    await takeScreenshot(assert);
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.collapsed.accessibilityRequired.label,
+      'Accessibility Required',
+    );
+    assert.ok(
+      page.manager.schoolLearningMaterialAttributes.collapsed.accessibilityRequired.isDisabled,
+    );
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.collapsed.accessibilityRequirementsLink.label,
+      'Accessibility Requirements Link',
+    );
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.collapsed.accessibilityRequirementsLink.link,
+      '',
+    );
+  });
+
+  test('check fields expanded', async function (assert) {
+    this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'learningMaterialAccessibilityRequired',
+      value: false,
+    });
+    this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'learningMaterialAccessibilityRequirementsLink',
+      value: '',
+    });
+    await page.visit({ schoolId: this.school.id, schoolLearningMaterialAttributesDetails: true });
+    await takeScreenshot(assert);
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.expanded.attributes.accessibilityRequired.label,
+      'Accessibility Required',
+    );
+    assert.ok(
+      page.manager.schoolLearningMaterialAttributes.expanded.attributes.accessibilityRequired
+        .isDisabled,
+    );
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.expanded.attributes
+        .accessibilityRequirementsLink.label,
+      'Accessibility Requirements Link',
+    );
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.expanded.attributes
+        .accessibilityRequirementsLink.link,
+      '',
+    );
+  });
+
+  test('manage learning material attributes', async function (assert) {
+    this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'learningMaterialAccessibilityRequired',
+      value: false,
+    });
+    this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'learningMaterialAccessibilityRequirementLink',
+      value: '',
+    });
+    await page.visit({
+      schoolId: this.school.id,
+      schoolLearningMaterialAttributesDetails: true,
+      schoolManageLearningMaterialAttributes: true,
+    });
+    await takeScreenshot(assert, 'default');
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.expanded.manager.accessibilityRequired.label,
+      'Accessibility Required',
+      'required attribute label correct',
+    );
+    assert.notOk(
+      page.manager.schoolLearningMaterialAttributes.expanded.manager.accessibilityRequired
+        .isChecked,
+      'required attribute value is not checked',
+    );
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.expanded.manager.accessibilityRequirementsLink
+        .label,
+      'Accessibility Requirements Link',
+      'requirements link attribute label correct',
+    );
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.expanded.manager.accessibilityRequirementsLink
+        .link,
+      undefined,
+      'requirements link is empty',
+    );
+    await page.manager.schoolLearningMaterialAttributes.expanded.manager.accessibilityRequired.check();
+    await page.manager.schoolLearningMaterialAttributes.expanded.manager.accessibilityRequirementsLink.update(
+      'https://iliosproject.org',
+    );
+    await takeScreenshot(assert, 'learning material attributes checked and filled out');
+    await page.manager.schoolLearningMaterialAttributes.expanded.save();
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.expanded.attributes.accessibilityRequired.label,
+      'Accessibility Required',
+    );
+    assert.notOk(
+      page.manager.schoolLearningMaterialAttributes.expanded.attributes.accessibilityRequired
+        .isDisabled,
+    );
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.expanded.attributes
+        .accessibilityRequirementsLink.label,
+      'Accessibility Requirements Link',
+    );
+    assert.strictEqual(
+      page.manager.schoolLearningMaterialAttributes.expanded.attributes
+        .accessibilityRequirementsLink.link,
+      'https://iliosproject.org',
+    );
+  });
+});
