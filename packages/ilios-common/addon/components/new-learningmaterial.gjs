@@ -150,9 +150,7 @@ export default class NewLearningmaterialComponent extends Component {
   @cached
   get accessibilityRequiredData() {
     return new TrackedAsyncData(
-      this.schoolData.isResolved && this.schoolData.value
-        ? this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequired')
-        : null,
+      this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequired'),
     );
   }
 
@@ -162,11 +160,7 @@ export default class NewLearningmaterialComponent extends Component {
 
   @cached
   get accessibilityRequirementsLinkData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved && this.schoolData.value
-        ? this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequirementsLink')
-        : null,
-    );
+    return new TrackedAsyncData('learningMaterialAccessibilityRequirementsLink');
   }
 
   get accessibilityRequirementsLink() {

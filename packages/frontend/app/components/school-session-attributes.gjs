@@ -25,11 +25,7 @@ export default class SchoolSessionAttributesComponent extends Component {
     const rhett = new Map();
     if (this.schoolConfigsData.isResolved) {
       this.schoolConfigsData.value.forEach((config) => {
-        if (config.value == 'false') {
-          rhett.set(config.name, false);
-        } else {
-          rhett.set(config.name, config.value);
-        }
+        rhett.set(config.name, config.parsedValue);
       });
     }
     return rhett;
