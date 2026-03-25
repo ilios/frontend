@@ -202,8 +202,8 @@ importers:
         specifier: ^10.0.0
         version: 10.1.0(@glint/template@1.7.4)(ember-qunit@9.0.4(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@glint/template@1.7.4)(qunit@2.25.0))(ember-source@6.10.1(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.25.0)(webpack@5.105.4)
       ember-focus-trap:
-        specifier: ^1.1.0
-        version: 1.2.0(@babel/core@7.29.0)
+        specifier: ^2.0.0
+        version: 2.0.0(@babel/core@7.29.0)
       ember-keyboard:
         specifier: ^9.0.4
         version: 9.0.4(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))
@@ -430,8 +430,8 @@ importers:
         specifier: ^9.5.0
         version: 9.5.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.4))(@glimmer/component@2.0.0)(@glint/template@1.7.4)(ember-modifier@4.2.2(@babel/core@7.29.0))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.29.0))
       ember-focus-trap:
-        specifier: ^1.0.0
-        version: 1.2.0(@babel/core@7.29.0)
+        specifier: ^2.0.0
+        version: 2.0.0(@babel/core@7.29.0)
       ember-in-element-polyfill:
         specifier: ^1.0.0
         version: 1.0.1
@@ -5436,8 +5436,9 @@ packages:
       miragejs:
         optional: true
 
-  ember-focus-trap@1.2.0:
-    resolution: {integrity: sha512-+/AkXjWF9Qtv6a3tSZQvzFTF+vSoSNuWVemN8kbp4d3MmHWnbXzv5brd9wmAFFlp4yYRr2be7bVhNVxzJMLEhw==}
+  ember-focus-trap@2.0.0:
+    resolution: {integrity: sha512-zGPvt934h08gxdemIZz29XRn4cdwn51UxlodKtDkiahGrEpiSQ6qH8nvXGwDhQvZsf8zGumnXqcmDYYA5oFomQ==}
+    engines: {node: '>= 22.*', pnpm: '>= 10'}
 
   ember-in-element-polyfill@1.0.1:
     resolution: {integrity: sha512-eHs+7D7PuQr8a1DPqsJTsEyo3FZ1XuH6WEZaEBPDa9s0xLlwByCNKl8hi1EbXOgvgEZNHHi9Rh0vjxyfakrlgg==}
@@ -6178,8 +6179,8 @@ packages:
   flush-write-stream@1.1.1:
     resolution: {integrity: sha512-3Z4XhFZ3992uIq0XOqb9AreonueSYphE6oYbpt5+3u06JWklbsPkNv3ZKkP9Bz/r+1MWCaMoSQ28P85+1Yc77w==}
 
-  focus-trap@7.8.0:
-    resolution: {integrity: sha512-/yNdlIkpWbM0ptxno3ONTuf+2g318kh2ez3KSeZN5dZ8YC6AAmgeWz+GasYYiBJPFaYcSAPeu4GfhUaChzIJXA==}
+  focus-trap@8.0.1:
+    resolution: {integrity: sha512-9ptSG6z51YQOstI/oN4XuVGP/03u2nh0g//qz7L6zX0i6PZiPnkcf3GenXq7N2hZnASXaMxTPpbKwdI+PFvxlw==}
 
   follow-redirects@1.15.11:
     resolution: {integrity: sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ==}
@@ -16088,11 +16089,11 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  ember-focus-trap@1.2.0(@babel/core@7.29.0):
+  ember-focus-trap@2.0.0(@babel/core@7.29.0):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
-      focus-trap: 7.8.0
+      focus-trap: 8.0.1
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -17290,7 +17291,7 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 2.3.8
 
-  focus-trap@7.8.0:
+  focus-trap@8.0.1:
     dependencies:
       tabbable: 6.4.0
 
