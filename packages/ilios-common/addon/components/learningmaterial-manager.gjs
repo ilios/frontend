@@ -542,14 +542,14 @@ export default class LearningmaterialManagerComponent extends Component {
               <label>
                 {{t "general.markedAccessible"}}:
               </label>
-              <span class="markedaccessible add">
+              <span class="markedaccessible add" data-test-marked-accessible-value>
                 {{t "general.yes"}}
               </span>
             {{else}}
               <label>
                 {{t "general.markedAccessible"}}:
               </label>
-              <span class="markedaccessible remove">
+              <span class="markedaccessible remove" data-test-marked-accessible-value>
                 {{t "general.no"}}
               </span>
             {{/if}}

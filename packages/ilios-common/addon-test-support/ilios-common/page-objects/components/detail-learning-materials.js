@@ -49,7 +49,7 @@ const definition = {
     },
     copyrightPermission: text('.copyrightpermission'),
     copyrightRationale: text('.copyrightrationale'),
-    markedAccessible: text('.markedaccessible'),
+    markedAccessible: text('[data-test-marked-accessible-value]'),
     markedAccessibleToggle: clickable(
       '.marked-accessible-toggle button.toggle-yesno .switch-handle',
     ),
