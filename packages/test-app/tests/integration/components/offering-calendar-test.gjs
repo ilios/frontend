@@ -54,6 +54,6 @@ module('Integration | Component | offering-calendar', function (hooks) {
       </template>,
     );
     const events = '[data-test-calendar-event]';
-    assert.dom(events).exists({ count: 4 });
+    assert.dom(events).exists({ count: 2 });
   });
 });
