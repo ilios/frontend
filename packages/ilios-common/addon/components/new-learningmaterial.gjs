@@ -560,6 +560,7 @@ export default class NewLearningmaterialComponent extends Component {
                     href="{{this.accessibilityRequirementsLink}}"
                     target="_blank"
                     rel="noopener noreferrer"
+                    title={{t "general.accessibilityRequirementsLink"}}
                   >
                     <FaIcon @icon={{faArrowUpRightFromSquare}} />
                   </a>

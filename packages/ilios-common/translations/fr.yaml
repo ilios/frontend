@@ -1,6 +1,7 @@
 general:
   accessAllMaterialsForThisCourse: "Accéder à tout le matériel d'étude pour ce cours"
   accessibilityAgreement: "Ce fichier conforme aux exigences d'accessibilité"
+  accessibilityRequirementsLink: Lien vers les exigences d'accessibilité
   accommodationIsRequiredForLearnersInThisGroup: Des aménagements sont nécessaires pour les apprenants de ce groupe
   actions: Actions
   activeFilters: Filtres actifs
