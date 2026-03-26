@@ -22,11 +22,6 @@
 @forward "components/programyear-details";
 @forward "components/programyear-header";
 @forward "components/programyear-overview";
-@forward "components/school-competencies-collapsed";
-@forward "components/school-competencies-expanded";
-@forward "components/school-competencies-list";
-@forward "components/school-competencies-manager";
-@forward "components/school-competencies-pcrs-mapper";
 @forward "components/school-list";
 @forward "components/school-manager";
 @forward "components/school-new-vocabulary-form";
@@ -134,6 +129,11 @@
 @forward "components/reports/subject-header";
 @forward "components/reports/subjects-list";
 
+@forward "components/school/competencies-collapsed";
+@forward "components/school/competencies-expanded";
+@forward "components/school/competencies-list";
+@forward "components/school/competencies-manager";
+@forward "components/school/competencies-pcrs-mapper";
 @forward "components/school/emails";
 @forward "components/school/emails-editor";
 
