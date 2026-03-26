@@ -77,4 +77,32 @@ module('Integration | Modifier | animate-loading', function (hooks) {
     );
     assert.strictEqual(tracker.get('someKey'), '1');
   });
+
+  test('it returns immediatly with reduced motion', async function (assert) {
+    const originalMatchMedia = window.matchMedia;
+
+    //mock matchMedia so we can provide this value
+    window.matchMedia = (query) => {
+      return {
+        matches: query === '(prefers-reduced-motion: reduce)',
+        media: query,
+        onchange: null,
+        addListener: () => {}, // deprecated but sometimes used
+        removeListener: () => {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+      };
+    };
+    await render(
+      <template>
+        <div {{animateLoading}}></div>
+      </template>,
+    );
+    assert.dom('div').hasStyle({
+      opacity: '1',
+    });
+
+    window.matchMedia = originalMatchMedia;
+  });
 });
