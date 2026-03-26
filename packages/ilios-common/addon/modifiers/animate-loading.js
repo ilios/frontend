@@ -18,10 +18,21 @@ export default class AnimateLoadingModifier extends Modifier {
     });
   }
 
+  prefersReducedMotion() {
+    return globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
   modify(element, [trackingName], { initialOpacity = 0.1, finalOpacity = 1, loadingTime = 1000 }) {
     clearTimeout(this.timeoutId);
     this.element = element;
     this.trackingName = trackingName;
+
+    if (this.prefersReducedMotion()) {
+      element.style.transition = '';
+      element.style.opacity = finalOpacity;
+      return;
+    }
+
     if (trackingName && this.loadingOpacityTracker.has(trackingName)) {
       element.style.opacity = this.loadingOpacityTracker.get(trackingName);
     } else {
