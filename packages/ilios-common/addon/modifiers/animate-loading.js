@@ -19,6 +19,7 @@ export default class AnimateLoadingModifier extends Modifier {
   }
 
   modify(element, [trackingName], { initialOpacity = 0.1, finalOpacity = 1, loadingTime = 1000 }) {
+    clearTimeout(this.timeoutId);
     this.element = element;
     this.trackingName = trackingName;
     if (trackingName && this.loadingOpacityTracker.has(trackingName)) {
