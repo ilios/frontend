@@ -17,7 +17,6 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import HtmlEditor from 'ilios-common/components/html-editor';
-import isEmpty from 'ember-truth-helpers/helpers/is-empty';
 import { not } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import LearningMaterialUploader from 'ilios-common/components/learning-material-uploader';
@@ -558,7 +557,7 @@ export default class NewLearningmaterialComponent extends Component {
                 <label for="marked-accessible-{{this.uniqueId}}">
                   {{t "general.accessibilityAgreement"}}
                 </label>
-                {{#if (not (isEmpty this.accessibilityRequirementsLink))}}
+                {{#if this.accessibilityRequirementsLink}}
                   <a
                     href="{{this.accessibilityRequirementsLink}}"
                     target="_blank"

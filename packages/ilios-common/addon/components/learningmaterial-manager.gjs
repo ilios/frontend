@@ -10,11 +10,10 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import { date, string } from 'yup';
 import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
-import { and, eq, not } from 'ember-truth-helpers';
+import { and, eq } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import isEmpty from 'ember-truth-helpers/helpers/is-empty';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import HtmlEditor from 'ilios-common/components/html-editor';
@@ -579,7 +578,7 @@ export default class LearningmaterialManagerComponent extends Component {
                   <label>
                     {{t "general.accessibilityAgreement"}}:
                   </label>
-                  {{#if (not (isEmpty this.accessibilityRequirementsLink))}}
+                  {{#if this.accessibilityRequirementsLink}}
                     <a
                       href="{{this.accessibilityRequirementsLink}}"
                       target="_blank"
