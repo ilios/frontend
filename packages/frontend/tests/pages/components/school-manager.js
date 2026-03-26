@@ -6,6 +6,7 @@ import schoolVocabulariesCollapsed from './school-vocabularies-collapsed';
 import schoolSessionTypesExpanded from './school-session-types-expanded';
 import schoolSessionTypesCollapsed from './school-session-types-collapsed';
 import schoolSessionAttributes from './school-session-attributes';
+import schoolLearningMaterialAttributes from './school-learning-material-attributes';
 import schoolInstitutionalInformationManager from './school-institutional-information-manager';
 import schoolInstitutionalInformationDetails from './school-institutional-information-details';
 import schoolLeadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
@@ -33,6 +34,7 @@ const definition = {
   schoolSessionTypesExpanded,
   schoolSessionTypesCollapsed,
   schoolSessionAttributes,
+  schoolLearningMaterialAttributes,
   schoolInstitutionalInformationDetails,
   schoolInstitutionalInformationManager,
   emails,

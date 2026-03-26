@@ -4,6 +4,7 @@ general:
   aamcSchoolId: 'AAMC School ID (e.g. "Institution ID")'
   academicYear: Academic Year
   academicYears: Academic Years
+  accessibilityRequired: Accessibility Required
   accommodationIsRequiredForLearnersInThisGroup: Accommodation is required for learners in this group
   accommodationIsRequiredForLearnersInSubgroups: "Accommodation is required for learners in the following subgroups: {groups}"
   accountEnabled: Account Enabled
@@ -186,6 +187,7 @@ general:
   learnerGroupTitleFilterPlaceholder: Filter by Learner Group Title
   learnerGroupTitlePlaceholder: Enter a title for this learner group
   learningMaterial: Learning Material
+  learningMaterialAttributes: Learning Material Attributes
   linkedCompetencies: Linked Competencies
   linkedCompetencyCount: "{count, plural, =1 {1 has a linked competency} other {# have linked competencies}}"
   lock: Lock
@@ -200,6 +202,7 @@ general:
   manageEmails: Manage Emails
   manageGroupMembership: Manage Group Membership
   manageInstitutionalInformation: Manage Institutional Information
+  manageLearningMaterialAttributes: Manage Learning Material Attributes
   manageSessionAttributes: Manage Session Attributes
   manageUsersSummaryTitle: Ilios Users
   matchGroups: Match Groups

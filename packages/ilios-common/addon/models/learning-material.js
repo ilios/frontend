@@ -15,6 +15,8 @@ export default class LearningMaterial extends Model {
   copyrightPermission;
   @attr('string')
   copyrightRationale;
+  @attr('boolean')
+  markedAccessible;
   @attr('string')
   filename;
   @attr('string')

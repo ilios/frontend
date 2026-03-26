@@ -74,9 +74,6 @@ export default class DetailLearningMaterialsComponent extends Component {
     return !!this.managingMaterial;
   }
 
-  get isSession() {
-    return !this.args.isCourse;
-  }
   get displaySearchBox() {
     return !this.isManaging && !this.displayAddNewForm && !this.isSorting && this.args.editable;
   }
@@ -235,6 +232,8 @@ export default class DetailLearningMaterialsComponent extends Component {
         {{#if this.isManaging}}
           <LearningmaterialManager
             @learningMaterial={{this.managingMaterial}}
+            @isCourse={{@isCourse}}
+            @subject={{@subject}}
             @editable={{@editable}}
             @closeManager={{this.closeLearningmaterialManager}}
             @learningMaterialStatuses={{this.learningMaterialStatuses}}
@@ -248,6 +247,8 @@ export default class DetailLearningMaterialsComponent extends Component {
         {{else if this.displayAddNewForm}}
           <NewLearningmaterial
             @type={{this.type}}
+            @isCourse={{@isCourse}}
+            @subject={{@subject}}
             @learningMaterialStatuses={{this.learningMaterialStatuses}}
             @learningMaterialUserRoles={{this.learningMaterialUserRoles}}
             @save={{perform this.saveNewLearningMaterial}}

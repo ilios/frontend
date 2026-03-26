@@ -14,9 +14,17 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    this.store = this.owner.lookup('service:store');
+    this.school = this.server.create('school');
+    this.schoolModel = await this.store.findRecord('school', this.school.id);
+    this.course = this.server.create('course', {
+      published: true,
+      year: 2026,
+      school: this.school,
+    });
+    this.courseModel = await this.store.findRecord('course', this.course.id);
     await setupAuthentication({
-      school,
+      school: this.school,
       displayName: 'Clem Chowder',
     });
   });
@@ -53,6 +61,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -60,8 +70,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.url.errorMessage.isPresent);
-    assert.strictEqual(component.url.ariaInvalid, 'false');
+    assert.notOk(component.url.errorMessage.isPresent, 'no error message present');
+    assert.strictEqual(component.url.ariaInvalid, 'false', 'link aria not invalid');
 
     await component.save();
     assert.strictEqual(component.url.ariaErrorMessage, component.url.errorMessage.id);
@@ -86,6 +96,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -104,6 +116,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -144,6 +158,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -177,12 +193,149 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     assert.strictEqual(component.copyrightRationale.ariaInvalid, 'false');
   });
 
+  test('validate accessibility permission enabled', async function (assert) {
+    this.schoolConfig = this.store.createRecord('school-config', {
+      name: 'learningMaterialAccessibilityRequired',
+      value: true,
+      school: this.schoolModel,
+    });
+
+    this.set('type', 'file');
+    await render(
+      <template>
+        <NewLearningmaterial
+          @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
+          @learningMaterialStatuses={{(array)}}
+          @learningMaterialUserRoles={{(array)}}
+          @save={{(noop)}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+    assert.notOk(component.markedAccessible.errorMessage.isPresent, 'error message not present');
+    assert.strictEqual(component.markedAccessible.ariaInvalid, 'false', 'link aria not invalid');
+
+    await component.save();
+    assert.strictEqual(
+      component.markedAccessible.ariaErrorMessage,
+      component.markedAccessible.errorMessage.id,
+      'error message id is correct',
+    );
+    assert.strictEqual(
+      component.markedAccessible.errorMessage.text,
+      'Agreement is required for upload',
+      'error message text is correct',
+    );
+    assert.strictEqual(component.markedAccessible.ariaInvalid, 'true', 'link aria is invalid');
+
+    await component.markedAccessible.toggle();
+    assert.notOk(
+      component.markedAccessible.errorMessage.isPresent,
+      'error message no longer present',
+    );
+    assert.strictEqual(
+      component.markedAccessible.ariaInvalid,
+      'false',
+      'link aria no longer invalid',
+    );
+  });
+
+  test('validate accessibility permission disabled', async function (assert) {
+    this.schoolConfig = this.store.createRecord('school-config', {
+      name: 'learningMaterialAccessibilityRequired',
+      value: false,
+      school: this.schoolModel,
+    });
+
+    this.set('type', 'file');
+    await render(
+      <template>
+        <NewLearningmaterial
+          @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
+          @learningMaterialStatuses={{(array)}}
+          @learningMaterialUserRoles={{(array)}}
+          @save={{(noop)}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+    assert.notOk(component.markedAccessible.errorMessage.isPresent, 'error message not present');
+    assert.strictEqual(component.markedAccessible.ariaInvalid, 'false', 'link aria not invalid');
+
+    await component.save();
+    assert.notOk(
+      component.markedAccessible.errorMessage.isPresent,
+      'error message still not present',
+    );
+    assert.strictEqual(component.markedAccessible.ariaInvalid, 'false', 'link aria still invalid');
+  });
+
+  test('validate accessibility requirements link blank', async function (assert) {
+    this.schoolConfig = this.store.createRecord('school-config', {
+      name: 'learningMaterialAccessibilityRequirementsLink',
+      value: '',
+      school: this.schoolModel,
+    });
+
+    this.set('type', 'file');
+    await render(
+      <template>
+        <NewLearningmaterial
+          @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
+          @learningMaterialStatuses={{(array)}}
+          @learningMaterialUserRoles={{(array)}}
+          @save={{(noop)}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+    assert.notOk(
+      component.accessibilityRequirementsLink.isPresent,
+      'accessibility requirements link not visible',
+    );
+  });
+
+  test('validate accessibility requirements link', async function (assert) {
+    this.schoolConfig = this.store.createRecord('school-config', {
+      name: 'learningMaterialAccessibilityRequirementsLink',
+      value: 'https://iliosproject.org',
+      school: this.schoolModel,
+    });
+
+    this.set('type', 'file');
+    await render(
+      <template>
+        <NewLearningmaterial
+          @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
+          @learningMaterialStatuses={{(array)}}
+          @learningMaterialUserRoles={{(array)}}
+          @save={{(noop)}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+    assert.ok(
+      component.accessibilityRequirementsLink.isPresent,
+      'accessibility requirements link visible',
+    );
+  });
+
   test('validate original author', async function (assert) {
     this.set('type', 'file');
     await render(
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
@@ -223,6 +376,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       <template>
         <NewLearningmaterial
           @type={{this.type}}
+          @isCourse={{true}}
+          @subject={{this.courseModel}}
           @learningMaterialStatuses={{(array)}}
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}

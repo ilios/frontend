@@ -34,11 +34,22 @@ module('Unit | Model | School', function (hooks) {
     assert.deepEqual(testNull, null);
   });
 
+  test('getConfigValue empty string', async function (assert) {
+    const school = this.store.createRecord('school');
+    this.store.createRecord('school-config', {
+      name: 'test-empty-string',
+      value: '',
+      school,
+    });
+    const testEmptyString = await school.getConfigValue('test-empty-string');
+    assert.strictEqual(testEmptyString, '');
+  });
+
   test('getConfigValue null', async function (assert) {
     const school = this.store.createRecord('school');
     this.store.createRecord('school-config', {
       name: 'test-null',
-      value: 'null',
+      value: null,
       school,
     });
     const testNull = await school.getConfigValue('test-null');

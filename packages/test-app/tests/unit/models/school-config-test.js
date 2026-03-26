@@ -28,4 +28,12 @@ module('Unit | Model | School Config', function (hooks) {
     });
     assert.true(model.parsedValue);
   });
+
+  test('getParsedValue empty string', async function (assert) {
+    const model = this.store.createRecord('school-config', {
+      name: 'test-empty-string',
+      value: '',
+    });
+    assert.strictEqual(model.parsedValue, '');
+  });
 });

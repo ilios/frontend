@@ -78,6 +78,19 @@ const definition = {
       scope: '[data-test-copyright-rationale-validation-error-message]',
     },
   },
+  markedAccessible: {
+    scope: '[data-test-marked-accessible]',
+    toggle: clickable('input'),
+    ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
+    errorMessage: {
+      id: attribute('id'),
+      scope: '[data-test-marked-accessible-validation-error-message]',
+    },
+  },
+  accessibilityRequirementsLink: {
+    scope: '[data-test-accessibility-requirements-link]',
+  },
   fileUpload: {
     scope: '[data-test-file]',
     errorMessage: {

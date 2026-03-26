@@ -1,5 +1,7 @@
 general:
   accessAllMaterialsForThisCourse: Acceso Todos los Materiales para este Curso
+  accessibilityAgreement: "Este archivo cumple con los requisitos de accesibilidad"
+  accessibilityRequirementsLink: Enlace a los Requisitos de Accesibilidad
   accommodationIsRequiredForLearnersInThisGroup: Se requiere alojamiento para los estudiantes de este grupo
   actions: Acciones
   activeFilters: Filtros Activos
@@ -212,6 +214,7 @@ general:
   manageLeadership: Maneje el Liderazgo
   manageLearners: Administrar Aprendedores
   markAsScheduled: Marque Como Programado
+  markedAccessible: Accesible
   materials: Materiales
   mesh: MeSH
   meshCount: "{count, plural, =1 {1 tiene MeSH} other {# tienen MeSH}}"
@@ -413,7 +416,8 @@ general:
 errors:
   accepted: "{description} debe ser aceptado"
   after: "{description} necesita estar después de {after}"
-  agreementRequired: Acuerdo o se requiere una justificación alternativa para cargar
+  agreementRequired: Acuerdo se requiere para cargar
+  agreementRequiredOrRationale: Acuerdo o se requiere una justificación alternativa para cargar
   before: "{description} necesita estar antes de {before}"
   blank: "{description} no puede estar en blanco"
   collection: "{description} necesita ser una colección"

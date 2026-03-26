@@ -40,6 +40,16 @@ import set from 'ember-set-helper/helpers/set';
     @setSchoolSessionAttributesDetails={{set @controller "schoolSessionAttributesDetails"}}
     @schoolManageSessionAttributes={{@controller.schoolManageSessionAttributes}}
     @setSchoolManageSessionAttributes={{set @controller "schoolManageSessionAttributes"}}
+    @schoolLearningMaterialAttributesDetails={{@controller.schoolLearningMaterialAttributesDetails}}
+    @setSchoolLearningMaterialAttributesDetails={{set
+      @controller
+      "schoolLearningMaterialAttributesDetails"
+    }}
+    @schoolManageLearningMaterialAttributes={{@controller.schoolManageLearningMaterialAttributes}}
+    @setSchoolManageLearningMaterialAttributes={{set
+      @controller
+      "schoolManageLearningMaterialAttributes"
+    }}
     @schoolSessionTypeDetails={{@controller.schoolSessionTypeDetails}}
     @setSchoolSessionTypeDetails={{set @controller "schoolSessionTypeDetails"}}
     @schoolManagedSessionType={{@controller.schoolManagedSessionType}}

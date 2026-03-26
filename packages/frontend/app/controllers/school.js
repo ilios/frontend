@@ -11,7 +11,9 @@ export default class SchoolController extends Controller {
     'schoolLeadershipDetails',
     'schoolManageLeadership',
     'schoolManageSessionAttributes',
+    'schoolManageLearningMaterialAttributes',
     'schoolSessionAttributesDetails',
+    'schoolLearningMaterialAttributesDetails',
     'schoolSessionTypeDetails',
     'schoolManagedSessionType',
     'schoolNewSessionType',
@@ -29,6 +31,8 @@ export default class SchoolController extends Controller {
   @tracked schoolManageLeadership = false;
   @tracked schoolManageSessionAttributes = false;
   @tracked schoolSessionAttributesDetails = false;
+  @tracked schoolManageLearningMaterialAttributes = false;
+  @tracked schoolLearningMaterialAttributesDetails = false;
   @tracked schoolNewSessionType = false;
   @tracked schoolSessionTypeDetails = false;
   @tracked schoolManagedSessionType = null;

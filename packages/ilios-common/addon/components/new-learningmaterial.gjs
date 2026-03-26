@@ -21,6 +21,8 @@ import { not } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import LearningMaterialUploader from 'ilios-common/components/learning-material-uploader';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -88,10 +90,24 @@ export default class NewLearningmaterialComponent extends Component {
           (d) => {
             return {
               path: d.path,
-              messageKey: 'errors.agreementRequired',
+              messageKey: 'errors.agreementRequiredOrRationale',
             };
           },
           (value) => this.copyrightRationale || value === true,
+        ),
+    }),
+    markedAccessible: boolean().when(['$isFile', '$accessibilityRequired'], {
+      is: true,
+      then: (schema) =>
+        schema.test(
+          'is-true',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.agreementRequired',
+            };
+          },
+          (value) => value === true,
         ),
     }),
     fileHash: string()
@@ -102,6 +118,66 @@ export default class NewLearningmaterialComponent extends Component {
       }),
   });
   userModel = new TrackedAsyncData(this.currentUser.getModel());
+
+  @cached
+  get subjectData() {
+    return new TrackedAsyncData(this.args.subject);
+  }
+
+  @cached
+  get courseData() {
+    if (this.subjectData.isResolved) {
+      if (!this.args.isCourse) {
+        return new TrackedAsyncData(this.subjectData.value.course);
+      } else {
+        return new TrackedAsyncData(this.subjectData.value);
+      }
+    }
+
+    return new TrackedAsyncData(null);
+  }
+
+  @cached
+  get schoolData() {
+    if (this.courseData.isResolved) {
+      return new TrackedAsyncData(this.courseData.value.school);
+    }
+
+    return new TrackedAsyncData(null);
+  }
+
+  // https://www.ada.gov/law-and-regs/regulations/title-ii-2010-regulations/#-35200-requirements-for-web-and-mobile-accessibility
+  @cached
+  get accessibilityRequiredData() {
+    if (this.schoolData.isResolved) {
+      return new TrackedAsyncData(
+        this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequired'),
+      );
+    }
+
+    return new TrackedAsyncData(null);
+  }
+
+  get accessibilityRequired() {
+    return this.accessibilityRequiredData.isResolved ? this.accessibilityRequiredData.value : false;
+  }
+
+  @cached
+  get accessibilityRequirementsLinkData() {
+    if (this.schoolData.isResolved) {
+      return new TrackedAsyncData(
+        this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequirementsLink'),
+      );
+    }
+
+    return new TrackedAsyncData(null);
+  }
+
+  get accessibilityRequirementsLink() {
+    return this.accessibilityRequirementsLinkData.isResolved
+      ? this.accessibilityRequirementsLinkData.value
+      : '';
+  }
 
   get uniqueId() {
     return guidFor(this);
@@ -194,6 +270,7 @@ export default class NewLearningmaterialComponent extends Component {
         learningMaterial.setProperties({
           copyrightRationale: this.copyrightRationale,
           copyrightPermission: this.copyrightPermission,
+          markedAccessible: this.markedAccessible,
           filename: this.filename,
           fileHash: this.fileHash,
         });
@@ -440,7 +517,7 @@ export default class NewLearningmaterialComponent extends Component {
           </span>
         </div>
         {{#unless this.copyrightPermission}}
-          <div class="item" data-test-copyright-rationale>
+          <div class="item copyright-rationale" data-test-copyright-rationale>
             <label for="copyright-rationale-{{this.uniqueId}}">
               {{t "general.copyrightRationale"}}:
             </label>
@@ -462,6 +539,44 @@ export default class NewLearningmaterialComponent extends Component {
             </span>
           </div>
         {{/unless}}
+        {{#if this.accessibilityRequiredData.isResolved}}
+          <div class="item accessibility" data-test-marked-accessible>
+            <span>
+              <p id="lm-accessibility-permissions-text">
+                <input
+                  id="marked-accessible-{{this.uniqueId}}"
+                  aria-invalid={{if this.validations.errors.markedAccessible "true" "false"}}
+                  aria-errormessage="marked-accessible-error-{{this.uniqueId}}"
+                  class={{if this.validations.errors.markedAccessible "error"}}
+                  type="checkbox"
+                  checked={{this.markedAccessible}}
+                  {{on "click" (set this "markedAccessible" (not this.markedAccessible))}}
+                  {{on "change" (perform this.validations.runValidator)}}
+                  data-test-marked-accessible
+                />
+                <label for="marked-accessible-{{this.uniqueId}}">
+                  {{t "general.accessibilityAgreement"}}
+                </label>
+                {{#if this.accessibilityRequirementsLink}}
+                  <a
+                    href="{{this.accessibilityRequirementsLink}}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={{t "general.accessibilityRequirementsLink"}}
+                    data-test-accessibility-requirements-link
+                  >
+                    <FaIcon @icon={{faArrowUpRightFromSquare}} />
+                  </a>
+                {{/if}}
+                <YupValidationMessage
+                  id="marked-accessible-error-{{this.uniqueId}}"
+                  @validationErrors={{this.validations.errors.markedAccessible}}
+                  data-test-marked-accessible-validation-error-message
+                />
+              </p>
+            </span>
+          </div>
+        {{/if}}
       {{/if}}
 
       <div class="buttons">

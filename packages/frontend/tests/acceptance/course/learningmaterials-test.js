@@ -16,20 +16,18 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     this.user = await setupAuthentication({ school: this.school }, true);
     this.user2 = this.server.create('user', { displayName: 'Clem Chowder' });
     this.server.create('academic-year');
+
     const statuses = this.server.createList('learningMaterialStatus', 5);
     const roles = this.server.createList('learningMaterialUserRole', 3);
     const descriptors = this.server.createList('mesh-descriptor', 6);
 
-    this.course = this.server.create('course', {
-      year: 2013,
-      school: this.school,
-    });
     this.material1 = this.server.create('learning-material', {
       originalAuthor: 'Jennifer Johnson',
       owningUser: this.user,
       status: statuses[0],
       userRole: roles[0],
       copyrightPermission: true,
+      markedAccessible: false,
       filename: 'something.pdf',
       absoluteFileUri: 'http://somethingsomething.com/something.pdf',
       uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toJSDate(),
@@ -41,6 +39,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       userRole: roles[0],
       copyrightPermission: false,
       copyrightRationale: 'reason is thus',
+      markedAccessible: true,
       filename: 'filename',
       absoluteFileUri: 'http://example.com/file',
       uploadDate: DateTime.fromObject({ year: 2011, month: 3, day: 14, hour: 8 }).toJSDate(),
@@ -72,6 +71,12 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       filename: 'letter.txt',
       absoluteFileUri: 'http://bttf.com/letter.txt',
     });
+
+    this.course = this.server.create('course', {
+      year: 2013,
+      school: this.school,
+    });
+
     this.server.create('courseLearningMaterial', {
       learningMaterial: this.material1,
       course: this.course,
@@ -300,6 +305,116 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     assert.strictEqual(page.details.learningMaterials.manager.copyrightRationale, 'reason is thus');
     assert.notOk(page.details.learningMaterials.manager.hasLink);
     assert.notOk(page.details.learningMaterials.manager.hasCitation);
+  });
+
+  test('view accessibility file learning material details', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    await page.visit({ courseId: this.course.id, details: true });
+    assert.strictEqual(page.details.learningMaterials.current.length, 4, 'course lm count correct');
+    await page.details.learningMaterials.current[0].details();
+
+    assert.strictEqual(
+      page.details.learningMaterials.manager.name.value,
+      'learning material 0',
+      'lm name correct',
+    );
+    assert.strictEqual(
+      page.details.learningMaterials.manager.author,
+      'Jennifer Johnson',
+      'lm author correct',
+    );
+    assert.strictEqual(
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>0 lm description</p>',
+      'lm description is correct',
+    );
+    assert.ok(page.details.learningMaterials.manager.hasFile, 'lm has a file');
+    assert.ok(
+      page.details.learningMaterials.manager.hasMarkedAccessibleToggle,
+      'lm has an a11y toggle',
+    );
+    assert.notOk(
+      page.details.learningMaterials.manager.markedAccessibleToggleYes,
+      'lm a11y toggle is not set to yes',
+    );
+    assert.ok(
+      page.details.learningMaterials.manager.markedAccessibleToggleNo,
+      'lm a11y toggle is set to no',
+    );
+    assert.notOk(page.details.learningMaterials.manager.hasLink, 'lm does not have link');
+    assert.notOk(page.details.learningMaterials.manager.hasCitation, 'lm does not have citation');
+
+    await page.details.learningMaterials.manager.cancel();
+    await page.details.learningMaterials.current[1].details();
+
+    assert.strictEqual(
+      page.details.learningMaterials.manager.name.value,
+      'learning material 1',
+      'lm name correct',
+    );
+    assert.strictEqual(
+      page.details.learningMaterials.manager.author,
+      'Jennifer Johnson',
+      'lm author correct',
+    );
+    assert.strictEqual(
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>1 lm description</p>',
+      'lm description is correct',
+    );
+    assert.ok(page.details.learningMaterials.manager.hasFile, 'lm has a file');
+    assert.ok(
+      page.details.learningMaterials.manager.hasMarkedAccessibleToggle,
+      'lm has an a11y toggle',
+    );
+    assert.ok(
+      page.details.learningMaterials.manager.markedAccessibleToggleYes,
+      'lm a11y toggle is set to yes',
+    );
+    assert.notOk(
+      page.details.learningMaterials.manager.markedAccessibleToggleNo,
+      'lm a11y toggle is not set to no',
+    );
+    assert.notOk(page.details.learningMaterials.manager.hasLink, 'lm does not have link');
+    assert.notOk(page.details.learningMaterials.manager.hasCitation, 'lm does not have citation');
+  });
+
+  test('toggling accessibility file learning material', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    await page.visit({ courseId: this.course.id, details: true });
+    assert.strictEqual(page.details.learningMaterials.current.length, 4, 'course lm count correct');
+    await page.details.learningMaterials.current[0].details();
+
+    assert.ok(
+      page.details.learningMaterials.manager.hasMarkedAccessibleToggle,
+      'lm has an a11y toggle',
+    );
+    assert.notOk(
+      page.details.learningMaterials.manager.markedAccessibleToggleYes,
+      'lm a11y toggle is not set to yes',
+    );
+    assert.ok(
+      page.details.learningMaterials.manager.markedAccessibleToggleNo,
+      'lm a11y toggle is set to no',
+    );
+
+    await page.details.learningMaterials.manager.markedAccessibleToggle();
+    await page.details.learningMaterials.manager.save();
+
+    await page.details.learningMaterials.current[0].details();
+
+    assert.ok(
+      page.details.learningMaterials.manager.hasMarkedAccessibleToggle,
+      'lm has an a11y toggle',
+    );
+    assert.ok(
+      page.details.learningMaterials.manager.markedAccessibleToggleYes,
+      'lm a11y toggle is set to yes',
+    );
+    assert.notOk(
+      page.details.learningMaterials.manager.markedAccessibleToggleNo,
+      'lm a11y toggle is not set to no',
+    );
   });
 
   test('view url file learning material details', async function (assert) {

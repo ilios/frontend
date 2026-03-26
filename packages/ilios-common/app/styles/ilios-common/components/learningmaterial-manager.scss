@@ -30,6 +30,15 @@
       padding: 0.25em 0 1em;
     }
 
+    .marked-accessible-toggle {
+      display: flex;
+      gap: 0.5em;
+
+      & + span {
+        font-style: italic;
+      }
+    }
+
     .downloadurl {
       align-items: center;
       display: flex;

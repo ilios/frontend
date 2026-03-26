@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
 import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { DateTime } from 'luxon';
 import { findById } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { date, string } from 'yup';
 import { uniqueId, fn } from '@ember/helper';
@@ -26,7 +27,7 @@ import DatePicker from 'ilios-common/components/date-picker';
 import TimePicker from 'ilios-common/components/time-picker';
 import MeshManager from 'ilios-common/components/mesh-manager';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import { faCopy, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpRightFromSquare, faCopy, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearningmaterialManagerComponent extends Component {
   @service store;
@@ -36,6 +37,50 @@ export default class LearningmaterialManagerComponent extends Component {
   constructor() {
     super(...arguments);
     this.loadExistingData();
+  }
+
+  @cached
+  get subjectData() {
+    return new TrackedAsyncData(this.args.subject);
+  }
+
+  @cached
+  get courseData() {
+    if (this.subjectData.isResolved) {
+      if (!this.args.isCourse) {
+        return new TrackedAsyncData(this.subjectData.value.course);
+      } else {
+        return new TrackedAsyncData(this.subjectData.value);
+      }
+    }
+
+    return new TrackedAsyncData(null);
+  }
+
+  @cached
+  get schoolData() {
+    if (this.courseData.isResolved) {
+      return new TrackedAsyncData(this.courseData.value.school);
+    }
+
+    return new TrackedAsyncData(null);
+  }
+
+  @cached
+  get accessibilityRequirementsLinkData() {
+    if (this.schoolData.isResolved) {
+      return new TrackedAsyncData(
+        this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequirementsLink'),
+      );
+    }
+
+    return new TrackedAsyncData(null);
+  }
+
+  get accessibilityRequirementsLink() {
+    return this.accessibilityRequirementsLinkData.isResolved
+      ? this.accessibilityRequirementsLinkData.value
+      : null;
   }
 
   validations = new YupValidations(this, {
@@ -81,6 +126,7 @@ export default class LearningmaterialManagerComponent extends Component {
   @tracked description;
   @tracked copyrightPermission;
   @tracked copyrightRationale;
+  @tracked markedAccessible;
   @tracked citation;
   @tracked link;
   @tracked mimetype;
@@ -245,6 +291,7 @@ export default class LearningmaterialManagerComponent extends Component {
     this.description = parentMaterial.description;
     this.copyrightPermission = parentMaterial.copyrightPermission;
     this.copyrightRationale = parentMaterial.copyrightRationale;
+    this.markedAccessible = parentMaterial.markedAccessible;
     this.citation = parentMaterial.citation;
     this.link = parentMaterial.link;
     this.mimetype = parentMaterial.mimetype;
@@ -278,6 +325,7 @@ export default class LearningmaterialManagerComponent extends Component {
     this.parentMaterial.set('status', this.currentStatus);
     this.parentMaterial.set('title', this.title);
     this.parentMaterial.set('description', this.description);
+    this.parentMaterial.set('markedAccessible', this.markedAccessible);
 
     this.args.learningMaterial.set('meshDescriptors', this.terms);
     await this.args.learningMaterial.save();
@@ -522,6 +570,47 @@ export default class LearningmaterialManagerComponent extends Component {
               </span>
             </div>
           {{/if}}
+
+          <div class="item">
+            {{#if @editable}}
+              {{#if this.accessibilityRequirementsLinkData.isResolved}}
+                <div class="marked-accessible-toggle">
+                  <label>
+                    {{t "general.accessibilityAgreement"}}:
+                  </label>
+                  {{#if this.accessibilityRequirementsLink}}
+                    <a
+                      href="{{this.accessibilityRequirementsLink}}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={{t "general.accessibilityRequirementsLink"}}
+                      data-test-accessibility-requirements-link
+                    >
+                      <FaIcon @icon={{faArrowUpRightFromSquare}} />
+                    </a>
+                  {{/if}}
+                  <ToggleYesno
+                    @yes={{this.markedAccessible}}
+                    @toggle={{set this "markedAccessible"}}
+                  />
+                </div>
+              {{/if}}
+            {{else if this.markedAccessible}}
+              <label>
+                {{t "general.markedAccessible"}}:
+              </label>
+              <span class="markedaccessible add" data-test-marked-accessible-value>
+                {{t "general.yes"}}
+              </span>
+            {{else}}
+              <label>
+                {{t "general.markedAccessible"}}:
+              </label>
+              <span class="markedaccessible remove" data-test-marked-accessible-value>
+                {{t "general.no"}}
+              </span>
+            {{/if}}
+          </div>
 
           <div class="item timed-release">
             <label>

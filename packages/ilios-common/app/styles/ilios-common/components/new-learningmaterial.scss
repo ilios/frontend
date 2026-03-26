@@ -19,8 +19,14 @@
       }
     }
 
-    &.copyright {
-      #lm-copyright-permissions-text {
+    &.copyright,
+    &.copyright-rationale,
+    &.accessibility,
+    &.accessibility-rationale {
+      margin-top: 1em;
+
+      #lm-copyright-permissions-text,
+      #lm-accessibility-permissions-text {
         margin: 0;
       }
     }

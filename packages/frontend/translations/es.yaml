@@ -4,6 +4,7 @@ general:
   aamcSchoolId: 'Identificación de la escuela AAMC ("ID de la institución")'
   academicYear: Año Academico
   academicYears: Años Academicos
+  accessibilityRequired: Accesibilidad Requerida
   accommodationIsRequiredForLearnersInThisGroup: Se requiere alojamiento para los estudiantes de este grupo
   accommodationIsRequiredForLearnersInSubgroups: "Se requiere alojamiento para los estudiantes de los siguientes subgrupos: {groups}"
   accountEnabled: Cuenta Activa
@@ -186,6 +187,7 @@ general:
   learnerGroupTitleFilterPlaceholder: Aplicar un Filtro por Título de Grupo de Aprendedor
   learnerGroupTitlePlaceholder: Entre en un Título para este grupo de aprendedores
   learningMaterial: Material de Aprendizaje
+  learningMaterialAttributes: Atributos del Materiales de Aprendizaje
   linkedCompetencies: Competencias Vinculadas
   linkedCompetencyCount: "{count, plural, =1 {1 tiene una competencia vinculada} other {# tienen competencias vinculadas}}"
   lock: Bloquear
@@ -200,6 +202,7 @@ general:
   manageEmails: Administrar correos electrónicos
   manageGroupMembership: Administrar membresía de grupo
   manageInstitutionalInformation: Administrar información institucional
+  manageLearningMaterialAttributes: Maneje Atributos del Material de Aprendizaje
   manageSessionAttributes: Maneje Atributos de la Sesión
   manageUsersSummaryTitle: Usuarios de Ilios
   matchGroups: Igualar Grupos
