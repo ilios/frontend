@@ -6,6 +6,7 @@ general:
   actions: Actions
   activeFilters: Filtres actifs
   admin: Admin
+  addIlm: Ajouté ILM à {session}
   add: Ajouté
   addNew: Ajouté Neuf
   administratorCount: "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
@@ -54,6 +55,7 @@ general:
   complete: Accompli
   completeSessions: "Séances complète: prêt à publier"
   confirmRemoveLearningMaterial: "Êtes-vous sûr vous voulez supprimer cette matériel d'étude? Ça action ne peut pas être défait."
+  confirmRemoveIlm: Êtes-vous sûr de vouloir supprimer cet ILM ? Cette action est irréversible et supprimera tous les apprenants et instructeurs directement liés à cet ILM.
   confirmRemoveObjective: Êtes vous sûr de vouloir supprimer cet objectif? Ça action ne peut pas être défait.
   confirmRemoveSession: Êtes vous sûr de vouloir supprimer cette séance? Ça action ne peut pas être défait.
   confirmRemoveSessionOffering: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants? Ça action ne peut pas être défait."

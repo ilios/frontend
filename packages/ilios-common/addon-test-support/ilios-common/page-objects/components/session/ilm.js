@@ -1,5 +1,4 @@
 import { clickable, create, fillable, hasClass, isVisible, text } from 'ember-cli-page-object';
-import yesNoToggle from '../toggle-yesno';
 import ilmDueDateAndTime from '../session-overview-ilm-duedate';
 
 const definition = {
@@ -13,11 +12,18 @@ const definition = {
     hasError: isVisible('.validation-error-message'),
   },
   ilmDueDateAndTime,
-  toggleIlm: {
-    scope: '[data-test-ilm-value]',
-    yesNoToggle,
+  addIlm: clickable('[data-test-add]'),
+  removeIlm: clickable('[data-test-remove]'),
+  canAdd: isVisible('[data-test-add]'),
+  canRemove: isVisible('[data-test-remove]'),
+  message: text('[data-test-message]'),
+  confirmationMessage: {
+    scope: '[data-test-confirmation-message]',
   },
-  isIlm: hasClass('add', '[data-test-ilm-value] span'),
+  confirm: clickable('[data-test-confirm]'),
+  cancel: clickable('[data-test-cancel]'),
+  undo: clickable('[data-test-undo]'),
+  isIlm: hasClass('is-ilm', '[data-test-session-ilm]'),
 };
 
 export default definition;

@@ -11,7 +11,7 @@ module('Integration | Component | session/ilm', function (hooks) {
   setupMirage(hooks);
 
   test('it renders and is accessible when not editable with ILM', async function (assert) {
-    const ilmSession = this.server.create('ilmSession', { hours: 8 });
+    const ilmSession = this.server.create('ilm-session', { hours: 8 });
     this.set('session', this.server.create('session', { ilmSession }));
     await render(<template><Ilm @session={{this.session}} @editable={{false}} /></template>);
     assert.ok(component.ilmHours.isVisible);
@@ -19,33 +19,31 @@ module('Integration | Component | session/ilm', function (hooks) {
     assert.notOk(component.ilmHours.edit.isVisible);
     assert.ok(component.ilmDueDateAndTime.isVisible);
     assert.notOk(component.ilmDueDateAndTime.isEditable);
-    assert.notOk(component.toggleIlm.yesNoToggle.isVisible);
+    assert.notOk(component.canAdd);
+    assert.notOk(component.canRemove);
     assert.ok(component.isIlm);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it renders and is accessible when not editable with no ILM', async function (assert) {
+  test('it does not render when not editable with no ILM', async function (assert) {
     this.set('session', this.server.create('session'));
     await render(<template><Ilm @session={{this.session}} @editable={{false}} /></template>);
-    assert.notOk(component.ilmHours.isVisible);
-    assert.notOk(component.ilmDueDateAndTime.isVisible);
-    assert.notOk(component.toggleIlm.yesNoToggle.isVisible);
-    assert.notOk(component.isIlm);
+    assert.notOk(component.isVisible);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders and is accessible when editable with ILM', async function (assert) {
-    const ilmSession = this.server.create('ilmSession');
+    const ilmSession = this.server.create('ilm-session');
     this.set('session', this.server.create('session', { ilmSession }));
     await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
     assert.ok(component.ilmHours.isVisible);
     assert.ok(component.ilmDueDateAndTime.isVisible);
-    assert.ok(component.toggleIlm.yesNoToggle.isVisible);
-    assert.strictEqual(component.toggleIlm.yesNoToggle.checked, 'true');
+    assert.notOk(component.canAdd);
+    assert.ok(component.canRemove);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -56,15 +54,15 @@ module('Integration | Component | session/ilm', function (hooks) {
     await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
     assert.notOk(component.ilmHours.isVisible);
     assert.notOk(component.ilmDueDateAndTime.isVisible);
-    assert.ok(component.toggleIlm.yesNoToggle.isVisible);
-    assert.strictEqual(component.toggleIlm.yesNoToggle.checked, 'false');
+    assert.ok(component.canAdd);
+    assert.notOk(component.canRemove);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
   test('shows error with hours less than zero', async function (assert) {
-    const ilmSession = this.server.create('ilmSession');
+    const ilmSession = this.server.create('ilm-session');
     this.set('session', this.server.create('session', { ilmSession }));
     await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
     await component.ilmHours.edit();
@@ -74,7 +72,7 @@ module('Integration | Component | session/ilm', function (hooks) {
   });
 
   test('error clears with close and re-open', async function (assert) {
-    const ilmSession = this.server.create('ilmSession');
+    const ilmSession = this.server.create('ilm-session');
     this.set('session', this.server.create('session', { ilmSession }));
     await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
     await component.ilmHours.edit();
@@ -83,5 +81,141 @@ module('Integration | Component | session/ilm', function (hooks) {
     await component.ilmHours.cancel();
     await component.ilmHours.edit();
     assert.notOk(component.ilmHours.hasError);
+  });
+
+  test('remove and cancel', async function (assert) {
+    const learnerGroup = this.server.create('learner-group');
+    const ilmSession = this.server.create('ilm-session', {
+      learnerGroups: [learnerGroup],
+    });
+    const session = this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
+    await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
+    assert.ok(component.isIlm);
+    assert.ok(component.canRemove);
+    await component.removeIlm();
+    assert.ok(component.confirmationMessage.isVisible);
+
+    await a11yAudit(this.element);
+
+    await component.cancel();
+
+    assert.ok(component.isIlm);
+    assert.notOk(component.canAdd);
+    assert.ok(component.canRemove);
+    assert.strictEqual(this.server.db.ilmSessions.length, 1);
+  });
+
+  test('remove and undo', async function (assert) {
+    const learnerGroup = this.server.create('learner-group');
+    const ilmSession = this.server.create('ilm-session', {
+      learnerGroups: [learnerGroup],
+    });
+    const session = this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
+    await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
+    assert.ok(component.isIlm);
+    assert.ok(component.canRemove);
+    await component.removeIlm();
+    assert.ok(component.confirmationMessage.isVisible);
+    await component.undo();
+
+    assert.ok(component.isIlm);
+    assert.notOk(component.canAdd);
+    assert.ok(component.canRemove);
+    assert.strictEqual(this.server.db.ilmSessions.length, 1);
+  });
+
+  test('remove with no linked data', async function (assert) {
+    const ilmSession = this.server.create('ilm-session');
+    const session = this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
+    await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
+    assert.ok(component.isIlm);
+    assert.ok(component.canRemove);
+    await component.removeIlm();
+    assert.notOk(component.isIlm);
+    assert.ok(component.canAdd);
+    assert.strictEqual(this.server.db.ilmSessions.length, 0);
+  });
+
+  test('remove and confirm with linked learner groups', async function (assert) {
+    const learnerGroup = this.server.create('learner-group');
+    const ilmSession = this.server.create('ilm-session', {
+      learnerGroups: [learnerGroup],
+    });
+
+    const session = this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
+    await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
+    assert.ok(component.isIlm);
+    assert.ok(component.canRemove);
+    await component.removeIlm();
+    assert.ok(component.confirmationMessage.isVisible);
+    await component.confirm();
+
+    assert.notOk(component.isIlm);
+    assert.ok(component.canAdd);
+    assert.strictEqual(this.server.db.ilmSessions.length, 0);
+  });
+
+  test('remove and confirm with linked learner', async function (assert) {
+    const user = this.server.create('user');
+    const ilmSession = this.server.create('ilm-session', {
+      learners: [user],
+    });
+
+    const session = this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
+    await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
+    assert.ok(component.isIlm);
+    assert.ok(component.canRemove);
+    await component.removeIlm();
+    assert.ok(component.confirmationMessage.isVisible);
+    await component.confirm();
+
+    assert.notOk(component.isIlm);
+    assert.ok(component.canAdd);
+    assert.strictEqual(this.server.db.ilmSessions.length, 0);
+  });
+
+  test('remove and confirm with linked instructor groups', async function (assert) {
+    const instructorGroup = this.server.create('instructor-group');
+    const ilmSession = this.server.create('ilm-session', {
+      instructorGroups: [instructorGroup],
+    });
+
+    const session = this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
+    await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
+    assert.ok(component.isIlm);
+    assert.ok(component.canRemove);
+    await component.removeIlm();
+    assert.ok(component.confirmationMessage.isVisible);
+    await component.confirm();
+
+    assert.notOk(component.isIlm);
+    assert.ok(component.canAdd);
+    assert.strictEqual(this.server.db.ilmSessions.length, 0);
+  });
+
+  test('remove and confirm with linked instructor', async function (assert) {
+    const user = this.server.create('user');
+    const ilmSession = this.server.create('ilm-session', {
+      instructors: [user],
+    });
+
+    const session = this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
+    await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
+    assert.ok(component.isIlm);
+    assert.ok(component.canRemove);
+    await component.removeIlm();
+    assert.ok(component.confirmationMessage.isVisible);
+    await component.confirm();
+
+    assert.notOk(component.isIlm);
+    assert.ok(component.canAdd);
+    assert.strictEqual(this.server.db.ilmSessions.length, 0);
   });
 });
