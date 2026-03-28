@@ -13,6 +13,7 @@ import toggle from 'ilios-common/helpers/toggle';
 import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import Event from 'ilios-common/classes/event';
+import { uniqueBy } from 'ilios-common/utils/array-helpers';
 
 export default class OfferingCalendarComponent extends Component {
   @tracked showLearnerGroupEvents = true;
@@ -128,6 +129,9 @@ export default class OfferingCalendarComponent extends Component {
     if (this.showSessionEvents) {
       events = [...events, ...this.sessionEvents];
     }
+
+    // dedupe events on offering id.
+    events = uniqueBy(events, 'offering');
 
     const currentEventIdentifier =
       this.currentEvent.name + this.currentEvent.startDate + this.currentEvent.endDate;

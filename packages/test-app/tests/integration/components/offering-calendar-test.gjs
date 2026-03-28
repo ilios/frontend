@@ -19,7 +19,10 @@ module('Integration | Component | offering-calendar', function (hooks) {
       course,
       sessionType,
     });
-
+    const session2 = this.server.create('session', {
+      course,
+      sessionType,
+    });
     const offering1 = this.server.create('offering', {
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -32,17 +35,31 @@ module('Integration | Component | offering-calendar', function (hooks) {
       location: 123,
       session,
     });
+    const offering3 = this.server.create('offering', {
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      location: 123,
+      session: session2,
+    });
     const learnerGroup = this.server.create('learner-group', {
       offerings: [offering1, offering2],
     });
+    const learnerGroup2 = this.server.create('learner-group', {
+      offerings: [offering3],
+    });
+
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', learnerGroup.id);
+    const learnerGroupModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup2.id);
+
     this.set('startDate', today.toJSDate());
     this.set('endDate', tomorrow.toJSDate());
     this.set('session', sessionModel);
-    this.set('learnerGroups', [learnerGroupModel]);
+    this.set('learnerGroups', [learnerGroupModel, learnerGroupModel2]);
     await render(
       <template>
         <OfferingCalendar
@@ -54,6 +71,6 @@ module('Integration | Component | offering-calendar', function (hooks) {
       </template>,
     );
     const events = '[data-test-calendar-event]';
-    assert.dom(events).exists({ count: 4 });
+    assert.dom(events).exists({ count: 3 });
   });
 });
