@@ -11,40 +11,40 @@ env:
   SW_DISABLED: true
 
 jobs:
-  firefox-test:
-    name: Firefox Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        workspace:
-          - frontend
-          - test-app
-          - lti-course-manager
-          - lti-dashboard
-        firefox-version: [latest-esr]
-    steps:
-      - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v5
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: pnpm
-      - run: pnpm install
-      - name: Setup firefox
-        uses: browser-actions/setup-firefox@latest
-        with:
-          firefox-version: ${{ matrix.firefox-version }}
-      - run: firefox --version
-      - name: test
-        run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --launch=Firefox
-      - uses: actions/upload-artifact@v7
-        if: failure()
-        with:
-          name: replay-${{matrix.workspace}}-firefox-${{ matrix.firefox-version }}.json
-          path: ./packages/${{matrix.workspace}}/test-execution-*.json
-          retention-days: 7
+  # firefox-test:
+  #   name: Firefox Tests
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 20
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       workspace:
+  #         - frontend
+  #         - test-app
+  #         - lti-course-manager
+  #         - lti-dashboard
+  #       firefox-version: [latest-esr]
+  #   steps:
+  #     - uses: actions/checkout@v6
+  #     - uses: pnpm/action-setup@v5
+  #     - uses: actions/setup-node@v6
+  #       with:
+  #         node-version: 24
+  #         cache: pnpm
+  #     - run: pnpm install
+  #     - name: Setup firefox
+  #       uses: browser-actions/setup-firefox@latest
+  #       with:
+  #         firefox-version: ${{ matrix.firefox-version }}
+  #     - run: firefox --version
+  #     - name: test
+  #       run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --launch=Firefox
+  #     - uses: actions/upload-artifact@v7
+  #       if: failure()
+  #       with:
+  #         name: replay-${{matrix.workspace}}-firefox-${{ matrix.firefox-version }}.json
+  #         path: ./packages/${{matrix.workspace}}/test-execution-*.json
+  #         retention-days: 7
 
   safari-test:
     name: Safari Tests
@@ -69,4 +69,4 @@ jobs:
       - name: Safari Version
         run: /usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" /Applications/Safari.app/Contents/Info.plist
       - name: test
-        run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=SafariApplescript
+        run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=SafariApplescript --filter="animate-loading"

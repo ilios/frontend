@@ -12,9 +12,12 @@ module('Integration | Modifier | animate-loading', function (hooks) {
         <div {{animateLoading}}></div>
       </template>,
     );
-    assert.ok(
-      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.1) < 0.001,
+    const initialStyle = getComputedStyle(this.element.querySelector('div'), null);
+    console.log(
+      initialStyle.opacity,
+      globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches,
     );
+    assert.ok(Math.abs(initialStyle.opacity - 0.1) < 0.001);
 
     await waitUntil(
       () => getComputedStyle(this.element.querySelector('div'), null).opacity === '1',
@@ -76,5 +79,33 @@ module('Integration | Modifier | animate-loading', function (hooks) {
       </template>,
     );
     assert.strictEqual(tracker.get('someKey'), '1');
+  });
+
+  test('it returns immediatly with reduced motion', async function (assert) {
+    const originalMatchMedia = window.matchMedia;
+
+    //mock matchMedia so we can provide this value
+    window.matchMedia = (query) => {
+      return {
+        matches: query === '(prefers-reduced-motion: reduce)',
+        media: query,
+        onchange: null,
+        addListener: () => {}, // deprecated but sometimes used
+        removeListener: () => {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+      };
+    };
+    await render(
+      <template>
+        <div {{animateLoading}}></div>
+      </template>,
+    );
+    assert.dom('div').hasStyle({
+      opacity: '1',
+    });
+
+    window.matchMedia = originalMatchMedia;
   });
 });
