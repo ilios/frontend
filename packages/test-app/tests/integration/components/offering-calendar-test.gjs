@@ -118,5 +118,8 @@ module('Integration | Component | offering-calendar', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.weeklyCalendar.calendar.events.length, 3);
+    assert.ok(component.weeklyCalendar.calendar.events[0].isThirdDayOfWeek);
+    assert.ok(component.weeklyCalendar.calendar.events[1].isThirdDayOfWeek);
+    assert.ok(component.weeklyCalendar.calendar.events[2].isThirdDayOfWeek);
   });
 });
