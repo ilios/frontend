@@ -7,6 +7,7 @@ import t from 'ember-intl/helpers/t';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
 import toggle from 'ilios-common/helpers/toggle';
@@ -16,6 +17,8 @@ import Event from 'ilios-common/classes/event';
 import { uniqueBy } from 'ilios-common/utils/array-helpers';
 
 export default class OfferingCalendarComponent extends Component {
+  @service localeDays;
+
   @tracked showLearnerGroupEvents = true;
   @tracked showSessionEvents = true;
   @tracked learnerGroupEvents = [];
@@ -116,6 +119,18 @@ export default class OfferingCalendarComponent extends Component {
     }
   }
 
+  get fromTimeStamp() {
+    return DateTime.fromJSDate(this.localeDays.firstDayOfDateWeek(this.args.startDate))
+      .set({ hour: 0, minute: 0, second: 0 })
+      .toUnixInteger();
+  }
+
+  get toTimeStamp() {
+    return DateTime.fromJSDate(this.localeDays.lastDayOfDateWeek(this.args.startDate))
+      .set({ hour: 23, minute: 59, second: 59 })
+      .toUnixInteger();
+  }
+
   get calendarEvents() {
     if (!this.currentEvent) {
       return [];
@@ -144,7 +159,10 @@ export default class OfferingCalendarComponent extends Component {
       return eventIdentifier !== currentEventIdentifier;
     });
 
-    return [...filteredEvents, this.currentEvent];
+    return [...filteredEvents, this.currentEvent].filter((event) => {
+      const ts = DateTime.fromISO(event.startDate).toUnixInteger();
+      return this.fromTimeStamp <= ts && ts <= this.toTimeStamp;
+    });
   }
   <template>
     <div class="offering-calendar">
