@@ -165,13 +165,13 @@ export default class OfferingCalendarComponent extends Component {
     });
   }
   <template>
-    <div class="offering-calendar">
+    <div class="offering-calendar" data-test-offering-calendar>
       {{#if this.calendarEventsData.isResolved}}
-        <h2 class="offering-calendar-title">
+        <h2 class="offering-calendar-title" data-test-offering-calendar-title>
           {{t "general.calendar"}}
         </h2>
-        <p class="offering-calendar-filter-options">
-          <span class="filter">
+        <p class="offering-calendar-filter-options" data-test-filters>
+          <span class="filter" data-test-learner-group-events-filter>
             <ToggleYesno
               @yes={{this.showLearnerGroupEvents}}
               @toggle={{fn (mut this.showLearnerGroupEvents)}}
@@ -182,7 +182,7 @@ export default class OfferingCalendarComponent extends Component {
               {{t "general.showLearnerGroupEvents"}}
             </label>
           </span>
-          <span class="filter">
+          <span class="filter" data-test-session-events-filter>
             <ToggleYesno
               @yes={{this.showSessionEvents}}
               @toggle={{fn (mut this.showSessionEvents)}}

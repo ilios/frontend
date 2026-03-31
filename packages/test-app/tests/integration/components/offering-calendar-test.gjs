@@ -1,13 +1,60 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
+import { array } from '@ember/helper';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { DateTime } from 'luxon';
 import OfferingCalendar from 'ilios-common/components/offering-calendar';
+import { component } from 'ilios-common/page-objects/components/offering-calendar';
 
 module('Integration | Component | offering-calendar', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+
+  test('it renders', async function (assert) {
+    const startDate = DateTime.fromISO('2026-03-31T09:00:00');
+    const endDate = startDate.plus({ hour: 8 });
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school });
+    const sessionType = this.server.create('session-type');
+    const session = this.server.create('session', {
+      course,
+      sessionType,
+    });
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+
+    this.set('startDate', startDate.toJSDate());
+    this.set('endDate', endDate.toJSDate());
+    this.set('session', sessionModel);
+    await render(
+      <template>
+        <OfferingCalendar
+          @learnerGroups={{(array)}}
+          @session={{this.session}}
+          @startDate={{this.startDate}}
+          @endDate={{this.endDate}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.title, 'Calendar');
+    assert.ok(
+      component.filters.learnerGroupEvents.toggle.checked,
+      'learner group events filter is on by default',
+    );
+    assert.strictEqual(
+      component.filters.learnerGroupEvents.label,
+      'Show all events for assigned learner groups',
+    );
+    assert.ok(
+      component.filters.sessionEvents.toggle.checked,
+      'session events filter is on by default',
+    );
+    assert.strictEqual(component.filters.sessionEvents.label, 'Show all other session 0 events');
+    assert.strictEqual(
+      component.weeklyCalendar.calendar.title.longWeekOfYear,
+      'Week of March 29, 2026',
+    );
+  });
 
   test('shows events', async function (assert) {
     const today = DateTime.fromObject({ hour: 8 });
@@ -70,7 +117,6 @@ module('Integration | Component | offering-calendar', function (hooks) {
         />
       </template>,
     );
-    const events = '[data-test-calendar-event]';
-    assert.dom(events).exists({ count: 3 });
+    assert.strictEqual(component.weeklyCalendar.calendar.events.length, 3);
   });
 });
