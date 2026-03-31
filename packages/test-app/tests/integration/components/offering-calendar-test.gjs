@@ -85,8 +85,8 @@ module('Integration | Component | offering-calendar', function (hooks) {
       session,
     });
     const offering3 = this.server.create('offering', {
-      startDate: startDate.toJSDate(),
-      endDate: startDate.plus({ hour: 1 }).toJSDate(),
+      startDate: startDate.plus({ day: 1, hour: 1}).toJSDate(),
+      endDate: startDate.plus({ day: 1, hour: 2 }).toJSDate(),
       location: 123,
       session: session2,
     });
@@ -124,8 +124,8 @@ module('Integration | Component | offering-calendar', function (hooks) {
     assert.strictEqual(component.weeklyCalendar.calendar.events[0].time, '12:00 AM');
     assert.ok(component.weeklyCalendar.calendar.events[1].isThirdDayOfWeek);
     assert.strictEqual(component.weeklyCalendar.calendar.events[1].time, '08:00 AM');
-    assert.ok(component.weeklyCalendar.calendar.events[2].isThirdDayOfWeek);
-    assert.strictEqual(component.weeklyCalendar.calendar.events[2].time, '08:00 AM');
+    assert.ok(component.weeklyCalendar.calendar.events[2].isFourthDayOfWeek);
+    assert.strictEqual(component.weeklyCalendar.calendar.events[2].time, '09:00 AM');
     assert.ok(component.weeklyCalendar.calendar.events[3].isSeventhDayOfWeek);
     assert.strictEqual(component.weeklyCalendar.calendar.events[3].time, '10:59 PM');
   });
