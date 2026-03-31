@@ -58,7 +58,7 @@ module('Integration | Component | offering-calendar', function (hooks) {
 
   test('shows events', async function (assert) {
     const startDate = DateTime.fromISO('2026-03-31T08:00:00');
-    const endDate = startDate.plus({ day: 1 });
+    const endDate = startDate.plus({ hours: 8 });
     const startOfWeek = startDate.minus({ day: 2 }).set({ hour: 0, minute: 0, second: 0 });
     const endOfWeek = startDate.plus({ day: 4 }).set({ hour: 22, minute: 59, second: 59 });
     const school = this.server.create('school');
@@ -119,12 +119,14 @@ module('Integration | Component | offering-calendar', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.weeklyCalendar.calendar.events.length, 3);
+    assert.strictEqual(component.weeklyCalendar.calendar.events.length, 4);
     assert.ok(component.weeklyCalendar.calendar.events[0].isFirstDayOfWeek);
     assert.strictEqual(component.weeklyCalendar.calendar.events[0].time, '12:00 AM');
     assert.ok(component.weeklyCalendar.calendar.events[1].isThirdDayOfWeek);
     assert.strictEqual(component.weeklyCalendar.calendar.events[1].time, '08:00 AM');
-    assert.ok(component.weeklyCalendar.calendar.events[2].isSeventhDayOfWeek);
-    assert.strictEqual(component.weeklyCalendar.calendar.events[2].time, '10:59 PM');
+    assert.ok(component.weeklyCalendar.calendar.events[2].isThirdDayOfWeek);
+    assert.strictEqual(component.weeklyCalendar.calendar.events[2].time, '08:00 AM');
+    assert.ok(component.weeklyCalendar.calendar.events[3].isSeventhDayOfWeek);
+    assert.strictEqual(component.weeklyCalendar.calendar.events[3].time, '10:59 PM');
   });
 });
