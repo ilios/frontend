@@ -57,8 +57,8 @@ module('Integration | Component | offering-calendar', function (hooks) {
   });
 
   test('shows events', async function (assert) {
-    const today = DateTime.fromObject({ hour: 8 });
-    const tomorrow = today.plus({ day: 1 });
+    const startDate = DateTime.fromISO('2026-03-31T08:00:00');
+    const endDate = startDate.plus({ day: 1 });
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
     const sessionType = this.server.create('session-type');
@@ -71,20 +71,20 @@ module('Integration | Component | offering-calendar', function (hooks) {
       sessionType,
     });
     const offering1 = this.server.create('offering', {
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: startDate.toJSDate(),
+      endDate: startDate.plus({ hour: 1 }).toJSDate(),
       location: 123,
       session,
     });
     const offering2 = this.server.create('offering', {
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: startDate.toJSDate(),
+      endDate: startDate.plus({ hour: 1 }).toJSDate(),
       location: 123,
       session,
     });
     const offering3 = this.server.create('offering', {
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: startDate.toJSDate(),
+      endDate: startDate.plus({ hour: 1 }).toJSDate(),
       location: 123,
       session: session2,
     });
@@ -103,8 +103,8 @@ module('Integration | Component | offering-calendar', function (hooks) {
       .lookup('service:store')
       .findRecord('learner-group', learnerGroup2.id);
 
-    this.set('startDate', today.toJSDate());
-    this.set('endDate', tomorrow.toJSDate());
+    this.set('startDate', startDate.toJSDate());
+    this.set('endDate', endDate.toJSDate());
     this.set('session', sessionModel);
     this.set('learnerGroups', [learnerGroupModel, learnerGroupModel2]);
     await render(
