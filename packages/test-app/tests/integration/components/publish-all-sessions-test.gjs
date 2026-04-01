@@ -157,7 +157,6 @@ module('Integration | Component | publish all sessions', function (hooks) {
       'This course has unlinked objective(s)',
     );
     assert.ok(component.review.transitionToCourse.isVisible);
-    assert.ok(component.review.visualize.isVisible);
   });
 
   test('publish all overridable #2478', async function (assert) {

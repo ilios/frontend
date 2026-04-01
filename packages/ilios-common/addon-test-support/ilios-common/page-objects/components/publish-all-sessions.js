@@ -90,9 +90,6 @@ const definition = {
     transitionToCourse: {
       scope: '[data-test-course-link]',
     },
-    visualize: {
-      scope: '[data-test-visualize]',
-    },
     confirmation: text('[data-test-confirmation]'),
     save: clickable('[data-test-save]'),
   },
