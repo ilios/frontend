@@ -147,4 +147,68 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     await component.toggle.esc();
     assert.ok(component.menuClosed);
   });
+
+  test('dropdown options are accessible for unpublished session', async function (assert) {
+    const session = this.server.create('session', {
+      published: false,
+      publishedAsTbd: false,
+    });
+    this.server.create('offering', { session });
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    this.set('session', sessionModel);
+    await render(<template><PublicationMenu @session={{this.session}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.ok(component.hasPublishAsIs);
+    assert.notOk(component.hasPublish);
+    assert.ok(component.hasReview);
+    assert.ok(component.hasTbd);
+    assert.notOk(component.hasUnPublish);
+
+    assert.strictEqual(component.selectedMenuItem, 'Review 2 Missing Items');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.menu.up();
+    assert.strictEqual(component.selectedMenuItem, 'Publish As-is');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.menu.up();
+    assert.strictEqual(component.selectedMenuItem, 'Mark as Scheduled');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('dropdown options are accessible for published session', async function (assert) {
+    const session = this.server.create('session', {
+      published: true,
+      publishedAsTbd: false,
+    });
+    this.server.create('offering', { session });
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    this.set('session', sessionModel);
+    await render(<template><PublicationMenu @session={{this.session}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.notOk(component.hasPublishAsIs);
+    assert.notOk(component.hasPublish);
+    assert.ok(component.hasReview);
+    assert.ok(component.hasTbd);
+    assert.ok(component.hasUnPublish);
+
+    assert.strictEqual(component.selectedMenuItem, 'Review 2 Missing Items');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.menu.up();
+    assert.strictEqual(component.selectedMenuItem, 'UnPublish Session');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.menu.up();
+    assert.strictEqual(component.selectedMenuItem, 'Mark as Scheduled');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
 });

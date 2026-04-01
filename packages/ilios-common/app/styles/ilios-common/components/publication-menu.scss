@@ -43,6 +43,13 @@
         }
       }
 
+      &.alert {
+        &:hover,
+        &:focus {
+          background-color: var(--dark-yellow);
+        }
+      }
+
       &.good {
         &:hover,
         &:focus {

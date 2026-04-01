@@ -183,4 +183,70 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     await component.toggle.esc();
     assert.ok(component.menuClosed);
   });
+
+  test('dropdown options are accessible for unpublished course', async function (assert) {
+    const cohort = this.server.create('cohort');
+    this.server.create('course', {
+      cohorts: [cohort],
+      published: false,
+      publishedAsTbd: false,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.ok(component.hasPublishAsIs);
+    assert.notOk(component.hasPublish);
+    assert.ok(component.hasReview);
+    assert.ok(component.hasTbd);
+    assert.notOk(component.hasUnPublish);
+
+    assert.strictEqual(component.selectedMenuItem, 'Review 2 Missing Items');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.menu.up();
+    assert.strictEqual(component.selectedMenuItem, 'Publish As-is');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.menu.up();
+    assert.strictEqual(component.selectedMenuItem, 'Mark as Scheduled');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('dropdown options are accessible for published course', async function (assert) {
+    const cohort = this.server.create('cohort');
+    this.server.create('course', {
+      cohorts: [cohort],
+      published: true,
+      publishedAsTbd: false,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.notOk(component.hasPublishAsIs);
+    assert.notOk(component.hasPublish);
+    assert.ok(component.hasReview);
+    assert.ok(component.hasTbd);
+    assert.ok(component.hasUnPublish);
+
+    assert.strictEqual(component.selectedMenuItem, 'Review 2 Missing Items');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.menu.up();
+    assert.strictEqual(component.selectedMenuItem, 'UnPublish Course');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.menu.up();
+    assert.strictEqual(component.selectedMenuItem, 'Mark as Scheduled');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
 });
