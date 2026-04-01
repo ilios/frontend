@@ -17,12 +17,7 @@ import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import SaveButton from 'ilios-common/components/save-button';
 import perform from 'ember-concurrency/helpers/perform';
-import {
-  faChartColumn,
-  faLinkSlash,
-  faCaretRight,
-  faCaretDown,
-} from '@fortawesome/free-solid-svg-icons';
+import { faLinkSlash, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class PublishAllSessionsComponent extends Component {
   @service store;
@@ -526,14 +521,6 @@ export default class PublishAllSessionsComponent extends Component {
             data-test-course-link
           >
             <FaIcon @icon={{faLinkSlash}} />
-          </LinkTo>
-          <LinkTo
-            @route="course-visualize-objectives"
-            @model={{@course}}
-            title={{t "general.courseVisualizations"}}
-            data-test-visualize
-          >
-            <FaIcon @icon={{faChartColumn}} />
           </LinkTo>
         {{/if}}
         <p data-test-confirmation>
