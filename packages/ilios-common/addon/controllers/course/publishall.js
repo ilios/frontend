@@ -5,6 +5,11 @@ import { service } from '@ember/service';
 export default class CoursePublishallController extends Controller {
   @service router;
 
+  queryParams = ['expandCompleteSessions', 'expandIncompleteSessions'];
+
+  expandCompleteSessions = false;
+  expandIncompleteSessions = false;
+
   @action
   returnToList() {
     this.router.transitionTo('course.index', this.model, {
