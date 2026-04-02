@@ -113,8 +113,8 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.overridableSessions.sessions[1].title, 'session 4');
     assert.strictEqual(component.overridableSessions.sessions[1].offerings, 'Yes (1)');
     assert.strictEqual(component.overridableSessions.sessions[1].terms, 'No');
-    assert.strictEqual(component.overridableSessions.sessions[1].objectives.text, 'No');
-    assert.notOk(component.overridableSessions.sessions[1].objectives.isLinked);
+    assert.strictEqual(component.overridableSessions.sessions[1].objectives.text, 'Yes (1)');
+    assert.ok(component.overridableSessions.sessions[1].objectives.isLinked);
     assert.strictEqual(
       component.review.confirmation,
       'Publish 2, schedule 1, and ignore 1 sessions',
