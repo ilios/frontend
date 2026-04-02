@@ -1,4 +1,4 @@
-import { clickable, create, triggerable, isVisible, isHidden } from 'ember-cli-page-object';
+import { clickable, create, triggerable, isVisible, isHidden, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-course-publication-menu]',
@@ -7,6 +7,11 @@ const definition = {
     enter: triggerable('keyup', '', { eventProperties: { key: 'Enter' } }),
     down: triggerable('keyup', '', { eventProperties: { key: 'ArrowDown' } }),
     esc: triggerable('keyup', '', { eventProperties: { key: 'Escape' } }),
+  },
+  menu: {
+    scope: '[data-test-menu]',
+    down: triggerable('keyup', 'button:focus', { eventProperties: { key: 'ArrowDown' } }),
+    up: triggerable('keyup', 'button:focus', { eventProperties: { key: 'ArrowUp' } }),
   },
   menuClosed: isHidden('[data-test-menu]'),
   menuOpen: isVisible('[data-test-menu]'),
@@ -20,6 +25,7 @@ const definition = {
   reviewMisingItems: clickable('[data-test-review]'),
   markAsScheduled: clickable('[data-test-tbd]'),
   unpublishCourse: clickable('[data-test-un-publish]'),
+  selectedMenuItem: text('[data-test-menu] button:focus'),
 };
 
 export default definition;

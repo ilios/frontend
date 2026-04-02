@@ -204,7 +204,7 @@ export default class SessionPublicationMenuComponent extends Component {
           <div class="menu" role="menu" data-test-menu {{focus}}>
             {{#if this.showAsIs}}
               <button
-                class="danger"
+                class="alert"
                 role="menuitem"
                 tabindex="-1"
                 type="button"
