@@ -7,7 +7,6 @@ import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
-import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -24,8 +23,6 @@ export default class PublishAllSessionsComponent extends Component {
   @service flashMessages;
   @service intl;
 
-  @tracked publishableCollapsed = true;
-  @tracked unPublishableCollapsed = true;
   @tracked totalSessionsToSave;
   @tracked currentSessionsSaved;
 
@@ -208,17 +205,17 @@ export default class PublishAllSessionsComponent extends Component {
           <button
             class="title link-button"
             type="button"
-            aria-expanded={{if this.unPublishableCollapsed "true" "false"}}
+            aria-expanded={{if @expandIncompleteSessions "true" "false"}}
             data-test-expand-collapse
             data-test-title
-            {{on "click" (set this "unPublishableCollapsed" (not this.unPublishableCollapsed))}}
+            {{on "click" (fn @setExpandIncompleteSessions (not @expandIncompleteSessions))}}
           >
             {{t "general.incompleteSessions"}}
             ({{this.unPublishableSessions.length}})
-            <FaIcon @icon={{if this.unPublishableCollapsed faCaretRight faCaretDown}} />
+            <FaIcon @icon={{if @expandIncompleteSessions faCaretDown faCaretRight}} />
           </button>
         </div>
-        {{#unless this.unPublishableCollapsed}}
+        {{#if @expandIncompleteSessions}}
           <div class="content" data-test-content>
             <table class="ilios-table ilios-table-colors sticky-header">
               <thead>
@@ -291,24 +288,24 @@ export default class PublishAllSessionsComponent extends Component {
               </tbody>
             </table>
           </div>
-        {{/unless}}
+        {{/if}}
       </section>
       <section class="publish-all-sessions-publishable" data-test-publishable>
         <div>
           <button
             class="title link-button"
             type="button"
-            aria-expanded={{if this.publishableCollapsed "true" "false"}}
+            aria-expanded={{if @expandCompleteSessions "true" "false"}}
             data-test-expand-collapse
             data-test-title
-            {{on "click" (set this "publishableCollapsed" (not this.publishableCollapsed))}}
+            {{on "click" (fn @setExpandCompleteSessions (not @expandCompleteSessions))}}
           >
             {{t "general.completeSessions"}}
             ({{this.publishableSessions.length}})
-            <FaIcon @icon={{if this.publishableCollapsed faCaretRight faCaretDown}} />
+            <FaIcon @icon={{if @expandCompleteSessions faCaretDown faCaretRight}} />
           </button>
         </div>
-        {{#unless this.publishableCollapsed}}
+        {{#if @expandCompleteSessions}}
           <div class="content" data-test-content>
             <table class="ilios-table ilios-table-colors sticky-header">
               <thead>
@@ -381,7 +378,7 @@ export default class PublishAllSessionsComponent extends Component {
               </tbody>
             </table>
           </div>
-        {{/unless}}
+        {{/if}}
       </section>
       <section class="publish-all-sessions-overridable" data-test-overridable>
         <div class="title" data-test-title>

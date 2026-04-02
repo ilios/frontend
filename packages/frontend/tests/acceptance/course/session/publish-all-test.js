@@ -1,4 +1,5 @@
 import { module, test } from 'qunit';
+import { currentURL } from '@ember/test-helpers';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/publish-all-sessions';
@@ -24,6 +25,53 @@ module('Acceptance | Session - Publish All', function (hooks) {
     });
     this.term = this.server.create('term', { vocabulary });
     this.meshDescriptor = this.server.create('mesh-descriptor');
+  });
+
+  test('expand/collapse state of sections are tracked in url', async function (assert) {
+    this.server.create('session', {
+      course: this.course,
+      terms: [this.term],
+      meshDescriptors: [this.meshDescriptor],
+      sessionType: this.sessionTypes[0],
+      sessionObjectives: [this.server.create('session-objective')],
+      offerings: this.server.createList('offering', 2),
+    });
+    this.server.create('session', {
+      course: this.course,
+      terms: [this.term],
+      meshDescriptors: [this.meshDescriptor],
+      sessionType: this.sessionTypes[0],
+      sessionObjectives: [this.server.create('session-objective')],
+      offerings: this.server.createList('offering', 2),
+    });
+
+    await page.visit({ courseId: this.course.id });
+    assert.strictEqual(currentURL(), '/courses/1/publishall');
+
+    const { publishableSessions, unpublishableSessions } = page.publishAllSessions;
+
+    assert.notOk(publishableSessions.isExpanded);
+    assert.notOk(unpublishableSessions.isExpanded);
+
+    await publishableSessions.toggle();
+    assert.strictEqual(currentURL(), '/courses/1/publishall?expandCompleteSessions=true');
+    assert.ok(publishableSessions.isExpanded);
+    assert.notOk(unpublishableSessions.isExpanded);
+    await unpublishableSessions.toggle();
+    assert.strictEqual(
+      currentURL(),
+      '/courses/1/publishall?expandCompleteSessions=true&expandIncompleteSessions=true',
+    );
+    assert.ok(publishableSessions.isExpanded);
+    assert.ok(unpublishableSessions.isExpanded);
+    await publishableSessions.toggle();
+    assert.strictEqual(currentURL(), '/courses/1/publishall?expandIncompleteSessions=true');
+    assert.notOk(publishableSessions.isExpanded);
+    assert.ok(unpublishableSessions.isExpanded);
+    await unpublishableSessions.toggle();
+    assert.strictEqual(currentURL(), '/courses/1/publishall');
+    assert.notOk(publishableSessions.isExpanded);
+    assert.notOk(unpublishableSessions.isExpanded);
   });
 
   test('publish publishable sessions', async function (assert) {

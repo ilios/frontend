@@ -2,9 +2,9 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
+import noop from 'ilios-common/helpers/noop';
 import { component } from 'ilios-common/page-objects/components/publish-all-sessions';
 import PublishAllSessions from 'ilios-common/components/publish-all-sessions';
-
 module('Integration | Component | publish all sessions', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
@@ -61,19 +61,25 @@ module('Integration | Component | publish all sessions', function (hooks) {
     this.course = await store.findRecord('course', course.id);
   });
 
-  test('it renders', async function (assert) {
+  test('it renders expanded', async function (assert) {
     this.set('course', this.course);
 
-    await render(<template><PublishAllSessions @course={{this.course}} /></template>);
+    await render(
+      <template>
+        <PublishAllSessions
+          @course={{this.course}}
+          @expandCompleteSessions={{true}}
+          @expandIncompleteSessions={{true}}
+          @setExpandCompleteSessions={{(noop)}}
+          @setExpandIncompleteSessions={{(noop)}}
+        />
+      </template>,
+    );
     assert.strictEqual(
-      component.unpublishableSessions.text,
+      component.unpublishableSessions.title,
       'Sessions Incomplete: cannot publish (1)',
     );
-    assert.notOk(component.unpublishableSessions.isExpanded);
-    assert.strictEqual(component.unpublishableSessions.sessions.length, 0);
     assert.ok(component.unpublishableSessions.canExpandCollapse);
-    await component.unpublishableSessions.toggle();
-    assert.ok(component.unpublishableSessions.isExpanded);
     assert.strictEqual(component.unpublishableSessions.sessions.length, 1);
     assert.strictEqual(component.unpublishableSessions.sessions[0].title, 'session 1');
     assert.strictEqual(component.unpublishableSessions.sessions[0].offerings, 'No');
@@ -81,14 +87,10 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.unpublishableSessions.sessions[0].objectives.text, 'No');
     assert.notOk(component.unpublishableSessions.sessions[0].objectives.isLinked);
     assert.strictEqual(
-      component.publishableSessions.text,
+      component.publishableSessions.title,
       'Sessions Complete: ready to publish (1)',
     );
-    assert.notOk(component.publishableSessions.isExpanded);
-    assert.strictEqual(component.publishableSessions.sessions.length, 0);
     assert.ok(component.publishableSessions.canExpandCollapse);
-    await component.publishableSessions.toggle();
-    assert.ok(component.publishableSessions.isExpanded);
     assert.strictEqual(component.publishableSessions.sessions.length, 1);
     assert.strictEqual(component.publishableSessions.sessions[0].title, 'session 2');
     assert.strictEqual(component.publishableSessions.sessions[0].offerings, 'Yes (1)');
@@ -121,13 +123,95 @@ module('Integration | Component | publish all sessions', function (hooks) {
     );
   });
 
+  test('it renders collapsed', async function (assert) {
+    this.set('course', this.course);
+
+    await render(
+      <template>
+        <PublishAllSessions
+          @course={{this.course}}
+          @expandCompleteSessions={{false}}
+          @expandIncompleteSessions={{false}}
+          @setExpandCompleteSessions={{(noop)}}
+          @setExpandIncompleteSessions={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.notOk(component.publishableSessions.isExpanded);
+    assert.strictEqual(component.publishableSessions.sessions.length, 0);
+    assert.strictEqual(
+      component.publishableSessions.title,
+      'Sessions Complete: ready to publish (1)',
+    );
+    assert.ok(component.publishableSessions.canExpandCollapse);
+
+    assert.notOk(component.unpublishableSessions.isExpanded);
+    assert.strictEqual(component.unpublishableSessions.sessions.length, 0);
+    assert.strictEqual(
+      component.unpublishableSessions.title,
+      'Sessions Incomplete: cannot publish (1)',
+    );
+    assert.ok(component.unpublishableSessions.canExpandCollapse);
+  });
+
+  test('expanding sections works', async function (assert) {
+    this.set('course', this.course);
+    this.set('setExpandCompleteSessions', (value) => assert.step(value.toString()));
+    this.set('setExpandIncompleteSessions', (value) => assert.step(value.toString()));
+
+    await render(
+      <template>
+        <PublishAllSessions
+          @course={{this.course}}
+          @expandCompleteSessions={{false}}
+          @expandIncompleteSessions={{false}}
+          @setExpandCompleteSessions={{this.setExpandCompleteSessions}}
+          @setExpandIncompleteSessions={{this.setExpandIncompleteSessions}}
+        />
+      </template>,
+    );
+    await component.publishableSessions.toggle();
+    await component.unpublishableSessions.toggle();
+    assert.verifySteps(['true', 'true']);
+  });
+
+  test('collapsing sections works', async function (assert) {
+    this.set('course', this.course);
+    this.set('setExpandCompleteSessions', (value) => assert.step(value.toString()));
+    this.set('setExpandIncompleteSessions', (value) => assert.step(value.toString()));
+
+    await render(
+      <template>
+        <PublishAllSessions
+          @course={{this.course}}
+          @expandCompleteSessions={{true}}
+          @expandIncompleteSessions={{true}}
+          @setExpandCompleteSessions={{this.setExpandCompleteSessions}}
+          @setExpandIncompleteSessions={{this.setExpandIncompleteSessions}}
+        />
+      </template>,
+    );
+    await component.publishableSessions.toggle();
+    await component.unpublishableSessions.toggle();
+    assert.verifySteps(['false', 'false']);
+  });
+
   test('it renders empty', async function (assert) {
     const store = this.owner.lookup('service:store');
     const course = this.server.create('course');
     const model = await store.findRecord('course', course.id);
     this.set('course', model);
 
-    await render(<template><PublishAllSessions @course={{this.course}} /></template>);
+    await render(
+      <template>
+        <PublishAllSessions
+          @course={{this.course}}
+          @setExpandCompleteSessions={{(noop)}}
+          @setExpandIncompleteSessions={{(noop)}}
+        />
+      </template>,
+    );
 
     assert.strictEqual(
       component.unpublishableSessions.text,
@@ -151,7 +235,15 @@ module('Integration | Component | publish all sessions', function (hooks) {
   test('shows course objective warning', async function (assert) {
     this.set('course', this.course);
 
-    await render(<template><PublishAllSessions @course={{this.course}} /></template>);
+    await render(
+      <template>
+        <PublishAllSessions
+          @course={{this.course}}
+          @setExpandCompleteSessions={{(noop)}}
+          @setExpandIncompleteSessions={{(noop)}}
+        />
+      </template>,
+    );
     assert.strictEqual(
       component.review.unlinkedObjectivesWarning,
       'This course has unlinked objective(s)',
@@ -162,7 +254,15 @@ module('Integration | Component | publish all sessions', function (hooks) {
   test('publish all overridable #2478', async function (assert) {
     this.set('course', this.course);
 
-    await render(<template><PublishAllSessions @course={{this.course}} /></template>);
+    await render(
+      <template>
+        <PublishAllSessions
+          @course={{this.course}}
+          @setExpandCompleteSessions={{(noop)}}
+          @setExpandIncompleteSessions={{(noop)}}
+        />
+      </template>,
+    );
     assert.strictEqual(
       component.review.confirmation,
       'Publish 2, schedule 1, and ignore 1 sessions',
@@ -191,7 +291,15 @@ module('Integration | Component | publish all sessions', function (hooks) {
   test('schedule all overridable #2478', async function (assert) {
     this.set('course', this.course);
 
-    await render(<template><PublishAllSessions @course={{this.course}} /></template>);
+    await render(
+      <template>
+        <PublishAllSessions
+          @course={{this.course}}
+          @setExpandCompleteSessions={{(noop)}}
+          @setExpandIncompleteSessions={{(noop)}}
+        />
+      </template>,
+    );
     assert.strictEqual(
       component.review.confirmation,
       'Publish 2, schedule 1, and ignore 1 sessions',
