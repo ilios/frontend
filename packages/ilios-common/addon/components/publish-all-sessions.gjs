@@ -480,7 +480,7 @@ export default class PublishAllSessionsComponent extends Component {
                         {{t "general.no"}}
                       </td>
                     {{/if}}
-                    {{#if session.sessionOjectives.length}}
+                    {{#if session.sessionObjectives.length}}
                       <td class="yes" data-test-objectives>
                         {{t "general.yes"}}
                         ({{session.sessionObjectives.length}})
