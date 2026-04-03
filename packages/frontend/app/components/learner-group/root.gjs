@@ -397,6 +397,10 @@ export default class LearnerGroupRootComponent extends Component {
     const topLevelGroup = await this.args.learnerGroup.topLevelGroup;
     const groups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     await all(groups.map((group) => group.save()));
+
+    if (!this.usersForMembersList.length) {
+      this.args.setIsEditing(false);
+    }
   });
 
   addUsersToGroup = task({ enqueue: true }, async (users) => {
@@ -426,6 +430,10 @@ export default class LearnerGroupRootComponent extends Component {
       groupsToSave = [...groupsToSave, ...removeGroups];
     }
     await all(uniqueValues(groupsToSave).map((group) => group.save()));
+
+    if (!this.usersForMembersList.length) {
+      this.args.setIsEditing(false);
+    }
   });
 
   createUsersToPassToCohortManager = task(async () => {
@@ -620,7 +628,7 @@ export default class LearnerGroupRootComponent extends Component {
                   data-test-filter
                 />
               {{/if}}
-              {{#if (or @isEditing @isBulkAssigning)}}
+              {{#if (and this.usersForMembersList.length (or @isEditing @isBulkAssigning))}}
                 <button
                   class="close"
                   type="button"
