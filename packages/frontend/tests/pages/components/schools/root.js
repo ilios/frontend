@@ -12,7 +12,7 @@ import {
 } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-school-list]',
+  scope: '[data-test-schools-root]',
   expandCollapseButton: {
     scope: '[data-test-expand-collapse-button]',
     toggle: clickable('button'),

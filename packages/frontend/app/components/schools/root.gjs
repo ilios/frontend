@@ -20,7 +20,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
-export default class SchoolListComponent extends Component {
+export default class SchoolsRootComponent extends Component {
   @service currentUser;
   @service store;
 
@@ -83,7 +83,7 @@ export default class SchoolListComponent extends Component {
   });
   <template>
     {{#let (uniqueId) as |templateId|}}
-      <section class="school-list main-section" data-test-school-list ...attributes>
+      <section class="schools-root main-section" data-test-schools-root ...attributes>
         <section class="schools">
           <div class="header">
             <h2 class="main-list-box-header-title">

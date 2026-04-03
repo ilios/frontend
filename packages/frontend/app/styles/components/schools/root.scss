@@ -1,6 +1,6 @@
 @use "../../ilios-common/mixins" as m;
 
-.school-list {
+.schools-root {
   .schools {
     @include m.main-list-box;
 
