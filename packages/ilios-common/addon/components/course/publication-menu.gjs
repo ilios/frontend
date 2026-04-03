@@ -113,12 +113,15 @@ export default class CoursePublicationMenuComponent extends Component {
     }
   }
   @action
-  keyUp({ key, target }) {
+  keyDown(event) {
+    const { key, target } = event;
     switch (key) {
       case 'ArrowDown':
+        event.preventDefault();
         this.handleArrowDown(target);
         break;
       case 'ArrowUp':
+        event.preventDefault();
         this.handleArrowUp(target);
         break;
       case 'Escape':
@@ -187,7 +190,7 @@ export default class CoursePublicationMenuComponent extends Component {
           aria-expanded={{if this.isOpen "true" "false"}}
           type="button"
           data-test-toggle
-          {{on "keyup" this.keyUp}}
+          {{on "keydown" this.keyDown}}
           {{on "click" this.toggleMenu}}
         >
           <FaIcon @icon={{this.icon}} />
@@ -205,7 +208,7 @@ export default class CoursePublicationMenuComponent extends Component {
                 tabindex="-1"
                 type="button"
                 {{on "click" this.publish}}
-                {{on "keyup" this.keyUp}}
+                {{on "keydown" this.keyDown}}
                 {{on "mouseenter" this.clearFocus}}
                 data-test-publish-as-is
               >
@@ -219,7 +222,7 @@ export default class CoursePublicationMenuComponent extends Component {
                 tabindex="-1"
                 type="button"
                 {{on "click" this.publish}}
-                {{on "keyup" this.keyUp}}
+                {{on "keydown" this.keyDown}}
                 {{on "mouseenter" this.clearFocus}}
                 data-test-publish
               >
@@ -233,7 +236,7 @@ export default class CoursePublicationMenuComponent extends Component {
                 tabindex="-1"
                 type="button"
                 {{on "click" this.scrollToCoursePublication}}
-                {{on "keyup" this.keyUp}}
+                {{on "keydown" this.keyDown}}
                 {{on "mouseenter" this.clearFocus}}
                 data-test-review
               >
@@ -247,7 +250,7 @@ export default class CoursePublicationMenuComponent extends Component {
                 tabindex="-1"
                 type="button"
                 {{on "click" this.publishAsTbd}}
-                {{on "keyup" this.keyUp}}
+                {{on "keydown" this.keyDown}}
                 {{on "mouseenter" this.clearFocus}}
                 data-test-tbd
               >
@@ -261,7 +264,7 @@ export default class CoursePublicationMenuComponent extends Component {
                 tabindex="-1"
                 type="button"
                 {{on "click" this.unpublish}}
-                {{on "keyup" this.keyUp}}
+                {{on "keydown" this.keyDown}}
                 {{on "mouseenter" this.clearFocus}}
                 data-test-un-publish
               >
