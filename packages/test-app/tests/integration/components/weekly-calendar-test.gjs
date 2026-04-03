@@ -244,6 +244,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
           @events={{this.events}}
           @changeToDayView={{(noop)}}
           @selectEvent={{this.selectEvent}}
+          @areEventsSelectable={{true}}
         />
       </template>,
     );
@@ -284,6 +285,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
           @events={{this.events}}
           @changeToDayView={{this.changeToDayView}}
           @selectEvent={{(noop)}}
+          @areEventsSelectable={{true}}
         />
       </template>,
     );

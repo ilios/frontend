@@ -77,6 +77,7 @@ export default class IliosCalendarWeekComponent extends Component {
           @changeToDayView={{if @areDaysSelectable this.changeToDayView (noop)}}
           @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}
           @isUserProfileCalendar={{@isUserProfileCalendar}}
+          @areEventsSelectable={{@areEventsSelectable}}
         />
         <IliosCalendarMultidayEvents
           @events={{this.multiDayEventsList}}

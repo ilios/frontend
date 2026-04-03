@@ -184,6 +184,7 @@ export default class WeeklyCalendarComponent extends Component {
                 @day={{day.dayOfWeek}}
                 @allDayEvents={{day.events}}
                 @selectEvent={{fn this.selectEvent event}}
+                @isEventSelectable={{@areEventsSelectable}}
               />
             {{else}}
               <span class="no-events visually-hidden" data-test-no-events>{{t

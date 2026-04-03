@@ -6,6 +6,7 @@ import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/weekly-calendar-event';
 import WeeklyCalendarEvent from 'ilios-common/components/weekly-calendar-event';
 import Event from 'ilios-common/classes/event';
+import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | weekly-calendar-event', function (hooks) {
@@ -34,6 +35,7 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
         isScheduled,
         postrequisites: [],
         prerequisites,
+        offering: 1,
       },
       false,
       showAsBlockedTime,
@@ -616,5 +618,56 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     assert.ok(component.cssClasses.includes(' blocked-time'));
     assert.notOk(component.style.includes(' background-color:'));
     assert.notOk(component.style.includes('; color:'));
+  });
+
+  test('selectable event', async function (assert) {
+    const event = this.createEvent(
+      'event 0',
+      '2020-02-10 10:40:00',
+      '2020-02-10 12:30:00',
+      '2012-01-09 08:00:00',
+      false,
+      true,
+      [],
+      true,
+    );
+    this.set('event', event);
+    this.set('events', [event]);
+    await render(
+      <template>
+        <WeeklyCalendarEvent
+          @event={{this.event}}
+          @allDayEvents={{this.events}}
+          @isEventSelectable={{true}}
+          @selectEvent={{(noop)}}
+        />
+      </template>,
+    );
+    assert.ok(component.cssClasses.includes('clickable'));
+  });
+
+  test('unselectable event', async function (assert) {
+    const event = this.createEvent(
+      'event 0',
+      '2020-02-10 10:40:00',
+      '2020-02-10 12:30:00',
+      '2012-01-09 08:00:00',
+      false,
+      true,
+      [],
+      true,
+    );
+    this.set('event', event);
+    this.set('events', [event]);
+    await render(
+      <template>
+        <WeeklyCalendarEvent
+          @event={{this.event}}
+          @allDayEvents={{this.events}}
+          @isEventSelectable={{false}}
+        />
+      </template>,
+    );
+    assert.notOk(component.cssClasses.includes('clickable'));
   });
 });
