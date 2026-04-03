@@ -25,25 +25,25 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     await page.visit({ schoolId: this.school.id });
     await takeScreenshot(assert);
     assert.strictEqual(
-      page.manager.sessionAttributes.collapsed.attendanceRequired.label,
+      page.root.sessionAttributes.collapsed.attendanceRequired.label,
       'Attendance Required',
     );
-    assert.ok(page.manager.sessionAttributes.collapsed.attendanceRequired.isDisabled);
+    assert.ok(page.root.sessionAttributes.collapsed.attendanceRequired.isDisabled);
     assert.strictEqual(
-      page.manager.sessionAttributes.collapsed.supplemental.label,
+      page.root.sessionAttributes.collapsed.supplemental.label,
       'Supplemental Curriculum',
     );
-    assert.ok(page.manager.sessionAttributes.collapsed.supplemental.isEnabled);
+    assert.ok(page.root.sessionAttributes.collapsed.supplemental.isEnabled);
     assert.strictEqual(
-      page.manager.sessionAttributes.collapsed.specialAttireRequired.label,
+      page.root.sessionAttributes.collapsed.specialAttireRequired.label,
       'Special Attire Required',
     );
-    assert.ok(page.manager.sessionAttributes.collapsed.specialAttireRequired.isDisabled);
+    assert.ok(page.root.sessionAttributes.collapsed.specialAttireRequired.isDisabled);
     assert.strictEqual(
-      page.manager.sessionAttributes.collapsed.specialEquipmentRequired.label,
+      page.root.sessionAttributes.collapsed.specialEquipmentRequired.label,
       'Special Equipment Required',
     );
-    assert.ok(page.manager.sessionAttributes.collapsed.specialEquipmentRequired.isDisabled);
+    assert.ok(page.root.sessionAttributes.collapsed.specialEquipmentRequired.isDisabled);
   });
 
   test('check fields expanded', async function (assert) {
@@ -60,27 +60,25 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     await page.visit({ schoolId: this.school.id, schoolSessionAttributesDetails: true });
     await takeScreenshot(assert);
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.attributes.attendanceRequired.label,
+      page.root.sessionAttributes.expanded.attributes.attendanceRequired.label,
       'Attendance Required',
     );
-    assert.ok(page.manager.sessionAttributes.expanded.attributes.attendanceRequired.isDisabled);
+    assert.ok(page.root.sessionAttributes.expanded.attributes.attendanceRequired.isDisabled);
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.attributes.supplemental.label,
+      page.root.sessionAttributes.expanded.attributes.supplemental.label,
       'Supplemental Curriculum',
     );
-    assert.ok(page.manager.sessionAttributes.expanded.attributes.supplemental.isEnabled);
+    assert.ok(page.root.sessionAttributes.expanded.attributes.supplemental.isEnabled);
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.attributes.specialAttireRequired.label,
+      page.root.sessionAttributes.expanded.attributes.specialAttireRequired.label,
       'Special Attire Required',
     );
-    assert.ok(page.manager.sessionAttributes.expanded.attributes.specialAttireRequired.isDisabled);
+    assert.ok(page.root.sessionAttributes.expanded.attributes.specialAttireRequired.isDisabled);
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.attributes.specialEquipmentRequired.label,
+      page.root.sessionAttributes.expanded.attributes.specialEquipmentRequired.label,
       'Special Equipment Required',
     );
-    assert.ok(
-      page.manager.sessionAttributes.expanded.attributes.specialEquipmentRequired.isDisabled,
-    );
+    assert.ok(page.root.sessionAttributes.expanded.attributes.specialEquipmentRequired.isDisabled);
   });
 
   test('manage session attributes', async function (assert) {
@@ -101,53 +99,51 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     });
     await takeScreenshot(assert, 'default');
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.manager.attendanceRequired.label,
+      page.root.sessionAttributes.expanded.manager.attendanceRequired.label,
       'Attendance Required',
     );
-    assert.notOk(page.manager.sessionAttributes.expanded.manager.attendanceRequired.isChecked);
+    assert.notOk(page.root.sessionAttributes.expanded.manager.attendanceRequired.isChecked);
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.manager.supplemental.label,
+      page.root.sessionAttributes.expanded.manager.supplemental.label,
       'Supplemental Curriculum',
     );
-    assert.ok(page.manager.sessionAttributes.expanded.manager.supplemental.isChecked);
+    assert.ok(page.root.sessionAttributes.expanded.manager.supplemental.isChecked);
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.manager.specialAttireRequired.label,
+      page.root.sessionAttributes.expanded.manager.specialAttireRequired.label,
       'Special Attire Required',
     );
-    assert.notOk(page.manager.sessionAttributes.expanded.manager.specialAttireRequired.isChecked);
+    assert.notOk(page.root.sessionAttributes.expanded.manager.specialAttireRequired.isChecked);
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.manager.specialEquipmentRequired.label,
+      page.root.sessionAttributes.expanded.manager.specialEquipmentRequired.label,
       'Special Equipment Required',
     );
-    assert.notOk(
-      page.manager.sessionAttributes.expanded.manager.specialEquipmentRequired.isChecked,
-    );
-    await page.manager.sessionAttributes.expanded.manager.attendanceRequired.check();
-    await page.manager.sessionAttributes.expanded.manager.supplemental.check();
-    await page.manager.sessionAttributes.expanded.manager.specialEquipmentRequired.check();
+    assert.notOk(page.root.sessionAttributes.expanded.manager.specialEquipmentRequired.isChecked);
+    await page.root.sessionAttributes.expanded.manager.attendanceRequired.check();
+    await page.root.sessionAttributes.expanded.manager.supplemental.check();
+    await page.root.sessionAttributes.expanded.manager.specialEquipmentRequired.check();
     await takeScreenshot(assert, 'session attributes checked');
-    await page.manager.sessionAttributes.expanded.save();
+    await page.root.sessionAttributes.expanded.save();
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.attributes.attendanceRequired.label,
+      page.root.sessionAttributes.expanded.attributes.attendanceRequired.label,
       'Attendance Required',
     );
-    assert.notOk(page.manager.sessionAttributes.expanded.attributes.attendanceRequired.isDisabled);
+    assert.notOk(page.root.sessionAttributes.expanded.attributes.attendanceRequired.isDisabled);
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.attributes.supplemental.label,
+      page.root.sessionAttributes.expanded.attributes.supplemental.label,
       'Supplemental Curriculum',
     );
-    assert.notOk(page.manager.sessionAttributes.expanded.attributes.supplemental.isEnabled);
+    assert.notOk(page.root.sessionAttributes.expanded.attributes.supplemental.isEnabled);
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.attributes.specialAttireRequired.label,
+      page.root.sessionAttributes.expanded.attributes.specialAttireRequired.label,
       'Special Attire Required',
     );
-    assert.ok(page.manager.sessionAttributes.expanded.attributes.specialAttireRequired.isDisabled);
+    assert.ok(page.root.sessionAttributes.expanded.attributes.specialAttireRequired.isDisabled);
     assert.strictEqual(
-      page.manager.sessionAttributes.expanded.attributes.specialEquipmentRequired.label,
+      page.root.sessionAttributes.expanded.attributes.specialEquipmentRequired.label,
       'Special Equipment Required',
     );
     assert.notOk(
-      page.manager.sessionAttributes.expanded.attributes.specialEquipmentRequired.isDisabled,
+      page.root.sessionAttributes.expanded.attributes.specialEquipmentRequired.isDisabled,
     );
   });
 });

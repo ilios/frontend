@@ -2,11 +2,11 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
-import { component } from 'frontend/tests/pages/components/school/manager';
-import Manager from 'frontend/components/school/manager';
+import { component } from 'frontend/tests/pages/components/school/root';
+import Root from 'frontend/components/school/root';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | school/manager', function (hooks) {
+module('Integration | Component | school/root', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -25,7 +25,7 @@ module('Integration | Component | school/manager', function (hooks) {
     this.set('school', this.school);
     await render(
       <template>
-        <Manager
+        <Root
           @school={{this.school}}
           @canUpdateSchool={{true}}
           @canUpdateCompetency={{true}}
@@ -95,7 +95,7 @@ module('Integration | Component | school/manager', function (hooks) {
     this.set('school', this.school);
     await render(
       <template>
-        <Manager
+        <Root
           @school={{this.school}}
           @canUpdateSchool={{true}}
           @canUpdateCompetency={{true}}
@@ -166,7 +166,7 @@ module('Integration | Component | school/manager', function (hooks) {
     this.set('school', this.school);
     await render(
       <template>
-        <Manager
+        <Root
           @school={{this.school}}
           @canUpdateSchool={{true}}
           @canUpdateCompetency={{true}}
@@ -233,7 +233,7 @@ module('Integration | Component | school/manager', function (hooks) {
     this.set('school', this.school);
     await render(
       <template>
-        <Manager
+        <Root
           @school={{this.school}}
           @canUpdateSchool={{true}}
           @canUpdateCompetency={{true}}
@@ -297,7 +297,7 @@ module('Integration | Component | school/manager', function (hooks) {
     this.set('school', this.school);
     await render(
       <template>
-        <Manager
+        <Root
           @school={{this.school}}
           @canUpdateSchool={{true}}
           @canUpdateCompetency={{true}}
@@ -361,7 +361,7 @@ module('Integration | Component | school/manager', function (hooks) {
     this.set('school', this.school);
     await render(
       <template>
-        <Manager
+        <Root
           @school={{this.school}}
           @canUpdateSchool={{true}}
           @canUpdateCompetency={{true}}

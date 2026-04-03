@@ -15,7 +15,7 @@ import leadershipCollapsed from 'ilios-common/page-objects/components/leadership
 import leadershipExpanded from 'ilios-common/page-objects/components/leadership-expanded';
 
 const definition = {
-  scope: '[data-test-school-manager]',
+  scope: '[data-test-school-root]',
   title: {
     scope: '[data-test-school-title]',
     edit: clickable('[data-test-edit]'),

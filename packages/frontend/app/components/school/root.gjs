@@ -34,7 +34,7 @@ import VocabulariesExpanded from 'frontend/components/school/vocabularies-expand
 import VocabulariesCollapsed from 'frontend/components/school/vocabularies-collapsed';
 import focus from 'ilios-common/modifiers/focus';
 
-export default class SchoolManagerComponent extends Component {
+export default class SchoolRootComponent extends Component {
   @service flashMessages;
   @service intl;
   @tracked title;
@@ -120,7 +120,7 @@ export default class SchoolManagerComponent extends Component {
   <template>
     {{pageTitle " | " this.title prepend=false}}
 
-    <section class="school-manager main-section" data-test-school-manager ...attributes>
+    <section class="school-root main-section" data-test-school-root ...attributes>
       <div class="backtolink">
         <LinkTo @route="schools">
           {{t "general.backToSchools"}}
@@ -156,7 +156,7 @@ export default class SchoolManagerComponent extends Component {
           {{/if}}
         </h2>
       </div>
-      <div class="school-manager-content">
+      <div class="school-root-content">
         {{#if
           (or
             (and (eq @school.directors.length 0) (eq @school.administrators.length 0))

@@ -25,16 +25,16 @@ module('Acceptance | School - Learning Material Attributes', function (hooks) {
     await page.visit({ schoolId: this.school.id });
     await takeScreenshot(assert);
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.collapsed.accessibilityRequired.label,
+      page.root.learningMaterialAttributes.collapsed.accessibilityRequired.label,
       'Accessibility Required',
     );
-    assert.ok(page.manager.learningMaterialAttributes.collapsed.accessibilityRequired.isDisabled);
+    assert.ok(page.root.learningMaterialAttributes.collapsed.accessibilityRequired.isDisabled);
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.collapsed.accessibilityRequirementsLink.label,
+      page.root.learningMaterialAttributes.collapsed.accessibilityRequirementsLink.label,
       'Accessibility Requirements Link',
     );
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.collapsed.accessibilityRequirementsLink.link,
+      page.root.learningMaterialAttributes.collapsed.accessibilityRequirementsLink.link,
       '',
     );
   });
@@ -53,20 +53,18 @@ module('Acceptance | School - Learning Material Attributes', function (hooks) {
     await page.visit({ schoolId: this.school.id, schoolLearningMaterialAttributesDetails: true });
     await takeScreenshot(assert);
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.expanded.attributes.accessibilityRequired.label,
+      page.root.learningMaterialAttributes.expanded.attributes.accessibilityRequired.label,
       'Accessibility Required',
     );
     assert.ok(
-      page.manager.learningMaterialAttributes.expanded.attributes.accessibilityRequired.isDisabled,
+      page.root.learningMaterialAttributes.expanded.attributes.accessibilityRequired.isDisabled,
     );
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.expanded.attributes.accessibilityRequirementsLink
-        .label,
+      page.root.learningMaterialAttributes.expanded.attributes.accessibilityRequirementsLink.label,
       'Accessibility Requirements Link',
     );
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.expanded.attributes.accessibilityRequirementsLink
-        .link,
+      page.root.learningMaterialAttributes.expanded.attributes.accessibilityRequirementsLink.link,
       '',
     );
   });
@@ -89,45 +87,43 @@ module('Acceptance | School - Learning Material Attributes', function (hooks) {
     });
     await takeScreenshot(assert, 'default');
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.expanded.manager.accessibilityRequired.label,
+      page.root.learningMaterialAttributes.expanded.manager.accessibilityRequired.label,
       'Accessibility Required',
       'required attribute label correct',
     );
     assert.notOk(
-      page.manager.learningMaterialAttributes.expanded.manager.accessibilityRequired.isChecked,
+      page.root.learningMaterialAttributes.expanded.manager.accessibilityRequired.isChecked,
       'required attribute value is not checked',
     );
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.expanded.manager.accessibilityRequirementsLink.label,
+      page.root.learningMaterialAttributes.expanded.manager.accessibilityRequirementsLink.label,
       'Accessibility Requirements Link',
       'requirements link attribute label correct',
     );
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.expanded.manager.accessibilityRequirementsLink.link,
+      page.root.learningMaterialAttributes.expanded.manager.accessibilityRequirementsLink.link,
       undefined,
       'requirements link is empty',
     );
-    await page.manager.learningMaterialAttributes.expanded.manager.accessibilityRequired.check();
-    await page.manager.learningMaterialAttributes.expanded.manager.accessibilityRequirementsLink.update(
+    await page.root.learningMaterialAttributes.expanded.manager.accessibilityRequired.check();
+    await page.root.learningMaterialAttributes.expanded.manager.accessibilityRequirementsLink.update(
       'https://iliosproject.org',
     );
     await takeScreenshot(assert, 'learning material attributes checked and filled out');
-    await page.manager.learningMaterialAttributes.expanded.save();
+    await page.root.learningMaterialAttributes.expanded.save();
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.expanded.attributes.accessibilityRequired.label,
+      page.root.learningMaterialAttributes.expanded.attributes.accessibilityRequired.label,
       'Accessibility Required',
     );
     assert.notOk(
-      page.manager.learningMaterialAttributes.expanded.attributes.accessibilityRequired.isDisabled,
+      page.root.learningMaterialAttributes.expanded.attributes.accessibilityRequired.isDisabled,
     );
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.expanded.attributes.accessibilityRequirementsLink
-        .label,
+      page.root.learningMaterialAttributes.expanded.attributes.accessibilityRequirementsLink.label,
       'Accessibility Requirements Link',
     );
     assert.strictEqual(
-      page.manager.learningMaterialAttributes.expanded.attributes.accessibilityRequirementsLink
-        .link,
+      page.root.learningMaterialAttributes.expanded.attributes.accessibilityRequirementsLink.link,
       'https://iliosproject.org',
     );
   });

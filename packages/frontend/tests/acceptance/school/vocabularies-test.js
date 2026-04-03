@@ -26,7 +26,7 @@ module('Acceptance | School - Vocabularies', function (hooks) {
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
     await takeScreenshot(assert);
-    const { vocabulariesCollapsed: c } = page.manager;
+    const { vocabulariesCollapsed: c } = page.root;
 
     assert.strictEqual(c.title, 'Vocabularies (2)');
     assert.strictEqual(c.vocabularies.length, 2);
@@ -39,7 +39,7 @@ module('Acceptance | School - Vocabularies', function (hooks) {
   test('expanded', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
     await takeScreenshot(assert);
-    const { vocabulariesExpanded: c } = page.manager;
+    const { vocabulariesExpanded: c } = page.root;
 
     assert.strictEqual(c.title, 'Vocabularies (2)');
     assert.strictEqual(c.vocabulariesList.vocabularies.length, 2);
@@ -53,7 +53,7 @@ module('Acceptance | School - Vocabularies', function (hooks) {
 
   test('add new vocabulary', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
-    const { vocabulariesExpanded: c } = page.manager;
+    const { vocabulariesExpanded: c } = page.root;
 
     await c.openNewVocabularyForm();
     await c.newVocabularyForm.title.set('New Vocabulary');
@@ -68,7 +68,7 @@ module('Acceptance | School - Vocabularies', function (hooks) {
 
   test('add new term', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
-    const { vocabulariesExpanded: c } = page.manager;
+    const { vocabulariesExpanded: c } = page.root;
 
     await c.vocabulariesList.vocabularies[0].manage();
     assert.ok(c.vocabularyManager.isVisible);
@@ -95,7 +95,7 @@ module('Acceptance | School - Vocabularies', function (hooks) {
 
   test('delete terms', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
-    const { vocabulariesExpanded: c } = page.manager;
+    const { vocabulariesExpanded: c } = page.root;
 
     await c.vocabulariesList.vocabularies[0].manage();
     assert.ok(c.vocabularyManager.isVisible);
@@ -123,7 +123,7 @@ module('Acceptance | School - Vocabularies', function (hooks) {
       school: this.school,
     });
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
-    const { vocabulariesExpanded: c } = page.manager;
+    const { vocabulariesExpanded: c } = page.root;
 
     assert.strictEqual(c.vocabulariesList.vocabularies.length, 3);
     assert.strictEqual(c.vocabulariesList.vocabularies[2].title.text, 'Vocabulary 3');
