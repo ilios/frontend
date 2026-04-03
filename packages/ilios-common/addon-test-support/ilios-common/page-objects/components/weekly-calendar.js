@@ -28,6 +28,7 @@ const definition = {
     isSixthDayOfWeek: hasClass('day-6'),
     isSeventhDayOfWeek: hasClass('day-7'),
     hasNoEvents: isPresent('[data-test-no-events]'),
+    isClickable: hasClass('clickable', '[data-test-day]'),
   }),
   days: collection('[data-test-events-day]', {
     events: collection('[data-test-weekly-calendar-event]'),

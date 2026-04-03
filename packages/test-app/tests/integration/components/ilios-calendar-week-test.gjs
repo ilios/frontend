@@ -57,6 +57,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
         />
       </template>,
     );
+    assert.ok(component.calendar.dayHeadings[0].isClickable);
     await component.calendar.dayHeadings[0].selectDay();
     assert.verifySteps(['changeDate called', 'changeView called']);
   });
@@ -85,6 +86,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
         />
       </template>,
     );
+    assert.notOk(component.calendar.dayHeadings[0].isClickable);
     await component.calendar.dayHeadings[0].selectDay();
     assert.verifySteps([]);
   });
