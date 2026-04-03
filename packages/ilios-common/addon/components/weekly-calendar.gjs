@@ -122,7 +122,9 @@ export default class WeeklyCalendarComponent extends Component {
   @action
   selectEvent(event) {
     if (event.isMulti) {
-      this.args.changeToDayView(event.startDate);
+      if (this.args.changeToDayView) {
+        this.args.changeToDayView(event.startDate);
+      }
     } else {
       this.args.selectEvent(event);
     }
@@ -130,7 +132,9 @@ export default class WeeklyCalendarComponent extends Component {
 
   @action
   changeToDayView(date) {
-    this.args.changeToDayView(DateTime.fromJSDate(date).toFormat('yyyy-MM-dd'));
+    if (this.args.changeToDayView) {
+      this.args.changeToDayView(DateTime.fromJSDate(date).toFormat('yyyy-MM-dd'));
+    }
   }
   <template>
     <section
@@ -202,7 +206,7 @@ export default class WeeklyCalendarComponent extends Component {
         {{#each this.week as |day|}}
           <div class="day-heading day-{{day.dayOfWeek}}">
             <button
-              class="link-button"
+              class="link-button{{if @changeToDayView ' clickable'}}"
               type="button"
               {{on "click" (fn this.changeToDayView day.date)}}
               tabindex="-1"

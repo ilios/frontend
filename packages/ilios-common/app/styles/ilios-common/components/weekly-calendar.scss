@@ -126,9 +126,14 @@
       }
 
       button {
+        cursor: default;
         display: flex;
         flex-direction: column;
         text-align: center;
+
+        &.clickable {
+          cursor: pointer;
+        }
       }
     }
   }

@@ -62,11 +62,14 @@ export default class IliosCalendarWeekComponent extends Component {
 
   @action
   changeToDayView(date) {
-    if (this.args.areDaysSelectable && this.args.changeDate && this.args.changeView) {
-      this.args.changeDate(date);
-      this.args.changeView('day');
-    }
+    this.args.changeDate(date);
+    this.args.changeView('day');
   }
+
+  get canChangeToDayView() {
+    return this.args.areDaysSelectable && this.args.changeDate && this.args.changeView;
+  }
+
   <template>
     {{#if (isArray @calendarEvents)}}
       <div class="ilios-calendar-week" data-test-ilios-calendar-week>
@@ -74,7 +77,7 @@ export default class IliosCalendarWeekComponent extends Component {
           @isLoadingEvents={{@isLoadingEvents}}
           @date={{this.date}}
           @events={{this.singleDayEvents}}
-          @changeToDayView={{if @areDaysSelectable this.changeToDayView (noop)}}
+          @changeToDayView={{if this.canChangeToDayView this.changeToDayView false}}
           @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}
           @isUserProfileCalendar={{@isUserProfileCalendar}}
           @areEventsSelectable={{@areEventsSelectable}}
