@@ -11,7 +11,7 @@ import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import { fn, get, concat } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import { and, eq } from 'ember-truth-helpers';
+import { and, eq, not } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import mapBy0 from 'ilios-common/helpers/map-by';
@@ -241,7 +241,7 @@ export default class OfferingManagerComponent extends Component {
               {{/each}}
             </ul>
           </div>
-          {{#if @editable}}
+          {{#if (and @editable (not this.showRemoveConfirmation))}}
             <div class="offering-manager-actions">
               <button
                 class="link-button edit"
