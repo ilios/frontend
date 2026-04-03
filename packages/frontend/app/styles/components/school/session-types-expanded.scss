@@ -1,0 +1,25 @@
+@use "../../ilios-common/mixins" as m;
+
+.school-session-types-expanded {
+  @include m.detail-container(var(--orange));
+
+  .school-session-types-header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .school-session-types-expanded-content {
+    @include m.detail-container-content;
+
+    .saved-result {
+      @include m.main-list-saved-new;
+    }
+  }
+}

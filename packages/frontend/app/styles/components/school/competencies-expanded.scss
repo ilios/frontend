@@ -1,0 +1,21 @@
+@use "../../ilios-common/mixins" as m;
+
+.school-competencies-expanded {
+  @include m.detail-container(var(--orange));
+
+  .school-competencies-expanded-header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .school-competencies-expanded-content {
+    @include m.detail-container-content;
+  }
+}

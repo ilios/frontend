@@ -1,0 +1,11 @@
+@use "../../ilios-common/mixins" as m;
+
+.school-session-type-manager {
+  .session-type-title {
+    @include m.ilios-heading-h4;
+  }
+
+  .school-session-type-form {
+    margin-left: 0;
+  }
+}

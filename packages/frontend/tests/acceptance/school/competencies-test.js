@@ -4,7 +4,7 @@ import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/school';
 
-module('Acceptance | school/competencies', function (hooks) {
+module('Acceptance | School - Competencies', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
@@ -30,8 +30,8 @@ module('Acceptance | school/competencies', function (hooks) {
     assert.strictEqual(currentURL(), '/schools/1');
     await takeScreenshot(assert);
 
-    assert.strictEqual(page.manager.schoolCompetenciesCollapsed.title.text, 'Competencies (2/1)');
-    const { domains } = page.manager.schoolCompetenciesCollapsed;
+    assert.strictEqual(page.root.competenciesCollapsed.title.text, 'Competencies (2/1)');
+    const { domains } = page.root.competenciesCollapsed;
     assert.strictEqual(domains.length, 2);
     assert.strictEqual(domains[0].title, 'competency 0');
     assert.strictEqual(domains[0].summary, 'There is 1 subcompetency');
@@ -43,11 +43,8 @@ module('Acceptance | school/competencies', function (hooks) {
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
     await takeScreenshot(assert);
 
-    assert.strictEqual(
-      page.manager.schoolCompetenciesExpanded.collapser.text,
-      'Competencies (2/1)',
-    );
-    const { items } = page.manager.schoolCompetenciesExpanded.competenciesList;
+    assert.strictEqual(page.root.competenciesExpanded.collapser.text, 'Competencies (2/1)');
+    const { items } = page.root.competenciesExpanded.competenciesList;
     assert.strictEqual(items.length, 3);
     assert.strictEqual(items[0].title.text, 'competency 0');
     assert.strictEqual(items[1].title.text, 'competency 2');
@@ -66,9 +63,9 @@ module('Acceptance | school/competencies', function (hooks) {
   test('manager', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
-    await page.manager.schoolCompetenciesExpanded.manage();
+    await page.root.competenciesExpanded.manage();
     await takeScreenshot(assert);
-    const { domains } = page.manager.schoolCompetenciesExpanded.competenciesManager;
+    const { domains } = page.root.competenciesExpanded.competenciesManager;
 
     assert.strictEqual(domains.length, 2);
     assert.strictEqual(domains[0].details.editor.text, 'competency 0');
@@ -80,7 +77,7 @@ module('Acceptance | school/competencies', function (hooks) {
   test('add new domain', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
-    const { schoolCompetenciesExpanded: e } = page.manager;
+    const { competenciesExpanded: e } = page.root;
     await e.manage();
     await e.competenciesManager.newDomain.newCompetency.title.set('new domain');
     await e.competenciesManager.newDomain.newCompetency.save();
@@ -99,7 +96,7 @@ module('Acceptance | school/competencies', function (hooks) {
   test('add new sub competency', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
-    const { schoolCompetenciesExpanded: e } = page.manager;
+    const { competenciesExpanded: e } = page.root;
     await e.manage();
     const { domains } = e.competenciesManager;
     await domains[0].newCompetency.title.set('new sub competency');
@@ -117,7 +114,7 @@ module('Acceptance | school/competencies', function (hooks) {
   test('edit domain title', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
-    const { schoolCompetenciesExpanded: e } = page.manager;
+    const { competenciesExpanded: e } = page.root;
     await e.manage();
     const { domains } = e.competenciesManager;
     await domains[0].details.editor.title.edit();
@@ -131,9 +128,9 @@ module('Acceptance | school/competencies', function (hooks) {
   test('edit competency title', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
-    await page.manager.schoolCompetenciesExpanded.manage();
+    await page.root.competenciesExpanded.manage();
     await takeScreenshot(assert);
-    const { domains } = page.manager.schoolCompetenciesExpanded.competenciesManager;
+    const { domains } = page.root.competenciesExpanded.competenciesManager;
 
     await domains[0].competencies[0].editor.title.edit();
     await domains[0].competencies[0].editor.title.set('new title');
@@ -148,7 +145,7 @@ module('Acceptance | school/competencies', function (hooks) {
 
   test('save changes', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
-    const { schoolCompetenciesExpanded: e } = page.manager;
+    const { competenciesExpanded: e } = page.root;
     await e.manage();
     const { domains } = e.competenciesManager;
     await domains[0].details.editor.title.edit();

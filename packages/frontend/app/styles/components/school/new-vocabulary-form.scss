@@ -1,0 +1,25 @@
+@use "../../ilios-common/mixins" as m;
+
+.school-new-vocabulary-form {
+  .form {
+    width: 80%;
+    @include m.ilios-form {
+      display: block;
+    }
+
+    .item {
+      @include m.ilios-form-item;
+      height: 4rem;
+
+      label {
+        display: block;
+      }
+    }
+
+    .buttons {
+      @include m.ilios-form-buttons {
+        padding-top: 2rem;
+      }
+    }
+  }
+}

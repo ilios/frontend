@@ -1,0 +1,297 @@
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { task } from 'ember-concurrency';
+import { TrackedAsyncData } from 'ember-async-data';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
+import { LinkTo } from '@ember/routing';
+import t from 'ember-intl/helpers/t';
+import EditableField from 'ilios-common/components/editable-field';
+import perform from 'ember-concurrency/helpers/perform';
+import { on } from '@ember/modifier';
+import { pageTitle } from 'ember-page-title';
+import pick from 'ilios-common/helpers/pick';
+import set from 'ember-set-helper/helpers/set';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { and, eq, not, or } from 'ember-truth-helpers';
+import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
+import { fn } from '@ember/helper';
+import LeadershipCollapsed from 'ilios-common/components/leadership-collapsed';
+import hasManyLength from 'ilios-common/helpers/has-many-length';
+import CompetenciesExpanded from 'frontend/components/school/competencies-expanded';
+import CompetenciesCollapsed from 'frontend/components/school/competencies-collapsed';
+import EmailsEditor from 'frontend/components/school/emails-editor';
+import Emails from 'frontend/components/school/emails';
+import InstitutionalInformationManager from 'frontend/components/school/institutional-information-manager';
+import InstitutionalInformationDetails from 'frontend/components/school/institutional-information-details';
+import LearningMaterialAttributes from 'frontend/components/school/learning-material-attributes';
+import SessionAttributes from 'frontend/components/school/session-attributes';
+import SessionTypesExpanded from 'frontend/components/school/session-types-expanded';
+import SessionTypesCollapsed from 'frontend/components/school/session-types-collapsed';
+import VocabulariesExpanded from 'frontend/components/school/vocabularies-expanded';
+import VocabulariesCollapsed from 'frontend/components/school/vocabularies-collapsed';
+import focus from 'ilios-common/modifiers/focus';
+
+export default class SchoolRootComponent extends Component {
+  @service flashMessages;
+  @service intl;
+  @tracked title;
+  @tracked newSavedSessionType;
+
+  constructor() {
+    super(...arguments);
+    this.title = this.args.school.title;
+  }
+
+  validations = new YupValidations(this, {
+    title: string().required().max(60),
+  });
+
+  @cached
+  get institutionalInformationData() {
+    return new TrackedAsyncData(this.args.school.curriculumInventoryInstitution);
+  }
+
+  get institutionalInformationLoaded() {
+    return this.institutionalInformationData.isResolved;
+  }
+
+  get institutionalInformation() {
+    return this.institutionalInformationData.isResolved
+      ? this.institutionalInformationData.value
+      : null;
+  }
+
+  @cached
+  get sessionTypesData() {
+    return new TrackedAsyncData(this.args.school.sessionTypes);
+  }
+
+  get sessionTypesLoaded() {
+    return this.sessionTypesData.isResolved;
+  }
+
+  get hasSessionTypes() {
+    return this.sessionTypesData.isResolved ? !!this.sessionTypesData.value.length : false;
+  }
+
+  changeTitle = task({ drop: true }, async () => {
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.validations.clearErrorDisplay();
+
+    this.args.school.title = this.title;
+    this.newSchool = await this.args.school.save();
+    this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
+      capitalize: true,
+    });
+  });
+
+  @action
+  setNewSavedSessionType(sessionType) {
+    this.newSavedSessionType = sessionType;
+  }
+
+  @action
+  revertTitleChanges() {
+    this.title = this.args.school.title;
+  }
+
+  @action
+  async saveInstitutionalInformation(institution) {
+    if (!institution.belongsTo('school').id()) {
+      institution.school = this.args.school;
+    }
+    await institution.save();
+    this.args.setSchoolManageInstitutionalInformation(false);
+  }
+
+  @action
+  async saveEmails(administratorEmail, changeAlertRecipients) {
+    this.args.school.changeAlertRecipients = changeAlertRecipients;
+    this.args.school.iliosAdministratorEmail = administratorEmail;
+    await this.args.school.save();
+  }
+  <template>
+    {{pageTitle " | " this.title prepend=false}}
+
+    <section class="school-root main-section" data-test-school-root ...attributes>
+      <div class="backtolink">
+        <LinkTo @route="schools">
+          {{t "general.backToSchools"}}
+        </LinkTo>
+      </div>
+      <div class="school-overview">
+        <h2 data-test-school-title>
+          {{#if @canUpdateSchool}}
+            <EditableField
+              @value={{this.title}}
+              @save={{perform this.changeTitle}}
+              @close={{this.revertTitleChanges}}
+              as |keyboard isSaving|
+            >
+              <input
+                aria-label={{t "general.title"}}
+                type="text"
+                value={{this.title}}
+                disabled={{isSaving}}
+                {{on "input" (pick "target.value" (set this "title"))}}
+                {{this.validations.attach "title"}}
+                {{keyboard}}
+                {{focus}}
+              />
+              <YupValidationMessage
+                @description={{t "general.title"}}
+                @validationErrors={{this.validations.errors.title}}
+                data-test-title-validation-error-message
+              />
+            </EditableField>
+          {{else}}
+            {{this.title}}
+          {{/if}}
+        </h2>
+      </div>
+      <div class="school-root-content">
+        {{#if
+          (or
+            (and (eq @school.directors.length 0) (eq @school.administrators.length 0))
+            @schoolLeadershipDetails
+          )
+        }}
+          <LeadershipExpanded
+            @model={{@school}}
+            @editable={{@canUpdateSchool}}
+            @collapse={{fn @setSchoolLeadershipDetails false}}
+            @expand={{fn @setSchoolLeadershipDetails true}}
+            @isManaging={{@schoolManageLeadership}}
+            @setIsManaging={{@setSchoolManageLeadership}}
+          />
+        {{else}}
+          <LeadershipCollapsed
+            @showAdministrators={{true}}
+            @showDirectors={{true}}
+            @directorsCount={{hasManyLength @school "directors"}}
+            @administratorsCount={{hasManyLength @school "administrators"}}
+            @expand={{fn @setSchoolLeadershipDetails true}}
+          />
+        {{/if}}
+        {{#if (or (eq @school.competencies.length 0) @schoolCompetencyDetails)}}
+          <CompetenciesExpanded
+            @school={{@school}}
+            @canUpdate={{@canUpdateCompetency}}
+            @canDelete={{@canDeleteCompetency}}
+            @canCreate={{@canCreateCompetency}}
+            @collapse={{fn @setSchoolCompetencyDetails false}}
+            @expand={{fn @setSchoolCompetencyDetails true}}
+            @isManaging={{@schoolManageCompetencies}}
+            @setSchoolManageCompetencies={{@setSchoolManageCompetencies}}
+          />
+        {{else}}
+          <CompetenciesCollapsed
+            @school={{@school}}
+            @expand={{fn @setSchoolCompetencyDetails true}}
+          />
+        {{/if}}
+        {{#if (or (eq @school.vocabularies.length 0) @schoolVocabularyDetails)}}
+          <VocabulariesExpanded
+            @school={{@school}}
+            @canUpdateVocabulary={{@canUpdateVocabulary}}
+            @canDeleteVocabulary={{@canDeleteVocabulary}}
+            @canCreateVocabulary={{@canCreateVocabulary}}
+            @canUpdateTerm={{@canUpdateTerm}}
+            @canDeleteTerm={{@canDeleteTerm}}
+            @canCreateTerm={{@canCreateTerm}}
+            @collapse={{fn @setSchoolVocabularyDetails false}}
+            @expand={{fn @setSchoolVocabularyDetails true}}
+            @managedVocabularyId={{@schoolManagedVocabulary}}
+            @setSchoolManagedVocabulary={{@setSchoolManagedVocabulary}}
+            @managedTermId={{@schoolManagedVocabularyTerm}}
+            @setSchoolManagedVocabularyTerm={{@setSchoolManagedVocabularyTerm}}
+            @schoolNewVocabulary={{@schoolNewVocabulary}}
+            @setSchoolNewVocabulary={{@setSchoolNewVocabulary}}
+          />
+        {{else}}
+          <VocabulariesCollapsed
+            @school={{@school}}
+            @expand={{fn @setSchoolVocabularyDetails true}}
+          />
+        {{/if}}
+        {{#if this.sessionTypesLoaded}}
+          {{#if (or (not this.hasSessionTypes) @schoolSessionTypeDetails)}}
+            <SessionTypesExpanded
+              @school={{@school}}
+              @canUpdate={{@canUpdateSessionType}}
+              @canDelete={{@canDeleteSessionType}}
+              @canCreate={{@canCreateSessionType}}
+              @collapse={{fn @setSchoolSessionTypeDetails false}}
+              @expand={{fn @setSchoolSessionTypeDetails true}}
+              @managedSessionTypeId={{@schoolManagedSessionType}}
+              @setSchoolManagedSessionType={{@setSchoolManagedSessionType}}
+              @schoolNewSessionType={{@schoolNewSessionType}}
+              @setSchoolNewSessionType={{@setSchoolNewSessionType}}
+              @newSavedSessionType={{this.newSavedSessionType}}
+              @setNewSavedSessionType={{this.setNewSavedSessionType}}
+            />
+          {{else}}
+            <SessionTypesCollapsed
+              @school={{@school}}
+              @expand={{fn @setSchoolSessionTypeDetails true}}
+            />
+          {{/if}}
+        {{/if}}
+        <LearningMaterialAttributes
+          @school={{@school}}
+          @canUpdate={{@canUpdateSchoolConfig}}
+          @collapse={{fn @setSchoolLearningMaterialAttributesDetails false}}
+          @expand={{fn @setSchoolLearningMaterialAttributesDetails true}}
+          @details={{@schoolLearningMaterialAttributesDetails}}
+          @isManaging={{@schoolManageLearningMaterialAttributes}}
+          @manage={{@setSchoolManageLearningMaterialAttributes}}
+        />
+        <SessionAttributes
+          @school={{@school}}
+          @canUpdate={{@canUpdateSchoolConfig}}
+          @collapse={{fn @setSchoolSessionAttributesDetails false}}
+          @expand={{fn @setSchoolSessionAttributesDetails true}}
+          @details={{@schoolSessionAttributesDetails}}
+          @isManaging={{@schoolManageSessionAttributes}}
+          @manage={{@setSchoolManageSessionAttributes}}
+        />
+        {{#if @schoolManageEmails}}
+          <EmailsEditor
+            @school={{@school}}
+            @cancel={{fn @setSchoolManageEmails false}}
+            @save={{this.saveEmails}}
+          />
+        {{else}}
+          <Emails
+            @canUpdate={{@canUpdateSchool}}
+            @manage={{@setSchoolManageEmails}}
+            @school={{@school}}
+          />
+        {{/if}}
+        {{#if @schoolManageInstitutionalInformation}}
+          {{#if this.institutionalInformationLoaded}}
+            <InstitutionalInformationManager
+              @canUpdate={{@canUpdateSchool}}
+              @manage={{@setSchoolManageInstitutionalInformation}}
+              @institutionalInformation={{this.institutionalInformation}}
+              @save={{this.saveInstitutionalInformation}}
+            />
+          {{/if}}
+        {{else}}
+          <InstitutionalInformationDetails
+            @canUpdate={{@canUpdateSchool}}
+            @manage={{@setSchoolManageInstitutionalInformation}}
+            @school={{@school}}
+          />
+        {{/if}}
+      </div>
+    </section>
+  </template>
+}

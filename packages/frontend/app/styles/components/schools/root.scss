@@ -1,0 +1,47 @@
+@use "../../ilios-common/mixins" as m;
+
+.schools-root {
+  .schools {
+    @include m.main-list-box;
+
+    .header {
+      @include m.main-list-box-header;
+
+      .actions {
+        @include m.main-list-box-header-actions;
+      }
+    }
+  }
+
+  .new {
+    background-color: var(--white);
+    border: 1px solid var(--lightest-grey);
+    margin: 0.5rem 0;
+    padding: 1rem;
+
+    .new-result-title {
+      @include m.ilios-heading-h4;
+      margin-bottom: 1rem;
+    }
+
+    .form {
+      @include m.ilios-form;
+
+      .item {
+        @include m.ilios-form-item;
+      }
+
+      .buttons {
+        @include m.ilios-form-buttons;
+      }
+    }
+  }
+
+  .savedschool {
+    @include m.main-list-saved-new;
+  }
+
+  .list {
+    @include m.main-list-box-table;
+  }
+}

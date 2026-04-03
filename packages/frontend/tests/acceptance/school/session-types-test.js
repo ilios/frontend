@@ -37,10 +37,10 @@ module('Acceptance | School - Session Types', function (hooks) {
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
 
-    await page.manager.schoolSessionTypesCollapsed.expand();
+    await page.root.sessionTypesCollapsed.expand();
     assert.strictEqual(currentURL(), '/schools/1?schoolSessionTypeDetails=true');
 
-    const { schoolSessionTypesExpanded: e } = page.manager;
+    const { sessionTypesExpanded: e } = page.root;
 
     assert.strictEqual(e.list.sessionTypes.length, 1);
     assert.strictEqual(e.list.sessionTypes[0].title.text, 'one');
@@ -86,8 +86,8 @@ module('Acceptance | School - Session Types', function (hooks) {
     });
 
     await page.visit({ schoolId: this.school.id });
-    await page.manager.schoolSessionTypesCollapsed.expand();
-    const { schoolSessionTypesExpanded: e } = page.manager;
+    await page.root.sessionTypesCollapsed.expand();
+    const { sessionTypesExpanded: e } = page.root;
     await e.list.sessionTypes[0].manage();
     await e.manager.form.submit.click();
 
@@ -107,7 +107,7 @@ module('Acceptance | School - Session Types', function (hooks) {
     this.server.create('aamc-method', { id: 'AM001', active: true });
     this.server.create('aamc-method', { id: 'AM002', active: true });
     await page.visit({ schoolId: this.school.id, schoolSessionTypeDetails: true });
-    const { schoolSessionTypesExpanded: e } = page.manager;
+    const { sessionTypesExpanded: e } = page.root;
 
     assert.strictEqual(e.list.sessionTypes.length, 0);
     await e.createNew();
@@ -132,7 +132,7 @@ module('Acceptance | School - Session Types', function (hooks) {
     this.server.create('aamc-method', { id: 'AM001', active: true });
     this.server.create('aamc-method', { id: 'AM002', active: true });
     await page.visit({ schoolId: this.school.id, schoolSessionTypeDetails: true });
-    const { schoolSessionTypesExpanded: e } = page.manager;
+    const { sessionTypesExpanded: e } = page.root;
 
     assert.strictEqual(e.list.sessionTypes.length, 0);
     await e.createNew();

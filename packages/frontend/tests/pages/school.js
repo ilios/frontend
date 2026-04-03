@@ -1,7 +1,7 @@
 import { create, visitable } from 'ember-cli-page-object';
-import manager from './components/school-manager';
+import root from './components/school/root';
 
 export default create({
   visit: visitable('/schools/:schoolId'),
-  manager,
+  root,
 });

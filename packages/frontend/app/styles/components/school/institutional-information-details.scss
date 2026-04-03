@@ -1,0 +1,25 @@
+@use "../../ilios-common/mixins" as m;
+
+.school-institutional-information-details {
+  @include m.detail-container(var(--orange));
+
+  .school-institutional-information-details-header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .school-institutional-information-details-content {
+    @include m.detail-container-content;
+
+    label {
+      font-weight: 600;
+    }
+  }
+}

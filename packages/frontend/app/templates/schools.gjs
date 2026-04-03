@@ -1,7 +1,7 @@
 import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
-import SchoolList from 'frontend/components/school-list';
+import Root from 'frontend/components/schools/root';
 <template>
   {{pageTitle (t "general.schools")}}
-  <SchoolList @schools={{@model}} />
+  <Root @schools={{@model}} />
 </template>
