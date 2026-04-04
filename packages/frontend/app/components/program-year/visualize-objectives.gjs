@@ -1,7 +1,7 @@
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
-import VisualizerProgramYearObjectives from 'frontend/components/visualizer-program-year-objectives';
+import VisualizerProgramYearObjectives from '../visualizer-program-year-objectives';
 <template>
   <section
     class="program-year-visualize-objectives data-visualization"

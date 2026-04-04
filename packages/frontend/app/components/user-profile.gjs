@@ -1,19 +1,19 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import ManageUsersSummary from 'frontend/components/manage-users-summary';
+import ManageUsersSummary from './manage-users-summary';
 import t from 'ember-intl/helpers/t';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';
-import PendingSingleUserUpdate from 'frontend/components/pending-single-user-update';
+import PendingSingleUserUpdate from './pending-single-user-update';
 import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import { and, not } from 'ember-truth-helpers';
-import UserProfileCalendar from 'frontend/components/user-profile-calendar';
-import UserProfileBio from 'frontend/components/user-profile-bio';
-import UserProfileRoles from 'frontend/components/user-profile-roles';
-import UserProfileCohorts from 'frontend/components/user-profile-cohorts';
-import UserProfileIcs from 'frontend/components/user-profile-ics';
-import UserProfilePermissions from 'frontend/components/user-profile-permissions';
-import LearnerGroups from 'frontend/components/user-profile/learner-groups';
+import UserProfileCalendar from './user-profile-calendar';
+import UserProfileBio from './user-profile-bio';
+import UserProfileRoles from './user-profile-roles';
+import UserProfileCohorts from './user-profile-cohorts';
+import UserProfileIcs from './user-profile-ics';
+import UserProfilePermissions from './user-profile-permissions';
+import LearnerGroups from './user-profile/learner-groups';
 
 export default class UserProfileComponent extends Component {
   @service currentUser;

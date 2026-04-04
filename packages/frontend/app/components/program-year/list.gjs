@@ -8,13 +8,13 @@ import t from 'ember-intl/helpers/t';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
-import New from 'frontend/components/program-year/new';
+import New from './new';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import add from 'ember-math-helpers/helpers/add';
-import ListItem from 'frontend/components/program-year/list-item';
+import ListItem from './list-item';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearListComponent extends Component {

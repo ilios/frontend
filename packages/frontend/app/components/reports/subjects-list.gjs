@@ -8,16 +8,16 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
-import NewSubject from 'frontend/components/reports/new-subject';
+import NewSubject from './new-subject';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
 import { hash } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import SubjectResults from 'frontend/components/reports/subject-results';
+import SubjectResults from './subject-results';
 import set from 'ember-set-helper/helpers/set';
 import { and } from 'ember-truth-helpers';
-import Table from 'frontend/components/reports/table';
-import ListLoading from 'frontend/components/reports/list-loading';
+import Table from './table';
+import ListLoading from './list-loading';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectsListComponent extends Component {

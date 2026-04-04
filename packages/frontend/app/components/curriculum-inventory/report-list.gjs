@@ -6,7 +6,7 @@ import { eq, or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
-import ReportListItem from 'frontend/components/curriculum-inventory/report-list-item';
+import ReportListItem from './report-list-item';
 
 export default class CurriculumInventoryReportListComponent extends Component {
   @service currentUser;

@@ -16,7 +16,7 @@ import set from 'ember-set-helper/helpers/set';
 import { and, not } from 'ember-truth-helpers';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
-import VocabularyNewTerm from 'frontend/components/school/vocabulary-new-term';
+import VocabularyNewTerm from './vocabulary-new-term';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';

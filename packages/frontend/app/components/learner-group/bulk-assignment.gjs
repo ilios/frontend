@@ -6,11 +6,11 @@ import { isEmpty, isPresent } from '@ember/utils';
 import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import BulkGroupMatcher from 'frontend/components/learner-group/bulk-group-matcher';
+import BulkGroupMatcher from './bulk-group-matcher';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { and, gt } from 'ember-truth-helpers';
-import BulkFinalizeUsers from 'frontend/components/learner-group/bulk-finalize-users';
-import UploadData from 'frontend/components/learner-group/upload-data';
+import BulkFinalizeUsers from './bulk-finalize-users';
+import UploadData from './upload-data';
 import set from 'ember-set-helper/helpers/set';
 
 export default class LearnerGroupBulkAssignmentComponent extends Component {

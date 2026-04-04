@@ -7,14 +7,14 @@ import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import { action } from '@ember/object';
 import striptags from 'striptags';
-import SubjectHeader from 'frontend/components/reports/subject-header';
+import SubjectHeader from '../subject-header';
 import { and } from 'ember-truth-helpers';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import add from 'ember-math-helpers/helpers/add';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
-import SubjectDownload from 'frontend/components/reports/subject-download';
+import SubjectDownload from '../subject-download';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectSessionComponent extends Component {

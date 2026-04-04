@@ -2,7 +2,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import includes from 'ilios-common/helpers/includes';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import pcrsUriToNumber from 'frontend/helpers/pcrs-uri-to-number';
+import pcrsUriToNumber from '../../helpers/pcrs-uri-to-number';
 <template>
   <section
     class="school-competencies-pcrs-mapper"

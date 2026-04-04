@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import SessionTypeForm from 'frontend/components/school/session-type-form';
+import SessionTypeForm from './session-type-form';
 import { and, eq } from 'ember-truth-helpers';
 
 export default class SchoolSessionTypeManagerComponent extends Component {

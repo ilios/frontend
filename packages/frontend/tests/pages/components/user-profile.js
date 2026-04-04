@@ -1,12 +1,12 @@
 import { create } from 'ember-cli-page-object';
 
-import bio from 'frontend/tests/pages/components/user-profile-bio';
-import calendar from 'frontend/tests/pages/components/user-profile-calendar';
-import cohorts from 'frontend/tests/pages/components/user-profile-cohorts';
-import ics from 'frontend/tests/pages/components/user-profile-ics';
-import learnerGroups from 'frontend/tests/pages/components/user-profile/learner-groups';
-import permissions from 'frontend/tests/pages/components/user-profile-permissions';
-import roles from 'frontend/tests/pages/components/user-profile-roles';
+import bio from './user-profile-bio';
+import calendar from './user-profile-calendar';
+import cohorts from './user-profile-cohorts';
+import ics from './user-profile-ics';
+import learnerGroups from './user-profile/learner-groups';
+import permissions from './user-profile-permissions';
+import roles from './user-profile-roles';
 import toggleButtons from 'ilios-common/page-objects/components/toggle-buttons';
 import userNameInfo from 'ilios-common/page-objects//components/user-name-info';
 import userStatus from 'ilios-common/page-objects/components/user-status';

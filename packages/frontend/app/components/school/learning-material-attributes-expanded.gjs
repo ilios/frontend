@@ -7,7 +7,7 @@ import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
-import LearningMaterialAttributesManager from 'frontend/components/school/learning-material-attributes-manager';
+import LearningMaterialAttributesManager from './learning-material-attributes-manager';
 import {
   faArrowRotateLeft,
   faCaretDown,

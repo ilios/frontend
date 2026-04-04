@@ -13,7 +13,7 @@ import pick from 'ilios-common/helpers/pick';
 import sortBy0 from 'ilios-common/helpers/sort-by';
 import { eq } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
-import Manager from 'frontend/components/assign-students/manager';
+import Manager from './manager';
 import WaitSaving from 'ilios-common/components/wait-saving';
 import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
 

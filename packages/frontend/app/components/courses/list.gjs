@@ -8,10 +8,10 @@ import { eq, or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
-import ListItem from 'frontend/components/courses/list-item';
+import ListItem from './list-item';
 import perform from 'ember-concurrency/helpers/perform';
 import includes from 'ilios-common/helpers/includes';
-import ResponsiveTd from 'frontend/components/responsive-td';
+import ResponsiveTd from '../responsive-td';
 import { on } from '@ember/modifier';
 
 export default class CoursesListComponent extends Component {

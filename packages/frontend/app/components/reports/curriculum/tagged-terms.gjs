@@ -6,7 +6,7 @@ import createDownloadFile from 'ilios-common/utils/create-download-file';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { chunk } from 'ilios-common/utils/array-helpers';
-import Header from 'frontend/components/reports/curriculum/header';
+import Header from './header';
 import noop from 'ilios-common/helpers/noop';
 import perform from 'ember-concurrency/helpers/perform';
 import add from 'ember-math-helpers/helpers/add';

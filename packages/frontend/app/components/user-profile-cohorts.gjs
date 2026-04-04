@@ -10,9 +10,9 @@ import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import UserProfileCohortsManager from 'frontend/components/user-profile-cohorts-manager';
+import UserProfileCohortsManager from './user-profile-cohorts-manager';
 import set from 'ember-set-helper/helpers/set';
-import UserProfileCohortsDetails from 'frontend/components/user-profile-cohorts-details';
+import UserProfileCohortsDetails from './user-profile-cohorts-details';
 import {
   faArrowRotateLeft,
   faPenToSquare,

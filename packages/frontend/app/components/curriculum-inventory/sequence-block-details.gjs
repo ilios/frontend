@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import SequenceBlockHeader from 'frontend/components/curriculum-inventory/sequence-block-header';
+import SequenceBlockHeader from './sequence-block-header';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import reverse from 'ilios-common/helpers/reverse';
 import { pageTitle } from 'ember-page-title';
-import SequenceBlockOverview from 'frontend/components/curriculum-inventory/sequence-block-overview';
+import SequenceBlockOverview from './sequence-block-overview';
 
 export default class CurriculumInventorySequenceBlockDetailsComponent extends Component {
   @cached

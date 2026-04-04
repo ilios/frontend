@@ -14,8 +14,8 @@ import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import isArray from 'ember-truth-helpers/helpers/is-array';
-import ObjectiveListItem from 'frontend/components/program-year/objective-list-item';
-import ObjectiveListLoading from 'frontend/components/program-year/objective-list-loading';
+import ObjectiveListItem from './objective-list-item';
+import ObjectiveListLoading from './objective-list-loading';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import {
   faCaretDown,

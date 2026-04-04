@@ -4,7 +4,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { map } from 'rsvp';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
-import CompetenciesListItem from 'frontend/components/school/competencies-list-item';
+import CompetenciesListItem from './competencies-list-item';
 
 export default class SchoolCompetenciesListComponent extends Component {
   @cached

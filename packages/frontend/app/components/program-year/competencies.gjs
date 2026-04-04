@@ -12,11 +12,11 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import sortBy from 'ilios-common/helpers/sort-by';
-import ManagedCompetencyListItem from 'frontend/components/program-year/managed-competency-list-item';
+import ManagedCompetencyListItem from './managed-competency-list-item';
 import { or } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
-import CompetencyListItem from 'frontend/components/program-year/competency-list-item';
+import CompetencyListItem from './competency-list-item';
 import {
   faArrowRotateLeft,
   faCaretDown,

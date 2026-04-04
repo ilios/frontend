@@ -5,7 +5,7 @@ import SortableTh from 'ilios-common/components/sortable-th';
 import { fn } from '@ember/helper';
 import { eq, or } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
-import ListItem from 'frontend/components/instructor-groups/list-item';
+import ListItem from './list-item';
 
 export default class InstructorGroupsListComponent extends Component {
   @service intl;

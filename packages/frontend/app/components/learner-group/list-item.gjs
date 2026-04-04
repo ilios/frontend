@@ -7,7 +7,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { service } from '@ember/service';
 import { LinkTo } from '@ember/routing';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import ResponsiveTd from 'frontend/components/responsive-td';
+import ResponsiveTd from '../responsive-td';
 import t from 'ember-intl/helpers/t';
 import { and, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';

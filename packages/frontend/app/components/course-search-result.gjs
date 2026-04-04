@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
-import GlobalSearchTags from 'frontend/components/global-search-tags';
+import GlobalSearchTags from './global-search-tags';
 import { array } from '@ember/helper';
 import { gt } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';

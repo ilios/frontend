@@ -10,7 +10,7 @@ import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import ResponsiveTd from 'frontend/components/responsive-td';
+import ResponsiveTd from '../responsive-td';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventorySequenceBlockListItemComponent extends Component {

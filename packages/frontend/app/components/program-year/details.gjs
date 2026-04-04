@@ -3,14 +3,14 @@ import { fn } from '@ember/helper';
 import LeadershipCollapsed from 'ilios-common/components/leadership-collapsed';
 import hasManyLength from 'ilios-common/helpers/has-many-length';
 import { eq, or } from 'ember-truth-helpers';
-import Competencies from 'frontend/components/program-year/competencies';
+import Competencies from './competencies';
 import CollapsedCompetencies from 'ilios-common/components/collapsed-competencies';
-import Objectives from 'frontend/components/program-year/objectives';
-import CollapsedObjectives from 'frontend/components/program-year/collapsed-objectives';
+import Objectives from './objectives';
+import CollapsedObjectives from './collapsed-objectives';
 import DetailTaxonomies from 'ilios-common/components/detail-taxonomies';
 import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
-import CourseAssociations from 'frontend/components/program-year/course-associations';
-import CohortMembers from 'frontend/components/program-year/cohort-members';
+import CourseAssociations from './course-associations';
+import CohortMembers from './cohort-members';
 
 <template>
   <div class="programyear-details" data-test-program-year-details ...attributes>

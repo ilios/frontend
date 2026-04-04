@@ -12,7 +12,7 @@ import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
 import { eq, not } from 'ember-truth-helpers';
-import YesNo from 'frontend/components/yes-no';
+import YesNo from './yes-no';
 import {
   faArrowRotateLeft,
   faPenToSquare,

@@ -7,8 +7,8 @@ import SessionOfferings from './curriculum/session-offerings';
 import LearnerGroups from './curriculum/learner-groups';
 import InstructionalTime from './curriculum/instructional-time';
 import TaggedTerms from './curriculum/tagged-terms';
-import Header from 'frontend/components/reports/curriculum/header';
-import ChooseCourse from 'frontend/components/reports/curriculum/choose-course';
+import Header from './curriculum/header';
+import ChooseCourse from './curriculum/choose-course';
 
 export default class ReportsCurriculumComponent extends Component {
   @service store;

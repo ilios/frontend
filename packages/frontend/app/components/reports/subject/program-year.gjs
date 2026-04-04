@@ -6,11 +6,11 @@ import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import { action } from '@ember/object';
-import SubjectHeader from 'frontend/components/reports/subject-header';
+import SubjectHeader from '../subject-header';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
-import SubjectDownload from 'frontend/components/reports/subject-download';
+import SubjectDownload from '../subject-download';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectProgramYearComponent extends Component {
