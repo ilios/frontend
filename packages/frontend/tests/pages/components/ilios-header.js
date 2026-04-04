@@ -1,6 +1,6 @@
 import { create, text } from 'ember-cli-page-object';
-import searchBox from 'frontend/tests/pages/components/global-search-box';
-import userMenu from 'frontend/tests/pages/components/user-menu';
+import searchBox from './global-search-box';
+import userMenu from './user-menu';
 
 const definition = {
   scope: '[data-test-ilios-header]',

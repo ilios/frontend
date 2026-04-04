@@ -1,5 +1,5 @@
 import { create, collection, triggerable } from 'ember-cli-page-object';
-import linkToWithAction from 'frontend/tests/pages/components/link-to-with-action';
+import linkToWithAction from './link-to-with-action';
 
 export default create({
   scope: '[data-test-user-menu]',
