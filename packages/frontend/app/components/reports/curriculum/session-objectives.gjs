@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import striptags from 'striptags';
 import PapaParse from 'papaparse';
 import { task, timeout } from 'ember-concurrency';
-import createDownloadFile from 'frontend/utils/create-download-file';
+import createDownloadFile from 'ilios-common/utils/create-download-file';
 import { DateTime } from 'luxon';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
