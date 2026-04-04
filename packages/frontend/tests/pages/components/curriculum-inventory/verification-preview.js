@@ -1,13 +1,13 @@
 import { create, collection, text } from 'ember-cli-page-object';
-import table1 from 'frontend/tests/pages/components/curriculum-inventory/verification-preview-table1';
-import table2 from 'frontend/tests/pages/components/curriculum-inventory/verification-preview-table2';
-import table3a from 'frontend/tests/pages/components/curriculum-inventory/verification-preview-table3a';
-import table3b from 'frontend/tests/pages/components/curriculum-inventory/verification-preview-table3b';
-import table4 from 'frontend/tests/pages/components/curriculum-inventory/verification-preview-table4';
-import table5 from 'frontend/tests/pages/components/curriculum-inventory/verification-preview-table5';
-import table6 from 'frontend/tests/pages/components/curriculum-inventory/verification-preview-table6';
-import table7 from 'frontend/tests/pages/components/curriculum-inventory/verification-preview-table7';
-import table8 from 'frontend/tests/pages/components/curriculum-inventory/verification-preview-table8';
+import table1 from './verification-preview-table1';
+import table2 from './verification-preview-table2';
+import table3a from './verification-preview-table3a';
+import table3b from './verification-preview-table3b';
+import table4 from './verification-preview-table4';
+import table5 from './verification-preview-table5';
+import table6 from './verification-preview-table6';
+import table7 from './verification-preview-table7';
+import table8 from './verification-preview-table8';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-verification-preview]',
