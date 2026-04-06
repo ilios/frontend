@@ -628,7 +628,7 @@ export default class LearnerGroupRootComponent extends Component {
                   data-test-filter
                 />
               {{/if}}
-              {{#if (and this.usersForMembersList.length (or @isEditing @isBulkAssigning))}}
+              {{#if (and this.usersForUserManager.length (or @isEditing @isBulkAssigning))}}
                 <button
                   class="close"
                   type="button"
@@ -655,7 +655,7 @@ export default class LearnerGroupRootComponent extends Component {
                   >
                     {{t "general.uploadGroupAssignments"}}
                   </button>
-                  {{#if this.usersForMembersList.length}}
+                  {{#if this.usersForUserManager.length}}
                     <button
                       class="manage"
                       type="button"

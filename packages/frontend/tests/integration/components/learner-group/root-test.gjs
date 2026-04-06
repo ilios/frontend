@@ -145,10 +145,16 @@ module('Integration | Component | learner-group/root', function (hooks) {
       </template>,
     );
 
-    assert.ok(component.actions.buttons.toggle.isVisible);
-    assert.notOk(component.actions.buttons.bulkAssignment.isVisible);
-    assert.notOk(component.actions.buttons.manageUsers.isVisible);
-    assert.notOk(component.actions.buttons.close.isVisible);
+    assert.notOk(component.actions.buttons.toggle.isVisible, 'calendar toggle buttons not visible');
+    assert.notOk(
+      component.actions.buttons.bulkAssignment.isVisible,
+      'bulk assignment button not visible',
+    );
+    assert.notOk(
+      component.actions.buttons.manageUsers.isVisible,
+      'manage users button not visible',
+    );
+    assert.notOk(component.actions.buttons.close.isVisible, 'close button not visible');
     assert.strictEqual(component.actions.title, 'Members (0)');
   });
 
@@ -742,8 +748,16 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('learnergroup calendar', async function (assert) {
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
     const learnerGroup = this.server.create('learner-group', {
-      url: 'https://iliosproject.org/',
+      title: 'test group',
+      location: 'test location',
+      users: [user1, user2],
+      offerings: [offering],
       cohort: this.cohort,
     });
     const learnerGroupModel = await this.owner
@@ -781,8 +795,16 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('manage users', async function (assert) {
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
     const learnerGroup = this.server.create('learner-group', {
-      url: 'https://iliosproject.org/',
+      title: 'test group',
+      location: 'test location',
+      users: [user1, user2],
+      offerings: [offering],
       cohort: this.cohort,
     });
     const learnerGroupModel = await this.owner
@@ -813,8 +835,16 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('bulk assignment', async function (assert) {
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
     const learnerGroup = this.server.create('learner-group', {
-      url: 'https://iliosproject.org/',
+      title: 'test group',
+      location: 'test location',
+      users: [user1, user2],
+      offerings: [offering],
       cohort: this.cohort,
     });
     const learnerGroupModel = await this.owner
