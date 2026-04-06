@@ -115,6 +115,124 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.notOk(component.actions.buttons.close.isVisible);
   });
 
+  test('renders with data, but no members', async function (assert) {
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
+    const user3 = this.server.create('user');
+    const cohort = this.server.create('cohort', {
+      title: 'this cohort',
+      users: [user1, user2, user3],
+      programYear: this.programYear,
+    });
+
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
+
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'test group',
+      location: 'test location',
+      offerings: [offering],
+      cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(
+      <template>
+        <Root
+          @canUpdate={{true}}
+          @setIsEditing={{(noop)}}
+          @setSortUsersBy={{(noop)}}
+          @setIsBulkAssigning={{(noop)}}
+          @sortUsersBy="fullName"
+          @learnerGroup={{this.learnerGroup}}
+          @isEditing={{false}}
+          @isBulkAssigning={{false}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(
+      component.defaultLocation.text,
+      'Default Location: test location',
+      'default location text correct',
+    );
+
+    assert.notOk(component.actions.buttons.toggle.isVisible, 'calendar toggle not visible');
+    assert.ok(component.actions.buttons.bulkAssignment.isVisible, 'bulk assignment button visible');
+    assert.notOk(
+      component.actions.buttons.manageUsers.isVisible,
+      'manager users button not visible',
+    );
+    assert.notOk(component.actions.buttons.close.isVisible, 'close button not visible');
+    assert.strictEqual(component.actions.title, 'Members (0)', 'member count correct');
+  });
+
+  test('renders with no members, but one member in subgroup', async function (assert) {
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
+    const user3 = this.server.create('user');
+    const cohort = this.server.create('cohort', {
+      title: 'this cohort',
+      users: [user1, user2],
+      programYear: this.programYear,
+    });
+
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
+
+    const subGroup = this.server.create('learner-group', {
+      title: 'test sub-group',
+      cohort,
+      users: [user3],
+    });
+
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'test group',
+      location: 'test location',
+      offerings: [offering],
+      children: [subGroup],
+      cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(
+      <template>
+        <Root
+          @canUpdate={{true}}
+          @setIsEditing={{(noop)}}
+          @setSortUsersBy={{(noop)}}
+          @setIsBulkAssigning={{(noop)}}
+          @sortUsersBy="fullName"
+          @learnerGroup={{this.learnerGroup}}
+          @isEditing={{false}}
+          @isBulkAssigning={{false}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(
+      component.defaultLocation.text,
+      'Default Location: test location',
+      'default location text correct',
+    );
+
+    assert.notOk(component.actions.buttons.toggle.isVisible, 'calendar toggle not visible');
+    assert.ok(component.actions.buttons.bulkAssignment.isVisible, 'bulk assignment button visible');
+    assert.ok(component.actions.buttons.manageUsers.isVisible, 'manager users button visible');
+    assert.notOk(component.actions.buttons.close.isVisible, 'close button not visible');
+    assert.strictEqual(component.actions.title, 'Members (0)', 'member count correct');
+  });
+
   test('renders with data in read-only mode', async function (assert) {
     const cohort = this.server.create('cohort', {
       title: 'this cohort',
