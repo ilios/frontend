@@ -9,5 +9,9 @@ button {
     font: inherit;
     text-align: left;
     white-space: normal;
+
+    &.inactive {
+      color: var(--black);
+    }
   }
 }
