@@ -207,7 +207,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     );
     assert.strictEqual(component.dayHeadings.length, 7);
     component.dayHeadings.forEach((heading) => {
-      assert.notOk(heading.isClickable);
+      assert.notOk(heading.button.cssClasses.includes('clickable'));
+      assert.ok(heading.button.isDisabled);
     });
   });
 
@@ -233,7 +234,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     );
     assert.strictEqual(component.dayHeadings.length, 7);
     component.dayHeadings.forEach((heading) => {
-      assert.notOk(heading.isClickable);
+      assert.notOk(heading.button.cssClasses.includes('clickable'));
+      assert.ok(heading.button.isDisabled);
     });
   });
 

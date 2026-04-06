@@ -10,7 +10,7 @@ button {
     text-align: left;
     white-space: normal;
 
-    &.inactive {
+    &:disabled {
       color: var(--black);
     }
   }

@@ -57,12 +57,12 @@ module('Integration | Component | ilios calendar week', function (hooks) {
         />
       </template>,
     );
-    assert.ok(component.calendar.dayHeadings[0].isClickable);
+    assert.notOk(component.calendar.dayHeadings[0].button.isDisabled);
     await component.calendar.dayHeadings[0].selectDay();
     assert.verifySteps(['changeDate called', 'changeView called']);
   });
 
-  test('clicking on a day header does nothing when areDaysSelectable is false', async function (assert) {
+  test('day header is disabled when areDaysSelectable is false', async function (assert) {
     const date = DateTime.fromObject({
       year: 2015,
       month: 9,
@@ -72,22 +72,17 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       second: 0,
     });
     this.set('date', date.toJSDate());
-    this.set('changeDate', () => {
-      assert.step('changeDate called');
-    });
     await render(
       <template>
         <IliosCalendarWeek
           @date={{this.date}}
           @calendarEvents={{(array)}}
           @areDaysSelectable={{false}}
-          @changeDate={{this.changeDate}}
+          @changeDate={{(noop)}}
           @changeView={{(noop)}}
         />
       </template>,
     );
-    assert.notOk(component.calendar.dayHeadings[0].isClickable);
-    await component.calendar.dayHeadings[0].selectDay();
-    assert.verifySteps([]);
+    assert.ok(component.calendar.dayHeadings[0].button.isDisabled);
   });
 });
