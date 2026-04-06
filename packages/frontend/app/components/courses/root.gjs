@@ -15,11 +15,11 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import { eq, not } from 'ember-truth-helpers';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import set from 'ember-set-helper/helpers/set';
-import New from 'frontend/components/courses/new';
+import New from './new';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
-import List from 'frontend/components/courses/list';
-import LoadingList from 'frontend/components/courses/loading-list';
+import List from './list';
+import LoadingList from './loading-list';
 import { faBuildingColumns, faCalendar, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class CoursesRootComponent extends Component {

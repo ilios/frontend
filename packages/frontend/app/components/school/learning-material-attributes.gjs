@@ -4,8 +4,8 @@ import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { or } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
-import LearningMaterialAttributesCollapsed from 'frontend/components/school/learning-material-attributes-collapsed';
-import LearningMaterialAttributesExpanded from 'frontend/components/school/learning-material-attributes-expanded';
+import LearningMaterialAttributesCollapsed from './learning-material-attributes-collapsed';
+import LearningMaterialAttributesExpanded from './learning-material-attributes-expanded';
 
 export default class SchoolLearningMaterialAttributesComponent extends Component {
   schoolConfigNames = [

@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import load from 'ember-async-data/helpers/load';
-import SubjectResults from 'frontend/components/reports/subject-results';
+import SubjectResults from './subject-results';
 
 export default class ReportsSubjectComponent extends Component {
   @service currentUser;

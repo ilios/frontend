@@ -6,7 +6,7 @@ import { eq, or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
-import TableRow from 'frontend/components/reports/table-row';
+import TableRow from './table-row';
 import includes from 'ilios-common/helpers/includes';
 import { on } from '@ember/modifier';
 

@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
-import CompetencyTitleEditor from 'frontend/components/school/competency-title-editor';
+import CompetencyTitleEditor from './competency-title-editor';
 import { and, eq } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import NewCompetency from 'frontend/components/school/new-competency';
+import NewCompetency from './new-competency';
 import t from 'ember-intl/helpers/t';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 

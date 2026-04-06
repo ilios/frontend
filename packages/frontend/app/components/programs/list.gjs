@@ -1,5 +1,5 @@
 import t from 'ember-intl/helpers/t';
-import ListItem from 'frontend/components/programs/list-item';
+import ListItem from './list-item';
 <template>
   <div class="list" ...attributes data-test-program-list>
     {{#if @programs.length}}

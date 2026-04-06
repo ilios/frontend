@@ -4,8 +4,8 @@ import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { or } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
-import SessionAttributesCollapsed from 'frontend/components/school/session-attributes-collapsed';
-import SessionAttributesExpanded from 'frontend/components/school/session-attributes-expanded';
+import SessionAttributesCollapsed from './session-attributes-collapsed';
+import SessionAttributesExpanded from './session-attributes-expanded';
 
 export default class SchoolSessionAttributesComponent extends Component {
   schoolConfigNames = [

@@ -11,7 +11,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import set from 'ember-set-helper/helpers/set';
 import focus from 'ilios-common/modifiers/focus';
-import LinkToWithAction from 'frontend/components/link-to-with-action';
+import LinkToWithAction from './link-to-with-action';
 import { faUser, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserMenuComponent extends Component {

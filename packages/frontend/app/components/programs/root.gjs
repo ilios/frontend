@@ -12,10 +12,10 @@ import pick from 'ilios-common/helpers/pick';
 import sortBy from 'ilios-common/helpers/sort-by';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import set from 'ember-set-helper/helpers/set';
-import New from 'frontend/components/program/new';
+import New from '../program/new';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
-import List from 'frontend/components/programs/list';
+import List from './list';
 import { faBuildingColumns, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramRootComponent extends Component {

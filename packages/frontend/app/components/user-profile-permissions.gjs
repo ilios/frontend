@@ -14,7 +14,7 @@ import pick from 'ilios-common/helpers/pick';
 import sortBy0 from 'ilios-common/helpers/sort-by';
 import { eq, not } from 'ember-truth-helpers';
 import reverse from 'ilios-common/helpers/reverse';
-import YesNo from 'frontend/components/yes-no';
+import YesNo from './yes-no';
 import set from 'ember-set-helper/helpers/set';
 import add from 'ember-math-helpers/helpers/add';
 import { LinkTo } from '@ember/routing';

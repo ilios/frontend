@@ -11,10 +11,10 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { and, not } from 'ember-truth-helpers';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import { fn } from '@ember/helper';
-import NewVocabularyForm from 'frontend/components/school/new-vocabulary-form';
-import VocabularyTermManager from 'frontend/components/school/vocabulary-term-manager';
-import VocabularyManager from 'frontend/components/school/vocabulary-manager';
-import VocabulariesList from 'frontend/components/school/vocabularies-list';
+import NewVocabularyForm from './new-vocabulary-form';
+import VocabularyTermManager from './vocabulary-term-manager';
+import VocabularyManager from './vocabulary-manager';
+import VocabulariesList from './vocabularies-list';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 

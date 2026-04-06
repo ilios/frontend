@@ -4,8 +4,8 @@ import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { modifier } from 'ember-modifier';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import UserProfileBioDetails from 'frontend/components/user-profile-bio-details';
-import UserProfileBioManager from 'frontend/components/user-profile-bio-manager';
+import UserProfileBioDetails from './user-profile-bio-details';
+import UserProfileBioManager from './user-profile-bio-manager';
 
 export default class UserProfileBioComponent extends Component {
   @service currentUser;

@@ -12,9 +12,9 @@ import { and, not } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import perform from 'ember-concurrency/helpers/perform';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
-import SessionTypeForm from 'frontend/components/school/session-type-form';
-import SessionTypeManager from 'frontend/components/school/session-type-manager';
-import SessionTypesList from 'frontend/components/school/session-types-list';
+import SessionTypeForm from './session-type-form';
+import SessionTypeManager from './session-type-manager';
+import SessionTypesList from './session-types-list';
 import { faCaretDown, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolSessionTypesExpandedComponent extends Component {

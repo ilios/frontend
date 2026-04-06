@@ -8,7 +8,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { fn } from '@ember/helper';
-import pcrsUriToNumber from 'frontend/helpers/pcrs-uri-to-number';
+import pcrsUriToNumber from '../../helpers/pcrs-uri-to-number';
 import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesListItemPcrsComponent extends Component {

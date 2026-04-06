@@ -8,7 +8,7 @@ import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import set from 'ember-set-helper/helpers/set';
-import InstructorManager from 'frontend/components/instructor-group/instructor-manager';
+import InstructorManager from './instructor-manager';
 import sortBy from 'ilios-common/helpers/sort-by';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';

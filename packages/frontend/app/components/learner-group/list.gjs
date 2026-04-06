@@ -6,7 +6,7 @@ import { fn } from '@ember/helper';
 import { eq, or } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
-import ListItem from 'frontend/components/learner-group/list-item';
+import ListItem from './list-item';
 
 export default class LearnerGroupListComponent extends Component {
   @service intl;

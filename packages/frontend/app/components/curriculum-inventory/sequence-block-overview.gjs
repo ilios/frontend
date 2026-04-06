@@ -25,8 +25,8 @@ import DatePicker from 'ilios-common/components/date-picker';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import set from 'ember-set-helper/helpers/set';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import SequenceBlockSessionManager from 'frontend/components/curriculum-inventory/sequence-block-session-manager';
-import SequenceBlockSessionList from 'frontend/components/curriculum-inventory/sequence-block-session-list';
+import SequenceBlockSessionManager from './sequence-block-session-manager';
+import SequenceBlockSessionList from './sequence-block-session-list';
 import focus from 'ilios-common/modifiers/focus';
 
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {

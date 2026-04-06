@@ -1,7 +1,7 @@
 import { pageTitle } from 'ember-page-title';
-import Header from 'frontend/components/instructor-group/header';
-import Users from 'frontend/components/instructor-group/users';
-import CourseAssociations from 'frontend/components/instructor-group/course-associations';
+import Header from './header';
+import Users from './users';
+import CourseAssociations from './course-associations';
 
 <template>
   {{pageTitle " | " @instructorGroup.title prepend=false}}

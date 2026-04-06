@@ -11,9 +11,9 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import { and, eq } from 'ember-truth-helpers';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
-import NewReport from 'frontend/components/curriculum-inventory/new-report';
+import NewReport from './new-report';
 import { LinkTo } from '@ember/routing';
-import ReportList from 'frontend/components/curriculum-inventory/report-list';
+import ReportList from './report-list';
 import perform from 'ember-concurrency/helpers/perform';
 import {
   faBuildingColumns,

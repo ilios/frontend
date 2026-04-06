@@ -5,12 +5,12 @@ import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
-import NewSequenceBlock from 'frontend/components/curriculum-inventory/new-sequence-block';
+import NewSequenceBlock from './new-sequence-block';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
-import SequenceBlockListItem from 'frontend/components/curriculum-inventory/sequence-block-list-item';
+import SequenceBlockListItem from './sequence-block-list-item';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventorySequenceBlockListComponent extends Component {

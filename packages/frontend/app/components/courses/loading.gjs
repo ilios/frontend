@@ -5,7 +5,7 @@ import t from 'ember-intl/helpers/t';
 import noop from 'ilios-common/helpers/noop';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
-import LoadingList from 'frontend/components/courses/loading-list';
+import LoadingList from './loading-list';
 import { faBuildingColumns, faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 export default class CoursesLoadingComponent extends Component {

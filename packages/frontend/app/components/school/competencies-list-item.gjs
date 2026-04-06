@@ -4,8 +4,8 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
-import CompetenciesListItemPcrs from 'frontend/components/school/competencies-list-item-pcrs';
-import CompetenciesPcrsMapper from 'frontend/components/school/competencies-pcrs-mapper';
+import CompetenciesListItemPcrs from './competencies-list-item-pcrs';
+import CompetenciesPcrsMapper from './competencies-pcrs-mapper';
 
 export default class SchoolCompetenciesListItemComponent extends Component {
   @service store;

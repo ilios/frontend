@@ -12,8 +12,8 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
-import CompetenciesManager from 'frontend/components/school/competencies-manager';
-import CompetenciesList from 'frontend/components/school/competencies-list';
+import CompetenciesManager from './competencies-manager';
+import CompetenciesList from './competencies-list';
 import {
   faArrowRotateLeft,
   faCaretDown,

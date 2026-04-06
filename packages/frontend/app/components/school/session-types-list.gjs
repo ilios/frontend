@@ -1,6 +1,6 @@
 import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
-import SessionTypesListItem from 'frontend/components/school/session-types-list-item';
+import SessionTypesListItem from './session-types-list-item';
 <template>
   <div class="school-session-types-list" data-test-school-session-types-list ...attributes>
     <table class="ilios-table ilios-table-colors ilios-removable-table sticky-header">

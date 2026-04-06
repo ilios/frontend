@@ -2,7 +2,7 @@ import { LinkTo } from '@ember/routing';
 import { hash } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { pageTitle } from 'ember-page-title';
-import VisualizeSessionTypeVocabularyGraph from 'frontend/components/school/visualize-session-type-vocabulary-graph';
+import VisualizeSessionTypeVocabularyGraph from './visualize-session-type-vocabulary-graph';
 <template>
   {{pageTitle
     (t "general.schools")

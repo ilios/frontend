@@ -15,10 +15,10 @@ import { pageTitle } from 'ember-page-title';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import SubjectCopy from 'frontend/components/reports/subject-copy';
-import SubjectDownload from 'frontend/components/reports/subject-download';
-import SubjectYearFilter from 'frontend/components/reports/subject-year-filter';
-import SubjectDescription from 'frontend/components/reports/subject-description';
+import SubjectCopy from './subject-copy';
+import SubjectDownload from './subject-download';
+import SubjectYearFilter from './subject-year-filter';
+import SubjectDescription from './subject-description';
 import focus from 'ilios-common/modifiers/focus';
 
 export default class ReportsSubjectHeaderComponent extends Component {

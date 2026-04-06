@@ -8,7 +8,7 @@ import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
-import SessionAttributesManager from 'frontend/components/school/session-attributes-manager';
+import SessionAttributesManager from './session-attributes-manager';
 import {
   faArrowRotateLeft,
   faCaretDown,

@@ -1,7 +1,7 @@
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
-import Header from 'frontend/components/program/header';
-import Overview from 'frontend/components/program/overview';
+import Header from './header';
+import Overview from './overview';
 import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
 import { fn } from '@ember/helper';
 import { pageTitle } from 'ember-page-title';
