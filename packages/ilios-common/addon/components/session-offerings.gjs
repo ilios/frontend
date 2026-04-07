@@ -80,10 +80,6 @@ export default class SessionOfferingsComponent extends Component {
             @editable={{@editable}}
             @toggleIsEditing={{toggle "isEditing" this}}
           />
-        {{else}}
-          <p>
-            {{t "general.noOfferings"}}
-          </p>
         {{/if}}
       </div>
     </section>
