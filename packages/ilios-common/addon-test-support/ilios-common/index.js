@@ -2,6 +2,7 @@ export { default as setupAuthentication } from './helpers/setup-authentication';
 export { default as waitForResource } from './helpers/wait-for-resource';
 export { freezeDateAt, unfreezeDate } from './helpers/mockdate';
 export { flatpickrDatePicker, flatpickrDateValue } from './helpers/flatpickr-date-picker';
+export { default as setPreferReducedMotion } from './helpers/set-prefer-reduced-motion';
 export {
   fillInQuillEditor,
   quillEditorValue,

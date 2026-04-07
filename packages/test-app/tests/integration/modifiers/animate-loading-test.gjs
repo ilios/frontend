@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, waitUntil } from '@ember/test-helpers';
 import animateLoading from 'ilios-common/modifiers/animate-loading';
+import { setPreferReducedMotion } from 'ilios-common';
 
 module('Integration | Modifier | animate-loading', function (hooks) {
   setupRenderingTest(hooks);
@@ -14,23 +15,8 @@ module('Integration | Modifier | animate-loading', function (hooks) {
     window.matchMedia = this.originalMatchMedia;
   });
 
-  this.setPreferReducedMotion = (reduced) => {
-    window.matchMedia = (query) => {
-      return {
-        matches: query === '(prefers-reduced-motion: reduce)' && reduced,
-        media: query,
-        onchange: null,
-        addListener: () => {}, // deprecated but sometimes used
-        removeListener: () => {},
-        addEventListener: () => {},
-        removeEventListener: () => {},
-        dispatchEvent: () => false,
-      };
-    };
-  };
-
   test('it renders defaults', async function (assert) {
-    this.setPreferReducedMotion(false);
+    setPreferReducedMotion(false);
     await render(
       <template>
         <div {{animateLoading}}></div>
@@ -51,7 +37,7 @@ module('Integration | Modifier | animate-loading', function (hooks) {
   });
 
   test('it renders options', async function (assert) {
-    this.setPreferReducedMotion(false);
+    setPreferReducedMotion(false);
     await render(
       <template>
         <div {{animateLoading initialOpacity=".3" finalOpacity="0.6" loadingTime=500}}>
@@ -75,7 +61,7 @@ module('Integration | Modifier | animate-loading', function (hooks) {
   });
 
   test('it works with tracker service', async function (assert) {
-    this.setPreferReducedMotion(false);
+    setPreferReducedMotion(false);
     const tracker = this.owner.lookup('service:loading-opacity-tracker');
     tracker.set('someKey', '0.23');
     await render(
@@ -105,7 +91,7 @@ module('Integration | Modifier | animate-loading', function (hooks) {
   });
 
   test('it returns immediatly with reduced motion', async function (assert) {
-    this.setPreferReducedMotion(true);
+    setPreferReducedMotion(true);
 
     await render(
       <template>
