@@ -3,8 +3,6 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import VerificationPreviewTable1 from './verification-preview-table1';
 import VerificationPreviewTable2 from './verification-preview-table2';
@@ -45,173 +43,101 @@ export default class CurriculumInventoryVerificationPreviewComponent extends Com
       ...attributes
     >
       {{#if this.tables}}
-        <ul class="table-of-contents" data-test-table-of-contents>
+        <ul class="table-of-contents" id="toc" data-test-table-of-contents>
           <li>
-            <button
-              class="link link-button"
-              type="button"
-              {{on "click" (fn this.scrollTo "table1")}}
-            >
+            <a href="#table1">
               {{t "general.table1ProgramExpectationsMappedToPcrs"}}
-            </button>
+            </a>
           </li>
           <li>
-            <button
-              class="link link-button"
-              type="button"
-              {{on "click" (fn this.scrollTo "table2")}}
-            >
+            <a href="#table2">
               {{t "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"}}
-            </button>
+            </a>
           </li>
           <li>
-            <button
-              class="link link-button"
-              type="button"
-              {{on "click" (fn this.scrollTo "table3a")}}
-            >
+            <a href="#table3a">
               {{t "general.table3aNonClerkshipSequenceBlockInstructionalTime"}}
-            </button>
+            </a>
           </li>
           <li>
-            <button
-              class="link link-button"
-              type="button"
-              {{on "click" (fn this.scrollTo "table3b")}}
-            >
+            <a href="table3b">
               {{t "general.table3bClerkshipSequenceBlockInstructionalTime"}}
-            </button>
+            </a>
           </li>
           <li>
-            <button
-              class="link link-button"
-              type="button"
-              {{on "click" (fn this.scrollTo "table4")}}
-            >
+            <a href="#table4">
               {{t "general.table4InstructionalMethodCounts"}}
-            </button>
+            </a>
           </li>
           <li>
-            <button
-              class="link link-button"
-              type="button"
-              {{on "click" (fn this.scrollTo "table5")}}
-            >
+            <a href="#table5">
               {{t "general.table5NonClerkshipSequenceBlockAssessmentMethods"}}
-            </button>
+            </a>
           </li>
           <li>
-            <button
-              class="link link-button"
-              type="button"
-              {{on "click" (fn this.scrollTo "table6")}}
-            >
+            <a href="#table6">
               {{t "general.table6ClerkshipSequenceBlockAssessmentMethods"}}
-            </button>
+            </a>
           </li>
           <li>
-            <button
-              class="link link-button"
-              type="button"
-              {{on "click" (fn this.scrollTo "table7")}}
-            >
+            <a href="#table7">
               {{t "general.table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative"}}
-            </button>
+            </a>
           </li>
           <li>
-            <button
-              class="link link-button"
-              type="button"
-              {{on "click" (fn this.scrollTo "table8")}}
-            >
+            <a href="#table8">
               {{t "general.table8AllResourceTypes"}}
-            </button>
+            </a>
           </li>
         </ul>
         <VerificationPreviewTable1 @data={{this.tables.program_expectations_mapped_to_pcrs}} />
-        <button
-          class="link link-button back-to-toc"
-          type="button"
-          {{on "click" (fn this.scrollTo "toc")}}
-        >
+        <a href="#toc" class="back-to-toc">
           {{t "general.backToTableOfContents"}}
-        </button>
+        </a>
         <VerificationPreviewTable2
           @data={{this.tables.primary_instructional_methods_by_non_clerkship_sequence_blocks}}
         />
-        <button
-          class="link link-button back-to-toc"
-          type="button"
-          {{on "click" (fn this.scrollTo "toc")}}
-        >
+        <a href="#toc" class="back-to-toc">
           {{t "general.backToTableOfContents"}}
-        </button>
+        </a>
         <VerificationPreviewTable3a
           @data={{this.tables.non_clerkship_sequence_block_instructional_time}}
         />
-        <button
-          class="link link-button back-to-toc"
-          type="button"
-          {{on "click" (fn this.scrollTo "toc")}}
-        >
+        <a href="#toc" class="back-to-toc">
           {{t "general.backToTableOfContents"}}
-        </button>
+        </a>
         <VerificationPreviewTable3b
           @data={{this.tables.clerkship_sequence_block_instructional_time}}
         />
-        <button
-          class="link link-button back-to-toc"
-          type="button"
-          {{on "click" (fn this.scrollTo "toc")}}
-        >
+        <a href="#toc" class="back-to-toc">
           {{t "general.backToTableOfContents"}}
-        </button>
+        </a>
         <VerificationPreviewTable4 @data={{this.tables.instructional_method_counts}} />
-        <button
-          class="link link-button back-to-toc"
-          type="button"
-          {{on "click" (fn this.scrollTo "toc")}}
-        >
+        <a href="#toc" class="back-to-toc">
           {{t "general.backToTableOfContents"}}
-        </button>
+        </a>
         <VerificationPreviewTable5
           @data={{this.tables.non_clerkship_sequence_block_assessment_methods}}
         />
-        <button
-          class="link link-button back-to-toc"
-          type="button"
-          {{on "click" (fn this.scrollTo "toc")}}
-        >
+        <a href="#toc" class="back-to-toc">
           {{t "general.backToTableOfContents"}}
-        </button>
+        </a>
         <VerificationPreviewTable6
           @data={{this.tables.clerkship_sequence_block_assessment_methods}}
         />
-        <button
-          class="link link-button back-to-toc"
-          type="button"
-          {{on "click" (fn this.scrollTo "toc")}}
-        >
+        <a href="#toc" class="back-to-toc">
           {{t "general.backToTableOfContents"}}
-        </button>
+        </a>
         <VerificationPreviewTable7
           @data={{this.tables.all_events_with_assessments_tagged_as_formative_or_summative}}
         />
-        <button
-          class="link link-button back-to-toc"
-          type="button"
-          {{on "click" (fn this.scrollTo "toc")}}
-        >
+        <a href="#toc" class="back-to-toc">
           {{t "general.backToTableOfContents"}}
-        </button>
+        </a>
         <VerificationPreviewTable8 @data={{this.tables.all_resource_types}} />
-        <button
-          class="link link-button back-to-toc"
-          type="button"
-          {{on "click" (fn this.scrollTo "toc")}}
-        >
+        <a href="#toc" class="back-to-toc">
           {{t "general.backToTableOfContents"}}
-        </button>
+        </a>
       {{else}}
         <LoadingSpinner />
       {{/if}}
