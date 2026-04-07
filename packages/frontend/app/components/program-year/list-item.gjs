@@ -21,6 +21,11 @@ export default class ProgramYearListItemComponent extends Component {
 
   @tracked showRemoveConfirmation = false;
 
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'center',
+  };
+
   @cached
   get canLockData() {
     return new TrackedAsyncData(this.permissionChecker.canLockProgramYear(this.args.programYear));
@@ -197,7 +202,7 @@ export default class ProgramYearListItemComponent extends Component {
         </td>
       </tr>
       {{#if this.showRemoveConfirmation}}
-        <tr class="confirm-removal" {{scrollIntoView}}>
+        <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}}>
           <td colspan="8" class="hide-from-small-screen">
             <div class="confirm-message" data-test-message>
               {{t "general.confirmRemoveProgramYear" courseCount=this.cohort.courses.length}}

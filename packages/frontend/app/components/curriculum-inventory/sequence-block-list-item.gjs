@@ -11,11 +11,17 @@ import set from 'ember-set-helper/helpers/set';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import ResponsiveTd from '../responsive-td';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventorySequenceBlockListItemComponent extends Component {
   @service intl;
   @tracked showConfirmRemoval;
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'center',
+  };
 
   @cached
   get courseData() {
@@ -89,7 +95,7 @@ export default class CurriculumInventorySequenceBlockListItemComponent extends C
       </td>
     </tr>
     {{#if this.showRemoveConfirmation}}
-      <tr class="confirm-removal" data-test-confirm-removal>
+      <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}} data-test-confirm-removal>
         <ResponsiveTd @smallScreenSpan="9" @largeScreenSpan="15">
           <div class="confirm-message">
             {{t "general.confirmRemoveSequenceBlock"}}
