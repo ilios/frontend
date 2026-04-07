@@ -13,6 +13,7 @@ import { and, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import {
   faArrowRotateLeft,
   faCopy,
@@ -24,6 +25,11 @@ export default class LearnerGroupListItemComponent extends Component {
   @service permissionChecker;
   @tracked showRemoveConfirmation = false;
   @tracked showCopyConfirmation = false;
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'center',
+  };
 
   @cached
   get sortedTitlesOfSubgroupsInNeedOfAccommodationData() {
@@ -233,7 +239,7 @@ export default class LearnerGroupListItemComponent extends Component {
       </td>
     </tr>
     {{#if this.showRemoveConfirmation}}
-      <tr class="confirm-removal" data-test-confirm-removal>
+      <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}} data-test-confirm-removal>
         <ResponsiveTd @smallScreenSpan="3" @largeScreenSpan="5">
           <div class="confirm-message">
             {{t "general.confirmRemoveLearnerGroup" subgroupCount=@learnerGroup.children.length}}

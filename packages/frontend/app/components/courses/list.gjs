@@ -12,6 +12,7 @@ import ListItem from './list-item';
 import perform from 'ember-concurrency/helpers/perform';
 import includes from 'ilios-common/helpers/includes';
 import ResponsiveTd from '../responsive-td';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import { on } from '@ember/modifier';
 
 export default class CoursesListComponent extends Component {
@@ -21,6 +22,11 @@ export default class CoursesListComponent extends Component {
 
   @tracked coursesForRemovalConfirmation = [];
   @tracked savingCourseIds = [];
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'center',
+  };
 
   get sortedAscending() {
     return !this.args.sortBy.includes(':desc');
@@ -191,7 +197,7 @@ export default class CoursesListComponent extends Component {
                 @confirmRemoval={{this.confirmRemoval}}
               />
               {{#if (includes course.id this.coursesForRemovalConfirmation)}}
-                <tr class="confirm-removal">
+                <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}}>
                   <ResponsiveTd @smallScreenSpan="11" @largeScreenSpan="16">
                     <div class="confirm-message">
                       {{t
