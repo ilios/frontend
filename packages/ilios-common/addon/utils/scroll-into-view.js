@@ -23,6 +23,13 @@ export default function scrollIntoView(element, options) {
   // Merge default options with any given overrides.
   const opts = options?.opts ? { ...defaultOpts, ...options.opts } : defaultOpts;
 
+  // Accessibility override on smooth scrolling if the user prefers reduced motion.
+  // see https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView#behavior
+  // see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion
+  if ('smooth' === opts.behavior && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    opts.behavior = 'auto';
+  }
+
   function deferredScroll() {
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
     element?.scrollIntoView(opts);
