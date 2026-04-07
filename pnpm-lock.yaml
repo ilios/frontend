@@ -427,8 +427,8 @@ importers:
         specifier: ^5.1.0
         version: 5.2.0(@babel/core@7.29.0)(@glint/template@1.7.7)
       ember-file-upload:
-        specifier: ^9.5.0
-        version: 9.5.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)(@glint/template@1.7.7)(ember-modifier@4.2.2(@babel/core@7.29.0))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.29.0))
+        specifier: ^10.0.0
+        version: 10.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)(@glint/template@1.7.7)(ember-modifier@4.2.2(@babel/core@7.29.0))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.29.0))
       ember-focus-trap:
         specifier: ^2.0.0
         version: 2.0.0(@babel/core@7.29.0)
@@ -5378,8 +5378,8 @@ packages:
       ember-source: '>= 4.0.0'
       qunit: '*'
 
-  ember-file-upload@9.5.0:
-    resolution: {integrity: sha512-qcYAuaA4MsmGzTaGgaC/KWAPh3Gc/rwl3h9YgI8pHP2AbLSrJ3Ichi73nr71NrUerYLZ3ccmT6M0ohPKaTeXIg==}
+  ember-file-upload@10.0.0:
+    resolution: {integrity: sha512-jpzcczn2vgr9Q5BffPzSsIWCUAZ0e4DJpIp64t6M6SPDgXZGS2pJLYjRHmrGsYEo+lnkT/RyD2RQpxewB0oTZw==}
     engines: {node: 16.* || >= 18}
     peerDependencies:
       '@ember/test-helpers': ^2.9.3 || ^3.0.3 || ^4.0.4 || ^5.0.0
@@ -16007,7 +16007,7 @@ snapshots:
       - supports-color
       - webpack
 
-  ember-file-upload@9.5.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)(@glint/template@1.7.7)(ember-modifier@4.2.2(@babel/core@7.29.0))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.29.0)):
+  ember-file-upload@10.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)(@glint/template@1.7.7)(ember-modifier@4.2.2(@babel/core@7.29.0))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.29.0)):
     dependencies:
       '@ember/test-helpers': 5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@ember/test-waiters': 4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7)
