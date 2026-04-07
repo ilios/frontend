@@ -28,6 +28,11 @@ module('Unit | Utility | scroll into view', function (hooks) {
   });
 
   test('overrides', async function (assert) {
+    // KLUDGE!
+    // Safari evidently sets the reduced motion preference in the CI,
+    // so we need to force the opposite here.
+    // todo: Check next year if this is still necessary [2026/04/07].
+    setPreferReducedMotion(false);
     const mockElement = {
       scrollIntoView(options) {
         assert.step('scrollIntoView called');
