@@ -193,4 +193,33 @@ module('Acceptance | User', function (hooks) {
     await page.cohorts.manage();
     assert.strictEqual(page.cohorts.manager.primaryCohort.title, 'school 0 program 0 cohort 1');
   });
+
+  test('permissions view #7048', async function (assert) {
+    this.server.create('academic-year', { id: 2002 });
+    const user = this.server.create('user', {
+      school: this.school,
+    });
+
+    const course = this.server.create('course', {
+      school: this.school,
+      directors: [user],
+      administrators: [user],
+      studentAdvisors: [user],
+      year: 2002,
+    });
+
+    const session = this.server.create('session', {
+      course,
+    });
+    this.server.create('ilm-session', {
+      session,
+      instructors: [user],
+    });
+
+    await page.visit({ userId: user.id });
+
+    assert.strictEqual(page.permissions.courses.title, 'Courses (4)');
+    assert.strictEqual(page.permissions.sessions.title, 'Sessions (1)');
+    await takeScreenshot(assert);
+  });
 });
