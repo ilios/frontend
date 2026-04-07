@@ -1,6 +1,7 @@
 import { clickable, create, property, text, visitable } from 'ember-cli-page-object';
 import bioDetails from './components/user-profile-bio-details';
 import cohorts from './components/user-profile-cohorts';
+import permissions from './components/user-profile-permissions';
 import manageUsersSummary from './components/manage-users-summary';
 
 export default create({
@@ -9,6 +10,7 @@ export default create({
   manageUsersSummary,
   bioDetails,
   cohorts,
+  permissions,
   roles: {
     scope: '[data-test-user-profile-roles]',
     manage: clickable('[data-test-manage]'),
