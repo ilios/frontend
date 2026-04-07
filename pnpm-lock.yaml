@@ -154,8 +154,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       ember-cli-deploy-brotli:
-        specifier: ^0.4.0
-        version: 0.4.0
+        specifier: ^0.5.1
+        version: 0.5.1
       ember-cli-deploy-build:
         specifier: 3.0.0
         version: 3.0.0(@babel/core@7.29.0)(eslint@9.39.4)
@@ -5172,9 +5172,9 @@ packages:
     resolution: {integrity: sha512-eFrvBHe13ONgwNBmaaBAX5PguaKiSFS9jwwovdoTctyOWKcr1rbwwyQ7WlBHc8TFK+DddXi+wBS5Bt+N1WmbXA==}
     engines: {node: 12.* || 14.* || >= 16}
 
-  ember-cli-deploy-brotli@0.4.0:
-    resolution: {integrity: sha512-7SeKLTLUMNJP0oZJCWy5GTrChMU/4WCZLh/4NQX3pJrkKP/ke0an4JKukDViPVhwRQu8PnRLmXvqyfObdHyl9Q==}
-    engines: {node: 10.* || >= 12}
+  ember-cli-deploy-brotli@0.5.1:
+    resolution: {integrity: sha512-AQA55j0ERsV2fFFaLmn9869drCxJJkEv6vyCHYqqAAjYj/qRmpb3Q0lBX11IO9LJqyNK1w8JBDJE8UIBlHHdzw==}
+    engines: {node: '>= 20'}
 
   ember-cli-deploy-build@2.0.0:
     resolution: {integrity: sha512-o6TCCKVLC85KYkk3TV8PCmEPfUI9R0qYzb7Sda+SIq9f5oR+vOoTsQmjUPyMB5Qou2sBVreUTjgNEaJBzvLtLg==}
@@ -15445,7 +15445,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-deploy-brotli@0.4.0:
+  ember-cli-deploy-brotli@0.5.1:
     dependencies:
       chalk: 2.3.0
       core-object: 3.1.5
