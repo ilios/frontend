@@ -31,6 +31,7 @@ import {
   faUserPlus,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 
 export default class OfferingManagerComponent extends Component {
   @service intl;
@@ -41,6 +42,9 @@ export default class OfferingManagerComponent extends Component {
   setLearnerGroupElement = modifier((element, [id]) => {
     set(this, `learnerGroupElement${id}`, element);
   });
+  scrollOpts = {
+    behavior: 'smooth',
+  };
 
   @action
   toggleIsEditing() {
@@ -268,7 +272,7 @@ export default class OfferingManagerComponent extends Component {
             </div>
           {{/if}}
           {{#if this.showRemoveConfirmation}}
-            <div class="confirm-removal">
+            <div class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}}>
               <div class="confirm-message">
                 {{t
                   "general.confirmRemoveSessionOffering"
