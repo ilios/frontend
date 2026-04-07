@@ -146,10 +146,6 @@ export default class OfferingFormComponent extends Component {
       ),
   });
 
-  scrollOpts = {
-    behavior: 'smooth',
-  };
-
   hasZeroDuration(hours, minutes) {
     const hrs = parseInt(hours, 10) || 0;
     const mins = parseInt(minutes, 10) || 0;
@@ -634,7 +630,7 @@ export default class OfferingFormComponent extends Component {
     <div class="offering-form" data-test-offering-form>
       {{#if this.offeringFormData.isResolved}}
         {{#let (uniqueId) as |templateId|}}
-          <div class="toggle-offering-calendar" {{scrollIntoView opts=this.scrollOpts}}>
+          <div class="toggle-offering-calendar" {{scrollIntoView}}>
             <ToggleButtons
               @firstLabel={{t "general.hideCalendar"}}
               @firstOptionSelected={{not this.showOfferingCalendar}}
