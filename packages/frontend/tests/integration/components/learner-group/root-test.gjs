@@ -162,7 +162,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
       'default location text correct',
     );
 
-    assert.notOk(component.actions.buttons.toggle.isVisible, 'calendar toggle not visible');
+    assert.ok(component.actions.buttons.toggle.isVisible, 'calendar toggle visible');
     assert.ok(component.actions.buttons.bulkAssignment.isVisible, 'bulk assignment button visible');
     assert.notOk(
       component.actions.buttons.manageUsers.isVisible,
@@ -226,7 +226,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
       'default location text correct',
     );
 
-    assert.notOk(component.actions.buttons.toggle.isVisible, 'calendar toggle not visible');
+    assert.ok(component.actions.buttons.toggle.isVisible, 'calendar toggle visible');
     assert.ok(component.actions.buttons.bulkAssignment.isVisible, 'bulk assignment button visible');
     assert.ok(component.actions.buttons.manageUsers.isVisible, 'manager users button visible');
     assert.notOk(component.actions.buttons.close.isVisible, 'close button not visible');
@@ -263,7 +263,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
       </template>,
     );
 
-    assert.notOk(component.actions.buttons.toggle.isVisible, 'calendar toggle buttons not visible');
+    assert.ok(component.actions.buttons.toggle.isVisible, 'calendar toggle visible');
     assert.notOk(
       component.actions.buttons.bulkAssignment.isVisible,
       'bulk assignment button not visible',

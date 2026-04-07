@@ -638,14 +638,12 @@ export default class LearnerGroupRootComponent extends Component {
                   {{t "general.close"}}
                 </button>
               {{else}}
-                {{#if this.usersForMembersList.length}}
-                  <ToggleButtons
-                    @firstOptionSelected={{not @showCalendar}}
-                    @firstLabel={{t "general.hideCalendar"}}
-                    @secondLabel={{t "general.showCalendar"}}
-                    @toggle={{@setShowCalendar}}
-                  />
-                {{/if}}
+                <ToggleButtons
+                  @firstOptionSelected={{not @showCalendar}}
+                  @firstLabel={{t "general.hideCalendar"}}
+                  @secondLabel={{t "general.showCalendar"}}
+                  @toggle={{@setShowCalendar}}
+                />
                 {{#if @canUpdate}}
                   <button
                     class="bulk-assign"
