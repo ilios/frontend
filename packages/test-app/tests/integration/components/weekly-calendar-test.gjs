@@ -185,6 +185,60 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
+  test('day headings appear not-clickable if click handler is false', async function (assert) {
+    const january9th2019 = DateTime.fromObject({
+      year: 2019,
+      month: 1,
+      day: 9,
+      hour: 8,
+      minute: 0,
+      second: 0,
+    });
+    this.set('date', january9th2019.toJSDate());
+    await render(
+      <template>
+        <WeeklyCalendar
+          @date={{this.date}}
+          @events={{(array)}}
+          @changeToDayView={{false}}
+          @selectEvent={{(noop)}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.dayHeadings.length, 7);
+    component.dayHeadings.forEach((heading) => {
+      assert.notOk(heading.button.cssClasses.includes('clickable'));
+      assert.ok(heading.button.isDisabled);
+    });
+  });
+
+  test('day headings appear clickable if click handler is given', async function (assert) {
+    const january9th2019 = DateTime.fromObject({
+      year: 2019,
+      month: 1,
+      day: 9,
+      hour: 8,
+      minute: 0,
+      second: 0,
+    });
+    this.set('date', january9th2019.toJSDate());
+    await render(
+      <template>
+        <WeeklyCalendar
+          @date={{this.date}}
+          @events={{(array)}}
+          @changeToDayView={{this.changeToDayView}}
+          @selectEvent={{(noop)}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.dayHeadings.length, 7);
+    component.dayHeadings.forEach((heading) => {
+      assert.notOk(heading.button.cssClasses.includes('clickable'));
+      assert.ok(heading.button.isDisabled);
+    });
+  });
+
   test('click on day', async function (assert) {
     const january9th2019 = DateTime.fromObject({
       year: 2019,
@@ -205,6 +259,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
           @events={{(array)}}
           @changeToDayView={{this.changeToDayView}}
           @selectEvent={{(noop)}}
+          @areEventsSelectable={{true}}
         />
       </template>,
     );
@@ -244,6 +299,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
           @events={{this.events}}
           @changeToDayView={{(noop)}}
           @selectEvent={{this.selectEvent}}
+          @areEventsSelectable={{true}}
         />
       </template>,
     );
@@ -284,6 +340,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
           @events={{this.events}}
           @changeToDayView={{this.changeToDayView}}
           @selectEvent={{(noop)}}
+          @areEventsSelectable={{true}}
         />
       </template>,
     );

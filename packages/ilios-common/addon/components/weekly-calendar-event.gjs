@@ -74,7 +74,7 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   get clickable() {
-    return this.isIlm || this.isOffering;
+    return this.args.isEventSelectable && (this.isIlm || this.isOffering);
   }
 
   get tooltipContent() {

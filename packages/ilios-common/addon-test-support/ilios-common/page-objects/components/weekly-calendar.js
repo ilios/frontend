@@ -4,6 +4,7 @@ import {
   create,
   collection,
   hasClass,
+  property,
   text,
   isPresent,
 } from 'ember-cli-page-object';
@@ -28,6 +29,11 @@ const definition = {
     isSixthDayOfWeek: hasClass('day-6'),
     isSeventhDayOfWeek: hasClass('day-7'),
     hasNoEvents: isPresent('[data-test-no-events]'),
+    button: {
+      scope: 'button',
+      cssClasses: attribute('class'),
+      isDisabled: property('disabled'),
+    },
   }),
   days: collection('[data-test-events-day]', {
     events: collection('[data-test-weekly-calendar-event]'),
