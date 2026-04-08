@@ -279,9 +279,9 @@ general:
   programAndCohort: Programa / Clase de La Graduación
   programCohorts: Clases de La Graduación
   programDetail: Detalle del programa
+  publicationReview: Revisión de Publicación
   publicationStatus: Estado de Publicación
   publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
-  publishAllSessions: "Publique {sessionCount} sesiónes"
   publishAsIs: Publique Como Es
   publishCourse: Publique Curso
   published: Publicado
