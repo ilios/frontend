@@ -75,6 +75,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
         />
       </template>,
     );
+    assert.strictEqual(component.header.title, 'Publication Review');
     assert.strictEqual(
       component.unpublishableSessions.title,
       'Sessions Incomplete: cannot publish (1)',
@@ -138,6 +139,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
       </template>,
     );
 
+    assert.strictEqual(component.header.title, 'Publication Review');
     assert.notOk(component.publishableSessions.isExpanded);
     assert.strictEqual(component.publishableSessions.sessions.length, 0);
     assert.strictEqual(
@@ -213,6 +215,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
       </template>,
     );
 
+    assert.strictEqual(component.header.title, 'Publication Review');
     assert.strictEqual(
       component.unpublishableSessions.text,
       'Sessions Incomplete: cannot publish (0)',
