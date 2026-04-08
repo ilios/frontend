@@ -9,7 +9,7 @@ import { LinkTo } from '@ember/routing';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ResponsiveTd from '../responsive-td';
 import t from 'ember-intl/helpers/t';
-import { and, not } from 'ember-truth-helpers';
+import { and, or, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
@@ -191,16 +191,30 @@ export default class LearnerGroupListItemComponent extends Component {
         {{#if this.canDeleteLoading}}
           <FaIcon @icon={{faTrash}} class="disabled" />
         {{else}}
-          {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
-            <button
-              class="link-button"
-              type="button"
-              {{on "click" this.showRemove}}
-              title={{t "general.remove"}}
-              data-test-remove
-            >
-              <FaIcon @icon={{faTrash}} class="enabled remove" />
-            </button>
+          {{#if this.canDelete}}
+            {{#if (or @learnerGroup.usersCount @learnerGroup.childrenCount)}}
+              {{#unless this.showRemoveConfirmation}}
+                <button
+                  class="link-button"
+                  type="button"
+                  {{on "click" this.showRemove}}
+                  title={{t "general.remove"}}
+                  data-test-remove
+                >
+                  <FaIcon @icon={{faTrash}} class="enabled remove" />
+                </button>
+              {{/unless}}
+            {{else}}
+              <button
+                class="link-button"
+                type="button"
+                {{on "click" (perform this.remove)}}
+                title={{t "general.remove"}}
+                data-test-remove
+              >
+                <FaIcon @icon={{faTrash}} class="enabled remove" />
+              </button>
+            {{/if}}
           {{else}}
             <FaIcon @icon={{faTrash}} class="disabled" />
           {{/if}}
@@ -236,7 +250,11 @@ export default class LearnerGroupListItemComponent extends Component {
       <tr class="confirm-removal" data-test-confirm-removal>
         <ResponsiveTd @smallScreenSpan="3" @largeScreenSpan="5">
           <div class="confirm-message">
-            {{t "general.confirmRemoveLearnerGroup" subgroupCount=@learnerGroup.children.length}}
+            {{t
+              "general.confirmRemoveLearnerGroup"
+              memberCount=@learnerGroup.usersCount
+              subgroupCount=@learnerGroup.children.length
+            }}
             <br />
             <div class="confirm-buttons">
               <button
