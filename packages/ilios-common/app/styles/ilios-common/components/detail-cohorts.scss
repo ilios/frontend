@@ -17,5 +17,9 @@
 
   .detail-cohorts-content {
     @include m.detail-container-content;
+
+    &.empty {
+      padding: 0 0.5em;
+    }
   }
 }

@@ -137,7 +137,7 @@ export default class DetailCohortsComponent extends Component {
           {{/if}}
         </div>
       </div>
-      <div class="detail-cohorts-content">
+      <div class="detail-cohorts-content{{unless this.cohorts.length ' empty'}}">
         {{#if this.isManaging}}
           <DetailCohortManager
             @course={{@course}}

@@ -243,7 +243,6 @@ general:
   no: Non
   noAssociatedCompetencies: Nul compétences associées
   noAssociatedCompetency: Nul compétence associée
-  noCohorts: "Il n'y a aucun des cohortes dans ce cours"
   noCourseLearningMaterialsAvailable: "Aucun Matériels D'étude de Cours"
   noEvents: aucuns événements
   none: Nul

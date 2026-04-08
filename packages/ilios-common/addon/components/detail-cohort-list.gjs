@@ -83,8 +83,6 @@ export default class DetailCohortListComponent extends Component {
               {{/each}}
             </tbody>
           </table>
-        {{else}}
-          {{t "general.noCohorts"}}
         {{/if}}
       {{else}}
         <LoadingSpinner />
