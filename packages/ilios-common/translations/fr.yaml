@@ -279,9 +279,9 @@ general:
   programAndCohort: Diplôme et Cohortes
   programCohorts: Cohortes
   programDetail: Détail du programme
+  publicationReview: Revue de Publication
   publicationStatus: Statut de Publication
   publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, et ignorer des {ignoreCount} séances"
-  publishAllSessions: "Publier {sessionCount} des séances"
   publishAsIs: 'Publier "as-is"'
   publishCourse: Publier Cours
   published: Publié
