@@ -653,16 +653,16 @@ export default class LearnerGroupRootComponent extends Component {
                   >
                     {{t "general.uploadGroupAssignments"}}
                   </button>
-                  {{#if this.usersForUserManager.length}}
-                    <button
-                      class="manage"
-                      type="button"
-                      data-test-manage
-                      {{on "click" (fn @setIsEditing true)}}
-                    >
-                      {{t "general.manage"}}
-                    </button>
-                  {{/if}}
+                  <button
+                    class="manage{{unless this.usersForUserManager.length ' disabled'}}"
+                    type="button"
+                    disabled={{not this.usersForUserManager.length}}
+                    title={{unless this.usersForUserManager.length (t "general.noMembers")}}
+                    data-test-manage
+                    {{on "click" (fn @setIsEditing true)}}
+                  >
+                    {{t "general.manageMembers"}}
+                  </button>
                 {{/if}}
               {{/if}}
             </div>

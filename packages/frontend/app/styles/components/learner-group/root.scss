@@ -61,6 +61,13 @@
         input {
           margin-right: 1rem;
         }
+
+        button {
+          &:disabled {
+            cursor: default;
+            background-color: var(--grey);
+          }
+        }
       }
     }
   }

@@ -203,6 +203,7 @@ general:
   manageGroupMembership: Manage Group Membership
   manageInstitutionalInformation: Manage Institutional Information
   manageLearningMaterialAttributes: Manage Learning Material Attributes
+  manageMembers: Manage Members
   manageSessionAttributes: Manage Session Attributes
   manageUsersSummaryTitle: Ilios Users
   matchGroups: Match Groups
@@ -244,6 +245,7 @@ general:
   noAccountExists: "Your account {accountName} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator."
   noCohortsAvailableForStudentAssignment: There are no cohorts available for student assignment in this school.
   noInstitutionalInformation: No institutional information has been configured for this school.
+  noMembers: There are no learner group members to manage
   nonClerkshipSequenceBlocks: Non-Clerkship Sequence Blocks
   nonStudent: Non-Student
   noPopulateGroup: "No!  Leave it empty, I'll add students myself."
