@@ -16,6 +16,7 @@ import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import SaveButton from 'ilios-common/components/save-button';
 import perform from 'ember-concurrency/helpers/perform';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import { faLinkSlash, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class PublishAllSessionsComponent extends Component {
