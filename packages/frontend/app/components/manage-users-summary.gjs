@@ -18,6 +18,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import { eq } from 'ember-truth-helpers';
 import UserStatus from 'ilios-common/components/user-status';
+import scrollIntoView from 'ilios-common/utils/scroll-into-view';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
@@ -175,7 +176,7 @@ export default class ManageUsersSummaryComponent extends Component {
   }
 
   scrollToActiveElement(element) {
-    element.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+    scrollIntoView(element, { opts: { block: 'nearest' } });
   }
 
   getActiveUserId(listArray) {

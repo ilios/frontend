@@ -19,6 +19,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { fn } from '@ember/helper';
 import SessionsGridLastUpdated from 'ilios-common/components/sessions-grid-last-updated';
 import SessionsGridOfferingTable from 'ilios-common/components/sessions-grid-offering-table';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 
 export default class SessionsGridComponent extends Component {
   @service router;
@@ -30,6 +31,11 @@ export default class SessionsGridComponent extends Component {
     super(...arguments);
     this.scrollDown();
   }
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'center',
+  };
 
   @cached
   get sortedSessionsData() {
@@ -229,7 +235,11 @@ export default class SessionsGridComponent extends Component {
             @expandedSessionIds={{@expandedSessionIds}}
           />
           {{#if (includes session.id this.confirmDeleteSessionIds)}}
-            <div class="confirm-removal" data-test-confirm-removal>
+            <div
+              class="confirm-removal"
+              {{scrollIntoView opts=this.scrollOpts}}
+              data-test-confirm-removal
+            >
               {{t "general.confirmRemoveSession"}}
               <div class="confirm-buttons">
                 <button

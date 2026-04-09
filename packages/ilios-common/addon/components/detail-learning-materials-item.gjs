@@ -12,10 +12,16 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import { or } from 'ember-truth-helpers';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import { faClock, faEye, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailLearningMaterialsItemComponent extends Component {
   @tracked showRemoveConfirmation = false;
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'center',
+  };
 
   @cached
   get owningUserData() {
@@ -149,7 +155,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
       </td>
     </tr>
     {{#if this.showRemoveConfirmation}}
-      <tr class="confirm-removal" data-test-confirm-removal>
+      <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}} data-test-confirm-removal>
         <td colspan="14">
           <div class="confirm-message">
             {{t "general.confirmRemoveLearningMaterial"}}

@@ -10,17 +10,24 @@ import { and, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import ResponsiveTd from '../responsive-td';
+
 import { faDownload, faLock, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventoryReportListItemComponent extends Component {
   @service iliosConfig;
   @service permissionChecker;
   @tracked showConfirmRemoval;
+
   isFinalized = this.args.report.belongsTo('export').id();
   academicYearConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'center',
+  };
 
   @cached
   get canDeleteData() {
@@ -115,7 +122,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
       </td>
     </tr>
     {{#if this.showRemoveConfirmation}}
-      <tr class="confirm-removal" data-test-confirm-removal>
+      <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}} data-test-confirm-removal>
         <ResponsiveTd @smallScreenSpan="8" @largeScreenSpan="16">
           <div class="confirm-message">
             {{t "general.confirmRemoveReport"}}
