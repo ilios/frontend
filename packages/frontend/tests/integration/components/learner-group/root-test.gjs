@@ -164,10 +164,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
 
     assert.ok(component.actions.buttons.toggle.isVisible, 'calendar toggle visible');
     assert.ok(component.actions.buttons.bulkAssignment.isVisible, 'bulk assignment button visible');
-    assert.notOk(
-      component.actions.buttons.manageUsers.isVisible,
-      'manager users button not visible',
-    );
+    assert.ok(component.actions.buttons.manageUsers.isVisible, 'manager users button visible');
+    assert.ok(component.actions.buttons.manageUsers.isDisabled, 'manage members button disabled');
     assert.notOk(component.actions.buttons.close.isVisible, 'close button not visible');
     assert.strictEqual(component.actions.title, 'Members (0)', 'member count correct');
   });
@@ -228,7 +226,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
 
     assert.ok(component.actions.buttons.toggle.isVisible, 'calendar toggle visible');
     assert.ok(component.actions.buttons.bulkAssignment.isVisible, 'bulk assignment button visible');
-    assert.ok(component.actions.buttons.manageUsers.isVisible, 'manager users button visible');
+    assert.ok(component.actions.buttons.manageUsers.isVisible, 'manage members button visible');
+    assert.notOk(
+      component.actions.buttons.manageUsers.isDisabled,
+      'manage members button not disabled',
+    );
     assert.notOk(component.actions.buttons.close.isVisible, 'close button not visible');
     assert.strictEqual(component.actions.title, 'Members (0)', 'member count correct');
   });
@@ -270,7 +272,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     );
     assert.notOk(
       component.actions.buttons.manageUsers.isVisible,
-      'manage users button not visible',
+      'manage members button not visible',
     );
     assert.notOk(component.actions.buttons.close.isVisible, 'close button not visible');
     assert.strictEqual(component.actions.title, 'Members (0)');

@@ -4,6 +4,7 @@ import {
   fillable,
   isPresent,
   isVisible,
+  property,
   text,
   value,
 } from 'ember-cli-page-object';
@@ -69,6 +70,7 @@ const definition = {
       },
       manageUsers: {
         scope: '[data-test-manage]',
+        isDisabled: property('disabled'),
       },
     },
   },
