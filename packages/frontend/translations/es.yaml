@@ -183,7 +183,7 @@ general:
   learner: Aprendedor
   learnerGroupsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Cada grupo de alumnos adjunto se enumera junto con los instructores y los datos del curso."
   learnerGroupsReportSummaryMultiSchool: "informe para {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Cada grupo de alumnos adjunto se enumera junto con los instructores y los datos del curso."
-  learnerGroupTitle: Título de Grupo de Instructores
+  learnerGroupTitle: Título de Grupo de Aprendedores
   learnerGroupTitleFilterPlaceholder: Aplicar un Filtro por Título de Grupo de Aprendedor
   learnerGroupTitlePlaceholder: Entre en un Título para este grupo de aprendedores
   learningMaterial: Material de Aprendizaje
