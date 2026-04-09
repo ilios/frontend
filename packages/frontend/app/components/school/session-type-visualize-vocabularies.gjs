@@ -1,5 +1,6 @@
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
+import { hash } from '@ember/helper';
 import { pageTitle } from 'ember-page-title';
 import VisualizeSessionTypeVocabulariesGraph from './visualize-session-type-vocabularies-graph';
 <template>
@@ -21,8 +22,12 @@ import VisualizeSessionTypeVocabulariesGraph from './visualize-session-type-voca
     data-test-school-session-type-visualize-vocabularies
     ...attributes
   >
-    <div class="backtolink">
-      <LinkTo @route="school" @model={{@model.school}}>
+    <div class="backtolink" data-test-back-to-school>
+      <LinkTo
+        @route="school"
+        @model={{@model.school}}
+        @query={{hash schoolSessionTypeDetails=true}}
+      >
         {{t "general.backToSchool"}}
       </LinkTo>
     </div>
