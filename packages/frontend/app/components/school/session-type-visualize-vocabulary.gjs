@@ -1,5 +1,4 @@
 import { LinkTo } from '@ember/routing';
-import { hash } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { pageTitle } from 'ember-page-title';
 import VisualizeSessionTypeVocabularyGraph from './visualize-session-type-vocabulary-graph';
@@ -24,33 +23,10 @@ import VisualizeSessionTypeVocabularyGraph from './visualize-session-type-vocabu
     data-test-school-session-type-visualize-vocabulary
     ...attributes
   >
-    <div class="breadcrumbs" data-test-breadcrumb>
-      <span>
-        <LinkTo
-          @route="school"
-          @model={{@model.vocabulary.school}}
-          @query={{hash schoolSessionTypeDetails=true}}
-        >
-          {{@model.vocabulary.school.title}}
-        </LinkTo>
-      </span>
-      <span>
-        {{t "general.visualizations"}}
-      </span>
-      <span>
-        {{t "general.sessionTypes"}}
-      </span>
-      <span>
-        {{@model.sessionType.title}}
-      </span>
-      <span>
-        <LinkTo @route="session-type-visualize-vocabularies" @model={{@model.sessionType}}>
-          {{t "general.vocabularies"}}
-        </LinkTo>
-      </span>
-      <span>
-        {{@model.vocabulary.title}}
-      </span>
+    <div class="backtolink" data-test-back-to-vocabularies>
+      <LinkTo @route="session-type-visualize-vocabularies" @model={{@model.sessionType}}>
+        {{t "general.backToVocabularies"}}
+      </LinkTo>
     </div>
     <h2 data-test-primary-title>{{t "general.termsBySessionType"}}</h2>
     <h3 data-test-secondary-title>

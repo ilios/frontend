@@ -3,6 +3,10 @@ import termsChart from './visualize-session-type-vocabulary-graph';
 
 const definition = create({
   scope: '[data-test-school-session-type-visualize-vocabulary]',
+  backToVocabularies: {
+    scope: '[data-test-back-to-vocabularies]',
+    url: attribute('href', 'a'),
+  },
   primaryTitle: text('[data-test-primary-title]'),
   secondaryTitle: text('[data-test-secondary-title]'),
   breadcrumb: {
