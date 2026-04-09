@@ -397,6 +397,10 @@ export default class LearnerGroupRootComponent extends Component {
     const topLevelGroup = await this.args.learnerGroup.topLevelGroup;
     const groups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     await all(groups.map((group) => group.save()));
+
+    if (!this.usersForMembersList.length) {
+      this.args.setIsEditing(false);
+    }
   });
 
   addUsersToGroup = task({ enqueue: true }, async (users) => {
@@ -426,6 +430,10 @@ export default class LearnerGroupRootComponent extends Component {
       groupsToSave = [...groupsToSave, ...removeGroups];
     }
     await all(uniqueValues(groupsToSave).map((group) => group.save()));
+
+    if (!this.usersForMembersList.length) {
+      this.args.setIsEditing(false);
+    }
   });
 
   createUsersToPassToCohortManager = task(async () => {
@@ -610,15 +618,17 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </div>
             <div class="actions" data-test-buttons>
-              <input
-                type="text"
-                value={{this.filter}}
-                placeholder={{t "general.filterByNameOrEmail"}}
-                aria-label={{t "general.filterByNameOrEmail"}}
-                {{on "input" (pick "target.value" (set this "filter"))}}
-                data-test-filter
-              />
-              {{#if (or @isEditing @isBulkAssigning)}}
+              {{#if this.usersForMembersList.length}}
+                <input
+                  type="text"
+                  value={{this.filter}}
+                  placeholder={{t "general.filterByNameOrEmail"}}
+                  aria-label={{t "general.filterByNameOrEmail"}}
+                  {{on "input" (pick "target.value" (set this "filter"))}}
+                  data-test-filter
+                />
+              {{/if}}
+              {{#if (and this.usersForUserManager.length (or @isEditing @isBulkAssigning))}}
                 <button
                   class="close"
                   type="button"
@@ -644,12 +654,14 @@ export default class LearnerGroupRootComponent extends Component {
                     {{t "general.uploadGroupAssignments"}}
                   </button>
                   <button
-                    class="manage"
+                    class="manage{{unless this.usersForUserManager.length ' disabled'}}"
                     type="button"
+                    disabled={{not this.usersForUserManager.length}}
+                    title={{unless this.usersForUserManager.length (t "general.noMembers")}}
                     data-test-manage
                     {{on "click" (fn @setIsEditing true)}}
                   >
-                    {{t "general.manage"}}
+                    {{t "general.manageMembers"}}
                   </button>
                 {{/if}}
               {{/if}}

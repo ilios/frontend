@@ -5,6 +5,7 @@
 .learner-group-root {
   .learner-group-overview {
     margin-top: 0.5rem;
+
     .block {
       display: flex;
       align-items: flex-start;
@@ -60,6 +61,13 @@
         input {
           margin-right: 1rem;
         }
+
+        button {
+          &:disabled {
+            cursor: default;
+            background-color: var(--grey);
+          }
+        }
       }
     }
   }
@@ -75,6 +83,7 @@
 
   .subgroups {
     @include m.detail-container-content;
+    border-top: 1px dotted var(--orange);
 
     .header {
       @include m.detail-container-header;

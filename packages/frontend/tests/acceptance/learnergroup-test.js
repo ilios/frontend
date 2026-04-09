@@ -23,27 +23,50 @@ module('Acceptance | Learner Group', function (hooks) {
     this.server.createList('user', 2, { cohorts: [cohort] });
 
     await page.visit({ learnerGroupId: 1 });
-    await page.root.actions.buttons.manageUsers.click();
-    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 0);
-    assert.strictEqual(page.root.cohortUserManager.users.length, 2);
+
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      0,
+      'current group user count correct',
+    );
+    assert.strictEqual(
+      page.root.cohortUserManager.users.length,
+      2,
+      'potential cohort user count correct',
+    );
     assert.strictEqual(
       page.root.cohortUserManager.users[0].name.userNameInfo.fullName,
       '1 guy M. Mc1son',
+      'first cohort user name correct',
     );
     assert.strictEqual(
       page.root.cohortUserManager.users[1].name.userNameInfo.fullName,
       '2 guy M. Mc2son',
+      'second cohort user name correct',
     );
+
     await page.root.cohortUserManager.users[0].add();
-    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
+    await page.root.actions.buttons.manageUsers.click();
+
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      1,
+      'user count in current group correct',
+    );
     assert.strictEqual(
       page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
       '1 guy M. Mc1son',
+      'current group user name correct',
     );
-    assert.strictEqual(page.root.cohortUserManager.users.length, 1);
+    assert.strictEqual(
+      page.root.cohortUserManager.users.length,
+      1,
+      'potential cohort user count correct',
+    );
     assert.strictEqual(
       page.root.cohortUserManager.users[0].name.userNameInfo.fullName,
       '2 guy M. Mc2son',
+      'remaining cohort user name correct',
     );
   });
 
@@ -307,6 +330,7 @@ module('Acceptance | Learner Group', function (hooks) {
       updatedAt: Date.now(),
     });
     this.server.create('offering');
+    this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
 
     await page.visit({ learnerGroupId: 1 });
     assert.ok(
@@ -372,6 +396,7 @@ module('Acceptance | Learner Group', function (hooks) {
       updatedAt: Date.now(),
     });
     this.server.create('offering');
+    this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
 
     await page.visit({ learnerGroupId: 1 });
     assert.strictEqual(
@@ -508,50 +533,58 @@ module('Acceptance | Learner Group', function (hooks) {
     );
 
     await page.root.subgroups.list.items[0].clickTitle();
-    await page.root.actions.buttons.manageUsers.click();
+
     assert.strictEqual(
       page.root.userManager.usersInCurrentGroup.length,
       0,
-      'users in current group count correct',
+      'users in current (first) subgroup count correct',
     );
     assert.strictEqual(
       page.root.userManager.usersNotInCurrentGroup.length,
       0,
-      'users not in current group count correct',
+      'users not in current (first) subgroup count correct',
     );
+
     assert.strictEqual(page.root.cohortUserManager.users.length, 3, 'cohort users count correct');
+
     await page.root.cohortUserManager.users[0].add();
+    await page.root.actions.buttons.manageUsers.click();
+
     assert.strictEqual(
       page.root.userManager.usersInCurrentGroup.length,
       1,
-      'users in current group count correct',
+      'users in current (first) subgroup count correct',
     );
     assert.strictEqual(
       page.root.userManager.usersNotInCurrentGroup.length,
       0,
-      'users not in current group count correct',
+      'users not in current (first) subgroup count correct',
     );
     assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
     assert.strictEqual(
       page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
       '1 guy M. Mc1son',
-      'name of first user in current group correct',
+      'name of first user in current (first) subgroup correct',
     );
+
     await page.root.header.breadcrumb.crumbs[2].visit();
     await page.root.subgroups.list.items[1].clickTitle();
     await page.root.actions.buttons.manageUsers.click();
+
     assert.strictEqual(
       page.root.userManager.usersInCurrentGroup.length,
       0,
-      'users in current group count correct',
+      'users in current (second) subgroup count correct',
     );
     assert.strictEqual(
       page.root.userManager.usersNotInCurrentGroup.length,
       1,
-      'users not in current group count correct',
+      'users not in current (second) subgroup count correct',
     );
     assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
+
     await page.root.userManager.usersNotInCurrentGroup[0].add();
+
     assert.strictEqual(
       page.root.userManager.usersInCurrentGroup.length,
       1,

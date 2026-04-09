@@ -183,7 +183,7 @@ general:
   learner: Aprendedor
   learnerGroupsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Cada grupo de alumnos adjunto se enumera junto con los instructores y los datos del curso."
   learnerGroupsReportSummaryMultiSchool: "informe para {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Cada grupo de alumnos adjunto se enumera junto con los instructores y los datos del curso."
-  learnerGroupTitle: Título de Grupo de Instructores
+  learnerGroupTitle: Título de Grupo de Aprendedores
   learnerGroupTitleFilterPlaceholder: Aplicar un Filtro por Título de Grupo de Aprendedor
   learnerGroupTitlePlaceholder: Entre en un Título para este grupo de aprendedores
   learningMaterial: Material de Aprendizaje
@@ -203,6 +203,7 @@ general:
   manageGroupMembership: Administrar membresía de grupo
   manageInstitutionalInformation: Administrar información institucional
   manageLearningMaterialAttributes: Maneje Atributos del Material de Aprendizaje
+  manageMembers: Manaje Miembros
   manageSessionAttributes: Maneje Atributos de la Sesión
   manageUsersSummaryTitle: Usuarios de Ilios
   matchGroups: Igualar Grupos
@@ -244,6 +245,7 @@ general:
   noAccountExists: "Su cuenta {accountName} no coincide con los registros de Ilios. Si usted necesita más asistencia, póngase en contacto con su administrador de Ilios"
   noCohortsAvailableForStudentAssignment: "No hay cohortes disponibles para la asignación de estudiantes en esta escuela."
   noInstitutionalInformation: No se ha configurado información institucional para esta escuela.
+  noMembers: No hay miembros de grupo de aprendedores que manejar
   nonClerkshipSequenceBlocks: Bloques de secuencia que no son de la rotación
   nonStudent: No estudiante
   noPopulateGroup: ¡No! Déjelo vacío. Voy a agregar alumnos yo mismo.
