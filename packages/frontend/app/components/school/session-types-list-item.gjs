@@ -9,6 +9,7 @@ import { and, eq, not, or } from 'ember-truth-helpers';
 import set from 'ember-set-helper/helpers/set';
 import { LinkTo } from '@ember/routing';
 import perform from 'ember-concurrency/helpers/perform';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import {
   faBan,
   faChartColumn,
@@ -19,6 +20,11 @@ import {
 
 export default class SchoolSessionTypesListItemComponent extends Component {
   @tracked showRemoveConfirmation = false;
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'center',
+  };
 
   remove = task({ drop: true }, async () => {
     await this.args.sessionType.destroyRecord();
@@ -116,7 +122,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
       </td>
     </tr>
     {{#if this.showRemoveConfirmation}}
-      <tr class="confirm-removal">
+      <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}}>
         <td colspan="11" class="hide-from-small-screen">
           <div class="confirm-message" data-test-message>
             {{t "general.confirmRemoveSessionType"}}
