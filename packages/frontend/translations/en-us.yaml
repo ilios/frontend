@@ -52,6 +52,11 @@ general:
   canNotDeleteProgram: This program cannot be deleted because it is attached to a curriculum inventory report or program year, or you do not have permission
   canNotDeleteProgramYear: This program year cannot be deleted because it is associated with a cohort with students or groups, or you do not have permission
   canNotDeleteReport: This report cannot be deleted because it is is still loading
+  canNotDeleteSchoolCompetency: This school competency cannot be deleted because it is attached to at least one program year objective, or you do not have permission
+  canNotDeleteSchoolCompetencyDomain: This school competency domain cannot be deleted because there are attached competencies
+  canNotDeleteSchoolSessionType: This school session type cannot be deleted because you do not have permission
+  canNotDeleteSchoolVocabulary: This school vocabulary cannot be deleted because it has at least one term, or you do not have permission
+  canNotDeleteSchoolVocabularyTerm: This school vocabulary term cannot be deleted because it has at least one sub-term, has an association, or you do not have permission
   changeAlertRecipients: Change-alert Recipients
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
   childSequenceOrder: Child Sequence Order

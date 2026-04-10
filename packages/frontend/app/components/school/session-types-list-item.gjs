@@ -110,7 +110,11 @@ export default class SchoolSessionTypesListItemComponent extends Component {
             </button>
           {{/if}}
         {{else}}
-          <FaIcon @icon={{faTrash}} class="disabled" />
+          <FaIcon
+            @icon={{faTrash}}
+            class="disabled"
+            @title={{t "general.canNotDeleteSchoolSessionType"}}
+          />
         {{/if}}
         <LinkTo
           @route="session-type-visualize-vocabularies"
