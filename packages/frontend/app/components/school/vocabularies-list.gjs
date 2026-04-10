@@ -114,7 +114,11 @@ export default class SchoolVocabulariesListComponent extends Component {
                         <FaIcon @icon={{faTrash}} class="enabled remove" />
                       </button>
                     {{else}}
-                      <FaIcon @icon={{faTrash}} class="disabled" />
+                      <FaIcon
+                        @icon={{faTrash}}
+                        class="disabled"
+                        @title={{t "general.canNotDeleteSchoolVocabulary"}}
+                      />
                     {{/if}}
                   </td>
                 </tr>

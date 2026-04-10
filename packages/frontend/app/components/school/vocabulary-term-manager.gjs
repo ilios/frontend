@@ -246,7 +246,11 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                     data-test-delete
                   />
                 {{else}}
-                  <FaIcon @icon={{faTrash}} class="disabled" />
+                  <FaIcon
+                    @icon={{faTrash}}
+                    class="disabled"
+                    @title={{t "general.canNotDeleteSchoolVocabularyTerm"}}
+                  />
                 {{/if}}
               </div>
               <div class="block is-active" data-test-is-active>

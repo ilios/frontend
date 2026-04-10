@@ -50,6 +50,11 @@ general:
   canNotDeleteProgram: "Este programa no se puede eliminar porque está asociado a un informe de inventario curricular o a un año del programa, o usted no tiene permiso"
   canNotDeleteProgramYear: "Este año del programa no se puede eliminar porque está asociado a una cohorte de estudiantes o grupos, o porque usted no tiene permiso"
   canNotDeleteReport: "Este informe no se puede eliminar porque aún se está cargando"
+  canNotDeleteSchoolCompetency: "Esta competencia escolar no se puede eliminar porque está vinculada a al menos un objetivo del año del programa, o porque no tiene permiso"
+  canNotDeleteSchoolCompetencyDomain: "Este dominio de competencia escolar no se puede eliminar porque hay competencias asociadas"
+  canNotDeleteSchoolSessionType: "Este tipo de sesión escolar no se puede eliminar porque no tiene permiso"
+  canNotDeleteSchoolVocabulary: "Este vocabulario escolar no se puede eliminar porque tiene al menos un término o porque no tiene permiso"
+  canNotDeleteSchoolVocabularyTerm: "Este término del vocabulario escolar no se puede eliminar porque tiene al menos un término subordinado, tiene una asociación, o no tiene permiso"
   changeAlertRecipients: Destinatarios con alerta de cambio
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
   childSequenceOrder: Orden de Secuencia de Los Hijos
