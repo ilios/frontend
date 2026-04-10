@@ -69,7 +69,11 @@ export default class InstructorGroupsListItemComponent extends Component {
             <FaIcon @icon={{faTrash}} class="enabled remove" />
           </button>
         {{else}}
-          <FaIcon @icon={{faTrash}} class="disabled" />
+          <FaIcon
+            @icon={{faTrash}}
+            class="disabled"
+            @title={{t "general.canNotDeleteInstructorGroup"}}
+          />
         {{/if}}
       </td>
     </tr>

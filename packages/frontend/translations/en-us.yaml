@@ -43,6 +43,12 @@ general:
   badCredentials: Incorrect username or password
   campusId: Campus ID
   canNotContinueWithInvalidRecords: "Cannot continue with these invalid records, please fix and re-upload the file."
+  canNotDeleteCourse: This course cannot be deleted because it is published, scheduled, has been rolled over, or you do not have permission
+  canNotDeleteCurriculumInventoryReport: This curriculum inventory report cannot be deleted because you do not have permission
+  canNotDeleteInstructorGroup: This instructor group cannot be deleted because it is either attached to a course or you do not have permission
+  canNotDeleteLearnerGroup: This learner group cannot be deleted because it is either attached to a session offering or you do not have permission
+  canNotDeleteProgram: This program cannot be deleted because it is attached to a curriculum inventory report or program year, or you do not have permission
+  canNotDeleteReport: This report cannot be deleted because it is is still loading
   changeAlertRecipients: Change-alert Recipients
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
   childSequenceOrder: Child Sequence Order

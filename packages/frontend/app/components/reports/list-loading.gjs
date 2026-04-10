@@ -16,7 +16,11 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
         {{#each (repeat @count)}}
           <tr data-test-loading-item>
             <td class="text-left"></td>
-            <td class="text-right"><FaIcon @icon={{faTrash}} class="disabled" /></td>
+            <td class="text-right"><FaIcon
+                @icon={{faTrash}}
+                class="disabled"
+                @title={{t "general.canNotDeleteReport"}}
+              /></td>
           </tr>
         {{/each}}
       </tbody>

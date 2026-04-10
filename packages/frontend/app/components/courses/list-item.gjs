@@ -115,7 +115,7 @@ export default class CoursesListItemComponent extends Component {
               <FaIcon @icon={{faTrash}} class="enabled remove" />
             </button>
           {{else}}
-            <FaIcon @icon={{faTrash}} class="disabled" />
+            <FaIcon @icon={{faTrash}} class="disabled" @title={{t "general.canNotDeleteCourse"}} />
           {{/if}}
         {{/if}}
       </td>

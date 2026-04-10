@@ -37,6 +37,7 @@ general:
   calendar: Calendrier
   campusNameOfRecord: Nombre de registro del campus
   cancel: Annul
+  canNotDeleteSession: "Cette session ne peut pas être supprimée car elle a des prérequis ou vous n’avez pas la permission"
   chooseCohortTitle: Choisi objectif mère pour
   chooseFile: Choisir un Fichier
   citation: Citation
