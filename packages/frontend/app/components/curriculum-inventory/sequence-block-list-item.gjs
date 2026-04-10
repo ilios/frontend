@@ -84,7 +84,11 @@ export default class CurriculumInventorySequenceBlockListItemComponent extends C
             <FaIcon @icon={{faTrash}} class="enabled remove" />
           </button>
         {{else}}
-          <FaIcon @icon={{faTrash}} class="disabled" />
+          <FaIcon
+            @icon={{faTrash}}
+            class="disabled"
+            @title={{t "general.canNotDeleteSequenceBlock"}}
+          />
         {{/if}}
       </td>
     </tr>
