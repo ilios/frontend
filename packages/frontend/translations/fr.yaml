@@ -50,6 +50,7 @@ general:
   canNotDeleteInstructorGroup: "Ce groupe des instructeurs ne peut pas être supprimé car il est associé à un cours ou vous n’avez pas la permission"
   canNotDeleteLearnerGroup: "Ce groupe d'apprenants ne peut pas être supprimé car il est associé à une session ou vous n’avez pas la permission"
   canNotDeleteProgram: "Ce programme ne peut pas être supprimé car il est associé à un rapport d’inventaire curriculaire ou à une année de programme, ou vous n’avez pas la permission"
+  canNotDeleteProgramYear: "Cette année de programme ne peut être supprimée car elle est associée à une cohorte d'étudiants ou à des groupes, ou vous n'en avez pas la permission"
   canNotDeleteReport: "Ce rapport ne peut pas être supprimé car il est encore en cours de chargement."
   changeAlertRecipients: Destinataires des alertes de changement
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
