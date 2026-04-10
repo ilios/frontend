@@ -191,7 +191,11 @@ export default class ProgramYearListItemComponent extends Component {
                 <FaIcon @icon={{faTrash}} class="remove" />
               </button>
             {{else}}
-              <FaIcon @icon={{faTrash}} class="disabled" />
+              <FaIcon
+                @icon={{faTrash}}
+                class="disabled"
+                @title={{t "general.canNotDeleteProgramYear"}}
+              />
             {{/if}}
           {{/if}}
         </td>
