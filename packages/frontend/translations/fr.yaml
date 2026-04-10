@@ -57,6 +57,7 @@ general:
   canNotDeleteSchoolSessionType: "Ce type de session scolaire ne peut pas être supprimé car vous n'en avez pas la permission"
   canNotDeleteSchoolVocabulary: "Ce lexique scolaire ne peut pas être supprimé car il contient au moins un terme, ou vous n'en avez pas la permission"
   canNotDeleteSchoolVocabularyTerm: "Ce terme de vocabulaire scolaire ne peut pas être supprimé car il comporte au moins un sous-terme, une association, ou vous n'en avez pas la permission"
+  canNotDeleteSequenceBlock: "Ce bloc de séquence ne peut pas être supprimé car vous n'en avez pas la permission"
   changeAlertRecipients: Destinataires des alertes de changement
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
   childSequenceOrder: Ordre séquentiel des enfants
