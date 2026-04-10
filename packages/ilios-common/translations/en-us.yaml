@@ -37,6 +37,7 @@ general:
   calendar: Calendar
   campusNameOfRecord: Campus name of record
   cancel: Cancel
+  canNotDeleteSession: This session cannot be deleted because it either has prerequisites or you do not have permission
   chooseCohortTitle: Select Parent For
   chooseFile: Choose File
   citation: Citation

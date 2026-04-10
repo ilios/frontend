@@ -45,6 +45,12 @@ general:
   badCredentials: "Nom d'utilisateur ou mot de passe incorrect"
   campusId: Campus ID
   canNotContinueWithInvalidRecords: "Ne peut pas continuer avec ces rapports invalides, fixez s'il vous plaît et retéléchargez le fichier."
+  canNotDeleteCourse: "Ce cours ne peut pas être supprimé car il est publié, planifié, a des éléments associés ou vous n’avez pas la permission"
+  canNotDeleteCurriculumInventoryReport: "Ce rapport d'inventaire des programmes d'études ne peut pas être supprimé car vous n’avez pas la permission"
+  canNotDeleteInstructorGroup: "Ce groupe des instructeurs ne peut pas être supprimé car il est associé à un cours ou vous n’avez pas la permission"
+  canNotDeleteLearnerGroup: "Ce groupe d'apprenants ne peut pas être supprimé car il est associé à une session ou vous n’avez pas la permission"
+  canNotDeleteProgram: "Ce programme ne peut pas être supprimé car il est associé à un rapport d’inventaire curriculaire ou à une année de programme, ou vous n’avez pas la permission"
+  canNotDeleteReport: "Ce rapport ne peut pas être supprimé car il est encore en cours de chargement."
   changeAlertRecipients: Destinataires des alertes de changement
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
   childSequenceOrder: Ordre séquentiel des enfants

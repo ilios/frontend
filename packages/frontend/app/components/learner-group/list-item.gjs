@@ -195,7 +195,11 @@ export default class LearnerGroupListItemComponent extends Component {
       </td>
       <td class="text-right">
         {{#if this.canDeleteLoading}}
-          <FaIcon @icon={{faTrash}} class="disabled" />
+          <FaIcon
+            @icon={{faTrash}}
+            class="disabled"
+            @title={{t "general.canNotDeleteLearnerGroup"}}
+          />
         {{else}}
           {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
             <button
@@ -208,7 +212,11 @@ export default class LearnerGroupListItemComponent extends Component {
               <FaIcon @icon={{faTrash}} class="enabled remove" />
             </button>
           {{else}}
-            <FaIcon @icon={{faTrash}} class="disabled" />
+            <FaIcon
+              @icon={{faTrash}}
+              class="disabled"
+              @title={{t "general.canNotDeleteLearnerGroup"}}
+            />
           {{/if}}
         {{/if}}
         {{#if this.canCreateLoading}}

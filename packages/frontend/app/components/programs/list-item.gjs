@@ -64,7 +64,7 @@ export default class ProgramListItemComponent extends Component {
             <FaIcon @icon={{faTrash}} />
           </button>
         {{else}}
-          <FaIcon @icon={{faTrash}} class="disabled" />
+          <FaIcon @icon={{faTrash}} class="disabled" @title={{t "general.canNotDeleteProgram"}} />
         {{/if}}
       </td>
     </tr>

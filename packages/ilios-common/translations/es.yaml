@@ -37,6 +37,7 @@ general:
   calendar: Calendario
   campusNameOfRecord: Nombre de registro del registrador
   cancel: Cancelar
+  canNotDeleteSession: "Esta sesión no se puede eliminar porque tiene prerrequisitos o no tienes permiso"
   chooseCohortTitle: Seleccione Matriz Para
   chooseFile: Seleccione Archivo
   citation: Citación
