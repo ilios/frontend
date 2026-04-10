@@ -206,7 +206,7 @@ export default class SessionsGridSessionRowComponent extends Component {
             @ariaHidden={{false}}
             class="disabled"
             data-test-delete-disabled
-            @title={{t "general.remove"}}
+            @title={{t "general.canNotDeleteSession"}}
           />
         {{/if}}
       </span>
