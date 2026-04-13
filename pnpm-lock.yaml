@@ -81,9 +81,6 @@ importers:
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.4
-      '@fortawesome/free-solid-svg-icons':
-        specifier: 6.7.2
-        version: 6.7.2
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
