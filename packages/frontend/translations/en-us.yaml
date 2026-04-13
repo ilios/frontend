@@ -51,6 +51,7 @@ general:
   canNotDeleteLearnerGroup: This learner group cannot be deleted because it is either attached to a session offering or you do not have permission
   canNotDeleteProgram: This program cannot be deleted because it is attached to a curriculum inventory report or program year, or you do not have permission
   canNotDeleteProgramYear: This program year cannot be deleted because it is associated with a cohort with students or groups, or you do not have permission
+  canNotDeleteProgramYearObjective: This program year objective cannot be deleted because it is associated with a course, or you do not have permission
   canNotDeleteReport: This report cannot be deleted because it is is still loading
   canNotDeleteSchoolCompetency: This school competency cannot be deleted because it is attached to at least one program year objective, or you do not have permission
   canNotDeleteSchoolCompetencyDomain: This school competency domain cannot be deleted because there are attached competencies

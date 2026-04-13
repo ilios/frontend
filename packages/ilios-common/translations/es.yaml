@@ -37,7 +37,9 @@ general:
   calendar: Calendario
   campusNameOfRecord: Nombre de registro del registrador
   cancel: Cancelar
+  canNotDeleteCourseObjective: "Este objetivo de curso no se puede eliminar porque no tiene permiso"
   canNotDeleteSession: "Esta sesión no se puede eliminar porque tiene prerrequisitos o no tienes permiso"
+  canNotDeleteSessionObjective: "Este objetivo de sesión no se puede eliminar porque no tiene permiso"
   chooseCohortTitle: Seleccione Matriz Para
   chooseFile: Seleccione Archivo
   citation: Citación
