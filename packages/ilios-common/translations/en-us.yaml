@@ -38,8 +38,10 @@ general:
   campusNameOfRecord: Campus name of record
   cancel: Cancel
   canNotDeleteCourseObjective: This course objective cannot be deleted because you do not have permission
+  canNotDeleteLearningMaterial: This learning material can not be deleted because you do not have permission
   canNotDeleteSession: This session cannot be deleted because it either has prerequisites or you do not have permission
   canNotDeleteSessionObjective: This session objective cannot be deleted because you do not have permission
+  canNotDeleteSessionOffering: This session offering cannot be deleted because you do not have permission
   chooseCohortTitle: Select Parent For
   chooseFile: Choose File
   citation: Citation
