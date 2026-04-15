@@ -52,8 +52,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glint/template@1.7.7)
       '@ember-intl/lint':
-        specifier: ^0.9.3
-        version: 0.9.4
+        specifier: ^1.0.0
+        version: 1.0.0
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
         version: 1.0.9(@glint/template@1.7.7)(webpack@5.106.1)
@@ -542,8 +542,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glint/template@1.7.7)
       '@ember-intl/lint':
-        specifier: ^0.9.3
-        version: 0.9.4
+        specifier: ^1.0.0
+        version: 1.0.0
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0
@@ -692,8 +692,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glint/template@1.7.7)
       '@ember-intl/lint':
-        specifier: ^0.9.3
-        version: 0.9.4
+        specifier: ^1.0.0
+        version: 1.0.0
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
         version: 1.0.9(@glint/template@1.7.7)(webpack@5.106.1)
@@ -926,8 +926,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glint/template@1.7.7)
       '@ember-intl/lint':
-        specifier: ^0.9.3
-        version: 0.9.4
+        specifier: ^1.0.0
+        version: 1.0.0
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
         version: 1.0.9(@glint/template@1.7.7)(webpack@5.106.1)
@@ -1157,8 +1157,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glint/template@1.7.7)
       '@ember-intl/lint':
-        specifier: ^0.9.3
-        version: 0.9.4
+        specifier: ^1.0.0
+        version: 1.0.0
       '@ember-intl/v1-compat':
         specifier: ^1.0.5
         version: 1.0.9(@glint/template@1.7.7)(webpack@5.106.1)
@@ -2235,8 +2235,8 @@ packages:
       '@ember/test-waiters':
         optional: true
 
-  '@ember-intl/lint@0.9.4':
-    resolution: {integrity: sha512-7qclir+oSjIrnkrhWER1r9lxPE4tweL9yDbjJ+iBxABSPhGaUp0d46psBQi6Q2V340swkXDVouvNlZ7GCqh6cQ==}
+  '@ember-intl/lint@1.0.0':
+    resolution: {integrity: sha512-Vu/gX7vRWAA3uKSIAEzmUQKXsjeV9iVuRXrAGrnK2ZKYdIyB2e0wsY75a/478jy2ro6PfcmGtPt8KZ9UxhwDig==}
     engines: {node: 20.* || >= 22}
     hasBin: true
 
@@ -2446,8 +2446,14 @@ packages:
   '@formatjs/icu-messageformat-parser@3.5.3':
     resolution: {integrity: sha512-HJWZ9S6JWey6iY5+YXE3Kd0ofWU1sC2KTTp56e1168g/xxWvVvr8k9G4fexIgwYV9wbtjY7kGYK5FjoWB3B2OQ==}
 
+  '@formatjs/icu-messageformat-parser@3.5.4':
+    resolution: {integrity: sha512-JVY39ROgLt+pIYngo6piyj4OVfZmXs/2FkC4wLS+ql1Eig/sGJKB7YwDO/5bkJFkfwaFAeIpgEiJc8hiYxNalw==}
+
   '@formatjs/icu-skeleton-parser@2.1.3':
     resolution: {integrity: sha512-9mFp8TJ166ZM2pcjKwsBWXrDnOJGT7vMEScVgLygUODPOsE8S6f/FHoacvrlHK1B4dYZk8vSCNruyPU64AfgJQ==}
+
+  '@formatjs/icu-skeleton-parser@2.1.4':
+    resolution: {integrity: sha512-8bSFZbrlvGX11ywMZxtgkPBt5Q8/etyts7j7j+GWpOVK1g43zwMIH3LZxk43HAtEP7L/jtZ+OZaMiFTOiBj9CA==}
 
   '@formatjs/intl-localematcher@0.8.2':
     resolution: {integrity: sha512-q05KMYGJLyqFNFtIb8NhWLF5X3aK/k0wYt7dnRFuy6aLQL+vUwQ1cg5cO4qawEiINybeCPXAWlprY2mSBjSXAQ==}
@@ -2968,6 +2974,7 @@ packages:
 
   '@simple-git/argv-parser@1.1.0':
     resolution: {integrity: sha512-sUKOu2lb5vGIWADNNLpscyj07DAeQZU3KLbnE2Tj53tW6BbDQKMly2CCfnR4oYzqtRELCPWfwaPg+Q0T8qfKBg==}
+    deprecated: Contains a breaking change that should be a major version bump
 
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
@@ -11406,7 +11413,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@ember-intl/lint@0.9.4':
+  '@ember-intl/lint@1.0.0':
     dependencies:
       '@codemod-utils/ast-javascript': 3.0.1
       '@codemod-utils/ast-template': 3.0.1
@@ -11414,7 +11421,7 @@ snapshots:
       '@codemod-utils/files': 4.0.1
       '@codemod-utils/package-json': 4.0.1
       '@codemod-utils/threads': 1.0.0
-      '@formatjs/icu-messageformat-parser': 3.5.3
+      '@formatjs/icu-messageformat-parser': 3.5.4
       js-yaml: 4.1.1
       yargs: 18.0.0
     transitivePeerDependencies:
@@ -11864,9 +11871,15 @@ snapshots:
       '@formatjs/ecma402-abstract': 3.2.0
       '@formatjs/icu-skeleton-parser': 2.1.3
 
+  '@formatjs/icu-messageformat-parser@3.5.4':
+    dependencies:
+      '@formatjs/icu-skeleton-parser': 2.1.4
+
   '@formatjs/icu-skeleton-parser@2.1.3':
     dependencies:
       '@formatjs/ecma402-abstract': 3.2.0
+
+  '@formatjs/icu-skeleton-parser@2.1.4': {}
 
   '@formatjs/intl-localematcher@0.8.2':
     dependencies:
