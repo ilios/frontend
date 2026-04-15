@@ -4,10 +4,11 @@ import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import { eq, not } from 'ember-truth-helpers';
+import { and, eq, not } from 'ember-truth-helpers';
 import CopyButton from 'ilios-common/components/copy-button';
 import perform from 'ember-concurrency/helpers/perform';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
+import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import set from 'ember-set-helper/helpers/set';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
@@ -184,6 +185,19 @@ export default class ReportsCurriculumHeaderComponent extends Component {
         </p>
       </div>
       <div class="input-buttons">
+        {{#if (and (eq this.selectedReport.label "Tagged Terms") (not @showReportResults))}}
+          <div class="tagged-terms-mode" data-test-tagged-terms-mode>
+            <label>
+              {{t "general.taggedTermsMode"}}
+            </label>
+            <ToggleButtons
+              @firstOptionSelected={{not @taggedTermsModeGrouped}}
+              @firstLabel={{t "general.taggedTermsModeListed"}}
+              @secondLabel={{t "general.taggedTermsModeGrouped"}}
+              @toggle={{@toggleTaggedTermsModeGrouped}}
+            />
+          </div>
+        {{/if}}
         {{#if @countSelectedCourses}}
           <CopyButton
             @getClipboardText={{this.getReportUrl}}

@@ -103,7 +103,11 @@ export default class ReportsCurriculumComponent extends Component {
   <template>
     <div class="reports-curriculum main-section" data-test-reports-curriculum ...attributes>
       {{#if @showReportResults}}
-        <this.reportResultsComponent @courses={{this.selectedCourses}} @close={{@stop}} />
+        <this.reportResultsComponent
+          @courses={{this.selectedCourses}}
+          @taggedTermsModeGrouped={{@taggedTermsModeGrouped}}
+          @close={{@stop}}
+        />
       {{else}}
         <Header
           @selectedSchoolIds={{this.selectedSchoolIds}}
@@ -111,6 +115,8 @@ export default class ReportsCurriculumComponent extends Component {
           @showReportResults={{@showReportResults}}
           @selectedReportValue={{this.selectedReportValue}}
           @changeSelectedReport={{this.changeSelectedReport}}
+          @taggedTermsModeGrouped={{@taggedTermsModeGrouped}}
+          @toggleTaggedTermsModeGrouped={{@toggleTaggedTermsModeGrouped}}
           @runReport={{@run}}
           @close={{@stop}}
         />
