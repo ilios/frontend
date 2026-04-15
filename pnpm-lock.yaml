@@ -103,8 +103,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glint/template@1.7.7)
       axe-core:
-        specifier: ^4.11.1
-        version: 4.11.2
+        specifier: ^4.11.3
+        version: 4.11.3
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -125,7 +125,7 @@ importers:
         version: 5.2.1(@babel/core@7.29.0)
       ember-a11y-testing:
         specifier: ^8.0.0
-        version: 8.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.2)(qunit@2.25.0)
+        version: 8.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.3)(qunit@2.25.0)
       ember-async-data:
         specifier: ^2.0.0
         version: 2.0.1(@babel/core@7.29.0)(@glint/template@1.7.7)
@@ -1202,14 +1202,14 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.29.0)(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glint/template@1.7.7)
       axe-core:
-        specifier: ^4.11.1
-        version: 4.11.2
+        specifier: ^4.11.3
+        version: 4.11.3
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
       ember-a11y-testing:
         specifier: ^8.0.0
-        version: 8.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.2)(qunit@2.25.0)
+        version: 8.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.3)(qunit@2.25.0)
       ember-auto-import:
         specifier: ^2.12.0
         version: 2.13.1(@glint/template@1.7.7)(webpack@5.106.1)
@@ -2968,6 +2968,7 @@ packages:
 
   '@simple-git/argv-parser@1.1.0':
     resolution: {integrity: sha512-sUKOu2lb5vGIWADNNLpscyj07DAeQZU3KLbnE2Tj53tW6BbDQKMly2CCfnR4oYzqtRELCPWfwaPg+Q0T8qfKBg==}
+    deprecated: Contains a breaking change that should be a major version bump
 
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
@@ -3726,8 +3727,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     deprecated: The AWS SDK for JavaScript (v2) has reached end-of-support, and no longer receives updates. Please migrate your code to use AWS SDK for JavaScript (v3). More info https://a.co/cUPnyil
 
-  axe-core@4.11.2:
-    resolution: {integrity: sha512-byD6KPdvo72y/wj2T/4zGEvvlis+PsZsn/yPS3pEO+sFpcrqRpX/TJCxvVaEsNeMrfQbCr7w163YqoD9IYwHXw==}
+  axe-core@4.11.3:
+    resolution: {integrity: sha512-zBQouZixDTbo3jMGqHKyePxYxr1e5W8UdTmBQ7sNtaA9M2bE32daxxPLS/jojhKOHxQ7LWwPjfiwf/fhaJWzlg==}
     engines: {node: '>=4'}
 
   babel-code-frame@6.26.0:
@@ -13406,7 +13407,7 @@ snapshots:
       uuid: 8.0.0
       xml2js: 0.6.2
 
-  axe-core@4.11.2: {}
+  axe-core@4.11.3: {}
 
   babel-code-frame@6.26.0:
     dependencies:
@@ -15109,12 +15110,12 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-a11y-testing@8.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.2)(qunit@2.25.0):
+  ember-a11y-testing@8.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.3)(qunit@2.25.0):
     dependencies:
       '@ember/test-helpers': 5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@ember/test-waiters': 4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/addon-shim': 1.10.2
-      axe-core: 4.11.2
+      axe-core: 4.11.3
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
     optionalDependencies:
       qunit: 2.25.0
