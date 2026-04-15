@@ -118,8 +118,8 @@ importers:
         specifier: ^4.26.3
         version: 4.28.2
       caniuse-db:
-        specifier: ^1.0.30001786
-        version: 1.0.30001787
+        specifier: ^1.0.30001788
+        version: 1.0.30001788
       ember-a11y-refocus:
         specifier: 5.2.1
         version: 5.2.1(@babel/core@7.29.0)
@@ -749,8 +749,8 @@ importers:
         specifier: ^4.26.3
         version: 4.28.2
       caniuse-db:
-        specifier: ^1.0.30001786
-        version: 1.0.30001787
+        specifier: ^1.0.30001788
+        version: 1.0.30001788
       ember-auto-import:
         specifier: ^2.12.0
         version: 2.13.1(@glint/template@1.7.7)(webpack@5.106.1)
@@ -980,8 +980,8 @@ importers:
         specifier: ^4.26.3
         version: 4.28.2
       caniuse-db:
-        specifier: ^1.0.30001786
-        version: 1.0.30001787
+        specifier: ^1.0.30001788
+        version: 1.0.30001788
       ember-auto-import:
         specifier: ^2.12.0
         version: 2.13.1(@glint/template@1.7.7)(webpack@5.106.1)
@@ -2968,6 +2968,7 @@ packages:
 
   '@simple-git/argv-parser@1.1.0':
     resolution: {integrity: sha512-sUKOu2lb5vGIWADNNLpscyj07DAeQZU3KLbnE2Tj53tW6BbDQKMly2CCfnR4oYzqtRELCPWfwaPg+Q0T8qfKBg==}
+    deprecated: Contains a breaking change that should be a major version bump
 
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
@@ -4207,8 +4208,8 @@ packages:
     resolution: {integrity: sha512-RbsNrFyhwkx+6psk/0fK/Q9orOUr9VMxohGd8vTa4djf4TGLfblBgUfqZChrZuW0Q+mz2eBPFLusw9Jfukzmhg==}
     hasBin: true
 
-  caniuse-db@1.0.30001787:
-    resolution: {integrity: sha512-MPnMz/6w2kPuQirFSrP/Wujg7jwrTyG7QEr4V2of5CIpHdWSoxBowmVwSiYDqvFl02U/dLzww/xXC0XcJAT85Q==}
+  caniuse-db@1.0.30001788:
+    resolution: {integrity: sha512-pkA6gamWFv3jnNsJyioTVnADOzoIv7+8mopJd5H3YvgOxJbqLTFgRuWdcEa4RQuBx7EtkmDNwmjUikXTONvoPA==}
 
   caniuse-lite@1.0.30001787:
     resolution: {integrity: sha512-mNcrMN9KeI68u7muanUpEejSLghOKlVhRqS/Za2IeyGllJ9I9otGpR9g3nsw7n4W378TE/LyIteA0+/FOZm4Kg==}
@@ -14304,7 +14305,7 @@ snapshots:
     dependencies:
       tmp: 0.0.28
 
-  caniuse-db@1.0.30001787: {}
+  caniuse-db@1.0.30001788: {}
 
   caniuse-lite@1.0.30001787: {}
 
