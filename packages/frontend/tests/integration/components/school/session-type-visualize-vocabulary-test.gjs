@@ -34,20 +34,10 @@ module('Integration | Component | school/session-type-visualize-vocabulary', fun
 
     await render(<template><SessionTypeVisualizeVocabulary @model={{this.model}} /></template>);
 
+    assert.strictEqual(component.backToVocabularies.text, 'Back to Vocabularies');
+    assert.strictEqual(component.backToVocabularies.url, '/data/sessiontype/1/vocabularies');
     assert.strictEqual(component.primaryTitle, 'Terms by Session Type');
     assert.strictEqual(component.secondaryTitle, 'session type 0 (Vocabulary 1)');
-    assert.strictEqual(component.breadcrumb.crumbs.length, 6);
-    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'school 0');
-    assert.strictEqual(
-      component.breadcrumb.crumbs[0].link,
-      '/schools/1?schoolSessionTypeDetails=true',
-    );
-    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.strictEqual(component.breadcrumb.crumbs[2].text, 'Session Types');
-    assert.strictEqual(component.breadcrumb.crumbs[3].text, 'session type 0');
-    assert.strictEqual(component.breadcrumb.crumbs[4].text, 'Vocabularies');
-    assert.strictEqual(component.breadcrumb.crumbs[4].link, '/data/sessiontype/1/vocabularies');
-    assert.strictEqual(component.breadcrumb.crumbs[5].text, 'Vocabulary 1');
 
     await waitFor('.loaded');
     await waitFor('svg .slice');
