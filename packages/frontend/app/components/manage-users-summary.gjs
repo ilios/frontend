@@ -36,6 +36,10 @@ export default class ManageUsersSummaryComponent extends Component {
 
   userSearchTypeData = new TrackedAsyncData(this.iliosConfig.getUserSearchType());
 
+  scrollOpts = {
+    block: 'nearest',
+  };
+
   @cached
   get userSearchType() {
     return this.userSearchTypeData.isResolved ? this.userSearchTypeData.value : null;
@@ -176,7 +180,7 @@ export default class ManageUsersSummaryComponent extends Component {
   }
 
   scrollToActiveElement(element) {
-    scrollIntoView(element, { opts: { block: 'nearest' } });
+    scrollIntoView(element, this.scrollOpts);
   }
 
   getActiveUserId(listArray) {
