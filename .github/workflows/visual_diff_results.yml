@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Check for "results" artifact
         id: check
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -48,7 +48,7 @@ jobs:
       MARKER: "<!-- visual-diff-results -->"
     steps:
       - name: Download artifact
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -82,7 +82,7 @@ jobs:
         run: unzip "${{ runner.temp }}/artifacts/results.zip" -d "${{ runner.temp }}/artifacts"
 
       - name: Extract Details
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         id: data
         with:
           script: |
