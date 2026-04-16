@@ -23,7 +23,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
 
   scrollOpts = {
     behavior: 'smooth',
-    block: 'center',
+    block: 'nearest',
   };
 
   remove = task({ drop: true }, async () => {

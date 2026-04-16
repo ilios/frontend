@@ -16,7 +16,7 @@ export default class ReportsTableComponent extends Component {
 
   scrollOpts = {
     behavior: 'smooth',
-    block: 'center',
+    block: 'nearest',
   };
 
   get sortedAscending() {

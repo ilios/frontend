@@ -20,7 +20,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
 
   scrollOpts = {
     behavior: 'smooth',
-    block: 'center',
+    block: 'nearest',
   };
 
   @cached

@@ -20,7 +20,7 @@ export default class CurriculumInventorySequenceBlockListItemComponent extends C
 
   scrollOpts = {
     behavior: 'smooth',
-    block: 'center',
+    block: 'nearest',
   };
 
   @cached

@@ -26,7 +26,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
   );
   scrollOpts = {
     behavior: 'smooth',
-    block: 'center',
+    block: 'nearest',
   };
 
   @cached

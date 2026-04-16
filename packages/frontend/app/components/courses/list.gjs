@@ -25,7 +25,7 @@ export default class CoursesListComponent extends Component {
 
   scrollOpts = {
     behavior: 'smooth',
-    block: 'center',
+    block: 'nearest',
   };
 
   get sortedAscending() {
