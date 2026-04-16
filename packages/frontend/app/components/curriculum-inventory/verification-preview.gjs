@@ -60,7 +60,7 @@ export default class CurriculumInventoryVerificationPreviewComponent extends Com
             </a>
           </li>
           <li>
-            <a href="table3b">
+            <a href="#table3b">
               {{t "general.table3bClerkshipSequenceBlockInstructionalTime"}}
             </a>
           </li>
