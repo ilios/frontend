@@ -8,10 +8,16 @@ import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
 import TableRow from './table-row';
 import includes from 'ilios-common/helpers/includes';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import { on } from '@ember/modifier';
 
 export default class ReportsTableComponent extends Component {
   @tracked reportsForRemovalConfirmation = [];
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'nearest',
+  };
 
   get sortedAscending() {
     return !this.args.sortBy.includes(':desc');
@@ -64,7 +70,7 @@ export default class ReportsTableComponent extends Component {
             @confirmRemoval={{this.confirmRemoval}}
           />
           {{#if (includes decoratedReport.report.id this.reportsForRemovalConfirmation)}}
-            <tr class="confirm-removal">
+            <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}}>
               <td colspan="12">
                 <div class="confirm-message">
                   {{t "general.confirmRemoveReport"}}

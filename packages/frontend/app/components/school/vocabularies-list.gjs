@@ -12,12 +12,18 @@ import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import perform from 'ember-concurrency/helpers/perform';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabulariesListComponent extends Component {
   @service store;
   @tracked newVocabulary;
   @tracked showRemovalConfirmationFor;
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'nearest',
+  };
 
   @cached
   get vocabulariesData() {
@@ -119,7 +125,11 @@ export default class SchoolVocabulariesListComponent extends Component {
                   </td>
                 </tr>
                 {{#if (eq this.showRemovalConfirmationFor vocabulary)}}
-                  <tr class="confirm-removal" data-test-confirm-removal={{index}}>
+                  <tr
+                    class="confirm-removal"
+                    {{scrollIntoView opts=this.scrollOpts}}
+                    data-test-confirm-removal={{index}}
+                  >
                     <td colspan="5">
                       <div class="confirm-message">
                         {{t "general.confirmRemoveVocabulary"}}

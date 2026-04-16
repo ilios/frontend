@@ -16,6 +16,7 @@ import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import SaveButton from 'ilios-common/components/save-button';
 import perform from 'ember-concurrency/helpers/perform';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import { faLinkSlash, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class PublishAllSessionsComponent extends Component {
@@ -199,7 +200,7 @@ export default class PublishAllSessionsComponent extends Component {
   });
 
   <template>
-    <div class="publish-all-sessions" data-test-publish-all-sessions>
+    <div class="publish-all-sessions" {{scrollIntoView delay=10}} data-test-publish-all-sessions>
       <div class="publish-all-sessions-header" data-test-header>
         <span class="title" data-test-title>
           {{t "general.publicationReview"}}

@@ -10,11 +10,17 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ResponsiveTd from '../responsive-td';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class InstructorGroupsListItemComponent extends Component {
   @service permissionChecker;
   @tracked showRemoveConfirmation = false;
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'nearest',
+  };
 
   @cached
   get canDeleteData() {
@@ -74,7 +80,7 @@ export default class InstructorGroupsListItemComponent extends Component {
       </td>
     </tr>
     {{#if this.showRemoveConfirmation}}
-      <tr class="confirm-removal" data-test-confirm-removal>
+      <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}} data-test-confirm-removal>
         <ResponsiveTd @smallScreenSpan="3" @largeScreenSpan="5">
           <div class="confirm-message">
             {{t
