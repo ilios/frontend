@@ -278,9 +278,9 @@ general:
   programAndCohort: Program / Cohort
   programCohorts: Program Cohorts
   programDetail: Program Detail
+  publicationReview: Publication Review
   publicationStatus: Publication Status
   publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, and ignore {ignoreCount} sessions"
-  publishAllSessions: "Publish {sessionCount} sessions"
   publishAsIs: Publish As-is
   publishCourse: Publish Course
   published: Published

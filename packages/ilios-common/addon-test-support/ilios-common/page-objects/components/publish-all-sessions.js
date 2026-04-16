@@ -10,6 +10,10 @@ import {
 
 const definition = {
   scope: '[data-test-publish-all-sessions]',
+  header: {
+    scope: '[data-test-header]',
+    title: text('[data-test-title]'),
+  },
   unpublishableSessions: {
     scope: '[data-test-unpublishable]',
     title: text('> div > [data-test-title]'),

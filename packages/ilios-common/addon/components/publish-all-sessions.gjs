@@ -200,6 +200,11 @@ export default class PublishAllSessionsComponent extends Component {
 
   <template>
     <div class="publish-all-sessions" data-test-publish-all-sessions>
+      <div class="publish-all-sessions-header" data-test-header>
+        <span class="title" data-test-title>
+          {{t "general.publicationReview"}}
+        </span>
+      </div>
       <section class="publish-all-sessions-unpublishable" data-test-unpublishable>
         <div>
           <button

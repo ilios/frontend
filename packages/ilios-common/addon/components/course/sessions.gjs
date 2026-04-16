@@ -190,7 +190,7 @@ export default class CourseSessionsComponent extends Component {
           {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}
             <LinkTo @route="course.publishall" @model={{@course}} data-test-publish-all>
               <button type="button">
-                {{t "general.publishAllSessions" sessionCount=this.sessionsCount}}
+                {{t "general.publicationReview"}}
               </button>
             </LinkTo>
           {{/if}}
