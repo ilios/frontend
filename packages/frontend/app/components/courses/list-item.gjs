@@ -49,10 +49,7 @@ export default class CoursesListItemComponent extends Component {
   }
   <template>
     <tr
-      class="courses-list-item{{if
-          (includes @course.id @coursesForRemovalConfirmation)
-          ' confirm-removal'
-        }}"
+      class="courses-list-item{{if @showRemoveConfirmation ' confirm-removal'}}"
       data-test-courses-list-item
     >
       <td class="text-left" colspan="8" data-test-course-title>
@@ -94,12 +91,13 @@ export default class CoursesListItemComponent extends Component {
           {{else if this.canLock}}
             <button
               type="button"
-              class="link-button"
+              class="link-button{{if @showRemoveConfirmation ' disabled'}}"
               title={{t "general.lockCourse"}}
+              disabled={{@showRemoveConfirmation}}
               {{on "click" (fn @lockCourse @course)}}
               data-test-lock
             >
-              <FaIcon @icon={{faLockOpen}} />
+              <FaIcon @icon={{faLockOpen}} class="{{if @showRemoveConfirmation 'disabled'}}" />
             </button>
           {{else}}
             <FaIcon @icon={{faLockOpen}} class="disabled" />
@@ -107,12 +105,16 @@ export default class CoursesListItemComponent extends Component {
           {{#if this.canDelete}}
             <button
               type="button"
-              class="link-button"
+              class="link-button{{if @showRemoveConfirmation ' disabled'}}"
               title={{t "general.deleteCourse"}}
+              disabled={{@showRemoveConfirmation}}
               {{on "click" (fn @confirmRemoval @course)}}
               data-test-remove
             >
-              <FaIcon @icon={{faTrash}} class="enabled remove" />
+              <FaIcon
+                @icon={{faTrash}}
+                class="remove{{if @showRemoveConfirmation ' disabled' ' enabled'}}"
+              />
             </button>
           {{else}}
             <FaIcon @icon={{faTrash}} class="disabled" @title={{t "general.canNotDeleteCourse"}} />

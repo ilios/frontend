@@ -192,13 +192,18 @@ export default class SessionsGridSessionRowComponent extends Component {
       <span class="session-grid-actions" data-test-actions>
         {{#if (and this.canUpdate (not @session.prerequisiteCount))}}
           <button
-            class="link-button"
+            class="link-button{{if @showConfirmDelete ' disabled'}}"
             type="button"
             {{on "click" (fn @confirmDelete @session.id)}}
             title={{t "general.remove"}}
+            disabled={{@showConfirmDelete}}
             data-test-delete
           >
-            <FaIcon @icon={{faTrash}} @ariaHidden={{false}} class="remove enabled" />
+            <FaIcon
+              @icon={{faTrash}}
+              @ariaHidden={{false}}
+              class="remove{{if @showConfirmDelete ' disabled' ' enabled'}}"
+            />
           </button>
         {{else}}
           <FaIcon
