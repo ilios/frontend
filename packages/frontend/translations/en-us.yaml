@@ -48,7 +48,7 @@ general:
   canNotDeleteCourse: This course cannot be deleted because it is published, scheduled, has been rolled over, or you do not have permission.
   canNotDeleteCurriculumInventoryReport: This curriculum inventory report cannot be deleted because you do not have permission.
   canNotDeleteInstructorGroup: This instructor group cannot be deleted because it is either attached to a course or you do not have permission.
-  canNotDeleteLearnerGroup: This learner group cannot be deleted because it is either attached to a session offering or you do not have permission.
+  canNotDeleteLearnerGroup: This learner group cannot be deleted because it is either attached to a session or you do not have permission.
   canNotDeleteProgram: This program cannot be deleted because it is attached to a curriculum inventory report or program year, or you do not have permission.
   canNotDeleteProgramYear: This program year cannot be deleted because it is associated with a cohort with students or groups, or you do not have permission.
   canNotDeleteProgramYearObjective: This program year objective cannot be deleted because it is associated with a course, or you do not have permission.
