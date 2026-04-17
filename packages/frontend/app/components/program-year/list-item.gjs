@@ -191,9 +191,13 @@ export default class ProgramYearListItemComponent extends Component {
                 class="link-button"
                 aria-label={{t "general.remove"}}
                 {{on "click" (set this "showRemoveConfirmation" true)}}
+                disabled={{this.showRemoveConfirmation}}
                 data-test-remove
               >
-                <FaIcon @icon={{faTrash}} class="remove" />
+                <FaIcon
+                  @icon={{faTrash}}
+                  class="remove{{if this.showRemoveConfirmation ' disabled' ' enabled'}}"
+                />
               </button>
             {{else}}
               <FaIcon @icon={{faTrash}} class="disabled" />

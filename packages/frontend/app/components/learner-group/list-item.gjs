@@ -197,15 +197,19 @@ export default class LearnerGroupListItemComponent extends Component {
         {{#if this.canDeleteLoading}}
           <FaIcon @icon={{faTrash}} class="disabled" />
         {{else}}
-          {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
+          {{#if this.canDelete}}
             <button
               class="link-button"
               type="button"
               {{on "click" this.showRemove}}
               title={{t "general.remove"}}
+              disabled={{this.showRemoveConfirmation}}
               data-test-remove
             >
-              <FaIcon @icon={{faTrash}} class="enabled remove" />
+              <FaIcon
+                @icon={{faTrash}}
+                class="remove{{if this.showRemoveConfirmation ' disabled' ' enabled'}}"
+              />
             </button>
           {{else}}
             <FaIcon @icon={{faTrash}} class="disabled" />
@@ -220,9 +224,10 @@ export default class LearnerGroupListItemComponent extends Component {
               type="button"
               {{on "click" this.showCopy}}
               title={{t "general.copy"}}
+              disabled={{this.showRemoveConfirmation}}
               data-test-copy
             >
-              <FaIcon @icon={{faCopy}} />
+              <FaIcon @icon={{faCopy}} class="{{if this.showRemoveConfirmation 'disabled'}}" />
             </button>
           {{else}}
             <button
