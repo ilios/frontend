@@ -82,18 +82,26 @@ export default class SchoolSessionTypesListItemComponent extends Component {
       <td>
         <button
           type="button"
-          class="link-button"
+          class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
           aria-label={{t "general.manage"}}
+          disabled={{or (this.showRemoveConfirmation this.deleteSessionType.isRunning)}}
           data-test-manage
           {{on "click" (fn @manageSessionType @sessionType.id)}}
         >
-          <FaIcon @icon={{faPenToSquare}} class="edit" />
+          <FaIcon
+            @icon={{faPenToSquare}}
+            class={{if
+              (or this.showRemoveConfirmation this.deleteSessionType.isRunning)
+              "disabled"
+              "edit"
+            }}
+          />
         </button>
         {{#if (eq @sessionType.sessionCount 0)}}
           {{#if @canDelete}}
             <button
               type="button"
-              class="link-button"
+              class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
               aria-label={{t "general.remove"}}
               disabled={{or (this.showRemoveConfirmation this.deleteSessionType.isRunning)}}
               data-test-delete
@@ -103,7 +111,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
                 @icon={{faTrash}}
                 class={{if
                   (or this.showRemoveConfirmation this.deleteSessionType.isRunning)
-                  "inactive"
+                  "disabled"
                   "remove"
                 }}
               />
@@ -117,7 +125,14 @@ export default class SchoolSessionTypesListItemComponent extends Component {
           @model={{@sessionType}}
           title={{t "general.vocabularies"}}
         >
-          <FaIcon @icon={{faChartColumn}} class="enabled" />
+          <FaIcon
+            @icon={{faChartColumn}}
+            class={{if
+              (or this.showRemoveConfirmation this.deleteSessionType.isRunning)
+              "disabled"
+              "enabled"
+            }}
+          />
         </LinkTo>
       </td>
     </tr>

@@ -95,13 +95,24 @@ export default class SchoolVocabulariesListComponent extends Component {
                   </td>
                   <td class="text-left text-top" colspan="1">
                     <button
-                      class="link-button"
+                      class="link-button{{if
+                          (eq this.showRemovalConfirmationFor vocabulary)
+                          ' disabled'
+                        }}"
                       type="button"
                       aria-label={{t "general.edit"}}
+                      disabled={{eq this.showRemovalConfirmationFor vocabulary}}
                       data-test-manage
                       {{on "click" (fn @manageVocabulary vocabulary.id)}}
                     >
-                      <FaIcon @icon={{faPenToSquare}} class="enabled" />
+                      <FaIcon
+                        @icon={{faPenToSquare}}
+                        class={{if
+                          (eq this.showRemovalConfirmationFor vocabulary)
+                          "disabled"
+                          "enabled"
+                        }}
+                      />
                     </button>
                     {{#if
                       (and
@@ -111,9 +122,13 @@ export default class SchoolVocabulariesListComponent extends Component {
                       )
                     }}
                       <button
-                        class="link-button"
+                        class="link-button{{if
+                            (eq this.showRemovalConfirmationFor vocabulary)
+                            ' disabled'
+                          }}"
                         type="button"
                         aria-label={{t "general.remove"}}
+                        disabled={{eq this.showRemovalConfirmationFor vocabulary}}
                         data-test-delete
                         {{on "click" (fn this.confirmRemoval vocabulary)}}
                       >
