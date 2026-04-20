@@ -98,13 +98,16 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             href={{@report.absoluteFileUri}}
             rel="noopener noreferrer"
             target="_blank"
+            disabled={{this.showRemoveConfirmation}}
             data-test-download
-          ><FaIcon
+          >
+            <FaIcon
               @icon={{faDownload}}
               @title={{t "general.download"}}
-              class="enabled"
+              class={{if this.showRemoveConfirmation "disabled" "enabled"}}
               aria-label={{t "general.download"}}
-            /></a>
+            />
+          </a>
         </span>
         {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
           <button
@@ -112,9 +115,13 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             type="button"
             {{on "click" (set this "showRemoveConfirmation" true)}}
             aria-label={{t "general.remove"}}
+            disabled={{this.showRemoveConfirmation}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} class="enabled remove" />
+            <FaIcon
+              @icon={{faTrash}}
+              class="remove{{if this.showRemoveConfirmation ' disabled' ' enabled'}}"
+            />
           </button>
         {{else}}
           <FaIcon @icon={{faTrash}} class="disabled" />
