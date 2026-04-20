@@ -7,11 +7,6 @@
   border-top: 0;
   border-width: 0 2px 2px;
 
-  h3 {
-    @include m.ilios-heading-h4;
-    padding: 0 0.5rem 1rem;
-  }
-
   .display-text-wrapper {
     display: block;
   }
@@ -27,6 +22,12 @@
 
     .title {
       @include m.detail-container-title;
+      @include m.ilios-heading-h5;
+      padding-bottom: 1rem;
+    }
+
+    .sub-title {
+      @include m.ilios-heading-h5;
     }
 
     .session-publicationcheck-content {
