@@ -68,6 +68,7 @@ export default class SessionPublicationCheckComponent extends Component {
           {{t "general.backToTitle" title=@session.title}}
         </LinkTo>
       </div>
+      <h3>{{t "general.publicationReview"}}</h3>
       <div class="results" {{scrollIntoView}}>
         <div class="title" data-test-title>
           {{t "general.missingItems"}}
