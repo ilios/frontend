@@ -262,15 +262,19 @@ export default class SessionObjectiveListItemComponent extends Component {
 
       {{#if @editable}}
         <div class="actions grid-item" data-test-actions>
-          {{#if (and (not this.isManaging) (not this.showRemoveConfirmation))}}
+          {{#if (not this.isManaging)}}
             <button
-              class="link-button"
+              class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
               type="button"
               aria-label={{t "general.remove"}}
+              disabled={{this.showRemoveConfirmation}}
               {{on "click" (set this "showRemoveConfirmation" true)}}
               data-test-remove
             >
-              <FaIcon @icon={{faTrash}} class="enabled remove" />
+              <FaIcon
+                @icon={{faTrash}}
+                class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+              />
             </button>
           {{else}}
             <FaIcon
