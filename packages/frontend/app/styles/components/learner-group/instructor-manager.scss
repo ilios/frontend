@@ -2,9 +2,13 @@
 
 .learner-group-instructor-manager {
   @include m.detail-container(var(--orange));
+  padding-top: 0;
 
   .detail-header {
     @include m.detail-container-header;
+    align-items: baseline;
+    border-top: 1px dotted var(--orange);
+    padding-top: 0.5rem;
 
     .title {
       @include m.detail-container-title;
@@ -26,9 +30,13 @@
   }
 
   .detail-content {
+    h4 {
+      @include m.ilios-heading-h5;
+      padding-top: 1rem;
+    }
+
     .removable-instructors {
       @include m.ilios-removable-list;
-      margin-bottom: 1rem;
     }
 
     .removable-instructor-group {
