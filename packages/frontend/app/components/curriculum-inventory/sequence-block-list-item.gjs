@@ -85,9 +85,13 @@ export default class CurriculumInventorySequenceBlockListItemComponent extends C
             type="button"
             {{on "click" (set this "showRemoveConfirmation" true)}}
             aria-label={{t "general.remove"}}
+            disabled={{this.showRemoveConfirmation}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} class="enabled remove" />
+            <FaIcon
+              @icon={{faTrash}}
+              class="remove{{if this.showRemoveConfirmation ' disabled' ' enabled'}}"
+            />
           </button>
         {{else}}
           <FaIcon
