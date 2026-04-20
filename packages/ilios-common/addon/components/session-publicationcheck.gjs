@@ -69,7 +69,7 @@ export default class SessionPublicationCheckComponent extends Component {
         </LinkTo>
       </div>
       <h3>{{t "general.publicationReview"}}</h3>
-      <div class="results" {{scrollIntoView}}>
+      <div class="results" {{scrollIntoView delay=10}}>
         <div class="title" data-test-title>
           {{t "general.missingItems"}}
           ({{@session.allPublicationIssuesLength}})
