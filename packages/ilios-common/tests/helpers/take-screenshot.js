@@ -20,7 +20,16 @@ export const takeComponentScreenshot = async (assert, description = '') => {
   }
   const filename = getUniqueName(assert, description);
   const testing = document.getElementById('ember-testing');
-  const element = testing.firstChild;
+  let element;
+  let i = 0;
+  do {
+    element = testing.children[i];
+    i++;
+  } while (element && !(element instanceof Element));
+  if (!(element instanceof Element)) {
+    console.error('Unable to find a valid Element to screenshot');
+    return;
+  }
   return snap(element, filename, {
     backgroundColor: 'hsl(0, 0%, 98%)',
   });
