@@ -10,6 +10,7 @@ export default class ProgramYear extends Model {
   @attr('boolean')
   locked;
 
+  /** @deprecated */
   @attr('boolean')
   archived;
 

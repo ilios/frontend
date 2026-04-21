@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { and, not, or } from 'ember-truth-helpers';
+import { or } from 'ember-truth-helpers';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -124,7 +124,7 @@ export default class ProgramYearListItemComponent extends Component {
     await this.args.programYear.destroyRecord();
   });
   <template>
-    {{#if (and this.cohort (not @programYear.archived))}}
+    {{#if this.cohort}}
       <tr
         class={{if this.showRemoveConfirmation "confirm-removal"}}
         data-test-program-year-list-item

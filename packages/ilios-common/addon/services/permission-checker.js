@@ -164,7 +164,7 @@ export default class PermissionCheckerService extends Service {
     return this.canChangeInSchool(school, 'CAN_CREATE_PROGRAMS');
   }
   async canUpdateProgramYear(programYear) {
-    if (programYear.get('locked') || programYear.get('archived')) {
+    if (programYear.get('locked')) {
       return false;
     }
 
@@ -187,7 +187,7 @@ export default class PermissionCheckerService extends Service {
     return this.canUpdateProgram(program);
   }
   async canDeleteProgramYear(programYear) {
-    if (programYear.get('locked') || programYear.get('archived')) {
+    if (programYear.get('locked')) {
       return false;
     }
 
