@@ -13,4 +13,9 @@
   .link-button {
     text-align: left;
   }
+
+  .link-button.disabled,
+  a.disabled {
+    cursor: default;
+  }
 }

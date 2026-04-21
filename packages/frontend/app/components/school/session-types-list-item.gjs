@@ -124,6 +124,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
           @route="session-type-visualize-vocabularies"
           @model={{@sessionType}}
           title={{t "general.vocabularies"}}
+          class={{if (or this.showRemoveConfirmation this.deleteSessionType.isRunning) "disabled"}}
         >
           <FaIcon
             @icon={{faChartColumn}}

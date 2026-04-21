@@ -29,12 +29,16 @@ export default class ReportsTableRowComponent extends Component {
       <td class="text-right" colspan="1" data-test-status>
         <button
           type="button"
-          class="link-button"
+          class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
           title={{t "general.delete"}}
           {{on "click" (fn @confirmRemoval @decoratedReport.report)}}
+          disabled={{this.showRemoveConfirmation}}
           data-test-remove
         >
-          <FaIcon @icon={{faTrash}} class="enabled remove" />
+          <FaIcon
+            @icon={{faTrash}}
+            class={{if this.showRemoveConfirmation "disabled" "enabled remove"}}
+          />
         </button>
       </td>
     </tr>

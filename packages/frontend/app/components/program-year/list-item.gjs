@@ -175,12 +175,13 @@ export default class ProgramYearListItemComponent extends Component {
             {{else if this.canLock}}
               <button
                 type="button"
-                class="link-button"
+                class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
                 aria-label={{t "general.lock"}}
+                disabled={{this.showRemoveConfirmation}}
                 {{on "click" (perform this.lock)}}
                 data-test-lock
               >
-                <FaIcon @icon={{faLockOpen}} />
+                <FaIcon @icon={{faLockOpen}} class={{if this.showRemoveConfirmation "disabled"}} />
               </button>
             {{else}}
               <FaIcon @icon={{faLockOpen}} />
@@ -188,7 +189,7 @@ export default class ProgramYearListItemComponent extends Component {
             {{#if this.canDelete}}
               <button
                 type="button"
-                class="link-button"
+                class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
                 aria-label={{t "general.remove"}}
                 {{on "click" (set this "showRemoveConfirmation" true)}}
                 disabled={{this.showRemoveConfirmation}}
@@ -196,7 +197,7 @@ export default class ProgramYearListItemComponent extends Component {
               >
                 <FaIcon
                   @icon={{faTrash}}
-                  class="remove{{if this.showRemoveConfirmation ' disabled' ' enabled'}}"
+                  class="{{if this.showRemoveConfirmation 'disabled' 'remove enabled'}}"
                 />
               </button>
             {{else}}
