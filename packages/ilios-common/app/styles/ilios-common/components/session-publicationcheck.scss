@@ -6,19 +6,28 @@
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
-  padding-left: 0.8rem;
+
+  .display-text-wrapper {
+    display: block;
+  }
 
   .back-to-session {
-    border-top: 1px solid var(--orange);
-    padding: 1rem 0;
+    padding: 1rem 0 1rem 0.5rem;
   }
 
   .results {
     background-color: var(--lightest-blue);
     @include m.detail-container(var(--orange));
+    padding: 0 0.5rem;
 
     .title {
       @include m.detail-container-title;
+      @include m.ilios-heading-h5;
+      padding-bottom: 1rem;
+    }
+
+    .sub-title {
+      @include m.ilios-heading-h5;
     }
 
     .session-publicationcheck-content {
