@@ -5,6 +5,10 @@
     button {
       @include m.ilios-button-reset;
       color: var(--red);
+
+      &.disabled {
+        cursor: default;
+      }
     }
   }
 }

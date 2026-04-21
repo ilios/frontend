@@ -6,7 +6,6 @@ import { LinkTo } from '@ember/routing';
 import formatDate from 'ember-intl/helpers/format-date';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import { and, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
@@ -99,19 +98,18 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             rel="noopener noreferrer"
             target="_blank"
             disabled={{this.showRemoveConfirmation}}
+            class={{if this.showRemoveConfirmation "disabled"}}
             data-test-download
-          >
-            <FaIcon
+          ><FaIcon
               @icon={{faDownload}}
               @title={{t "general.download"}}
               class={{if this.showRemoveConfirmation "disabled" "enabled"}}
               aria-label={{t "general.download"}}
-            />
-          </a>
+            /></a>
         </span>
-        {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
+        {{#if this.canDelete}}
           <button
-            class="link-button"
+            class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
             type="button"
             {{on "click" (set this "showRemoveConfirmation" true)}}
             aria-label={{t "general.remove"}}
@@ -120,7 +118,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
           >
             <FaIcon
               @icon={{faTrash}}
-              class="remove{{if this.showRemoveConfirmation ' disabled' ' enabled'}}"
+              class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
             />
           </button>
         {{else}}
