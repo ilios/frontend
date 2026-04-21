@@ -22,6 +22,16 @@ module('Integration | Component | ilios-header', function (hooks) {
     assert.ok(component.isPresent);
     assert.strictEqual(component.title, 'test');
 
-    await a11yAudit(this.element);
+    /*
+      Skip a specific a11y test because the `<main id="main">` element is in application.gjs and
+      not in the Header component. So we get a failure because the target isn't present
+    */
+    await a11yAudit(this.element, {
+      rules: {
+        'skip-link': {
+          enabled: false,
+        },
+      },
+    });
   });
 });
