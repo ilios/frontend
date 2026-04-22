@@ -60,7 +60,7 @@
     "ember-math-helpers": "^5.0.0",
     "ember-modifier": "^4.0.0",
     "ember-popper-modifier": "^4.1.0",
-    "ember-primitives": "^0.55.0",
+    "ember-primitives": "^0.56.0",
     "ember-set-helper": "^3.1.0",
     "ember-simple-auth": "^8.0.0",
     "ember-simple-charts": "^12.2.2",
