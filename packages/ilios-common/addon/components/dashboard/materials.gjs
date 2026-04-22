@@ -18,8 +18,7 @@ import PagedlistControls from 'ilios-common/components/pagedlist-controls';
 import SortableTh from 'ilios-common/components/sortable-th';
 import { fn } from '@ember/helper';
 import MaterialListItem from 'ilios-common/components/dashboard/material-list-item';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -373,7 +372,7 @@ export default class DashboardMaterialsComponent extends Component {
             <p>{{t "general.none"}}</p>
           {{/if}}
         {{else}}
-          <FaIcon @icon={{faSpinner}} class="orange" @size="2x" @spin={{true}} />
+          <LoadingSpinner @class="orange" @size="2x" />
         {{/if}}
       </div>
     </div>

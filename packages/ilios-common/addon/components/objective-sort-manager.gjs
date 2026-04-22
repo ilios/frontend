@@ -7,17 +7,13 @@ import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import FadeText from 'ilios-common/components/fade-text';
-import {
-  faArrowRotateLeft,
-  faCheck,
-  faSpinner,
-  faUpDownLeftRight,
-} from '@fortawesome/free-solid-svg-icons';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faArrowRotateLeft, faCheck, faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ObjectiveSortManagerComponent extends Component {
   @tracked totalObjectivesToSave;
@@ -123,7 +119,7 @@ export default class ObjectiveSortManagerComponent extends Component {
           {{on "click" (perform this.saveSortOrder)}}
         >
           {{#if this.saveSortOrder.isRunning}}
-            <FaIcon @icon={{faSpinner}} @spin={{true}} />
+            <LoadingSpinner />
             {{this.saveProgress}}%
           {{else}}
             <FaIcon @icon={{faCheck}} />

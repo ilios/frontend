@@ -15,7 +15,7 @@ import ObjectiveListItemDescriptors from 'ilios-common/components/session/object
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import ManageObjectiveParents from 'ilios-common/components/session/manage-objective-parents';
 import ManageObjectiveDescriptors from 'ilios-common/components/session/manage-objective-descriptors';
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
@@ -23,7 +23,8 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import striptags from 'striptags';
-import { faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionObjectiveListItemComponent extends Component {
   @service store;
@@ -293,7 +294,7 @@ export default class SessionObjectiveListItemComponent extends Component {
               {{on "click" (perform this.deleteObjective)}}
             >
               {{#if this.deleteObjective.isRunning}}
-                <FaIcon @icon={{faSpinner}} @spin={{true}} />
+                <LoadingSpinner />
               {{else}}
                 {{t "general.yes"}}
               {{/if}}

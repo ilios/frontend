@@ -4,8 +4,7 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 <template>
   <div class="token-login main-section">
     {{#let (uniqueId) as |templateId|}}
@@ -24,7 +23,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
         {{on "click" (perform @controller.login)}}
       >
         {{#if @controller.login.isRunning}}
-          <FaIcon @icon={{faSpinner}} @spin={{true}} />
+          <LoadingSpinner />
         {{/if}}
         {{t "general.login"}}
       </button>
