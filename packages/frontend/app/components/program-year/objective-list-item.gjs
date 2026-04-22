@@ -8,7 +8,7 @@ import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import { and, not } from 'ember-truth-helpers';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import t from 'ember-intl/helpers/t';
 import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
@@ -16,7 +16,6 @@ import HtmlEditor from 'ilios-common/components/html-editor';
 import ObjectiveListItemCompetency from './objective-list-item-competency';
 import ObjectiveListItemTerms from 'ilios-common/components/objective-list-item-terms';
 import ObjectiveListItemDescriptors from './objective-list-item-descriptors';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import ManageObjectiveCompetency from './manage-objective-competency';
 import ManageObjectiveDescriptors from './manage-objective-descriptors';
 import ObjectiveListItemExpanded from './objective-list-item-expanded';
@@ -26,10 +25,10 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import { string } from 'yup';
 import striptags from 'striptags';
 import FadeText from 'ilios-common/components/fade-text';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faCaretDown,
   faCaretRight,
-  faSpinner,
   faToggleOff,
   faToggleOn,
   faTrash,
@@ -429,7 +428,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             {{on "click" (perform this.deleteObjective)}}
           >
             {{#if this.deleteObjective.isRunning}}
-              <FaIcon @icon={{faSpinner}} @spin={{true}} />
+              <LoadingSpinner />
             {{else}}
               {{t "general.yes"}}
             {{/if}}

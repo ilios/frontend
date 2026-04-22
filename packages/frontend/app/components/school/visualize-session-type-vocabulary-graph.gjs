@@ -13,11 +13,12 @@ import SimpleChart from 'ember-simple-charts/components/simple-chart';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import SortableTh from 'ilios-common/components/sortable-th';
 import { fn } from '@ember/helper';
 import sortBy from 'ilios-common/helpers/sort-by';
-import { faDownload, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends Component {
   @service router;
@@ -235,7 +236,7 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
           </div>
         {{/if}}
       {{else}}
-        <FaIcon @icon={{faSpinner}} @spin={{true}} />
+        <LoadingSpinner />
       {{/if}}
     </div>
   </template>

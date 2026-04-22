@@ -8,10 +8,9 @@ import t from 'ember-intl/helpers/t';
 import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
 import includes from 'ilios-common/helpers/includes';
 import { fn } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import CohortCalendarFilter from 'ilios-common/components/dashboard/cohort-calendar-filter';
 import TermsCalendarFilter from 'ilios-common/components/dashboard/terms-calendar-filter';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardCalendarFiltersComponent extends Component {
   @service dataLoader;
@@ -90,7 +89,7 @@ export default class DashboardCalendarFiltersComponent extends Component {
                 {{/each}}
               </ul>
             {{else}}
-              <FaIcon @icon={{faSpinner}} @spin={{true}} />
+              <LoadingSpinner />
             {{/if}}
           </div>
         </div>
@@ -126,7 +125,7 @@ export default class DashboardCalendarFiltersComponent extends Component {
                 {{/each}}
               </ul>
             {{else}}
-              <FaIcon @icon={{faSpinner}} @spin={{true}} />
+              <LoadingSpinner />
             {{/if}}
           </div>
         </div>

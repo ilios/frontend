@@ -8,14 +8,15 @@ import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import { and, lte } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
 import mapBy0 from 'ilios-common/helpers/map-by';
 import perform from 'ember-concurrency/helpers/perform';
 import focus from 'ilios-common/modifiers/focus';
-import { faXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_TIMEOUT = 250;
 const MIN_INPUT = 3;
@@ -234,7 +235,7 @@ export default class MeshManagerComponent extends Component {
                 data-test-show-more
               >
                 {{#if this.searchMore.isRunning}}
-                  <FaIcon @icon={{faSpinner}} @spin={{true}} />
+                  <LoadingSpinner />
                 {{/if}}
                 {{t "general.showMore"}}
               </button>
