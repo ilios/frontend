@@ -53,6 +53,59 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     assert.strictEqual(page.programYears.newProgramYear.years.options.length, 10);
   });
 
+  test('sort list', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const thisYear = new Date().getFullYear();
+    const cohorts = this.server.createList('cohort', 4);
+    this.server.create('program-year', {
+      program: this.program,
+      startYear: thisYear - 2,
+      cohort: cohorts[0],
+    });
+    this.server.create('program-year', {
+      program: this.program,
+      startYear: thisYear - 1,
+      cohort: cohorts[1],
+    });
+    this.server.create('program-year', {
+      program: this.program,
+      startYear: thisYear,
+      cohort: cohorts[2],
+    });
+    await page.visit({ programId: this.program.id });
+
+    assert.ok(page.programYears.header.startYear.isSortedDescending);
+    assert.strictEqual(page.programYears.items.length, 3);
+    assert.strictEqual(page.programYears.items[0].link.text, `${thisYear}`);
+    assert.strictEqual(page.programYears.items[0].title, 'cohort 2');
+    assert.strictEqual(page.programYears.items[1].link.text, `${thisYear - 1}`);
+    assert.strictEqual(page.programYears.items[1].title, 'cohort 1');
+    assert.strictEqual(page.programYears.items[2].link.text, `${thisYear - 2}`);
+    assert.strictEqual(page.programYears.items[2].title, 'cohort 0');
+
+    await page.programYears.header.startYear.click();
+
+    assert.ok(page.programYears.header.startYear.isSortedAscending);
+    assert.strictEqual(page.programYears.items.length, 3);
+    assert.strictEqual(page.programYears.items[0].link.text, `${thisYear - 2}`);
+    assert.strictEqual(page.programYears.items[0].title, 'cohort 0');
+    assert.strictEqual(page.programYears.items[1].link.text, `${thisYear - 1}`);
+    assert.strictEqual(page.programYears.items[1].title, 'cohort 1');
+    assert.strictEqual(page.programYears.items[2].link.text, `${thisYear}`);
+    assert.strictEqual(page.programYears.items[2].title, 'cohort 2');
+
+    await page.programYears.header.startYear.click();
+
+    assert.ok(page.programYears.header.startYear.isSortedDescending);
+    assert.strictEqual(page.programYears.items.length, 3);
+    assert.strictEqual(page.programYears.items[0].link.text, `${thisYear}`);
+    assert.strictEqual(page.programYears.items[0].title, 'cohort 2');
+    assert.strictEqual(page.programYears.items[1].link.text, `${thisYear - 1}`);
+    assert.strictEqual(page.programYears.items[1].title, 'cohort 1');
+    assert.strictEqual(page.programYears.items[2].link.text, `${thisYear - 2}`);
+    assert.strictEqual(page.programYears.items[2].title, 'cohort 0');
+  });
+
   test('check competencies', async function (assert) {
     const programYear = this.server.create('program-year', {
       program: this.program,
