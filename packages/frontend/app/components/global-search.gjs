@@ -4,7 +4,6 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import GlobalSearchBox from './global-search-box';
 import { and, gt, not } from 'ember-truth-helpers';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import CourseSearchResult from './course-search-result';
 import { on } from '@ember/modifier';
@@ -14,7 +13,7 @@ import includes from 'ilios-common/helpers/includes';
 import PaginationLinks from './pagination-links';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 const COURSES_PER_PAGE = 10;
 
@@ -141,7 +140,7 @@ export default class GlobalSearchComponent extends Component {
       >
         {{#if this.resultsData.isPending}}
           <li class="searching" data-test-searching>
-            <FaIcon @icon={{faSpinner}} class="orange" @spin={{true}} />
+            <LoadingSpinner @class="orange" />
             {{t "general.currentlySearchingPrompt"}}
           </li>
         {{else}}

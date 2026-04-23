@@ -9,9 +9,10 @@ import CopyButton from 'ilios-common/components/copy-button';
 import perform from 'ember-concurrency/helpers/perform';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
-import { faCheck, faCopy, faDownload, faPlay, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCheck, faCopy, faDownload, faPlay } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsCurriculumHeaderComponent extends Component {
   @service flashMessages;
@@ -207,7 +208,7 @@ export default class ReportsCurriculumHeaderComponent extends Component {
         {{#if @showReportResults}}
           {{#if @loading}}
             <div class="loading-results">
-              <FaIcon @icon={{faSpinner}} @spin={{true}} />
+              <LoadingSpinner />
             </div>
           {{else}}
             <button type="button" {{on "click" @download}} data-test-download>
