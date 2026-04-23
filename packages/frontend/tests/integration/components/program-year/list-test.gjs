@@ -66,9 +66,9 @@ module('Integration | Component | program-year/list', function (hooks) {
     await render(<template><List @canUpdate={{false}} @program={{this.program}} /></template>);
 
     assert.strictEqual(component.items.length, 3);
-    assert.strictEqual(component.items[0].link.text, '2001');
+    assert.strictEqual(component.items[0].link.text, '2003');
     assert.strictEqual(component.items[1].link.text, '2002');
-    assert.strictEqual(component.items[2].link.text, '2003');
+    assert.strictEqual(component.items[2].link.text, '2001');
   });
 
   test('it renders long year', async function (assert) {
@@ -83,9 +83,9 @@ module('Integration | Component | program-year/list', function (hooks) {
     await render(<template><List @canUpdate={{false}} @program={{this.program}} /></template>);
 
     assert.strictEqual(component.items.length, 3);
-    assert.strictEqual(component.items[0].link.text, '2001 - 2002');
+    assert.strictEqual(component.items[0].link.text, '2003 - 2004');
     assert.strictEqual(component.items[1].link.text, '2002 - 2003');
-    assert.strictEqual(component.items[2].link.text, '2003 - 2004');
+    assert.strictEqual(component.items[2].link.text, '2001 - 2002');
   });
 
   test('create new program year', async function (assert) {
