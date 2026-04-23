@@ -136,18 +136,23 @@ export default class DetailLearningMaterialsItemComponent extends Component {
             class="icon-button"
             aria-label={{t "general.edit"}}
             {{on "click" (fn @setManagedMaterial @lm)}}
+            disabled={{this.showRemoveConfirmation}}
             data-test-edit
           >
-            <FaIcon @icon={{faPenToSquare}} />
+            <FaIcon @icon={{faPenToSquare}} class={{if this.showRemoveConfirmation "disabled"}} />
           </button>
           <button
             type="button"
-            class="icon-button remove"
+            class="icon-button{{if this.showRemoveConfirmation ' disabled' ' remove'}}"
             aria-label={{t "general.remove"}}
             {{on "click" (set this "showRemoveConfirmation" true)}}
+            disabled={{this.showRemoveConfirmation}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} class="enabled remove" />
+            <FaIcon
+              @icon={{faTrash}}
+              class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+            />
           </button>
         {{else}}
           <FaIcon @icon={{faTrash}} class="disabled" />

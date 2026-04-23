@@ -191,6 +191,7 @@ export default class CoursesListComponent extends Component {
               <ListItem
                 @course={{course}}
                 @coursesForRemovalConfirmation={{this.coursesForRemovalConfirmation}}
+                @showRemoveConfirmation={{includes course.id this.coursesForRemovalConfirmation}}
                 @savingCourseIds={{this.savingCourseIds}}
                 @lockCourse={{fn (perform this.lockCourse)}}
                 @unlockCourse={{fn (perform this.unlockCourse)}}
