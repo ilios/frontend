@@ -1,2 +1,2 @@
-import List from 'frontend/components/program-year/list';
-<template><List @canCreate={{@controller.canCreate}} @program={{@model}} /></template>
+import ProgramYearList from 'frontend/components/program-year/list';
+<template><ProgramYearList @canCreate={{@controller.canCreate}} @program={{@model}} /></template>

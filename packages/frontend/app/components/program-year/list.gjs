@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { task } from 'ember-concurrency';
@@ -7,14 +8,15 @@ import { service } from '@ember/service';
 import t from 'ember-intl/helpers/t';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import set from 'ember-set-helper/helpers/set';
-import { not } from 'ember-truth-helpers';
+import { eq, or, not } from 'ember-truth-helpers';
 import New from './new';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
-import { array } from '@ember/helper';
+import { array, fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import add from 'ember-math-helpers/helpers/add';
 import ListItem from './list-item';
+import SortableTh from 'ilios-common/components/sortable-th';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearListComponent extends Component {
@@ -22,6 +24,8 @@ export default class ProgramYearListComponent extends Component {
   @service iliosConfig;
   @tracked editorOn = false;
   @tracked savedProgramYear;
+  @tracked sortBy = 'startYear:desc';
+
   @service fetch;
 
   crossesBoundaryConfig = new TrackedAsyncData(
@@ -38,12 +42,31 @@ export default class ProgramYearListComponent extends Component {
   }
 
   get sortedProgramYears() {
+    if (this.sortBy.includes('startYear')) {
+      return this.programYears.slice().sort((a, b) => a.startYear - b.startYear);
+    }
     return sortBy(this.programYears, 'startYear');
   }
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
+  }
+
+  get sortedAscending() {
+    return !this.sortBy.includes(':desc');
+  }
+
+  @action
+  setSortBy(what) {
+    if (this.sortBy === what) {
+      what += ':desc';
+    }
+    this.sortBy = what;
+  }
+
+  get orderedProgramYears() {
+    return this.sortedAscending ? this.sortedProgramYears : this.sortedProgramYears.reverse();
   }
 
   saveNew = task({ drop: true }, async (startYear) => {
@@ -181,9 +204,16 @@ export default class ProgramYearListComponent extends Component {
             <table class="ilios-table ilios-table-colors ilios-zebra-table ilios-removable-table">
               <thead>
                 <tr>
-                  <th class="text-left">
+                  <SortableTh
+                    @align="left"
+                    @colspan={{2}}
+                    @sortedAscending={{this.sortedAscending}}
+                    @onClick={{fn this.setSortBy "startYear"}}
+                    @sortType="numeric"
+                    @sortedBy={{or (eq this.sortBy "startYear") (eq this.sortBy "startYear:desc")}}
+                  >
                     {{t "general.matriculationYear"}}
-                  </th>
+                  </SortableTh>
                   <th class="text-left">
                     {{t "general.cohort"}}
                   </th>
@@ -205,7 +235,7 @@ export default class ProgramYearListComponent extends Component {
                 </tr>
               </thead>
               <tbody>
-                {{#each this.sortedProgramYears as |programYear|}}
+                {{#each this.orderedProgramYears as |programYear|}}
                   <ListItem
                     @programYear={{programYear}}
                     @academicYearCrossesCalendarYearBoundaries={{this.academicYearCrossesCalendarYearBoundaries}}
