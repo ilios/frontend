@@ -77,7 +77,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     const origin = window.location.origin;
 
     // grouped - terms 'rolled up' into one line per session
-    if (this.args.reportOptions.taggedTermsModeGrouped) {
+    if (this.args.taggedTermsModeGrouped) {
       return this.reportResults.reduce((acc, c) => {
         c.sessions.forEach((s) => {
           const resultRow = {
@@ -219,7 +219,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
       }
       rhett[this.intl.t('general.course')] = o.courseTitle;
 
-      if (this.args.reportOptions.taggedTermsModeGrouped) {
+      if (this.args.taggedTermsModeGrouped) {
         rhett[this.intl.t('general.courseTerms')] = o.courseTerms.join(', ') ?? '';
         rhett[this.intl.t('general.session')] = o.sessionTitle;
         rhett[this.intl.t('general.sessionTerms')] = o.sessionTerms.join(', ') ?? '';
@@ -245,7 +245,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     const csv = PapaParse.unparse(data);
     this.finishedBuildingReport = true;
     createDownloadFile(
-      this.args.reportOptions.taggedTermsModeGrouped ? 'terms-grouped.csv' : 'terms-listed.csv',
+      this.args.taggedTermsModeGrouped ? 'terms-grouped.csv' : 'terms-listed.csv',
       csv,
       'text/csv',
     );
