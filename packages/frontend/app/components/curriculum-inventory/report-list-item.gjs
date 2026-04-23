@@ -117,7 +117,11 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             <FaIcon @icon={{faTrash}} class="enabled remove" />
           </button>
         {{else}}
-          <FaIcon @icon={{faTrash}} class="disabled" />
+          <FaIcon
+            @icon={{faTrash}}
+            class="disabled"
+            @title={{t "general.canNotDeleteCurriculumInventoryReport"}}
+          />
         {{/if}}
       </td>
     </tr>

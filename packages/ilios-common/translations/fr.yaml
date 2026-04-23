@@ -37,6 +37,11 @@ general:
   calendar: Calendrier
   campusNameOfRecord: Nombre de registro del campus
   cancel: Annul
+  canNotDeleteCourseObjective: "Ce objectif de cours ne peut pas être supprimé car vous n'en avez pas la permission."
+  canNotDeleteLearningMaterial: "Ce matériel d'etude ne peut pas être supprimé car vous n'en avez pas la permission."
+  canNotDeleteSession: "Cette séances ne peut pas être supprimée car elle a des conditions préalables ou vous n’avez pas la permission."
+  canNotDeleteSessionObjective: "Ce objectif de séances ne peut pas être supprimé car vous n'en avez pas la permission."
+  canNotDeleteSessionOffering: "Cette offre ne peut pas être supprimée car vous n'en avez pas la permission."
   chooseCohortTitle: Choisi objectif mère pour
   chooseFile: Choisir un Fichier
   citation: Citation

@@ -45,6 +45,20 @@ general:
   badCredentials: Incorrecta contraseña o nombre de usuario
   campusId: Campus ID
   canNotContinueWithInvalidRecords: "No se puede continuar con estos registros no válidos, por favor, corrija y vuelva a subir el archivo."
+  canNotDeleteCourse: "Este curso no se puede eliminar porque está publicado, programado, tiene elementos dependientes, o no tiene permiso."
+  canNotDeleteCurriculumInventoryReport: "Este informe de inventario de plan de estudios no se puede eliminar porque no tiene permiso."
+  canNotDeleteInstructorGroup: "Este grupo de instructores no se puede eliminar porque está asociado a un curso o no tiene permiso."
+  canNotDeleteLearnerGroup: "Este grupo de aprendedores no se puede eliminar porque está asociado a una sesión o no tiene permiso."
+  canNotDeleteProgram: "Este programa no se puede eliminar porque está asociado a un informe de inventario curricular o a un año del programa, o no tiene permiso."
+  canNotDeleteProgramYear: "Este año del programa no se puede eliminar porque está asociado a una cohorte de estudiantes o grupos, o porque no tiene permiso."
+  canNotDeleteProgramYearObjective: "Este año del programa no se puede eliminar porque porque está asociado con un curso, o no tiene permiso."
+  canNotDeleteReport: "Este informe no se puede eliminar porque aún se está cargando."
+  canNotDeleteSchoolCompetency: "Esta competencia escolar no se puede eliminar porque está vinculada a al menos un objetivo del año del programa, o porque no tiene permiso."
+  canNotDeleteSchoolCompetencyDomain: "Este dominio de competencia escolar no se puede eliminar porque hay competencias asociadas."
+  canNotDeleteSchoolSessionType: "Este tipo de sesión escolar no se puede eliminar porque no tiene permiso."
+  canNotDeleteSchoolVocabulary: "Este vocabulario escolar no se puede eliminar porque tiene al menos un término o no tiene permiso."
+  canNotDeleteSchoolVocabularyTerm: "Este término del vocabulario escolar no se puede eliminar porque tiene al menos un término subordinado, tiene una asociación, o no tiene permiso."
+  canNotDeleteSequenceBlock: "Este bloque de secuencia no se puede eliminar porque no tiene permiso."
   changeAlertRecipients: Destinatarios con alerta de cambio
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
   childSequenceOrder: Orden de Secuencia de Los Hijos
@@ -217,7 +231,7 @@ general:
   metaDescription: Gestión Curricular para las Profesiones de la Salud.
   middleName: Segundo Nombre
   minimum: Mínimo
-  missingCompetenciesMessage: Favor de agregar por lo menos una competencia para este año de programa.
+  missingCompetenciesMessage: Favor de agregar por lo menos una competencia para este año del programa.
   missingRequiredUsername: "'Nombre de Usuario' se requiere para la entrada al sistema; este usuario será incapaz a la entrada al sistema hasta que un username sea entrado"
   modifyUserPassword: Haga clic aquí para restablecer la contraseña.
   moveToGroup: "{count, plural, =1 {Mueva estudiante a {groupTitle}} other {Mueva # estudiantes a {groupTitle}}}"

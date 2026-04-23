@@ -267,7 +267,11 @@ export default class OfferingManagerComponent extends Component {
                   <FaIcon @icon={{faTrash}} class="enabled remove" />
                 </button>
               {{else}}
-                <FaIcon @icon={{faTrash}} class="disabled" />
+                <FaIcon
+                  @icon={{faTrash}}
+                  class="disabled"
+                  @title={{t "general.canNotDeleteSessionOffering"}}
+                />
               {{/if}}
             </div>
           {{/if}}

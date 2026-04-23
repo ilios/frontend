@@ -209,45 +209,53 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
           {{#if @term}}
             <div class="school-vocabulary-term-manager-properties">
               <div class="block term-title" data-test-title>
-                <label for="title-{{templateId}}">
-                  {{t "general.title"}}:
-                </label>
-                {{#if @canUpdate}}
-                  <EditableField
-                    @value={{if this.title this.title (t "general.clickToEdit")}}
-                    @save={{perform this.changeTitle}}
-                    @close={{this.revertTitleChanges}}
-                    as |keyboard isSaving|
-                  >
-                    <input
-                      id="title-{{templateId}}"
-                      type="text"
-                      value={{this.title}}
-                      disabled={{isSaving}}
-                      {{on "input" (pick "target.value" (set this "titleBuffer"))}}
-                      {{this.validations.attach "title"}}
-                      {{keyboard}}
-                      {{focus}}
+                <div class="block" data-test-label-and-value>
+                  <label for="title-{{templateId}}">
+                    {{t "general.title"}}:
+                  </label>
+                  {{#if @canUpdate}}
+                    <EditableField
+                      @value={{if this.title this.title (t "general.clickToEdit")}}
+                      @save={{perform this.changeTitle}}
+                      @close={{this.revertTitleChanges}}
+                      as |keyboard isSaving|
+                    >
+                      <input
+                        id="title-{{templateId}}"
+                        type="text"
+                        value={{this.title}}
+                        disabled={{isSaving}}
+                        {{on "input" (pick "target.value" (set this "titleBuffer"))}}
+                        {{this.validations.attach "title"}}
+                        {{keyboard}}
+                        {{focus}}
+                      />
+                      <YupValidationMessage
+                        @description={{t "general.title"}}
+                        @validationErrors={{this.validations.errors.title}}
+                        data-test-title-validation-error-message
+                      />
+                    </EditableField>
+                  {{else}}
+                    {{this.title}}
+                  {{/if}}
+                </div>
+                <span class="term-delete">
+                  {{#if (and @canDelete (not this.children.length) (not @term.hasAssociations))}}
+                    <FaIcon
+                      @icon={{faTrash}}
+                      class="clickable remove enabled"
+                      {{on "click" (perform this.deleteTerm)}}
+                      data-test-delete
                     />
-                    <YupValidationMessage
-                      @description={{t "general.title"}}
-                      @validationErrors={{this.validations.errors.title}}
-                      data-test-title-validation-error-message
+                  {{else}}
+                    <FaIcon
+                      @icon={{faTrash}}
+                      class="disabled"
+                      @title={{t "general.canNotDeleteSchoolVocabularyTerm"}}
                     />
-                  </EditableField>
-                {{else}}
-                  {{this.title}}
-                {{/if}}
-                {{#if (and @canDelete (not this.children.length) (not @term.hasAssociations))}}
-                  <FaIcon
-                    @icon={{faTrash}}
-                    class="clickable remove enabled"
-                    {{on "click" (perform this.deleteTerm)}}
-                    data-test-delete
-                  />
-                {{else}}
-                  <FaIcon @icon={{faTrash}} class="disabled" />
-                {{/if}}
+                  {{/if}}
+                </span>
               </div>
               <div class="block is-active" data-test-is-active>
                 <label>
