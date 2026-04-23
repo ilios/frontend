@@ -400,6 +400,9 @@ general:
   table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Table 7: All Events with Assessments Tagged as Formative or Summative"
   table8AllResourceTypes: "Table 8: All Resource Types"
   taggedTerms: Tagged Terms
+  taggedTermsMode: Tagged Terms Mode
+  taggedTermsModeGrouped: Grouped
+  taggedTermsModeListed: Listed
   taggedTermsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each set of attached terms is listed along with course data."
   taggedTermsReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each set of attached terms is listed along with course data."
   termsBySessionType: Terms by Session Type

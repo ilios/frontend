@@ -75,47 +75,77 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
 
   get results() {
     const origin = window.location.origin;
-    return this.reportResults.reduce((acc, c) => {
-      if (c.terms.length) {
-        c.terms.sort().forEach((cTerm) => {
-          const courseTerm = {
+
+    // grouped - terms 'rolled up' into one line per session
+    if (this.args.taggedTermsModeGrouped) {
+      return this.reportResults.reduce((acc, c) => {
+        c.sessions.forEach((s) => {
+          const resultRow = {
             courseId: c.id,
             courseTitle: c.title,
-            courseTerms: c.terms,
-            courseTermTitle: cTerm.title,
-            courseTermVocabulary: cTerm.vocabulary.title,
-            courseLink: `${origin}${this.router.urlFor('course', c.id)}`,
-            sessionTitle: '',
-          };
-
-          if (this.hasMultipleSchools) {
-            courseTerm.schoolTitle = c.school.title;
-          }
-
-          acc.push(courseTerm);
-        });
-      }
-      c.sessions.forEach((s) => {
-        s.terms.forEach((sTerm) => {
-          const sessionTerm = {
-            courseId: c.id,
-            courseTitle: c.title,
-            courseTerms: [],
+            courseTerms: c.terms
+              .sort(this.sortTerms)
+              .map((cTerm) => `(${cTerm.vocabulary.title}) ${cTerm.title}`),
             sessionTitle: s.title,
-            sessionTermTitle: sTerm.title,
-            sessionTermVocabulary: sTerm.vocabulary.title,
+            sessionTerms: s.terms
+              .sort(this.sortTerms)
+              .map((sTerm) => `(${sTerm.vocabulary.title}) ${sTerm.title}`),
             sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
           };
 
           if (this.hasMultipleSchools) {
-            sessionTerm.schoolTitle = c.school.title;
+            resultRow.schoolTitle = c.school.title;
           }
 
-          acc.push(sessionTerm);
+          acc.push(resultRow);
         });
-      });
-      return acc;
-    }, []);
+        return acc;
+      }, []);
+    }
+    // listed - one term per line per course or session
+    else {
+      return this.reportResults.reduce((acc, c) => {
+        if (c.terms.length) {
+          c.terms.sort().forEach((cTerm) => {
+            const courseTerm = {
+              courseId: c.id,
+              courseTitle: c.title,
+              courseTerms: c.terms,
+              courseTermTitle: cTerm.title,
+              courseTermVocabulary: cTerm.vocabulary.title,
+              courseLink: `${origin}${this.router.urlFor('course', c.id)}`,
+              sessionTitle: '',
+            };
+
+            if (this.hasMultipleSchools) {
+              courseTerm.schoolTitle = c.school.title;
+            }
+
+            acc.push(courseTerm);
+          });
+        }
+        c.sessions.forEach((s) => {
+          s.terms.forEach((sTerm) => {
+            const sessionTerm = {
+              courseId: c.id,
+              courseTitle: c.title,
+              courseTerms: [],
+              sessionTitle: s.title,
+              sessionTermTitle: sTerm.title,
+              sessionTermVocabulary: sTerm.vocabulary.title,
+              sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
+            };
+
+            if (this.hasMultipleSchools) {
+              sessionTerm.schoolTitle = c.school.title;
+            }
+
+            acc.push(sessionTerm);
+          });
+        });
+        return acc;
+      }, []);
+    }
   }
 
   get sortedResults() {
@@ -128,6 +158,14 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     }
 
     return a.sessionTitle.localeCompare(b.sessionTitle);
+  };
+
+  sortTerms = (a, b) => {
+    if (a.vocabulary.title !== b.vocabulary.title) {
+      return a.vocabulary.title.localeCompare(b.vocabulary.title);
+    }
+
+    return a.title.localeCompare(b.title);
   };
 
   get selectedSchoolIds() {
@@ -181,25 +219,36 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
       }
       rhett[this.intl.t('general.course')] = o.courseTitle;
 
-      if (o.courseTerms.length) {
-        rhett[this.intl.t('general.courseTerm')] = o.courseTermTitle;
-        rhett[this.intl.t('general.session')] = '';
-        rhett[this.intl.t('general.sessionTerm')] = '';
-        rhett[this.intl.t('general.vocabulary')] = o.courseTermVocabulary;
-        rhett[this.intl.t('general.link')] = o.courseLink;
-      } else {
-        rhett[this.intl.t('general.courseTerm')] = '';
+      if (this.args.taggedTermsModeGrouped) {
+        rhett[this.intl.t('general.courseTerms')] = o.courseTerms.join(', ') ?? '';
         rhett[this.intl.t('general.session')] = o.sessionTitle;
-        rhett[this.intl.t('general.sessionTerm')] = o.sessionTermTitle;
-        rhett[this.intl.t('general.vocabulary')] = o.sessionTermVocabulary;
+        rhett[this.intl.t('general.sessionTerms')] = o.sessionTerms.join(', ') ?? '';
         rhett[this.intl.t('general.link')] = o.sessionLink;
+      } else {
+        if (o.courseTerms.length) {
+          rhett[this.intl.t('general.courseTerm')] = o.courseTermTitle;
+          rhett[this.intl.t('general.session')] = '';
+          rhett[this.intl.t('general.sessionTerm')] = '';
+          rhett[this.intl.t('general.vocabulary')] = o.courseTermVocabulary;
+          rhett[this.intl.t('general.link')] = o.courseLink;
+        } else {
+          rhett[this.intl.t('general.courseTerm')] = '';
+          rhett[this.intl.t('general.session')] = o.sessionTitle;
+          rhett[this.intl.t('general.sessionTerm')] = o.sessionTermTitle;
+          rhett[this.intl.t('general.vocabulary')] = o.sessionTermVocabulary;
+          rhett[this.intl.t('general.link')] = o.sessionLink;
+        }
       }
 
       return rhett;
     });
     const csv = PapaParse.unparse(data);
     this.finishedBuildingReport = true;
-    createDownloadFile(`terms.csv`, csv, 'text/csv');
+    createDownloadFile(
+      this.args.taggedTermsModeGrouped ? 'terms-grouped.csv' : 'terms-listed.csv',
+      csv,
+      'text/csv',
+    );
     await timeout(2000);
     this.finishedBuildingReport = false;
   });
