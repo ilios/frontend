@@ -26,10 +26,6 @@
     right: 0;
     z-index: 100;
 
-    @include cm.for-laptop-and-up {
-      width: 100%;
-    }
-
     > * {
       margin-bottom: 0;
     }
@@ -42,10 +38,12 @@
       outline: none;
       padding: 0.5rem 0.5rem 0.5rem 1.5rem;
       text-align: right;
+
       @include cm.for-laptop-and-up {
         padding: 0.5rem;
         text-align: center;
       }
+
       text-decoration: none;
       white-space: nowrap;
 
@@ -58,6 +56,7 @@
         background-color: var(--blue);
         border-color: var(--blue);
         color: var(--white);
+
         &:focus {
           border-color: var(--lightest-blue);
         }
@@ -69,9 +68,11 @@
         border-color: var(--green);
         color: var(--white);
         cursor: default;
+
         &:focus {
           border-color: var(--lightest-green);
         }
+
         &:hover {
           background-color: var(--green);
         }
@@ -81,6 +82,7 @@
 
   .toggle {
     background-color: var(--super-light-grey);
+
     span {
       display: none;
 
@@ -94,6 +96,7 @@
     &[aria-expanded="true"] {
       background-color: var(--white);
     }
+
     &[aria-expanded="true"] {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
