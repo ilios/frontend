@@ -125,6 +125,7 @@ general:
   deselectUser: Deseleccione usuario
   didYouMean: ¿Quería decir <a href="{href}">{suggestion}</a>?
   director: Director
+  disabledByConfirmation: "Esto no se puede utilizar al confirmar la eliminación."
   disableUser: Desactivar el usuario
   doesNotMatchUserRecord: 'Cargado {description} no coincide con la información en Ilios, cuál es "{record}"'
   downloadCompetencyMap: Descargar el mapa de competencias

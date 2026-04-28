@@ -407,7 +407,16 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
             type="button"
             {{on "click" (set this "showRemoveConfirmation" true)}}
-            aria-label={{t "general.remove"}}
+            aria-label={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
             disabled={{this.showRemoveConfirmation}}
             data-test-remove
           >

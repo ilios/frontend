@@ -195,14 +195,23 @@ export default class SessionsGridSessionRowComponent extends Component {
             class="link-button{{if @showConfirmDelete ' disabled'}}"
             type="button"
             {{on "click" (fn @confirmDelete @session.id)}}
-            title={{t "general.remove"}}
+            aria-label={{if
+              @showConfirmDelete
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            title={{if
+              @showConfirmDelete
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
             disabled={{@showConfirmDelete}}
             data-test-delete
           >
             <FaIcon
               @icon={{faTrash}}
               @ariaHidden={{false}}
-              class="remove{{if @showConfirmDelete ' disabled' ' enabled'}}"
+              class={{if @showConfirmDelete " disabled" "remove enabled"}}
             />
           </button>
         {{else}}

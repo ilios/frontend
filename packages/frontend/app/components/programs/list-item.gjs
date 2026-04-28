@@ -58,7 +58,16 @@ export default class ProgramListItemComponent extends Component {
           <button
             type="button"
             class={{if this.showRemoveConfirmation "disabled"}}
-            aria-label={{t "general.remove"}}
+            aria-label={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
             {{on "click" (set this "showRemoveConfirmation" true)}}
             disabled={{this.showRemoveConfirmation}}
             data-test-remove

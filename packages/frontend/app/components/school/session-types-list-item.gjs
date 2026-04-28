@@ -102,7 +102,16 @@ export default class SchoolSessionTypesListItemComponent extends Component {
             <button
               type="button"
               class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
-              aria-label={{t "general.remove"}}
+              aria-label={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.remove")
+              }}
+              title={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.remove")
+              }}
               disabled={{or (this.showRemoveConfirmation this.deleteSessionType.isRunning)}}
               data-test-delete
               {{on "click" (set this "showRemoveConfirmation" true)}}

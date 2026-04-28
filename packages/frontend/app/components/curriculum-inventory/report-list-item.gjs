@@ -102,9 +102,17 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             data-test-download
           ><FaIcon
               @icon={{faDownload}}
-              @title={{t "general.download"}}
+              aria-label={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.download")
+              }}
+              @title={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.download")
+              }}
               class={{if this.showRemoveConfirmation "disabled" "enabled"}}
-              aria-label={{t "general.download"}}
             /></a>
         </span>
         {{#if this.canDelete}}
@@ -112,7 +120,16 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
             type="button"
             {{on "click" (set this "showRemoveConfirmation" true)}}
-            aria-label={{t "general.remove"}}
+            aria-label={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
             disabled={{this.showRemoveConfirmation}}
             data-test-remove
           >

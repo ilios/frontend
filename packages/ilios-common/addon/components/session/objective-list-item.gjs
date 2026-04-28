@@ -261,11 +261,26 @@ export default class SessionObjectiveListItemComponent extends Component {
 
       {{#if @editable}}
         <div class="actions grid-item" data-test-actions>
-          {{#if (not this.isManaging)}}
+          {{#if this.isManaging}}
+            <FaIcon
+              @icon={{faTrash}}
+              class="disabled"
+              @title={{t "general.canNotDeleteSessionObjective"}}
+            />
+          {{else}}
             <button
               class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
               type="button"
-              aria-label={{t "general.remove"}}
+              aria-label={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.remove")
+              }}
+              title={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.remove")
+              }}
               disabled={{this.showRemoveConfirmation}}
               {{on "click" (set this "showRemoveConfirmation" true)}}
               data-test-remove
@@ -275,12 +290,6 @@ export default class SessionObjectiveListItemComponent extends Component {
                 class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
               />
             </button>
-          {{else}}
-            <FaIcon
-              @icon={{faTrash}}
-              class="disabled"
-              @title={{t "general.canNotDeleteSessionObjective"}}
-            />
           {{/if}}
         </div>
       {{/if}}
