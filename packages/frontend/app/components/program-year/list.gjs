@@ -43,7 +43,7 @@ export default class ProgramYearListComponent extends Component {
 
   get sortedProgramYears() {
     if (this.sortBy.includes('startYear')) {
-      return this.programYears.slice().sort((a, b) => a.startYear - b.startYear);
+      return this.programYears.toSorted((a, b) => a.startYear - b.startYear);
     }
     return sortBy(this.programYears, 'startYear');
   }
