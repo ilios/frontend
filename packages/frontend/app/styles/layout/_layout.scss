@@ -23,6 +23,11 @@
 
   & > header {
     grid-area: header;
+
+    // make sure "Skip to main content" link is not visible on Safari
+    .ember-a11y-refocus-skip-link {
+      clip-path: inset(100%);
+    }
   }
 
   & > nav {
