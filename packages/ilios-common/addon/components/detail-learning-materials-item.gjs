@@ -133,8 +133,17 @@ export default class DetailLearningMaterialsItemComponent extends Component {
         {{#if @editable}}
           <button
             type="button"
-            class="icon-button"
-            aria-label={{t "general.edit"}}
+            class="icon-button{{if this.showRemoveConfirmation ' disabled'}}"
+            aria-label={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.edit")
+            }}
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.edit")
+            }}
             {{on "click" (fn @setManagedMaterial @lm)}}
             disabled={{this.showRemoveConfirmation}}
             data-test-edit
@@ -144,7 +153,16 @@ export default class DetailLearningMaterialsItemComponent extends Component {
           <button
             type="button"
             class="icon-button{{if this.showRemoveConfirmation ' disabled' ' remove'}}"
-            aria-label={{t "general.remove"}}
+            aria-label={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
             {{on "click" (set this "showRemoveConfirmation" true)}}
             disabled={{this.showRemoveConfirmation}}
             data-test-remove

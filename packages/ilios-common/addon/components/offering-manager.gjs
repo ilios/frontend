@@ -250,7 +250,16 @@ export default class OfferingManagerComponent extends Component {
               <button
                 class="link-button edit"
                 type="button"
-                title={{t "general.edit"}}
+                aria-label={{if
+                  this.showRemoveConfirmation
+                  (t "general.disabledByConfirmation")
+                  (t "general.edit")
+                }}
+                title={{if
+                  this.showRemoveConfirmation
+                  (t "general.disabledByConfirmation")
+                  (t "general.edit")
+                }}
                 disabled={{this.showRemoveConfirmation}}
                 {{on "click" this.toggleIsEditing}}
                 data-test-edit
@@ -264,14 +273,23 @@ export default class OfferingManagerComponent extends Component {
                 <button
                   class="link-button remove"
                   type="button"
-                  title={{t "general.remove"}}
+                  aria-label={{if
+                    this.showRemoveConfirmation
+                    (t "general.disabledByConfirmation")
+                    (t "general.remove")
+                  }}
+                  title={{if
+                    this.showRemoveConfirmation
+                    (t "general.disabledByConfirmation")
+                    (t "general.remove")
+                  }}
                   disabled={{this.showRemoveConfirmation}}
                   {{on "click" (set0 this "showRemoveConfirmation" true)}}
                   data-test-remove
                 >
                   <FaIcon
                     @icon={{faTrash}}
-                    class="remove{{if this.showRemoveConfirmation ' disabled' ' enabled'}}"
+                    class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
                   />
                 </button>
               {{else}}

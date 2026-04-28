@@ -10,7 +10,6 @@ import { and, eq } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import notEq from 'ember-truth-helpers/helpers/not-eq';
 import perform from 'ember-concurrency/helpers/perform';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -100,7 +99,16 @@ export default class SchoolVocabulariesListComponent extends Component {
                           ' disabled'
                         }}"
                       type="button"
-                      aria-label={{t "general.edit"}}
+                      aria-label={{if
+                        (eq this.showRemovalConfirmationFor vocabulary)
+                        (t "general.disabledByConfirmation")
+                        (t "general.edit")
+                      }}
+                      title={{if
+                        (eq this.showRemovalConfirmationFor vocabulary)
+                        (t "general.disabledByConfirmation")
+                        (t "general.edit")
+                      }}
                       disabled={{eq this.showRemovalConfirmationFor vocabulary}}
                       data-test-manage
                       {{on "click" (fn @manageVocabulary vocabulary.id)}}
@@ -114,25 +122,35 @@ export default class SchoolVocabulariesListComponent extends Component {
                         }}
                       />
                     </button>
-                    {{#if
-                      (and
-                        @canDelete
-                        (eq vocabulary.termCount 0)
-                        (notEq this.showRemovalConfirmationFor vocabulary)
-                      )
-                    }}
+                    {{#if (and @canDelete (eq vocabulary.termCount 0))}}
                       <button
                         class="link-button{{if
                             (eq this.showRemovalConfirmationFor vocabulary)
                             ' disabled'
                           }}"
                         type="button"
-                        aria-label={{t "general.remove"}}
+                        aria-label={{if
+                          (eq this.showRemovalConfirmationFor vocabulary)
+                          (t "general.disabledByConfirmation")
+                          (t "general.remove")
+                        }}
+                        title={{if
+                          (eq this.showRemovalConfirmationFor vocabulary)
+                          (t "general.disabledByConfirmation")
+                          (t "general.remove")
+                        }}
                         disabled={{eq this.showRemovalConfirmationFor vocabulary}}
                         data-test-delete
                         {{on "click" (fn this.confirmRemoval vocabulary)}}
                       >
-                        <FaIcon @icon={{faTrash}} class="enabled remove" />
+                        <FaIcon
+                          @icon={{faTrash}}
+                          class={{if
+                            (eq this.showRemovalConfirmationFor vocabulary)
+                            "disabled"
+                            "remove enabled"
+                          }}
+                        />
                       </button>
                     {{else}}
                       <FaIcon

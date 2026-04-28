@@ -30,14 +30,23 @@ export default class ReportsTableRowComponent extends Component {
         <button
           type="button"
           class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
-          title={{t "general.delete"}}
+          aria-label={{if
+            this.showRemoveConfirmation
+            (t "general.disabledByConfirmation")
+            (t "general.delete")
+          }}
+          title={{if
+            this.showRemoveConfirmation
+            (t "general.disabledByConfirmation")
+            (t "general.delete")
+          }}
           {{on "click" (fn @confirmRemoval @decoratedReport.report)}}
           disabled={{this.showRemoveConfirmation}}
           data-test-remove
         >
           <FaIcon
             @icon={{faTrash}}
-            class={{if this.showRemoveConfirmation "disabled" "enabled remove"}}
+            class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
           />
         </button>
       </td>

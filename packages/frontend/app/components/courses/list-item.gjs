@@ -92,7 +92,16 @@ export default class CoursesListItemComponent extends Component {
             <button
               type="button"
               class="link-button{{if @showRemoveConfirmation ' disabled'}}"
-              title={{t "general.lockCourse"}}
+              aria-label={{if
+                @showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.lockCourse")
+              }}
+              title={{if
+                @showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.lockCourse")
+              }}
               disabled={{@showRemoveConfirmation}}
               {{on "click" (fn @lockCourse @course)}}
               data-test-lock
@@ -106,14 +115,23 @@ export default class CoursesListItemComponent extends Component {
             <button
               type="button"
               class="link-button{{if @showRemoveConfirmation ' disabled'}}"
-              title={{t "general.deleteCourse"}}
+              aria-label={{if
+                @showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.deleteCourse")
+              }}
+              title={{if
+                @showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.deleteCourse")
+              }}
               disabled={{@showRemoveConfirmation}}
               {{on "click" (fn @confirmRemoval @course)}}
               data-test-remove
             >
               <FaIcon
                 @icon={{faTrash}}
-                class="remove{{if @showRemoveConfirmation ' disabled' ' enabled'}}"
+                class={{if @showRemoveConfirmation "disabled" "remove enabled"}}
               />
             </button>
           {{else}}
