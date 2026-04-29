@@ -13,6 +13,9 @@ const definition = {
   confirmCourseRemoval: clickable(
     '[data-test-courses] .confirm-removal td:nth-of-type(1) button.remove',
   ),
+  cancelCourseRemoval: clickable(
+    '[data-test-courses] .confirm-removal td:nth-of-type(1) button.done',
+  ),
   isSortedByTitleAscending: hasClass(
     'fa-arrow-down-a-z',
     '[data-test-course-headings] th:eq(0) svg',

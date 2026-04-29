@@ -1,4 +1,4 @@
-import { clickable, create, hasClass, isVisible, text } from 'ember-cli-page-object';
+import { attribute, clickable, create, hasClass, isVisible, text } from 'ember-cli-page-object';
 import publicationStatus from 'ilios-common/page-objects/components/publication-status';
 
 const definition = {
@@ -8,14 +8,38 @@ const definition = {
   startDate: text('[data-test-start-date]'),
   endDate: text('[data-test-end-date]'),
   publicationStatus,
-  isLocked: hasClass('fa-lock', 'svg', { scope: '[data-test-status]', at: 1 }),
-  isUnlocked: hasClass('fa-lock-open', 'svg', { scope: '[data-test-status]', at: 1 }),
-  canLock: isVisible('[data-test-lock]', { scope: '[data-test-status]' }),
-  canUnlock: isVisible('[data-test-unlock]', { scope: '[data-test-status]' }),
-  canRemove: isVisible('[data-test-remove]', { scope: '[data-test-status]' }),
-  lock: clickable('[data-test-lock]', { scope: '[data-test-status]' }),
-  unLock: clickable('[data-test-unlock]', { scope: '[data-test-status]' }),
-  remove: clickable('[data-test-remove]', { scope: '[data-test-status]' }),
+  status: {
+    scope: '[data-test-status]',
+    isLocked: hasClass('fa-lock', 'svg', { at: 1 }),
+    canLock: isVisible('[data-test-lock]'),
+    lock: clickable('[data-test-lock]'),
+    lockIcon: {
+      scope: '[data-test-lock]',
+      at: 1,
+      label: attribute('aria-label'),
+      title: attribute('title'),
+    },
+    isUnlocked: hasClass('fa-lock-open', 'svg', { at: 1 }),
+    canUnlock: isVisible('[data-test-unlock]'),
+    unLock: clickable('[data-test-unlock]'),
+    unlockIcon: {
+      scope: '[data-test-unlock]',
+      at: 1,
+      label: attribute('aria-label'),
+      title: attribute('title'),
+    },
+    canRemove: isVisible('[data-test-remove]'),
+    remove: clickable('[data-test-remove]'),
+    removeIcon: {
+      scope: '[data-test-remove]',
+      label: attribute('aria-label'),
+      title: attribute('title'),
+    },
+    removeDisabledIcon: {
+      scope: '.fa-trash.disabled',
+      title: text('title'),
+    },
+  },
 };
 
 export default definition;
