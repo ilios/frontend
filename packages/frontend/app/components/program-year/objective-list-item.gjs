@@ -402,17 +402,28 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             <FaIcon @icon={{faToggleOff}} @title={{t "general.inactive"}} />
           {{/if}}
         {{/if}}
-        {{#if
-          (and this.canDelete @editable (not this.isManaging) (not this.showRemoveConfirmation))
-        }}
+        {{#if (and this.canDelete @editable (not this.isManaging))}}
           <button
-            class="link-button"
+            class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
             type="button"
             {{on "click" (set this "showRemoveConfirmation" true)}}
-            aria-label={{t "general.remove"}}
+            aria-label={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            disabled={{this.showRemoveConfirmation}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} class="enabled remove" />
+            <FaIcon
+              @icon={{faTrash}}
+              class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+            />
           </button>
         {{else}}
           <FaIcon

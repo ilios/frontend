@@ -69,10 +69,23 @@ export default class InstructorGroupsListItemComponent extends Component {
             class="link-button"
             type="button"
             {{on "click" (set this "showRemoveConfirmation" true)}}
-            title={{t "general.remove"}}
+            aria-label={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            disabled={{this.showRemoveConfirmation}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} class="enabled remove" />
+            <FaIcon
+              @icon={{faTrash}}
+              class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+            />
           </button>
         {{else}}
           <FaIcon

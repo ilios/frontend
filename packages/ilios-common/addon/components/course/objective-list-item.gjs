@@ -278,22 +278,35 @@ export default class CourseObjectiveListItemComponent extends Component {
 
       {{#if @editable}}
         <div class="actions grid-item" data-test-actions>
-          {{#if (and (not this.isManaging) (not this.showRemoveConfirmation))}}
-            <button
-              class="link-button"
-              type="button"
-              aria-label={{t "general.remove"}}
-              {{on "click" (set this "showRemoveConfirmation" true)}}
-              data-test-remove
-            >
-              <FaIcon @icon={{faTrash}} class="enabled remove" />
-            </button>
-          {{else}}
+          {{#if this.isManaging}}
             <FaIcon
               @icon={{faTrash}}
               class="disabled"
               @title={{t "general.canNotDeleteCourseObjective"}}
             />
+          {{else}}
+            <button
+              class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+              type="button"
+              aria-label={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.remove")
+              }}
+              title={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.remove")
+              }}
+              disabled={{this.showRemoveConfirmation}}
+              {{on "click" (set this "showRemoveConfirmation" true)}}
+              data-test-remove
+            >
+              <FaIcon
+                @icon={{faTrash}}
+                class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+              />
+            </button>
           {{/if}}
         </div>
       {{/if}}

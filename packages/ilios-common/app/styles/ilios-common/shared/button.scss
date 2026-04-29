@@ -12,6 +12,7 @@ button {
 
     &:disabled {
       color: var(--black);
+      cursor: default;
     }
   }
 }

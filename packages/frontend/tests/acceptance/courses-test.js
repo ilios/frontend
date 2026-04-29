@@ -240,11 +240,11 @@ module('Acceptance | Courses', function (hooks) {
     await page.visit();
 
     assert.notOk(
-      page.root.list.courses[0].canRemove,
+      page.root.list.courses[0].status.canRemove,
       'non-privileged user cannot delete published course',
     );
     assert.notOk(
-      page.root.list.courses[1].canRemove,
+      page.root.list.courses[1].status.canRemove,
       'non-privileged user cannot delete unpublished course',
     );
   });
@@ -265,10 +265,13 @@ module('Acceptance | Courses', function (hooks) {
     await page.visit();
 
     assert.notOk(
-      page.root.list.courses[0].canRemove,
+      page.root.list.courses[0].status.canRemove,
       'privileged user cannot delete published course',
     );
-    assert.ok(page.root.list.courses[1].canRemove, 'privileged user can delete unpublished course');
+    assert.ok(
+      page.root.list.courses[1].status.canRemove,
+      'privileged user can delete unpublished course',
+    );
   });
 
   test('new course', async function (assert) {
@@ -405,7 +408,7 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(page.root.list.courses.length, 1);
     assert.ok(page.root.newCourseLinkIsHidden);
 
-    await page.root.list.courses[0].remove();
+    await page.root.list.courses[0].status.remove();
     await page.root.list.confirmCourseRemoval();
     assert.strictEqual(page.root.list.courses.length, 0);
     assert.notOk(page.root.list.listIsVisible);
@@ -431,14 +434,15 @@ module('Acceptance | Courses', function (hooks) {
       'Not Published',
       'course status is correct',
     );
-    assert.notOk(page.root.list.courses[0].isLocked, 'course is not locked');
+
+    assert.notOk(page.root.list.courses[0].status.isLocked, 'course is not locked');
     assert.strictEqual(page.root.list.courses[1].title, 'course 1', 'course name is correct');
     assert.strictEqual(
       page.root.list.courses[1].publicationStatus.icon.title,
       'Not Published',
       'course status is correct',
     );
-    assert.ok(page.root.list.courses[1].isLocked, 'course is locked');
+    assert.ok(page.root.list.courses[1].status.isLocked, 'course is locked');
   });
 
   test('no academic years exist', async function (assert) {
@@ -610,13 +614,14 @@ module('Acceptance | Courses', function (hooks) {
     });
 
     await page.visit();
+
     assert.strictEqual(page.root.list.courses.length, 2);
-    assert.ok(page.root.list.courses[0].isLocked, 'first course is locked');
-    assert.ok(page.root.list.courses[1].isUnlocked, 'second course is unlocked');
-    await page.root.list.courses[0].unLock();
-    await page.root.list.courses[1].lock();
-    assert.ok(page.root.list.courses[0].isUnlocked, 'first course is now unlocked');
-    assert.ok(page.root.list.courses[1].isLocked, 'second course is now locked');
+    assert.ok(page.root.list.courses[0].status.isLocked, 'first course is locked');
+    assert.ok(page.root.list.courses[1].status.isUnlocked, 'second course is unlocked');
+    await page.root.list.courses[0].status.unLock();
+    await page.root.list.courses[1].status.lock();
+    assert.ok(page.root.list.courses[0].status.isUnlocked, 'first course is now unlocked');
+    assert.ok(page.root.list.courses[1].status.isLocked, 'second course is now locked');
   });
 
   test('non-privileged users cannot lock and unlock course but can see the icon', async function (assert) {
@@ -638,10 +643,10 @@ module('Acceptance | Courses', function (hooks) {
 
     await page.visit();
     assert.strictEqual(page.root.list.courses.length, 2);
-    assert.ok(page.root.list.courses[0].isLocked, 'first course is locked');
-    assert.ok(page.root.list.courses[1].isUnlocked, 'second course is unlocked');
-    assert.notOk(page.root.list.courses[0].canLock);
-    assert.notOk(page.root.list.courses[1].canUnlock);
+    assert.ok(page.root.list.courses[0].status.isLocked, 'first course is locked');
+    assert.ok(page.root.list.courses[1].status.isUnlocked, 'second course is unlocked');
+    assert.notOk(page.root.list.courses[0].status.canLock);
+    assert.notOk(page.root.list.courses[1].status.canUnlock);
   });
 
   test('title filter escapes regex', async function (assert) {
@@ -679,11 +684,11 @@ module('Acceptance | Courses', function (hooks) {
     await page.visit({ year });
 
     assert.notOk(
-      page.root.list.courses[0].canRemove,
+      page.root.list.courses[0].status.canRemove,
       'privileged user cannot delete course with descendants',
     );
     assert.ok(
-      page.root.list.courses[1].canRemove,
+      page.root.list.courses[1].status.canRemove,
       'privileged user can delete course with ancestors',
     );
   });
@@ -792,5 +797,115 @@ module('Acceptance | Courses', function (hooks) {
     assert.notOk(page.root.filterHasFocus);
     await page.root.filterByTitle('first');
     assert.ok(page.root.filterHasFocus);
+  });
+
+  test('course actions have proper labels and titles during deletion confirmation and non-confirmation', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const year = DateTime.now().year.toString();
+    this.server.create('academic-year', { id: year });
+    this.server.create('course', {
+      year,
+      school: this.school,
+      published: false,
+    });
+    const courseParent = this.server.create('course', {
+      year,
+      school: this.school,
+    });
+    this.server.create('course', {
+      year,
+      school: this.school,
+      ancestor: courseParent,
+    });
+    await page.visit();
+
+    assert.strictEqual(page.root.list.courses.length, 3);
+
+    assert.ok(page.root.list.courses[0].status.canRemove, 'first course can be removed');
+    assert.strictEqual(
+      page.root.list.courses[0].status.lockIcon.label,
+      'Lock Course',
+      'first course lock icon aria-label correct',
+    );
+    assert.strictEqual(
+      page.root.list.courses[0].status.lockIcon.title,
+      'Lock Course',
+      'first course lock icon title correct',
+    );
+    assert.strictEqual(
+      page.root.list.courses[0].status.removeIcon.title,
+      'Delete Course',
+      'first course remove icon title correct',
+    );
+
+    assert.notOk(page.root.list.courses[1].status.canRemove, 'second course cannot be removed');
+    assert.strictEqual(
+      page.root.list.courses[1].status.lockIcon.label,
+      'Lock Course',
+      'second course lock icon aria-label correct',
+    );
+    assert.strictEqual(
+      page.root.list.courses[1].status.lockIcon.title,
+      'Lock Course',
+      'second course lock icon title correct',
+    );
+    assert.ok(
+      page.root.list.courses[1].status.removeDisabledIcon,
+      'second course shows disabled remove icon',
+    );
+    assert.strictEqual(
+      page.root.list.courses[1].status.removeDisabledIcon.title,
+      'This course cannot be deleted because it is published, scheduled, has been rolled over, or you do not have permission.',
+    );
+
+    assert.ok(page.root.list.courses[2].status.canRemove, 'third course can be removed');
+    assert.strictEqual(
+      page.root.list.courses[2].status.lockIcon.label,
+      'Lock Course',
+      'third course lock icon aria-label correct',
+    );
+    assert.strictEqual(
+      page.root.list.courses[2].status.lockIcon.title,
+      'Lock Course',
+      'third course lock icon title correct',
+    );
+    assert.strictEqual(
+      page.root.list.courses[2].status.removeIcon.title,
+      'Delete Course',
+      'third course remove icon title correct',
+    );
+
+    await page.root.list.courses[0].status.remove();
+
+    assert.strictEqual(
+      page.root.list.courses[0].status.lockIcon.label,
+      'This cannot be used while confirming deletion.',
+    );
+    assert.strictEqual(
+      page.root.list.courses[0].status.lockIcon.title,
+      'This cannot be used while confirming deletion.',
+    );
+    assert.strictEqual(
+      page.root.list.courses[0].status.removeIcon.title,
+      'This cannot be used while confirming deletion.',
+    );
+
+    await page.root.list.cancelCourseRemoval();
+
+    assert.strictEqual(
+      page.root.list.courses[0].status.lockIcon.label,
+      'Lock Course',
+      'first course lock icon aria-label correct',
+    );
+    assert.strictEqual(
+      page.root.list.courses[0].status.lockIcon.title,
+      'Lock Course',
+      'first course lock icon title correct',
+    );
+    assert.strictEqual(
+      page.root.list.courses[0].status.removeIcon.title,
+      'Delete Course',
+      'first course remove icon title correct',
+    );
   });
 });

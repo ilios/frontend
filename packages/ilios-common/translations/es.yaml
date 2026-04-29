@@ -109,6 +109,7 @@ general:
   description: Descripción
   directorCount: "Hay {count, plural, =1 {1 director} other {# directores}}"
   directors: Directores
+  disabledByConfirmation: "Esto no se puede utilizar al confirmar la eliminación."
   disabledUserAccount: cuenta de usuario deshabilitada
   displayName: Nombre de Mostrar
   done: Acabado

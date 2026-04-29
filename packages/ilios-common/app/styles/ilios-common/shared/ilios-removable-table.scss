@@ -34,7 +34,7 @@
         padding-top: 1.1em;
       }
 
-      .remove {
+      .remove:not(.disabled) {
         background-color: var(--white);
         color: var(--red);
 

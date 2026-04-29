@@ -133,21 +133,44 @@ export default class DetailLearningMaterialsItemComponent extends Component {
         {{#if @editable}}
           <button
             type="button"
-            class="icon-button"
-            aria-label={{t "general.edit"}}
+            class="icon-button{{if this.showRemoveConfirmation ' disabled'}}"
+            aria-label={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.edit")
+            }}
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.edit")
+            }}
             {{on "click" (fn @setManagedMaterial @lm)}}
+            disabled={{this.showRemoveConfirmation}}
             data-test-edit
           >
-            <FaIcon @icon={{faPenToSquare}} />
+            <FaIcon @icon={{faPenToSquare}} class={{if this.showRemoveConfirmation "disabled"}} />
           </button>
           <button
             type="button"
-            class="icon-button remove"
-            aria-label={{t "general.remove"}}
+            class="icon-button{{if this.showRemoveConfirmation ' disabled' ' remove'}}"
+            aria-label={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
             {{on "click" (set this "showRemoveConfirmation" true)}}
+            disabled={{this.showRemoveConfirmation}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} class="enabled remove" />
+            <FaIcon
+              @icon={{faTrash}}
+              class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+            />
           </button>
         {{else}}
           <FaIcon
