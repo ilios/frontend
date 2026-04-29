@@ -218,134 +218,136 @@ export default class LearnerGroupUserManagerComponent extends Component {
         {{#if @users.length}}
           <div class="learner-group-user-manager-content">
             <div class="list">
-              <div class="title" data-test-group-members>
+              <div class="title{{unless this.groupUsers.length ' empty'}}" data-test-group-members>
                 {{t "general.groupMembers"}}
                 ({{this.groupUsers.length}})
               </div>
-              <table
-                class="ilios-table ilios-table-colors ilios-zebra-table sticky-header"
-                data-test-assigned-users
-              >
-                <thead>
-                  <tr>
-                    <th class="text-left" colspan="1">
-                      <input
-                        type="checkbox"
-                        checked={{this.hasAllSelectedGroupUsers}}
-                        indeterminate={{this.hasSomeSelectedGroupUsers}}
-                        aria-label={{t "general.selectAllOrNone"}}
-                        {{on "click" this.toggleAllGroupUsersSelection}}
-                        data-test-toggle-all
-                      />
-                    </th>
-                    <SortableTh
-                      @colspan={{4}}
-                      @onClick={{fn this.setSortBy "fullName"}}
-                      @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
-                      @sortedAscending={{this.sortedAscending}}
-                    >
-                      {{t "general.name"}}
-                    </SortableTh>
-                    <th class="text-left" colspan="2">
-                      {{t "general.campusId"}}
-                    </th>
-                    <th class="text-left hide-from-small-screen" colspan="5">
-                      {{t "general.email"}}
-                    </th>
-                    <SortableTh
-                      @colspan={{2}}
-                      @onClick={{fn this.setSortBy "lowestGroupInTreeTitle"}}
-                      @sortedBy={{or
-                        (eq @sortBy "lowestGroupInTreeTitle")
-                        (eq @sortBy "lowestGroupInTreeTitle:desc")
-                      }}
-                      @sortedAscending={{this.sortedAscending}}
-                    >
-                      {{t "general.groupName"}}
-                    </SortableTh>
-                    <th class="text-left" colspan="1">
-                      {{t "general.actions"}}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each (sortBy @sortBy this.groupUsers) as |user index|}}
-                    <tr class={{unless user.enabled "disabled-user-account" ""}}>
-                      <td class="text-left" colspan="1">
+              {{#if this.groupUsers.length}}
+                <table
+                  class="ilios-table ilios-table-colors ilios-zebra-table sticky-header"
+                  data-test-assigned-users
+                >
+                  <thead>
+                    <tr>
+                      <th class="text-left" colspan="1">
                         <input
-                          aria-labelledby="selected-username-{{index}}-{{templateId}}"
                           type="checkbox"
-                          checked={{includes user.content this.selectedGroupUsers}}
-                          {{on "click" (fn this.toggleGroupUserSelection user.content)}}
+                          checked={{this.hasAllSelectedGroupUsers}}
+                          indeterminate={{this.hasSomeSelectedGroupUsers}}
+                          aria-label={{t "general.selectAllOrNone"}}
+                          {{on "click" this.toggleAllGroupUsersSelection}}
+                          data-test-toggle-all
                         />
-                      </td>
-                      <td class="text-left" colspan="4">
-                        <button
-                          class="inline-button"
-                          type="button"
-                          {{on "click" (fn this.toggleGroupUserSelection user.content)}}
-                        >
-                          <UserNameInfo
-                            id="selected-username-{{index}}-{{templateId}}"
-                            @user={{user}}
-                          />
-                          <UserStatus @user={{user}} />
-                        </button>
-                      </td>
-                      <td class="text-left" colspan="2">
-                        <button
-                          class="inline-button"
-                          type="button"
-                          {{on "click" (fn this.toggleGroupUserSelection user.content)}}
-                        >
-                          {{user.campusId}}
-                        </button>
-                      </td>
-                      <td class="text-left hide-from-small-screen" colspan="5">
-                        <button
-                          class="inline-button"
-                          type="button"
-                          {{on "click" (fn this.toggleGroupUserSelection user.content)}}
-                        >
-                          {{user.email}}
-                        </button>
-                      </td>
-                      <td class="text-left" colspan="2" data-test-learnergroup>
-                        <LinkTo
-                          @route="learner-group"
-                          @model={{user.lowestGroupInTree}}
-                          @query={{hash isEditing=true sortUsersBy=@sortBy}}
-                          title={{user.lowestGroupInTree.titleWithParentTitles}}
-                          aria-label={{user.lowestGroupInTree.titleWithParentTitles}}
-                        >
-                          {{user.lowestGroupInTree.title}}
-                        </LinkTo>
-                      </td>
-                      <td>
-                        {{#if (includes user.content this.usersBeingRemovedFromGroup)}}
-                          <LoadingSpinner />
-                        {{else}}
-                          {{#if (eq this.selectedGroupUsers.length 0)}}
-                            <button
-                              type="button"
-                              class="link-button"
-                              {{on "click" (perform this.removeUserFromGroup user.content)}}
-                              title={{t
-                                "general.removeLearnerToCohort"
-                                cohort=@cohortTitle
-                                count=1
-                              }}
-                              data-test-remove-user
-                            >
-                              <FaIcon @icon={{faMinus}} class="no" />
-                            </button>
-                          {{/if}}
-                        {{/if}}
-                      </td>
+                      </th>
+                      <SortableTh
+                        @colspan={{4}}
+                        @onClick={{fn this.setSortBy "fullName"}}
+                        @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
+                        @sortedAscending={{this.sortedAscending}}
+                      >
+                        {{t "general.name"}}
+                      </SortableTh>
+                      <th class="text-left" colspan="2">
+                        {{t "general.campusId"}}
+                      </th>
+                      <th class="text-left hide-from-small-screen" colspan="5">
+                        {{t "general.email"}}
+                      </th>
+                      <SortableTh
+                        @colspan={{2}}
+                        @onClick={{fn this.setSortBy "lowestGroupInTreeTitle"}}
+                        @sortedBy={{or
+                          (eq @sortBy "lowestGroupInTreeTitle")
+                          (eq @sortBy "lowestGroupInTreeTitle:desc")
+                        }}
+                        @sortedAscending={{this.sortedAscending}}
+                      >
+                        {{t "general.groupName"}}
+                      </SortableTh>
+                      <th class="text-left" colspan="1">
+                        {{t "general.actions"}}
+                      </th>
                     </tr>
-                  {{/each}}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {{#each (sortBy @sortBy this.groupUsers) as |user index|}}
+                      <tr class={{unless user.enabled "disabled-user-account" ""}}>
+                        <td class="text-left" colspan="1">
+                          <input
+                            aria-labelledby="selected-username-{{index}}-{{templateId}}"
+                            type="checkbox"
+                            checked={{includes user.content this.selectedGroupUsers}}
+                            {{on "click" (fn this.toggleGroupUserSelection user.content)}}
+                          />
+                        </td>
+                        <td class="text-left" colspan="4">
+                          <button
+                            class="inline-button"
+                            type="button"
+                            {{on "click" (fn this.toggleGroupUserSelection user.content)}}
+                          >
+                            <UserNameInfo
+                              id="selected-username-{{index}}-{{templateId}}"
+                              @user={{user}}
+                            />
+                            <UserStatus @user={{user}} />
+                          </button>
+                        </td>
+                        <td class="text-left" colspan="2">
+                          <button
+                            class="inline-button"
+                            type="button"
+                            {{on "click" (fn this.toggleGroupUserSelection user.content)}}
+                          >
+                            {{user.campusId}}
+                          </button>
+                        </td>
+                        <td class="text-left hide-from-small-screen" colspan="5">
+                          <button
+                            class="inline-button"
+                            type="button"
+                            {{on "click" (fn this.toggleGroupUserSelection user.content)}}
+                          >
+                            {{user.email}}
+                          </button>
+                        </td>
+                        <td class="text-left" colspan="2" data-test-learnergroup>
+                          <LinkTo
+                            @route="learner-group"
+                            @model={{user.lowestGroupInTree}}
+                            @query={{hash isEditing=true sortUsersBy=@sortBy}}
+                            title={{user.lowestGroupInTree.titleWithParentTitles}}
+                            aria-label={{user.lowestGroupInTree.titleWithParentTitles}}
+                          >
+                            {{user.lowestGroupInTree.title}}
+                          </LinkTo>
+                        </td>
+                        <td>
+                          {{#if (includes user.content this.usersBeingRemovedFromGroup)}}
+                            <LoadingSpinner />
+                          {{else}}
+                            {{#if (eq this.selectedGroupUsers.length 0)}}
+                              <button
+                                type="button"
+                                class="link-button"
+                                {{on "click" (perform this.removeUserFromGroup user.content)}}
+                                title={{t
+                                  "general.removeLearnerToCohort"
+                                  cohort=@cohortTitle
+                                  count=1
+                                }}
+                                data-test-remove-user
+                              >
+                                <FaIcon @icon={{faMinus}} class="no" />
+                              </button>
+                            {{/if}}
+                          {{/if}}
+                        </td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              {{/if}}
               <div class="title" data-test-all-other-members>
                 {{t "general.allOtherMembers" topLevelGroupTitle=@topLevelGroupTitle}}
                 ({{this.nonGroupUsers.length}})
