@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
+import { action } from '@ember/object';
 import { DateTime } from 'luxon';
 import { cached, tracked } from '@glimmer/tracking';
 import { findById } from 'ilios-common/utils/array-helpers';
@@ -15,12 +16,14 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import includes from 'ilios-common/helpers/includes';
 import { LinkTo } from '@ember/routing';
 import UserNameInfo from 'ilios-common/components/user-name-info';
+import SortableTh from 'ilios-common/components/sortable-th';
 
 export default class AssignStudentsManagerComponent extends Component {
   @service store;
   @service dataLoader;
 
   @tracked primaryCohortId = null;
+  @tracked sortBy = 'fullName';
 
   @cached
   get schoolData() {
@@ -93,6 +96,18 @@ export default class AssignStudentsManagerComponent extends Component {
       return this.cohorts.reverse()[0];
     }
   }
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(what) {
+    if (this.sortBy === what) {
+      what += ':desc';
+    }
+    this.sortBy = what;
+  }
   <template>
     <div class="assign-students-manager" data-test-assign-students-manager>
       <div class="header">
@@ -164,19 +179,37 @@ export default class AssignStudentsManagerComponent extends Component {
                   {{t "general.all"}}
                 </label>
               </th>
-              <th class="text-left" colspan="4">
+              <SortableTh
+                @align="left"
+                @colspan={{4}}
+                @sortedAscending={{this.sortedAscending}}
+                @onClick={{fn this.setSortBy "fullName"}}
+                @sortedBy={{or (eq this.sortBy "fullName") (eq this.sortBy "fullName:desc")}}
+              >
                 {{t "general.fullName"}}
-              </th>
-              <th class="text-left" colspan="4">
+              </SortableTh>
+              <SortableTh
+                @align="left"
+                @colspan={{4}}
+                @sortedAscending={{this.sortedAscending}}
+                @onClick={{fn this.setSortBy "email"}}
+                @sortedBy={{or (eq this.sortBy "email") (eq this.sortBy "email:desc")}}
+              >
                 {{t "general.email"}}
-              </th>
-              <th class="text-left" colspan="2">
+              </SortableTh>
+              <SortableTh
+                @align="left"
+                @colspan={{2}}
+                @sortedAscending={{this.sortedAscending}}
+                @onClick={{fn this.setSortBy "campusId"}}
+                @sortedBy={{or (eq this.sortBy "campusId") (eq this.sortBy "campusId:desc")}}
+              >
                 {{t "general.campusId"}}
-              </th>
+              </SortableTh>
             </tr>
           </thead>
           <tbody>
-            {{#each @selectableStudents as |user|}}
+            {{#each (sortBy this.sortBy @selectableStudents) as |user|}}
               <tr class={{if (includes user @selectedStudents) "highlighted"}} data-test-student>
                 <td class="text-left" colspan="1">
                   <input
