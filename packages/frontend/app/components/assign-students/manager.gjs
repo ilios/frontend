@@ -12,6 +12,7 @@ import set from 'ember-set-helper/helpers/set';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { and, eq, gt, lt, not, or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
+import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import includes from 'ilios-common/helpers/includes';
 import { LinkTo } from '@ember/routing';
@@ -145,6 +146,15 @@ export default class AssignStudentsManagerComponent extends Component {
                 {{t "general.save"}}
               {{/if}}
             </button>
+            <div class="titlefilter" data-test-title-filter>
+              <input
+                aria-label={{t "general.filterByTitle"}}
+                placeholder={{t "general.pendingUserUpdates.filterBy"}}
+                type="text"
+                value={{@query}}
+                {{on "input" (pick "target.value" (perform @setQuery))}}
+              />
+            </div>
           {{/if}}
         {{else}}
           <div class="no-cohorts" data-test-no-cohorts>{{t
