@@ -10,6 +10,8 @@ import { fn } from '@ember/helper';
     @setSelectedCourseIds={{@controller.setSelectedCourseIds}}
     @report={{@controller.report}}
     @setReport={{set @controller "report"}}
+    @taggedTermsModeGrouped={{@controller.taggedTermsModeGrouped}}
+    @toggleTaggedTermsModeGrouped={{@controller.toggleTaggedTermsModeGrouped}}
     @schools={{@model}}
     @run={{fn (set @controller "run") true}}
     @stop={{fn (set @controller "run") false}}

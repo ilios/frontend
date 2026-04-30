@@ -2,10 +2,16 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 
 export default class ReportsCurriculumController extends Controller {
-  queryParams = [{ courses: 'courses' }, { report: 'report' }, { run: 'run' }];
+  queryParams = [
+    { courses: 'courses' },
+    { report: 'report' },
+    { taggedTermsModeGrouped: 'taggedTermsModeGrouped' },
+    { run: 'run' },
+  ];
 
   @tracked courses = null;
   @tracked report = null;
+  @tracked taggedTermsModeGrouped = false;
   @tracked run = false;
 
   get selectedCourseIds() {
@@ -19,5 +25,9 @@ export default class ReportsCurriculumController extends Controller {
       //use a Set to remove duplicates
       this.courses = [...new Set(ids)].join('-');
     }
+  };
+
+  toggleTaggedTermsModeGrouped = () => {
+    this.taggedTermsModeGrouped = !this.taggedTermsModeGrouped;
   };
 }
