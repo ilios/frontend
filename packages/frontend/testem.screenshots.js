@@ -3,6 +3,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const FailureOnlyReporter = require('testem-failure-only-reporter');
 
 const buildDir = process.env.BUILD_DIR || path.resolve(__dirname, '../../build');
 const downloadDir = `${buildDir}/screenshots`;
@@ -43,4 +44,5 @@ module.exports = {
     Firefox: ['--headless'],
   },
   firefox_user_js: firefoxUserJsPath,
+  reporter: FailureOnlyReporter,
 };
