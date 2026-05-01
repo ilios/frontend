@@ -1,8 +1,9 @@
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import sortBy from 'ilios-common/helpers/sort-by';
-import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div
     class="session-objective-list-item-descriptors grid-item"
@@ -18,7 +19,7 @@ import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-s
         data-test-save
       >
         {{#if @isSaving}}
-          <FaIcon @icon={{faSpinner}} @spin={{true}} />
+          <LoadingSpinner />
         {{else}}
           <FaIcon @icon={{faCheck}} />
         {{/if}}

@@ -3,11 +3,12 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import noop from 'ilios-common/helpers/noop';
 import { fn } from '@ember/helper';
-import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default class ObjectiveListItemTermsComponent extends Component {
   @cached
@@ -30,7 +31,7 @@ export default class ObjectiveListItemTermsComponent extends Component {
           {{on "click" @save}}
         >
           {{#if @isSaving}}
-            <FaIcon @icon={{faSpinner}} @spin={{true}} />
+            <LoadingSpinner />
           {{else}}
             <FaIcon @icon={{faCheck}} />
           {{/if}}

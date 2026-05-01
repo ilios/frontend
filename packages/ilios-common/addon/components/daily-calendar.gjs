@@ -3,12 +3,11 @@ import { service } from '@ember/service';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { modifier } from 'ember-modifier';
 import { DateTime } from 'luxon';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import DailyCalendarEvent from 'ilios-common/components/daily-calendar-event';
 import { fn } from '@ember/helper';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class DailyCalendarComponent extends Component {
   @service intl;
@@ -66,7 +65,7 @@ export default class DailyCalendarComponent extends Component {
     >
       <h2 class="day-of-week" data-test-day-of-week>
         {{#if @isLoadingEvents}}
-          <FaIcon @icon={{faSpinner}} @spin={{true}} />
+          <LoadingSpinner />
           {{t "general.loadingEvents"}}
           ...
         {{else}}

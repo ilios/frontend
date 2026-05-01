@@ -2,6 +2,6 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 <template>
   <span class="loading-spinner">
-    <FaIcon @icon={{faSpinner}} @spin={{true}} />
+    <FaIcon @icon={{faSpinner}} @spin={{true}} class={{@class}} @size={{@size}} />
   </span>
 </template>

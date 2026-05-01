@@ -10,10 +10,11 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import optional from 'ilios-common/helpers/optional';
 import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import WeekGlanceEvent from 'ilios-common/components/week-glance-event';
 import formatDate from 'ember-intl/helpers/format-date';
-import { faSpinner, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class WeeklyGlanceComponent extends Component {
   @service userEvents;
@@ -189,7 +190,7 @@ export default class WeeklyGlanceComponent extends Component {
           {{/if}}
         {{else}}
           <p>
-            <FaIcon @icon={{faSpinner}} @spin={{true}} />
+            <LoadingSpinner />
             {{t "general.loadingEvents"}}
           </p>
         {{/if}}

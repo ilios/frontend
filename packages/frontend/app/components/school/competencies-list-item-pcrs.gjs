@@ -5,11 +5,12 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { fn } from '@ember/helper';
 import pcrsUriToNumber from '../../helpers/pcrs-uri-to-number';
-import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesListItemPcrsComponent extends Component {
   save = task({ drop: true }, async () => {
@@ -40,7 +41,7 @@ export default class SchoolCompetenciesListItemPcrsComponent extends Component {
           data-test-save
         >
           {{#if this.save.isRunning}}
-            <FaIcon @icon={{faSpinner}} @spin={{true}} />
+            <LoadingSpinner />
           {{else}}
             <FaIcon @icon={{faCheck}} />
           {{/if}}
