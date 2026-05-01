@@ -34,6 +34,8 @@ export default class LoginRoute extends Route {
     if (type === 'cas') {
       return await this.casLogin();
     }
+
+    throw new Error(`Login type not supported: ${type}`);
   }
 
   async casLogin() {
