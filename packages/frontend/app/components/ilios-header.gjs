@@ -74,8 +74,12 @@ export default class IliosHeaderComponent extends Component {
       <NavigationNarrator
         @navigationText={{t "general.navigationCompleteText"}}
         @skipText={{t "general.skipToMainContent"}}
+        @skipLink={{false}}
         @routeChangeValidator={{this.checkRouteChange}}
       />
+      <a href="#main" class="visually-hidden">
+        {{t "general.skipToMainContent"}}
+      </a>
       <h1 class="visually-hidden" data-test-title>
         {{this.pageTitle.title}}
       </h1>
