@@ -9,13 +9,12 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { and, lte } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
 import mapBy0 from 'ilios-common/helpers/map-by';
 import perform from 'ember-concurrency/helpers/perform';
 import focus from 'ilios-common/modifiers/focus';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_TIMEOUT = 250;
@@ -180,7 +179,7 @@ export default class MeshManagerComponent extends Component {
             />
           </div>
         {{/if}}
-        <div {{onClickOutside this.clear}} data-test-search-results-container>
+        <div data-test-search-results-container>
           {{#if this.search.isRunning}}
             <ul class="mesh-search-results">
               <li>
