@@ -9,6 +9,10 @@
 
   .title {
     @include m.detail-container-title-style;
+
+    &.empty {
+      margin-bottom: 0.5em;
+    }
   }
 
   .actions {
