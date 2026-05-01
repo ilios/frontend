@@ -19,6 +19,40 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
   });
 
+  test('check back to sessions list', async function (assert) {
+    await setupAuthentication(
+      {
+        school: this.school,
+        administeredSchools: [this.school],
+      },
+      true,
+    );
+    this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.strictEqual(page.backToSessions.text, 'Back to Session List');
+    assert.strictEqual(page.courseAndStatus.course, 'course 0');
+    assert.strictEqual(page.courseAndStatus.status, 'Not Published');
+
+    const coursePublished = this.server.create('course', {
+      id: 2,
+      school: this.school,
+      published: true,
+    });
+    this.server.create('session', {
+      id: 1,
+      course: coursePublished,
+      sessionType: this.sessionTypes[0],
+    });
+
+    await page.visit({ courseId: 2, sessionId: 1 });
+    assert.strictEqual(page.backToSessions.text, 'Back to Session List');
+    assert.strictEqual(page.courseAndStatus.course, 'course 1');
+    assert.strictEqual(page.courseAndStatus.status, 'Published');
+  });
+
   test('check fields', async function (assert) {
     await setupAuthentication(
       {
