@@ -148,15 +148,6 @@ export default class AssignStudentsRootComponent extends Component {
             {{this.selectedSchool.title}}
           {{/if}}
         </div>
-        <div class="titlefilter" data-test-title-filter>
-          <input
-            aria-label={{t "general.filterByTitle"}}
-            placeholder={{t "general.pendingUserUpdates.filterBy"}}
-            type="text"
-            value={{@query}}
-            {{on "input" (pick "target.value" (perform this.setQuery))}}
-          />
-        </div>
       </div>
       <Manager
         @school={{this.selectedSchool}}
@@ -164,6 +155,8 @@ export default class AssignStudentsRootComponent extends Component {
         @selectedStudents={{this.selectedStudents}}
         @changeUserSelection={{this.changeUserSelection}}
         @changeAllUserSelections={{this.changeAllUserSelections}}
+        @query={{@query}}
+        @setQuery={{this.setQuery}}
         @save={{perform this.save}}
         @isSaving={{this.save.isRunning}}
       />

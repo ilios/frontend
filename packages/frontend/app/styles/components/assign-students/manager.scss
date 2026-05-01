@@ -15,6 +15,10 @@
 
     @include m.for-laptop-and-up {
       flex-direction: row;
+
+      .titlefilter {
+        margin-left: auto;
+      }
     }
 
     label {
