@@ -129,7 +129,7 @@ export default class ProgramYearListItemComponent extends Component {
         class={{if this.showRemoveConfirmation "confirm-removal"}}
         data-test-program-year-list-item
       >
-        <td class="text-left">
+        <td class="text-left" colspan="2">
           <LinkTo @route="program-year" @models={{array this.program @programYear}} data-test-link>
             <FaIcon @icon={{faSquareUpRight}} />
             {{this.academicYear}}
@@ -231,7 +231,7 @@ export default class ProgramYearListItemComponent extends Component {
               </div>
             </div>
           </td>
-          <td colspan="3" class="hide-from-large-screen" data-test-confirm-removal>
+          <td colspan="4" class="hide-from-large-screen" data-test-confirm-removal>
             <div class="confirm-message" data-test-message>
               {{t "general.confirmRemoveProgramYear" courseCount=this.cohort.courses.length}}
               <br />
