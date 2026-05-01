@@ -199,8 +199,6 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     assert.notOk(component.meshTerm.hasSelectedTerm, 'no mesh term selected');
     await component.meshTerm.meshManager.search.set('descriptor 0');
     await takeComponentScreenshot(assert, 'with descriptor');
-    //reset the search because the screenshot steals focus
-    await component.meshTerm.meshManager.search.set('descriptor 0');
     await component.meshTerm.meshManager.searchResults[0].add();
     await takeComponentScreenshot(assert, 'with term selected');
     assert.strictEqual(
