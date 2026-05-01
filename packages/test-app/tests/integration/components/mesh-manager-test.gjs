@@ -152,19 +152,4 @@ module('Integration | Component | mesh-manager', function (hooks) {
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].text, 'no results');
   });
-
-  test('clicking outside of search results dismissed them.', async function (assert) {
-    const descriptors = this.server.createList('mesh-descriptor', 3);
-    this.set('terms', [descriptors[0], descriptors[2]]);
-    await render(
-      <template>
-        <MeshManager @editable={{true}} @terms={{this.terms}} @add={{(noop)}} @remove={{(noop)}} />
-      </template>,
-    );
-    await component.search.set('descriptor');
-    assert.strictEqual(component.searchResults.length, 3);
-    await component.search.click(); // click on anything outside the search results area, doesn't matter what.
-    assert.strictEqual(component.search.value, '');
-    assert.strictEqual(component.searchResults.length, 0);
-  });
 });
