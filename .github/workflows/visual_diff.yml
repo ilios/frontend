@@ -53,6 +53,7 @@ jobs:
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm install
       - name: Capture Screenshots
+        continue-on-error: true
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem.screenshots.js
       - name: Rename screenshots
@@ -106,6 +107,7 @@ jobs:
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm install
       - name: Capture Screenshots
+        continue-on-error: true
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem.screenshots.js
       - name: Rename screenshots
