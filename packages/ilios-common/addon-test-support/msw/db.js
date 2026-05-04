@@ -56,6 +56,10 @@ Object.keys(relationships).forEach((name) => {
   });
 });
 
+function isRelatedRecord(modelName, field) {
+  return relationships[modelName].some((r) => r.field === field);
+}
+
 async function getRelatedRecord(modelName, field, id) {
   const { target } = relationships[modelName].find((r) => r.field === field);
   if (!target) {
@@ -72,4 +76,4 @@ async function getRelatedRecord(modelName, field, id) {
 }
 
 // Export all collections as db object for backwards compatibility
-export { collections as db, getRelatedRecord };
+export { collections as db, getRelatedRecord, isRelatedRecord };

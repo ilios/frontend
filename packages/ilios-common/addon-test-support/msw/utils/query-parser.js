@@ -7,6 +7,7 @@ export function parseQueryParams(searchParams) {
     queryTerms: [],
     limit: 100000, // Match Mirage default
     offset: 0,
+    include: null,
   };
 
   for (const [key, value] of searchParams.entries()) {
@@ -29,9 +30,11 @@ export function parseQueryParams(searchParams) {
     } else if (key === 'q') {
       result.queryTerms = value.split(' ').filter(Boolean);
     } else if (key === 'limit') {
-      result.limit = parseInt(value, 10);
+      result.limit = Number(value);
     } else if (key === 'offset') {
-      result.offset = parseInt(value, 10);
+      result.offset = Number(value);
+    } else if (key === 'include') {
+      result.include = value;
     }
   }
 
