@@ -14,7 +14,9 @@ export function createCrudHandlers(modelName, apiRoute) {
     // GET collection
     http.get(`/api/${apiPath}`, async ({ request }) => {
       const url = new URL(request.url);
-      const { filterParams, limit, offset, queryTerms } = parseQueryParams(url.searchParams);
+      const { filterParams, limit, offset, queryTerms, include } = parseQueryParams(
+        url.searchParams,
+      );
 
       let records = await db[modelName].all();
       records = await filterByParams(modelName, records, filterParams);
@@ -40,7 +42,7 @@ export function createCrudHandlers(modelName, apiRoute) {
         totalCount: total,
       };
 
-      return HttpResponse.json(formatJsonApi(paginatedRecords, modelName, { meta }));
+      return HttpResponse.json(formatJsonApi(paginatedRecords, modelName, { meta, include }));
     }),
 
     // GET single record

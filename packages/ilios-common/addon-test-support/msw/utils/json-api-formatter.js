@@ -4,7 +4,7 @@ import { getTypeFor } from '../relationships';
 
 // Transforms @msw/data records into JSON:API format compatible with Ember Data
 export function formatJsonApi(data, modelName, options = {}) {
-  const { included = [], meta = null } = options;
+  const { include = null, meta = null } = options;
   const isCollection = Array.isArray(data);
 
   const response = {
@@ -13,8 +13,11 @@ export function formatJsonApi(data, modelName, options = {}) {
       : formatResource(data, modelName),
   };
 
-  if (included.length > 0) {
-    response.included = formatIncluded(data, included);
+  if (include?.length > 0) {
+    const included = new Set();
+    addIncluded(modelName, data, include, included);
+
+    response.included = included.values().toArray();
   }
 
   if (meta) {
@@ -83,30 +86,32 @@ function formatRelationship(related, typeName) {
   };
 }
 
-function formatIncluded(data, includeList) {
-  const included = [];
-  const seen = new Set();
+function addIncluded(modelName, data, includeList, included) {
+  const includes = includeList.split(',');
 
   const items = Array.isArray(data) ? data : [data];
 
   for (const item of items) {
-    for (const relationshipName of includeList) {
-      const related = item[relationshipName];
-      if (!related) continue;
+    for (const include of includes) {
+      const includedItems = include.split('.');
+      const field = includedItems.shift();
 
-      const relatedItems = Array.isArray(related) ? related : [related];
+      const related = item[field];
 
-      for (const relatedItem of relatedItems) {
-        const key = `${relatedItem.__typename}-${relatedItem.id}`;
-        if (!seen.has(key)) {
-          seen.add(key);
-          included.push(formatResource(relatedItem, relatedItem.__typename));
+      if (related) {
+        const relatedItems = Array.isArray(related) ? related : [related];
+        const type = getTypeFor(modelName, field);
+        for (const relatedItem of relatedItems) {
+          if (!included.has(relatedItem)) {
+            included.add(formatResource(relatedItem, type));
+          }
+          if (includedItems.length) {
+            addIncluded(type, relatedItem, includedItems.join('.'), included);
+          }
         }
       }
     }
   }
-
-  return included;
 }
 
 export default formatJsonApi;

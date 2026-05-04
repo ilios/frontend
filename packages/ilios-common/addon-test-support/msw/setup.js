@@ -4,7 +4,7 @@ import { startMSW } from './start-msw.js';
 import { db } from './db.js';
 import { createModel, createModelList, resetIdCounter } from './create-model.js';
 
-// Drop-in replacement for setupMSW() that maintains the same API
+// Drop-in replacement for setupMirage() that maintains the same API
 export function setupMSW(hooks) {
   hooks.beforeEach(async function () {
     if (!this.owner) {
