@@ -1,4 +1,4 @@
 export default {
-  title: (i) => `vocabulary ${i}`,
+  title: (i) => `Vocabulary ${i + 1}`,
   active: true,
 };
