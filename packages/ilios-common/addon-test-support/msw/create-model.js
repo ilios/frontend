@@ -39,6 +39,7 @@ function factory(modelName, attrs) {
   const defaults = factoryDefaults[modelName] || {};
 
   const built = {};
+
   for (const [key, value] of Object.entries(defaults)) {
     if (typeof value === 'function') {
       // For non-arrow functions, bind the resolved object as 'this'
