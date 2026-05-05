@@ -1,44 +1,17 @@
+import qs from 'qs';
+
 // Parses Ilios-specific query parameters: filters[field], limit/offset, and search queries
 export function parseQueryParams(searchParams) {
-  const filterParamRegex = /filters\[([a-z]+)\]/i;
+  // temporary workaround - pass string instead of URLSearchParams [ST 2026/05/05]
+  const theRealParams2 = qs.parse(searchParams.toString());
 
-  const result = {
-    filterParams: [],
-    queryTerms: [],
-    limit: 100000, // Match Mirage default
-    offset: 0,
-    include: null,
+  return {
+    filterParams: theRealParams2.filters ?? [],
+    queryTerms: theRealParams2.q?.split(' ').filter(Boolean) ?? [],
+    limit: Number(theRealParams2.limit ?? 100000), // Match Mirage default
+    offset: Number(theRealParams2.offset ?? 0),
+    include: theRealParams2.include ?? null,
   };
-
-  for (const [key, value] of searchParams.entries()) {
-    if (filterParamRegex.test(key)) {
-      const match = key.match(filterParamRegex);
-      const param = match[1];
-
-      // Parse array values: filters[id]=[1,2,3]
-      let parsedValue = value;
-      if (value.startsWith('[') && value.endsWith(']')) {
-        parsedValue = value.slice(1, -1).split(',');
-      }
-
-      // Convert string 'false' to boolean
-      if (parsedValue === 'false') {
-        parsedValue = false;
-      }
-
-      result.filterParams.push({ param, value: parsedValue });
-    } else if (key === 'q') {
-      result.queryTerms = value.split(' ').filter(Boolean);
-    } else if (key === 'limit') {
-      result.limit = Number(value);
-    } else if (key === 'offset') {
-      result.offset = Number(value);
-    } else if (key === 'include') {
-      result.include = value;
-    }
-  }
-
-  return result;
 }
 
 export function applyFilters(data, filterParams) {
