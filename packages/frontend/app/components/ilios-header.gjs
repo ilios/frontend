@@ -73,7 +73,6 @@ export default class IliosHeaderComponent extends Component {
     <header class="ilios-header" data-test-ilios-header ...attributes>
       <NavigationNarrator
         @navigationText={{t "general.navigationCompleteText"}}
-        @skipText={{t "general.skipToMainContent"}}
         @skipLink={{false}}
         @routeChangeValidator={{this.checkRouteChange}}
       />
