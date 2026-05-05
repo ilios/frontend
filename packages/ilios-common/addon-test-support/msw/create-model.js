@@ -55,8 +55,10 @@ function factory(modelName, attrs) {
 
   //combine our factory object with user passed attrs
   const rhett = { ...built, ...attrs };
+  // always increment regardless of whether the id has been provided or not.
+  // this is to keep us consistent with Mirage's behaviour.
+  const id = getIdentityManager(modelName).inc();
   if (!rhett.id) {
-    const id = getIdentityManager(modelName).inc();
     rhett.id = `${id}`;
   }
 
