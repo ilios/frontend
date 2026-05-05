@@ -57,7 +57,7 @@ const coursesHandler = http.get('/api/courses', async ({ request }) => {
     });
   }
 
-  const { filterParams, limit, offset, queryTerms } = parseQueryParams(params);
+  const { filterParams, limit, offset, queryTerms } = parseQueryParams(params.toString());
 
   // Apply other filters
   if (filterParams.length > 0) {
@@ -116,7 +116,7 @@ const sessionsHandler = http.get('/api/sessions', async ({ request }) => {
     });
   }
 
-  const { limit, offset } = parseQueryParams(params);
+  const { limit, offset } = parseQueryParams(params.toString());
   const total = sessions.length;
   const paginatedSessions = sessions.slice(offset, offset + limit);
 
@@ -148,7 +148,7 @@ const pendingUserUpdatesHandler = http.get('/api/pendinguserupdates', async ({ r
     });
   }
 
-  const { limit, offset } = parseQueryParams(params);
+  const { limit, offset } = parseQueryParams(params.toString());
   const total = updates.length;
   const paginatedUpdates = updates.slice(offset, offset + limit);
 
