@@ -41,6 +41,10 @@
       display: block;
       margin-bottom: 0.25rem;
 
+      &.download-dropdown {
+        display: inline-block;
+      }
+
       &.toggle {
         margin-bottom: 0;
       }
