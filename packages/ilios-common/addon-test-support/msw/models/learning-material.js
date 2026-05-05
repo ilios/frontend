@@ -14,6 +14,7 @@ export const schema = z
     filesize: z.number().optional(),
     link: z.string().optional(),
     token: z.string().optional(),
+    absoluteFileUri: z.string().optional(),
   })
   .passthrough();
 
