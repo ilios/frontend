@@ -28,7 +28,7 @@ const cohortsHandler = http.get('/api/cohorts', async ({ request }) => {
     });
   }
 
-  const { limit, offset } = parseQueryParams(params);
+  const { limit, offset } = parseQueryParams(params.toString());
   const total = cohorts.length;
   const paginatedCohorts = cohorts.slice(offset, offset + limit);
 

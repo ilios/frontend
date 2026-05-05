@@ -2,15 +2,14 @@ import qs from 'qs';
 
 // Parses Ilios-specific query parameters: filters[field], limit/offset, and search queries
 export function parseQueryParams(searchParams) {
-  // temporary workaround - pass string instead of URLSearchParams [ST 2026/05/05]
-  const theRealParams2 = qs.parse(searchParams.toString());
+  const parsedParameters = qs.parse(searchParams);
 
   return {
-    filterParams: theRealParams2.filters ?? [],
-    queryTerms: theRealParams2.q?.split(' ').filter(Boolean) ?? [],
-    limit: Number(theRealParams2.limit ?? 100000), // Match Mirage default
-    offset: Number(theRealParams2.offset ?? 0),
-    include: theRealParams2.include ?? null,
+    filterParams: parsedParameters.filters ?? [],
+    queryTerms: parsedParameters.q?.split(' ').filter(Boolean) ?? [],
+    limit: Number(parsedParameters.limit ?? 100000), // Match Mirage default
+    offset: Number(parsedParameters.offset ?? 0),
+    include: parsedParameters.include ?? null,
   };
 }
 

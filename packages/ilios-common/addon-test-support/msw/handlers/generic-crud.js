@@ -15,7 +15,7 @@ export function createCrudHandlers(modelName, apiRoute) {
     http.get(`/api/${apiPath}`, async ({ request }) => {
       const url = new URL(request.url);
       const { filterParams, limit, offset, queryTerms, include } = parseQueryParams(
-        url.searchParams,
+        url.searchParams.toString(),
       );
 
       let records = await db[modelName].all();
