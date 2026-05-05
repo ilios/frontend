@@ -77,6 +77,7 @@ export default class DownloadDropdownComponent extends Component {
           data-level="toggle"
           data-test-toggle
           {{on "click" (toggle "isOpen" this)}}
+          {{on "keydown" this.toggleMenu}}
         >
           <FaIcon @icon={{faDownload}} />
           {{t "general.downloadResults"}}
