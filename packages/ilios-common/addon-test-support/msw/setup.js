@@ -47,8 +47,9 @@ function get(url, callback) {
   this.server.use(
     http.get(
       url,
-      () => {
-        return HttpResponse.json(callback());
+      async (request) => {
+        const rhett = await callback(request);
+        return HttpResponse.json(rhett);
       },
       { once: true },
     ),
