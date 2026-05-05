@@ -9,7 +9,7 @@ import t from 'ember-intl/helpers/t';
 import focus from 'ilios-common/modifiers/focus';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faCaretRight, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default class DownloadDropdownComponent extends Component {
   @tracked isOpen = false;
@@ -81,6 +81,7 @@ export default class DownloadDropdownComponent extends Component {
         >
           <FaIcon @icon={{faDownload}} />
           {{t "general.downloadResults"}}
+          <FaIcon @icon={{if this.isOpen faCaretDown faCaretRight}} @fixedWidth={{true}} />
         </button>
 
         {{#if this.isOpen}}
