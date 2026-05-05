@@ -1,0 +1,59 @@
+@use "../ilios-common/mixins" as m;
+
+.download-dropdown {
+  background-color: transparent;
+  border: 1px solid var(--super-light-grey);
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  position: relative;
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: 1000;
+
+    > * {
+      margin-bottom: 0;
+    }
+
+    .dropdown-item {
+      border: 2px solid var(--super-light-grey);
+      background-color: var(--super-light-grey);
+      color: var(--black);
+      display: block;
+      outline: none;
+      padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+      width: 100%;
+
+      @include m.for-laptop-and-up {
+        padding: 0.5rem;
+        text-align: center;
+      }
+
+      text-decoration: none;
+      white-space: nowrap;
+
+      &:focus {
+        border-color: var(--grey);
+        border-collapse: separate;
+      }
+
+      &:hover {
+        background-color: var(--blue);
+        border-color: var(--blue);
+        color: var(--white);
+
+        &:focus {
+          border-color: var(--lightest-blue);
+        }
+      }
+    }
+  }
+}

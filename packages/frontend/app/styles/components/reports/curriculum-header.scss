@@ -41,6 +41,10 @@
       display: block;
       margin-bottom: 0.25rem;
 
+      &.toggle {
+        margin-bottom: 0;
+      }
+
       &:disabled {
         cursor: default;
         background-color: var(--grey);
