@@ -17,16 +17,16 @@ module('Acceptance | assign students', function (hooks) {
       startYear: DateTime.now().year,
     });
     await this.server.create('cohort', { programYear });
-    await this.server.createList('userRole', 5);
+    const roles = await this.server.createList('userRole', 5);
     await this.server.create('user', {
       school: this.school,
-      roleIds: [4],
+      roles: [roles[3]],
       firstName: 'Clem',
       lastName: 'Chowder',
     });
     await this.server.create('user', {
       school: this.school,
-      roleIds: [4],
+      roles: [roles[3]],
       displayName: 'Aardvark',
     });
   });

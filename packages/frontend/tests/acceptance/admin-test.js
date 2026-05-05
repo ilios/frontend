@@ -10,8 +10,8 @@ module('Acceptance | Admin', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = await this.server.create('school');
-    await setupAuthentication({ school, administeredSchools: [school] }, true);
+    this.school = await this.server.create('school');
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
   });
 
   test('can transition to `users` route', async function (assert) {
@@ -23,7 +23,7 @@ module('Acceptance | Admin', function (hooks) {
   });
 
   test('can search for users', async function (assert) {
-    await this.server.createList('user', 20, { schoolId: 1 });
+    await this.server.createList('user', 20, { school: this.school });
     await this.server.createList('authentication', 20);
 
     const userSearch = '.user-search input';
