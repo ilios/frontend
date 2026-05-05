@@ -1,9 +1,8 @@
 import { click, fillIn, currentURL, triggerEvent, visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 const url = '/admin';
-
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 
 module('Acceptance | Admin', function (hooks) {
@@ -63,14 +62,13 @@ module('Acceptance | Admin', function (hooks) {
     const userSearch = '.user-search input';
     await visit(url);
 
-    this.server.get('api/users', (schema, { queryParams }) => {
+    this.server.get('api/users', async ({ request }) => {
       assert.step('API called');
-      assert.ok('order_by[lastName]' in queryParams);
-      assert.ok('order_by[firstName]' in queryParams);
-      assert.strictEqual(queryParams['order_by[lastName]'], 'ASC');
-      assert.strictEqual(queryParams['order_by[firstName]'], 'ASC');
-
-      return schema.users.all();
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('order_by[lastName]'), 'ASC');
+      assert.strictEqual(searchParams.get('order_by[firstName]'), 'ASC');
+      const rhett = await this.server.db.user.all();
+      return formatJsonApi(rhett, 'user');
     });
 
     await fillIn(userSearch, 'son');
@@ -95,19 +93,31 @@ module('Acceptance | Admin', function (hooks) {
     const userSearch = '.user-search input';
     await visit(url);
 
-    this.server.get('api/search/v1/users', ({ db }, { queryParams }) => {
+    this.server.get('api/search/v1/users', async ({ request }) => {
       assert.step('API called');
-      assert.ok('q' in queryParams);
-      assert.strictEqual(queryParams.q, 'son');
-      assert.ok('size' in queryParams);
-      assert.strictEqual(parseInt(queryParams.size, 10), 100);
-      assert.notOk('order_by[firstName]' in queryParams);
-      assert.notOk('order_by[firstName]' in queryParams);
-
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('q'), 'son');
+      assert.strictEqual(Number(searchParams.get('size')), 100);
+      assert.notOk(searchParams.has('order_by[firstName]'));
+      assert.notOk(searchParams.has('order_by[firstName]'));
+      // user search is non-standard API, we need to remap records here so the payload
+      // adheres to the expected shape.
+      const users = (await this.server.db.user.all()).map((user) => {
+        return {
+          lastName: user.lastName,
+          firstName: user.firstName,
+          displayName: user.displayName,
+          campusId: user.campusId,
+          middleName: user.middleName,
+          id: user.id,
+          enabled: user.enabled,
+          email: user.email,
+        };
+      });
       return {
         results: {
           autocomplete: [],
-          users: db.users,
+          users,
         },
       };
     });
