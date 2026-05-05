@@ -400,9 +400,6 @@ general:
   table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Tabla 7: Todos los eventos con evaluaciones etiquetadas como formativas o sumativas"
   table8AllResourceTypes: "Tabla 8: Todos los tipos de recursos"
   taggedTerms: Términos Etiquetados
-  taggedTermsMode: Modo de Términos Etiquetados
-  taggedTermsModeGrouped: Agrupados
-  taggedTermsModeListed: Listado
   taggedTermsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera cada conjunto de términos junto los datos del curso."
   taggedTermsReportSummaryMultiSchool: "report for {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Se enumera cada conjunto de términos junto los datos del curso."
   termsBySessionType: Términos por Tipo de Sesión

@@ -210,7 +210,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     return '84';
   }
 
-  downloadReport = task({ drop: true }, async () => {
+  downloadReport = task({ drop: true }, async (filename = 'terms.csv') => {
     const data = this.sortedResults.map((o) => {
       const rhett = {};
 
@@ -244,11 +244,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     });
     const csv = PapaParse.unparse(data);
     this.finishedBuildingReport = true;
-    createDownloadFile(
-      this.args.taggedTermsModeGrouped ? 'terms-grouped.csv' : 'terms-listed.csv',
-      csv,
-      'text/csv',
-    );
+    createDownloadFile(filename, csv, 'text/csv');
     await timeout(2000);
     this.finishedBuildingReport = false;
   });

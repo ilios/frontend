@@ -4,14 +4,14 @@ import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import { and, eq, not } from 'ember-truth-helpers';
+import { eq, not } from 'ember-truth-helpers';
 import CopyButton from 'ilios-common/components/copy-button';
 import perform from 'ember-concurrency/helpers/perform';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
-import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import set from 'ember-set-helper/helpers/set';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import DownloadDropdown from 'frontend/components/download-dropdown';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCheck, faCopy, faDownload, faPlay } from '@fortawesome/free-solid-svg-icons';
 
@@ -51,6 +51,19 @@ export default class ReportsCurriculumHeaderComponent extends Component {
       },
     ],
   };
+
+  taggedTermsOptions = [
+    {
+      title: 'Grouped',
+      tooltip: 'All terms in course/session on one row',
+      filename: 'terms-grouped.csv',
+    },
+    {
+      title: 'Listed',
+      tooltip: 'Each course/session term on separate row',
+      filename: 'terms-listed.csv',
+    },
+  ];
 
   get countSelectedSchools() {
     return this.args.selectedSchoolIds ? this.args.selectedSchoolIds.length : 0;
@@ -185,19 +198,6 @@ export default class ReportsCurriculumHeaderComponent extends Component {
         </p>
       </div>
       <div class="input-buttons">
-        {{#if (and (eq this.selectedReport.label "Tagged Terms") (not @showReportResults))}}
-          <div class="tagged-terms-mode" data-test-tagged-terms-mode>
-            <label>
-              {{t "general.taggedTermsMode"}}
-            </label>
-            <ToggleButtons
-              @firstOptionSelected={{not @taggedTermsModeGrouped}}
-              @firstLabel={{t "general.taggedTermsModeListed"}}
-              @secondLabel={{t "general.taggedTermsModeGrouped"}}
-              @toggle={{@toggleTaggedTermsModeGrouped}}
-            />
-          </div>
-        {{/if}}
         {{#if @countSelectedCourses}}
           <CopyButton
             @getClipboardText={{this.getReportUrl}}
@@ -225,14 +225,18 @@ export default class ReportsCurriculumHeaderComponent extends Component {
               <LoadingSpinner />
             </div>
           {{else}}
-            <button type="button" {{on "click" @download}} data-test-download>
-              {{#if @finished}}
-                <FaIcon @icon={{faCheck}} />
-              {{else}}
-                <FaIcon @icon={{faDownload}} />
-              {{/if}}
-              {{t "general.downloadResults"}}
-            </button>
+            {{#if (eq this.selectedReport.label "Tagged Terms")}}
+              <DownloadDropdown @links={{this.taggedTermsOptions}} @action={{@download}} />
+            {{else}}
+              <button type="button" {{on "click" @download}} data-test-download>
+                {{#if @finished}}
+                  <FaIcon @icon={{faCheck}} />
+                {{else}}
+                  <FaIcon @icon={{faDownload}} />
+                {{/if}}
+                {{t "general.downloadResults"}}
+              </button>
+            {{/if}}
           {{/if}}
           <button type="button" class="cancel text" {{on "click" @close}} data-test-close>
             {{t "general.close"}}
