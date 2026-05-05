@@ -637,6 +637,9 @@ importers:
       prettier-plugin-ember-template-tag:
         specifier: ^2.1.2
         version: 2.1.5(prettier@3.8.3)
+      qs:
+        specifier: ^6.15.1
+        version: 6.15.1
       sass:
         specifier: ^1.97.2
         version: 1.99.0
