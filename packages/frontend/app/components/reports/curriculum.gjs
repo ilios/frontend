@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
+import { eq } from 'ember-truth-helpers';
 import SessionObjectives from './curriculum/session-objectives';
 import SessionOfferings from './curriculum/session-offerings';
 import LearnerGroups from './curriculum/learner-groups';
@@ -18,6 +19,19 @@ export default class ReportsCurriculumComponent extends Component {
 
   @tracked searchResults = null;
   @tracked reportResults = null;
+
+  taggedTermsOptions = [
+    {
+      title: 'Grouped',
+      tooltip: 'All terms in course/session on one row',
+      filename: 'terms-grouped.csv',
+    },
+    {
+      title: 'Listed',
+      tooltip: 'Each course/session term on separate row',
+      filename: 'terms-listed.csv',
+    },
+  ];
 
   get passedCourseIds() {
     return this.args.selectedCourseIds?.map(Number) ?? [];
@@ -103,7 +117,11 @@ export default class ReportsCurriculumComponent extends Component {
   <template>
     <div class="reports-curriculum main-section" data-test-reports-curriculum ...attributes>
       {{#if @showReportResults}}
-        <this.reportResultsComponent @courses={{this.selectedCourses}} @close={{@stop}} />
+        <this.reportResultsComponent
+          @courses={{this.selectedCourses}}
+          @options={{if (eq this.selectedReportValue "taggedTerms") this.taggedTermsOptions}}
+          @close={{@stop}}
+        />
       {{else}}
         <Header
           @selectedSchoolIds={{this.selectedSchoolIds}}

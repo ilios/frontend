@@ -20,6 +20,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
   @service store;
   @service graphql;
   @service reporting;
+  @tracked downloadType;
   @tracked finishedBuildingReport = false;
 
   @cached
@@ -77,7 +78,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     const origin = window.location.origin;
 
     // grouped - terms 'rolled up' into one line per session
-    if (this.args.taggedTermsModeGrouped) {
+    if (this.downloadType == 'grouped') {
       return this.reportResults.reduce((acc, c) => {
         c.sessions.forEach((s) => {
           const resultRow = {
@@ -210,7 +211,8 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     return '84';
   }
 
-  downloadReport = task({ drop: true }, async (filename = 'terms.csv') => {
+  downloadReport = task({ drop: true }, async (filename = 'terms-listed.csv') => {
+    this.downloadType = filename == 'terms-grouped.csv' ? 'grouped' : 'listed';
     const data = this.sortedResults.map((o) => {
       const rhett = {};
 
@@ -219,10 +221,18 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
       }
       rhett[this.intl.t('general.course')] = o.courseTitle;
 
-      if (this.args.taggedTermsModeGrouped) {
-        rhett[this.intl.t('general.courseTerms')] = o.courseTerms.join(', ') ?? '';
+      if (filename == 'terms-grouped.csv') {
+        if (o.courseTerms.length) {
+          rhett[this.intl.t('general.courseTerms')] = o.courseTerms.join(', ');
+        } else {
+          rhett[this.intl.t('general.courseTerms')] = '';
+        }
         rhett[this.intl.t('general.session')] = o.sessionTitle;
-        rhett[this.intl.t('general.sessionTerms')] = o.sessionTerms.join(', ') ?? '';
+        if (o.sessionTerms) {
+          rhett[this.intl.t('general.sessionTerms')] = o.sessionTerms.join(', ');
+        } else {
+          rhett[this.intl.t('general.sessionTerms')] = '';
+        }
         rhett[this.intl.t('general.link')] = o.sessionLink;
       } else {
         if (o.courseTerms.length) {
@@ -257,6 +267,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
       @selectedReportValue="taggedTerms"
       @changeSelectedReport={{(noop)}}
       @close={{@close}}
+      @options={{@options}}
       @download={{perform this.downloadReport}}
       @finished={{this.finishedBuildingReport}}
     />

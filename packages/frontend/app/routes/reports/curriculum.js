@@ -13,9 +13,6 @@ export default class ReportsCurriculumRoute extends Route {
     courses: {
       replace: true,
     },
-    taggedTermsModeGrouped: {
-      replace: true,
-    },
   };
 
   beforeModel(transition) {

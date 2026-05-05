@@ -52,19 +52,6 @@ export default class ReportsCurriculumHeaderComponent extends Component {
     ],
   };
 
-  taggedTermsOptions = [
-    {
-      title: 'Grouped',
-      tooltip: 'All terms in course/session on one row',
-      filename: 'terms-grouped.csv',
-    },
-    {
-      title: 'Listed',
-      tooltip: 'Each course/session term on separate row',
-      filename: 'terms-listed.csv',
-    },
-  ];
-
   get countSelectedSchools() {
     return this.args.selectedSchoolIds ? this.args.selectedSchoolIds.length : 0;
   }
@@ -225,8 +212,8 @@ export default class ReportsCurriculumHeaderComponent extends Component {
               <LoadingSpinner />
             </div>
           {{else}}
-            {{#if (eq this.selectedReport.label "Tagged Terms")}}
-              <DownloadDropdown @links={{this.taggedTermsOptions}} @action={{@download}} />
+            {{#if (eq @selectedReportValue "taggedTerms")}}
+              <DownloadDropdown @links={{@options}} @action={{@download}} />
             {{else}}
               <button type="button" {{on "click" @download}} data-test-download>
                 {{#if @finished}}
