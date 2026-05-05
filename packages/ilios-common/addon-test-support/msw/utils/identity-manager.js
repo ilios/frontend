@@ -43,9 +43,9 @@ class IdentityManager {
    * Increment ID
    */
   inc() {
-    let nextValue = this.#get() + 1;
+    let nextValue = this.#get();
 
-    this._nextId = nextValue;
+    this._nextId = nextValue + 1;
 
     return nextValue;
   }
