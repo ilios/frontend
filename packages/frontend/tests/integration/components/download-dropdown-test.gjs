@@ -22,7 +22,7 @@ module('Integration | Component | download-dropdown', function (hooks) {
       },
     ];
 
-    await render(<template><DownloadDropdown @links={{options}} @action={{(noop)}} /></template>);
+    await render(<template><DownloadDropdown @items={{options}} @action={{(noop)}} /></template>);
 
     assert.ok(component, 'component exists');
     assert.notOk(component.menu.displays, 'component menu does not exist yet');
