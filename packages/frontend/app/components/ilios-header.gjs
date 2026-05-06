@@ -76,7 +76,7 @@ export default class IliosHeaderComponent extends Component {
         @skipLink={{false}}
         @routeChangeValidator={{this.checkRouteChange}}
       />
-      <a href="#main" class="visually-hidden">
+      <a href="#main" id="ember-a11y-refocus-skip-link" class="visually-hidden">
         {{t "general.skipToMainContent"}}
       </a>
       <h1 class="visually-hidden" data-test-title>
