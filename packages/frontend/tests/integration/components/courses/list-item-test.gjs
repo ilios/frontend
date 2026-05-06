@@ -55,10 +55,10 @@ module('Integration | Component | courses/list-item', function (hooks) {
     assert.strictEqual(component.startDate, '04/23/2023');
     assert.strictEqual(component.endDate, '05/30/2023');
     assert.strictEqual(component.publicationStatus.icon.title, 'Not Published');
-    assert.ok(component.isUnlocked);
-    assert.notOk(component.isLocked);
-    assert.ok(component.isUnlocked);
-    assert.ok(component.isUnlocked);
+    assert.ok(component.status.isUnlocked);
+    assert.notOk(component.status.isLocked);
+    assert.ok(component.status.isUnlocked);
+    assert.ok(component.status.isUnlocked);
   });
 
   test('lock', async function (assert) {
@@ -78,10 +78,10 @@ module('Integration | Component | courses/list-item', function (hooks) {
         />
       </template>,
     );
-    assert.ok(component.isUnlocked);
-    assert.notOk(component.isLocked);
-    assert.ok(component.canLock);
-    await component.lock();
+    assert.ok(component.status.isUnlocked);
+    assert.notOk(component.status.isLocked);
+    assert.ok(component.status.canLock);
+    await component.status.lock();
     assert.verifySteps(['lock called']);
   });
 
@@ -103,10 +103,10 @@ module('Integration | Component | courses/list-item', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.isUnlocked);
-    assert.ok(component.isLocked);
-    assert.ok(component.canUnlock);
-    await component.unLock();
+    assert.notOk(component.status.isUnlocked);
+    assert.ok(component.status.isLocked);
+    assert.ok(component.status.canUnlock);
+    await component.status.unLock();
     assert.verifySteps(['unlock called']);
   });
 
@@ -127,8 +127,8 @@ module('Integration | Component | courses/list-item', function (hooks) {
         />
       </template>,
     );
-    assert.ok(component.canRemove);
-    await component.remove();
+    assert.ok(component.status.canRemove);
+    await component.status.remove();
     assert.verifySteps(['confirmRemoval called']);
   });
 
@@ -151,8 +151,8 @@ module('Integration | Component | courses/list-item', function (hooks) {
         />
       </template>,
     );
-    assert.ok(component.isLocked);
-    assert.notOk(component.canUnlock);
+    assert.ok(component.status.isLocked);
+    assert.notOk(component.status.canUnlock);
   });
 
   test('cannot lock', async function (assert) {
@@ -173,8 +173,8 @@ module('Integration | Component | courses/list-item', function (hooks) {
         />
       </template>,
     );
-    assert.ok(component.isUnlocked);
-    assert.notOk(component.canLock);
+    assert.ok(component.status.isUnlocked);
+    assert.notOk(component.status.canLock);
   });
 
   test('cannot delete b/c course has been rolled over', async function (assert) {
