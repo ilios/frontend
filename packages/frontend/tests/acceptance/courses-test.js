@@ -818,11 +818,6 @@ module('Acceptance | Courses', function (hooks) {
 
     assert.ok(page.root.list.courses[0].status.canRemove, 'first course can be removed');
     assert.strictEqual(
-      page.root.list.courses[0].status.lockIcon.label,
-      'Lock Course',
-      'first course lock icon aria-label correct',
-    );
-    assert.strictEqual(
       page.root.list.courses[0].status.lockIcon.title,
       'Lock Course',
       'first course lock icon title correct',
@@ -835,30 +830,21 @@ module('Acceptance | Courses', function (hooks) {
 
     assert.notOk(page.root.list.courses[1].status.canRemove, 'second course cannot be removed');
     assert.strictEqual(
-      page.root.list.courses[1].status.lockIcon.label,
-      'Lock Course',
-      'second course lock icon aria-label correct',
-    );
-    assert.strictEqual(
       page.root.list.courses[1].status.lockIcon.title,
       'Lock Course',
       'second course lock icon title correct',
     );
     assert.ok(
-      page.root.list.courses[1].status.removeDisabledIcon,
+      page.root.list.courses[1].status.removeIcon.isDisabled,
       'second course shows disabled remove icon',
     );
     assert.strictEqual(
-      page.root.list.courses[1].status.removeDisabledIcon.title,
+      page.root.list.courses[1].status.removeIcon.title,
       'This course cannot be deleted because it is published, scheduled, has been rolled over, or you do not have permission.',
+      'second course disabled remove icon tooltip correct',
     );
 
     assert.ok(page.root.list.courses[2].status.canRemove, 'third course can be removed');
-    assert.strictEqual(
-      page.root.list.courses[2].status.lockIcon.label,
-      'Lock Course',
-      'third course lock icon aria-label correct',
-    );
     assert.strictEqual(
       page.root.list.courses[2].status.lockIcon.title,
       'Lock Course',
@@ -887,11 +873,6 @@ module('Acceptance | Courses', function (hooks) {
 
     await page.root.list.cancelCourseRemoval();
 
-    assert.strictEqual(
-      page.root.list.courses[0].status.lockIcon.label,
-      'Lock Course',
-      'first course lock icon aria-label correct',
-    );
     assert.strictEqual(
       page.root.list.courses[0].status.lockIcon.title,
       'Lock Course',
