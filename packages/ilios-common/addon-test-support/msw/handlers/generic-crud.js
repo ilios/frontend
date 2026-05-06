@@ -165,13 +165,13 @@ async function filterByParams(modelName, records, params) {
       });
       return {
         r,
-        matchesAllFilteres: filterResults.every((v) => v === true),
+        matchesAllFilters: filterResults.every((v) => v === true),
       };
     }),
   );
 
   return recordFilterResults
-    .filter(({ matchesAllFilteres }) => matchesAllFilteres === true)
+    .filter(({ matchesAllFilters }) => matchesAllFilters === true)
     .map(({ r }) => r);
 }
 
