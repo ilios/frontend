@@ -73,9 +73,12 @@ export default class IliosHeaderComponent extends Component {
     <header class="ilios-header" data-test-ilios-header ...attributes>
       <NavigationNarrator
         @navigationText={{t "general.navigationCompleteText"}}
-        @skipText={{t "general.skipToMainContent"}}
+        @skipLink={{false}}
         @routeChangeValidator={{this.checkRouteChange}}
       />
+      <a href="#main" id="ember-a11y-refocus-skip-link" class="visually-hidden">
+        {{t "general.skipToMainContent"}}
+      </a>
       <h1 class="visually-hidden" data-test-title>
         {{this.pageTitle.title}}
       </h1>
