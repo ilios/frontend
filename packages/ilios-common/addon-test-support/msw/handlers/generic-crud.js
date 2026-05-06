@@ -160,7 +160,7 @@ async function filterByParams(modelName, records, params) {
   }
   const recordFilterResults = await Promise.all(
     records.map(async (r) => {
-      const filterResults = await Array.fromAsync(params, ({ param, value }) => {
+      const filterResults = await Array.fromAsync(params, ([param, value]) => {
         return filterByParam(modelName, r, param, value);
       });
       return {
