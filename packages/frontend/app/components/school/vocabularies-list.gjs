@@ -99,11 +99,6 @@ export default class SchoolVocabulariesListComponent extends Component {
                           ' disabled'
                         }}"
                       type="button"
-                      aria-label={{if
-                        (eq this.showRemovalConfirmationFor vocabulary)
-                        (t "general.disabledByConfirmation")
-                        (t "general.edit")
-                      }}
                       title={{if
                         (eq this.showRemovalConfirmationFor vocabulary)
                         (t "general.disabledByConfirmation")
@@ -129,11 +124,6 @@ export default class SchoolVocabulariesListComponent extends Component {
                             ' disabled'
                           }}"
                         type="button"
-                        aria-label={{if
-                          (eq this.showRemovalConfirmationFor vocabulary)
-                          (t "general.disabledByConfirmation")
-                          (t "general.remove")
-                        }}
                         title={{if
                           (eq this.showRemovalConfirmationFor vocabulary)
                           (t "general.disabledByConfirmation")

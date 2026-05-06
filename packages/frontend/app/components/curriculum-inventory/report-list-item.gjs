@@ -120,11 +120,6 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
             type="button"
             {{on "click" (set this "showRemoveConfirmation" true)}}
-            aria-label={{if
-              this.showRemoveConfirmation
-              (t "general.disabledByConfirmation")
-              (t "general.remove")
-            }}
             title={{if
               this.showRemoveConfirmation
               (t "general.disabledByConfirmation")

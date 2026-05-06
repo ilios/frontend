@@ -250,11 +250,6 @@ export default class OfferingManagerComponent extends Component {
               <button
                 class="link-button edit"
                 type="button"
-                aria-label={{if
-                  this.showRemoveConfirmation
-                  (t "general.disabledByConfirmation")
-                  (t "general.edit")
-                }}
                 title={{if
                   this.showRemoveConfirmation
                   (t "general.disabledByConfirmation")
@@ -273,11 +268,6 @@ export default class OfferingManagerComponent extends Component {
                 <button
                   class="link-button remove"
                   type="button"
-                  aria-label={{if
-                    this.showRemoveConfirmation
-                    (t "general.disabledByConfirmation")
-                    (t "general.remove")
-                  }}
                   title={{if
                     this.showRemoveConfirmation
                     (t "general.disabledByConfirmation")

@@ -69,11 +69,6 @@ export default class InstructorGroupsListItemComponent extends Component {
             class="link-button"
             type="button"
             {{on "click" (set this "showRemoveConfirmation" true)}}
-            aria-label={{if
-              this.showRemoveConfirmation
-              (t "general.disabledByConfirmation")
-              (t "general.remove")
-            }}
             title={{if
               this.showRemoveConfirmation
               (t "general.disabledByConfirmation")

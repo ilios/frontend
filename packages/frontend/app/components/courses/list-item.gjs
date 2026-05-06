@@ -92,11 +92,6 @@ export default class CoursesListItemComponent extends Component {
             <button
               type="button"
               class="link-button{{if @showRemoveConfirmation ' disabled'}}"
-              aria-label={{if
-                @showRemoveConfirmation
-                (t "general.disabledByConfirmation")
-                (t "general.lockCourse")
-              }}
               title={{if
                 @showRemoveConfirmation
                 (t "general.disabledByConfirmation")
@@ -115,11 +110,6 @@ export default class CoursesListItemComponent extends Component {
             <button
               type="button"
               class="link-button{{if @showRemoveConfirmation ' disabled'}}"
-              aria-label={{if
-                @showRemoveConfirmation
-                (t "general.disabledByConfirmation")
-                (t "general.deleteCourse")
-              }}
               title={{if
                 @showRemoveConfirmation
                 (t "general.disabledByConfirmation")

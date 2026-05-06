@@ -206,11 +206,6 @@ export default class LearnerGroupListItemComponent extends Component {
               class="link-button"
               type="button"
               {{on "click" this.showRemove}}
-              aria-label={{if
-                this.showRemoveConfirmation
-                (t "general.disabledByConfirmation")
-                (t "general.remove")
-              }}
               title={{if
                 this.showRemoveConfirmation
                 (t "general.disabledByConfirmation")
@@ -240,11 +235,6 @@ export default class LearnerGroupListItemComponent extends Component {
               class="link-button"
               type="button"
               {{on "click" this.showCopy}}
-              aria-label={{if
-                this.showRemoveConfirmation
-                (t "general.disabledByConfirmation")
-                (t "general.copy")
-              }}
               title={{if
                 this.showRemoveConfirmation
                 (t "general.disabledByConfirmation")

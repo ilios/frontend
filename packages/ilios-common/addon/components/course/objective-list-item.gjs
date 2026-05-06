@@ -289,11 +289,6 @@ export default class CourseObjectiveListItemComponent extends Component {
             <button
               class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
               type="button"
-              aria-label={{if
-                this.showRemoveConfirmation
-                (t "general.disabledByConfirmation")
-                (t "general.remove")
-              }}
               title={{if
                 this.showRemoveConfirmation
                 (t "general.disabledByConfirmation")

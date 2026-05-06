@@ -195,11 +195,6 @@ export default class SessionsGridSessionRowComponent extends Component {
             class="link-button{{if @showConfirmDelete ' disabled'}}"
             type="button"
             {{on "click" (fn @confirmDelete @session.id)}}
-            aria-label={{if
-              @showConfirmDelete
-              (t "general.disabledByConfirmation")
-              (t "general.remove")
-            }}
             title={{if
               @showConfirmDelete
               (t "general.disabledByConfirmation")

@@ -134,11 +134,6 @@ export default class DetailLearningMaterialsItemComponent extends Component {
           <button
             type="button"
             class="icon-button{{if this.showRemoveConfirmation ' disabled'}}"
-            aria-label={{if
-              this.showRemoveConfirmation
-              (t "general.disabledByConfirmation")
-              (t "general.edit")
-            }}
             title={{if
               this.showRemoveConfirmation
               (t "general.disabledByConfirmation")
@@ -153,11 +148,6 @@ export default class DetailLearningMaterialsItemComponent extends Component {
           <button
             type="button"
             class="icon-button{{if this.showRemoveConfirmation ' disabled' ' remove'}}"
-            aria-label={{if
-              this.showRemoveConfirmation
-              (t "general.disabledByConfirmation")
-              (t "general.remove")
-            }}
             title={{if
               this.showRemoveConfirmation
               (t "general.disabledByConfirmation")

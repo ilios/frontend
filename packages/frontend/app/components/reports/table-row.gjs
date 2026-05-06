@@ -30,11 +30,6 @@ export default class ReportsTableRowComponent extends Component {
         <button
           type="button"
           class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
-          aria-label={{if
-            this.showRemoveConfirmation
-            (t "general.disabledByConfirmation")
-            (t "general.delete")
-          }}
           title={{if
             this.showRemoveConfirmation
             (t "general.disabledByConfirmation")
