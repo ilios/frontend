@@ -162,15 +162,28 @@ export default class ProgramYearListItemComponent extends Component {
               {{#if this.canUnlock}}
                 <button
                   type="button"
-                  class="link-button"
-                  aria-label={{t "general.unlock"}}
+                  class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+                  title={{if
+                    this.showRemoveConfirmation
+                    (t "general.disabledByConfirmation")
+                    (t "general.unlock")
+                  }}
+                  disabled={{this.showRemoveConfirmation}}
                   {{on "click" (perform this.unlock)}}
                   data-test-unlock
                 >
                   <FaIcon @icon={{faLock}} />
                 </button>
               {{else}}
-                <FaIcon @icon={{faLock}} />
+                <button
+                  type="button"
+                  class="link-button disabled"
+                  title={{t "general.canNotUnlockProgramYear"}}
+                  disabled
+                  data-test-unlock
+                >
+                  <FaIcon @icon={{faLock}} />
+                </button>
               {{/if}}
             {{else if this.canLock}}
               <button
@@ -188,7 +201,15 @@ export default class ProgramYearListItemComponent extends Component {
                 <FaIcon @icon={{faLockOpen}} class={{if this.showRemoveConfirmation "disabled"}} />
               </button>
             {{else}}
-              <FaIcon @icon={{faLockOpen}} />
+              <button
+                type="button"
+                class="link-button disabled"
+                title={{t "general.canNotLockProgramYear"}}
+                disabled
+                data-test-lock
+              >
+                <FaIcon @icon={{faLockOpen}} class="disabled" />
+              </button>
             {{/if}}
             {{#if this.canDelete}}
               <button
@@ -209,11 +230,15 @@ export default class ProgramYearListItemComponent extends Component {
                 />
               </button>
             {{else}}
-              <FaIcon
-                @icon={{faTrash}}
-                class="disabled"
-                @title={{t "general.canNotDeleteProgramYear"}}
-              />
+              <button
+                type="button"
+                class="link-button disabled"
+                title={{t "general.canNotDeleteProgramYear"}}
+                disabled
+                data-test-remove
+              >
+                <FaIcon @icon={{faTrash}} class="disabled" />
+              </button>
             {{/if}}
           {{/if}}
         </td>

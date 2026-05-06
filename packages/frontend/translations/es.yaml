@@ -59,6 +59,10 @@ general:
   canNotDeleteSchoolVocabulary: "Este vocabulario escolar no se puede eliminar porque tiene al menos un término o no tiene permiso."
   canNotDeleteSchoolVocabularyTerm: "Este término del vocabulario escolar no se puede eliminar porque tiene al menos un término subordinado, tiene una asociación, o no tiene permiso."
   canNotDeleteSequenceBlock: "Este bloque de secuencia no se puede eliminar porque no tiene permiso."
+  canNotLockCourse: "Este curso no se puede bloquear porque no tiene permiso."
+  canNotLockProgramYear: "Este año del programa no se puede bloquear porque no tiene permiso."
+  canNotUnlockCourse: "Este curso no se puede desbloquear porque no tiene permiso."
+  canNotUnlockProgramYear: "Este año del programa no se puede desbloquear porque no tiene permiso."
   changeAlertRecipients: Destinatarios con alerta de cambio
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
   childSequenceOrder: Orden de Secuencia de Los Hijos

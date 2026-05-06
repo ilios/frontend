@@ -203,15 +203,15 @@ export default class LearnerGroupListItemComponent extends Component {
         {{else}}
           {{#if this.canDelete}}
             <button
-              class="link-button"
+              class="link-button{{if @showRemoveConfirmation ' disabled'}}"
               type="button"
-              {{on "click" this.showRemove}}
               title={{if
                 this.showRemoveConfirmation
                 (t "general.disabledByConfirmation")
                 (t "general.remove")
               }}
               disabled={{this.showRemoveConfirmation}}
+              {{on "click" this.showRemove}}
               data-test-remove
             >
               <FaIcon
@@ -220,11 +220,13 @@ export default class LearnerGroupListItemComponent extends Component {
               />
             </button>
           {{else}}
-            <FaIcon
-              @icon={{faTrash}}
-              class="disabled"
-              @title={{t "general.canNotDeleteLearnerGroup"}}
-            />
+            <button
+              type="button"
+              class="link-button disabled"
+              title={{t "general.canNotDeleteLearnerGroup"}}
+            >
+              <FaIcon @icon={{faTrash}} class="disabled" />
+            </button>
           {{/if}}
         {{/if}}
         {{#if this.canCreateLoading}}
@@ -232,7 +234,7 @@ export default class LearnerGroupListItemComponent extends Component {
         {{else}}
           {{#if (and this.canCreate (not this.showCopyConfirmation))}}
             <button
-              class="link-button"
+              class="link-button{{if @showRemoveConfirmation ' disabled'}}"
               type="button"
               {{on "click" this.showCopy}}
               title={{if

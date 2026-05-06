@@ -537,10 +537,13 @@ module('Integration | Component | courses/list', function (hooks) {
       </template>,
     );
     assert.notOk(component.courses[0].status.removeIcon.isDisabled);
-    assert.strictEqual(component.courses[0].status.removeIcon.title, 'Remove Course');
+    assert.strictEqual(component.courses[0].status.removeIcon.title, 'Delete Course');
     await component.courses[0].status.remove();
     assert.ok(component.courses[0].status.removeIcon.isDisabled);
-    assert.strictEqual(component.courses[0].status.removeIcon.title, 'This cannot be removed');
+    assert.strictEqual(
+      component.courses[0].status.removeIcon.title,
+      'This cannot be used while confirming deletion.',
+    );
     await component.confirmCourseRemoval();
     assert.verifySteps(['remove called']);
   });

@@ -117,15 +117,15 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
         </span>
         {{#if this.canDelete}}
           <button
-            class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
             type="button"
-            {{on "click" (set this "showRemoveConfirmation" true)}}
+            class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
             title={{if
               this.showRemoveConfirmation
               (t "general.disabledByConfirmation")
               (t "general.remove")
             }}
             disabled={{this.showRemoveConfirmation}}
+            {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
             <FaIcon
@@ -134,11 +134,15 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             />
           </button>
         {{else}}
-          <FaIcon
-            @icon={{faTrash}}
-            class="disabled"
-            @title={{t "general.canNotDeleteCurriculumInventoryReport"}}
-          />
+          <button
+            type="button"
+            class="link-button disabled"
+            title={{t "general.canNotDeleteCurriculumInventoryReport"}}
+            disabled
+            data-test-remove
+          >
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          </button>
         {{/if}}
       </td>
     </tr>

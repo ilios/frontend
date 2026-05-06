@@ -1,4 +1,6 @@
 import { clickable, create, isVisible, text } from 'ember-cli-page-object';
+import { findOne } from 'ember-cli-page-object/extend';
+import { getter } from 'ember-cli-page-object/macros';
 
 const definition = {
   scope: '[data-test-program-year-list-item]',
@@ -18,14 +20,14 @@ const definition = {
   terms: {
     scope: '[data-test-terms]',
   },
-  canBeRemoved: isVisible('[data-test-remove]'),
+  canBeRemoved: isVisibleAndEnabled('[data-test-remove]'),
   remove: clickable('[data-test-remove]'),
   unlock: clickable('[data-test-unlock]'),
-  canBeUnlocked: isVisible('[data-test-unlock]'),
+  canBeUnlocked: isVisibleAndEnabled('[data-test-unlock]'),
   lock: clickable('[data-test-lock]'),
   isLocked: isVisible('[data-test-unlock]'),
   isUnlocked: isVisible('[data-test-lock]'),
-  canBeLocked: isVisible('[data-test-lock]'),
+  canBeLocked: isVisibleAndEnabled('[data-test-lock]'),
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
     message: text('[data-test-message]'),
@@ -34,6 +36,12 @@ const definition = {
     resetScope: true,
   },
 };
+
+function isVisibleAndEnabled(selector) {
+  return getter(function (pageObjectKey) {
+    return !findOne(this, selector, { pageObjectKey }).disabled;
+  });
+}
 
 export default definition;
 export const component = create(definition);

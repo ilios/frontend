@@ -66,15 +66,15 @@ export default class InstructorGroupsListItemComponent extends Component {
       <td class="text-right">
         {{#if this.canDelete}}
           <button
-            class="link-button"
+            class="link-button{{if @showRemoveConfirmation ' disabled'}}"
             type="button"
-            {{on "click" (set this "showRemoveConfirmation" true)}}
             title={{if
               this.showRemoveConfirmation
               (t "general.disabledByConfirmation")
               (t "general.remove")
             }}
             disabled={{this.showRemoveConfirmation}}
+            {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
             <FaIcon
@@ -83,11 +83,13 @@ export default class InstructorGroupsListItemComponent extends Component {
             />
           </button>
         {{else}}
-          <FaIcon
-            @icon={{faTrash}}
-            class="disabled"
-            @title={{t "general.canNotDeleteInstructorGroup"}}
-          />
+          <button
+            type="button"
+            class="link-button disabled"
+            title={{t "general.canNotDeleteInstructorGroup"}}
+          >
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          </button>
         {{/if}}
       </td>
     </tr>

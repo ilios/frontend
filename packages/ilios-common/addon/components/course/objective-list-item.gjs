@@ -280,11 +280,15 @@ export default class CourseObjectiveListItemComponent extends Component {
       {{#if @editable}}
         <div class="actions grid-item" data-test-actions>
           {{#if this.isManaging}}
-            <FaIcon
-              @icon={{faTrash}}
-              class="disabled"
-              @title={{t "general.canNotDeleteCourseObjective"}}
-            />
+            <button
+              type="button"
+              class="link-button disabled"
+              title={{t "general.canNotDeleteCourseObjective"}}
+              disabled
+              data-test-remove
+            >
+              <FaIcon @icon={{faTrash}} class="disabled" />
+            </button>
           {{else}}
             <button
               class="link-button{{if this.showRemoveConfirmation ' disabled'}}"

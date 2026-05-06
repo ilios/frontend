@@ -1,4 +1,4 @@
-import { clickable, create, isVisible, text } from 'ember-cli-page-object';
+import { clickable, create, isVisible, property, text } from 'ember-cli-page-object';
 import userNameInfo from './user-name-info';
 import typeIcon from './lm-type-icon';
 
@@ -22,6 +22,7 @@ const definition = {
     },
     remove: {
       scope: '[data-test-remove]',
+      isDisabled: property('disabled'),
     },
   },
   confirmRemoval: {

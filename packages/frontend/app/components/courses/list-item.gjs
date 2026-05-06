@@ -78,15 +78,28 @@ export default class CoursesListItemComponent extends Component {
             {{#if this.canUnlock}}
               <button
                 type="button"
-                class="link-button"
-                title={{t "general.unlockCourse"}}
+                class="link-button{{if @showRemoveConfirmation ' disabled'}}"
+                title={{if
+                  @showRemoveConfirmation
+                  (t "general.disabledByConfirmation")
+                  (t "general.unlockCourse")
+                }}
+                disabled={{@showRemoveConfirmation}}
                 {{on "click" (fn @unlockCourse @course)}}
                 data-test-unlock
               >
                 <FaIcon @icon={{faLock}} />
               </button>
             {{else}}
-              <FaIcon @icon={{faLock}} class="disabled" />
+              <button
+                type="button"
+                class="link-button disabled"
+                title={{t "general.canNotUnlockCourse"}}
+                disabled
+                data-test-unlock
+              >
+                <FaIcon @icon={{faLock}} class="disabled" />
+              </button>
             {{/if}}
           {{else if this.canLock}}
             <button
@@ -104,7 +117,15 @@ export default class CoursesListItemComponent extends Component {
               <FaIcon @icon={{faLockOpen}} class="{{if @showRemoveConfirmation 'disabled'}}" />
             </button>
           {{else}}
-            <FaIcon @icon={{faLockOpen}} class="disabled" />
+            <button
+              type="button"
+              class="link-button disabled"
+              title={{t "general.canNotLockCourse"}}
+              disabled
+              data-test-lock
+            >
+              <FaIcon @icon={{faLockOpen}} class="disabled" />
+            </button>
           {{/if}}
           {{#if this.canDelete}}
             <button
@@ -125,7 +146,15 @@ export default class CoursesListItemComponent extends Component {
               />
             </button>
           {{else}}
-            <FaIcon @icon={{faTrash}} class="disabled" @title={{t "general.canNotDeleteCourse"}} />
+            <button
+              type="button"
+              class="link-button disabled"
+              title={{t "general.canNotDeleteCourse"}}
+              disabled
+              data-test-remove
+            >
+              <FaIcon @icon={{faTrash}} class="disabled" />
+            </button>
           {{/if}}
         {{/if}}
       </td>

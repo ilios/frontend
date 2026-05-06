@@ -1,12 +1,6 @@
-import {
-  attribute,
-  clickable,
-  create,
-  hasClass,
-  isVisible,
-  property,
-  text,
-} from 'ember-cli-page-object';
+import { attribute, clickable, create, hasClass, property, text } from 'ember-cli-page-object';
+import { findOne } from 'ember-cli-page-object/extend';
+import { getter } from 'ember-cli-page-object/macros';
 import publicationStatus from 'ilios-common/page-objects/components/publication-status';
 
 const definition = {
@@ -19,35 +13,38 @@ const definition = {
   status: {
     scope: '[data-test-status]',
     isLocked: hasClass('fa-lock', 'svg', { at: 1 }),
-    canLock: isVisible('[data-test-lock]'),
+    canLock: isVisibleAndEnabled('[data-test-lock]'),
     lock: clickable('[data-test-lock]'),
     lockIcon: {
       scope: '[data-test-lock]',
       at: 1,
-      label: attribute('aria-label'),
       title: attribute('title'),
       isDisabled: property('disabled'),
     },
     isUnlocked: hasClass('fa-lock-open', 'svg', { at: 1 }),
-    canUnlock: isVisible('[data-test-unlock]'),
+    canUnlock: isVisibleAndEnabled('[data-test-unlock]'),
     unLock: clickable('[data-test-unlock]'),
     unlockIcon: {
       scope: '[data-test-unlock]',
       at: 1,
-      label: attribute('aria-label'),
       title: attribute('title'),
       isDisabled: hasClass('disabled'),
     },
-    canRemove: isVisible('[data-test-remove]'),
+    canRemove: isVisibleAndEnabled('[data-test-remove]'),
     remove: clickable('[data-test-remove]'),
     removeIcon: {
       scope: '[data-test-remove]',
-      label: attribute('aria-label'),
       title: attribute('title'),
       isDisabled: property('disabled'),
     },
   },
 };
+
+function isVisibleAndEnabled(selector) {
+  return getter(function (pageObjectKey) {
+    return !findOne(this, selector, { pageObjectKey }).disabled;
+  });
+}
 
 export default definition;
 export const component = create(definition);

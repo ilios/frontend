@@ -153,8 +153,8 @@ export default class DetailLearningMaterialsItemComponent extends Component {
               (t "general.disabledByConfirmation")
               (t "general.remove")
             }}
-            {{on "click" (set this "showRemoveConfirmation" true)}}
             disabled={{this.showRemoveConfirmation}}
+            {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
             <FaIcon
@@ -163,11 +163,15 @@ export default class DetailLearningMaterialsItemComponent extends Component {
             />
           </button>
         {{else}}
-          <FaIcon
-            @icon={{faTrash}}
-            class="disabled"
-            @title={{t "general.canNotDeleteLearningMaterial"}}
-          />
+          <button
+            type="button"
+            class="icon-button disabled"
+            title={{t "general.canNotDeleteLearningMaterial"}}
+            disabled
+            data-test-remove
+          >
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          </button>
         {{/if}}
       </td>
     </tr>

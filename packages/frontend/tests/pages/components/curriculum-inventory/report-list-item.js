@@ -1,4 +1,6 @@
 import { attribute, clickable, create, isPresent, text } from 'ember-cli-page-object';
+import { findOne } from 'ember-cli-page-object/extend';
+import { getter } from 'ember-cli-page-object/macros';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-report-list-item]',
@@ -11,7 +13,7 @@ const definition = {
   status: text('[data-test-status]'),
   remove: clickable('[data-test-remove]'),
   isDownloadable: isPresent('[data-test-download]'),
-  isDeletable: isPresent('[data-test-remove]'),
+  isDeletable: isVisibleAndEnabled('[data-test-remove]'),
   confirmRemoval: {
     resetScope: true,
     scope: '[data-test-confirm-removal]',
@@ -19,6 +21,12 @@ const definition = {
     cancel: clickable('[data-test-cancel]', { visible: true }),
   },
 };
+
+function isVisibleAndEnabled(selector) {
+  return getter(function (pageObjectKey) {
+    return !findOne(this, selector, { pageObjectKey }).disabled;
+  });
+}
 
 export default definition;
 export const component = create(definition);

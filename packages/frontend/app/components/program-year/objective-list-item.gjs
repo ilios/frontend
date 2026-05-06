@@ -405,13 +405,13 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
           <button
             class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
             type="button"
-            {{on "click" (set this "showRemoveConfirmation" true)}}
             title={{if
               this.showRemoveConfirmation
               (t "general.disabledByConfirmation")
               (t "general.remove")
             }}
             disabled={{this.showRemoveConfirmation}}
+            {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
             <FaIcon
@@ -420,11 +420,15 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             />
           </button>
         {{else}}
-          <FaIcon
-            @icon={{faTrash}}
-            class="disabled"
-            @title={{t "general.canNotDeleteProgramYearObjective"}}
-          />
+          <button
+            type="button"
+            class="link-button disabled"
+            title={{t "general.canNotDeleteProgramYearObjective"}}
+            disabled
+            data-test-remove
+          >
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          </button>
         {{/if}}
       </div>
 

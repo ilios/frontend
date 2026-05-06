@@ -627,22 +627,23 @@ module('Acceptance | Courses', function (hooks) {
       schoolId: 1,
       published: true,
       publishedAsTbd: false,
-      locked: true,
+      locked: false,
     });
     this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
       publishedAsTbd: true,
-      locked: false,
+      locked: true,
     });
 
     await page.visit();
+
     assert.strictEqual(page.root.list.courses.length, 2);
-    assert.ok(page.root.list.courses[0].status.isLocked, 'first course is locked');
-    assert.ok(page.root.list.courses[1].status.isUnlocked, 'second course is unlocked');
-    assert.notOk(page.root.list.courses[0].status.canLock);
-    assert.notOk(page.root.list.courses[1].status.canUnlock);
+    assert.ok(page.root.list.courses[0].status.isUnlocked, 'first course is unlocked');
+    assert.ok(page.root.list.courses[1].status.isLocked, 'second course is locked');
+    assert.notOk(page.root.list.courses[0].status.canLock, 'first course cannot be locked');
+    assert.notOk(page.root.list.courses[1].status.canUnlock, 'second course cannot be unlocked');
   });
 
   test('title filter escapes regex', async function (assert) {
@@ -858,10 +859,6 @@ module('Acceptance | Courses', function (hooks) {
 
     await page.root.list.courses[0].status.remove();
 
-    assert.strictEqual(
-      page.root.list.courses[0].status.lockIcon.label,
-      'This cannot be used while confirming deletion.',
-    );
     assert.strictEqual(
       page.root.list.courses[0].status.lockIcon.title,
       'This cannot be used while confirming deletion.',

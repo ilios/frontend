@@ -84,9 +84,14 @@ export default class SchoolSessionTypesListItemComponent extends Component {
           type="button"
           class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
           aria-label={{t "general.manage"}}
+          title={{if
+            this.showRemoveConfirmation
+            (t "general.disabledByConfirmation")
+            (t "general.manage")
+          }}
           disabled={{or (this.showRemoveConfirmation this.deleteSessionType.isRunning)}}
-          data-test-manage
           {{on "click" (fn @manageSessionType @sessionType.id)}}
+          data-test-manage
         >
           <FaIcon
             @icon={{faPenToSquare}}
@@ -108,8 +113,8 @@ export default class SchoolSessionTypesListItemComponent extends Component {
                 (t "general.remove")
               }}
               disabled={{or (this.showRemoveConfirmation this.deleteSessionType.isRunning)}}
-              data-test-delete
               {{on "click" (set this "showRemoveConfirmation" true)}}
+              data-test-delete
             >
               <FaIcon
                 @icon={{faTrash}}
@@ -122,11 +127,15 @@ export default class SchoolSessionTypesListItemComponent extends Component {
             </button>
           {{/if}}
         {{else}}
-          <FaIcon
-            @icon={{faTrash}}
-            class="disabled"
-            @title={{t "general.canNotDeleteSchoolSessionType"}}
-          />
+          <button
+            type="button"
+            class="link-button disabled"
+            title={{t "general.canNotDeleteSchoolSessionType"}}
+            disabled
+            data-test-delete
+          >
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          </button>
         {{/if}}
         <LinkTo
           @route="session-type-visualize-vocabularies"

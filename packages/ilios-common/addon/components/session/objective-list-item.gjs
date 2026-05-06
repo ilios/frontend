@@ -263,11 +263,15 @@ export default class SessionObjectiveListItemComponent extends Component {
       {{#if @editable}}
         <div class="actions grid-item" data-test-actions>
           {{#if this.isManaging}}
-            <FaIcon
-              @icon={{faTrash}}
-              class="disabled"
-              @title={{t "general.canNotDeleteSessionObjective"}}
-            />
+            <button
+              type="button"
+              class="link-button disabled"
+              title={{t "general.canNotDeleteSessionObjective"}}
+              disabled
+              data-test-remove
+            >
+              <FaIcon @icon={{faTrash}} class="disabled" />
+            </button>
           {{else}}
             <button
               class="link-button{{if this.showRemoveConfirmation ' disabled'}}"

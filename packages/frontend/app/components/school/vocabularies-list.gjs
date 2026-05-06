@@ -119,19 +119,19 @@ export default class SchoolVocabulariesListComponent extends Component {
                     </button>
                     {{#if (and @canDelete (eq vocabulary.termCount 0))}}
                       <button
+                        type="button"
                         class="link-button{{if
                             (eq this.showRemovalConfirmationFor vocabulary)
                             ' disabled'
                           }}"
-                        type="button"
                         title={{if
                           (eq this.showRemovalConfirmationFor vocabulary)
                           (t "general.disabledByConfirmation")
                           (t "general.remove")
                         }}
                         disabled={{eq this.showRemovalConfirmationFor vocabulary}}
-                        data-test-delete
                         {{on "click" (fn this.confirmRemoval vocabulary)}}
+                        data-test-delete
                       >
                         <FaIcon
                           @icon={{faTrash}}
@@ -143,11 +143,15 @@ export default class SchoolVocabulariesListComponent extends Component {
                         />
                       </button>
                     {{else}}
-                      <FaIcon
-                        @icon={{faTrash}}
-                        class="disabled"
-                        @title={{t "general.canNotDeleteSchoolVocabulary"}}
-                      />
+                      <button
+                        type="button"
+                        class="link-button disabled"
+                        title={{t "general.canNotDeleteSchoolVocabulary"}}
+                        disabled
+                        data-test-delete
+                      >
+                        <FaIcon @icon={{faTrash}} class="disabled" />
+                      </button>
                     {{/if}}
                   </td>
                 </tr>

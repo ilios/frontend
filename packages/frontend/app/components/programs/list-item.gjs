@@ -63,14 +63,22 @@ export default class ProgramListItemComponent extends Component {
               (t "general.disabledByConfirmation")
               (t "general.remove")
             }}
-            {{on "click" (set this "showRemoveConfirmation" true)}}
             disabled={{this.showRemoveConfirmation}}
+            {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
             <FaIcon @icon={{faTrash}} class={{if this.showRemoveConfirmation "disabled"}} />
           </button>
         {{else}}
-          <FaIcon @icon={{faTrash}} class="disabled" @title={{t "general.canNotDeleteProgram"}} />
+          <button
+            type="button"
+            class={{if this.showRemoveConfirmation "disabled"}}
+            title={{t "general.canNotDeleteProgram"}}
+            disabled
+            data-test-remove
+          >
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          </button>
         {{/if}}
       </td>
     </tr>
