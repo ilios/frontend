@@ -161,6 +161,11 @@ async function filterByParams(modelName, records, params) {
   const recordFilterResults = await Promise.all(
     records.map(async (r) => {
       const filterResults = await Array.fromAsync(params, ([param, value]) => {
+        // abort early if the given filter value is a blank string.
+        // we'll treat that as "ignored"/auto-success.
+        if ('' === value) {
+          return true;
+        }
         return filterByParam(modelName, r, param, value);
       });
       return {
