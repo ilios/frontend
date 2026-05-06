@@ -1,4 +1,12 @@
-import { attribute, clickable, create, hasClass, isVisible, text } from 'ember-cli-page-object';
+import {
+  attribute,
+  clickable,
+  create,
+  hasClass,
+  isVisible,
+  property,
+  text,
+} from 'ember-cli-page-object';
 import publicationStatus from 'ilios-common/page-objects/components/publication-status';
 
 const definition = {
@@ -18,6 +26,7 @@ const definition = {
       at: 1,
       label: attribute('aria-label'),
       title: attribute('title'),
+      isDisabled: property('disabled'),
     },
     isUnlocked: hasClass('fa-lock-open', 'svg', { at: 1 }),
     canUnlock: isVisible('[data-test-unlock]'),
@@ -27,6 +36,7 @@ const definition = {
       at: 1,
       label: attribute('aria-label'),
       title: attribute('title'),
+      isDisabled: hasClass('disabled'),
     },
     canRemove: isVisible('[data-test-remove]'),
     remove: clickable('[data-test-remove]'),
@@ -34,10 +44,7 @@ const definition = {
       scope: '[data-test-remove]',
       label: attribute('aria-label'),
       title: attribute('title'),
-    },
-    removeDisabledIcon: {
-      scope: '.fa-trash.disabled',
-      title: text('title'),
+      isDisabled: property('disabled'),
     },
   },
 };
