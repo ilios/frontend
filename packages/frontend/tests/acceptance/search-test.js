@@ -26,10 +26,10 @@ module('Acceptance | search', function (hooks) {
   test('visiting /search', async function (assert) {
     const input = 'hello';
 
-    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
-      assert.ok(queryParams.q);
-      assert.strictEqual(queryParams.q, input);
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('q'), input);
 
       return {
         results: {
@@ -51,11 +51,11 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('visiting /search?q', async function (assert) {
-    const test = 'hello';
-    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+    const input = 'hello';
+    this.server.get('api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
-      assert.ok(queryParams.q);
-      assert.strictEqual(queryParams.q, test);
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('q'), input);
 
       return {
         results: {
@@ -66,8 +66,8 @@ module('Acceptance | search', function (hooks) {
       };
     });
 
-    await page.visit({ q: test });
-    assert.strictEqual(page.globalSearch.searchBox.inputValue, test);
+    await page.visit({ q: input });
+    assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
     assert.verifySteps(['API called']);
   });
 
@@ -136,12 +136,13 @@ module('Acceptance | search', function (hooks) {
     }
     const firstInput = 'first';
 
-    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+    const callback = ({ request }) => {
       assert.step('API called');
-      assert.ok(queryParams.size);
-      assert.ok(queryParams.from);
-      const from = Number(queryParams.from);
-      const size = Number(queryParams.size);
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('size'));
+      assert.ok(searchParams.has('from'));
+      const from = Number(searchParams.get('from'));
+      const size = Number(searchParams.get('size'));
       return {
         results: {
           courses: courses.slice(from, from + size),
@@ -149,9 +150,12 @@ module('Acceptance | search', function (hooks) {
           didYouMean: [],
         },
       };
-    });
+    };
+
+    this.server.get('api/search/v2/curriculum', callback);
     await page.visit();
     assert.strictEqual(currentURL(), '/search', 'url is correct');
+    this.server.get('api/search/v2/curriculum', callback);
     await page.globalSearch.searchBox.input(firstInput);
     await page.globalSearch.searchBox.clickIcon();
     await page.paginationLinks.pageLinks[1].click();
@@ -173,6 +177,7 @@ module('Acceptance | search', function (hooks) {
     assert.strictEqual(currentURL(), `/search?page=2&q=${firstInput}`, 'url is correct');
     await page.globalSearch.searchResults[0].clickCourse();
     assert.strictEqual(currentURL(), `/courses/11`, 'course url is correct');
+    this.server.get('api/search/v2/curriculum', callback);
     await page.visit({
       page: 2,
       q: firstInput,
@@ -193,36 +198,19 @@ module('Acceptance | search', function (hooks) {
   test('clicking back on search updates results and input #4759', async function (assert) {
     const firstInput = 'first';
     const secondInput = 'second';
+    const callbackRhett = {
+      results: {
+        courses: [],
+        totalCourses: 0,
+        didYouMean: [],
+      },
+    };
 
-    let searchRun = 0;
-    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v2/curriculum', ({ request }) => {
+      const { searchParams } = new URL(request.url);
       assert.step('API called');
-      const rhett = {
-        results: {
-          courses: [],
-          totalCourses: 0,
-          didYouMean: [],
-        },
-      };
-      assert.ok(searchRun <= 2);
-      let input, message;
-      switch (searchRun) {
-        case 0:
-          input = firstInput;
-          message = 'first time, first input';
-          break;
-        case 1:
-          input = secondInput;
-          message = 'second time, second input';
-          break;
-        case 2:
-          input = firstInput;
-          message = 'third time, first input';
-          break;
-      }
-      assert.strictEqual(queryParams.q, input, message);
-      searchRun++;
-      return rhett;
+      assert.strictEqual(searchParams.get('q'), firstInput, 'first time, first input');
+      return callbackRhett;
     });
     await page.visit();
     assert.strictEqual(currentURL(), '/search');
@@ -230,20 +218,33 @@ module('Acceptance | search', function (hooks) {
     await page.globalSearch.searchBox.clickIcon();
     assert.strictEqual(page.globalSearch.searchBox.inputValue, firstInput);
     assert.strictEqual(currentURL(), `/search?q=${firstInput}`);
+
+    this.server.get('api/search/v2/curriculum', ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.step('API called');
+      assert.strictEqual(searchParams.get('q'), secondInput, 'second time, second input');
+      return callbackRhett;
+    });
     await page.globalSearch.searchBox.input(secondInput);
     await page.globalSearch.searchBox.clickIcon();
     assert.strictEqual(page.globalSearch.searchBox.inputValue, secondInput);
     assert.strictEqual(currentURL(), `/search?q=${secondInput}`);
+
+    this.server.get('api/search/v2/curriculum', ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.step('API called');
+      assert.strictEqual(searchParams.get('q'), firstInput, 'third time, first input');
+      return callbackRhett;
+    });
     await page.visit({ q: firstInput });
     assert.strictEqual(currentURL(), `/search?q=${firstInput}`);
     assert.strictEqual(page.globalSearch.searchBox.inputValue, firstInput);
-    assert.strictEqual(searchRun, 3, 'search was run three times');
     assert.verifySteps(Array(3).fill('API called'));
   });
 
   test('school filter in query param', async function (assert) {
     await this.server.createList('school', 2);
-    const schools = this.server.schema.schools.all().models;
+    const schools = await this.server.db.school.all();
     const courses = [];
     const year = currentAcademicYear();
     for (let i = 0; i < 3; i++) {
@@ -255,10 +256,11 @@ module('Acceptance | search', function (hooks) {
       });
     }
 
-    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
-      assert.ok(queryParams.schools);
-      const schoolIds = queryParams.schools.split('-').map(Number);
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('schools'));
+      const schoolIds = searchParams.get('schools').split('-').map(Number);
       assert.deepEqual(schoolIds, [2]);
       return {
         results: {
@@ -287,14 +289,15 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('year filter in query param', async function (assert) {
-    await this.server.create('academic-year', { id: 2025, title: '2025' });
-    await this.server.create('academic-year', { id: 2024, title: '2024' });
-    await this.server.create('academic-year', { id: 2023, title: '2023' });
+    await this.server.create('academic-year', { id: '2025', title: '2025' });
+    await this.server.create('academic-year', { id: '2024', title: '2024' });
+    await this.server.create('academic-year', { id: '2023', title: '2023' });
 
-    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
-      assert.ok(queryParams.years);
-      const years = queryParams.years.split('-').map(Number);
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('years'));
+      const years = searchParams.get('years').split('-').map(Number);
       assert.deepEqual(years, [2024]);
       return {
         results: {
