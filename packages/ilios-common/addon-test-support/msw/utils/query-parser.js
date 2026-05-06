@@ -5,7 +5,7 @@ export function parseQueryParams(searchParams) {
   const parsedParameters = qs.parse(searchParams);
 
   return {
-    filterParams: parsedParameters.filters ?? [],
+    filterParams: parsedParameters.filters ?? {},
     queryTerms: parsedParameters.q?.split(' ').filter(Boolean) ?? [],
     limit: Number(parsedParameters.limit ?? 100000), // Match Mirage default
     offset: Number(parsedParameters.offset ?? 0),
