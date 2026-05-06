@@ -8,7 +8,7 @@ export const schema = z
     year: z.number().optional(),
     startDate: z.string().optional(),
     endDate: z.string().optional(),
-    externalId: z.string().optional(),
+    externalId: z.string().optional().nullable(),
     locked: z.boolean().optional(),
     archived: z.boolean().optional(),
     publishedAsTbd: z.boolean().optional(),
