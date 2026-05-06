@@ -154,7 +154,7 @@ async function extractRelationshipsInUpdate(modelName, data, attrs) {
  * @returns {Promise<[]>}
  */
 async function filterByParams(modelName, records, params) {
-  params = new Map(params.entries);
+  params = new Map(Object.entries(params));
   if (!params.size) {
     return records;
   }
