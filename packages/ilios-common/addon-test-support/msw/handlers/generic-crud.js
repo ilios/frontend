@@ -17,7 +17,6 @@ export function createCrudHandlers(modelName, apiRoute) {
       const { filterParams, limit, offset, queryTerms, include } = parseQueryParams(
         url.searchParams.toString(),
       );
-
       let records = await db[modelName].all();
       records = await filterByParams(modelName, records, filterParams);
 
@@ -148,17 +147,22 @@ async function extractRelationshipsInUpdate(modelName, data, attrs) {
   }
 }
 
+/**
+ * @param {string} modelName
+ * @param {array} records
+ * @param {object} params
+ * @returns {Promise<[]>}
+ */
 async function filterByParams(modelName, records, params) {
-  if (!params.length) {
+  params = new Map(params.entries);
+  if (!params.size) {
     return records;
   }
-
   const recordFilterResults = await Promise.all(
     records.map(async (r) => {
       const filterResults = await Array.fromAsync(params, ({ param, value }) => {
         return filterByParam(modelName, r, param, value);
       });
-
       return {
         r,
         matchesAllFilteres: filterResults.every((v) => v === true),
