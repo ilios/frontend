@@ -906,4 +906,45 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
     assert.notOk(component.close.isPresent);
     assert.notOk(component.download.isPresent);
   });
+
+  test('it uses download dropdown when using tagged terms #9289', async function (assert) {
+    this.set('showReportResults', false);
+    this.set('runReport', () => {
+      this.set('showReportResults', true);
+    });
+    this.set('close', () => {
+      this.set('showReportResults', false);
+    });
+    await render(
+      <template>
+        <Header
+          @countSelectedCourses={{5}}
+          @showReportResults={{this.showReportResults}}
+          @selectedReportValue="taggedTerms"
+          @changeSelectedReport={{(noop)}}
+          @runReport={{this.runReport}}
+          @close={{this.close}}
+          @download={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.ok(component.runReport.isPresent);
+    assert.ok(component.copy.isPresent);
+    assert.notOk(component.close.isPresent);
+    assert.notOk(component.download.isPresent);
+    assert.notOk(component.downloadDropdown.isPresent);
+    await component.runReport.click();
+    assert.ok(component.close.isPresent);
+    assert.ok(component.copy.isPresent);
+    assert.notOk(component.download.isPresent);
+    assert.ok(component.downloadDropdown.isPresent);
+    assert.notOk(component.runReport.isPresent);
+    await component.close.click();
+    assert.ok(component.runReport.isPresent);
+    assert.ok(component.copy.isPresent);
+    assert.notOk(component.close.isPresent);
+    assert.notOk(component.download.isPresent);
+    assert.notOk(component.downloadDropdown.isPresent);
+  });
 });

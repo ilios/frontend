@@ -23,6 +23,10 @@ const definition = {
     scope: '[data-test-download]',
     click: clickable(),
   },
+  downloadDropdown: {
+    scope: '[data-test-download-dropdown]',
+    click: clickable(),
+  },
   copy: {
     scope: '[data-test-copy-button]',
     click: clickable(),
