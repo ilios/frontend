@@ -484,8 +484,8 @@ module('Integration | Component | courses/list', function (hooks) {
         />
       </template>,
     );
-    assert.ok(component.courses[0].isUnlocked);
-    await component.courses[0].lock();
+    assert.ok(component.courses[0].status.isUnlocked);
+    await component.courses[0].status.lock();
     assert.verifySteps(['lock called']);
   });
 
@@ -510,8 +510,8 @@ module('Integration | Component | courses/list', function (hooks) {
         />
       </template>,
     );
-    assert.ok(component.courses[0].isLocked);
-    await component.courses[0].unLock();
+    assert.ok(component.courses[0].status.isLocked);
+    await component.courses[0].status.unLock();
     assert.verifySteps(['unlock called']);
   });
 
@@ -536,7 +536,11 @@ module('Integration | Component | courses/list', function (hooks) {
         />
       </template>,
     );
-    await component.courses[0].remove();
+    assert.notOk(component.courses[0].status.removeIcon.isDisabled);
+    assert.strictEqual(component.courses[0].status.removeIcon.title, 'Remove Course');
+    await component.courses[0].status.remove();
+    assert.ok(component.courses[0].status.removeIcon.isDisabled);
+    assert.strictEqual(component.courses[0].status.removeIcon.title, 'This cannot be removed');
     await component.confirmCourseRemoval();
     assert.verifySteps(['remove called']);
   });
