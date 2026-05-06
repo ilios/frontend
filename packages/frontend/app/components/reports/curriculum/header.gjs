@@ -213,7 +213,7 @@ export default class ReportsCurriculumHeaderComponent extends Component {
             </div>
           {{else}}
             {{#if (eq @selectedReportValue "taggedTerms")}}
-              <DownloadDropdown @links={{@options}} @action={{@download}} />
+              <DownloadDropdown @items={{@options}} @action={{@download}} />
             {{else}}
               <button type="button" {{on "click" @download}} data-test-download>
                 {{#if @finished}}
