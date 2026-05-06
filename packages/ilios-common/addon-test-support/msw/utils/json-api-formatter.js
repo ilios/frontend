@@ -45,7 +45,7 @@ function formatResource(model, modelName) {
     // Relationships are objects or arrays with IDs
     if (value && typeof value === 'object' && value.id) {
       relationships[camelize(key)] = formatRelationship(value, getTypeFor(modelName, key));
-    } else if (Array.isArray(value) && value[0]?.id) {
+    } else if (Array.isArray(value) && (!value.length || value[0]?.id)) {
       relationships[camelize(key)] = formatRelationship(value, getTypeFor(modelName, key));
     } else {
       attributes[camelize(key)] = value;
