@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { camelize } from '@ember/string';
-import { pluralize } from 'ember-inflector';
+import { singularize, pluralize } from 'ember-inflector';
 import { db, getRelatedRecord, isRelatedRecord } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
@@ -80,34 +80,59 @@ export function createCrudHandlers(modelName, apiRoute) {
       const body = await request.json();
       const data = body.data;
 
-      if (!data) {
+      const existingRecord = await db[modelName].findFirst((q) => q.where({ id: params.id }));
+      if (!existingRecord) {
+        return new HttpResponse(null, { status: 404 });
+      }
+      const { data: jsonApiData } = formatJsonApi(existingRecord, modelName);
+
+      //delete the existing existingRecord and create a brand new one.
+      //This is a HACK, couldn't get the relationships to update otherwise
+      await db[modelName].delete(existingRecord);
+
+      if (!data.attributes) {
         return new HttpResponse(JSON.stringify({ errors: ['Invalid request body'] }), {
           status: 400,
         });
       }
 
-      const record = await db[modelName].findFirst((q) => q.where({ id: params.id }));
-
-      if (!record) {
-        return new HttpResponse(null, { status: 404 });
-      }
-
-      // Extract attributes to update
+      // Extract attributes
       const attrs = { ...data.attributes };
+      attrs.id = params.id;
 
       await extractRelationshipsInUpdate(modelName, data, attrs);
-
-      const updated = await db[modelName].update(record, {
-        data(obj) {
-          Object.keys(attrs).forEach((key) => {
-            if (attrs[key]) {
-              obj[key] = attrs[key];
-            }
-          });
-        },
+      //add current values for any attributes the patch did not set
+      Object.keys(jsonApiData.attributes).forEach((key) => {
+        if (!(key in attrs)) {
+          attrs[key] = jsonApiData.attributes[key];
+        }
       });
 
-      return HttpResponse.json(formatJsonApi(updated, modelName));
+      const keys = Object.keys(jsonApiData.relationships);
+
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        if (!(key in attrs)) {
+          const value = jsonApiData.relationships[key].data;
+          if (Array.isArray(value)) {
+            const records = await Promise.all(
+              value.map(({ id, type }) => {
+                const singularType = singularize(type);
+                return db[singularType].findFirst((q) => q.where({ id }));
+              }),
+            );
+            attrs[key] = records;
+          } else {
+            const { type, id } = value;
+            const record = await db[type].findFirst((q) => q.where({ id }));
+            attrs[key] = record;
+          }
+        }
+      }
+
+      const newRecord = await db[modelName].create(attrs);
+
+      return HttpResponse.json(formatJsonApi(newRecord, modelName));
     }),
 
     // DELETE record
