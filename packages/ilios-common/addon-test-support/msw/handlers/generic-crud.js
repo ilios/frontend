@@ -186,11 +186,6 @@ async function filterByParams(modelName, records, params) {
   const recordFilterResults = await Promise.all(
     records.map(async (r) => {
       const filterResults = await Array.fromAsync(params, ([param, value]) => {
-        // abort early if the given filter value is a blank string.
-        // we'll treat that as "ignored"/auto-success.
-        if ('' === value) {
-          return true;
-        }
         return filterByParam(modelName, r, param, value);
       });
       return {
@@ -205,30 +200,53 @@ async function filterByParams(modelName, records, params) {
     .map(({ r }) => r);
 }
 
-async function filterByParam(modelName, record, param, value) {
+/**
+ * @param {string} modelName
+ * @param {object} record
+ * @param {string} param
+ * @param {*} value
+ * @returns {boolean}
+ */
+function filterByParam(modelName, record, param, value) {
+  // first, let's check on the given filter value.
+  // check if the given filter value it's blank or an empty array.
+  // since there's nothing to filter on, we'll treat these as a success.
+  if ('' === value) {
+    return true;
+  }
+  if (Array.isArray(value) && !value.length) {
+    return true;
+  }
+
+  // then, let's get the name and value of the record's field that we're going to filter on.
+  const fieldName = camelize(param);
+  if (!Object.hasOwn(record, fieldName)) {
+    return false;
+  }
+  const fieldValue = record[fieldName];
+
+  // filter non-relationship fields
   if (!isRelatedRecord(modelName, param)) {
-    let fieldValue = record[camelize(param)];
     if (Array.isArray(value)) {
       return value.includes(String(fieldValue));
     }
     return String(fieldValue) === String(value);
   }
-  if (Array.isArray(value)) {
-    return value.some((v) => getRelatedRecord(modelName, param, v));
-  }
-  const v = record[param];
-  if (!value) {
-    if (Array.isArray(v)) {
-      return v.length === 0;
+
+  // filter relationship fields
+  if (Array.isArray(fieldValue)) {
+    const fieldValueIds = fieldValue.map(({ id }) => id);
+    if (Array.isArray(value)) {
+      return value.some((v) => fieldValueIds.includes(v));
+    } else {
+      fieldValueIds.includes(value);
     }
-    return !!v;
   }
-  const related = await getRelatedRecord(modelName, param, value);
-  if (Array.isArray(v)) {
-    const vIds = v.map(({ id }) => id);
-    return vIds.includes(related.id);
+  const fieldValueId = fieldValue.id;
+  if (Array.isArray(value)) {
+    return value.includes(fieldValueId);
   }
-  return v.id === related.id;
+  return value === fieldValueId;
 }
 
 // Generate handlers for all standard models
