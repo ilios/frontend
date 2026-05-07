@@ -77,38 +77,109 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
   get results() {
     const origin = window.location.origin;
 
-    // grouped - terms 'rolled up' into one line per session
+    // grouped - terms 'rolled up' into one line per course or session
     if (this.downloadType == 'grouped') {
       return this.reportResults.reduce((acc, c) => {
-        c.sessions.forEach((s) => {
-          const resultRow = {
+        if (c.sessions.length) {
+          c.sessions.forEach((s) => {
+            const sessionTermsRow = {
+              courseId: c.id,
+              courseTitle: c.title,
+              courseTerms: c.terms
+                .sort(this.sortTerms)
+                .map((cTerm) => `(${cTerm.vocabulary.title}) ${cTerm.title}`),
+              sessionTitle: s.title,
+              sessionTerms: s.terms
+                .sort(this.sortTerms)
+                .map((sTerm) => `(${sTerm.vocabulary.title}) ${sTerm.title}`),
+              sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
+            };
+
+            if (this.hasMultipleSchools) {
+              sessionTermsRow.schoolTitle = c.school.title;
+            }
+
+            acc.push(sessionTermsRow);
+          });
+        } else if (c.terms.length) {
+          const courseTermsRow = {
             courseId: c.id,
             courseTitle: c.title,
             courseTerms: c.terms
               .sort(this.sortTerms)
               .map((cTerm) => `(${cTerm.vocabulary.title}) ${cTerm.title}`),
-            sessionTitle: s.title,
-            sessionTerms: s.terms
-              .sort(this.sortTerms)
-              .map((sTerm) => `(${sTerm.vocabulary.title}) ${sTerm.title}`),
-            sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
+            courseLink: `${origin}${this.router.urlFor('course', c.id)}`,
+            sessionTitle: '',
+            sessionTerms: '',
           };
 
           if (this.hasMultipleSchools) {
-            resultRow.schoolTitle = c.school.title;
+            courseTermsRow.schoolTitle = c.school.title;
           }
 
-          acc.push(resultRow);
-        });
+          acc.push(courseTermsRow);
+        } else {
+          const courseResultRow = {
+            courseId: c.id,
+            courseTitle: c.title,
+            courseTerms: '',
+            courseLink: `${origin}${this.router.urlFor('course', c.id)}`,
+            sessionTitle: '',
+            sessionTerms: '',
+          };
+
+          if (this.hasMultipleSchools) {
+            courseResultRow.schoolTitle = c.school.title;
+          }
+
+          acc.push(courseResultRow);
+        }
+
         return acc;
       }, []);
     }
     // listed - one term per line per course or session
     else {
       return this.reportResults.reduce((acc, c) => {
+        // special case for no course terms and no session terms
+        if (!c.sessions.length && !c.terms.length) {
+          const courseRow = {
+            courseId: c.id,
+            courseTitle: c.title,
+            courseLink: `${origin}${this.router.urlFor('course', c.id)}`,
+            sessionTitle: '',
+          };
+
+          if (this.hasMultipleSchools) {
+            courseRow.schoolTitle = c.school.title;
+          }
+
+          acc.push(courseRow);
+        } else if (c.sessions.length) {
+          c.sessions.forEach((s) => {
+            s.terms.forEach((sTerm) => {
+              const sessionTermRow = {
+                courseId: c.id,
+                courseTitle: c.title,
+                courseTerms: [],
+                sessionTitle: s.title,
+                sessionTermTitle: sTerm.title,
+                sessionTermVocabulary: sTerm.vocabulary.title,
+                sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
+              };
+
+              if (this.hasMultipleSchools) {
+                sessionTermRow.schoolTitle = c.school.title;
+              }
+
+              acc.push(sessionTermRow);
+            });
+          });
+        }
+
         if (c.terms.length) {
           c.terms.sort().forEach((cTerm) => {
-            const courseTerm = {
+            const courseTermRow = {
               courseId: c.id,
               courseTitle: c.title,
               courseTerms: c.terms,
@@ -119,31 +190,13 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
             };
 
             if (this.hasMultipleSchools) {
-              courseTerm.schoolTitle = c.school.title;
+              courseTermRow.schoolTitle = c.school.title;
             }
 
-            acc.push(courseTerm);
+            acc.push(courseTermRow);
           });
         }
-        c.sessions.forEach((s) => {
-          s.terms.forEach((sTerm) => {
-            const sessionTerm = {
-              courseId: c.id,
-              courseTitle: c.title,
-              courseTerms: [],
-              sessionTitle: s.title,
-              sessionTermTitle: sTerm.title,
-              sessionTermVocabulary: sTerm.vocabulary.title,
-              sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
-            };
 
-            if (this.hasMultipleSchools) {
-              sessionTerm.schoolTitle = c.school.title;
-            }
-
-            acc.push(sessionTerm);
-          });
-        });
         return acc;
       }, []);
     }
@@ -222,7 +275,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
       rhett[this.intl.t('general.course')] = o.courseTitle;
 
       if (filename == 'terms-grouped.csv') {
-        if (o.courseTerms.length) {
+        if (o.courseTerms) {
           rhett[this.intl.t('general.courseTerms')] = o.courseTerms.join(', ');
         } else {
           rhett[this.intl.t('general.courseTerms')] = '';
@@ -233,22 +286,15 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
         } else {
           rhett[this.intl.t('general.sessionTerms')] = '';
         }
-        rhett[this.intl.t('general.link')] = o.sessionLink;
       } else {
-        if (o.courseTerms.length) {
-          rhett[this.intl.t('general.courseTerm')] = o.courseTermTitle;
-          rhett[this.intl.t('general.session')] = '';
-          rhett[this.intl.t('general.sessionTerm')] = '';
-          rhett[this.intl.t('general.vocabulary')] = o.courseTermVocabulary;
-          rhett[this.intl.t('general.link')] = o.courseLink;
-        } else {
-          rhett[this.intl.t('general.courseTerm')] = '';
-          rhett[this.intl.t('general.session')] = o.sessionTitle;
-          rhett[this.intl.t('general.sessionTerm')] = o.sessionTermTitle;
-          rhett[this.intl.t('general.vocabulary')] = o.sessionTermVocabulary;
-          rhett[this.intl.t('general.link')] = o.sessionLink;
-        }
+        rhett[this.intl.t('general.courseTerm')] = o.courseTermTitle ?? '';
+        rhett[this.intl.t('general.session')] = o.sessionTitle ?? '';
+        rhett[this.intl.t('general.sessionTerm')] = o.sessionTermTitle ?? '';
+        rhett[this.intl.t('general.vocabulary')] =
+          o.sessionTermVocabulary ?? o.courseTermVocabulary ?? '';
       }
+
+      rhett[this.intl.t('general.link')] = o.sessionLink ?? o.courseLink ?? '';
 
       return rhett;
     });
