@@ -25,7 +25,12 @@ const definition = {
   },
   downloadDropdown: {
     scope: '[data-test-download-dropdown]',
-    click: clickable(),
+    toggle: clickable('[data-test-toggle]'),
+    menu: {
+      scope: '[data-test-menu]',
+      items: collection('[data-test-item]'),
+      click: clickable(),
+    },
   },
   copy: {
     scope: '[data-test-copy-button]',
