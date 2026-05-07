@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const schema = z
   .object({
-    id: z.string(),
+    id: z.union([z.number(), z.string()]),
     notes: z.string().optional(),
     required: z.boolean().optional(),
     publicNotes: z.boolean().optional(),
