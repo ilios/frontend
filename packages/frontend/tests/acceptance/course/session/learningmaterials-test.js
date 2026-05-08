@@ -78,10 +78,10 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       school,
     });
 
-    const sessionType = this.server.create('session-type', { school });
+    this.sessionType = this.server.create('session-type', { school });
     const session = this.server.create('session', {
       course: this.course,
-      sessionType,
+      sessionType: this.sessionType,
     });
 
     this.server.create('session-learning-material', {
@@ -899,6 +899,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   test('list double linked learning materials', async function (assert) {
     const session = this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionType,
     });
     this.server.create('session-learning-material', {
       learningMaterial: this.material1,
@@ -927,6 +928,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   test('view double linked learning material details', async function (assert) {
     const session = this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionType,
     });
     this.server.create('session-learning-material', {
       learningMaterial: this.material1,
