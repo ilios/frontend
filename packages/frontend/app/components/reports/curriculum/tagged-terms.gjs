@@ -157,23 +157,38 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
           acc.push(courseRow);
         } else if (c.sessions.length) {
           c.sessions.forEach((s) => {
-            s.terms.forEach((sTerm) => {
-              const sessionTermRow = {
+            if (s.terms.length) {
+              s.terms.forEach((sTerm) => {
+                const sessionTermRow = {
+                  courseId: c.id,
+                  courseTitle: c.title,
+                  courseTerms: [],
+                  sessionTitle: s.title,
+                  sessionTermTitle: sTerm.title,
+                  sessionTermVocabulary: sTerm.vocabulary.title,
+                  sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
+                };
+
+                if (this.hasMultipleSchools) {
+                  sessionTermRow.schoolTitle = c.school.title;
+                }
+
+                acc.push(sessionTermRow);
+              });
+            } else {
+              const sessionRow = {
                 courseId: c.id,
                 courseTitle: c.title,
-                courseTerms: [],
                 sessionTitle: s.title,
-                sessionTermTitle: sTerm.title,
-                sessionTermVocabulary: sTerm.vocabulary.title,
                 sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
               };
 
               if (this.hasMultipleSchools) {
-                sessionTermRow.schoolTitle = c.school.title;
+                sessionRow.schoolTitle = c.school.title;
               }
 
-              acc.push(sessionTermRow);
-            });
+              acc.push(sessionRow);
+            }
           });
         }
 
