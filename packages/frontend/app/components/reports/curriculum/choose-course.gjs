@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { eq, gt } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
@@ -20,12 +19,6 @@ export default class ReportsCurriculumChooseCourseComponent extends Component {
   @service currentUser;
 
   @tracked selectedSchoolId = null;
-  @tracked expandedYears = [];
-
-  constructor() {
-    super(...arguments);
-    this.expandedYears.push(currentAcademicYear());
-  }
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
 
@@ -82,7 +75,7 @@ export default class ReportsCurriculumChooseCourseComponent extends Component {
       const hasAllSelectedCourses = selectedCourses.length === courses.length;
       const hasSomeSelectedCourses = selectedCourses.length > 0 && !hasAllSelectedCourses;
       return {
-        isExpanded: this.expandedYears.includes(year),
+        isExpanded: this.args.expandedYears.includes(year),
         year,
         courses,
         selectedCourses,
@@ -94,9 +87,9 @@ export default class ReportsCurriculumChooseCourseComponent extends Component {
 
   toggleYear = (year, isExpanded) => {
     if (isExpanded) {
-      this.expandedYears = this.expandedYears.filter((y) => y !== year);
+      this.args.setExpandedYears(this.args.expandedYears.filter((y) => Number(y) !== year));
     } else {
-      this.expandedYears = [...this.expandedYears, year];
+      this.args.setExpandedYears([...this.args.expandedYears, Number(year)].sort());
     }
   };
 
