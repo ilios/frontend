@@ -39,13 +39,17 @@ Object.keys(schemas).forEach((name) => {
 
 Object.keys(relationships).forEach((name) => {
   collections[name].defineRelations(({ many, one }) => {
-    return relationships[name].reduce((r, { field, type, target }) => {
+    return relationships[name].reduce((r, { field, type, target, role }) => {
+      const opts = {};
+      if (role) {
+        opts['role'] = role;
+      }
       switch (type) {
         case 'oneOf':
-          r[field] = one(collections[target]);
+          r[field] = one(collections[target], { opts });
           break;
         case 'manyOf':
-          r[field] = many(collections[target]);
+          r[field] = many(collections[target], { opts });
           break;
         default:
           console.error(`Unknown relationships type ${type} on ${name}:${field} for ${target}`);
