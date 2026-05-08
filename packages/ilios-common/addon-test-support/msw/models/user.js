@@ -110,11 +110,13 @@ export const relationships = [
     field: 'directedSchools',
     type: 'manyOf',
     target: 'school',
+    role: 'schoolDirector',
   },
   {
     field: 'administeredSchools',
     type: 'manyOf',
     target: 'school',
+    role: 'schoolAdministrator',
   },
   {
     field: 'administeredSessions',
