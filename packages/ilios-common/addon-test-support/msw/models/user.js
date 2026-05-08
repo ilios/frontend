@@ -59,6 +59,7 @@ export const relationships = [
     field: 'studentAdvisedSessions',
     type: 'manyOf',
     target: 'session',
+    role: 'sessionStudentAdvisor',
   },
   {
     field: 'learnerGroups',
@@ -119,6 +120,7 @@ export const relationships = [
     field: 'administeredSessions',
     type: 'manyOf',
     target: 'session',
+    role: 'sessionAdministrator',
   },
   {
     field: 'directedPrograms',
