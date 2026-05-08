@@ -12,8 +12,8 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
     this.user2 = this.server.create('user', { displayName: 'Clem Chowder' });
     this.server.create('academic-year');
 
@@ -75,10 +75,10 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
 
     this.course = this.server.create('course', {
       year: 2013,
-      school: this.school,
+      school,
     });
 
-    const sessionType = this.server.create('session-type', { school: this.school });
+    const sessionType = this.server.create('session-type', { school });
     const session = this.server.create('session', {
       course: this.course,
       sessionType,

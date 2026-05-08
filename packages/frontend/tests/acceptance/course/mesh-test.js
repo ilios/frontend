@@ -7,8 +7,8 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Mesh Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
-    this.school = this.server.create('school');
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
     this.server.create('academic-year');
     this.server.createList('meshTree', 3);
     this.server.createList('meshConcept', 3);
@@ -28,7 +28,7 @@ module('Acceptance | Course - Mesh Terms', function (hooks) {
 
     this.course = this.server.create('course', {
       year: 2014,
-      school: this.school,
+      school,
       meshDescriptorIds: [1, 2, 3],
     });
   });

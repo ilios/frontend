@@ -11,7 +11,10 @@ module('Acceptance | Programs', function (hooks) {
   module('User in single school with no special permissions', function (hooks) {
     hooks.beforeEach(async function () {
       this.school = this.server.create('school');
-      this.user = await setupAuthentication({ school: this.school }, true);
+      this.user = await setupAuthentication(
+        { school: this.school, administeredSchools: [this.school] },
+        true,
+      );
     });
 
     test('visiting /programs', async function (assert) {

@@ -6,8 +6,8 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Objective List', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
     this.server.create('academic-year', { id: 2013 });
   });
 

@@ -6,17 +6,17 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({}, true);
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
     this.server.create('academic-year', { id: 2013 });
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
     const course = this.server.create('course', {
       year: 2013,
-      school: this.school,
+      school,
     });
-    const sessionType = this.server.create('session-type', { school: this.school });
+    const sessionType = this.server.create('session-type', { school });
     const session = this.server.create('session', { course, sessionType });
     const meshDescriptors = this.server.createList('mesh-descriptor', 6);
     this.server.create('session-objective', {

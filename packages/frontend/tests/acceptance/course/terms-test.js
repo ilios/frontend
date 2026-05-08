@@ -7,10 +7,10 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
-    this.school = this.server.create('school');
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
     this.server.create('vocabulary', {
-      school: this.school,
+      school,
       active: true,
     });
     this.server.create('academic-year', { id: 2013 });
@@ -26,7 +26,7 @@ module('Acceptance | Course - Terms', function (hooks) {
 
     this.course = this.server.create('course', {
       year: 2013,
-      school: this.school,
+      school,
       termIds: [1],
     });
   });

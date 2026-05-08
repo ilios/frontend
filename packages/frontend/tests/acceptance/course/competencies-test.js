@@ -7,9 +7,9 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Competencies', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
-    this.school = this.server.create('school');
-    const program = this.server.create('program', { school: this.school });
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
+    const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', {
       program,
     });
@@ -17,11 +17,11 @@ module('Acceptance | Course - Competencies', function (hooks) {
       programYear,
     });
     const competency1 = this.server.create('competency', {
-      school: this.school,
+      school,
       programYears: [programYear],
     });
     const competency2 = this.server.create('competency', {
-      school: this.school,
+      school,
       programYears: [programYear],
     });
 
@@ -36,7 +36,7 @@ module('Acceptance | Course - Competencies', function (hooks) {
 
     this.course = this.server.create('course', {
       year: 2013,
-      school: this.school,
+      school,
       cohorts: [cohort],
     });
     this.server.create('course-objective', {

@@ -7,8 +7,8 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     const school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
     this.server.create('academic-year', { id: 2013 });
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
@@ -21,7 +21,6 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
     this.server.createList('term', 3, { vocabulary, active: true });
     this.course = this.server.create('course', { school });
     this.server.create('course-objective', { course: this.course, terms: [term] });
-    this.school = school;
   });
 
   test('manage and save terms', async function (assert) {

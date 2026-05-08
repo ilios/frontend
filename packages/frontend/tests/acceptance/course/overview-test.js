@@ -9,8 +9,8 @@ module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
     this.server.createList('course-clerkship-type', 2);
   });
 
@@ -344,6 +344,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('rollover hidden from unprivileged users', async function (assert) {
+    this.user.update({ administeredSchools: [] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,

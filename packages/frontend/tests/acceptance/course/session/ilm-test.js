@@ -7,15 +7,15 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Independent Learning', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
     this.server.createList('user', 6);
     this.server.create('academic-year');
-    this.course = this.server.create('course', { school: this.school });
-    this.server.createList('instructor-group', 5, { school: this.school });
+    this.course = this.server.create('course', { school });
+    this.server.createList('instructor-group', 5, { school });
     this.server.createList('user', 2, { instructorGroupIds: [1] });
     this.server.createList('user', 3, { instructorGroupIds: [2] });
-    const sessionType = this.server.create('session-type', { school: this.school });
+    const sessionType = this.server.create('session-type', { school });
     const ilmSession = this.server.create('ilm-session', {
       instructorGroupIds: [1, 2, 3],
       instructorIds: [2, 3, 4],

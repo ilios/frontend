@@ -7,10 +7,10 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
     const vocabulary = this.server.create('vocabulary', {
-      school: this.school,
+      school,
       active: true,
     });
     this.server.create('academic-year', { id: 2013 });
@@ -26,9 +26,9 @@ module('Acceptance | Session - Terms', function (hooks) {
 
     const course = this.server.create('course', {
       year: 2013,
-      school: this.school,
+      school,
     });
-    const sessionType = this.server.create('session-type', { school: this.school });
+    const sessionType = this.server.create('session-type', { school });
     this.server.create('session', {
       course,
       sessionType,

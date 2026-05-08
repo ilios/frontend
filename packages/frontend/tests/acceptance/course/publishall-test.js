@@ -8,8 +8,8 @@ import page from 'ilios-common/page-objects/course-publish-all';
 module('Acceptance | Course - Publish All Sessions', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
     this.cohort = this.server.create('cohort');
   });
 

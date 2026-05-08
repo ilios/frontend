@@ -11,7 +11,10 @@ module('Acceptance | Learner Group', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication(
+      { school: this.school, administeredSchools: [this.school] },
+      true,
+    );
     this.program = this.server.create('program', { school: this.school });
   });
 
