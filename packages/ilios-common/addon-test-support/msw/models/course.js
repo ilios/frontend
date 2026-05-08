@@ -31,16 +31,19 @@ export const relationships = [
     field: 'directors',
     type: 'manyOf',
     target: 'user',
+    role: 'courseDirector',
   },
   {
     field: 'administrators',
     type: 'manyOf',
     target: 'user',
+    role: 'courseAdministrator',
   },
   {
     field: 'studentAdvisors',
     type: 'manyOf',
     target: 'user',
+    role: 'courseStudentAdvisor',
   },
   {
     field: 'cohorts',
