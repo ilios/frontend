@@ -18,15 +18,16 @@ module('Acceptance | assign students', function (hooks) {
     });
     await this.server.create('cohort', { programYear });
     const roles = await this.server.createList('userRole', 5);
+    this.studentRole = roles[3];
     await this.server.create('user', {
       school: this.school,
-      roles: [roles[3]],
+      roles: [this.studentRole],
       firstName: 'Clem',
       lastName: 'Chowder',
     });
     await this.server.create('user', {
       school: this.school,
-      roles: [roles[3]],
+      roles: [this.studentRole],
       displayName: 'Aardvark',
     });
   });
@@ -43,7 +44,7 @@ module('Acceptance | assign students', function (hooks) {
   test('school filter', async function (assert) {
     await this.server.create('user', {
       school: this.school2,
-      roleIds: [4],
+      roles: [this.studentRole],
       displayName: 'Aardvark',
     });
     await setupAuthentication({
@@ -114,7 +115,7 @@ module('Acceptance | assign students', function (hooks) {
   test('changing school filter resets user selections', async function (assert) {
     await this.server.create('user', {
       school: this.school2,
-      roleIds: [4],
+      roles: [this.studentRole],
       displayName: 'Zeb',
     });
     await setupAuthentication({
