@@ -55,11 +55,13 @@ export const relationships = [
     field: 'administrators',
     type: 'manyOf',
     target: 'user',
+    role: 'sessionAdministrator',
   },
   {
     field: 'studentAdvisors',
     type: 'manyOf',
     target: 'user',
+    role: 'sessionStudentAdvisor',
   },
   {
     field: 'postrequisite',
