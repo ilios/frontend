@@ -46,10 +46,10 @@ Object.keys(relationships).forEach((name) => {
       }
       switch (type) {
         case 'oneOf':
-          r[field] = one(collections[target], { opts });
+          r[field] = one(collections[target], opts);
           break;
         case 'manyOf':
-          r[field] = many(collections[target], { opts });
+          r[field] = many(collections[target], opts);
           break;
         default:
           console.error(`Unknown relationships type ${type} on ${name}:${field} for ${target}`);
