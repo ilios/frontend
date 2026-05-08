@@ -41,16 +41,19 @@ export const relationships = [
     field: 'directedCourses',
     type: 'manyOf',
     target: 'course',
+    role: 'courseDirector',
   },
   {
     field: 'administeredCourses',
     type: 'manyOf',
     target: 'course',
+    role: 'courseAdministrator',
   },
   {
     field: 'studentAdvisedCourses',
     type: 'manyOf',
     target: 'course',
+    role: 'courseStudentAdvisor',
   },
   {
     field: 'studentAdvisedSessions',
