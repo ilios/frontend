@@ -239,7 +239,7 @@ function filterByParam(modelName, record, param, value) {
     if (Array.isArray(value)) {
       return value.some((v) => fieldValueIds.includes(v));
     } else {
-      fieldValueIds.includes(value);
+      return fieldValueIds.includes(value);
     }
   }
   const fieldValueId = fieldValue.id;
