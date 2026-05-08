@@ -276,12 +276,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[0].details();
-
-    assert.strictEqual(page.details.learningMaterials.manager.nameValue, 'learning material 0');
+    assert.strictEqual(page.details.learningMaterials.manager.name.value, 'learning material 0');
     assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
     assert.strictEqual(
-      page.details.learningMaterials.manager.description.value,
-      '0 lm description',
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>0 lm description</p>',
     );
     assert.ok(page.details.learningMaterials.manager.hasFile);
     assert.ok(page.details.learningMaterials.manager.hasCopyrightPermission);
@@ -297,13 +296,13 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     await page.details.learningMaterials.current[1].details();
 
     assert.strictEqual(
-      page.details.learningMaterials.manager.nameValue,
+      page.details.learningMaterials.manager.name.value,
       'http://example.com/subdir1/subdir2/long_file_name.pdf',
     );
     assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
     assert.strictEqual(
-      page.details.learningMaterials.manager.description.value,
-      '1 lm description',
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>1 lm description</p>',
     );
     assert.ok(page.details.learningMaterials.manager.hasFile);
     assert.notOk(page.details.learningMaterials.manager.hasCopyrightPermission);
@@ -428,13 +427,13 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     await page.details.learningMaterials.current[1].details();
 
     assert.strictEqual(
-      page.details.learningMaterials.manager.nameValue,
+      page.details.learningMaterials.manager.name.value,
       'http://example.com/subdir1/subdir2/long_file_name.pdf',
     );
     assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
     assert.strictEqual(
-      page.details.learningMaterials.manager.description.value,
-      '1 lm description',
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>1 lm description</p>',
     );
     assert.strictEqual(page.details.learningMaterials.manager.uploadDate, '03/14/2011');
     assert.ok(page.details.learningMaterials.manager.hasFile);
@@ -452,11 +451,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[2].details();
 
-    assert.strictEqual(page.details.learningMaterials.manager.nameValue, 'learning material 2');
+    assert.strictEqual(page.details.learningMaterials.manager.name.value, 'learning material 2');
     assert.strictEqual(page.details.learningMaterials.manager.author, 'Hunter Pence');
     assert.strictEqual(
-      page.details.learningMaterials.manager.description.value,
-      '2 lm description',
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>2 lm description</p>',
     );
     assert.strictEqual(
       page.details.learningMaterials.manager.uploadDate,
@@ -480,11 +479,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[3].details();
 
-    assert.strictEqual(page.details.learningMaterials.manager.nameValue, 'learning material 3');
+    assert.strictEqual(page.details.learningMaterials.manager.name.value, 'learning material 3');
     assert.strictEqual(page.details.learningMaterials.manager.author, 'Willie Mays');
     assert.strictEqual(
-      page.details.learningMaterials.manager.description.value,
-      '3 lm description',
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>3 lm description</p>',
     );
     assert.strictEqual(page.details.learningMaterials.manager.uploadDate, '12/12/2016');
     assert.ok(page.details.learningMaterials.manager.hasCitation);
