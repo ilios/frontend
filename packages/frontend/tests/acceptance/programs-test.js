@@ -21,7 +21,6 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('add new program', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       await page.visit();
 
       assert.ok(page.root.toggleNewProgramFormExists);
@@ -38,7 +37,6 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('remove program', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       this.server.create('program', {
         school: this.school,
       });
@@ -54,7 +52,6 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('cancel remove program', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       this.server.create('program', {
         school: this.school,
       });

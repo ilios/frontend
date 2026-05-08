@@ -299,7 +299,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('confirm removal message', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].remove();
     assert.ok(
@@ -312,7 +311,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('remove offering', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].remove();
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].confirmRemoval();
@@ -321,7 +319,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('cancel remove offering', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].remove();
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].cancelRemoval();
@@ -330,7 +327,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can create a new offering single day', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
@@ -378,7 +374,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can create a new offering multi-day', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const sep112011 = DateTime.fromObject({ year: 2011, month: 9, day: 11, hour: 2, minute: 15 });
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.top.createNew();
@@ -446,7 +441,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can create a new small group offering', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
@@ -511,7 +505,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can edit existing offerings', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.ok(page.details.offerings.header.isVisible);
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].edit();
@@ -562,7 +555,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('user can cancel offering edits', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.ok(page.details.offerings.header.isVisible);
@@ -642,8 +634,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can create recurring small groups', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
@@ -716,8 +706,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can create recurring single offerings', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
@@ -771,7 +759,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('edit offerings twice #2850', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     this.server.create('learner-group', {
       cohortId: 1,
     });

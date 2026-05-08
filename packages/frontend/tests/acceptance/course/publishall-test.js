@@ -122,7 +122,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
   });
 
   test('Updating course objectives updates the unlinked objective warning', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const programYear = this.server.create('program-year', {
       cohort: this.cohort,
     });

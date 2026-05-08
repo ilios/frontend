@@ -20,7 +20,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       school: this.school,
     });
     this.server.create('course-objective', { course });
-    this.user.update({ administeredSchools: [this.school] });
+
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({
@@ -58,7 +58,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       school: this.school,
     });
     this.server.create('course-objective', { course });
-    this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: course.id,
       details: true,
@@ -88,7 +88,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       school: this.school,
     });
     this.server.create('course-objective', { course });
-    this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: course.id,
       details: true,
@@ -117,7 +117,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       year: 2013,
       school: this.school,
     });
-    this.user.update({ administeredSchools: [this.school] });
+
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({

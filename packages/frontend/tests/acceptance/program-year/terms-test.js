@@ -46,7 +46,6 @@ module('Acceptance | Program Year - Terms', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       programId: this.program.id,
       programYearId: this.programYear.id,
@@ -70,7 +69,6 @@ module('Acceptance | Program Year - Terms', function (hooks) {
   });
 
   test('save term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       programId: this.program.id,
       programYearId: this.programYear.id,
@@ -87,7 +85,6 @@ module('Acceptance | Program Year - Terms', function (hooks) {
   });
 
   test('cancel term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       programId: this.program.id,
       programYearId: this.programYear.id,

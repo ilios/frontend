@@ -73,7 +73,6 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('change title', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.strictEqual(page.root.header.title.text, 'instructor group 0');
     await page.root.header.title.edit();
@@ -84,7 +83,6 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('add instructor', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.strictEqual(page.root.users.users.length, 2);
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
@@ -148,7 +146,6 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('remove instructor', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.strictEqual(page.root.users.users.length, 2);
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');

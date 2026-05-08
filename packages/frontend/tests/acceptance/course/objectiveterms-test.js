@@ -25,7 +25,6 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
   });
 
   test('manage and save terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -133,7 +132,6 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
   });
 
   test('manage and cancel terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,

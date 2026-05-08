@@ -44,8 +44,6 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
   });
 
   test('list parent objectives by competency', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -84,8 +82,6 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
   });
 
   test('save changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -126,8 +122,6 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
   });
 
   test('cancel changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: this.course.id,
       details: true,

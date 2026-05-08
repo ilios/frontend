@@ -50,7 +50,6 @@ module('Acceptance | Course - Competencies', function (hooks) {
   });
 
   test('collapsed competencies renders', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     await takeScreenshot(assert);
     assert.strictEqual(page.details.collapsedCompetencies.title, 'Competencies (1)');
@@ -61,7 +60,6 @@ module('Acceptance | Course - Competencies', function (hooks) {
   });
 
   test('changing objective parent changes summary', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,

@@ -14,7 +14,6 @@ module('Acceptance | Course - Multiple Objective Parents', function (hooks) {
       name: 'allowMultipleCourseObjectiveParents',
       value: true,
     });
-    this.user.update({ administeredSchools: [this.school] });
 
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', { program });
@@ -79,7 +78,6 @@ module('Acceptance | Course - Multiple Objective Parents', function (hooks) {
   });
 
   test('can select multiple parents', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,

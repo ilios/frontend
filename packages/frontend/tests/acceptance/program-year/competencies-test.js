@@ -53,7 +53,6 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   });
 
   test('list with permission to edit', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
     await takeScreenshot(assert);
     assert.strictEqual(page.details.competencies.title, 'Competencies (2)');
@@ -71,7 +70,6 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   });
 
   test('manager list', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
     await page.details.competencies.manage();
 
@@ -88,7 +86,6 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   });
 
   test('change and save', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
     await page.details.competencies.manage();
 
@@ -124,7 +121,6 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   });
 
   test('change and cancel', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
     await page.details.competencies.manage();
 

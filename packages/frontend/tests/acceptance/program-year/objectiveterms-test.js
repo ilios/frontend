@@ -27,7 +27,6 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
   });
 
   test('manage and save terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await takeScreenshot(assert);
     assert.strictEqual(
@@ -146,7 +145,6 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
   });
 
   test('manage and cancel terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
