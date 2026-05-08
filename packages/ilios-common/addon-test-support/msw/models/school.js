@@ -50,11 +50,13 @@ export const relationships = [
     field: 'directors',
     type: 'manyOf',
     target: 'user',
+    role: 'schoolDirector',
   },
   {
     field: 'administrators',
     type: 'manyOf',
     target: 'user',
+    role: 'schoolAdministrator',
   },
   {
     field: 'configurations',
