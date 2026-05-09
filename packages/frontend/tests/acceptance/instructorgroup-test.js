@@ -11,11 +11,11 @@ module('Acceptance | Instructor Group', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    const school = this.server.create('school');
+    await setupAuthentication({ school, administeredSchools: [school] }, true);
     const users = this.server.createList('user', 4);
     const courses = this.server.createList('course', 2, {
-      school: this.school,
+      school,
     });
     const sessionType = this.server.create('session-type');
     const session1 = this.server.create('session', {
@@ -27,14 +27,14 @@ module('Acceptance | Instructor Group', function (hooks) {
       sessionType,
     });
     const instructorGroup1 = this.server.create('instructor-group', {
-      school: this.school,
+      school,
       users: [users[0], users[1]],
     });
     const instructorGroup2 = this.server.create('instructor-group', {
-      school: this.school,
+      school,
     });
     this.server.create('instructor-group', {
-      school: this.school,
+      school,
     });
     this.server.create('offering', {
       session: session1,
@@ -73,7 +73,6 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('change title', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.strictEqual(page.root.header.title.text, 'instructor group 0');
     await page.root.header.title.edit();
@@ -84,7 +83,6 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('add instructor', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.strictEqual(page.root.users.users.length, 2);
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
@@ -148,7 +146,6 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('remove instructor', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.strictEqual(page.root.users.users.length, 2);
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');

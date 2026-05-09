@@ -13,7 +13,10 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication(
+      { school: this.school, administeredSchools: [this.school] },
+      true,
+    );
     this.user2 = this.server.create('user', { displayName: 'Clem Chowder' });
     this.server.create('academic-year');
 
@@ -105,7 +108,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('list learning materials', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(currentRouteName(), 'course.index');
 
@@ -171,7 +173,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('create new link learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const testTitle = 'testsome title';
     const testAuthor = 'testsome author';
     const testDescription = 'testsome description';
@@ -207,7 +208,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('create new citation learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const testTitle = 'testsome title';
     const testAuthor = 'testsome author';
     const testDescription = 'testsome description';
@@ -244,7 +244,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('can only add one learning-material at a time', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     assert.ok(page.details.learningMaterials.canCreateNew);
@@ -256,7 +255,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('cancel new learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     assert.ok(page.details.learningMaterials.search.isVisible);
@@ -268,7 +266,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('view copyright file learning material details', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[0].details();
@@ -288,7 +285,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('view rationale file learning material details', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[1].details();
@@ -308,7 +304,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('view accessibility file learning material details', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4, 'course lm count correct');
     await page.details.learningMaterials.current[0].details();
@@ -380,7 +375,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('toggling accessibility file learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4, 'course lm count correct');
     await page.details.learningMaterials.current[0].details();
@@ -418,7 +412,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('view url file learning material details', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[1].details();
@@ -441,7 +434,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('view link learning material details', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[2].details();
@@ -470,7 +462,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('view citation learning material details', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[3].details();
@@ -492,7 +483,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('edit learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newNote = 'text text. Woo hoo!';
     const newDescription = "i'll sleep when i'm dead.";
 
@@ -530,8 +520,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('change from required to not required #1249', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[2].details();
@@ -544,7 +532,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('cancel editing learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newNote = 'text text. Woo hoo!';
     const newDescription = 'counting sheep';
 
@@ -580,7 +567,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[0].details();
@@ -625,7 +611,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('save terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[0].details();
@@ -646,7 +631,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('cancel term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[0].details();
@@ -667,7 +651,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('find and add learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.search.search.set('doc');
@@ -696,7 +679,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('add timed release start date', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.notOk(page.details.learningMaterials.current[0].isTimedRelease);
     await page.details.learningMaterials.current[0].details();
@@ -724,7 +706,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('add timed release start and end date', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newStartDate = DateTime.fromObject({ hour: 10, minute: 10 }).plus({
       days: 1,
       month: 1,
@@ -771,7 +752,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('add timed release end date', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.notOk(page.details.learningMaterials.current[0].isTimedRelease);
     await page.details.learningMaterials.current[0].details();
@@ -799,7 +779,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('end date is after start date', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newDate = DateTime.fromObject({ hour: 10, minute: 10 }).plus({ days: 1, month: 1 });
 
     await page.visit({ courseId: this.course.id, details: true });
@@ -835,7 +814,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('edit learning material with no other links #3617', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newTitle = 'text text. Woo hoo!';
 
     await page.visit({ courseId: this.course.id, details: true });
@@ -853,7 +831,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('title too short', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.notOk(page.details.learningMaterials.current[0].isTimedRelease);
     await page.details.learningMaterials.current[0].details();
@@ -864,7 +841,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('title too long', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.notOk(page.details.learningMaterials.current[0].isTimedRelease);
     await page.details.learningMaterials.current[0].details();
@@ -875,7 +851,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('missing copyright info #1204', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     await page.details.learningMaterials.createNew();
     await page.details.learningMaterials.pickNew('File');
@@ -914,7 +889,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       required: false,
       position: 1,
     });
-    this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({ courseId: course.id, details: true });
     await takeScreenshot(assert);
     assert.strictEqual(currentRouteName(), 'course.index');
@@ -944,7 +919,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       required: false,
       position: 1,
     });
-    this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({ courseId: course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 1);
     await page.details.learningMaterials.current[0].details();

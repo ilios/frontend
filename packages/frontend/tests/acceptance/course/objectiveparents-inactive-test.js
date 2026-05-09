@@ -7,8 +7,8 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
   });
 
   test('inactive program year objectives are hidden unless they are selected', async function (assert) {
@@ -51,7 +51,6 @@ module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
       programYearObjectives: [parent],
     });
 
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: course.id,
       details: true,

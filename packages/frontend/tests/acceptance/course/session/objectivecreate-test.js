@@ -7,17 +7,17 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Objective Create', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
     this.server.create('academic-year', { id: 2013 });
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
     this.course = this.server.create('course', {
       year: 2013,
-      school: this.school,
+      school,
     });
-    const sessionType = this.server.create('session-type', { school: this.school });
+    const sessionType = this.server.create('session-type', { school });
     const session = this.server.create('session', {
       course: this.course,
       sessionType,
@@ -26,7 +26,6 @@ module('Acceptance | Session - Objective Create', function (hooks) {
   });
 
   test('save new objective', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({
@@ -59,7 +58,6 @@ module('Acceptance | Session - Objective Create', function (hooks) {
   });
 
   test('cancel new objective', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -84,7 +82,6 @@ module('Acceptance | Session - Objective Create', function (hooks) {
   });
 
   test('empty objective title can not be created', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,

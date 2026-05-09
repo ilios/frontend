@@ -10,12 +10,14 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication(
+      { school: this.school, administeredSchools: [this.school] },
+      true,
+    );
     this.program = this.server.create('program', { school: this.school });
   });
 
   test('check list', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const thisYear = new Date().getFullYear();
     const cohorts = this.server.createList('cohort', 4);
     this.server.create('program-year', {
@@ -54,7 +56,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('sort list', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const thisYear = new Date().getFullYear();
     const cohorts = this.server.createList('cohort', 4);
     this.server.create('program-year', {
@@ -175,7 +176,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('can delete a program-year', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const programYear = this.server.create('program-year', {
       program: this.program,
     });
@@ -188,7 +188,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('canceling adding new program-year collapses new program year form', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: this.program.id });
     assert.notOk(page.programYears.newProgramYear.isVisible);
     await page.programYears.expandCollapse.toggle();
@@ -199,7 +198,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
 
   test('can add a program-year (with no pre-existing program-years)', async function (assert) {
     const thisYear = new Date().getFullYear();
-    this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({ programId: this.program.id });
     assert.strictEqual(page.programYears.items.length, 0);
     await page.programYears.expandCollapse.toggle();
@@ -215,7 +214,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
 
   test('can add a program-year (with pre-existing program-year)', async function (assert) {
     const thisYear = new Date().getFullYear();
-    this.user.update({ administeredSchools: [this.school] });
+
     const directors = this.server.createList('user', 3);
     const competencies = this.server.createList('competency', 3);
     const vocabulary = this.server.create('vocabulary', { school: this.school });
@@ -269,7 +268,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('privileged users can lock and unlock program-year', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const cohorts = this.server.createList('cohort', 2);
     this.server.create('program-year', {
       program: this.program,
@@ -297,7 +295,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('delete-button is not visible for program years with populated cohorts', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const programYears = this.server.createList('programYear', 2, {
       program: this.program,
     });

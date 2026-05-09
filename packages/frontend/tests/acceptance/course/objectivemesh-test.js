@@ -6,8 +6,8 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
-    this.school = this.server.create('school');
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
     this.server.create('academic-year', { id: 2013 });
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
@@ -15,7 +15,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
 
     this.course = this.server.create('course', {
       year: 2013,
-      school: this.school,
+      school,
     });
 
     const meshDescriptors = this.server.createList('mesh-descriptor', 6);
@@ -37,8 +37,6 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -113,8 +111,6 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   });
 
   test('save terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -177,8 +173,6 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   });
 
   test('cancel changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: this.course.id,
       details: true,

@@ -7,8 +7,8 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Mesh Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
     this.server.create('academic-year');
     this.server.createList('meshTree', 3);
     this.server.createList('meshConcept', 3);
@@ -28,9 +28,9 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
 
     const course = this.server.create('course', {
       year: 2014,
-      school: this.school,
+      school,
     });
-    const sessionType = this.server.create('session-type', { school: this.school });
+    const sessionType = this.server.create('session-type', { school });
     this.server.create('session', {
       course,
       meshDescriptorIds: [1, 2, 3],
@@ -47,7 +47,6 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     await page.details.meshTerms.manage();
@@ -79,7 +78,6 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('save terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     await page.details.meshTerms.manage();
@@ -101,7 +99,6 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('cancel term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     assert.strictEqual(page.details.meshTerms.current[0].title, 'descriptor 0');

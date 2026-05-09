@@ -6,8 +6,8 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Objective Create', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
     this.server.create('academic-year', { id: 2013 });
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
@@ -20,7 +20,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       school: this.school,
     });
     this.server.create('course-objective', { course });
-    this.user.update({ administeredSchools: [this.school] });
+
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({
@@ -58,7 +58,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       school: this.school,
     });
     this.server.create('course-objective', { course });
-    this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: course.id,
       details: true,
@@ -88,7 +88,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       school: this.school,
     });
     this.server.create('course-objective', { course });
-    this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: course.id,
       details: true,
@@ -117,7 +117,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       year: 2013,
       school: this.school,
     });
-    this.user.update({ administeredSchools: [this.school] });
+
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({

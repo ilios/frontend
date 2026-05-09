@@ -12,8 +12,8 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
     this.user2 = this.server.create('user', { displayName: 'Clem Chowder' });
     this.server.create('academic-year');
 
@@ -75,13 +75,13 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
 
     this.course = this.server.create('course', {
       year: 2013,
-      school: this.school,
+      school,
     });
 
-    const sessionType = this.server.create('session-type', { school: this.school });
+    this.sessionType = this.server.create('session-type', { school });
     const session = this.server.create('session', {
       course: this.course,
-      sessionType,
+      sessionType: this.sessionType,
     });
 
     this.server.create('session-learning-material', {
@@ -181,7 +181,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('create new link learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const testTitle = 'testsome title';
     const testAuthor = 'testsome author';
     const testDescription = 'testsome description';
@@ -217,7 +216,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('create new citation learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const testTitle = 'testsome title';
     const testAuthor = 'testsome author';
     const testDescription = 'testsome description';
@@ -253,7 +251,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('can only add one learning-material at a time', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     assert.ok(page.details.learningMaterials.canCreateNew);
@@ -265,8 +262,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('cancel new learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     assert.ok(page.details.learningMaterials.search.isVisible);
@@ -281,12 +276,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[0].details();
-
-    assert.strictEqual(page.details.learningMaterials.manager.nameValue, 'learning material 0');
+    assert.strictEqual(page.details.learningMaterials.manager.name.value, 'learning material 0');
     assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
     assert.strictEqual(
-      page.details.learningMaterials.manager.description.value,
-      '0 lm description',
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>0 lm description</p>',
     );
     assert.ok(page.details.learningMaterials.manager.hasFile);
     assert.ok(page.details.learningMaterials.manager.hasCopyrightPermission);
@@ -302,13 +296,13 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     await page.details.learningMaterials.current[1].details();
 
     assert.strictEqual(
-      page.details.learningMaterials.manager.nameValue,
+      page.details.learningMaterials.manager.name.value,
       'http://example.com/subdir1/subdir2/long_file_name.pdf',
     );
     assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
     assert.strictEqual(
-      page.details.learningMaterials.manager.description.value,
-      '1 lm description',
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>1 lm description</p>',
     );
     assert.ok(page.details.learningMaterials.manager.hasFile);
     assert.notOk(page.details.learningMaterials.manager.hasCopyrightPermission);
@@ -319,7 +313,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('view accessibility file learning material details', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4, 'course lm count correct');
     await page.details.learningMaterials.current[0].details();
@@ -392,7 +385,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('toggling accessibility file learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4, 'course lm count correct');
     await page.details.learningMaterials.current[0].details();
@@ -435,13 +427,13 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     await page.details.learningMaterials.current[1].details();
 
     assert.strictEqual(
-      page.details.learningMaterials.manager.nameValue,
+      page.details.learningMaterials.manager.name.value,
       'http://example.com/subdir1/subdir2/long_file_name.pdf',
     );
     assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
     assert.strictEqual(
-      page.details.learningMaterials.manager.description.value,
-      '1 lm description',
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>1 lm description</p>',
     );
     assert.strictEqual(page.details.learningMaterials.manager.uploadDate, '03/14/2011');
     assert.ok(page.details.learningMaterials.manager.hasFile);
@@ -459,11 +451,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[2].details();
 
-    assert.strictEqual(page.details.learningMaterials.manager.nameValue, 'learning material 2');
+    assert.strictEqual(page.details.learningMaterials.manager.name.value, 'learning material 2');
     assert.strictEqual(page.details.learningMaterials.manager.author, 'Hunter Pence');
     assert.strictEqual(
-      page.details.learningMaterials.manager.description.value,
-      '2 lm description',
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>2 lm description</p>',
     );
     assert.strictEqual(
       page.details.learningMaterials.manager.uploadDate,
@@ -487,11 +479,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[3].details();
 
-    assert.strictEqual(page.details.learningMaterials.manager.nameValue, 'learning material 3');
+    assert.strictEqual(page.details.learningMaterials.manager.name.value, 'learning material 3');
     assert.strictEqual(page.details.learningMaterials.manager.author, 'Willie Mays');
     assert.strictEqual(
-      page.details.learningMaterials.manager.description.value,
-      '3 lm description',
+      await page.details.learningMaterials.manager.description.editorValue(),
+      '<p>3 lm description</p>',
     );
     assert.strictEqual(page.details.learningMaterials.manager.uploadDate, '12/12/2016');
     assert.ok(page.details.learningMaterials.manager.hasCitation);
@@ -504,7 +496,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('edit learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newNote = 'text text. Woo hoo!';
     const newDescription = 'high altitude training';
 
@@ -543,8 +534,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('change from required to not required #1249', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[2].details();
@@ -557,7 +546,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('cancel editing learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newNote = 'text text. Woo hoo!';
     const newDescription = 'the sun is shining.';
 
@@ -593,7 +581,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[0].details();
@@ -638,7 +625,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('save terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[0].details();
@@ -661,7 +647,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('cancel term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.current[0].details();
@@ -684,7 +669,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('find and add learning material', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     await page.details.learningMaterials.search.search.set('doc');
@@ -713,7 +697,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('add timed release start date', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.notOk(page.details.learningMaterials.current[0].isTimedRelease);
     await page.details.learningMaterials.current[0].details();
@@ -741,7 +724,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('add timed release start and end date', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newStartDate = DateTime.fromObject({ hour: 10, minute: 10 }).plus({
       days: 1,
       month: 1,
@@ -788,7 +770,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('add timed release end date', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.notOk(page.details.learningMaterials.current[0].isTimedRelease);
     await page.details.learningMaterials.current[0].details();
@@ -816,7 +797,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('end date is after start date', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newDate = DateTime.fromObject({ hour: 10, minute: 10 }).plus({ days: 1, month: 1 });
 
     await page.visit({ courseId: this.course.id, sessionId: 1 });
@@ -852,7 +832,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('edit learning material with no other links #3617', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const newTitle = 'text text. Woo hoo!';
 
     await page.visit({ courseId: this.course.id, sessionId: 1 });
@@ -870,7 +849,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('title too short', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.notOk(page.details.learningMaterials.current[0].isTimedRelease);
     await page.details.learningMaterials.current[0].details();
@@ -881,7 +859,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('title too long', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.notOk(page.details.learningMaterials.current[0].isTimedRelease);
     await page.details.learningMaterials.current[0].details();
@@ -892,7 +869,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('missing copyright info #1204', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     await page.details.learningMaterials.createNew();
     await page.details.learningMaterials.pickNew('File');
@@ -923,6 +899,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   test('list double linked learning materials', async function (assert) {
     const session = this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionType,
     });
     this.server.create('session-learning-material', {
       learningMaterial: this.material1,
@@ -951,6 +928,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   test('view double linked learning material details', async function (assert) {
     const session = this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionType,
     });
     this.server.create('session-learning-material', {
       learningMaterial: this.material1,

@@ -9,7 +9,10 @@ module('Acceptance | Program - Overview', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication(
+      { school: this.school, administeredSchools: [this.school] },
+      true,
+    );
   });
 
   test('non editable fields', async function (assert) {
@@ -24,7 +27,6 @@ module('Acceptance | Program - Overview', function (hooks) {
   });
 
   test('editable fields', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
       school: this.school,
     });
@@ -36,7 +38,6 @@ module('Acceptance | Program - Overview', function (hooks) {
   });
 
   test('change title', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
       school: this.school,
     });
@@ -54,7 +55,6 @@ module('Acceptance | Program - Overview', function (hooks) {
   });
 
   test('change short title', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
       school: this.school,
     });
@@ -72,7 +72,6 @@ module('Acceptance | Program - Overview', function (hooks) {
   });
 
   test('change duration', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
       school: this.school,
     });
@@ -90,7 +89,6 @@ module('Acceptance | Program - Overview', function (hooks) {
   });
 
   test('leave duration at 1', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
       school: this.school,
       duration: 1,

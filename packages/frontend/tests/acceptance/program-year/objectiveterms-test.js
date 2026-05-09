@@ -7,8 +7,8 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     const school = this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
     this.server.create('academic-year', { id: 2013 });
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
@@ -23,11 +23,9 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
     this.server.createList('term', 3, { vocabulary, active: true });
     this.server.create('term', { vocabulary: vocabulary2, active: true });
     this.server.create('program-year-objective', { programYear, terms: [term] });
-    this.school = school;
   });
 
   test('manage and save terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await takeScreenshot(assert);
     assert.strictEqual(
@@ -146,7 +144,6 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
   });
 
   test('manage and cancel terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,

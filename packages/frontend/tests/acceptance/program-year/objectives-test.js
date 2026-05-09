@@ -7,12 +7,12 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
     const program = this.server.create('program', {
-      school: this.school,
+      school,
     });
-    const vocabulary = this.server.create('vocabulary', { school: this.school });
+    const vocabulary = this.server.create('vocabulary', { school });
     const term1 = this.server.create('term', { vocabulary, active: true });
     const term2 = this.server.create('term', { vocabulary });
     const programYear = this.server.create('program-year', {
@@ -22,28 +22,28 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
       programYear,
     });
     const parent = this.server.create('competency', {
-      school: this.school,
+      school,
       programYears: [programYear],
     });
     const competency1 = this.server.create('competency', {
       parent,
-      school: this.school,
+      school,
       programYears: [programYear],
     });
     this.server.create('competency', {
       parent,
-      school: this.school,
+      school,
       programYears: [programYear],
     });
     const competency4 = this.server.create('competency', {
-      school: this.school,
+      school,
       programYears: [programYear],
     });
     this.server.create('competency', {
-      school: this.school,
+      school,
       programYears: [programYear],
     });
-    this.server.createList('competency', 3, { school: this.school });
+    this.server.createList('competency', 3, { school });
     const meshDescriptors = this.server.createList('mesh-descriptor', 4);
     const programYearObjective = this.server.create('program-year-objective', {
       programYear,
@@ -66,7 +66,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('list editable', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await takeScreenshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
@@ -196,7 +195,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('manage MeSH terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
@@ -246,7 +244,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('save MeSH terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
@@ -288,7 +285,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('cancel changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
@@ -329,7 +325,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('manage competency', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await page.details.objectives.objectiveList.objectives[0].competency.manage();
     const m = page.details.objectives.objectiveList.objectives[0].competencyManager;
@@ -351,7 +346,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('save competency', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await page.details.objectives.objectiveList.objectives[0].competency.manage();
     const m = page.details.objectives.objectiveList.objectives[0].competencyManager;
@@ -378,7 +372,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('save no competency', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await page.details.objectives.objectiveList.objectives[0].competency.manage();
     const m = page.details.objectives.objectiveList.objectives[0].competencyManager;
@@ -395,7 +388,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('cancel competency change', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await page.details.objectives.objectiveList.objectives[0].competency.manage();
     const m = page.details.objectives.objectiveList.objectives[0].competencyManager;
@@ -422,7 +414,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('cancel remove competency change', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await page.details.objectives.objectiveList.objectives[0].competency.manage();
     const m = page.details.objectives.objectiveList.objectives[0].competencyManager;
@@ -449,7 +440,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('add competency', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].description.text,
@@ -482,7 +472,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('empty objective title can not be saved', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
@@ -520,7 +509,6 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('activate and deactivate', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 

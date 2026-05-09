@@ -11,7 +11,10 @@ module('Acceptance | Programs', function (hooks) {
   module('User in single school with no special permissions', function (hooks) {
     hooks.beforeEach(async function () {
       this.school = this.server.create('school');
-      this.user = await setupAuthentication({ school: this.school }, true);
+      this.user = await setupAuthentication(
+        { school: this.school, administeredSchools: [this.school] },
+        true,
+      );
     });
 
     test('visiting /programs', async function (assert) {
@@ -21,7 +24,6 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('add new program', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       await page.visit();
 
       assert.ok(page.root.toggleNewProgramFormExists);
@@ -38,7 +40,6 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('remove program', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       this.server.create('program', {
         school: this.school,
       });
@@ -54,7 +55,6 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('cancel remove program', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       this.server.create('program', {
         school: this.school,
       });

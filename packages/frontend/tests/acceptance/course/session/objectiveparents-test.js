@@ -6,16 +6,16 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    const school = this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
     const course = this.server.create('course', {
       year: 2013,
-      school: this.school,
+      school,
     });
     const courseObjectives = this.server.createList('course-objective', 3, {
       course,
     });
-    const sessionType = this.server.create('session-type', { school: this.school });
+    const sessionType = this.server.create('session-type', { school });
     const session = this.server.create('session', { course, sessionType });
     this.server.create('session-objective', {
       session,
@@ -25,8 +25,6 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
   });
 
   test('list parent objectives', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -64,8 +62,6 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
   });
 
   test('save changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -115,8 +111,6 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
   });
 
   test('cancel changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -166,8 +160,6 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
   });
 
   test('deselect all parents for session objective', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: 1,
       sessionId: 1,

@@ -10,7 +10,10 @@ module('Acceptance | Courses', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication(
+      { school: this.school, administeredSchools: [this.school] },
+      true,
+    );
     this.server.create('school');
   });
 
@@ -226,6 +229,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('unprivileged users can not delete courses', async function (assert) {
+    this.user.update({ administeredSchools: [] });
     this.server.create('academic-year', { id: 2014 });
     this.server.create('course', {
       year: 2014,
@@ -250,7 +254,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('privileged users can only delete unpublished courses', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     this.server.create('academic-year', { id: 2014 });
     this.server.create('course', {
       year: 2014,
@@ -272,7 +275,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year });
     await page.visit({ year });
@@ -312,7 +314,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course link hides after changing year', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const year1 = DateTime.now().year;
     const year2 = DateTime.now().year + 1;
     this.server.create('academic-year', { id: year1 });
@@ -337,6 +338,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course toggle does not show up for unprivileged users', async function (assert) {
+    this.user.update({ administeredSchools: [] });
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year });
     await page.visit({ year });
@@ -344,7 +346,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course in another year does not display in list', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     this.server.create('academic-year', { id: 2012 });
     this.server.create('academic-year', { id: 2013 });
 
@@ -360,7 +361,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course does not appear twice when navigating back', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year });
 
@@ -381,7 +381,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course can be deleted', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year });
     this.server.create('userRole', {
@@ -442,8 +441,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('no academic years exist', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit();
     await page.root.toggleNewCourseForm();
 
@@ -592,7 +589,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('privileged users can lock and unlock course', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     this.server.create('academic-year', { id: 2014 });
     this.server.create('course', {
       year: 2014,
@@ -663,7 +659,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('can not delete course with descendants #3620', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const year = DateTime.now().year.toString();
     this.server.create('academic-year', { id: year });
     const course1 = this.server.create('course', {
@@ -690,7 +685,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('academic year pre-selects last year with calendar-year-boundary-crossing config turned on', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.user.update({ administeredSchools: [this.school] });
+
     freezeDateAt(new Date('1/1/2021'));
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year - 1 });
@@ -713,7 +708,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('academic year pre-selects this year with calendar-year-boundary-crossing config turned on', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.user.update({ administeredSchools: [this.school] });
+
     freezeDateAt(new Date('10/10/2021'));
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year - 1 });
@@ -736,7 +731,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('academic year always pre-selects this year with calendar-year-boundary-crossing config turned off', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.user.update({ administeredSchools: [this.school] });
+
     freezeDateAt(new Date('1/1/2021'));
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year - 1 });
@@ -759,7 +754,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('academic STILL always year pre-selects this year with calendar-year-boundary-crossing config turned off', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.user.update({ administeredSchools: [this.school] });
+
     freezeDateAt(new Date('10/10/2021'));
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year - 1 });
