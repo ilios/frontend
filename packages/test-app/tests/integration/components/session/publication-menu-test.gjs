@@ -149,7 +149,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('dropdown options are accessible for unpublished session', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       published: false,
       publishedAsTbd: false,
     });
@@ -181,7 +181,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('dropdown options are accessible for published session', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       published: true,
       publishedAsTbd: false,
     });

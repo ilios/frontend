@@ -291,7 +291,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course link hides after changing school', async function (assert) {
-    this.school2 = this.server.create('school');
+    this.school2 = await this.server.create('school');
     this.user.update({ administeredSchools: [this.school, this.school2] });
     const year1 = DateTime.now().year;
     const year2 = DateTime.now().year + 1;
