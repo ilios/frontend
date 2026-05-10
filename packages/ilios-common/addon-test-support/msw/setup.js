@@ -3,6 +3,7 @@ import { settled } from '@ember/test-helpers';
 import { startMSW } from './start-msw.js';
 import { db } from './db.js';
 import { createModel, createModelList, resetIdCounter } from './create-model.js';
+import { updateModel } from './update-model.js';
 
 // Drop-in replacement for setupMirage() that maintains the same API
 export function setupMSW(hooks) {
@@ -24,6 +25,7 @@ export function setupMSW(hooks) {
     // Provide Mirage-compatible API
     this.server.create = createModel;
     this.server.createList = createModelList;
+    this.server.update = updateModel;
     this.server.db = db;
     this.server.get = get.bind(this);
     this.server.post = post.bind(this);
