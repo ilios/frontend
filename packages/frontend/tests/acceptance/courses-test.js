@@ -28,22 +28,22 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('course', {
       title: 'specialfirstcourse',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     await this.server.create('course', {
       title: 'specialsecondcourse',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     await this.server.create('course', {
       title: 'regularcourse',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     const lastCourse = await this.server.create('course', {
       title: 'aaLastcourse',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     await page.visit({ filter: 'Last' });
     assert.strictEqual(page.root.list.courses.length, 1);
@@ -56,33 +56,33 @@ module('Acceptance | Courses', function (hooks) {
     const firstCourse = await this.server.create('course', {
       title: 'specialfirstcourse',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     const secondCourse = await this.server.create('course', {
       title: 'specialsecondcourse',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     const regularCourse = await this.server.create('course', {
       title: 'regularcourse',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     const lastCourse = await this.server.create('course', {
       title: 'aaLastcourse',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     const regexCourse = await this.server.create('course', {
       title: '\\yoo hoo',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
 
     await this.server.create('course', {
       title: 'archivedCourse',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       archived: true,
     });
     await page.visit();
@@ -144,11 +144,11 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
     });
     const secondCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     await page.visit();
     assert.strictEqual(page.root.list.courses.length, 1);
@@ -166,11 +166,11 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
     });
     const secondCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     await page.visit({ year: 2014 });
     assert.strictEqual(page.root.list.courses.length, 1);
@@ -185,12 +185,12 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     const secondCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
-      directorIds: [this.user.id],
+      school: this.school,
+      directors: [this.user],
     });
 
     await page.visit();
@@ -233,12 +233,12 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: true,
     });
     await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: false,
     });
     await page.visit();
@@ -257,12 +257,12 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: true,
     });
     await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: false,
     });
     await page.visit();
@@ -417,11 +417,11 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       locked: true,
     });
 
@@ -465,11 +465,11 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     const secondCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
     await page.visit();
     assert.ok(page.root.list.isSortedByTitleAscending);
@@ -486,12 +486,12 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       level: 1,
     });
     const secondCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       level: 2,
     });
 
@@ -511,12 +511,12 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
     });
     const secondCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       startDate: DateTime.fromObject({ hour: 8 }).plus({ days: 1 }).toJSDate(),
     });
 
@@ -536,12 +536,12 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       endDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
     });
     const secondCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       endDate: DateTime.fromObject({ hour: 8 }).plus({ days: 1 }).toJSDate(),
     });
 
@@ -561,19 +561,19 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: true,
       publishedAsTbd: false,
     });
     const secondCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: true,
       publishedAsTbd: true,
     });
     const thirdCourse = await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: false,
       publishedAsTbd: false,
     });
@@ -596,14 +596,14 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: true,
       publishedAsTbd: false,
       locked: true,
     });
     await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: true,
       publishedAsTbd: true,
       locked: false,
@@ -626,14 +626,14 @@ module('Acceptance | Courses', function (hooks) {
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: true,
       publishedAsTbd: true,
       locked: false,
     });
     await this.server.create('course', {
       year: 2014,
-      schoolId: 1,
+      school: this.school,
       published: true,
       publishedAsTbd: false,
       locked: true,
@@ -653,7 +653,7 @@ module('Acceptance | Courses', function (hooks) {
     const firstCourse = await this.server.create('course', {
       title: 'yes\\no',
       year: 2014,
-      schoolId: 1,
+      school: this.school,
     });
 
     await page.visit();
