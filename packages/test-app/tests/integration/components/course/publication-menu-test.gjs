@@ -185,7 +185,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('dropdown options are accessible for unpublished course', async function (assert) {
-    const cohort = this.server.create('cohort');
+    const cohort = await this.server.create('cohort');
     this.server.create('course', {
       cohorts: [cohort],
       published: false,
@@ -218,7 +218,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('dropdown options are accessible for published course', async function (assert) {
-    const cohort = this.server.create('cohort');
+    const cohort = await this.server.create('cohort');
     this.server.create('course', {
       cohorts: [cohort],
       published: true,

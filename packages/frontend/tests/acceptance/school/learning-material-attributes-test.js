@@ -7,7 +7,7 @@ module('Acceptance | School - Learning Material Attributes', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     await setupAuthentication({ school: this.school }, true);
   });
 

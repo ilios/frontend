@@ -123,7 +123,7 @@ module('Acceptance | Course - Overview', function (hooks) {
 
   test('back to courses link contains year of given course as query param', async function (assert) {
     const year = 2013;
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year,
       school: this.school,
     });

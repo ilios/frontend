@@ -59,10 +59,10 @@ module('Integration | Component | course/rollover', function (hooks) {
       hour: 8,
     });
     freezeDateAt(december11th2025.toJSDate());
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
     for (let startYear = 2025; startYear < 2029; startYear++) {
-      const programYear = this.server.create('program-year', {
+      const programYear = await this.server.create('program-year', {
         program,
         startYear,
       });
@@ -71,7 +71,7 @@ module('Integration | Component | course/rollover', function (hooks) {
         programYear,
       });
     }
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
