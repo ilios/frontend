@@ -179,12 +179,14 @@ async function extractRelationshipsInUpdate(modelName, data, attrs) {
         if (Array.isArray(relationship.data)) {
           attrs[key] = await Promise.all(
             relationship.data.map((item) => {
-              const id = modelsWithStringIds.has(modelName) ? item.id : Number(item.id);
+              const relatedModelName = singularize(item.type);
+              const id = modelsWithStringIds.has(relatedModelName) ? item.id : Number(item.id);
               return getRelatedRecord(modelName, key, id);
             }),
           );
         } else {
-          const id = modelsWithStringIds.has(modelName)
+          const relatedModelName = singularize(relationship.data.type);
+          const id = modelsWithStringIds.has(relatedModelName)
             ? relationship.data.id
             : Number(relationship.data.id);
           attrs[key] = relationship.data ? await getRelatedRecord(modelName, key, id) : null;
