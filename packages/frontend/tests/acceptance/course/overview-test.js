@@ -21,7 +21,7 @@ module('Acceptance | Course - Overview', function (hooks) {
         year: 2013,
         school: this.school,
         clerkshipType: this.clerkshipType,
-        externalId: 123,
+        externalId: '123',
         level: 3,
       });
       await this.server.create('user', {
