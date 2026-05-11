@@ -81,5 +81,15 @@ async function getRelatedRecord(modelName, field, id) {
   return value;
 }
 
+function validateRecordData(modelName, obj) {
+  try {
+    collections[modelName].options.schema.parse(obj);
+  } catch (e) {
+    const errors = e.issues.map(({ path, message }) => `${message} for "${path}"`);
+    const message = `Schema Errors for "${modelName}": [\n  ` + errors.join('\n  ') + '\n]';
+    throw new Error(message);
+  }
+}
+
 // Export all collections as db object for backwards compatibility
-export { collections as db, getRelatedRecord, isRelatedRecord };
+export { collections as db, getRelatedRecord, isRelatedRecord, validateRecordData };
