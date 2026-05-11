@@ -237,13 +237,13 @@ function filterByParam(modelName, record, param, value) {
     return String(fieldValue) === String(value);
   }
 
-  // filter relationship fields
+  // filter relationship field by comparing record IDs.
   if (Array.isArray(fieldValue)) {
     const fieldValueIds = fieldValue.map(({ id }) => id);
     if (Array.isArray(value)) {
-      return value.some((v) => fieldValueIds.includes(v));
+      return value.some((v) => fieldValueIds.includes(Number(v)));
     } else {
-      return fieldValueIds.includes(value);
+      return fieldValueIds.includes(Number(value));
     }
   }
   const fieldValueId = fieldValue.id;
