@@ -97,7 +97,6 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             href={{@report.absoluteFileUri}}
             rel="noopener noreferrer"
             target="_blank"
-            disabled={{this.showRemoveConfirmation}}
             class={{if this.showRemoveConfirmation "disabled"}}
             data-test-download
           ><FaIcon
