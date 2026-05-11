@@ -141,9 +141,9 @@ export function createCrudHandlers(modelName, apiRoute) {
             );
             attrs[key] = records;
           } else {
-            const type = value.type;
-            let id = modelsWithStringIds.has(type) ? value.id : Number(value.id);
-            const record = await db[type].findFirst((q) => q.where({ id }));
+            const singularType = singularize(value.type);
+            let id = modelsWithStringIds.has(singularType) ? value.id : Number(value.id);
+            const record = await db[singularType].findFirst((q) => q.where({ id }));
             attrs[key] = record;
           }
         }
