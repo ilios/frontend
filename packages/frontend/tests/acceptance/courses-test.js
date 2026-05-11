@@ -614,6 +614,8 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(page.root.list.courses.length, 2);
     assert.ok(page.root.list.courses[0].status.isLocked, 'first course is locked');
     assert.ok(page.root.list.courses[1].status.isUnlocked, 'second course is unlocked');
+    assert.ok(page.root.list.courses[0].status.canUnlock, 'first course can be locked');
+    assert.ok(page.root.list.courses[1].status.canLock, 'second course can be unlocked');
     await page.root.list.courses[0].status.unLock();
     await page.root.list.courses[1].status.lock();
     assert.ok(page.root.list.courses[0].status.isUnlocked, 'first course is now unlocked');
@@ -621,25 +623,26 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('non-privileged users cannot lock and unlock course but can see the icon', async function (assert) {
+    this.user.update({ administeredSchools: [] });
     this.server.create('academic-year', { id: 2014 });
     this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
-      publishedAsTbd: false,
+      publishedAsTbd: true,
       locked: false,
     });
     this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
-      publishedAsTbd: true,
+      publishedAsTbd: false,
       locked: true,
     });
 
     await page.visit();
 
-    assert.strictEqual(page.root.list.courses.length, 2);
+    assert.strictEqual(page.root.list.courses.length, 2, 'course count correct');
     assert.ok(page.root.list.courses[0].status.isUnlocked, 'first course is unlocked');
     assert.ok(page.root.list.courses[1].status.isLocked, 'second course is locked');
     assert.notOk(page.root.list.courses[0].status.canLock, 'first course cannot be locked');
