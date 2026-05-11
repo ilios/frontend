@@ -10,26 +10,28 @@ module('Acceptance | Course - Mesh Terms', function (hooks) {
     const school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [school] }, true);
     await this.server.create('academic-year');
-    await this.server.createList('meshTree', 3);
-    await this.server.createList('meshConcept', 3);
+    const trees = await this.server.createList('meshTree', 3);
+    const concepts = await this.server.createList('meshConcept', 3);
 
-    await this.server.create('meshConcept', {
-      scopeNote: '1234567890'.repeat(30),
-    });
+    concepts.push(
+      await this.server.create('meshConcept', {
+        scopeNote: '1234567890'.repeat(30),
+      }),
+    );
 
-    await this.server.create('mesh-descriptor', {
-      conceptIds: [1, 2, 3, 4],
-      treeIds: [1, 2, 3],
+    const descriptor1 = await this.server.create('mesh-descriptor', {
+      concepts,
+      trees,
     });
-    await this.server.create('mesh-descriptor', {
+    const descriptor2 = await this.server.create('mesh-descriptor', {
       deleted: true,
     });
-    await this.server.createList('mesh-descriptor', 4);
+    const descriptors = await this.server.createList('mesh-descriptor', 4);
 
     this.course = await this.server.create('course', {
       year: 2014,
       school,
-      meshDescriptorIds: [1, 2, 3],
+      meshDescriptors: [descriptor1, descriptor2, descriptors[0]],
     });
   });
 
