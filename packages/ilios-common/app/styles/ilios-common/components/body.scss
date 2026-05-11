@@ -23,8 +23,8 @@ a,
 .link {
   @include m.ilios-link;
 
-  &.disabled {
-    cursor: default;
+  &.disabled:active {
+    pointer-events: none;
   }
 }
 
