@@ -3,10 +3,10 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    title: z.string().optional(),
-    subject: z.string().optional(),
-    prepositionalObject: z.string().optional(),
-    prepositionalObjectTableRowId: z.string().optional(),
+    title: z.string().nullish(),
+    subject: z.string().nullish(),
+    prepositionalObject: z.string().nullish(),
+    prepositionalObjectTableRowId: z.string().nullish(),
   })
   .passthrough();
 

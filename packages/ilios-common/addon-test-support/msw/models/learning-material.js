@@ -3,18 +3,18 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    title: z.string().optional(),
-    description: z.string().optional(),
-    originalAuthor: z.string().optional(),
-    citation: z.string().optional(),
-    copyrightPermission: z.boolean().optional(),
-    copyrightRationale: z.string().optional(),
-    filename: z.string().optional(),
-    mimetype: z.string().optional(),
-    filesize: z.number().optional(),
-    link: z.string().optional(),
-    token: z.string().optional(),
-    absoluteFileUri: z.string().optional(),
+    title: z.string().nullish(),
+    description: z.string().nullish(),
+    originalAuthor: z.string().nullish(),
+    citation: z.string().nullish(),
+    copyrightPermission: z.boolean().nullish(),
+    copyrightRationale: z.string().nullish(),
+    filename: z.string().nullish(),
+    mimetype: z.string().nullish(),
+    filesize: z.number().nullish(),
+    link: z.string().nullish(),
+    token: z.string().nullish(),
+    absoluteFileUri: z.string().nullish(),
   })
   .passthrough();
 

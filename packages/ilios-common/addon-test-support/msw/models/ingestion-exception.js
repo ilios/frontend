@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    uid: z.string().optional(),
+    uid: z.string().nullish(),
   })
   .passthrough();
 

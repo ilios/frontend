@@ -3,8 +3,8 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    hours: z.number().optional(),
-    dueDate: z.string().optional(),
+    hours: z.number().nullish(),
+    dueDate: z.string().nullish(),
   })
   .passthrough();
 

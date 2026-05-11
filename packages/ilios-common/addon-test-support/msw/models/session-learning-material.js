@@ -3,12 +3,12 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    notes: z.string().optional(),
-    required: z.boolean().optional(),
-    publicNotes: z.boolean().optional(),
-    position: z.number().optional(),
-    startDate: z.string().optional(),
-    endDate: z.string().optional(),
+    notes: z.string().nullish(),
+    required: z.boolean().nullish(),
+    publicNotes: z.boolean().nullish(),
+    position: z.number().nullish(),
+    startDate: z.string().nullish(),
+    endDate: z.string().nullish(),
   })
   .passthrough();
 

@@ -3,15 +3,15 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    title: z.string().optional(),
-    attireRequired: z.boolean().optional(),
-    equipmentRequired: z.boolean().optional(),
-    supplemental: z.boolean().optional(),
-    attendanceRequired: z.boolean().optional(),
-    publishedAsTbd: z.boolean().optional(),
-    published: z.boolean().optional(),
-    instructionalNotes: z.string().optional(),
-    updatedAt: z.string().optional(),
+    title: z.string().nullish(),
+    attireRequired: z.boolean().nullish(),
+    equipmentRequired: z.boolean().nullish(),
+    supplemental: z.boolean().nullish(),
+    attendanceRequired: z.boolean().nullish(),
+    publishedAsTbd: z.boolean().nullish(),
+    published: z.boolean().nullish(),
+    instructionalNotes: z.string().nullish(),
+    updatedAt: z.string().nullish(),
   })
   .passthrough();
 

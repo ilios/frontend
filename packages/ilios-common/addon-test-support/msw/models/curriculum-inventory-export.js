@@ -3,8 +3,8 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    document: z.string().optional(),
-    createdAt: z.string().optional(),
+    document: z.string().nullish(),
+    createdAt: z.string().nullish(),
   })
   .passthrough();
 
