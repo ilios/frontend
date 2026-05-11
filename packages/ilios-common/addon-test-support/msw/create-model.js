@@ -1,20 +1,10 @@
 import { factoryDefaults } from './factories.js';
-import { db, validateRecordData } from './db.js';
+import { db, validateRecordData, modelsWithStringIds } from './db.js';
 import { IdentityManager } from './utils/identity-manager.js';
 import { camelize } from '@ember/string';
 
 const identityManagers = new Map();
 const factoryCounters = new Map();
-// Almost all of our models has numeric IDs, except MeSH related data points.
-// We'll need to distinguish between those and the rest when creating IDs for our mock models.
-const modelsWithStringIds = new Set([
-  'meshConcept',
-  'meshDescriptor',
-  'meshQualifier',
-  'meshPreviousIndexing',
-  'meshTerm',
-  'meshTree',
-]);
 
 export function createModel(modelName, attrs = {}) {
   const name = camelize(modelName);

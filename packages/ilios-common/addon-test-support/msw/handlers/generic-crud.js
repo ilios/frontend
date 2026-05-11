@@ -1,7 +1,13 @@
 import { http, HttpResponse } from 'msw';
 import { camelize } from '@ember/string';
 import { singularize, pluralize } from 'ember-inflector';
-import { db, getRelatedRecord, isRelatedRecord, validateRecordData } from '../db.js';
+import {
+  db,
+  getRelatedRecord,
+  isRelatedRecord,
+  validateRecordData,
+  modelsWithStringIds,
+} from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
 
@@ -238,12 +244,17 @@ function filterByParam(modelName, record, param, value) {
   }
 
   // filter relationship field by comparing record IDs.
+  const modelHasStringId = modelsWithStringIds.has(modelName);
   if (Array.isArray(fieldValue)) {
     const fieldValueIds = fieldValue.map(({ id }) => id);
     if (Array.isArray(value)) {
-      return value.some((v) => fieldValueIds.includes(Number(v)));
+      return value.some((v) => {
+        v = modelHasStringId ? v : Number(v);
+        return fieldValueIds.includes(v);
+      });
     } else {
-      return fieldValueIds.includes(Number(value));
+      value = modelHasStringId ? value : Number(value);
+      return fieldValueIds.includes(value);
     }
   }
   const fieldValueId = fieldValue.id;
