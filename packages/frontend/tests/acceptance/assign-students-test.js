@@ -52,7 +52,7 @@ module('Acceptance | assign students', function (hooks) {
       administeredSchools: [this.school, this.school2],
     });
     await page.visit();
-    assert.strictEqual(page.root.schoolFilter.selectedSchool, this.school.id);
+    assert.strictEqual(Number(page.root.schoolFilter.selectedSchool), this.school.id);
     assert.strictEqual(page.root.schoolFilter.options.length, 2);
     assert.strictEqual(page.root.schoolFilter.options[0].text, 'school 0');
     assert.strictEqual(page.root.schoolFilter.options[1].text, 'school 1');
@@ -123,7 +123,7 @@ module('Acceptance | assign students', function (hooks) {
       administeredSchools: [this.school, this.school2],
     });
     await page.visit();
-    assert.strictEqual(page.root.schoolFilter.selectedSchool, this.school.id);
+    assert.strictEqual(Number(page.root.schoolFilter.selectedSchool), this.school.id);
     assert.strictEqual(page.root.schoolFilter.options.length, 2);
     assert.strictEqual(page.root.schoolFilter.options[0].text, 'school 0');
     assert.strictEqual(page.root.schoolFilter.options[1].text, 'school 1');
@@ -138,7 +138,7 @@ module('Acceptance | assign students', function (hooks) {
     assert.ok(page.root.manager.isToggleAllIndeterminate);
     assert.notOk(page.root.manager.isToggleAllChecked);
     await page.root.schoolFilter.set(this.school2.id);
-    assert.strictEqual(page.root.schoolFilter.selectedSchool, this.school2.id);
+    assert.strictEqual(Number(page.root.schoolFilter.selectedSchool), this.school2.id);
     assert.notOk(page.root.manager.isToggleAllIndeterminate);
     assert.notOk(page.root.manager.isToggleAllChecked);
     assert.strictEqual(page.root.manager.students.length, 1);
