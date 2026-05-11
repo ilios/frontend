@@ -1,7 +1,7 @@
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { getContext } from '@ember/test-helpers';
 
-const defaultUserId = '100';
+const defaultUserId = 100;
 
 export default async function (
   userObject = { id: defaultUserId },
