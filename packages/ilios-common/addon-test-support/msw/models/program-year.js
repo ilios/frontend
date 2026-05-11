@@ -3,11 +3,11 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    startYear: z.number().optional(),
-    locked: z.boolean().optional(),
-    archived: z.boolean().optional(),
-    publishedAsTbd: z.boolean().optional(),
-    published: z.boolean().optional(),
+    startYear: z.number().nullish(),
+    locked: z.boolean().nullish(),
+    archived: z.boolean().nullish(),
+    publishedAsTbd: z.boolean().nullish(),
+    published: z.boolean().nullish(),
   })
   .passthrough();
 

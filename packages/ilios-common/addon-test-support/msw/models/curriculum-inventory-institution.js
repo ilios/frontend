@@ -3,13 +3,13 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    name: z.string().optional(),
-    aamcCode: z.string().optional(),
-    addressStreet: z.string().optional(),
-    addressCity: z.string().optional(),
-    addressStateOrProvince: z.string().optional(),
-    addressZipcode: z.string().optional(),
-    addressCountryCode: z.string().optional(),
+    name: z.string().nullish(),
+    aamcCode: z.string().nullish(),
+    addressStreet: z.string().nullish(),
+    addressCity: z.string().nullish(),
+    addressStateOrProvince: z.string().nullish(),
+    addressZipcode: z.string().nullish(),
+    addressCountryCode: z.string().nullish(),
   })
   .passthrough();
 

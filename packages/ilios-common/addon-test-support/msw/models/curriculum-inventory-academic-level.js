@@ -3,9 +3,9 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    name: z.string().optional(),
-    description: z.string().optional(),
-    level: z.number().optional(),
+    name: z.string().nullish(),
+    description: z.string().nullish(),
+    level: z.number().nullish(),
   })
   .passthrough();
 

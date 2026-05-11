@@ -3,12 +3,12 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    room: z.string().optional(),
-    site: z.string().optional(),
-    url: z.string().optional(),
-    startDate: z.string().optional(),
-    endDate: z.string().optional(),
-    updatedAt: z.string().optional(),
+    room: z.string().nullish(),
+    site: z.string().nullish(),
+    url: z.string().nullish(),
+    startDate: z.string().nullish(),
+    endDate: z.string().nullish(),
+    updatedAt: z.string().nullish(),
   })
   .passthrough();
 

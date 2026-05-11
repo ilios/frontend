@@ -3,18 +3,18 @@ import { z } from 'zod';
 export const schema = z
   .object({
     id: z.number(),
-    title: z.string().optional(),
-    description: z.string().optional(),
-    required: z.number().optional(),
-    childSequenceOrder: z.number().optional(),
-    orderInSequence: z.number().optional(),
-    minimum: z.number().optional(),
-    maximum: z.number().optional(),
-    track: z.boolean().optional(),
-    startDate: z.string().optional(),
-    endDate: z.string().optional(),
-    duration: z.number().optional(),
-    academicLevel: z.number().optional(),
+    title: z.string().nullish(),
+    description: z.string().nullish(),
+    required: z.number().nullish(),
+    childSequenceOrder: z.number().nullish(),
+    orderInSequence: z.number().nullish(),
+    minimum: z.number().nullish(),
+    maximum: z.number().nullish(),
+    track: z.boolean().nullish(),
+    startDate: z.string().nullish(),
+    endDate: z.string().nullish(),
+    duration: z.number().nullish(),
+    academicLevel: z.number().nullish(),
   })
   .passthrough();
 
