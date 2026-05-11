@@ -1,9 +1,8 @@
 import { factoryDefaults } from './factories.js';
-import { db, validateRecordData, modelsWithStringIds } from './db.js';
-import { IdentityManager } from './utils/identity-manager.js';
+import { db, validateRecordData } from './db.js';
 import { camelize } from '@ember/string';
+import { getIdentityManager, resetIdentityManagers } from './utils/identity-managers.js';
 
-const identityManagers = new Map();
 const factoryCounters = new Map();
 
 export function createModel(modelName, attrs = {}) {
@@ -67,14 +66,6 @@ function factory(modelName, attrs) {
   return rhett;
 }
 
-function getIdentityManager(modelName) {
-  if (!identityManagers.has(modelName)) {
-    identityManagers.set(modelName, new IdentityManager(modelsWithStringIds.has(modelName)));
-  }
-
-  return identityManagers.get(modelName);
-}
-
 function incrementFactoryCounter(modelName) {
   if (!factoryCounters.has(modelName)) {
     factoryCounters.set(modelName, 0);
@@ -85,6 +76,6 @@ function incrementFactoryCounter(modelName) {
 }
 
 export function resetIdCounter() {
-  identityManagers.forEach((idM) => idM.reset());
+  resetIdentityManagers();
   factoryCounters.clear();
 }
