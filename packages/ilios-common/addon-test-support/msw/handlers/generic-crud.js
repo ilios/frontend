@@ -95,8 +95,9 @@ export function createCrudHandlers(modelName, apiRoute) {
     http.patch(`/api/${apiPath}/:id`, async ({ params, request }) => {
       const body = await request.json();
       const data = body.data;
+      const id = modelsWithStringIds.has(modelName) ? params.id: Number(params.id);
 
-      const existingRecord = await db[modelName].findFirst((q) => q.where({ id: params.id }));
+      const existingRecord = await db[modelName].findFirst((q) => q.where({ id }));
       if (!existingRecord) {
         return new HttpResponse(null, { status: 404 });
       }
@@ -114,7 +115,7 @@ export function createCrudHandlers(modelName, apiRoute) {
 
       // Extract attributes
       const attrs = { ...data.attributes };
-      attrs.id = params.id;
+      attrs.id = id;
 
       await extractRelationshipsInUpdate(modelName, data, attrs);
       //add current values for any attributes the patch did not set
@@ -153,7 +154,8 @@ export function createCrudHandlers(modelName, apiRoute) {
 
     // DELETE record
     http.delete(`/api/${apiPath}/:id`, async ({ params }) => {
-      const record = await db[modelName].findFirst((q) => q.where({ id: params.id }));
+      const id = modelsWithStringIds.has(modelName) ? params.id: Number(params.id);
+      const record = await db[modelName].findFirst((q) => q.where({ id }));
 
       if (!record) {
         return new HttpResponse(null, { status: 404 });
