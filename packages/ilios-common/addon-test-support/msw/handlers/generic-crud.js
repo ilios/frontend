@@ -4,6 +4,7 @@ import { singularize, pluralize } from 'ember-inflector';
 import { db, getRelatedRecord, isRelatedRecord } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
+import { createModel } from '../create-model.js';
 
 // Create generic CRUD handlers for a model
 export function createCrudHandlers(modelName, apiRoute) {
@@ -72,7 +73,7 @@ export function createCrudHandlers(modelName, apiRoute) {
       const attrs = { ...data.attributes };
       await extractRelationshipsInUpdate(modelName, data, attrs);
 
-      const record = await db[modelName].create(attrs);
+      const record = createModel(modelName, attrs);
 
       return HttpResponse.json(formatJsonApi(record, modelName), { status: 201 });
     }),
