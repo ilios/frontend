@@ -10,6 +10,7 @@ import {
 } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
+import { getIdentityManager } from '../utils/identity-managers.js';
 
 // Create generic CRUD handlers for a model
 export function createCrudHandlers(modelName, apiRoute) {
@@ -76,6 +77,12 @@ export function createCrudHandlers(modelName, apiRoute) {
 
       // Extract attributes
       const attrs = { ...data.attributes };
+
+      if (!attrs.id) {
+        // Auto-generate an ID if it doesn't exist yet.
+        // TODO: consider throwing an error here since POST should be used to update given records [ST 2026/05/11]
+        attrs.id = getIdentityManager(modelName).inc();
+      }
       await extractRelationshipsInUpdate(modelName, data, attrs);
 
       validateRecordData(modelName, attrs);
