@@ -51,7 +51,7 @@ class IdentityManager {
 
     this._nextId = nextValue + 1;
 
-    return this.#get();
+    return this._returnIdAsString ? String(nextValue) : nextValue;
   }
 
   /**

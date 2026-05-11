@@ -2,6 +2,17 @@ import { Collection } from '@msw/data';
 import { schemas, relationships } from './models.js';
 import { z } from 'zod';
 
+// Almost all of our models has numeric IDs, except MeSH related data points.
+// We'll need to distinguish between those and the rest when creating IDs for our mock models.
+const modelsWithStringIds = new Set([
+  'meshConcept',
+  'meshDescriptor',
+  'meshQualifier',
+  'meshPreviousIndexing',
+  'meshTerm',
+  'meshTree',
+]);
+
 const schemasWithRelationships = {};
 
 /*
@@ -92,4 +103,10 @@ function validateRecordData(modelName, obj) {
 }
 
 // Export all collections as db object for backwards compatibility
-export { collections as db, getRelatedRecord, isRelatedRecord, validateRecordData };
+export {
+  collections as db,
+  getRelatedRecord,
+  isRelatedRecord,
+  validateRecordData,
+  modelsWithStringIds,
+};
