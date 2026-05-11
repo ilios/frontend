@@ -135,12 +135,14 @@ export function createCrudHandlers(modelName, apiRoute) {
             const records = await Promise.all(
               value.map(({ id, type }) => {
                 const singularType = singularize(type);
+                id = modelsWithStringIds.has(singularType) ? id : Number(id);
                 return db[singularType].findFirst((q) => q.where({ id }));
               }),
             );
             attrs[key] = records;
           } else {
-            const { type, id } = value;
+            const type = value.type;
+            let id = modelsWithStringIds.has(type) ? value.id : Number(value.id);
             const record = await db[type].findFirst((q) => q.where({ id }));
             attrs[key] = record;
           }
