@@ -81,7 +81,7 @@ async function getRelatedRecord(modelName, field, id) {
     console.error(`Unknown relationship ${field} on ${modelName}`);
   }
 
-  id = modelsWithStringIds.has(target) ? Number(id) : id;
+  id = modelsWithStringIds.has(target) ? id : Number(id);
   const value = await collections[target].findFirst((q) => q.where({ id }));
 
   if (!value) {
