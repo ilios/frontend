@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const schema = z
   .object({
-    id: z.string(),
+    id: z.number(),
     username: z.string().optional(),
     password: z.string().optional(),
   })

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const schema = z
   .object({
-    id: z.string(),
+    id: z.number(),
     room: z.string().optional(),
     site: z.string().optional(),
     url: z.string().optional(),

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const schema = z
   .object({
-    id: z.string(),
+    id: z.number(),
     name: z.string().optional(),
     startDate: z.string().optional(),
     endDate: z.string().optional(),
