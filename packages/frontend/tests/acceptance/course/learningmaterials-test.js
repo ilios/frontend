@@ -178,7 +178,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     const testDescription = 'testsome description';
     const testUrl = 'http://www.ucsf.edu/';
 
-    assert.strictEqual(this.server.db.learningMaterials.length, 5);
+    assert.strictEqual((await this.server.db.learningMaterial.all()).length, 5);
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     assert.ok(page.details.learningMaterials.search.isVisible);
@@ -201,8 +201,9 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.details.learningMaterials.newLearningMaterial.description(testDescription);
     await page.details.learningMaterials.newLearningMaterial.save();
 
-    assert.strictEqual(this.server.db.learningMaterials.length, 6);
-    assert.strictEqual(this.server.db.learningMaterials[5].link, testUrl);
+    const learningMaterials = await this.server.db.learningMaterial.all();
+    assert.strictEqual(learningMaterials.length, 6);
+    assert.strictEqual(learningMaterials[5].link, testUrl);
     assert.strictEqual(page.details.learningMaterials.current.length, 5);
     assert.strictEqual(page.details.learningMaterials.current[4].title, testTitle);
   });
@@ -213,7 +214,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     const testDescription = 'testsome description';
     const testCitation = 'testsome citation';
 
-    assert.strictEqual(this.server.db.learningMaterials.length, 5);
+    assert.strictEqual((await this.server.db.learningMaterial.all()).length, 5);
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     assert.ok(page.details.learningMaterials.search.isVisible);
@@ -236,8 +237,9 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.details.learningMaterials.newLearningMaterial.description(testDescription);
     await page.details.learningMaterials.newLearningMaterial.save();
 
-    assert.strictEqual(this.server.db.learningMaterials.length, 6);
-    assert.strictEqual(this.server.db.learningMaterials[5].citation, testCitation);
+    const learningMaterials = await this.server.db.learningMaterial.all();
+    assert.strictEqual(learningMaterials.length, 6);
+    assert.strictEqual(learningMaterials[5].citation, testCitation);
 
     assert.strictEqual(page.details.learningMaterials.current.length, 5);
     assert.strictEqual(page.details.learningMaterials.current[4].title, testTitle);
