@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
@@ -117,18 +117,42 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
     assert.ok(true, 'no a11y errors found!');
   });
 
-  skip('download report', async function (assert) {
+  test('download report', async function (assert) {
     const courseModels = await this.owner.lookup('service:store').findAll('course');
     this.set('courses', courseModels);
+    this.set('options', [
+      {
+        title: 'Grouped',
+        tooltip: 'All terms in course/session on one row',
+        filename: 'terms-grouped.csv',
+      },
+      {
+        title: 'Listed',
+        tooltip: 'Each course/session term on separate row',
+        filename: 'terms-listed.csv',
+      },
+    ]);
 
-    await render(<template><TaggedTerms @courses={{this.courses}} @close={{(noop)}} /></template>);
+    await render(
+      <template>
+        <TaggedTerms @courses={{this.courses}} @options={{this.options}} @close={{(noop)}} />
+      </template>,
+    );
 
     assert.strictEqual(
       component.header.runSummaryText,
       'Run Tagged Terms report for one course. Each set of attached terms is listed along with course data.',
+      'report header text correct',
     );
 
-    await component.header.download.click();
-    assert.ok(true, 'downloaded report');
+    await component.header.downloadDropdown.toggle();
+
+    await assert.strictEqual(
+      component.header.downloadDropdown.menu.items.length,
+      2,
+      'download dropdown menu has correct item count',
+    );
+    assert.strictEqual(component.header.downloadDropdown.menu.items[0].text, 'Grouped');
+    assert.strictEqual(component.header.downloadDropdown.menu.items[1].text, 'Listed');
   });
 });

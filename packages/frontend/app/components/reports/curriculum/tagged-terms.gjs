@@ -20,6 +20,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
   @service store;
   @service graphql;
   @service reporting;
+  @tracked downloadType;
   @tracked finishedBuildingReport = false;
 
   @cached
@@ -75,47 +76,145 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
 
   get results() {
     const origin = window.location.origin;
-    return this.reportResults.reduce((acc, c) => {
-      if (c.terms.length) {
-        c.terms.sort().forEach((cTerm) => {
-          const courseTerm = {
+
+    // grouped - terms 'rolled up' into one line per course or session
+    if (this.downloadType == 'grouped') {
+      return this.reportResults.reduce((acc, c) => {
+        if (c.sessions.length) {
+          c.sessions.forEach((s) => {
+            const sessionTermsRow = {
+              courseId: c.id,
+              courseTitle: c.title,
+              courseTerms: c.terms
+                .sort(this.sortTerms)
+                .map((cTerm) => `(${cTerm.vocabulary.title}) ${cTerm.title}`),
+              sessionTitle: s.title,
+              sessionTerms: s.terms
+                .sort(this.sortTerms)
+                .map((sTerm) => `(${sTerm.vocabulary.title}) ${sTerm.title}`),
+              sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
+            };
+
+            if (this.hasMultipleSchools) {
+              sessionTermsRow.schoolTitle = c.school.title;
+            }
+
+            acc.push(sessionTermsRow);
+          });
+        } else if (c.terms.length) {
+          const courseTermsRow = {
             courseId: c.id,
             courseTitle: c.title,
-            courseTerms: c.terms,
-            courseTermTitle: cTerm.title,
-            courseTermVocabulary: cTerm.vocabulary.title,
+            courseTerms: c.terms
+              .sort(this.sortTerms)
+              .map((cTerm) => `(${cTerm.vocabulary.title}) ${cTerm.title}`),
+            courseLink: `${origin}${this.router.urlFor('course', c.id)}`,
+            sessionTitle: '',
+            sessionTerms: '',
+          };
+
+          if (this.hasMultipleSchools) {
+            courseTermsRow.schoolTitle = c.school.title;
+          }
+
+          acc.push(courseTermsRow);
+        } else {
+          const courseResultRow = {
+            courseId: c.id,
+            courseTitle: c.title,
+            courseTerms: '',
+            courseLink: `${origin}${this.router.urlFor('course', c.id)}`,
+            sessionTitle: '',
+            sessionTerms: '',
+          };
+
+          if (this.hasMultipleSchools) {
+            courseResultRow.schoolTitle = c.school.title;
+          }
+
+          acc.push(courseResultRow);
+        }
+
+        return acc;
+      }, []);
+    }
+    // listed - one term per line per course or session
+    else {
+      return this.reportResults.reduce((acc, c) => {
+        // special case for no course terms and no session terms
+        if (!c.sessions.length && !c.terms.length) {
+          const courseRow = {
+            courseId: c.id,
+            courseTitle: c.title,
             courseLink: `${origin}${this.router.urlFor('course', c.id)}`,
             sessionTitle: '',
           };
 
           if (this.hasMultipleSchools) {
-            courseTerm.schoolTitle = c.school.title;
+            courseRow.schoolTitle = c.school.title;
           }
 
-          acc.push(courseTerm);
-        });
-      }
-      c.sessions.forEach((s) => {
-        s.terms.forEach((sTerm) => {
-          const sessionTerm = {
-            courseId: c.id,
-            courseTitle: c.title,
-            courseTerms: [],
-            sessionTitle: s.title,
-            sessionTermTitle: sTerm.title,
-            sessionTermVocabulary: sTerm.vocabulary.title,
-            sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
-          };
+          acc.push(courseRow);
+        } else if (c.sessions.length) {
+          c.sessions.forEach((s) => {
+            if (s.terms.length) {
+              s.terms.forEach((sTerm) => {
+                const sessionTermRow = {
+                  courseId: c.id,
+                  courseTitle: c.title,
+                  courseTerms: [],
+                  sessionTitle: s.title,
+                  sessionTermTitle: sTerm.title,
+                  sessionTermVocabulary: sTerm.vocabulary.title,
+                  sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
+                };
 
-          if (this.hasMultipleSchools) {
-            sessionTerm.schoolTitle = c.school.title;
-          }
+                if (this.hasMultipleSchools) {
+                  sessionTermRow.schoolTitle = c.school.title;
+                }
 
-          acc.push(sessionTerm);
-        });
-      });
-      return acc;
-    }, []);
+                acc.push(sessionTermRow);
+              });
+            } else {
+              const sessionRow = {
+                courseId: c.id,
+                courseTitle: c.title,
+                sessionTitle: s.title,
+                sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
+              };
+
+              if (this.hasMultipleSchools) {
+                sessionRow.schoolTitle = c.school.title;
+              }
+
+              acc.push(sessionRow);
+            }
+          });
+        }
+
+        if (c.terms.length) {
+          c.terms.sort().forEach((cTerm) => {
+            const courseTermRow = {
+              courseId: c.id,
+              courseTitle: c.title,
+              courseTerms: c.terms,
+              courseTermTitle: cTerm.title,
+              courseTermVocabulary: cTerm.vocabulary.title,
+              courseLink: `${origin}${this.router.urlFor('course', c.id)}`,
+              sessionTitle: '',
+            };
+
+            if (this.hasMultipleSchools) {
+              courseTermRow.schoolTitle = c.school.title;
+            }
+
+            acc.push(courseTermRow);
+          });
+        }
+
+        return acc;
+      }, []);
+    }
   }
 
   get sortedResults() {
@@ -128,6 +227,14 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     }
 
     return a.sessionTitle.localeCompare(b.sessionTitle);
+  };
+
+  sortTerms = (a, b) => {
+    if (a.vocabulary.title !== b.vocabulary.title) {
+      return a.vocabulary.title.localeCompare(b.vocabulary.title);
+    }
+
+    return a.title.localeCompare(b.title);
   };
 
   get selectedSchoolIds() {
@@ -172,7 +279,8 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     return '84';
   }
 
-  downloadReport = task({ drop: true }, async () => {
+  downloadReport = task({ drop: true }, async (filename = 'terms-listed.csv') => {
+    this.downloadType = filename == 'terms-grouped.csv' ? 'grouped' : 'listed';
     const data = this.sortedResults.map((o) => {
       const rhett = {};
 
@@ -181,25 +289,33 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
       }
       rhett[this.intl.t('general.course')] = o.courseTitle;
 
-      if (o.courseTerms.length) {
-        rhett[this.intl.t('general.courseTerm')] = o.courseTermTitle;
-        rhett[this.intl.t('general.session')] = '';
-        rhett[this.intl.t('general.sessionTerm')] = '';
-        rhett[this.intl.t('general.vocabulary')] = o.courseTermVocabulary;
-        rhett[this.intl.t('general.link')] = o.courseLink;
-      } else {
-        rhett[this.intl.t('general.courseTerm')] = '';
+      if (filename == 'terms-grouped.csv') {
+        if (o.courseTerms) {
+          rhett[this.intl.t('general.courseTerms')] = o.courseTerms.join(', ');
+        } else {
+          rhett[this.intl.t('general.courseTerms')] = '';
+        }
         rhett[this.intl.t('general.session')] = o.sessionTitle;
-        rhett[this.intl.t('general.sessionTerm')] = o.sessionTermTitle;
-        rhett[this.intl.t('general.vocabulary')] = o.sessionTermVocabulary;
-        rhett[this.intl.t('general.link')] = o.sessionLink;
+        if (o.sessionTerms) {
+          rhett[this.intl.t('general.sessionTerms')] = o.sessionTerms.join(', ');
+        } else {
+          rhett[this.intl.t('general.sessionTerms')] = '';
+        }
+      } else {
+        rhett[this.intl.t('general.courseTerm')] = o.courseTermTitle ?? '';
+        rhett[this.intl.t('general.session')] = o.sessionTitle ?? '';
+        rhett[this.intl.t('general.sessionTerm')] = o.sessionTermTitle ?? '';
+        rhett[this.intl.t('general.vocabulary')] =
+          o.sessionTermVocabulary ?? o.courseTermVocabulary ?? '';
       }
+
+      rhett[this.intl.t('general.link')] = o.sessionLink ?? o.courseLink ?? '';
 
       return rhett;
     });
     const csv = PapaParse.unparse(data);
     this.finishedBuildingReport = true;
-    createDownloadFile(`terms.csv`, csv, 'text/csv');
+    createDownloadFile(filename, csv, 'text/csv');
     await timeout(2000);
     this.finishedBuildingReport = false;
   });
@@ -212,6 +328,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
       @selectedReportValue="taggedTerms"
       @changeSelectedReport={{(noop)}}
       @close={{@close}}
+      @options={{@options}}
       @download={{perform this.downloadReport}}
       @finished={{this.finishedBuildingReport}}
     />

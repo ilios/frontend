@@ -23,6 +23,15 @@ const definition = {
     scope: '[data-test-download]',
     click: clickable(),
   },
+  downloadDropdown: {
+    scope: '[data-test-download-dropdown]',
+    toggle: clickable('[data-test-toggle]'),
+    menu: {
+      scope: '[data-test-menu]',
+      items: collection('[data-test-item]'),
+      click: clickable(),
+    },
+  },
   copy: {
     scope: '[data-test-copy-button]',
     click: clickable(),

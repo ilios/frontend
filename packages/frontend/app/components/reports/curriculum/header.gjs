@@ -11,6 +11,7 @@ import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import set from 'ember-set-helper/helpers/set';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import DownloadDropdown from 'frontend/components/download-dropdown';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCheck, faCopy, faDownload, faPlay } from '@fortawesome/free-solid-svg-icons';
 
@@ -211,14 +212,18 @@ export default class ReportsCurriculumHeaderComponent extends Component {
               <LoadingSpinner />
             </div>
           {{else}}
-            <button type="button" {{on "click" @download}} data-test-download>
-              {{#if @finished}}
-                <FaIcon @icon={{faCheck}} />
-              {{else}}
-                <FaIcon @icon={{faDownload}} />
-              {{/if}}
-              {{t "general.downloadResults"}}
-            </button>
+            {{#if (eq @selectedReportValue "taggedTerms")}}
+              <DownloadDropdown @items={{@options}} @action={{@download}} />
+            {{else}}
+              <button type="button" {{on "click" @download}} data-test-download>
+                {{#if @finished}}
+                  <FaIcon @icon={{faCheck}} />
+                {{else}}
+                  <FaIcon @icon={{faDownload}} />
+                {{/if}}
+                {{t "general.downloadResults"}}
+              </button>
+            {{/if}}
           {{/if}}
           <button type="button" class="cancel text" {{on "click" @close}} data-test-close>
             {{t "general.close"}}

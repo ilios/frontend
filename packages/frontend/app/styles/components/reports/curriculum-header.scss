@@ -22,7 +22,15 @@
     margin-top: 0.5rem;
     justify-content: flex-end;
 
+    .tagged-terms-mode {
+      align-items: center;
+      display: flex;
+      gap: 0.5em;
+      margin-bottom: 0.25rem;
+    }
+
     @include cm.for-tablet-and-up {
+      align-items: center;
       display: flex;
       flex-direction: row;
       gap: 0.5em;
@@ -32,6 +40,14 @@
     div {
       display: block;
       margin-bottom: 0.25rem;
+
+      &.download-dropdown {
+        display: inline-block;
+      }
+
+      &.toggle {
+        margin-bottom: 0;
+      }
 
       &:disabled {
         cursor: default;
