@@ -7,8 +7,12 @@ function isNumber(n) {
   return (+n).toString() === n.toString();
 }
 
+/**
+ * @param {boolean} returnIdAsString
+ */
 class IdentityManager {
-  constructor() {
+  constructor(returnIdAsString) {
+    this._returnIdAsString = !!returnIdAsString;
     this._nextId = 1;
     this._ids = {};
   }
@@ -17,7 +21,7 @@ class IdentityManager {
     @method get
   */
   #get() {
-    return this._nextId;
+    return this._returnIdAsString ? String(this._nextId) : this._nextId;
   }
 
   /**
@@ -47,7 +51,7 @@ class IdentityManager {
 
     this._nextId = nextValue + 1;
 
-    return nextValue;
+    return this.#get();
   }
 
   /**
