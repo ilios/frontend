@@ -14,7 +14,7 @@ export function createModel(modelName, attrs = {}) {
   }
 
   const obj = factory(name, attrs);
-  validateRecordData(modelName, attrs);
+  validateRecordData(name, obj);
 
   return collection.create(obj);
 }
@@ -28,8 +28,9 @@ export function createModelList(modelName, count, attrs = {}) {
 
   const promises = [];
   for (let i = 0; i < count; i++) {
-    const object = factory(name, attrs);
-    promises.push(collection.create(object));
+    const obj = factory(name, attrs);
+    validateRecordData(name, obj);
+    promises.push(collection.create(obj));
   }
 
   return Promise.all(promises);
