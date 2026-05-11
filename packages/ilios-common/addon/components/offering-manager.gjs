@@ -261,7 +261,7 @@ export default class OfferingManagerComponent extends Component {
               >
                 <FaIcon
                   @icon={{faPenToSquare}}
-                  class="{{if this.showRemoveConfirmation ' disabled' ' enabled'}}"
+                  class={{if this.showRemoveConfirmation "disabled" "enabled"}}
                 />
               </button>
               {{#if @editable}}

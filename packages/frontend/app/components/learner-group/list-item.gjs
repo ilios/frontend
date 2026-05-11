@@ -245,7 +245,7 @@ export default class LearnerGroupListItemComponent extends Component {
               disabled={{this.showRemoveConfirmation}}
               data-test-copy
             >
-              <FaIcon @icon={{faCopy}} class="{{if this.showRemoveConfirmation 'disabled'}}" />
+              <FaIcon @icon={{faCopy}} class={{if this.showRemoveConfirmation "disabled"}} />
             </button>
           {{else}}
             <button

@@ -114,7 +114,7 @@ export default class CoursesListItemComponent extends Component {
               {{on "click" (fn @lockCourse @course)}}
               data-test-lock
             >
-              <FaIcon @icon={{faLockOpen}} class="{{if @showRemoveConfirmation 'disabled'}}" />
+              <FaIcon @icon={{faLockOpen}} class={{if @showRemoveConfirmation "disabled"}} />
             </button>
           {{else}}
             <button
