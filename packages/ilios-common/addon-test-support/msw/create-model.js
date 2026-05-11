@@ -5,6 +5,16 @@ import { camelize } from '@ember/string';
 
 const identityManagers = new Map();
 const factoryCounters = new Map();
+// Almost all of our models has numeric IDs, except MeSH related data points.
+// We'll need to distinguish between those and the rest when creating IDs for our mock models.
+const modelsWithStringIds = new Set([
+  'meshConcept',
+  'meshDescriptor',
+  'meshQualifier',
+  'meshPreviousIndexing',
+  'meshTerm',
+  'meshTree',
+]);
 
 export function createModel(modelName, attrs = {}) {
   const name = camelize(modelName);
@@ -69,7 +79,7 @@ function factory(modelName, attrs) {
 
 function getIdentityManager(modelName) {
   if (!identityManagers.has(modelName)) {
-    identityManagers.set(modelName, new IdentityManager());
+    identityManagers.set(modelName, new IdentityManager(modelsWithStringIds.has(modelName)));
   }
 
   return identityManagers.get(modelName);
