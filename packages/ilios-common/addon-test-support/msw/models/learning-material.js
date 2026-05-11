@@ -16,6 +16,7 @@ export const schema = z
     token: z.string().nullish(),
     absoluteFileUri: z.string().nullish(),
     markedAccessible: z.boolean().nullish(),
+    uploadDate: z.date().nullish(),
   })
   .passthrough();
 
