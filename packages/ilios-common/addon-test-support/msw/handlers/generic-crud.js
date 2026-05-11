@@ -53,9 +53,8 @@ export function createCrudHandlers(modelName, apiRoute) {
 
     // GET single record
     http.get(`/api/${apiPath}/:id`, async ({ params }) => {
-      //check if the string value `id` is actually a number like "3", if so use the number as a Number
-      const coercedId = Number.isFinite(Number(params.id)) ? Number(params.id) : params.id;
-      const record = await db[modelName].findFirst((q) => q.where({ id: coercedId }));
+      const id = modelsWithStringIds.has(modelName) ? params.id : Number(params.id);
+      const record = await db[modelName].findFirst((q) => q.where({ id }));
 
       if (!record) {
         return new HttpResponse(`No ${modelName} for id: ${params.id}`, { status: 404 });
