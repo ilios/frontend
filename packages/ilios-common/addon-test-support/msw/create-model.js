@@ -1,5 +1,5 @@
 import { factoryDefaults } from './factories.js';
-import { db } from './db.js';
+import { db, validateRecordData } from './db.js';
 import { IdentityManager } from './utils/identity-manager.js';
 import { camelize } from '@ember/string';
 
@@ -14,13 +14,7 @@ export function createModel(modelName, attrs = {}) {
   }
 
   const obj = factory(name, attrs);
-
-  try {
-    collection.options.schema.parse(obj);
-  } catch {
-    //add some info about, let msw-data throw the actual exception
-    console.error(`Data for ${modelName} is bad`);
-  }
+  validateRecordData(modelName, attrs);
 
   return collection.create(obj);
 }
