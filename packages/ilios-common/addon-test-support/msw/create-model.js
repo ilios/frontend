@@ -15,6 +15,13 @@ export function createModel(modelName, attrs = {}) {
 
   const obj = factory(name, attrs);
 
+  try {
+    collection.options.schema.parse(obj);
+  } catch {
+    //add some info about, let msw-data throw the actual exception
+    console.error(`Data for ${modelName} is bad`);
+  }
+
   return collection.create(obj);
 }
 
