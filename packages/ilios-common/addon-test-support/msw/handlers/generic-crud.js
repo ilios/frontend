@@ -149,6 +149,7 @@ export function createCrudHandlers(modelName, apiRoute) {
         }
       }
 
+      validateRecordData(modelName, attrs);
       const newRecord = await db[modelName].create(attrs);
 
       return HttpResponse.json(formatJsonApi(newRecord, modelName));
