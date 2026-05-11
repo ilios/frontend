@@ -65,12 +65,14 @@ function isRelatedRecord(modelName, field) {
 }
 
 async function getRelatedRecord(modelName, field, id) {
+  //check if the string value `id` is actually a number like "3", if so use the number as a Number
+  const coercedId = Number.isFinite(Number(id)) ? Number(id) : id;
   const { target } = relationships[modelName].find((r) => r.field === field);
   if (!target) {
     console.error(`Unknown relationship ${field} on ${modelName}`);
   }
 
-  const value = await collections[target].findFirst((q) => q.where({ id }));
+  const value = await collections[target].findFirst((q) => q.where({ id: coercedId }));
 
   if (!value) {
     console.error(`Unable to get ${target}:${id}`);

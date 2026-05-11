@@ -60,7 +60,7 @@ class IdentityManager {
 
     this.inc();
 
-    return id.toString();
+    return id;
   }
 
   /**

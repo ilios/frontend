@@ -59,7 +59,7 @@ function factory(modelName, attrs) {
   // this is to keep us consistent with Mirage's behaviour.
   const id = getIdentityManager(modelName).inc();
   if (!rhett.id) {
-    rhett.id = `${id}`;
+    rhett.id = id;
   }
 
   return rhett;
