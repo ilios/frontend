@@ -84,7 +84,7 @@ export function createCrudHandlers(modelName, apiRoute) {
       const body = await request.json();
       const data = body.data;
 
-      const existingRecord = await db[modelName].findFirst((q) => q.where({ id: params.id }));
+      const existingRecord = await db[modelName].findFirst((q) => q.where({ id: Number(params.id) }));
       if (!existingRecord) {
         return new HttpResponse(null, { status: 404 });
       }
