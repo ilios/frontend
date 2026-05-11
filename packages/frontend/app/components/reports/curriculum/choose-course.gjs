@@ -75,7 +75,7 @@ export default class ReportsCurriculumChooseCourseComponent extends Component {
       const hasAllSelectedCourses = selectedCourses.length === courses.length;
       const hasSomeSelectedCourses = selectedCourses.length > 0 && !hasAllSelectedCourses;
       return {
-        isExpanded: this.args.expandedYears.includes(year),
+        isExpanded: this.args.expandedYears?.includes(year),
         year,
         courses,
         selectedCourses,
