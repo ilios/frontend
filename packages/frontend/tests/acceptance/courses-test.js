@@ -14,7 +14,7 @@ module('Acceptance | Courses', function (hooks) {
       { school: this.school, administeredSchools: [this.school] },
       true,
     );
-    await this.server.create('school');
+    this.school2 = await this.server.create('school');
   });
 
   test('visiting /courses', async function (assert) {
@@ -205,7 +205,9 @@ module('Acceptance | Courses', function (hooks) {
 
   test('year filter options', async function (assert) {
     await this.server.createList('school', 2);
-    this.server.db.users.update(this.user.id, { schoolId: 2 });
+    await this.server.update('user', this.user, {
+      school: this.school2,
+    });
 
     await this.server.create('academic-year', { id: 2013 });
     await this.server.create('academic-year', { id: 2014 });
@@ -291,9 +293,9 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course link hides after changing school', async function (assert) {
-    this.school2 = await this.server.create('school');
+    const school3 = await this.server.create('school');
     await this.server.update('user', this.user, {
-      administeredSchools: [this.school, this.school2],
+      administeredSchools: [this.school, school3],
     });
     const year1 = DateTime.now().year;
     const year2 = DateTime.now().year + 1;
@@ -313,7 +315,7 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(page.root.newCourseLink, 'Course 1', 'new course link');
     assert.strictEqual(page.root.list.courses[0].title, 'Course 1', 'course title is correct');
 
-    await page.root.filterBySchool(this.school2.id);
+    await page.root.filterBySchool(school3.id);
 
     assert.ok(page.root.newCourseLinkIsHidden);
   });
@@ -388,10 +390,6 @@ module('Acceptance | Courses', function (hooks) {
   test('new course can be deleted', async function (assert) {
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year });
-    await this.server.create('userRole', {
-      title: 'Developer',
-    });
-    this.server.db.users.update(this.user.id, { roleIds: [1] });
 
     await page.visit({ year });
     assert.strictEqual(page.root.list.courses.length, 0);
