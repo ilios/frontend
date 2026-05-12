@@ -229,7 +229,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('unprivileged users can not delete courses', async function (assert) {
-    this.user.update({ administeredSchools: [] });
+    await this.server.update('user', this.user, { administeredSchools: [] });
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
@@ -292,7 +292,9 @@ module('Acceptance | Courses', function (hooks) {
 
   test('new course link hides after changing school', async function (assert) {
     this.school2 = await this.server.create('school');
-    this.user.update({ administeredSchools: [this.school, this.school2] });
+    await this.server.update('user', this.user, {
+      administeredSchools: [this.school, this.school2],
+    });
     const year1 = DateTime.now().year;
     const year2 = DateTime.now().year + 1;
     this.server.create('academic-year', { id: year1 });
@@ -341,7 +343,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course toggle does not show up for unprivileged users', async function (assert) {
-    this.user.update({ administeredSchools: [] });
+    await this.server.update('user', this.user, { administeredSchools: [] });
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year });
     await page.visit({ year });
