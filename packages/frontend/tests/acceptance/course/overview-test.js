@@ -344,7 +344,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('rollover hidden from unprivileged users', async function (assert) {
-    this.user.update({ administeredSchools: [] });
+    await this.server.update('user', this.user, { administeredSchools: [] });
     const course = await this.server.create('course', {
       year: 2013,
       school: this.school,

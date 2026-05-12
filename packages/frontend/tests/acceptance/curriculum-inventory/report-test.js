@@ -13,7 +13,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
   });
 
   test('create new sequence block Issue #2108', async function (assert) {
-    this.user.update({ directedSchools: [this.school] });
+    await this.server.update('user', this.user, { directedSchools: [this.school] });
     const program = await this.server.create('program', { school: this.school });
     const report = await this.server.create('curriculum-inventory-report', { program });
     await this.server.create('curriculumInventorySequence', { report });
@@ -47,7 +47,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
   });
 
   test('rollover button visible to privileged users', async function (assert) {
-    this.user.update({ directedSchools: [this.school] });
+    await this.server.update('user', this.user, { directedSchools: [this.school] });
     const program = await this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
@@ -67,7 +67,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
   });
 
   test('finalizing report locks things down', async function (assert) {
-    this.user.update({ directedSchools: [this.school] });
+    await this.server.update('user', this.user, { directedSchools: [this.school] });
     const program = await this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
