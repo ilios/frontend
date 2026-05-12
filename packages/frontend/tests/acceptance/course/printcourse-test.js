@@ -11,49 +11,53 @@ module('Acceptance | Course - Print Course', function (hooks) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     await this.server.create('academic-year');
-    await this.server.create('cohort', { programYear });
-    this.learningMaterialUserRole = await this.server.create('learning-material-user-role');
-    this.learningMaterialStatus = await this.server.create('learning-material-status');
+    const cohort = await this.server.create('cohort', { programYear });
+    const userRole = (this.learningMaterialUserRole = await this.server.create(
+      'learning-material-user-role',
+    ));
+    const status = (this.learningMaterialStatus = await this.server.create(
+      'learning-material-status',
+    ));
     this.course = await this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       published: true,
       title: 'Back to the Future',
-      cohortIds: [1],
+      cohorts: [cohort],
     });
-    await this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       title: 'Topics',
-      schoolId: 1,
+      school: this.school,
     });
     await this.server.create('term', {
       title: 'Time Travel',
-      courseIds: [1],
-      vocabularyId: 1,
+      courses: [this.course],
+      vocabulary,
     });
     this.user = await this.server.create('user', {
       lastName: 'Brown',
       firstName: 'Emmet',
       id: 1,
     });
-    await this.server.create('learning-material', {
+    const learningMaterial = await this.server.create('learning-material', {
       title: 'Save the Clock Tower',
       originalAuthor: 'Jennifer Johnson',
       filename: 'Clock Tower Flyer',
-      owningUserId: 1,
-      statusId: 1,
-      userRoleId: 1,
+      owningUser: this.user,
+      status,
+      userRole,
       copyrightPermission: true,
       citation: 'Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955',
       description:
         'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.',
     });
     await this.server.create('courseLearningMaterial', {
-      learningMaterialId: 1,
-      courseId: 1,
+      learningMaterial,
+      course: this.course,
       required: false,
     });
     await this.server.create('mesh-descriptor', {
-      courseIds: [1],
+      courses: [this.course],
       name: 'Flux Capacitor',
     });
   });
@@ -126,14 +130,14 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print ILM details', async function (assert) {
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       published: true,
       publishedAsTbd: false,
     });
 
     await this.server.create('ilm-session', {
-      sessionId: 1,
+      session,
       hours: 1.5,
       dueDate: new Date(1995, 11, 17, 3, 24, 0),
     });
@@ -155,7 +159,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
 
   test('test print session objectives', async function (assert) {
     const session = await this.server.create('session', {
-      courseId: 1,
+      course: this.course,
       published: true,
       publishedAsTbd: false,
     });
