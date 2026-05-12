@@ -57,7 +57,6 @@ general:
   collapseDetail: Esconder Detalles
   competencies: Competencias
   complete: Completo
-  completeSessions: "Sesiónes Completas: Listo a Publicar"
   confirmRemoveLearningMaterial: ¿Está seguro que desea eliminar este material de aprendizaje? Esta acción no se puede deshacer.
   confirmRemoveObjective: ¿Está seguro que desea eliminar este objetivo? Esta acción no se puede deshacer.
   confirmRemoveSession: ¿Está seguro que desea eliminar este sessión? Esta acción no se puede deshacer.
@@ -289,6 +288,7 @@ general:
   publishAsIs: Publique Como Es
   publishCourse: Publique Curso
   published: Publicado
+  publishedSessions: Sesiones Publicadas
   publishedSuccessfully: Publicado con éxito
   publishSession: Publique La Sesión
   remove: Remover
@@ -297,7 +297,6 @@ general:
   resultsCount: "{count, plural, =1 {1 resultado} other {# resultados}}"
   returnToPreviousPage: Volver a la Página Anterior
   reviewMissingItems: "Revisar {count} Artículos Faltantes"
-  reviewSessions: Sesiónes a Revisar
   saturday: Sábado
   save: Guardar
   savedSuccessfully: ahorrado con éxito
@@ -389,6 +388,7 @@ general:
   universalLocator: Localizador universal de
   unlinkedObjectives: Este curso tiene objetivo(s) no vinculados
   unPublishCourse: No Publique El Curso
+  unPublishedSessions: Sesiones No Publicadas
   unPublishedSuccessfully: No Publicado con éxito
   unPublishSession: No Publique La Sesión
   unusedObjectives: Objetivos no Utilizados

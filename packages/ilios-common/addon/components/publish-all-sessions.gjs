@@ -306,7 +306,7 @@ export default class PublishAllSessionsComponent extends Component {
             data-test-title
             {{on "click" (fn @setExpandCompleteSessions (not @expandCompleteSessions))}}
           >
-            {{t "general.completeSessions"}}
+            {{t "general.publishedSessions"}}
             ({{this.publishableSessions.length}})
             <FaIcon @icon={{if @expandCompleteSessions faCaretDown faCaretRight}} />
           </button>
@@ -388,7 +388,7 @@ export default class PublishAllSessionsComponent extends Component {
       </section>
       <section class="publish-all-sessions-overridable" data-test-overridable>
         <div class="title" data-test-title>
-          {{t "general.reviewSessions"}}
+          {{t "general.unPublishedSessions"}}
           ({{this.overridableSessions.length}})
         </div>
         <div class="content">
