@@ -5,7 +5,7 @@ import { on } from '@ember/modifier';
 import { fn, concat } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { and, eq, not, or } from 'ember-truth-helpers';
+import { and, eq, not } from 'ember-truth-helpers';
 import set from 'ember-set-helper/helpers/set';
 import { LinkTo } from '@ember/routing';
 import perform from 'ember-concurrency/helpers/perform';
@@ -82,46 +82,77 @@ export default class SchoolSessionTypesListItemComponent extends Component {
       <td>
         <button
           type="button"
-          class="link-button"
+          class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
           aria-label={{t "general.manage"}}
-          data-test-manage
+          title={{if
+            this.showRemoveConfirmation
+            (t "general.disabledByConfirmation")
+            (t "general.manage")
+          }}
+          disabled={{this.showRemoveConfirmation}}
           {{on "click" (fn @manageSessionType @sessionType.id)}}
+          data-test-manage
         >
-          <FaIcon @icon={{faPenToSquare}} class="edit" />
+          <FaIcon
+            @icon={{faPenToSquare}}
+            class={{if this.showRemoveConfirmation "disabled" "edit"}}
+          />
         </button>
         {{#if (eq @sessionType.sessionCount 0)}}
           {{#if @canDelete}}
             <button
               type="button"
-              class="link-button"
-              aria-label={{t "general.remove"}}
-              disabled={{or (this.showRemoveConfirmation this.deleteSessionType.isRunning)}}
-              data-test-delete
+              class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+              title={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.remove")
+              }}
+              disabled={{this.showRemoveConfirmation}}
               {{on "click" (set this "showRemoveConfirmation" true)}}
+              data-test-delete
             >
               <FaIcon
                 @icon={{faTrash}}
-                class={{if
-                  (or this.showRemoveConfirmation this.deleteSessionType.isRunning)
-                  "inactive"
-                  "remove"
-                }}
+                class={{if this.showRemoveConfirmation "disabled" "remove"}}
               />
+            </button>
+          {{else}}
+            <button
+              type="button"
+              class="link-button disabled"
+              title={{t "general.canNotDeleteSchoolSessionType"}}
+              disabled
+              data-test-delete
+            >
+              <FaIcon @icon={{faTrash}} class="disabled" />
             </button>
           {{/if}}
         {{else}}
-          <FaIcon
-            @icon={{faTrash}}
-            class="disabled"
-            @title={{t "general.canNotDeleteSchoolSessionType"}}
-          />
+          <button
+            type="button"
+            class="link-button disabled"
+            title={{t "general.canNotDeleteSchoolSessionType"}}
+            disabled
+            data-test-delete
+          >
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          </button>
         {{/if}}
         <LinkTo
           @route="session-type-visualize-vocabularies"
           @model={{@sessionType}}
-          title={{t "general.vocabularies"}}
+          @disabled={{this.showRemoveConfirmation}}
+          title={{if
+            this.showRemoveConfirmation
+            (t "general.disabledByConfirmation")
+            (t "general.vocabularies")
+          }}
         >
-          <FaIcon @icon={{faChartColumn}} class="enabled" />
+          <FaIcon
+            @icon={{faChartColumn}}
+            class={{if this.showRemoveConfirmation "disabled" "enabled"}}
+          />
         </LinkTo>
       </td>
     </tr>

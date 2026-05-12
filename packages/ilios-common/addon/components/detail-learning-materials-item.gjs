@@ -133,28 +133,45 @@ export default class DetailLearningMaterialsItemComponent extends Component {
         {{#if @editable}}
           <button
             type="button"
-            class="icon-button"
-            aria-label={{t "general.edit"}}
+            class="icon-button{{if this.showRemoveConfirmation ' disabled'}}"
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.edit")
+            }}
             {{on "click" (fn @setManagedMaterial @lm)}}
+            disabled={{this.showRemoveConfirmation}}
             data-test-edit
           >
-            <FaIcon @icon={{faPenToSquare}} />
+            <FaIcon @icon={{faPenToSquare}} class={{if this.showRemoveConfirmation "disabled"}} />
           </button>
           <button
             type="button"
-            class="icon-button remove"
-            aria-label={{t "general.remove"}}
+            class="icon-button{{if this.showRemoveConfirmation ' disabled' ' remove'}}"
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            disabled={{this.showRemoveConfirmation}}
             {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} class="enabled remove" />
+            <FaIcon
+              @icon={{faTrash}}
+              class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+            />
           </button>
         {{else}}
-          <FaIcon
-            @icon={{faTrash}}
-            class="disabled"
-            @title={{t "general.canNotDeleteLearningMaterial"}}
-          />
+          <button
+            type="button"
+            class="icon-button disabled"
+            title={{t "general.canNotDeleteLearningMaterial"}}
+            disabled
+            data-test-remove
+          >
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          </button>
         {{/if}}
       </td>
     </tr>

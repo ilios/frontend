@@ -1,4 +1,6 @@
-import { attribute, clickable, create, hasClass, isVisible, text } from 'ember-cli-page-object';
+import { attribute, clickable, create, hasClass, text } from 'ember-cli-page-object';
+import { findOne } from 'ember-cli-page-object/extend';
+import { getter } from 'ember-cli-page-object/macros';
 
 const definition = {
   scope: '[data-test-school-session-types-list-item]',
@@ -13,7 +15,7 @@ const definition = {
   calendarColor: attribute('style', '[data-test-colorbox]'),
   manage: clickable('[data-test-manage]'),
   delete: clickable('[data-test-delete]'),
-  isDeletable: isVisible('[data-test-delete]'),
+  isDeletable: isVisibleAndEnabled('[data-test-delete]'),
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
     message: text('[data-test-message]'),
@@ -22,6 +24,12 @@ const definition = {
     resetScope: true,
   },
 };
+
+function isVisibleAndEnabled(selector) {
+  return getter(function (pageObjectKey) {
+    return !findOne(this, selector, { pageObjectKey }).disabled;
+  });
+}
 
 export default definition;
 export const component = create(definition);

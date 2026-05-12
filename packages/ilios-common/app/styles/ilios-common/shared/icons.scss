@@ -10,5 +10,6 @@
 
   &.disabled {
     color: var(--grey);
+    cursor: default;
   }
 }

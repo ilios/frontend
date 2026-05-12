@@ -1,4 +1,6 @@
-import { clickable, create, hasClass, isVisible, text } from 'ember-cli-page-object';
+import { attribute, clickable, create, hasClass, property, text } from 'ember-cli-page-object';
+import { findOne } from 'ember-cli-page-object/extend';
+import { getter } from 'ember-cli-page-object/macros';
 import publicationStatus from 'ilios-common/page-objects/components/publication-status';
 
 const definition = {
@@ -8,15 +10,41 @@ const definition = {
   startDate: text('[data-test-start-date]'),
   endDate: text('[data-test-end-date]'),
   publicationStatus,
-  isLocked: hasClass('fa-lock', 'svg', { scope: '[data-test-status]', at: 1 }),
-  isUnlocked: hasClass('fa-lock-open', 'svg', { scope: '[data-test-status]', at: 1 }),
-  canLock: isVisible('[data-test-lock]', { scope: '[data-test-status]' }),
-  canUnlock: isVisible('[data-test-unlock]', { scope: '[data-test-status]' }),
-  canRemove: isVisible('[data-test-remove]', { scope: '[data-test-status]' }),
-  lock: clickable('[data-test-lock]', { scope: '[data-test-status]' }),
-  unLock: clickable('[data-test-unlock]', { scope: '[data-test-status]' }),
-  remove: clickable('[data-test-remove]', { scope: '[data-test-status]' }),
+  status: {
+    scope: '[data-test-status]',
+    isLocked: hasClass('fa-lock', 'svg', { at: 1 }),
+    canLock: isVisibleAndEnabled('[data-test-lock]'),
+    lock: clickable('[data-test-lock]'),
+    lockIcon: {
+      scope: '[data-test-lock]',
+      at: 1,
+      title: attribute('title'),
+      isDisabled: property('disabled'),
+    },
+    isUnlocked: hasClass('fa-lock-open', 'svg', { at: 1 }),
+    canUnlock: isVisibleAndEnabled('[data-test-unlock]'),
+    unLock: clickable('[data-test-unlock]'),
+    unlockIcon: {
+      scope: '[data-test-unlock]',
+      at: 1,
+      title: attribute('title'),
+      isDisabled: hasClass('disabled'),
+    },
+    canRemove: isVisibleAndEnabled('[data-test-remove]'),
+    remove: clickable('[data-test-remove]'),
+    removeIcon: {
+      scope: '[data-test-remove]',
+      title: attribute('title'),
+      isDisabled: property('disabled'),
+    },
+  },
 };
+
+function isVisibleAndEnabled(selector) {
+  return getter(function (pageObjectKey) {
+    return !findOne(this, selector, { pageObjectKey }).disabled;
+  });
+}
 
 export default definition;
 export const component = create(definition);

@@ -22,6 +22,10 @@ body {
 a,
 .link {
   @include m.ilios-link;
+
+  &.disabled:active {
+    pointer-events: none;
+  }
 }
 
 button {

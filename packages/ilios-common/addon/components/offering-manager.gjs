@@ -11,7 +11,7 @@ import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import { fn, get, concat } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import { and, eq, not } from 'ember-truth-helpers';
+import { and, eq } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import mapBy0 from 'ilios-common/helpers/map-by';
@@ -245,26 +245,42 @@ export default class OfferingManagerComponent extends Component {
               {{/each}}
             </ul>
           </div>
-          {{#if (and @editable (not this.showRemoveConfirmation))}}
+          {{#if @editable}}
             <div class="offering-manager-actions">
               <button
                 class="link-button edit"
                 type="button"
-                title={{t "general.edit"}}
+                title={{if
+                  this.showRemoveConfirmation
+                  (t "general.disabledByConfirmation")
+                  (t "general.edit")
+                }}
+                disabled={{this.showRemoveConfirmation}}
                 {{on "click" this.toggleIsEditing}}
                 data-test-edit
               >
-                <FaIcon @icon={{faPenToSquare}} class="enabled" />
+                <FaIcon
+                  @icon={{faPenToSquare}}
+                  class={{if this.showRemoveConfirmation "disabled" "enabled"}}
+                />
               </button>
               {{#if @editable}}
                 <button
                   class="link-button remove"
                   type="button"
-                  title={{t "general.remove"}}
+                  title={{if
+                    this.showRemoveConfirmation
+                    (t "general.disabledByConfirmation")
+                    (t "general.remove")
+                  }}
+                  disabled={{this.showRemoveConfirmation}}
                   {{on "click" (set0 this "showRemoveConfirmation" true)}}
                   data-test-remove
                 >
-                  <FaIcon @icon={{faTrash}} class="enabled remove" />
+                  <FaIcon
+                    @icon={{faTrash}}
+                    class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+                  />
                 </button>
               {{else}}
                 <FaIcon

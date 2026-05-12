@@ -48,9 +48,12 @@ module('Integration | Component | school/vocabularies-list', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.vocabularies.length, 3);
-    assert.notOk(component.vocabularies[0].hasDeleteButton);
-    assert.notOk(component.vocabularies[1].hasDeleteButton);
+    assert.ok(component.vocabularies[0].hasDeleteButton);
+    assert.ok(component.vocabularies[0].deleteButtonIsDisabled);
+    assert.ok(component.vocabularies[1].hasDeleteButton);
+    assert.ok(component.vocabularies[1].deleteButtonIsDisabled);
     assert.ok(component.vocabularies[2].hasDeleteButton);
+    assert.notOk(component.vocabularies[2].deleteButtonIsDisabled);
   });
 
   test('clicking delete removes the vocabulary', async function (assert) {

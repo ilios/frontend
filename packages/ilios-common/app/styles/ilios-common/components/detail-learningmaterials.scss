@@ -114,6 +114,10 @@
     .icon-button {
       @include m.ilios-button-reset;
       color: var(--light-blue);
+
+      &.disabled {
+        cursor: default;
+      }
     }
   }
 }

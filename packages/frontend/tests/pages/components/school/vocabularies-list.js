@@ -1,4 +1,4 @@
-import { clickable, create, collection, text, isVisible } from 'ember-cli-page-object';
+import { clickable, create, collection, isVisible, property, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-vocabularies-list]',
@@ -10,6 +10,7 @@ const definition = {
     manage: clickable('[data-test-manage]'),
     delete: clickable('[data-test-delete]'),
     hasDeleteButton: isVisible('[data-test-delete]'),
+    deleteButtonIsDisabled: property('disabled', '[data-test-delete]'),
   }),
   deletionConfirmation: {
     scope: '[data-test-confirm-removal]',

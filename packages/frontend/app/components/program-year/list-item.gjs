@@ -162,45 +162,83 @@ export default class ProgramYearListItemComponent extends Component {
               {{#if this.canUnlock}}
                 <button
                   type="button"
-                  class="link-button"
-                  aria-label={{t "general.unlock"}}
+                  class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+                  title={{if
+                    this.showRemoveConfirmation
+                    (t "general.disabledByConfirmation")
+                    (t "general.unlock")
+                  }}
+                  disabled={{this.showRemoveConfirmation}}
                   {{on "click" (perform this.unlock)}}
                   data-test-unlock
                 >
                   <FaIcon @icon={{faLock}} />
                 </button>
               {{else}}
-                <FaIcon @icon={{faLock}} />
+                <button
+                  type="button"
+                  class="link-button disabled"
+                  title={{t "general.canNotUnlockProgramYear"}}
+                  disabled
+                  data-test-unlock
+                >
+                  <FaIcon @icon={{faLock}} />
+                </button>
               {{/if}}
             {{else if this.canLock}}
               <button
                 type="button"
-                class="link-button"
-                aria-label={{t "general.lock"}}
+                class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+                title={{if
+                  this.showRemoveConfirmation
+                  (t "general.disabledByConfirmation")
+                  (t "general.lock")
+                }}
+                disabled={{this.showRemoveConfirmation}}
                 {{on "click" (perform this.lock)}}
                 data-test-lock
               >
-                <FaIcon @icon={{faLockOpen}} />
+                <FaIcon @icon={{faLockOpen}} class={{if this.showRemoveConfirmation "disabled"}} />
               </button>
             {{else}}
-              <FaIcon @icon={{faLockOpen}} />
+              <button
+                type="button"
+                class="link-button disabled"
+                title={{t "general.canNotLockProgramYear"}}
+                disabled
+                data-test-lock
+              >
+                <FaIcon @icon={{faLockOpen}} class="disabled" />
+              </button>
             {{/if}}
             {{#if this.canDelete}}
               <button
                 type="button"
-                class="link-button"
-                aria-label={{t "general.remove"}}
+                class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+                title={{if
+                  this.showRemoveConfirmation
+                  (t "general.disabledByConfirmation")
+                  (t "general.remove")
+                }}
                 {{on "click" (set this "showRemoveConfirmation" true)}}
+                disabled={{this.showRemoveConfirmation}}
                 data-test-remove
               >
-                <FaIcon @icon={{faTrash}} class="remove" />
+                <FaIcon
+                  @icon={{faTrash}}
+                  class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+                />
               </button>
             {{else}}
-              <FaIcon
-                @icon={{faTrash}}
-                class="disabled"
-                @title={{t "general.canNotDeleteProgramYear"}}
-              />
+              <button
+                type="button"
+                class="link-button disabled"
+                title={{t "general.canNotDeleteProgramYear"}}
+                disabled
+                data-test-remove
+              >
+                <FaIcon @icon={{faTrash}} class="disabled" />
+              </button>
             {{/if}}
           {{/if}}
         </td>

@@ -201,22 +201,32 @@ export default class LearnerGroupListItemComponent extends Component {
             @title={{t "general.canNotDeleteLearnerGroup"}}
           />
         {{else}}
-          {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
+          {{#if this.canDelete}}
             <button
-              class="link-button"
+              class="link-button{{if @showRemoveConfirmation ' disabled'}}"
               type="button"
+              title={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.remove")
+              }}
+              disabled={{this.showRemoveConfirmation}}
               {{on "click" this.showRemove}}
-              title={{t "general.remove"}}
               data-test-remove
             >
-              <FaIcon @icon={{faTrash}} class="enabled remove" />
+              <FaIcon
+                @icon={{faTrash}}
+                class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+              />
             </button>
           {{else}}
-            <FaIcon
-              @icon={{faTrash}}
-              class="disabled"
-              @title={{t "general.canNotDeleteLearnerGroup"}}
-            />
+            <button
+              type="button"
+              class="link-button disabled"
+              title={{t "general.canNotDeleteLearnerGroup"}}
+            >
+              <FaIcon @icon={{faTrash}} class="disabled" />
+            </button>
           {{/if}}
         {{/if}}
         {{#if this.canCreateLoading}}
@@ -224,13 +234,18 @@ export default class LearnerGroupListItemComponent extends Component {
         {{else}}
           {{#if (and this.canCreate (not this.showCopyConfirmation))}}
             <button
-              class="link-button"
+              class="link-button{{if @showRemoveConfirmation ' disabled'}}"
               type="button"
               {{on "click" this.showCopy}}
-              title={{t "general.copy"}}
+              title={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.copy")
+              }}
+              disabled={{this.showRemoveConfirmation}}
               data-test-copy
             >
-              <FaIcon @icon={{faCopy}} />
+              <FaIcon @icon={{faCopy}} class={{if this.showRemoveConfirmation "disabled"}} />
             </button>
           {{else}}
             <button

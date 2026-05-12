@@ -45,10 +45,12 @@ module('Acceptance | School - Vocabularies', function (hooks) {
     assert.strictEqual(c.vocabulariesList.vocabularies.length, 2);
     assert.strictEqual(c.vocabulariesList.vocabularies[0].title.text, 'Vocabulary 1');
     assert.strictEqual(c.vocabulariesList.vocabularies[0].termsCount, '2');
-    assert.notOk(c.vocabulariesList.vocabularies[0].hasDeleteButton);
+    assert.ok(c.vocabulariesList.vocabularies[0].hasDeleteButton);
+    assert.ok(c.vocabulariesList.vocabularies[0].deleteButtonIsDisabled);
     assert.strictEqual(c.vocabulariesList.vocabularies[1].title.text, 'Vocabulary 2');
     assert.strictEqual(c.vocabulariesList.vocabularies[1].termsCount, '1');
-    assert.notOk(c.vocabulariesList.vocabularies[1].hasDeleteButton);
+    assert.ok(c.vocabulariesList.vocabularies[1].hasDeleteButton);
+    assert.ok(c.vocabulariesList.vocabularies[1].deleteButtonIsDisabled);
   });
 
   test('add new vocabulary', async function (assert) {

@@ -109,6 +109,7 @@ general:
   description: Description
   directorCount: "Il y a {count, plural, =1 {un directeur} other {# directeurs}}"
   directors: Directeurs
+  disabledByConfirmation: "Cette fonction ne peut pas être utilisée lors de la confirmation d'une suppression."
   disabledUserAccount: compte utilisateur désactivé
   displayName: Nom d’Affichage
   done: Fini

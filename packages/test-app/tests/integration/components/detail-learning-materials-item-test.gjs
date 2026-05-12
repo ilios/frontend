@@ -54,6 +54,7 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
     assert.ok(component.isNotePublic);
     assert.ok(component.actions.edit.isVisible);
     assert.ok(component.actions.remove.isVisible);
+    assert.notOk(component.actions.remove.isDisabled);
   });
 
   test('read-only', async function (assert) {
@@ -75,8 +76,9 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
     assert.strictEqual(component.mesh, 'descriptor 0 descriptor 1');
     assert.strictEqual(component.status, 'status 1');
     assert.ok(component.isNotePublic);
-    assert.notOk(component.actions.edit.isVisible);
-    assert.notOk(component.actions.remove.isVisible);
+    assert.notOk(component.actions.edit.isVisible, 'edit icon is not visible');
+    assert.ok(component.actions.remove.isVisible, 'remove icon is visible');
+    assert.ok(component.actions.remove.isDisabled, 'remove icon is disabled');
   });
 
   test('click to delete and cancel', async function (assert) {

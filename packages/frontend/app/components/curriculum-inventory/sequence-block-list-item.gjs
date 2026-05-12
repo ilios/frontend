@@ -5,7 +5,6 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
-import { and, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -79,22 +78,34 @@ export default class CurriculumInventorySequenceBlockListItemComponent extends C
         {{this.courseTitle}}
       </td>
       <td class="text-center" colspan="1">
-        {{#if (and @canUpdate (not this.showRemoveConfirmation))}}
+        {{#if @canUpdate}}
           <button
-            class="link-button"
             type="button"
+            class="link-button{{if @showRemoveConfirmation ' disabled'}}"
+            title={{if
+              this.showRemoveConfirmation
+              (t "general.disabledByConfirmation")
+              (t "general.remove")
+            }}
+            disabled={{this.showRemoveConfirmation}}
             {{on "click" (set this "showRemoveConfirmation" true)}}
-            aria-label={{t "general.remove"}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} class="enabled remove" />
+            <FaIcon
+              @icon={{faTrash}}
+              class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+            />
           </button>
         {{else}}
-          <FaIcon
-            @icon={{faTrash}}
-            class="disabled"
-            @title={{t "general.canNotDeleteSequenceBlock"}}
-          />
+          <button
+            type="button"
+            class="link-button disabled"
+            title={{t "general.canNotDeleteSequenceBlock"}}
+            disabled
+            data-test-remove
+          >
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          </button>
         {{/if}}
       </td>
     </tr>
