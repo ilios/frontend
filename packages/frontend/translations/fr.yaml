@@ -292,7 +292,7 @@ general:
   otherId: Autre ID
   parallel: Parallèle
   password: Mot de passe
-  pendingUpdatesSummary: "{count, plural, =1 {Il y a un utilisateur nécessitant une attention particulière} other {Il y a des # utilisateurs nécessitants une attention particulière}}"
+  pendingUpdatesSummary: "{count, plural, =1 {Il y a un utilisateur nécessitant une attention particulière.} other {Il y a des # utilisateurs nécessitants une attention particulière.}}"
   pendingUpdatesSummaryTitle: Mises du répertoire de Campus
   pendingUserUpdates:
     filterBy: Filtre par nom d’utilisateur
@@ -424,7 +424,7 @@ general:
   unableToSyncUser: "Incapable de syncroniser le utilisateur de répertoire, veuillez vous assurer le campus ID soit exacte."
   unassigned: Non attribuée
   unassignedStudentsConfirmation: "{count, plural, =1 {Attribuez 1 l’utilisateur sélectionné à} other {Attribuez # utilisateurs sélectionnés à}}"
-  unassignedStudentsSummary: "{count, plural, =1 {Il y a un étudiant qui a besoin affectation à une cohorte} other {Il y a # étudiants qui ont besoin affectation à une cohorte}}"
+  unassignedStudentsSummary: "{count, plural, =1 {Il y a un étudiant qui a besoin affectation à une cohorte.} other {Il y a # étudiants qui ont besoin affectation à une cohorte.}}"
   unassignedStudentsSummaryTitle: Étudiants qui ont besoin affectation à une cohorte
   unlock: Débloquer
   unlockCourse: Débloquer le cours

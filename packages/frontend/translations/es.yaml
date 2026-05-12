@@ -292,7 +292,7 @@ general:
   otherId: Otro ID
   parallel: Paralelo
   password: Contraseña
-  pendingUpdatesSummary: "{count, plural, =1 {Hay un usuario que necesita atención} other {Hay # usuarios que necesitan atención}}"
+  pendingUpdatesSummary: "{count, plural, =1 {Hay un usuario que necesita atención.} other {Hay # usuarios que necesitan atención.}}"
   pendingUpdatesSummaryTitle: Actualizaciones del Directorio del Campus
   pendingUserUpdates:
     filterBy: Filtro por nombre de uauario
@@ -424,7 +424,7 @@ general:
   unableToSyncUser: "Incapaz de sincronizar al usuario del directorio, por favor asegure el Campus ID es correcto."
   unassigned: No asignado
   unassignedStudentsConfirmation: "{count, plural, =1 {Asignar 1 el usuario seleccionado a} other {Asignar # usuarios seleccionados a}}"
-  unassignedStudentsSummary: "{count, plural, =1 {Hay un estudiante que requiere asignación de cohorte} other {Hay # estudiantes que requieren asignación de cohorte}}"
+  unassignedStudentsSummary: "{count, plural, =1 {Hay un estudiante que requiere asignación de cohorte.} other {Hay # estudiantes que requieren asignación de cohorte.}}"
   unassignedStudentsSummaryTitle: Estudiantes que Requieren Asignación de Cohorte
   unlock: Desbloquea
   unlockCourse: Desbloquea el curso

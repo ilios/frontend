@@ -32,7 +32,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
     this.set('schools', schools);
     await render(<template><PendingUpdatesSummary @schools={{this.schools}} /></template>);
     assert.strictEqual(component.title, 'Updates from the Campus Directory');
-    assert.strictEqual(component.summary, 'There are 5 users needing attention');
+    assert.strictEqual(component.summary, 'There are 5 users needing attention.');
     assert.ok(component.schoolFilter.hasMultiple);
     assert.strictEqual(component.schoolFilter.options.length, 2);
     assert.strictEqual(component.schoolFilter.selected, '1');
@@ -62,7 +62,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
     this.set('schools', schools);
     await render(<template><PendingUpdatesSummary @schools={{this.schools}} /></template>);
     assert.strictEqual(component.title, 'Updates from the Campus Directory');
-    assert.strictEqual(component.summary, 'There are 5 users needing attention');
+    assert.strictEqual(component.summary, 'There are 5 users needing attention.');
     assert.notOk(component.schoolFilter.hasMultiple);
     assert.strictEqual(component.schoolFilter.text, 'School school 0');
     assert.ok(component.hasAlert);
@@ -89,7 +89,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
     await render(<template><PendingUpdatesSummary @schools={{this.schools}} /></template>);
 
     assert.strictEqual(component.title, 'Updates from the Campus Directory');
-    assert.strictEqual(component.summary, 'There are 0 users needing attention');
+    assert.strictEqual(component.summary, 'There are 0 users needing attention.');
     assert.ok(component.schoolFilter.hasMultiple);
     assert.strictEqual(component.schoolFilter.options.length, 2);
     assert.strictEqual(component.schoolFilter.selected, '1');
@@ -123,7 +123,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
     await render(<template><PendingUpdatesSummary @schools={{this.schools}} /></template>);
 
     assert.strictEqual(component.title, 'Updates from the Campus Directory');
-    assert.strictEqual(component.summary, 'There are 2 users needing attention');
+    assert.strictEqual(component.summary, 'There are 2 users needing attention.');
     assert.ok(component.schoolFilter.hasMultiple);
     assert.strictEqual(component.schoolFilter.options.length, 3);
     assert.strictEqual(component.schoolFilter.selected, '2');
@@ -131,13 +131,13 @@ module('Integration | Component | pending updates summary', function (hooks) {
     assert.strictEqual(component.manage.link, '/admin/userupdates?school=2');
 
     await component.schoolFilter.set('1');
-    assert.strictEqual(component.summary, 'There is one user needing attention');
+    assert.strictEqual(component.summary, 'There is one user needing attention.');
     assert.strictEqual(component.schoolFilter.selected, '1');
     assert.ok(component.hasAlert);
     assert.strictEqual(component.manage.link, '/admin/userupdates?school=1');
 
     await component.schoolFilter.set('3');
-    assert.strictEqual(component.summary, 'There are 0 users needing attention');
+    assert.strictEqual(component.summary, 'There are 0 users needing attention.');
     assert.strictEqual(component.schoolFilter.selected, '3');
     assert.notOk(component.hasAlert);
     assert.notOk(component.manage.isVisible);
