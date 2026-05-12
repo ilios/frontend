@@ -1,16 +1,14 @@
 import { z } from 'zod';
 
-export const schema = z
-  .object({
-    id: z.number(),
-    room: z.string().nullish(),
-    site: z.string().nullish(),
-    url: z.string().nullish(),
-    startDate: z.string().nullish(),
-    endDate: z.string().nullish(),
-    updatedAt: z.string().nullish(),
-  })
-  .passthrough();
+export const schema = z.looseObject({
+  id: z.number(),
+  room: z.string().nullish(),
+  site: z.string().nullish(),
+  url: z.string().nullish(),
+  startDate: z.string().nullish(),
+  endDate: z.string().nullish(),
+  updatedAt: z.string().nullish(),
+});
 
 export const relationships = [
   {

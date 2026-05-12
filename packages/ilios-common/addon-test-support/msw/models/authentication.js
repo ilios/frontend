@@ -1,12 +1,10 @@
 import { z } from 'zod';
 
-export const schema = z
-  .object({
-    id: z.number(),
-    username: z.string().nullish(),
-    password: z.string().nullish(),
-  })
-  .passthrough();
+export const schema = z.looseObject({
+  id: z.number(),
+  username: z.string().nullish(),
+  password: z.string().nullish(),
+});
 
 export const relationships = [
   {

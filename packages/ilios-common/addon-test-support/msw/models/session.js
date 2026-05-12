@@ -1,19 +1,17 @@
 import { z } from 'zod';
 
-export const schema = z
-  .object({
-    id: z.number(),
-    title: z.string().nullish(),
-    attireRequired: z.boolean().nullish(),
-    equipmentRequired: z.boolean().nullish(),
-    supplemental: z.boolean().nullish(),
-    attendanceRequired: z.boolean().nullish(),
-    publishedAsTbd: z.boolean().nullish(),
-    published: z.boolean().nullish(),
-    instructionalNotes: z.string().nullish(),
-    updatedAt: z.string().nullish(),
-  })
-  .passthrough();
+export const schema = z.looseObject({
+  id: z.number(),
+  title: z.string().nullish(),
+  attireRequired: z.boolean().nullish(),
+  equipmentRequired: z.boolean().nullish(),
+  supplemental: z.boolean().nullish(),
+  attendanceRequired: z.boolean().nullish(),
+  publishedAsTbd: z.boolean().nullish(),
+  published: z.boolean().nullish(),
+  instructionalNotes: z.string().nullish(),
+  updatedAt: z.string().nullish(),
+});
 
 export const relationships = [
   {

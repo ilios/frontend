@@ -1,15 +1,13 @@
 import { z } from 'zod';
 
-export const schema = z
-  .object({
-    id: z.number(),
-    startYear: z.number().nullish(),
-    locked: z.boolean().nullish(),
-    archived: z.boolean().nullish(),
-    publishedAsTbd: z.boolean().nullish(),
-    published: z.boolean().nullish(),
-  })
-  .passthrough();
+export const schema = z.looseObject({
+  id: z.number(),
+  startYear: z.number().nullish(),
+  locked: z.boolean().nullish(),
+  archived: z.boolean().nullish(),
+  publishedAsTbd: z.boolean().nullish(),
+  published: z.boolean().nullish(),
+});
 
 export const relationships = [
   {

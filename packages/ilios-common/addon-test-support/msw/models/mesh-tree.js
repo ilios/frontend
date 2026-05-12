@@ -1,11 +1,9 @@
 import { z } from 'zod';
 
-export const schema = z
-  .object({
-    id: z.string(),
-    treeNumber: z.string().nullish(),
-  })
-  .passthrough();
+export const schema = z.looseObject({
+  id: z.string(),
+  treeNumber: z.string().nullish(),
+});
 
 export const relationships = [
   {
