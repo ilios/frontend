@@ -1,5 +1,5 @@
 export default {
   title: (i) => `course objective ${i}`,
-  position: 0,
+  position: (i) => i,
   active: true,
 };
