@@ -667,7 +667,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('can not delete course with descendants #3620', async function (assert) {
-    const year = DateTime.now().year.toString();
+    const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year });
     const course1 = await this.server.create('course', {
       year,
@@ -696,8 +696,8 @@ module('Acceptance | Courses', function (hooks) {
 
     freezeDateAt(new Date('1/1/2021'));
     const year = DateTime.now().year;
-    await this.server.create('academic-year', { id: year - 1 });
-    await this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year - 1, title: `${year - 1}` });
+    await this.server.create('academic-year', { id: year, title: `${year}` });
     this.server.get('application/config', function () {
       assert.step('API called');
       return {
@@ -719,8 +719,8 @@ module('Acceptance | Courses', function (hooks) {
 
     freezeDateAt(new Date('10/10/2021'));
     const year = DateTime.now().year;
-    await this.server.create('academic-year', { id: year - 1 });
-    await this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year - 1, title: `${year - 1}` });
+    await this.server.create('academic-year', { id: year, title: `${year}` });
     this.server.get('application/config', function () {
       assert.step('API called');
       return {
@@ -742,8 +742,8 @@ module('Acceptance | Courses', function (hooks) {
 
     freezeDateAt(new Date('1/1/2021'));
     const year = DateTime.now().year;
-    await this.server.create('academic-year', { id: year - 1 });
-    await this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year - 1, title: `${year - 1}` });
+    await this.server.create('academic-year', { id: year, title: `${year}` });
     this.server.get('application/config', function () {
       assert.step('API called');
       return {
@@ -765,8 +765,8 @@ module('Acceptance | Courses', function (hooks) {
 
     freezeDateAt(new Date('10/10/2021'));
     const year = DateTime.now().year;
-    await this.server.create('academic-year', { id: year - 1 });
-    await this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year - 1, title: `${year - 1}` });
+    await this.server.create('academic-year', { id: year, title: `${year}` });
     this.server.get('application/config', function () {
       assert.step('API called');
       return {
