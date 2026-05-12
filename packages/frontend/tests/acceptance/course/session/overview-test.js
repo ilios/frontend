@@ -857,16 +857,16 @@ module('Acceptance | Session - Overview', function (hooks) {
       true,
     );
     const ilmSession = await this.server.create('ilm-session');
-    const session = await this.server.create('session', {
+    const postrequisite = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       ilmSession,
+      postrequisite,
     });
-    const postRequisite = await this.server.create('session', {
-      course: this.course,
-      sessionType: this.sessionTypes[0],
-    });
-    session.update('postrequisite', postRequisite);
     await page.visit({
       courseId: 1,
       sessionId: 1,
