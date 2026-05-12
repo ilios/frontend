@@ -1,25 +1,23 @@
 import { z } from 'zod';
 
-export const schema = z
-  .object({
-    id: z.number(),
-    firstName: z.string().nullish(),
-    lastName: z.string().nullish(),
-    middleName: z.string().nullish(),
-    displayName: z.string().nullish(),
-    phone: z.string().nullish(),
-    email: z.string().nullish(),
-    preferredEmail: z.string().nullish(),
-    addedViaIlios: z.boolean().nullish(),
-    enabled: z.boolean().nullish(),
-    campusId: z.string().nullish(),
-    otherId: z.string().nullish(),
-    examined: z.boolean().nullish(),
-    userSyncIgnore: z.boolean().nullish(),
-    icsFeedKey: z.string().nullish(),
-    root: z.boolean().nullish(),
-  })
-  .passthrough();
+export const schema = z.looseObject({
+  id: z.number(),
+  firstName: z.string().nullish(),
+  lastName: z.string().nullish(),
+  middleName: z.string().nullish(),
+  displayName: z.string().nullish(),
+  phone: z.string().nullish(),
+  email: z.string().nullish(),
+  preferredEmail: z.string().nullish(),
+  addedViaIlios: z.boolean().nullish(),
+  enabled: z.boolean().nullish(),
+  campusId: z.string().nullish(),
+  otherId: z.string().nullish(),
+  examined: z.boolean().nullish(),
+  userSyncIgnore: z.boolean().nullish(),
+  icsFeedKey: z.string().nullish(),
+  root: z.boolean().nullish(),
+});
 
 export const relationships = [
   {
