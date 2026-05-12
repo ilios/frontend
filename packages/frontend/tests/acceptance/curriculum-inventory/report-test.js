@@ -9,11 +9,10 @@ module('Acceptance | curriculum inventory report', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
   });
 
   test('create new sequence block Issue #2108', async function (assert) {
-    await this.server.update('user', this.user, { directedSchools: [this.school] });
+    await setupAuthentication({ school: this.school, directedSchools: [this.school] }, true);
     const program = await this.server.create('program', { school: this.school });
     const report = await this.server.create('curriculum-inventory-report', { program });
     await this.server.create('curriculumInventorySequence', { report });
@@ -28,6 +27,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
   });
 
   test('rollover button hidden from unprivileged users', async function (assert) {
+    await setupAuthentication({ school: this.school }, true);
     const program = await this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
@@ -47,7 +47,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
   });
 
   test('rollover button visible to privileged users', async function (assert) {
-    await this.server.update('user', this.user, { directedSchools: [this.school] });
+    await setupAuthentication({ school: this.school, directedSchools: [this.school] }, true);
     const program = await this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
@@ -67,7 +67,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
   });
 
   test('finalizing report locks things down', async function (assert) {
-    await this.server.update('user', this.user, { directedSchools: [this.school] });
+    await setupAuthentication({ school: this.school, directedSchools: [this.school] }, true);
     const program = await this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
