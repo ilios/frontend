@@ -16,6 +16,8 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
     const [school1, school2] = await this.server.createList('school', 2);
     await this.server.createList('course', 2, { school: school1, year: 2015 });
     await this.server.createList('course', 3, { school: school2, year: 2022 });
+    this.school1 = school1;
+    this.school2 = school2;
   });
 
   test('it renders', async function (assert) {
@@ -88,20 +90,21 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
   });
 
   test('it sorts', async function (assert) {
-    this.server.db.courses.update(1, { title: 'xx', externalId: 'course1' });
-    this.server.db.courses.update(3, { title: 'aa', externalId: 'course2' });
+    await this.server.create('course', { school: this.school1, year: 2015, externalId: 'xx' });
+    await this.server.create('course', { school: this.school2, year: 2022, externalId: 'aa' });
     await render(
       <template><Course @currentId={{null}} @changeId={{(noop)}} @school={{null}} /></template>,
     );
 
     await component.input('course');
     await component.search();
-    assert.strictEqual(component.results.length, 5);
-
-    assert.strictEqual(component.results[0].text, '2022 [course2] aa');
+    assert.strictEqual(component.results.length, 7);
+    assert.strictEqual(component.results[0].text, '2022 course 2');
     assert.strictEqual(component.results[1].text, '2022 course 3');
     assert.strictEqual(component.results[2].text, '2022 course 4');
-    assert.strictEqual(component.results[3].text, '2015 course 1');
-    assert.strictEqual(component.results[4].text, '2015 [course1] xx');
+    assert.strictEqual(component.results[3].text, '2022 [aa] course 6');
+    assert.strictEqual(component.results[4].text, '2015 course 0');
+    assert.strictEqual(component.results[5].text, '2015 course 1');
+    assert.strictEqual(component.results[6].text, '2015 [xx] course 5');
   });
 });
