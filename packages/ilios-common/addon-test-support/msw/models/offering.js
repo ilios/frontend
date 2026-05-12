@@ -5,8 +5,8 @@ export const schema = z.looseObject({
   room: z.string().nullish(),
   site: z.string().nullish(),
   url: z.string().nullish(),
-  startDate: z.string().nullish(),
-  endDate: z.string().nullish(),
+  startDate: z.date(),
+  endDate: z.date(),
   updatedAt: z.string().nullish(),
 });
 

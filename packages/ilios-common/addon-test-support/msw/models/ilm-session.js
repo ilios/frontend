@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 export const schema = z.looseObject({
   id: z.number(),
-  hours: z.number().nullish(),
-  dueDate: z.string().nullish(),
+  hours: z.number(),
+  dueDate: z.date(),
 });
 
 export const relationships = [
