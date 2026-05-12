@@ -21,7 +21,7 @@ export async function updateModel(collectionName, model, attrs) {
   const collection = db[collectionName];
   return await collection.update(model, {
     data(model) {
-      attrs.forEach((k, v) => {
+      attrs.forEach((v, k) => {
         model[k] = v;
       });
     },
