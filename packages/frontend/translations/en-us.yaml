@@ -292,7 +292,7 @@ general:
   otherId: Other ID
   parallel: Parallel
   password: Password
-  pendingUpdatesSummary: "{count, plural, =1 {There is one user needing attention} other {There are # users needing attention}}"
+  pendingUpdatesSummary: "{count, plural, =1 {There is one user needing attention.} other {There are # users needing attention.}}"
   pendingUpdatesSummaryTitle: Updates from the Campus Directory
   pendingUserUpdates:
     filterBy: Filter by user name
@@ -424,7 +424,7 @@ general:
   unableToSyncUser: "Unable to sync user from directory, please ensure the Campus ID is correct."
   unassigned: Unassigned
   unassignedStudentsConfirmation: "{count, plural, =1 {Assign 1 selected user to} other {Assign # selected users to}}"
-  unassignedStudentsSummary: "{count, plural, =1 {There is one student needing assignment to a cohort} other {There are # students needing assignment to a cohort}}"
+  unassignedStudentsSummary: "{count, plural, =1 {There is one student needing assignment to a cohort.} other {There are # students needing assignment to a cohort.}}"
   unassignedStudentsSummaryTitle: Students Requiring Cohort Assignment
   unlock: Unlock
   unlockCourse: Unlock course
