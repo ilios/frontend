@@ -16,7 +16,7 @@ const modelsWithStringIds = new Set([
 const schemasWithRelationships = {};
 
 /*
-Because we need to recursivly refer to other schemas we need to
+Because we need to recursively refer to other schemas we need to
 dynamically assign getters for the relation properties.
 */
 Object.keys(relationships).forEach((name) => {
