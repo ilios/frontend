@@ -84,6 +84,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       endDate: this.today.plus({ days: 3, hours: 1 }).toJSDate(),
       url: 'https://example.edu/',
     });
+    this.cohort = cohort;
   });
 
   hooks.afterEach(() => {
@@ -759,22 +760,21 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('edit offerings twice #2850', async function (assert) {
-    await this.server.create('learner-group', {
-      cohortId: 1,
+    const topGroup = await this.server.create('learner-group', {
+      cohort: this.cohort,
+    });
+    const subGroup = await this.server.create('learner-group', {
+      cohort: this.cohort,
+      parent: topGroup,
+    });
+    const subSubGroup = await this.server.create('learner-group', {
+      cohort: this.cohort,
+      parent: subGroup,
     });
     await this.server.create('learner-group', {
-      cohortId: 1,
-      parentId: 3,
+      cohort: this.cohort,
+      parent: subSubGroup,
     });
-    await this.server.create('learner-group', {
-      cohortId: 1,
-      parentId: 4,
-    });
-    await this.server.create('learner-group', {
-      cohortId: 1,
-      parentId: 5,
-    });
-    this.server.db.cohorts.update(1, { learnerGroupIds: [3, 4, 5, 6] });
 
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].edit();
