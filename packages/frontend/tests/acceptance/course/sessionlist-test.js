@@ -438,9 +438,11 @@ module('Acceptance | Course - Session List', function (hooks) {
     await sessions[0].row.expand();
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];
+    assert.strictEqual(form.url.value, 'https://');
     await form.url.set('https://zoom.example.edu');
     await form.save();
-    assert.strictEqual(this.server.schema.offerings.find(1).url, 'https://zoom.example.edu');
+    await offerings[0].edit();
+    assert.strictEqual(form.url.value, 'https://zoom.example.edu');
   });
 
   test('sort by title #3941', async function (assert) {
