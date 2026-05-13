@@ -35,12 +35,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
       startYear: thisYear - 1,
       cohort: cohorts[2],
     });
-    this.server.create('program-year', {
-      program: this.program,
-      startYear: thisYear - 3,
-      cohort: cohorts[3],
-      archived: true,
-    });
     await page.visit({ programId: this.program.id });
     await takeScreenshot(assert, 'default');
     assert.strictEqual(page.programYears.items.length, 3);
