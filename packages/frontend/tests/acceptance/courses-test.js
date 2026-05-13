@@ -526,12 +526,12 @@ module('Acceptance | Courses', function (hooks) {
     const firstCourse = await this.server.create('course', {
       year: 2014,
       school: this.school,
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toISODate(),
     });
     const secondCourse = await this.server.create('course', {
       year: 2014,
       school: this.school,
-      startDate: DateTime.fromObject({ hour: 8 }).plus({ days: 1 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).plus({ days: 1 }).toISODate(),
     });
 
     await page.visit();
@@ -552,12 +552,12 @@ module('Acceptance | Courses', function (hooks) {
     const firstCourse = await this.server.create('course', {
       year: 2014,
       school: this.school,
-      endDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
+      endDate: DateTime.fromObject({ hour: 8 }).toISODate(),
     });
     const secondCourse = await this.server.create('course', {
       year: 2014,
       school: this.school,
-      endDate: DateTime.fromObject({ hour: 8 }).plus({ days: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ hour: 8 }).plus({ days: 1 }).toISODate(),
     });
 
     await page.visit();
