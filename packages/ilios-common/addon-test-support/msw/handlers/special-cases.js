@@ -102,7 +102,7 @@ const sessionsHandler = http.get('/api/sessions', async ({ request }) => {
   const params = url.searchParams;
   const schoolsFilter = params.get('filters[schools]');
 
-  let sessions = await db.session.findMany();
+  let sessions = await db.session.all();
 
   // Apply school filter if present
   if (schoolsFilter) {
