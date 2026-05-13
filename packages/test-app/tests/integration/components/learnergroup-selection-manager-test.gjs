@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -70,7 +70,11 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     );
   });
 
-  test('it renders', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'fail for msw');
+  });
+
+  skip('it renders', async function (assert) {
     this.set('learnerGroups', [this.secondLevelLearnerGroup1, this.secondLevelLearnerGroup3]);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(
@@ -156,7 +160,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     assert.strictEqual(component.availableGroups.cohorts[1].trees[1].subgroups.length, 0);
   });
 
-  test('remove group from selected list', async function (assert) {
+  skip('remove group from selected list', async function (assert) {
     this.set('remove', (learnerGroup) => {
       assert.step('remove called');
       assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
@@ -177,7 +181,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     assert.verifySteps(['remove called']);
   });
 
-  test('remove group in picker', async function (assert) {
+  skip('remove group in picker', async function (assert) {
     this.set('remove', (learnerGroup) => {
       assert.step('remove called');
       assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
@@ -199,7 +203,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     assert.verifySteps(['remove called']);
   });
 
-  test('add available group', async function (assert) {
+  skip('add available group', async function (assert) {
     this.set('add', (learnerGroup) => {
       assert.step('add called');
       assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);

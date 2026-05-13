@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -9,7 +9,11 @@ module('Integration | Component | detail terms list', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  test('list with terms', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
+  skip('list with terms', async function (assert) {
     const school = await this.server.create('school', {
       title: 'Medicine',
     });
@@ -60,7 +64,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     assert.strictEqual(component.terms[1].name, 'foo (inactive)');
   });
 
-  test('empty list', async function (assert) {
+  skip('empty list', async function (assert) {
     const school = await this.server.create('school', {
       title: 'Medicine',
     });
@@ -108,7 +112,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     assert.strictEqual(component.terms.length, 0);
   });
 
-  test('remove term', async function (assert) {
+  skip('remove term', async function (assert) {
     const school = await this.server.create('school', {
       title: 'Medicine',
     });
@@ -149,7 +153,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     assert.verifySteps(['remove called']);
   });
 
-  test('inactive vocabulary labeled as such in edit mode', async function (assert) {
+  skip('inactive vocabulary labeled as such in edit mode', async function (assert) {
     const school = await this.server.create('school', {
       title: 'Medicine',
     });
@@ -173,7 +177,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     assert.dom('[data-test-title] .inactive').hasText('(inactive)');
   });
 
-  test('click vocabulary title to manage', async function (assert) {
+  skip('click vocabulary title to manage', async function (assert) {
     const school = await this.server.create('school');
     const vocabulary = await this.server.create('vocabulary', { school });
     await this.server.create('term', { vocabulary });

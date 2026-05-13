@@ -1,5 +1,5 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/learner-groups';
@@ -417,7 +417,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items[0].title, 'yes\\no');
   });
 
-  test('copy learnergroup without learners', async function (assert) {
+  skip('copy learnergroup without learners', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
@@ -472,7 +472,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(learnerGroupPage.root.subgroups.list.items[1].children, '0');
   });
 
-  test('copy learnergroup with learners', async function (assert) {
+  skip('copy learnergroup with learners', async function (assert) {
     await this.server.createList('user', 10);
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });

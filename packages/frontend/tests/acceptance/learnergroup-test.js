@@ -1,5 +1,5 @@
 import { currentURL } from '@ember/test-helpers';
-import { test, module } from 'qunit';
+import { test, module, skip } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
@@ -417,32 +417,31 @@ module('Acceptance | Learner Group', function (hooks) {
     );
   });
 
-  test('Learners with missing parent group affiliation still appear in subgroup manager #3476', async function (assert) {
-    assert.ok(false, 'Temporarily switching off for MSW work, but failing still so we fix it.');
-    // const programYear = await this.server.create('program-year', { program: this.program });
-    // const cohort = await this.server.create('cohort', { programYear });
-    // const learnerGroup = await this.server.create('learner-group', {
-    //   cohort,
-    // });
-    // const subGroup = await this.server.create('learner-group', {
-    //   cohort,
-    //   parent: learnerGroup,
-    // });
-    // await this.server.createList('user', 2, {
-    //   cohorts: [cohort],
-    //   learnerGroups: [learnerGroup],
-    // });
-    // await this.server.create('user', {
-    //   cohorts: [cohort],
-    //   learnerGroups: [subGroup],
-    // });
+  skip('Learners with missing parent group affiliation still appear in subgroup manager #3476', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', {
+      cohort,
+    });
+    const subGroup = await this.server.create('learner-group', {
+      cohort,
+      parent: learnerGroup,
+    });
+    await this.server.createList('user', 2, {
+      cohorts: [cohort],
+      learnerGroups: [learnerGroup],
+    });
+    await this.server.create('user', {
+      cohorts: [cohort],
+      learnerGroups: [subGroup],
+    });
 
-    // await page.visit({ learnerGroupId: 2 });
-    // assert.strictEqual(currentURL(), '/learnergroups/2');
-    // assert.strictEqual(page.root.members.users.length, 1);
-    // await page.root.actions.buttons.manageUsers.click();
-    // assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
-    // assert.strictEqual(page.root.userManager.usersNotInCurrentGroup.length, 2);
+    await page.visit({ learnerGroupId: 2 });
+    assert.strictEqual(currentURL(), '/learnergroups/2');
+    assert.strictEqual(page.root.members.users.length, 1);
+    await page.root.actions.buttons.manageUsers.click();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
+    assert.strictEqual(page.root.userManager.usersNotInCurrentGroup.length, 2);
   });
 
   test('moving learners to group updates count #3570', async function (assert) {
@@ -488,112 +487,110 @@ module('Acceptance | Learner Group', function (hooks) {
     assert.strictEqual(page.root.header.members, 'Members: 1 / 4');
   });
 
-  test('manage subgroup members does not duplicate members #3936', async function (assert) {
-    assert.ok(false, 'Temporarily switching off for MSW work, but failing still so we fix it.');
-    // const programYear = await this.server.create('program-year', { program: this.program });
-    // const cohort = await this.server.create('cohort', { programYear });
-    // const parent = await this.server.create('learner-group', { cohort });
-    // const child = await this.server.create('learner-group', { cohort, parent });
-    // await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [parent, child] });
+  skip('manage subgroup members does not duplicate members #3936', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const parent = await this.server.create('learner-group', { cohort });
+    const child = await this.server.create('learner-group', { cohort, parent });
+    await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [parent, child] });
 
-    // await page.visit({ learnerGroupId: child.id });
-    // await page.root.actions.buttons.manageUsers.click();
-    // const users = page.root.userManager.usersInCurrentGroup;
-    // assert.strictEqual(users.length, 2);
-    // assert.strictEqual(users[0].name.userNameInfo.fullName, '1 guy M. Mc1son');
-    // assert.strictEqual(users[1].name.userNameInfo.fullName, '2 guy M. Mc2son');
+    await page.visit({ learnerGroupId: child.id });
+    await page.root.actions.buttons.manageUsers.click();
+    const users = page.root.userManager.usersInCurrentGroup;
+    assert.strictEqual(users.length, 2);
+    assert.strictEqual(users[0].name.userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(users[1].name.userNameInfo.fullName, '2 guy M. Mc2son');
   });
 
-  test('move learners individually from subgroup to subgroup #4953', async function (assert) {
-    assert.ok(false, 'Temporarily switching off for MSW work, but failing still so we fix it.');
-    // const programYear = await this.server.create('program-year', { program: this.program });
-    // const cohort = await this.server.create('cohort', { programYear });
-    // const parent = await this.server.create('learner-group', { cohort });
-    // await this.server.createList('learner-group', 2, { cohort, parent });
-    // await this.server.createList('user', 3, { cohorts: [cohort] });
+  skip('move learners individually from subgroup to subgroup #4953', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const parent = await this.server.create('learner-group', { cohort });
+    await this.server.createList('learner-group', 2, { cohort, parent });
+    await this.server.createList('user', 3, { cohorts: [cohort] });
 
-    // await page.visit({ learnerGroupId: 1 });
-    // assert.strictEqual(page.root.subgroups.list.items.length, 2, 'subgroup count is correct');
-    // assert.strictEqual(
-    //   page.root.subgroups.list.items[0].title,
-    //   'learner group 1',
-    //   'first subgroup title is correct',
-    // );
-    // assert.strictEqual(
-    //   page.root.subgroups.list.items[1].title,
-    //   'learner group 2',
-    //   'second subgroup title is correct',
-    // );
+    await page.visit({ learnerGroupId: 1 });
+    assert.strictEqual(page.root.subgroups.list.items.length, 2, 'subgroup count is correct');
+    assert.strictEqual(
+      page.root.subgroups.list.items[0].title,
+      'learner group 1',
+      'first subgroup title is correct',
+    );
+    assert.strictEqual(
+      page.root.subgroups.list.items[1].title,
+      'learner group 2',
+      'second subgroup title is correct',
+    );
 
-    // await page.root.subgroups.list.items[0].clickTitle();
+    await page.root.subgroups.list.items[0].clickTitle();
 
-    // assert.strictEqual(
-    //   page.root.userManager.usersInCurrentGroup.length,
-    //   0,
-    //   'users in current (first) subgroup count correct',
-    // );
-    // assert.strictEqual(
-    //   page.root.userManager.usersNotInCurrentGroup.length,
-    //   0,
-    //   'users not in current (first) subgroup count correct',
-    // );
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      0,
+      'users in current (first) subgroup count correct',
+    );
+    assert.strictEqual(
+      page.root.userManager.usersNotInCurrentGroup.length,
+      0,
+      'users not in current (first) subgroup count correct',
+    );
 
-    // assert.strictEqual(page.root.cohortUserManager.users.length, 3, 'cohort users count correct');
+    assert.strictEqual(page.root.cohortUserManager.users.length, 3, 'cohort users count correct');
 
-    // await page.root.cohortUserManager.users[0].add();
-    // await page.root.actions.buttons.manageUsers.click();
+    await page.root.cohortUserManager.users[0].add();
+    await page.root.actions.buttons.manageUsers.click();
 
-    // assert.strictEqual(
-    //   page.root.userManager.usersInCurrentGroup.length,
-    //   1,
-    //   'users in current (first) subgroup count correct',
-    // );
-    // assert.strictEqual(
-    //   page.root.userManager.usersNotInCurrentGroup.length,
-    //   0,
-    //   'users not in current (first) subgroup count correct',
-    // );
-    // assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
-    // assert.strictEqual(
-    //   page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
-    //   '1 guy M. Mc1son',
-    //   'name of first user in current (first) subgroup correct',
-    // );
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      1,
+      'users in current (first) subgroup count correct',
+    );
+    assert.strictEqual(
+      page.root.userManager.usersNotInCurrentGroup.length,
+      0,
+      'users not in current (first) subgroup count correct',
+    );
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+      'name of first user in current (first) subgroup correct',
+    );
 
-    // await page.root.header.breadcrumb.crumbs[2].visit();
-    // await page.root.subgroups.list.items[1].clickTitle();
-    // await page.root.actions.buttons.manageUsers.click();
+    await page.root.header.breadcrumb.crumbs[2].visit();
+    await page.root.subgroups.list.items[1].clickTitle();
+    await page.root.actions.buttons.manageUsers.click();
 
-    // assert.strictEqual(
-    //   page.root.userManager.usersInCurrentGroup.length,
-    //   0,
-    //   'users in current (second) subgroup count correct',
-    // );
-    // assert.strictEqual(
-    //   page.root.userManager.usersNotInCurrentGroup.length,
-    //   1,
-    //   'users not in current (second) subgroup count correct',
-    // );
-    // assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      0,
+      'users in current (second) subgroup count correct',
+    );
+    assert.strictEqual(
+      page.root.userManager.usersNotInCurrentGroup.length,
+      1,
+      'users not in current (second) subgroup count correct',
+    );
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
 
-    // await page.root.userManager.usersNotInCurrentGroup[0].add();
+    await page.root.userManager.usersNotInCurrentGroup[0].add();
 
-    // assert.strictEqual(
-    //   page.root.userManager.usersInCurrentGroup.length,
-    //   1,
-    //   'users in current group count correct',
-    // );
-    // assert.strictEqual(
-    //   page.root.userManager.usersNotInCurrentGroup.length,
-    //   0,
-    //   'users not in current group count correct',
-    // );
-    // assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
-    // assert.strictEqual(
-    //   page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
-    //   '1 guy M. Mc1son',
-    //   'name of first user in current group correct',
-    // );
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      1,
+      'users in current group count correct',
+    );
+    assert.strictEqual(
+      page.root.userManager.usersNotInCurrentGroup.length,
+      0,
+      'users not in current group count correct',
+    );
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+      'name of first user in current group correct',
+    );
   });
 
   test('expand and collapse course associations', async function (assert) {

@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
@@ -31,7 +31,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
     this.owner.register('service:currentUser', CurrentUserMock);
   });
 
-  test('renders with data', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
+  skip('renders with data', async function (assert) {
     const user1 = await this.server.create('user');
     const user2 = await this.server.create('user');
     const user3 = await this.server.create('user');
@@ -115,7 +119,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.notOk(component.actions.buttons.close.isVisible);
   });
 
-  test('renders with data, but no members', async function (assert) {
+  skip('renders with data, but no members', async function (assert) {
     const user1 = await this.server.create('user');
     const user2 = await this.server.create('user');
     const user3 = await this.server.create('user');
@@ -170,7 +174,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.actions.title, 'Members (0)', 'member count correct');
   });
 
-  test('renders with no members, but one member in subgroup', async function (assert) {
+  skip('renders with no members, but one member in subgroup', async function (assert) {
     const user1 = await this.server.create('user');
     const user2 = await this.server.create('user');
     const user3 = await this.server.create('user');
@@ -235,7 +239,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.actions.title, 'Members (0)', 'member count correct');
   });
 
-  test('renders with data in read-only mode', async function (assert) {
+  skip('renders with data in read-only mode', async function (assert) {
     const cohort = await this.server.create('cohort', {
       title: 'this cohort',
       programYear: this.programYear,
@@ -278,7 +282,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.actions.title, 'Members (0)');
   });
 
-  test('it renders expanded course associations', async function (assert) {
+  skip('it renders expanded course associations', async function (assert) {
     const user1 = await this.server.create('user');
     const user2 = await this.server.create('user');
     const user3 = await this.server.create('user');
@@ -366,7 +370,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     );
   });
 
-  test('it renders collapsed course associations', async function (assert) {
+  skip('it renders collapsed course associations', async function (assert) {
     const user1 = await this.server.create('user');
     const user2 = await this.server.create('user');
     const user3 = await this.server.create('user');
@@ -436,7 +440,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses (2)');
   });
 
-  test('collapsing course associations fires', async function (assert) {
+  skip('collapsing course associations fires', async function (assert) {
     const user1 = await this.server.create('user');
     const user2 = await this.server.create('user');
     const user3 = await this.server.create('user');
@@ -509,7 +513,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.verifySteps(['setShowCourseAssociations called']);
   });
 
-  test('expanding course associations fires', async function (assert) {
+  skip('expanding course associations fires', async function (assert) {
     const user1 = await this.server.create('user');
     const user2 = await this.server.create('user');
     const user3 = await this.server.create('user');
@@ -582,7 +586,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.verifySteps(['setShowCourseAssociations called']);
   });
 
-  test('Needs accommodation', async function (assert) {
+  skip('Needs accommodation', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', {
       needsAccommodation: true,
       cohort: this.cohort,
@@ -607,7 +611,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.needsAccommodation.toggle.checked, 'true');
   });
 
-  test('Does not need accommodation', async function (assert) {
+  skip('Does not need accommodation', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', {
       needsAccommodation: false,
       cohort: this.cohort,
@@ -632,7 +636,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.needsAccommodation.toggle.checked, 'false');
   });
 
-  test('Read-only: Needs accommodation', async function (assert) {
+  skip('Read-only: Needs accommodation', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', {
       needsAccommodation: true,
       cohort: this.cohort,
@@ -660,7 +664,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     );
   });
 
-  test('Read-only: Does not need accommodation', async function (assert) {
+  skip('Read-only: Does not need accommodation', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', {
       needsAccommodation: false,
       cohort: this.cohort,
@@ -688,7 +692,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     );
   });
 
-  test('Toggle needs accommodations', async function (assert) {
+  skip('Toggle needs accommodations', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', {
       needsAccommodation: false,
       cohort: this.cohort,
@@ -715,7 +719,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.needsAccommodation.toggle.checked, 'true');
   });
 
-  test('Update location', async function (assert) {
+  skip('Update location', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', {
       location: 'test location',
       cohort: this.cohort,
@@ -746,7 +750,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.defaultLocation.text, 'Default Location: new location name');
   });
 
-  test('Default location can be blank', async function (assert) {
+  skip('Default location can be blank', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', {
       location: 'test location',
       cohort: this.cohort,
@@ -777,7 +781,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.defaultLocation.text, 'Default Location: Click to edit');
   });
 
-  test('Update default URL', async function (assert) {
+  skip('Update default URL', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', {
       url: 'https://iliosproject.org/',
       cohort: this.cohort,
@@ -814,7 +818,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     );
   });
 
-  test('URL input validation', async function (assert) {
+  skip('URL input validation', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', {
       cohort: this.cohort,
     });
@@ -867,7 +871,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     );
   });
 
-  test('learnergroup calendar', async function (assert) {
+  skip('learnergroup calendar', async function (assert) {
     const user1 = await this.server.create('user');
     const user2 = await this.server.create('user');
     const course = await this.server.create('course', { school: this.school });
@@ -914,7 +918,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.ok(component.calendar.isVisible);
   });
 
-  test('manage users', async function (assert) {
+  skip('manage users', async function (assert) {
     const user1 = await this.server.create('user');
     const user2 = await this.server.create('user');
     const course = await this.server.create('course', { school: this.school });
@@ -954,7 +958,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.actions.title, 'Manage Group Membership');
   });
 
-  test('bulk assignment', async function (assert) {
+  skip('bulk assignment', async function (assert) {
     const user1 = await this.server.create('user');
     const user2 = await this.server.create('user');
     const course = await this.server.create('course', { school: this.school });
@@ -995,7 +999,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.actions.title, 'Upload Group Assignments');
   });
 
-  test('sub-groups list not visible if learner group has no sub-groups', async function (assert) {
+  skip('sub-groups list not visible if learner group has no sub-groups', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', {
       cohort: this.cohort,
     });
@@ -1023,7 +1027,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.notOk(component.subgroups.list.isVisible);
   });
 
-  test('toggling between instructor manager and instructor view mode', async function (assert) {
+  skip('toggling between instructor manager and instructor view mode', async function (assert) {
     const instructor = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
@@ -1120,7 +1124,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.ok(component.instructorsList.isVisible);
   });
 
-  test('edit and cancel', async function (assert) {
+  skip('edit and cancel', async function (assert) {
     const instructor = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
@@ -1163,7 +1167,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.instructorsList.assignedInstructors.length, 2);
   });
 
-  test('edit and save', async function (assert) {
+  skip('edit and save', async function (assert) {
     const instructor = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
@@ -1222,7 +1226,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.instructorsList.assignedInstructors.length, 1);
   });
 
-  test('filter applies in edit mode', async function (assert) {
+  skip('filter applies in edit mode', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const subgroup = await this.server.create('learner-group', { id: 2, parent: learnerGroup });
     await this.server.create('user', {
@@ -1302,7 +1306,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     );
   });
 
-  test('filter applies in view mode', async function (assert) {
+  skip('filter applies in view mode', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     await this.server.create('user', {
       firstName: 'Jasper',
