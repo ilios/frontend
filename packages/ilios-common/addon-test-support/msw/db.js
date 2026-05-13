@@ -35,8 +35,6 @@ Object.keys(relationships).forEach((name) => {
     return r;
   }, {});
 
-  schemasWithRelationships[name] = schemas[name];
-
   schemasWithRelationships[name] = z.object({
     ...schemas[name].shape, //special .shape zod method makes this work
     ...r,
