@@ -20,7 +20,7 @@ module('Integration | Component | course/loader', function (hooks) {
     class DataLoader extends Service {
       loadCourse(id) {
         assert.step('loadCourse called');
-        assert.strictEqual(id, course.id);
+        assert.strictEqual(Number(id), course.id);
         return promise;
       }
     }
