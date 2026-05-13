@@ -60,10 +60,11 @@ function get(url, callback) {
 
 function post(url, callback) {
   this.server.use(
-    http.get(
+    http.post(
       url,
-      () => {
-        return HttpResponse.json(callback());
+      async (request) => {
+        const rhett = await callback(request);
+        return HttpResponse.json(rhett);
       },
       { once: true },
     ),
