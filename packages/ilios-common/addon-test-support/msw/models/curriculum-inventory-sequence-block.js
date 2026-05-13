@@ -21,21 +21,25 @@ export const relationships = [
     field: 'startingAcademicLevel',
     type: 'oneOf',
     target: 'curriculumInventoryAcademicLevel',
+    role: 'startingSequenceBlocks',
   },
   {
     field: 'endingAcademicLevel',
     type: 'oneOf',
     target: 'curriculumInventoryAcademicLevel',
+    role: 'endingSequenceBlocks',
   },
   {
     field: 'parent',
     type: 'oneOf',
     target: 'curriculumInventorySequenceBlock',
+    role: 'children',
   },
   {
     field: 'children',
     type: 'manyOf',
     target: 'curriculumInventorySequenceBlock',
+    role: 'children',
   },
   {
     field: 'report',
@@ -46,11 +50,13 @@ export const relationships = [
     field: 'sessions',
     type: 'manyOf',
     target: 'session',
+    role: 'sequenceBlockSessions',
   },
   {
     field: 'excludedSessions',
     type: 'manyOf',
     target: 'session',
+    role: 'sequenceBlockExcludedSessions',
   },
   {
     field: 'course',

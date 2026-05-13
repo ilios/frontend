@@ -17,11 +17,13 @@ export const relationships = [
     field: 'parent',
     type: 'oneOf',
     target: 'term',
+    role: 'children',
   },
   {
     field: 'children',
     type: 'manyOf',
     target: 'term',
+    role: 'children',
   },
   {
     field: 'programYears',

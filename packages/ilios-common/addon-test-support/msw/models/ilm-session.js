@@ -26,10 +26,12 @@ export const relationships = [
     field: 'instructors',
     type: 'manyOf',
     target: 'user',
+    role: 'ilmInstructors',
   },
   {
     field: 'learners',
     type: 'manyOf',
     target: 'user',
+    role: 'ilmLearners',
   },
 ];

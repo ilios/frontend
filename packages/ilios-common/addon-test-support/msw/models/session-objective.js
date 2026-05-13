@@ -27,11 +27,13 @@ export const relationships = [
     field: 'ancestor',
     type: 'oneOf',
     target: 'sessionObjective',
+    role: 'descendants',
   },
   {
     field: 'descendants',
     type: 'manyOf',
     target: 'sessionObjective',
+    role: 'descendants',
   },
   {
     field: 'courseObjectives',

@@ -63,11 +63,13 @@ export const relationships = [
     field: 'learnerGroups',
     type: 'manyOf',
     target: 'learnerGroup',
+    role: 'learnerGroupUsers',
   },
   {
     field: 'instructedLearnerGroups',
     type: 'manyOf',
     target: 'learnerGroup',
+    role: 'learnerGroupInstructors',
   },
   {
     field: 'instructorGroups',
@@ -78,11 +80,13 @@ export const relationships = [
     field: 'instructorIlmSessions',
     type: 'manyOf',
     target: 'ilmSession',
+    role: 'ilmInstructors',
   },
   {
     field: 'learnerIlmSessions',
     type: 'manyOf',
     target: 'ilmSession',
+    role: 'ilmInstructors',
   },
   {
     field: 'offerings',
@@ -133,11 +137,13 @@ export const relationships = [
     field: 'cohorts',
     type: 'manyOf',
     target: 'cohort',
+    role: 'userCohorts',
   },
   {
     field: 'primaryCohort',
     type: 'oneOf',
     target: 'cohort',
+    role: 'primaryCohort',
   },
   {
     field: 'pendingUserUpdates',

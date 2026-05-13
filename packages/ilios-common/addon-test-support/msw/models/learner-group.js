@@ -18,11 +18,13 @@ export const relationships = [
     field: 'parent',
     type: 'oneOf',
     target: 'learnerGroup',
+    role: 'children',
   },
   {
     field: 'children',
     type: 'manyOf',
     target: 'learnerGroup',
+    role: 'children',
   },
   {
     field: 'ilmSessions',
@@ -43,20 +45,24 @@ export const relationships = [
     field: 'users',
     type: 'manyOf',
     target: 'user',
+    role: 'learnerGroupUsers',
   },
   {
     field: 'instructors',
     type: 'manyOf',
     target: 'user',
+    role: 'learnerGroupInstructors',
   },
   {
     field: 'ancestor',
     type: 'oneOf',
     target: 'learnerGroup',
+    role: 'descendants',
   },
   {
     field: 'descendants',
     type: 'manyOf',
     target: 'learnerGroup',
+    role: 'descendants',
   },
 ];

@@ -17,11 +17,13 @@ export const relationships = [
     field: 'ancestor',
     type: 'oneOf',
     target: 'courseObjective',
+    role: 'descendants',
   },
   {
     field: 'descendants',
     type: 'manyOf',
     target: 'courseObjective',
+    role: 'descendants',
   },
   {
     field: 'meshDescriptors',

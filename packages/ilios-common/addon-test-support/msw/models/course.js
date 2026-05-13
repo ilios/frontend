@@ -72,11 +72,13 @@ export const relationships = [
     field: 'ancestor',
     type: 'oneOf',
     target: 'course',
+    role: 'descendants',
   },
   {
     field: 'descendants',
     type: 'manyOf',
     target: 'course',
+    role: 'descendants',
   },
   {
     field: 'terms',
