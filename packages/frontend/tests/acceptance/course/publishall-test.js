@@ -4,6 +4,7 @@ import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-publish-all';
+import coursePage from 'ilios-common/page-objects/sessions';
 
 module('Acceptance | Course - Publish All Sessions', function (hooks) {
   setupApplicationTest(hooks);
@@ -118,7 +119,10 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.ok(page.publishAll.isVisible);
     await page.publishAll.review.save();
     assert.strictEqual(currentURL(), '/courses/1');
-    assert.ok(session.published);
+    assert.strictEqual(
+      coursePage.courseSessions.sessionsGrid.sessions[0].row.publicationStatus.icon.title,
+      'Published',
+    );
   });
 
   test('Updating course objectives updates the unlinked objective warning', async function (assert) {
