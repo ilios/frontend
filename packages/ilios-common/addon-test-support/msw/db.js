@@ -1,6 +1,7 @@
 import { Collection } from '@msw/data';
 import { schemas, relationships } from './models.js';
 import { z } from 'zod';
+import { camelize } from '@ember/string';
 
 // Almost all of our models has numeric IDs, except MeSH related data points.
 // We'll need to distinguish between those and the rest when creating IDs for our mock models.
@@ -98,7 +99,87 @@ function validateRecordData(modelName, obj) {
     throw new Error(message);
   }
 }
+/**
+ * @param {string} modelName
+ * @param {array} records
+ * @param {object} params
+ * @returns {Promise<[]>}
+ */
+async function filterByParams(modelName, records, params) {
+  params = new Map(Object.entries(params));
+  if (!params.size) {
+    return records;
+  }
+  const recordFilterResults = await Promise.all(
+    records.map(async (r) => {
+      const filterResults = await Array.fromAsync(params, ([param, value]) => {
+        return filterByParam(modelName, r, param, value);
+      });
+      return {
+        r,
+        matchesAllFilters: filterResults.every((v) => v === true),
+      };
+    }),
+  );
 
+  return recordFilterResults
+    .filter(({ matchesAllFilters }) => matchesAllFilters === true)
+    .map(({ r }) => r);
+}
+
+/**
+ * @param {string} modelName
+ * @param {object} record
+ * @param {string} param
+ * @param {*} value
+ * @returns {boolean}
+ */
+function filterByParam(modelName, record, param, value) {
+  // first, let's check on the given filter value.
+  // check if the given filter value it's blank or an empty array.
+  // since there's nothing to filter on, we'll treat these as a success.
+  if ('' === value) {
+    return true;
+  }
+  if (Array.isArray(value) && !value.length) {
+    return true;
+  }
+
+  // then, let's get the name and value of the record's field that we're going to filter on.
+  const fieldName = camelize(param);
+  if (!Object.hasOwn(record, fieldName)) {
+    return false;
+  }
+  const fieldValue = record[fieldName];
+
+  // filter non-relationship fields
+  if (!isRelatedRecord(modelName, param)) {
+    if (Array.isArray(value)) {
+      return value.includes(String(fieldValue));
+    }
+    return String(fieldValue) === String(value);
+  }
+
+  // filter relationship field by comparing record IDs.
+  const modelHasStringId = modelsWithStringIds.has(modelName);
+  if (Array.isArray(fieldValue)) {
+    const fieldValueIds = fieldValue.map(({ id }) => id);
+    if (Array.isArray(value)) {
+      return value.some((v) => {
+        v = modelHasStringId ? v : Number(v);
+        return fieldValueIds.includes(v);
+      });
+    } else {
+      value = modelHasStringId ? value : Number(value);
+      return fieldValueIds.includes(value);
+    }
+  }
+  const fieldValueId = fieldValue.id;
+  if (Array.isArray(value)) {
+    return value.includes(fieldValueId);
+  }
+  return value === fieldValueId;
+}
 // Export all collections as db object for backwards compatibility
 export {
   collections as db,
@@ -106,4 +187,5 @@ export {
   isRelatedRecord,
   validateRecordData,
   modelsWithStringIds,
+  filterByParams,
 };

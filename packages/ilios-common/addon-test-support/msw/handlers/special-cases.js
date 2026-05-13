@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { DateTime } from 'luxon';
-import { db } from '../db.js';
+import { db, filterByParams } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
 
@@ -115,8 +115,11 @@ const sessionsHandler = http.get('/api/sessions', async ({ request }) => {
       return school && schoolIds.includes(school.id);
     });
   }
+  const { filterParams, limit, offset, include } = parseQueryParams(url.searchParams.toString());
+  // unset schools filter
+  delete filterParams['schools'];
 
-  const { limit, offset } = parseQueryParams(params.toString());
+  sessions = await filterByParams('session', sessions, filterParams);
   const total = sessions.length;
   const paginatedSessions = sessions.slice(offset, offset + limit);
 
@@ -124,7 +127,7 @@ const sessionsHandler = http.get('/api/sessions', async ({ request }) => {
     totalCount: total,
   };
 
-  return HttpResponse.json(formatJsonApi(paginatedSessions, 'session', { meta }));
+  return HttpResponse.json(formatJsonApi(paginatedSessions, 'session', { meta, include }));
 });
 
 // Pending user updates with school filter
