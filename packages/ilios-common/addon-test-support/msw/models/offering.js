@@ -7,7 +7,7 @@ export const schema = z.looseObject({
   url: z.string().nullish(),
   startDate: z.date(),
   endDate: z.date(),
-  updatedAt: z.string().nullish(),
+  updatedAt: z.date(),
 });
 
 export const relationships = [

@@ -9,13 +9,13 @@ module('Acceptance | Users', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = await this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({
-      school: school,
+      school: this.school,
       campusId: '123',
-      administeredSchools: [school],
+      administeredSchools: [this.school],
     });
-    await this.server.createList('user', 90, { schoolId: 1, campusId: '555' });
+    await this.server.createList('user', 90, { school: this.school, campusId: '555' });
     await this.server.createList('authentication', 90);
   });
 
@@ -45,7 +45,11 @@ module('Acceptance | Users', function (hooks) {
   });
 
   test('can search for a user and transition to user route', async function (assert) {
-    await this.server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
+    await this.server.createList('user', 40, {
+      firstName: 'Test',
+      lastName: 'Name',
+      school: this.school,
+    });
     await page.visit();
     await takeScreenshot(assert, 'default');
     await page.root.search.set('Test Name');

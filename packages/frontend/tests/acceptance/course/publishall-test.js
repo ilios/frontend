@@ -29,7 +29,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       terms: [term],
     });
     await this.server.create('session-objective', { session: session1 });
-    await this.server.create('offering', { sessionId: 1 });
+    await this.server.create('offering', { session: session1 });
     const session2 = await this.server.create('session', {
       course,
       published: true,

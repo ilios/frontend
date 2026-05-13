@@ -37,7 +37,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     });
     this.course = await this.server.create('course', {
       school: this.school,
-      directorIds: [this.user.id],
+      directors: [this.user],
     });
     this.session1 = await this.server.create('session', {
       course: this.course,

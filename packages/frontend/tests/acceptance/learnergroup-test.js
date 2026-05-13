@@ -283,9 +283,9 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('Cohort members not in learner group appear after navigating to learner group #3428', async function (assert) {
-    await this.server.create('program-year', { program: this.program });
+    const programYear = await this.server.create('program-year', { program: this.program });
     const cohort = await this.server.create('cohort', {
-      programYearId: 1,
+      programYear,
     });
     const learnerGroup = await this.server.create('learner-group', {
       cohort,
@@ -324,7 +324,7 @@ module('Acceptance | Learner Group', function (hooks) {
       startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
       learnerGroups: [learnerGroup],
-      updatedAt: Date.now(),
+      updatedAt: DateTime.now().toJSDate(),
     });
     await this.server.create('offering');
     await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
@@ -383,14 +383,14 @@ module('Acceptance | Learner Group', function (hooks) {
       startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
       learnerGroups: [learnerGroup],
-      updatedAt: Date.now(),
+      updatedAt: DateTime.now().toJSDate(),
     });
     await this.server.create('offering', {
       session,
       startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
       learnerGroups: [subgroup],
-      updatedAt: Date.now(),
+      updatedAt: DateTime.now().toJSDate(),
     });
     await this.server.create('offering');
     await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
@@ -418,10 +418,8 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('Learners with missing parent group affiliation still appear in subgroup manager #3476', async function (assert) {
-    await this.server.create('program-year', { program: this.program });
-    const cohort = await this.server.create('cohort', {
-      programYearId: 1,
-    });
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
     const learnerGroup = await this.server.create('learner-group', {
       cohort,
     });

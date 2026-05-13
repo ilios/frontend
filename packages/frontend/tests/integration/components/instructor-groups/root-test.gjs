@@ -13,13 +13,15 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    for (let i = 0; i < 4; i++) {
-      const school = await this.server.create('school');
-      await this.server.createList('instructor-group', 3, { school });
-    }
+    const schools = await this.server.createList('school', 4);
+    await this.server.createList('instructor-group', 3, { school: schools[0] });
+    await this.server.createList('instructor-group', 3, { school: schools[1] });
+    await this.server.createList('instructor-group', 3, { school: schools[2] });
+    await this.server.createList('instructor-group', 3, { school: schools[3] });
+
     this.schools = await this.owner.lookup('service:store').findAll('school');
 
-    const user = await this.server.create('user', { schoolId: 2 });
+    const user = await this.server.create('user', { school: schools[1] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
