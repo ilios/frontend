@@ -88,11 +88,13 @@ export const relationships = [
     field: 'offerings',
     type: 'manyOf',
     target: 'offering',
+    role: 'offeringLearner',
   },
   {
     field: 'instructedOfferings',
     type: 'manyOf',
     target: 'offering',
+    role: 'offeringInstructor',
   },
   {
     field: 'programYears',

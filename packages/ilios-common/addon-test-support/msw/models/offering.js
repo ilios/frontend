@@ -30,10 +30,12 @@ export const relationships = [
     field: 'learners',
     type: 'manyOf',
     target: 'user',
+    role: 'offeringLearner',
   },
   {
     field: 'instructors',
     type: 'manyOf',
     target: 'user',
+    role: 'offeringInstructor',
   },
 ];
