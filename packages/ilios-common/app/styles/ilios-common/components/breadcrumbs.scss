@@ -9,6 +9,8 @@
   text-align: left;
 
   a {
+    display: block;
+
     &:focus,
     &:hover {
       color: var(--white);
