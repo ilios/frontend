@@ -23,28 +23,28 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('list groups', async function (assert) {
-      await this.server.createList('user', 5);
-      await this.server.createList('course', 2, { school: this.school });
-      await this.server.create('session', {
-        courseId: 1,
+      const users = await this.server.createList('user', 5);
+      const courses = await this.server.createList('course', 2, { school: this.school });
+      const session1 = await this.server.create('session', {
+        course: courses[0],
       });
-      await this.server.create('session', {
-        courseId: 2,
+      const session2 = await this.server.create('session', {
+        course: courses[1],
       });
       const firstInstructorGroup = await this.server.create('instructor-group', {
         school: this.school,
-        userIds: [2, 3, 4, 5, 6],
+        users,
       });
       const secondInstructorGroup = await this.server.create('instructor-group', {
         school: this.school,
       });
       await this.server.create('offering', {
-        instructorGroupIds: [1],
-        sessionId: 1,
+        instructorGroups: [firstInstructorGroup],
+        session: session1,
       });
       await this.server.create('offering', {
-        instructorGroupIds: [1],
-        sessionId: 2,
+        instructorGroups: [firstInstructorGroup],
+        session: session2,
       });
 
       await page.visit();

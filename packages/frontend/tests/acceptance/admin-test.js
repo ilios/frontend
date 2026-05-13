@@ -56,7 +56,7 @@ module('Acceptance | Admin', function (hooks) {
         },
       };
     });
-    await this.server.createList('user', 2, { schoolId: 1 });
+    await this.server.createList('user', 2, { school: this.school });
     await this.server.createList('authentication', 2);
 
     const userSearch = '.user-search input';
@@ -87,7 +87,7 @@ module('Acceptance | Admin', function (hooks) {
         },
       };
     });
-    await this.server.createList('user', 2, { schoolId: 1 });
+    await this.server.createList('user', 2, { school: this.school });
     await this.server.createList('authentication', 2);
 
     const userSearch = '.user-search input';
@@ -129,7 +129,7 @@ module('Acceptance | Admin', function (hooks) {
 
   test('search results exceed threshold', async function (assert) {
     const firstName = 'Janusz';
-    await this.server.createList('user', 100, { schoolId: 1, firstName });
+    await this.server.createList('user', 100, { school: this.school, firstName });
 
     const userSearch = '.user-search input';
     const results = '.user-search .results li';

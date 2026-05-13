@@ -10,24 +10,29 @@ module('Acceptance | User', function (hooks) {
   hooks.beforeEach(async function () {
     freezeDateAt(new Date('10/31/2002'));
     this.school = await this.server.create('school');
-    const userObject = {
+    const program = await this.server.create('program', { school: this.school });
+    const programYears = await this.server.createList('programYear', 3, { program });
+    this.cohort1 = await this.server.create('cohort', {
+      title: 'Medicine',
+      programYear: programYears[0],
+    });
+    this.cohort2 = await this.server.create('cohort', { programYear: programYears[1] });
+    this.cohort3 = await this.server.create('cohort', { programYear: programYears[2] });
+    const learnerGroups = await this.server.createList('learner-group', 5, {
+      title: 'Group 1',
+      cohort: this.cohort1,
+    });
+    await setupAuthentication({
       id: 100,
       campusId: '123',
       email: 'user@example.edu',
       phone: '111-111-1111',
-      primaryCohortId: 1,
-      cohortIds: [1, 2, 3],
-      learnerGroupIds: [3, 5],
+      primaryCohort: this.cohort1,
+      cohorts: [this.cohort1, this.cohort2, this.cohort3],
+      learnerGroups: [learnerGroups[2], learnerGroups[4]],
       administeredSchools: [this.school],
       school: this.school,
-    };
-    await this.server.create('program', { school: this.school });
-    await this.server.createList('programYear', 3, { programId: 1 });
-    this.cohort1 = await this.server.create('cohort', { title: 'Medicine', programYearId: 1 });
-    this.cohort2 = await this.server.create('cohort', { programYearId: 2 });
-    this.cohort3 = await this.server.create('cohort', { programYearId: 3 });
-    await this.server.createList('learner-group', 5, { title: 'Group 1', cohortId: 1 });
-    await setupAuthentication(userObject);
+    });
   });
 
   hooks.afterEach(() => {

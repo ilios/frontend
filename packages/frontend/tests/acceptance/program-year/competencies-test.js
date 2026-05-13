@@ -9,29 +9,29 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
     this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
-    await this.server.create('program', {
+    const program = await this.server.create('program', {
       school,
     });
-    await this.server.create('program-year', {
-      programId: 1,
+    const programYear = await this.server.create('program-year', {
+      program,
     });
     await this.server.create('cohort', {
-      programYearId: 1,
+      programYear,
     });
-    await this.server.create('competency', {
+    const domain = await this.server.create('competency', {
       school,
     });
     await this.server.createList('competency', 2, {
-      parentId: 1,
+      parent: domain,
       school,
-      programYearIds: [1],
+      programYears: [programYear],
     });
-    await this.server.create('competency', {
+    const parent = await this.server.create('competency', {
       school,
     });
     await this.server.createList('competency', 2, {
       school,
-      parentId: 4,
+      parent,
     });
   });
 

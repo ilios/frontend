@@ -29,10 +29,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const cohort2 = await this.server.create('cohort', {
       programYear: programYear2,
     });
-    const sessionType1 = await this.server.create('session-type', {
+    this.sessionType1 = await this.server.create('session-type', {
       school: this.school,
     });
-    const sessionType2 = await this.server.create('session-type', {
+    this.sessionType2 = await this.server.create('session-type', {
       school: this.school,
     });
     await this.server.create('session-type', {
@@ -52,19 +52,19 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     const session1 = await this.server.create('session', {
       course: course1,
-      sessionType: sessionType1,
+      sessionType: this.sessionType1,
     });
     const session2 = await this.server.create('session', {
       course: course1,
-      sessionType: sessionType2,
+      sessionType: this.sessionType2,
     });
     const session3 = await this.server.create('session', {
       course: course2,
-      sessionType: sessionType2,
+      sessionType: this.sessionType2,
     });
     const session4 = await this.server.create('session', {
       course: course2,
-      sessionType: sessionType2,
+      sessionType: this.sessionType2,
     });
     await this.server.create('academic-year', {
       id: 2015,
@@ -738,13 +738,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
-      sessionTypeId: 1,
+      sessionType: this.sessionType1,
     });
     await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
-      sessionTypeId: 2,
+      sessionType: this.sessionType2,
     });
     await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
     await page.calendar.controls.showFilters.toggle.secondLabel.click();
@@ -766,13 +766,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
-      sessionTypeId: 1,
+      sessionType: this.sessionType1,
     });
     await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
-      sessionTypeId: 2,
+      sessionType: this.sessionType2,
     });
     await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
     await page.calendar.controls.showFilters.toggle.secondLabel.click();
@@ -984,21 +984,21 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 1,
-      sessionTypeId: 1,
+      sessionType: this.sessionType1,
     });
     await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 2,
-      sessionTypeId: 2,
+      sessionType: this.sessionType2,
     });
     await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 1,
-      sessionTypeId: 2,
+      sessionType: this.sessionType2,
     });
     await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
     await page.calendar.controls.showFilters.toggle.secondLabel.click();
