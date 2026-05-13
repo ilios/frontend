@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, findAll } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -13,7 +13,11 @@ module('Integration | Component | detail terms list item', function (hooks) {
     this.vocabulary = await this.server.create('vocabulary');
   });
 
-  test('top-level', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
+  skip('top-level', async function (assert) {
     const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',
@@ -26,7 +30,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     assert.notStrictEqual(this.element.textContent.trim().indexOf('Foo'), -1);
   });
 
-  test('nested', async function (assert) {
+  skip('nested', async function (assert) {
     const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Lorem',
@@ -51,7 +55,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     assert.notStrictEqual(this.element.textContent.trim().indexOf('Foo'), -1);
   });
 
-  test('remove', async function (assert) {
+  skip('remove', async function (assert) {
     const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',
@@ -72,7 +76,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     assert.verifySteps(['remove called']);
   });
 
-  test('inactive', async function (assert) {
+  skip('inactive', async function (assert) {
     const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',
@@ -88,7 +92,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     assert.dom('.fa-xmark').exists({ count: 1 });
   });
 
-  test('read-only mode', async function (assert) {
+  skip('read-only mode', async function (assert) {
     const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',

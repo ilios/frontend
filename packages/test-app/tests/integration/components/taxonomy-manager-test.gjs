@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -75,7 +75,11 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     this.termModel3 = await this.owner.lookup('service:store').findRecord('term', term3.id);
   });
 
-  test('it renders', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
+  skip('it renders', async function (assert) {
     this.set('assignableVocabularies', [this.vocabModel1, this.vocabModel2, this.vocabModel3]);
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
 
@@ -116,7 +120,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     assert.strictEqual(component.availableTerms[1].children[1].name, 'Rainjacket');
   });
 
-  test('select/deselect term', async function (assert) {
+  skip('select/deselect term', async function (assert) {
     this.set('assignableVocabularies', [this.vocabModel1]);
     this.set('selectedTerms', [this.termModel1]);
     this.set('add', (term) => {
@@ -169,7 +173,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     assert.verifySteps(['add called', 'remove called', 'add called', 'remove called']);
   });
 
-  test('switch vocabularies', async function (assert) {
+  skip('switch vocabularies', async function (assert) {
     this.vocabModel2.set('active', true);
     this.set('assignableVocabularies', [this.vocabModel1, this.vocabModel2]);
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
@@ -201,7 +205,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     assert.strictEqual(component.availableTerms[0].name, 'Gamma');
   });
 
-  test('filter terms', async function (assert) {
+  skip('filter terms', async function (assert) {
     this.set('assignableVocabularies', [this.vocabModel1, this.vocabModel2]);
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
 
@@ -235,7 +239,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     assert.strictEqual(component.availableTerms[1].children[0].name, 'Palo Alto');
   });
 
-  test('given vocabulary is selected', async function (assert) {
+  skip('given vocabulary is selected', async function (assert) {
     this.vocabModel2.set('active', true);
 
     this.set('assignableVocabularies', [this.vocabModel1, this.vocabModel2, this.vocabModel3]);
@@ -261,7 +265,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     assert.strictEqual(component.availableTerms[0].name, 'Gamma');
   });
 
-  test('vocabulary without active top-level terms is not assignable', async function (assert) {
+  skip('vocabulary without active top-level terms is not assignable', async function (assert) {
     // deactivate all top-level terms in vocabulary 1
     this.termModel1.set('active', false);
     this.termModel2.set('active', false);

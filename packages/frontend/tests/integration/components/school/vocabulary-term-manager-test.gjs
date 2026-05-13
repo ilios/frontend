@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -10,7 +10,11 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  test('it renders', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
+  skip('it renders', async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const grandParent = await this.server.create('term', {
       title: 'grandparent',
@@ -81,7 +85,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.notOk(component.subTerms.list[1].hasChildren);
   });
 
-  test('activate inactive term', async function (assert) {
+  skip('activate inactive term', async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const term = await this.server.create('term', {
       vocabulary,
@@ -113,7 +117,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.ok(this.server.db.terms[0].active);
   });
 
-  test('inactivate active term', async function (assert) {
+  skip('inactivate active term', async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const term = await this.server.create('term', {
       vocabulary,
@@ -145,7 +149,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.notOk(this.server.db.terms[0].active);
   });
 
-  test('change term title', async function (assert) {
+  skip('change term title', async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const term = await this.server.create('term', {
       vocabulary,
@@ -178,7 +182,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.strictEqual(this.server.db.terms[0].title, 'new title');
   });
 
-  test('cancel term title changes', async function (assert) {
+  skip('cancel term title changes', async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const term = await this.server.create('term', {
       vocabulary,
@@ -211,7 +215,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.strictEqual(component.title, `Title: ${term.title}`);
   });
 
-  test('validation fails if term title is blank', async function (assert) {
+  skip('validation fails if term title is blank', async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const term = await this.server.create('term', {
       vocabulary,
@@ -247,7 +251,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.strictEqual(this.server.db.terms[0].title, 'term 0');
   });
 
-  test('validation fails if term title is too long', async function (assert) {
+  skip('validation fails if term title is too long', async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const term = await this.server.create('term', {
       vocabulary,
@@ -283,7 +287,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.strictEqual(this.server.db.terms[0].title, 'term 0');
   });
 
-  test('add term', async function (assert) {
+  skip('add term', async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const term = await this.server.create('term', {
       vocabulary,
@@ -320,7 +324,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.strictEqual(this.server.db.terms[1].vocabularyId, vocabulary.id);
   });
 
-  test("can't add term with empty title", async function (assert) {
+  skip("can't add term with empty title", async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const term = await this.server.create('term', {
       vocabulary,
@@ -357,7 +361,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.strictEqual(component.subTerms.newTermForm.errorMessage, 'Term can not be blank');
   });
 
-  test("can't rename nested term with duplicate title", async function (assert) {
+  skip("can't rename nested term with duplicate title", async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const topLevelTerm = await this.server.create('term', {
       vocabulary,
@@ -404,7 +408,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.strictEqual(component.error, 'Title is a duplicate');
   });
 
-  test("can't rename top-level term with duplicate title", async function (assert) {
+  skip("can't rename top-level term with duplicate title", async function (assert) {
     const vocabulary = await this.server.create('vocabulary');
     const term = await this.server.create('term', {
       vocabulary,

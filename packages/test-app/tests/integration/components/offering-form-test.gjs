@@ -52,6 +52,10 @@ module('Integration | Component | offering form', function (hooks) {
     unfreezeDate();
   });
 
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
   test('room and url input do not show by default', async function (assert) {
     await render(<template><OfferingForm @close={{(noop)}} /></template>);
     assert.notOk(component.location.isPresent);
@@ -825,7 +829,7 @@ module('Integration | Component | offering form', function (hooks) {
     assert.verifySteps(['save called']);
   });
 
-  test('remove learner group from picker', async function (assert) {
+  skip('remove learner group from picker', async function (assert) {
     const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
@@ -915,7 +919,7 @@ module('Integration | Component | offering form', function (hooks) {
     );
   });
 
-  test('remove learner group from list', async function (assert) {
+  skip('remove learner group from list', async function (assert) {
     const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
@@ -1005,7 +1009,7 @@ module('Integration | Component | offering form', function (hooks) {
     );
   });
 
-  test('add available learner group', async function (assert) {
+  skip('add available learner group', async function (assert) {
     const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
@@ -1052,7 +1056,7 @@ module('Integration | Component | offering form', function (hooks) {
     );
   });
 
-  test('adding a learner group with children adds them as well', async function (assert) {
+  skip('adding a learner group with children adds them as well', async function (assert) {
     const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
@@ -1107,7 +1111,7 @@ module('Integration | Component | offering form', function (hooks) {
     );
   });
 
-  test('removing a learner group with children from the picker removes them as well', async function (assert) {
+  skip('removing a learner group with children from the picker removes them as well', async function (assert) {
     const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
@@ -1170,7 +1174,7 @@ module('Integration | Component | offering form', function (hooks) {
     );
   });
 
-  test('removing a learner group with children from the list removes them as well', async function (assert) {
+  skip('removing a learner group with children from the list removes them as well', async function (assert) {
     const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
@@ -1233,7 +1237,7 @@ module('Integration | Component | offering form', function (hooks) {
     );
   });
 
-  test('selectively adding a learner group with children does not add the children', async function (assert) {
+  skip('selectively adding a learner group with children does not add the children', async function (assert) {
     const offering = await this.server.create('offering');
     const offeringModel = await this.owner
       .lookup('service:store')
@@ -1292,7 +1296,7 @@ module('Integration | Component | offering form', function (hooks) {
     );
   });
 
-  test('selectively removing a learner group with children from the picker does not remove the children', async function (assert) {
+  skip('selectively removing a learner group with children from the picker does not remove the children', async function (assert) {
     const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
@@ -1357,7 +1361,7 @@ module('Integration | Component | offering form', function (hooks) {
     );
   });
 
-  test('selectively removing a learner group with children from the list does not remove the children', async function (assert) {
+  skip('selectively removing a learner group with children from the list does not remove the children', async function (assert) {
     const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,

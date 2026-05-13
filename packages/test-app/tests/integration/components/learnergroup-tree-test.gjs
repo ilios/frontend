@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { click, render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -70,7 +70,11 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
       .findRecord('learner-group', thirdLevelLearnerGroup3.id);
   });
 
-  test('the group tree renders', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
+  skip('the group tree renders', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', [
       this.thirdLevelLearnerGroup2,
@@ -114,7 +118,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.notOk(component.subgroups[3].needsAccommodation);
   });
 
-  test('branches and leaves are styled accordingly', async function (assert) {
+  skip('branches and leaves are styled accordingly', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     await render(
@@ -139,7 +143,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.ok(component.subgroups[3].isStyledAsLeaf);
   });
 
-  test('filter by learner group title', async function (assert) {
+  skip('filter by learner group title', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     this.set('filter', 'Second 2');
@@ -163,7 +167,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.ok(component.subgroups[3].isHidden);
   });
 
-  test('regular expression escaping works during filtering', async function (assert) {
+  skip('regular expression escaping works during filtering', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     this.set('filter', '\\11');
@@ -187,7 +191,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.ok(component.subgroups[3].isHidden);
   });
 
-  test('add group by clicking on checkbox', async function (assert) {
+  skip('add group by clicking on checkbox', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     this.set('add', (learnerGroup, cascade) => {
@@ -208,7 +212,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['add called']);
   });
 
-  test('add group by clicking on checkbox label', async function (assert) {
+  skip('add group by clicking on checkbox label', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     this.set('add', (learnerGroup, cascade) => {
@@ -229,7 +233,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['add called']);
   });
 
-  test('shift-click on checkbox to add group without cascading selection', async function (assert) {
+  skip('shift-click on checkbox to add group without cascading selection', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     this.set('add', (learnerGroup, cascade) => {
@@ -252,7 +256,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['add called']);
   });
 
-  test('ctrl-click on checkbox to add group without cascading selection', async function (assert) {
+  skip('ctrl-click on checkbox to add group without cascading selection', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     this.set('add', (learnerGroup, cascade) => {
@@ -275,7 +279,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['add called']);
   });
 
-  test('shift-click on label to add group without cascading selection', async function (assert) {
+  skip('shift-click on label to add group without cascading selection', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     this.set('add', (learnerGroup, cascade) => {
@@ -298,7 +302,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['add called']);
   });
 
-  test('ctrl-click on label to add group without cascading selection', async function (assert) {
+  skip('ctrl-click on label to add group without cascading selection', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     this.set('add', (learnerGroup, cascade) => {
@@ -321,7 +325,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['add called']);
   });
 
-  test('remove group by clicking on checkbox', async function (assert) {
+  skip('remove group by clicking on checkbox', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', [this.thirdLevelLearnerGroup2]);
     this.set('remove', (learnerGroup, cascade) => {
@@ -342,7 +346,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['remove called']);
   });
 
-  test('remove group by clicking on checkbox label', async function (assert) {
+  skip('remove group by clicking on checkbox label', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', [this.thirdLevelLearnerGroup2]);
     this.set('remove', (learnerGroup, cascade) => {
@@ -363,7 +367,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['remove called']);
   });
 
-  test('shift-click on checkbox to remove group without cascading selection', async function (assert) {
+  skip('shift-click on checkbox to remove group without cascading selection', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', [this.topLevelLearnerGroup]);
     this.set('remove', (learnerGroup, cascade) => {
@@ -386,7 +390,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['remove called']);
   });
 
-  test('ctrl-click on checkbox to remove group without cascading selection', async function (assert) {
+  skip('ctrl-click on checkbox to remove group without cascading selection', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', [this.topLevelLearnerGroup]);
     this.set('remove', (learnerGroup, cascade) => {
@@ -409,7 +413,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['remove called']);
   });
 
-  test('shift-click on label to remove group without cascading selection', async function (assert) {
+  skip('shift-click on label to remove group without cascading selection', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', [this.topLevelLearnerGroup]);
     this.set('remove', (learnerGroup, cascade) => {
@@ -432,7 +436,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.verifySteps(['remove called']);
   });
 
-  test('ctrl-click on label to remove group without cascading selection', async function (assert) {
+  skip('ctrl-click on label to remove group without cascading selection', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', [this.topLevelLearnerGroup]);
     this.set('remove', (learnerGroup, cascade) => {
