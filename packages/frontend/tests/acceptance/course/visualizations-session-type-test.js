@@ -24,15 +24,20 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
     const term3 = await this.server.create('term', {
       vocabulary: vocabulary2,
     });
+    const course = await this.server.create('course', {
+      year: 2022,
+    });
     const session1 = await this.server.create('session', {
       sessionType,
+      course,
       terms: [term1],
     });
     const session2 = await this.server.create('session', {
       sessionType,
+      course,
       terms: [term2, term3],
     });
-    const session3 = await this.server.create('session', sessionType);
+    const session3 = await this.server.create('session', { sessionType, course });
     await this.server.create('ilm-session', {
       session: session3,
       hours: 2,
@@ -46,10 +51,6 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
       startDate: DateTime.fromISO('2022-07-20T09:00:00').toJSDate(),
       endDate: DateTime.fromISO('2022-07-20T09:30:00').toJSDate(),
       session: session2,
-    });
-    const course = await this.server.create('course', {
-      sessions: [session1, session2, session3],
-      year: 2022,
     });
     await page.visit({ courseId: course.id, sessionTypeId: sessionType.id });
     assert.strictEqual(currentURL(), '/data/courses/1/session-types/1');
