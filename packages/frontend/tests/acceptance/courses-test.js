@@ -640,7 +640,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('non-privileged users cannot lock and unlock course but can see the icon', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school }, true);
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
@@ -823,18 +823,19 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('course actions have proper labels and titles during deletion confirmation and non-confirmation', async function (assert) {
-    const year = DateTime.now().year.toString();
-    this.server.create('academic-year', { id: year });
-    this.server.create('course', {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    const year = DateTime.now().year;
+    await this.server.create('academic-year', { id: year });
+    await this.server.create('course', {
       year,
       school: this.school,
       published: false,
     });
-    const courseParent = this.server.create('course', {
+    const courseParent = await this.server.create('course', {
       year,
       school: this.school,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       year,
       school: this.school,
       ancestor: courseParent,
