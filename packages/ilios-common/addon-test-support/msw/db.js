@@ -161,20 +161,17 @@ function filterByParam(modelName, record, param, value) {
   }
 
   // filter relationship field by comparing record IDs.
-  const modelHasStringId = modelsWithStringIds.has(modelName);
   if (Array.isArray(fieldValue)) {
-    const fieldValueIds = fieldValue.map(({ id }) => id);
+    const fieldValueIds = fieldValue.map(({ id }) => String(id));
     if (Array.isArray(value)) {
       return value.some((v) => {
-        v = modelHasStringId ? v : Number(v);
         return fieldValueIds.includes(v);
       });
     } else {
-      value = modelHasStringId ? value : Number(value);
       return fieldValueIds.includes(value);
     }
   }
-  const fieldValueId = fieldValue.id;
+  const fieldValueId = String(fieldValue.id);
   if (Array.isArray(value)) {
     return value.includes(fieldValueId);
   }
