@@ -65,11 +65,13 @@ export const relationships = [
     field: 'postrequisite',
     type: 'oneOf',
     target: 'session',
+    role: 'prerequisites',
   },
   {
     field: 'prerequisites',
     type: 'manyOf',
     target: 'session',
+    role: 'prerequisites',
   },
   {
     field: 'terms',

@@ -17,10 +17,12 @@ export const relationships = [
     field: 'startingSequenceBlocks',
     type: 'manyOf',
     target: 'curriculumInventorySequenceBlock',
+    role: 'startingSequenceBlocks',
   },
   {
     field: 'endingSequenceBlocks',
     type: 'manyOf',
     target: 'curriculumInventorySequenceBlock',
+    role: 'endingSequenceBlocks',
   },
 ];

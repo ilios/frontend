@@ -32,11 +32,13 @@ export const relationships = [
     field: 'ancestor',
     type: 'oneOf',
     target: 'programYearObjective',
+    role: 'descendants',
   },
   {
     field: 'descendants',
     type: 'manyOf',
     target: 'programYearObjective',
+    role: 'descendants',
   },
   {
     field: 'courseObjectives',

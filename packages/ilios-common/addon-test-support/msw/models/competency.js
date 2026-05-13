@@ -16,11 +16,13 @@ export const relationships = [
     field: 'parent',
     type: 'oneOf',
     target: 'competency',
+    role: 'children',
   },
   {
     field: 'children',
     type: 'manyOf',
     target: 'competency',
+    role: 'children',
   },
   {
     field: 'aamcPcrses',

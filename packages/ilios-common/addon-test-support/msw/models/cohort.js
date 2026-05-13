@@ -25,5 +25,6 @@ export const relationships = [
     field: 'users',
     type: 'manyOf',
     target: 'user',
+    role: 'userCohorts',
   },
 ];
