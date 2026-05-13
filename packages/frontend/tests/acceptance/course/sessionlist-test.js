@@ -148,9 +148,10 @@ module('Acceptance | Course - Session List', function (hooks) {
     await sessions[0].row.expand();
     const { offerings } = sessions[0];
 
-    const offering1StartDate = DateTime.fromJSDate(this.server.db.offerings[0].startDate);
-    const offering2StartDate = DateTime.fromJSDate(this.server.db.offerings[1].startDate);
-    const offering3StartDate = DateTime.fromJSDate(this.server.db.offerings[2].startDate);
+    const mockOfferings = await this.server.db.offering.all();
+    const offering1StartDate = DateTime.fromJSDate(mockOfferings[0].startDate);
+    const offering2StartDate = DateTime.fromJSDate(mockOfferings[1].startDate);
+    const offering3StartDate = DateTime.fromJSDate(mockOfferings[2].startDate);
 
     assert.strictEqual(offerings.dates.length, 3);
 
