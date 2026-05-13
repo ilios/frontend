@@ -56,11 +56,13 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     });
     await setupAuthentication({ school });
     this.set('selectedCourseIds', ['2']);
+    this.set('expandedYears', [1984]);
     this.set('schools', buildSchoolsFromData(this.server));
     await render(
       <template>
         <ChooseCourse
           @selectedCourseIds={{this.selectedCourseIds}}
+          @expandedYears={{this.expandedYears}}
           @schools={{this.schools}}
           @add={{(noop)}}
           @remove={{(noop)}}
@@ -69,14 +71,14 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       </template>,
     );
 
-    assert.notOk(component.hasMultipleSchools);
-    assert.strictEqual(component.years.length, 3);
-    assert.strictEqual(component.years[0].title, '1985');
-    assert.notOk(component.years[0].isExpanded);
-    assert.strictEqual(component.years[1].title, '1984');
-    assert.ok(component.years[1].isExpanded);
-    assert.strictEqual(component.years[2].title, '1983');
-    assert.notOk(component.years[2].isExpanded);
+    assert.notOk(component.hasMultipleSchools, 'only one school selected');
+    assert.strictEqual(component.years.length, 3, 'year length correct');
+    assert.strictEqual(component.years[0].title, '1985', 'first year value correct');
+    assert.notOk(component.years[0].isExpanded, 'first year collapsed');
+    assert.strictEqual(component.years[1].title, '1984', 'second year value correct');
+    assert.ok(component.years[1].isExpanded, 'second year expanded');
+    assert.strictEqual(component.years[2].title, '1983', 'third year value correct');
+    assert.notOk(component.years[2].isExpanded, 'third year collapsed');
 
     assert.ok(component.years[1].toggleAll.isPartiallySelected);
     assert.notOk(component.years[1].toggleAll.isFullySelected);
@@ -110,10 +112,12 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     });
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('selectedCourseIds', []);
+    this.set('expandedYears', [1984]);
     await render(
       <template>
         <ChooseCourse
           @selectedCourseIds={{this.selectedCourseIds}}
+          @expandedYears={{this.expandedYears}}
           @schools={{this.schools}}
           @add={{(noop)}}
           @remove={{(noop)}}
@@ -161,10 +165,12 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     });
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('selectedCourseIds', [course1.id, course2.id]);
+    this.set('expandedYears', [1984]);
     await render(
       <template>
         <ChooseCourse
           @selectedCourseIds={{this.selectedCourseIds}}
+          @expandedYears={{this.expandedYears}}
           @schools={{this.schools}}
           @add={{(noop)}}
           @remove={{(noop)}}
@@ -206,10 +212,18 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     });
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('selectedCourseIds', []);
+    this.set('expandedYears', [1984]);
+    this.set('setExpandedYears', (year) => {
+      assert.step('setExpandedYears called');
+      assert.ok(year);
+      this.set('expandedYears', year);
+    });
     await render(
       <template>
         <ChooseCourse
           @selectedCourseIds={{this.selectedCourseIds}}
+          @expandedYears={{this.expandedYears}}
+          @setExpandedYears={{this.setExpandedYears}}
           @schools={{this.schools}}
           @add={{(noop)}}
           @remove={{(noop)}}
@@ -235,6 +249,12 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     await component.years[1].toggle();
     assert.notOk(component.years[0].isExpanded);
     assert.ok(component.years[1].isExpanded);
+    assert.verifySteps([
+      'setExpandedYears called',
+      'setExpandedYears called',
+      'setExpandedYears called',
+      'setExpandedYears called',
+    ]);
   });
 
   test('select course fires action', async function (assert) {
@@ -246,6 +266,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       year: 1984,
     });
     this.set('selectedCourseIds', []);
+    this.set('expandedYears', [1984]);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('add', (courseId) => {
       assert.step('add called');
@@ -255,6 +276,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       <template>
         <ChooseCourse
           @selectedCourseIds={{this.selectedCourseIds}}
+          @expandedYears={{this.expandedYears}}
           @schools={{this.schools}}
           @add={{this.add}}
           @remove={{(noop)}}
@@ -277,6 +299,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       year: 1984,
     });
     this.set('selectedCourseIds', [course.id]);
+    this.set('expandedYears', [1984]);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('remove', (courseId) => {
       assert.step('remove called');
@@ -286,6 +309,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       <template>
         <ChooseCourse
           @selectedCourseIds={{this.selectedCourseIds}}
+          @expandedYears={{this.expandedYears}}
           @schools={{this.schools}}
           @add={{(noop)}}
           @remove={{this.remove}}
@@ -308,6 +332,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       year: 1984,
     });
     this.set('selectedCourseIds', [course.id]);
+    this.set('expandedYears', [1984]);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('add', (courseId) => {
       assert.step('add called');
@@ -328,6 +353,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       <template>
         <ChooseCourse
           @selectedCourseIds={{this.selectedCourseIds}}
+          @expandedYears={{this.expandedYears}}
           @schools={{this.schools}}
           @add={{this.add}}
           @remove={{this.remove}}
@@ -357,6 +383,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       year: 1985,
     });
     this.set('selectedCourseIds', [course1.id, course2.id]);
+    this.set('expandedYears', [1984]);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('removeAll', () => {
       assert.step('removeAll called');
@@ -366,6 +393,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       <template>
         <ChooseCourse
           @selectedCourseIds={{this.selectedCourseIds}}
+          @expandedYears={{this.expandedYears}}
           @schools={{this.schools}}
           @add={{(noop)}}
           @remove={{noop}}
@@ -396,6 +424,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       year: 1984,
     });
     this.set('selectedCourseIds', [courses[0].id]);
+    this.set('expandedYears', [1984]);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('add', (courseId) => {
       this.set('selectedCourseIds', [...this.selectedCourseIds, courseId]);
@@ -404,6 +433,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       <template>
         <ChooseCourse
           @selectedCourseIds={{this.selectedCourseIds}}
+          @expandedYears={{this.expandedYears}}
           @schools={{this.schools}}
           @add={{this.add}}
           @remove={{(noop)}}
@@ -437,6 +467,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       courses.map(({ id }) => id),
     );
     this.set('schools', buildSchoolsFromData(this.server));
+    this.set('expandedYears', [1984]);
     this.set('remove', (courseId) => {
       this.set(
         'selectedCourseIds',
@@ -447,6 +478,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       <template>
         <ChooseCourse
           @selectedCourseIds={{this.selectedCourseIds}}
+          @expandedYears={{this.expandedYears}}
           @schools={{this.schools}}
           @add={{(noop)}}
           @remove={{this.remove}}
