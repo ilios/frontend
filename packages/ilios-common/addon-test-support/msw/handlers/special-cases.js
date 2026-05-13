@@ -11,7 +11,7 @@ const cohortsHandler = http.get('/api/cohorts', async ({ request }) => {
   const params = url.searchParams;
   const schoolsFilter = params.get('filters[schools]');
 
-  let cohorts = await db.cohort.findMany();
+  let cohorts = await db.cohort.all();
 
   // Apply school filter if present
   if (schoolsFilter) {
@@ -46,7 +46,7 @@ const coursesHandler = http.get('/api/courses', async ({ request }) => {
   const params = url.searchParams;
   const schoolFilter = params.get('filters[school]');
 
-  let courses = await db.course.findMany();
+  let courses = await db.course.all();
 
   // Apply school filter if present
   if (schoolFilter) {
@@ -137,7 +137,7 @@ const pendingUserUpdatesHandler = http.get('/api/pendinguserupdates', async ({ r
   const params = url.searchParams;
   const schoolsFilter = params.get('filters[schools]');
 
-  let updates = await db.pendingUserUpdate.findMany();
+  let updates = await db.pendingUserUpdate.all();
 
   // Apply school filter if present
   if (schoolsFilter) {
@@ -220,7 +220,7 @@ const userEventsHandler = http.get('/api/userevents/:userid', async ({ request, 
   const to = Number(url.searchParams.get('to'));
   const userid = Number(params.userid);
 
-  const userEvents = db.userevent.findMany().filter((event) => {
+  const userEvents = db.userevent.all().filter((event) => {
     const st = DateTime.fromJSDate(event.startDate).toUnixInteger();
     const et = DateTime.fromJSDate(event.endDate).toUnixInteger();
     return Number(event.user) === userid && from <= st && to >= et;
@@ -238,7 +238,7 @@ const schoolEventsHandler = http.get('/api/schoolevents/:schoolid', async ({ req
   const to = Number(url.searchParams.get('to'));
   const schoolId = Number(params.schoolid);
 
-  const schoolEvents = db.schoolevent.findMany().filter((event) => {
+  const schoolEvents = db.schoolevent.all().filter((event) => {
     const st = DateTime.fromJSDate(event.startDate).toUnixInteger();
     const et = DateTime.fromJSDate(event.endDate).toUnixInteger();
     return Number(event.school) === schoolId && from <= st && to >= et;

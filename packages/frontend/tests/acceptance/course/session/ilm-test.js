@@ -12,13 +12,17 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     await this.server.createList('user', 6);
     await this.server.create('academic-year');
     this.course = await this.server.create('course', { school });
-    await this.server.createList('instructor-group', 5, { school });
-    await this.server.createList('user', 2, { instructorGroupIds: [1] });
-    await this.server.createList('user', 3, { instructorGroupIds: [2] });
+    const instructorGroups = await this.server.createList('instructor-group', 5, { school });
+    const instructors1 = await this.server.createList('user', 2, {
+      instructorGroups: [instructorGroups[0]],
+    });
+    const instructors2 = await this.server.createList('user', 3, {
+      instructorGroups: [instructorGroups[1]],
+    });
     this.sessionType = await this.server.create('session-type', { school });
     this.ilmSession = await this.server.create('ilm-session', {
-      instructorGroupIds: [1, 2, 3],
-      instructorIds: [2, 3, 4],
+      instructorGroups: [instructorGroups[0], instructorGroups[1], instructorGroups[2]],
+      instructors: [instructors1[0], instructors1[1], instructors2[0]],
     });
   });
 
