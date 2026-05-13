@@ -94,8 +94,8 @@ module('Integration | Component | course/materials', function (hooks) {
     });
     context.server.create('offering', {
       session,
-      startDate: new Date(2020, 1, 2, 12).toISOString(),
-      endDate: new Date(2020, 1, 2, 14).toISOString(),
+      startDate: new Date(2020, 1, 2, 12),
+      endDate: new Date(2020, 1, 2, 14),
     });
 
     const course = await context.server.create('course', {
