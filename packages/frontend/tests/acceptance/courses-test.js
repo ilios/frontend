@@ -211,8 +211,8 @@ module('Acceptance | Courses', function (hooks) {
   test('year filter options', async function (assert) {
     await setupAuthentication({ school: this.school2, administeredSchools: [this.school] }, true);
     await this.server.createList('school', 2);
-    await this.server.create('academic-year', { id: 2013 });
-    await this.server.create('academic-year', { id: 2014 });
+    await this.server.create('academic-year', { id: 2013, title: '2013 - 2014' });
+    await this.server.create('academic-year', { id: 2014, title: '2014 - 2015' });
 
     await page.visit();
     assert.strictEqual(page.root.yearFilters.length, 2);
