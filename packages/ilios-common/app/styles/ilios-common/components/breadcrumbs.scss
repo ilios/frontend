@@ -1,86 +1,63 @@
 @use "sass:math";
 
 .breadcrumbs {
-  $breadcrumb-border: 1px solid var(--blue);
-  $breadcrumb-height: 2rem;
+  $border: 1px solid var(--blue);
+  $height: 2rem;
+  $h2: math.div($height, 2);
+  $h4: math.div($height, 4);
 
   display: inline-block;
   margin: 0.8rem;
   text-align: left;
 
-  a {
-    display: block;
-
-    &:focus,
-    &:hover {
-      color: var(--white);
-      text-decoration: none;
-    }
-  }
-
   /* stylelint-disable property-disallowed-list, declaration-property-value-disallowed-list */
-  span {
+  .crumb {
     background-color: var(--white);
-    border: $breadcrumb-border;
+    border: $border;
     border-left: 0;
     color: var(--blue);
     cursor: pointer;
     display: inline-block;
     font-size: 0.8rem;
-    line-height: $breadcrumb-height;
+    line-height: $height;
     margin-bottom: 2px;
-    margin-right: -5px;
-    padding: 0 math.div($breadcrumb-height, 4) 0 math.div($breadcrumb-height, 2);
+    margin-right: 0;
+    padding: 0 $h4 0 $h2;
     position: relative;
     text-decoration: none;
 
-    &::after,
-    &::before {
-      bottom: 0;
-      border-bottom: math.div($breadcrumb-height, 2) solid transparent;
-      border-left: math.div($breadcrumb-height, 4) solid transparent;
-      border-top: math.div($breadcrumb-height, 2) solid transparent;
+    &::before,
+    &::after {
       content: "";
-      display: block;
-      left: 100%;
-      margin: auto;
       position: absolute;
-      right: auto;
       top: 0;
-      z-index: 2;
+      bottom: 0;
+      border-left: $h4 solid transparent;
+      border-top: $h2 solid transparent;
+      border-bottom: $h2 solid transparent;
+      width: $h4;
     }
 
     &::before {
+      // outer arrow
       border-left-color: var(--blue);
+      left: 100%;
       margin-left: 1px;
       z-index: 1;
     }
-
     &::after {
+      // inner arrow
       border-left-color: var(--white);
-    }
-
-    &:hover {
-      background-color: var(--blue);
-      color: var(--white);
-
-      a,
-      button {
-        color: var(--white);
-      }
-
-      &::after {
-        border-left-color: var(--blue);
-      }
+      left: 100%;
+      z-index: 2;
     }
 
     &:first-child {
+      border-left: $border;
       border-bottom-left-radius: 3px;
-      border-left: $breadcrumb-border;
       border-top-left-radius: 3px;
-      padding-left: math.div($breadcrumb-height, 2);
+      padding-left: $h2;
     }
-
     &:last-child {
       background-color: inherit;
       border-color: var(--lighter-grey);
@@ -88,14 +65,27 @@
       border-top-right-radius: 3px;
       color: var(--black);
       cursor: default;
-      /* stylelint-disable scales/font-weights */
-      font-weight: 700;
-      padding-right: math.div($breadcrumb-height, 2);
-    }
+      font-weight: 600;
+      padding-right: $h2;
 
-    &:last-child::after,
-    &:last-child::before {
-      border: 0;
+      &::before,
+      &::after {
+        border: 0;
+      }
+    }
+  }
+
+  a.crumb {
+    display: block;
+
+    &:hover,
+    &:focus {
+      background-color: var(--blue);
+      color: var(--white);
+
+      &::after {
+        border-left-color: var(--blue);
+      }
     }
   }
 }
