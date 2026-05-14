@@ -23,7 +23,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     await this.server.createList('course', 2, {
       school,
       year: thisYear + 1,
-      externalId: 1,
+      externalId: '1',
     });
     await this.server.createList('course', 2, {
       school,
@@ -74,7 +74,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     await this.server.createList('course', 2, {
       school,
       year: thisYear + 1,
-      externalId: 1,
+      externalId: '1',
     });
     await this.server.createList('course', 2, {
       school,
