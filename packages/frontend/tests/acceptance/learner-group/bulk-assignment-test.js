@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { triggerEvent, waitFor } from '@ember/test-helpers';
 import { setupAuthentication } from 'ilios-common';
@@ -56,7 +56,11 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     await triggerEvent('[data-test-user-upload]', 'change', { files: [file] });
   };
 
-  test('upload users', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
+  skip('upload users', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await takeScreenshot(assert, 'learnerGroupId 1');
     await page.root.actions.buttons.bulkAssignment.click();
@@ -95,7 +99,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.ok(page.root.bulkAssignment.showConfirmUploadButton);
   });
 
-  test('upload user warnings', async function (assert) {
+  skip('upload user warnings', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
     await this.server.create('user', {
@@ -138,7 +142,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.ok(page.root.bulkAssignment.showConfirmUploadButton);
   });
 
-  test('upload user errors', async function (assert) {
+  skip('upload user errors', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
     await this.server.create('user', {
@@ -219,7 +223,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     await takeScreenshot(assert);
   });
 
-  test('choose small group match', async function (assert) {
+  skip('choose small group match', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
     await this.server.create('user', {
@@ -249,7 +253,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.strictEqual(page.root.bulkAssignment.groupsToMatch[0].selected, 'group 1 child 0');
   });
 
-  test('finalize and save', async function (assert) {
+  skip('finalize and save', async function (assert) {
     await this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
@@ -305,7 +309,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     await takeScreenshot(assert, 'post-bulkAssignment');
   });
 
-  test('create a new group when requested', async function (assert) {
+  skip('create a new group when requested', async function (assert) {
     await this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
@@ -339,7 +343,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.deepEqual(this.server.db.learnerGroups[3].userIds, ['2']);
   });
 
-  test('small group matches are trimmed', async function (assert) {
+  skip('small group matches are trimmed', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
     const users = await this.server.createList('user', 4, {
@@ -358,7 +362,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.strictEqual(page.root.bulkAssignment.groupsToMatch.length, 2);
   });
 
-  test('ignore blank lines #3684', async function (assert) {
+  skip('ignore blank lines #3684', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
     await this.server.create('user', {

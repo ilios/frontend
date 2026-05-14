@@ -17,12 +17,16 @@ module('Acceptance | Learner Groups', function (hooks) {
     this.sessionType = await this.server.create('session-type', { school: this.school });
   });
 
-  test('visiting /learnergroups', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
+  skip('visiting /learnergroups', async function (assert) {
     await page.visit();
     assert.strictEqual(currentRouteName(), 'learner-groups');
   });
 
-  test('list groups', async function (assert) {
+  skip('list groups', async function (assert) {
     await this.server.createList('user', 11);
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
@@ -63,7 +67,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items[1].children, '0');
   });
 
-  test('single option filters', async function (assert) {
+  skip('single option filters', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     await this.server.create('cohort', { programYear });
@@ -77,7 +81,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.programYearFilter.text, 'cohort 0');
   });
 
-  test('multiple options filter', async function (assert) {
+  skip('multiple options filter', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
@@ -135,7 +139,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items[0].title, 'learner group 1');
   });
 
-  test('filters by title', async function (assert) {
+  skip('filters by title', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
@@ -187,7 +191,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items[2].title, secondLearnerGroup.title);
   });
 
-  test('add new learnergroup', async function (assert) {
+  skip('add new learnergroup', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     await this.server.create('cohort', { programYear });
@@ -213,7 +217,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items[0].children, '0');
   });
 
-  test('cancel adding new learnergroup', async function (assert) {
+  skip('cancel adding new learnergroup', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
@@ -232,7 +236,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
   });
 
-  test('remove learnergroup', async function (assert) {
+  skip('remove learnergroup', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
@@ -252,7 +256,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.notOk(page.list.isPresent);
   });
 
-  test('cancel remove learnergroup', async function (assert) {
+  skip('cancel remove learnergroup', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
@@ -268,7 +272,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
   });
 
-  test('confirmation of remove message', async function (assert) {
+  skip('confirmation of remove message', async function (assert) {
     await this.server.createList('user', 5);
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
@@ -287,7 +291,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     );
   });
 
-  test('populated learner groups are deletable', async function (assert) {
+  skip('populated learner groups are deletable', async function (assert) {
     await this.server.createList('user', 5);
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
@@ -303,7 +307,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.ok(page.list.items[0].canBeDeleted);
   });
 
-  test('learner groups linked to offerings or ILMs cannot be deleted', async function (assert) {
+  skip('learner groups linked to offerings or ILMs cannot be deleted', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
@@ -354,7 +358,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.notOk(page.list.items[3].canBeDeleted);
   });
 
-  test('click title takes you to learnergroup route', async function (assert) {
+  skip('click title takes you to learnergroup route', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
@@ -367,7 +371,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(currentURL(), '/learnergroups/1');
   });
 
-  test('add new learnergroup with full cohort', async function (assert) {
+  skip('add new learnergroup with full cohort', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
@@ -392,13 +396,13 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items[0].children, '0');
   });
 
-  test('no add button when there is no cohort', async function (assert) {
+  skip('no add button when there is no cohort', async function (assert) {
     await page.visit();
     assert.strictEqual(currentRouteName(), 'learner-groups');
     assert.notOk(page.hasNewGroupToggle);
   });
 
-  test('title filter escapes regex', async function (assert) {
+  skip('title filter escapes regex', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
