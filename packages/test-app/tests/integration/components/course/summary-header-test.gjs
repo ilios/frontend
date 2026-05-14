@@ -14,7 +14,7 @@ module('Integration | Component | course summary header', function (hooks) {
     class PermissionCheckerStub extends Service {
       async canCreateCourse(inSchool) {
         assert.step('canCreateCourse called');
-        assert.strictEqual(school.id, inSchool.id);
+        assert.strictEqual(school.id, Number(inSchool.id));
         return true;
       }
     }
@@ -45,7 +45,7 @@ module('Integration | Component | course summary header', function (hooks) {
     class PermissionCheckerStub extends Service {
       async canCreateCourse(inSchool) {
         assert.step('canCreateCourse called');
-        assert.strictEqual(school.id, inSchool.id);
+        assert.strictEqual(school.id, Number(inSchool.id));
         return false;
       }
     }
