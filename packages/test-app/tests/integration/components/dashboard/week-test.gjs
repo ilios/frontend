@@ -94,8 +94,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
       isScheduled: true,
     });
 
-    const { userevents } = this.server.db;
-    this.setupEvents(userevents);
+    this.setupEvents(await this.server.db.userevent.all());
 
     await render(<template><Week /></template>);
     const expectedTitle = this.getTitle();
