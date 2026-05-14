@@ -17,26 +17,61 @@ module('Integration | Component | detail-competencies', function (hooks) {
     await this.server.create('cohort', { programYear });
     const domains = await this.server.createList('competency', 2, { school });
 
-    const competencies = await Promise.all(
-      domains
-        .map((domain) => {
-          return this.server.createList('competency', 2, {
-            parent: domain,
-            school,
-            programYears: [programYear],
-          });
-        })
-        .flat(),
+    const competencies = [];
+    competencies.push(
+      await this.server.create('competency', {
+        parent: domains[0],
+        school,
+        programYears: [programYear],
+      }),
     );
-    const programYearObjectives = await Promise.all(
-      competencies
-        .map((competency) => {
-          return this.server.create('program-year-objective', {
-            competency,
-            programYear,
-          });
-        })
-        .flat(),
+    competencies.push(
+      await this.server.create('competency', {
+        parent: domains[0],
+        school,
+        programYears: [programYear],
+      }),
+    );
+    competencies.push(
+      await this.server.create('competency', {
+        parent: domains[1],
+        school,
+        programYears: [programYear],
+      }),
+    );
+    competencies.push(
+      await this.server.create('competency', {
+        parent: domains[1],
+        school,
+        programYears: [programYear],
+      }),
+    );
+
+    const programYearObjectives = [];
+
+    programYearObjectives.push(
+      await this.server.create('program-year-objective', {
+        competency: competencies[0],
+        programYear,
+      }),
+    );
+    programYearObjectives.push(
+      await this.server.create('program-year-objective', {
+        competency: competencies[1],
+        programYear,
+      }),
+    );
+    programYearObjectives.push(
+      await this.server.create('program-year-objective', {
+        competency: competencies[2],
+        programYear,
+      }),
+    );
+    programYearObjectives.push(
+      await this.server.create('program-year-objective', {
+        competency: competencies[3],
+        programYear,
+      }),
     );
     const course = await this.server.create('course', {
       school,
