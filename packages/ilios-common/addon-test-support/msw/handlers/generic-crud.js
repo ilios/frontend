@@ -51,15 +51,17 @@ export function createCrudHandlers(modelName, apiRoute) {
     }),
 
     // GET single record
-    http.get(`/api/${apiPath}/:id`, async ({ params }) => {
+    http.get(`/api/${apiPath}/:id`, async ({ request, params }) => {
       const id = modelsWithStringIds.has(modelName) ? params.id : Number(params.id);
+      const url = new URL(request.url);
+      const { include } = parseQueryParams(url.searchParams.toString());
       const record = await db[modelName].findFirst((q) => q.where({ id }));
 
       if (!record) {
         return new HttpResponse(`No ${modelName} for id: ${params.id}`, { status: 404 });
       }
 
-      return HttpResponse.json(formatJsonApi(record, modelName));
+      return HttpResponse.json(formatJsonApi(record, modelName, { include }));
     }),
 
     // POST new record
