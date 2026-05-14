@@ -26,8 +26,8 @@ export const schema = z.looseObject({
   attendanceRequired: z.boolean().nullish(),
   supplemental: z.boolean().nullish(),
   cohorts: z.string().nullish(),
-  prerequisites: z.string().nullish(),
-  postrequisites: z.string().nullish(),
+  prerequisites: z.array(z.looseObject({})),
+  postrequisites: z.array(z.looseObject({})),
   sessionId: z.number().nullish(),
 });
 
