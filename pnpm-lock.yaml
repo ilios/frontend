@@ -9584,8 +9584,8 @@ packages:
   vm-browserify@1.1.2:
     resolution: {integrity: sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==}
 
-  vm2@3.11.1:
-    resolution: {integrity: sha512-X0U/jIuaec0GU9toK9ZT0XA51DsNUkTSV7gmE3ct69rsvBx5dDNsiJGI9Eq5/Hz8waJQ9Uf9FC3yGZKE+STRBw==}
+  vm2@3.11.3:
+    resolution: {integrity: sha512-DO1TTKuOc+veL11VNOvJwRab80mghFKE40Av3bl6pdXs11bdiDMuR73owy+dS2EsTZEvRUeBkkBuDVRjV/RgEw==}
     engines: {node: '>=6.0'}
     hasBin: true
 
@@ -14943,7 +14943,7 @@ snapshots:
       ast-types: 0.13.4
       escodegen: 1.14.3
       esprima: 4.0.1
-      vm2: 3.11.1
+      vm2: 3.11.3
 
   delayed-stream@1.0.0: {}
 
@@ -20993,7 +20993,7 @@ snapshots:
 
   vm-browserify@1.1.2: {}
 
-  vm2@3.11.1:
+  vm2@3.11.3:
     dependencies:
       acorn: 8.16.0
       acorn-walk: 8.3.5
