@@ -27,43 +27,51 @@ export function formatJsonApi(data, modelName, options = {}) {
   return response;
 }
 
-function formatResource(model, modelName) {
-  if (!model) {
-    return null;
-  }
-
-  const type = pluralize(camelize(modelName));
-  const attributes = {};
-  const relationships = {};
-
-  // Separate attributes from relationships
-  for (const [key, value] of Object.entries(model)) {
-    if (key.startsWith('__') || key === 'id') {
-      continue;
+function memoizeFormatResource() {
+  const memo = new Map();
+  return (model, modelName) => {
+    if (!model) {
+      return null;
+    }
+    if (memo.has(model)) {
+      return memo.get(model);
     }
 
-    // Relationships are objects or arrays with IDs
-    if (value && typeof value === 'object' && value.id) {
-      relationships[camelize(key)] = formatRelationship(value, getTypeFor(modelName, key));
-    } else if (Array.isArray(value) && (!value.length || value[0]?.id)) {
-      relationships[camelize(key)] = formatRelationship(value, getTypeFor(modelName, key));
-    } else {
-      attributes[camelize(key)] = value;
-    }
-  }
+    const type = pluralize(camelize(modelName));
+    const attributes = {};
+    const relationships = {};
 
-  const resource = {
-    type,
-    id: String(model.id),
-    attributes,
+    // Separate attributes from relationships
+    for (const [key, value] of Object.entries(model)) {
+      if (key.startsWith('__') || key === 'id') {
+        continue;
+      }
+
+      // Relationships are objects or arrays with IDs
+      if (value && typeof value === 'object' && value.id) {
+        relationships[camelize(key)] = formatRelationship(value, getTypeFor(modelName, key));
+      } else if (Array.isArray(value) && (!value.length || value[0]?.id)) {
+        relationships[camelize(key)] = formatRelationship(value, getTypeFor(modelName, key));
+      } else {
+        attributes[camelize(key)] = value;
+      }
+    }
+
+    const resource = {
+      type,
+      id: String(model.id),
+      attributes,
+    };
+
+    if (Object.keys(relationships).length > 0) {
+      resource.relationships = relationships;
+    }
+    memo.set(model, resource);
+    return resource;
   };
-
-  if (Object.keys(relationships).length > 0) {
-    resource.relationships = relationships;
-  }
-
-  return resource;
 }
+
+const formatResource = memoizeFormatResource();
 
 function formatRelationship(related, typeName) {
   const type = pluralize(camelize(typeName));
@@ -102,9 +110,8 @@ function addIncluded(modelName, data, includeList, included) {
         const relatedItems = Array.isArray(related) ? related : [related];
         const type = getTypeFor(modelName, field);
         for (const relatedItem of relatedItems) {
-          if (!included.has(relatedItem)) {
-            included.add(formatResource(relatedItem, type));
-          }
+          const resource = formatResource(relatedItem, type);
+          included.add(resource);
           if (includedItems.length) {
             addIncluded(type, relatedItem, includedItems.join('.'), included);
           }
