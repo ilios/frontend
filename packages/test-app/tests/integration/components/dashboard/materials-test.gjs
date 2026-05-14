@@ -46,7 +46,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       title: 'title1',
       absoluteFileUri: 'http://myhost.com/url1',
       sessionTitle: 'session1title',
-      course: courses[0].id,
+      course: `${courses[0].id}`,
       mimetype: 'application/pdf',
       courseTitle: courses[0].title,
       courseYear: courses[0].year,
@@ -58,7 +58,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       title: 'title2',
       link: 'http://myhost.com/url2',
       sessionTitle: 'session2title',
-      course: courses[1].id,
+      course: `${courses[1].id}`,
       courseTitle: courses[1].title,
       courseYear: courses[1].year,
       courseExternalId: courses[1].externalId,
@@ -69,7 +69,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       title: 'title3',
       citation: 'citationtext',
       sessionTitle: 'session3title',
-      course: courses[2].id,
+      course: `${courses[2].id}`,
       courseTitle: courses[2].title,
       courseYear: courses[2].year,
       courseExternalId: courses[2].externalId,
@@ -79,7 +79,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       title: 'title4',
       absoluteFileUri: 'http://myhost.com/document.txt',
       sessionTitle: 'session4title',
-      course: courses[0].id,
+      course: `${courses[0].id}`,
       mimetype: 'text/plain',
       courseTitle: courses[0].title,
       courseYear: courses[0].year,
@@ -90,7 +90,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     const lm5 = {
       title: 'title5',
       isBlanked: true,
-      course: courses[4].id,
+      course: `${courses[4].id}`,
       sessionTitle: 'session5title',
       courseTitle: courses[4].title,
       courseYear: courses[4].year,
@@ -113,7 +113,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         title: `title ${i}`,
         citation: `citationtext ${i}`,
         sessionTitle: `session title`,
-        course: courses[3].id,
+        course: `${courses[3].id}`,
         courseTitle: courses[3].title,
         courseYear: courses[3].year,
         courseExternalId: courses[3].externalId,
@@ -130,16 +130,14 @@ module('Integration | Component | dashboard/materials', function (hooks) {
   });
 
   test('it renders with materials in show-current mode', async function (assert) {
-    this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
-      assert.step('API called');
-      assert.ok('id' in params);
-      assert.strictEqual(parseInt(params.id, 10), 11);
-      assert.ok('before' in queryParams);
-      assert.ok('after' in queryParams);
-      const before = DateTime.fromSeconds(Number(queryParams.before));
-      const after = DateTime.fromSeconds(Number(queryParams.after));
+    this.server.get(`/api/usermaterials/:id`, async ({ params, request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(Number(params.id), 11);
+      const before = DateTime.fromSeconds(Number(searchParams.get('before')));
+      const after = DateTime.fromSeconds(Number(searchParams.get('after')));
       assert.ok(before.hasSame(this.today.plus({ days: 60 }), 'day'));
       assert.ok(after.hasSame(this.today, 'day'));
+      assert.step('API called');
       return {
         userMaterials: this.currentMaterials,
       };
@@ -253,12 +251,12 @@ module('Integration | Component | dashboard/materials', function (hooks) {
   });
 
   test('it renders with materials in show-all mode', async function (assert) {
-    this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
+    this.server.get(`/api/usermaterials/:id`, async ({ params, request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(Number(params.id), 11);
+      assert.notOk(searchParams.has('before'));
+      assert.notOk(searchParams.has('after'));
       assert.step('API called');
-      assert.ok('id' in params);
-      assert.strictEqual(parseInt(params.id, 10), 11);
-      assert.notOk('before' in queryParams);
-      assert.notOk('after' in queryParams);
       return {
         userMaterials: this.allMaterials,
       };
@@ -336,7 +334,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         userMaterials: this.currentMaterials,
       };
     });
-    this.set('courseId', this.courses[0].id);
+    this.set('courseId', `${this.courses[0].id}`);
     this.set('setCourse', (id) => {
       assert.step('setCourse called');
       assert.strictEqual(id, '2');
