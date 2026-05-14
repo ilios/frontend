@@ -76,7 +76,7 @@ module(
       });
       this.emptyCourse = await this.owner
         .lookup('service:store')
-        .findRecord('course', await this.server.create('course').id);
+        .findRecord('course', (await this.server.create('course')).id);
       this.linkedCourseWithTime = await this.owner
         .lookup('service:store')
         .findRecord('course', linkedCourseWithTime.id);

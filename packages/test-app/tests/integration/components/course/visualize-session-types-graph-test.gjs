@@ -63,7 +63,7 @@ module('Integration | Component | course/visualize-session-types-graph', functio
     });
     this.emptyCourse = await this.owner
       .lookup('service:store')
-      .findRecord('course', await this.server.create('course').id);
+      .findRecord('course', (await this.server.create('course')).id);
     this.linkedCourseWithoutTime = await this.owner
       .lookup('service:store')
       .findRecord('course', linkedCourseWithoutTime.id);
