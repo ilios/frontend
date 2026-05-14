@@ -29,6 +29,7 @@ export function setupMSW(hooks) {
     this.server.db = db;
     this.server.get = get.bind(this);
     this.server.post = post.bind(this);
+    this.server.patch = patch.bind(this);
   });
 
   hooks.afterEach(async function () {
@@ -61,6 +62,19 @@ function get(url, callback) {
 function post(url, callback) {
   this.server.use(
     http.post(
+      url,
+      async (request) => {
+        const rhett = await callback(request);
+        return HttpResponse.json(rhett);
+      },
+      { once: true },
+    ),
+  );
+}
+
+function patch(url, callback) {
+  this.server.use(
+    http.patch(
       url,
       async (request) => {
         const rhett = await callback(request);
