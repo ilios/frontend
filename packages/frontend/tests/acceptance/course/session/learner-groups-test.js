@@ -26,29 +26,26 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       const cohort = await this.server.create('cohort', {
         programYear,
       });
-      const course = await this.server.create('course', {
+      this.course = await this.server.create('course', {
         school: this.school,
         cohorts: [cohort],
       });
       const sessionType = await this.server.create('session-type', { school: this.school });
-      this.learnerGroups = await this.server.createList('learner-group', 5, {
+      const learnerGroups = await this.server.createList('learner-group', 5, {
         cohort,
       });
-      this.learnerGroups.push(
-        await this.server.createList('learner-group', 2, {
-          cohort,
-          parent: this.learnerGroups[3],
-        }),
-      );
-      this.learnerGroups.push(
-        await this.server.create('learner-group', {
-          cohort,
-          parent: this.learnerGroups[4],
-        }),
-      );
+      const subGroups = await this.server.createList('learner-group', 2, {
+        cohort,
+        parent: learnerGroups[3],
+      });
+      const subGroup = await this.server.create('learner-group', {
+        cohort,
+        parent: learnerGroups[4],
+      });
+      this.learnerGroups = [...learnerGroups, ...subGroups, subGroup];
       this.session = await this.server.create('session', {
-        course,
-        updatedAt: DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 }).toJSDate(),
+        course: this.course,
+        updatedAt: DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 }).toISO(),
         sessionType,
       });
       this.learners = await this.server.createList('user', 2);
@@ -70,7 +67,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learners: this.learners,
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
       const { selectedLearners, selectedLearnerGroups } =
@@ -105,7 +102,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learners: this.learners,
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
 
@@ -225,7 +222,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         session: this.session,
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
 
@@ -311,7 +308,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learnerGroups: [this.learnerGroups[0], this.learnerGroups[1], this.learnerGroups[3]],
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
@@ -361,7 +358,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learnerGroups: [this.learnerGroups[0], this.learnerGroups[1], this.learnerGroups[3]],
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
@@ -411,7 +408,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learnerGroups: [this.learnerGroups[0], this.learnerGroups[1], this.learnerGroups[3]],
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
@@ -539,7 +536,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learnerGroups: [this.learnerGroups[0], this.learnerGroups[1], this.learnerGroups[3]],
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
@@ -653,7 +650,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learnerGroups: [this.learnerGroups[0], this.learnerGroups[1]],
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
@@ -784,7 +781,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learnerGroups: [this.learnerGroups[0], this.learnerGroups[1]],
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
       await page.details.detailLearnersAndLearnerGroups.manage();
@@ -932,7 +929,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learnerGroups: [this.learnerGroups[0], this.learnerGroups[1], this.learnerGroups[3]],
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(currentRouteName(), 'session.index');
@@ -1010,7 +1007,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learners: this.learners,
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
 
@@ -1060,7 +1057,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learners: this.learners,
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
@@ -1093,7 +1090,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         learners: this.learners,
       });
 
-      await page.visit({ courseId: 1, sessionId: 1 });
+      await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
@@ -1146,7 +1143,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
     await this.server.create('ilm-session', {
       session: this.session,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await page.details.detailLearnersAndLearnerGroups.manage();
     await page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].toggle();
     await page.details.detailLearnersAndLearnerGroups.save();
