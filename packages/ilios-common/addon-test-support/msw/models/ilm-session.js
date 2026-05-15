@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const schema = z.looseObject({
   id: z.number(),
   hours: z.number(),
-  dueDate: z.date(),
+  dueDate: z.iso.datetime({ offset: true }),
 });
 
 export const relationships = [
