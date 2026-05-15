@@ -27,7 +27,7 @@ module('Integration | Component | week-glance', function (hooks) {
   const setupUserEvents = (context) => {
     class Mock extends Service {
       async getEvents() {
-        return context.server.db.userevents;
+        return context.server.db.userevent.all();
       }
     }
 
