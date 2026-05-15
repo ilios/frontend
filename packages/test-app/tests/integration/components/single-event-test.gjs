@@ -55,8 +55,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       sessionDescription: 'test description',
       name: 'test session',
       courseTitle: 'test course',
-      startDate: now.toJSDate(),
-      endDate: now.plus({ hour: 1 }).toJSDate(),
+      startDate: now.toISO(),
+      endDate: now.plus({ hour: 1 }).toISO(),
       location: 'here',
       url: 'https://example.edu',
       instructors: ['Great Teacher'],
@@ -257,7 +257,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       sessionTypeTitle: 'test type',
     });
 
-    this.set('event', this.server.db.userevents[0]);
+    this.set('event', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.event}} /></template>);
     assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
     assert.notOk(component.summary.header.hasLink);
@@ -300,7 +300,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       sessionTypeTitle: 'test type',
     });
 
-    this.set('event', this.server.db.userevents[0]);
+    this.set('event', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.event}} /></template>);
     assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
     assert.notOk(component.summary.header.hasLink);
@@ -381,7 +381,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       ],
     });
 
-    this.set('ev', this.server.db.userevents[0]);
+    this.set('ev', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.ev}} /></template>);
     assert.notOk(component.summary.header.hasLink);
     assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
@@ -429,7 +429,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       sessionTypeTitle: 'test type',
     });
 
-    this.set('event', this.server.db.userevents[0]);
+    this.set('event', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.event}} /></template>);
     assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
     assert.notOk(component.summary.header.hasLink);
@@ -465,7 +465,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
     await this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
-    this.set('evt', this.server.db.userevents[0]);
+    this.set('evt', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.evt}} /></template>);
     assert.ok(component.sessionLearningMaterials.linksToAllMaterials);
   });
@@ -479,7 +479,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
     await this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
-    this.set('evt', this.server.db.userevents[0]);
+    this.set('evt', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.evt}} /></template>);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
   });
@@ -493,7 +493,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
     await this.server.create('userevent', { isUserEvent: false, sessionTypeTitle: 'test type' });
-    this.set('evt', this.server.db.userevents[0]);
+    this.set('evt', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.evt}} /></template>);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
   });
@@ -513,7 +513,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       sessionTypeTitle: 'test type',
     });
 
-    this.set('event', this.server.db.userevents[0]);
+    this.set('event', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.event}} /></template>);
     assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
     assert.notOk(component.summary.header.hasLink);
@@ -546,7 +546,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       sessionTypeTitle: 'test type',
     });
 
-    this.set('event', this.server.db.userevents[0]);
+    this.set('event', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.event}} /></template>);
     assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
     assert.notOk(component.summary.header.hasLink);
@@ -584,7 +584,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       sessionTypeTitle: 'test type',
     });
 
-    this.set('event', this.server.db.userevents[0]);
+    this.set('event', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.event}} /></template>);
     assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
     assert.notOk(component.summary.header.hasLink);
@@ -635,7 +635,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       sessionTypeTitle: 'test type',
     });
 
-    this.set('event', this.server.db.userevents[0]);
+    this.set('event', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.event}} /></template>);
     assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
     assert.ok(component.summary.header.hasLink);
@@ -647,17 +647,17 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       await this.server.create('userevent', {
         name: 'Learn to Learn',
         courseTitle: 'course',
-        startDate: now.toJSDate(),
-        endDate: now.plus({ hour: 1 }).toJSDate(),
+        startDate: now.toISO(),
+        endDate: now.plus({ hour: 1 }).toISO(),
         isBlanked: false,
         isPublished: true,
         isScheduled: false,
         offering: 1,
-        lastModified: now.plus({ hour: 1 }),
+        lastModified: now.plus({ hour: 1 }).toISO(),
         sessionTypeTitle: 'test type',
       });
 
-      this.set('event', this.server.db.userevents[0]);
+      this.set('event', (await this.server.db.userevent.all())[0]);
       await render(<template><SingleEvent @event={{this.event}} /></template>);
 
       assert.ok(component.summary.header.wasRecentlyUpdated, 'event has NewUpdates icon');
@@ -668,8 +668,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       await this.server.create('userevent', {
         name: 'Learn to Learn',
         courseTitle: 'course',
-        startDate: now.toJSDate(),
-        endDate: now.plus({ days: 7 }).toJSDate(),
+        startDate: now.toISO(),
+        endDate: now.plus({ days: 7 }).toISO(),
         isBlanked: false,
         isPublished: true,
         isScheduled: false,
@@ -678,7 +678,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         sessionTypeTitle: 'test type',
       });
 
-      this.set('event', this.server.db.userevents[0]);
+      this.set('event', (await this.server.db.userevent.all())[0]);
       await render(<template><SingleEvent @event={{this.event}} /></template>);
       assert.notOk(
         component.summary.header.wasRecentlyUpdated,
@@ -691,8 +691,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       await this.server.create('userevent', {
         name: 'Learn to Learn',
         courseTitle: 'course',
-        startDate: now.toJSDate(),
-        endDate: now.plus({ hour: 1 }).toJSDate(),
+        startDate: now.toISO(),
+        endDate: now.plus({ hour: 1 }).toISO(),
         isBlanked: false,
         isPublished: true,
         isScheduled: true,
@@ -701,7 +701,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         sessionTypeTitle: 'test type',
       });
 
-      this.set('event', this.server.db.userevents[0]);
+      this.set('event', (await this.server.db.userevent.all())[0]);
       await render(<template><SingleEvent @event={{this.event}} /></template>);
       assert.ok(component.summary.header.isScheduled, 'event has Scheduled icon');
     });
@@ -711,8 +711,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       await this.server.create('userevent', {
         name: 'Learn to Learn',
         courseTitle: 'course',
-        startDate: now.toJSDate(),
-        endDate: now.plus({ hour: 1 }).toJSDate(),
+        startDate: now.toISO(),
+        endDate: now.plus({ hour: 1 }).toISO(),
         isBlanked: false,
         isPublished: false,
         isScheduled: false,
@@ -721,7 +721,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         sessionTypeTitle: 'test type',
       });
 
-      this.set('event', this.server.db.userevents[0]);
+      this.set('event', (await this.server.db.userevent.all())[0]);
       await render(<template><SingleEvent @event={{this.event}} /></template>);
       assert.ok(component.summary.header.isDraft, 'event has NotPublished icon');
     });
@@ -752,7 +752,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       sessionTypeTitle: 'test type',
     });
 
-    this.set('event', this.server.db.userevents[0]);
+    this.set('event', (await this.server.db.userevent.all())[0]);
     await render(<template><SingleEvent @event={{this.event}} /></template>);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);

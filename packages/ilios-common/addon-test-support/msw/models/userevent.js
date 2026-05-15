@@ -3,23 +3,27 @@ import { z } from 'zod';
 export const schema = z.looseObject({
   id: z.number(),
   name: z.string().nullish(),
-  startDate: z.string().nullish(),
-  endDate: z.string().nullish(),
+  startDate: z.iso.datetime({ offset: true }).nullish(),
+  endDate: z.iso.datetime({ offset: true }).nullish(),
   offering: z.number().nullish(),
   offeringId: z.number().nullish(),
   ilmSession: z.number().nullish(),
+  session: z.number().nullish(),
   school: z.number().nullish(),
   course: z.number().nullish(),
   courseTitle: z.string().nullish(),
-  instructors: z.string().nullish(),
+  instructors: z.array(z.string()).nullish(),
+  learningMaterials: z.array(z.looseObject({})).nullish(),
   sessionTypeId: z.number().nullish(),
   sessionTypeTitle: z.string().nullish(),
   courseExternalId: z.string().nullish(),
   sessionDescription: z.string().nullish(),
   location: z.string().nullish(),
-  lastModified: z.string().nullish(),
+  url: z.url().nullish(),
+  lastModified: z.iso.datetime({ offset: true }).nullish(),
   isPublished: z.boolean().nullish(),
   isScheduled: z.boolean().nullish(),
+  isUserEvent: z.boolean().nullish(),
   user: z.number().nullish(),
   attireRequired: z.boolean().nullish(),
   equipmentRequired: z.boolean().nullish(),
@@ -28,6 +32,35 @@ export const schema = z.looseObject({
   cohorts: z.string().nullish(),
   prerequisites: z.array(z.looseObject({})),
   postrequisites: z.array(z.looseObject({})),
+  sessionObjectives: z
+    .array(
+      z.looseObject({
+        id: z.number(),
+        title: z.string(),
+        position: z.number(),
+        competencies: z.array(z.number()),
+      }),
+    )
+    .nullish(),
+  courseObjectives: z
+    .array(
+      z.looseObject({
+        id: z.number(),
+        title: z.string(),
+        position: z.number(),
+        competencies: z.array(z.number()),
+      }),
+    )
+    .nullish(),
+  competencies: z
+    .array(
+      z.looseObject({
+        id: z.number(),
+        title: z.string(),
+        parent: z.number().nullish(),
+      }),
+    )
+    .nullish(),
   sessionId: z.number().nullish(),
 });
 
