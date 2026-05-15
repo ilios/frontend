@@ -149,9 +149,9 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { offerings } = sessions[0];
 
     const mockOfferings = await this.server.db.offering.all();
-    const offering1StartDate = DateTime.fromJSDate(mockOfferings[0].startDate);
-    const offering2StartDate = DateTime.fromJSDate(mockOfferings[1].startDate);
-    const offering3StartDate = DateTime.fromJSDate(mockOfferings[2].startDate);
+    const offering1StartDate = DateTime.fromISO(mockOfferings[0].startDate);
+    const offering2StartDate = DateTime.fromISO(mockOfferings[1].startDate);
+    const offering3StartDate = DateTime.fromISO(mockOfferings[2].startDate);
 
     assert.strictEqual(offerings.dates.length, 3);
 
