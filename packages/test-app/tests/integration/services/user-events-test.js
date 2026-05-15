@@ -42,15 +42,14 @@ module('Integration | Service | user events', function (hooks) {
     const from = DateTime.fromObject({ year: 2015, month: 3, day: 5, hour: 0 });
     const to = from.set({ hour: 24 });
 
-    this.server.get(`/api/userevents/:id`, (scheme, { params, queryParams }) => {
-      assert.step('API called');
+    this.server.get(`/api/userevents/:id`, ({ params, request }) => {
+      const { searchParams } = new URL(request.url);
       assert.ok('id' in params);
       assert.strictEqual(Number(params.id), 1);
-      assert.ok('from' in queryParams);
-      assert.ok('to' in queryParams);
-      assert.strictEqual(Number(queryParams.from), from.toUnixInteger());
-      assert.strictEqual(Number(queryParams.to), to.toUnixInteger());
+      assert.strictEqual(Number(searchParams.get('from')), from.toUnixInteger());
+      assert.strictEqual(Number(searchParams.get('to')), to.toUnixInteger());
 
+      assert.step('API called');
       return { userEvents: [event1, event2, event3] };
     });
 
@@ -92,7 +91,7 @@ module('Integration | Service | user events', function (hooks) {
     this.owner.register('service:iliosConfig', IliosConfigMock);
     const from = DateTime.fromObject({ year: 2015, month: 3, day: 5, hour: 0 });
     const to = from.set({ hour: 24 });
-    this.server.get(`/geflarknik/userevents/:id`, (scheme, { params }) => {
+    this.server.get(`/geflarknik/userevents/:id`, ({ params }) => {
       assert.step('API called');
       assert.strictEqual(Number(params.id), 1);
       return { userEvents: [] };
@@ -122,9 +121,9 @@ module('Integration | Service | user events', function (hooks) {
 
     const from = DateTime.fromObject({ year: 2011, month: 4, day: 21, hour: 0 });
     const to = from.set({ hour: 24 });
-    this.server.get(`/api/userevents/:id`, (scheme, { params }) => {
-      assert.step('API called');
+    this.server.get(`/api/userevents/:id`, ({ params }) => {
       assert.strictEqual(Number(params.id), 1);
+      assert.step('API called');
       return { userEvents: [event1, event2] };
     });
 
@@ -150,14 +149,15 @@ module('Integration | Service | user events', function (hooks) {
       postrequisites: [],
     };
 
-    this.server.get(`/api/userevents/:id`, (scheme, { params, queryParams }) => {
-      assert.step('API called');
+    this.server.get(`/api/userevents/:id`, ({ params, request }) => {
+      const { searchParams } = new URL(request.url);
       assert.strictEqual(Number(params.id), 1);
       const from = DateTime.fromObject({ year: 2013, month: 1, day: 21, hour: 0 });
       const to = from.set({ hour: 24 });
-      assert.strictEqual(Number(queryParams.from), from.toUnixInteger());
-      assert.strictEqual(Number(queryParams.to), to.toUnixInteger());
+      assert.strictEqual(Number(searchParams.get('from')), from.toUnixInteger());
+      assert.strictEqual(Number(searchParams.get('to')), to.toUnixInteger());
 
+      assert.step('API called');
       return { userEvents: [event1, event2] };
     });
 
@@ -181,13 +181,14 @@ module('Integration | Service | user events', function (hooks) {
       postrequisites: [],
     };
 
-    this.server.get(`/api/userevents/:id`, (scheme, { params, queryParams }) => {
-      assert.step('API called');
+    this.server.get(`/api/userevents/:id`, ({ params, request }) => {
+      const { searchParams } = new URL(request.url);
       assert.strictEqual(Number(params.id), 1);
       const from = DateTime.fromObject({ year: 2013, month: 1, day: 21, hour: 0 });
       const to = from.set({ hour: 24 });
-      assert.strictEqual(Number(queryParams.from), from.toUnixInteger());
-      assert.strictEqual(Number(queryParams.to), to.toUnixInteger());
+      assert.strictEqual(Number(searchParams.get('from')), from.toUnixInteger());
+      assert.strictEqual(Number(searchParams.get('to')), to.toUnixInteger());
+      assert.step('API called');
       return { userEvents: [event1, event2] };
     });
 
