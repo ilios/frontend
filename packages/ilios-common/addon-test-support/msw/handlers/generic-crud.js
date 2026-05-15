@@ -28,13 +28,14 @@ export function createCrudHandlers(modelName, apiRoute) {
 
       // Apply search if query terms exist
       if (queryTerms.length > 0) {
-        const searchTerm = queryTerms.join(' ').toLowerCase();
         records = records.filter((record) => {
-          return Object.values(record).some((value) => {
-            if (typeof value === 'string') {
-              return value.toLowerCase().includes(searchTerm);
-            }
-            return false;
+          return queryTerms.every((term) => {
+            return Object.values(record).some((value) => {
+              if (typeof value === 'string') {
+                return value.toLowerCase().includes(term.toLowerCase());
+              }
+              return false;
+            });
           });
         });
       }
