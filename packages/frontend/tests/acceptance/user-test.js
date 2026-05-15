@@ -200,7 +200,7 @@ module('Acceptance | User', function (hooks) {
   });
 
   test('permissions view #7048', async function (assert) {
-    this.server.create('academic-year', { id: 2002 });
+    await this.server.create('academic-year', { id: 2002 });
     const user = await this.server.create('user', {
       school: this.school,
     });
@@ -216,7 +216,7 @@ module('Acceptance | User', function (hooks) {
     const session = await this.server.create('session', {
       course,
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       session,
       instructors: [user],
     });

@@ -61,7 +61,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       title: 'Gamma',
       vocabulary: vocab2,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       active: true,
       title: 'Banana',
       vocabulary: vocab3,

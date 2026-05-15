@@ -304,8 +304,8 @@ module('Acceptance | Courses', function (hooks) {
     );
     const year1 = DateTime.now().year;
     const year2 = DateTime.now().year + 1;
-    this.server.create('academic-year', { id: year1 });
-    this.server.create('academic-year', { id: year2 });
+    await this.server.create('academic-year', { id: year1 });
+    await this.server.create('academic-year', { id: year2 });
     await page.visit({ year1 });
 
     assert.ok(page.root.newCourseLinkIsHidden);
@@ -329,8 +329,8 @@ module('Acceptance | Courses', function (hooks) {
     await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
     const year1 = DateTime.now().year;
     const year2 = DateTime.now().year + 1;
-    this.server.create('academic-year', { id: year1 });
-    this.server.create('academic-year', { id: year2 });
+    await this.server.create('academic-year', { id: year1 });
+    await this.server.create('academic-year', { id: year2 });
     await page.visit({ year1 });
 
     assert.ok(page.root.newCourseLinkIsHidden);

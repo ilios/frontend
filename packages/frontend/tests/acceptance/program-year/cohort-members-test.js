@@ -13,7 +13,7 @@ module('Acceptance | Program Year - Cohort members', function (hooks) {
     const program = await this.server.create('program', { school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
-    this.server.create('user', { cohorts: [cohort] });
+    await this.server.create('user', { cohorts: [cohort] });
     this.program = program;
     this.programYear = programYear;
   });

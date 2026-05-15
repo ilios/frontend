@@ -12,12 +12,12 @@ module('Acceptance | School - Learning Material Attributes', function (hooks) {
   });
 
   test('check fields collapsed', async function (assert) {
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'learningMaterialAccessibilityRequired',
       value: false,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'learningMaterialAccessibilityRequirementsLink',
       value: '',
@@ -40,12 +40,12 @@ module('Acceptance | School - Learning Material Attributes', function (hooks) {
   });
 
   test('check fields expanded', async function (assert) {
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'learningMaterialAccessibilityRequired',
       value: false,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'learningMaterialAccessibilityRequirementsLink',
       value: '',
@@ -70,12 +70,12 @@ module('Acceptance | School - Learning Material Attributes', function (hooks) {
   });
 
   test('manage learning material attributes', async function (assert) {
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'learningMaterialAccessibilityRequired',
       value: false,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'learningMaterialAccessibilityRequirementLink',
       value: '',
