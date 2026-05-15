@@ -326,13 +326,13 @@ module('Integration | Component | session copy', function (hooks) {
     const courseSelect = '.course-select select';
 
     await fillIn(yearSelect, nextYear);
-    assert.dom(courseSelect).hasValue(course3.id, 'first course is selected');
+    assert.dom(courseSelect).hasValue(`${course3.id}`, 'first course is selected');
     await click('.done');
 
     const sessions = await this.store.findAll('session');
     assert.strictEqual(sessions.length, 2);
     const newSession = findById(sessions, '2');
-    assert.strictEqual(newSession.belongsTo('course').id(), course3.id);
+    assert.strictEqual(newSession.belongsTo('course').id(), `${course3.id}`);
     assert.verifySteps(['visit called']);
   });
 
@@ -386,7 +386,7 @@ module('Integration | Component | session copy', function (hooks) {
     assert.strictEqual(session.title, newSession.title);
 
     const newPostRequisite = await newSession.postrequisite;
-    assert.strictEqual(postrequisite.id, newPostRequisite.id);
+    assert.strictEqual(postrequisite.id, Number(newPostRequisite.id));
     assert.verifySteps(['visit called']);
   });
 
