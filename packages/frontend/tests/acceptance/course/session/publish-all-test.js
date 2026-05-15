@@ -28,21 +28,24 @@ module('Acceptance | Session - Publish All', function (hooks) {
   });
 
   test('expand/collapse state of sections are tracked in url', async function (assert) {
-    this.server.create('session', {
+    const sessionObjectives = await this.server.createList('session-objective', 2);
+    const offerings = await this.server.createList('offering', 4);
+    await this.server.create('session', {
       course: this.course,
       terms: [this.term],
       meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
-      sessionObjectives: [this.server.create('session-objective')],
-      offerings: this.server.createList('offering', 2),
+      sessionObjectives: [sessionObjectives[0]],
+      offerings: [offerings[0], offerings[1]],
     });
-    this.server.create('session', {
+
+    await this.server.create('session', {
       course: this.course,
       terms: [this.term],
       meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
-      sessionObjectives: [this.server.create('session-objective')],
-      offerings: this.server.createList('offering', 2),
+      sessionObjectives: [sessionObjectives[1]],
+      offerings: [offerings[2], offerings[3]],
     });
 
     await page.visit({ courseId: this.course.id });
