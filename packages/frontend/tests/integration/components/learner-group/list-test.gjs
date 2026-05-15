@@ -30,10 +30,14 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    await this.server.createList('learner-group', 3, { cohort: this.cohort });
-    await this.server.createList('learner-group', 3, { cohort: this.cohort, parentId: 2 });
-    await this.server.createList('learner-group', 3, { cohort: this.cohort, parentId: 5 });
     const store = this.owner.lookup('service:store');
+
+    const learnerGroup1 = await this.server.create('learner-group', { cohort: this.cohort });
+    await this.server.createList('learner-group', 2, { cohort: this.cohort });
+    await this.server.createList('learner-group', 3, {
+      cohort: this.cohort,
+      parent: learnerGroup1,
+    });
     const learnerGroupModels = [
       await store.findRecord('learner-group', 1),
       await store.findRecord('learner-group', 2),
@@ -49,10 +53,10 @@ module('Integration | Component | learner-group/list', function (hooks) {
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
     assert.strictEqual(component.items[0].users, '0');
-    assert.strictEqual(component.items[0].children, '0');
+    assert.strictEqual(component.items[0].children, '3');
     assert.strictEqual(component.items[1].title, 'learner group 1');
     assert.strictEqual(component.items[1].users, '0');
-    assert.strictEqual(component.items[1].children, '3');
+    assert.strictEqual(component.items[1].children, '0');
     assert.strictEqual(component.items[2].title, 'learner group 2');
     assert.strictEqual(component.items[2].users, '0');
     assert.strictEqual(component.items[2].children, '0');
@@ -157,12 +161,12 @@ module('Integration | Component | learner-group/list', function (hooks) {
         <List @learnerGroups={{this.learnerGroups}} @sortBy="title" @setSortBy={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(this.server.db.learnerGroups.length, 3);
+    assert.strictEqual(this.server.db.learnerGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
     await component.items[0].remove();
     await component.confirmRemoval.confirm();
-    assert.strictEqual(this.server.db.learnerGroups.length, 2);
+    assert.strictEqual(this.server.db.learnerGroup.all().length, 2);
     assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].title, 'learner group 1');
   });
@@ -176,12 +180,12 @@ module('Integration | Component | learner-group/list', function (hooks) {
         <List @learnerGroups={{this.learnerGroups}} @sortBy="title" @setSortBy={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(this.server.db.learnerGroups.length, 3);
+    assert.strictEqual(this.server.db.learnerGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
     await component.items[0].remove();
     await component.confirmRemoval.cancel();
-    assert.strictEqual(this.server.db.learnerGroups.length, 3);
+    assert.strictEqual(this.server.db.learnerGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
   });
