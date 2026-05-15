@@ -427,7 +427,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
 
   test('can search for course', async function (assert) {
     const school = await this.server.create('school', { title: 'first' });
-    this.server.createList('course', 3, { school });
+    await this.server.createList('course', 3, { school });
     await render(
       <template>
         <NewSubject

@@ -66,7 +66,7 @@ module('Integration | Component | course/rollover', function (hooks) {
         program,
         startYear,
       });
-      this.server.create('cohort', {
+      await this.server.create('cohort', {
         title: `${startYear}`,
         programYear,
       });

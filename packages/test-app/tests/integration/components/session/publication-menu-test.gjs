@@ -153,7 +153,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
       published: false,
       publishedAsTbd: false,
     });
-    this.server.create('offering', { session });
+    await this.server.create('offering', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
@@ -185,7 +185,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
       published: true,
       publishedAsTbd: false,
     });
-    this.server.create('offering', { session });
+    await this.server.create('offering', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
