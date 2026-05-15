@@ -9,6 +9,7 @@ export const schema = z.looseObject({
   attendanceRequired: z.boolean().nullish(),
   publishedAsTbd: z.boolean().nullish(),
   published: z.boolean().nullish(),
+  description: z.string().nullish(),
   instructionalNotes: z.string().nullish(),
   updatedAt: z.iso.datetime({ offset: true }).nullish(),
 });
