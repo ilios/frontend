@@ -3,7 +3,6 @@ import { currentURL, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-session-type';
 import { setupAuthentication } from 'ilios-common';
-import { DateTime } from 'luxon';
 
 module('Acceptance | course visualizations - session-type', function (hooks) {
   setupApplicationTest(hooks);
@@ -43,13 +42,13 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
       hours: 2,
     });
     await this.server.create('offering', {
-      startDate: DateTime.fromISO('2022-07-20T09:00:00').toJSDate(),
-      endDate: DateTime.fromISO('2022-07-20T10:00:00').toJSDate(),
+      startDate: '2022-07-20T09:00:00',
+      endDate: '2022-07-20T10:00:00',
       session: session1,
     });
     await this.server.create('offering', {
-      startDate: DateTime.fromISO('2022-07-20T09:00:00').toJSDate(),
-      endDate: DateTime.fromISO('2022-07-20T09:30:00').toJSDate(),
+      startDate: '2022-07-20T09:00:00',
+      endDate: '2022-07-20T09:30:00',
       session: session2,
     });
     await page.visit({ courseId: course.id, sessionTypeId: sessionType.id });

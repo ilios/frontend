@@ -179,8 +179,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       published: true,
       title: 'my fancy course',
       clerkshipType,
-      startDate: new Date('2016-03-01'),
-      endDate: new Date('2016-03-02'),
+      startDate: '2016-03-01',
+      endDate: '2016-03-02',
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -755,8 +755,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       published: true,
       title: 'my fancy course',
       clerkshipType,
-      startDate: new Date('2016-03-01'),
-      endDate: new Date('2016-03-02'),
+      startDate: '2016-03-01',
+      endDate: '2016-03-02',
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -790,8 +790,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       published: true,
       title: 'my fancy course',
       clerkshipType,
-      startDate: new Date('2016-03-01'),
-      endDate: new Date('2016-03-02'),
+      startDate: '2016-03-01',
+      endDate: '2016-03-02',
     });
     const reportModel = await this.owner
       .lookup('service:store')

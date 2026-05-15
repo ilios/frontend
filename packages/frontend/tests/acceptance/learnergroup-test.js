@@ -325,10 +325,10 @@ module('Acceptance | Learner Group', function (hooks) {
     });
     await this.server.create('offering', {
       session,
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
       learnerGroups: [learnerGroup],
-      updatedAt: DateTime.now().toJSDate(),
+      updatedAt: DateTime.now().toISO(),
     });
     await this.server.create('offering');
     await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
@@ -384,17 +384,17 @@ module('Acceptance | Learner Group', function (hooks) {
     });
     await this.server.create('offering', {
       session,
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
       learnerGroups: [learnerGroup],
-      updatedAt: DateTime.now().toJSDate(),
+      updatedAt: DateTime.now().toISO(),
     });
     await this.server.create('offering', {
       session,
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
       learnerGroups: [subgroup],
-      updatedAt: DateTime.now().toJSDate(),
+      updatedAt: DateTime.now().toISO(),
     });
     await this.server.create('offering');
     await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });

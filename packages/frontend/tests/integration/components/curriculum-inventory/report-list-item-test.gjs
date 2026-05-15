@@ -19,8 +19,8 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
       program: this.program,
       name: 'CI Report',
       year: '2017',
-      startDate: new Date('2017-07-01'),
-      endDate: new Date('2018-06-30'),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
     this.report = await this.owner
       .lookup('service:store')

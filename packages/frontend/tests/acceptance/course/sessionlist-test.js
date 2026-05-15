@@ -42,7 +42,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     this.session1 = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionType,
-      updatedAt: DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 }).toJSDate(),
+      updatedAt: DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 }).toISO(),
     });
     this.session2 = await this.server.create('session', {
       course: this.course,
@@ -61,8 +61,8 @@ module('Acceptance | Course - Session List', function (hooks) {
     });
     await this.server.create('offering', {
       session: this.session1,
-      startDate: this.today.toJSDate(),
-      endDate: this.today.plus({ hour: 1 }).toJSDate(),
+      startDate: this.today.toISO(),
+      endDate: this.today.plus({ hour: 1 }).toISO(),
       learners: [learner1],
       learnerGroups: [learnerGroup1, learnerGroup2],
       instructors: [instructor1],
@@ -70,13 +70,13 @@ module('Acceptance | Course - Session List', function (hooks) {
     });
     await this.server.create('offering', {
       session: this.session1,
-      startDate: this.today.plus({ day: 1, hour: 1 }).toJSDate(),
-      endDate: this.today.plus({ day: 1, hour: 4 }).toJSDate(),
+      startDate: this.today.plus({ day: 1, hour: 1 }).toISO(),
+      endDate: this.today.plus({ day: 1, hour: 4 }).toISO(),
     });
     await this.server.create('offering', {
       session: this.session1,
-      startDate: this.today.plus({ day: 2 }).toJSDate(),
-      endDate: this.today.plus({ day: 3 }).toJSDate(),
+      startDate: this.today.plus({ day: 2 }).toISO(),
+      endDate: this.today.plus({ day: 3 }).toISO(),
     });
   });
 
