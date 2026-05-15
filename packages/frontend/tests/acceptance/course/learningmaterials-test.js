@@ -33,7 +33,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       markedAccessible: false,
       filename: 'something.pdf',
       absoluteFileUri: 'http://somethingsomething.com/something.pdf',
-      uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toJSDate(),
+      uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toISO(),
     });
     this.material2 = await this.server.create('learning-material', {
       originalAuthor: 'Jennifer Johnson',
@@ -45,7 +45,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       markedAccessible: true,
       filename: 'filename',
       absoluteFileUri: 'http://example.com/file',
-      uploadDate: DateTime.fromObject({ year: 2011, month: 3, day: 14, hour: 8 }).toJSDate(),
+      uploadDate: DateTime.fromObject({ year: 2011, month: 3, day: 14, hour: 8 }).toISO(),
     });
     this.material3 = await this.server.create('learning-material', {
       originalAuthor: 'Hunter Pence',
@@ -53,7 +53,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       status: statuses[0],
       owningUser: this.user,
       userRole: roles[0],
-      uploadDate: today.toJSDate(),
+      uploadDate: today.toISO(),
     });
     this.material4 = await this.server.create('learning-material', {
       originalAuthor: 'Willie Mays',
@@ -61,7 +61,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       status: statuses[0],
       userRole: roles[0],
       owningUser: this.user,
-      uploadDate: DateTime.fromObject({ year: 2016, month: 12, day: 12, hour: 8 }).toJSDate(),
+      uploadDate: DateTime.fromObject({ year: 2016, month: 12, day: 12, hour: 8 }).toISO(),
     });
     this.material5 = await this.server.create('learning-material', {
       title: 'Letter to Doc Brown',
@@ -70,7 +70,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       status: statuses[0],
       userRole: roles[0],
       copyrightPermission: true,
-      uploadDate: DateTime.fromObject({ year: 2016, month: 3, day: 3, hour: 8 }).toJSDate(),
+      uploadDate: DateTime.fromObject({ year: 2016, month: 3, day: 3, hour: 8 }).toISO(),
       filename: 'letter.txt',
       absoluteFileUri: 'http://bttf.com/letter.txt',
     });
