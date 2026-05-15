@@ -15,7 +15,7 @@ export const schema = z.looseObject({
   token: z.string().nullish(),
   absoluteFileUri: z.string().nullish(),
   markedAccessible: z.boolean().nullish(),
-  uploadDate: z.date().nullish(),
+  uploadDate: z.iso.datetime({ offset: true }).nullish(),
 });
 
 export const relationships = [

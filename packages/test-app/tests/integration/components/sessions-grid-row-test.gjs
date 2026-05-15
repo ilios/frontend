@@ -26,18 +26,18 @@ module('Integration | Component | sessions-grid-session-row', function (hooks) {
     await this.server.createList('session-objective', 3, { session });
     const offering1 = await this.server.create('offering', {
       session,
-      startDate: date.toJSDate(),
+      startDate: date.toISO(),
     });
     const offering2 = await this.server.create('offering', {
       session,
-      startDate: date.plus({ hour: 1 }).toJSDate(),
+      startDate: date.plus({ hour: 1 }).toISO(),
     });
     await this.server.create('learner-group', { offerings: [offering1] });
     await this.server.createList('learner-group', 3, { offerings: [offering2] });
     const ilmSession = await this.server.create('ilm-session', {
       id: 1,
       session,
-      dueDate: date.toJSDate(),
+      dueDate: date.toISO(),
     });
     await this.server.create('learner-group', { ilmSessions: [ilmSession] });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);

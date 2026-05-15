@@ -27,8 +27,8 @@ module('Integration | Component | offering-manager', function (hooks) {
     const learnerGroup2 = await this.server.create('learner-group');
     const offering = await this.server.create('offering', {
       session,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: today.toISO(),
+      endDate: today.plus({ hour: 1 }).toISO(),
       room: 'room 123',
       learners: [users[0], users[1]],
       learnerGroups: [learnerGroup1, learnerGroup2],
@@ -94,8 +94,8 @@ module('Integration | Component | offering-manager', function (hooks) {
     const learnerGroup2 = await this.server.create('learner-group');
     const offering = await this.server.create('offering', {
       session,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: today.toISO(),
+      endDate: today.plus({ hour: 1 }).toISO(),
       room: 'room 123',
       learnerGroups: [learnerGroup1, learnerGroup2],
       instructors: [users[0], users[1]],
@@ -153,8 +153,8 @@ module('Integration | Component | offering-manager', function (hooks) {
     });
     const offering = await this.server.create('offering', {
       session,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: today.toISO(),
+      endDate: today.plus({ hour: 1 }).toISO(),
       room: 'room 123',
       learners: [users[0], users[1]],
       instructors: [users[2], users[3]],
@@ -211,8 +211,8 @@ module('Integration | Component | offering-manager', function (hooks) {
     });
     const offering = await this.server.create('offering', {
       session,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: today.toISO(),
+      endDate: today.plus({ hour: 1 }).toISO(),
       room: 'room 123',
       instructors: [users[0], users[1]],
       url: 'http://foo.com',

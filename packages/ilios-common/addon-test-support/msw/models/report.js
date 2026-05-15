@@ -6,7 +6,7 @@ export const schema = z.looseObject({
   subject: z.string().nullish(),
   prepositionalObject: z.string().nullish(),
   prepositionalObjectTableRowId: z.string().nullish(),
-  createdAt: z.date(),
+  createdAt: z.iso.datetime({ offset: true }),
 });
 
 export const relationships = [

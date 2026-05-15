@@ -73,20 +73,20 @@ module('Integration | Component | offering-calendar', function (hooks) {
       sessionType,
     });
     const offering1 = await this.server.create('offering', {
-      startDate: startOfWeek.toJSDate(),
-      endDate: startOfWeek.plus({ hour: 1 }).toJSDate(),
+      startDate: startOfWeek.toISO(),
+      endDate: startOfWeek.plus({ hour: 1 }).toISO(),
       location: 123,
       session,
     });
     const offering2 = await this.server.create('offering', {
-      startDate: endOfWeek.toJSDate(),
-      endDate: endOfWeek.plus({ hour: 1 }).toJSDate(),
+      startDate: endOfWeek.toISO(),
+      endDate: endOfWeek.plus({ hour: 1 }).toISO(),
       location: 123,
       session,
     });
     const offering3 = await this.server.create('offering', {
-      startDate: startDate.plus({ day: 1, hour: 1 }).toJSDate(),
-      endDate: startDate.plus({ day: 1, hour: 2 }).toJSDate(),
+      startDate: startDate.plus({ day: 1, hour: 1 }).toISO(),
+      endDate: startDate.plus({ day: 1, hour: 2 }).toISO(),
       location: 123,
       session: session2,
     });

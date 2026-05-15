@@ -116,14 +116,14 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
     });
     await this.server.create('offering', {
       instructorGroups: [instructorGroup1],
-      startDate: DateTime.fromISO('2022-07-20T09:00:00').toJSDate(),
-      endDate: DateTime.fromISO('2022-07-20T10:00:00').toJSDate(),
+      startDate: DateTime.fromISO('2022-07-20T09:00:00').toISO(),
+      endDate: DateTime.fromISO('2022-07-20T10:00:00').toISO(),
       session: session1,
     });
     await this.server.create('offering', {
       instructors: [instructor],
-      startDate: DateTime.fromISO('2022-07-20T09:00:00').toJSDate(),
-      endDate: DateTime.fromISO('2022-07-20T09:30:00').toJSDate(),
+      startDate: DateTime.fromISO('2022-07-20T09:00:00').toISO(),
+      endDate: DateTime.fromISO('2022-07-20T09:30:00').toISO(),
       session: session2,
     });
     const course = await this.server.create('course', {

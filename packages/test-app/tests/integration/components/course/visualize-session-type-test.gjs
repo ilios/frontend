@@ -19,8 +19,8 @@ module('Integration | Component | course/visualize-session-type', function (hook
     const sessionType = await this.server.create('session-type', { school, sessions: [session] });
     await this.server.create('offering', {
       session: session,
-      startDate: new Date('2019-12-08T12:00:00'),
-      endDate: new Date('2019-12-08T17:00:00'),
+      startDate: '2019-12-08T12:00:00',
+      endDate: '2019-12-08T17:00:00',
     });
     this.sessionTypeModel = await this.owner
       .lookup('service:store')

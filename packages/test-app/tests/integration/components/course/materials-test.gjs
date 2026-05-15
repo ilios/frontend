@@ -5,6 +5,7 @@ import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/materials';
 import Materials from 'ilios-common/components/course/materials';
 import noop from 'ilios-common/helpers/noop';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | course/materials', function (hooks) {
   setupRenderingTest(hooks);
@@ -94,8 +95,8 @@ module('Integration | Component | course/materials', function (hooks) {
     });
     context.server.create('offering', {
       session,
-      startDate: new Date(2020, 1, 2, 12),
-      endDate: new Date(2020, 1, 2, 14),
+      startDate: DateTime.fromObject({ year: 2020, month: 2, day: 2, hour: 12 }).toISO(),
+      endDate: DateTime.fromObject({ year: 2020, month: 2, day: 2, hour: 14 }).toISO(),
     });
 
     const course = await context.server.create('course', {

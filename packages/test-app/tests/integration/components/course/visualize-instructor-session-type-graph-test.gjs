@@ -4,6 +4,7 @@ import { render, waitFor } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/visualize-instructor-session-type-graph';
 import VisualizeInstructorSessionTypeGraph from 'ilios-common/components/course/visualize-instructor-session-type-graph';
+import { DateTime } from 'luxon';
 
 module(
   'Integration | Component | course/visualize-instructor-session-type-graph',
@@ -46,32 +47,38 @@ module(
       });
       await this.server.create('offering', {
         session: session1,
-        startDate: new Date('2019-12-08T12:00:00'),
-        endDate: new Date('2019-12-08T17:00:00'),
+        startDate: DateTime.fromObject({ year: 2019, month: 12, day: 8, hour: 12 }).toISO(),
+        endDate: DateTime.fromObject({ year: 2019, month: 12, day: 8, hour: 17 }).toISO(),
         instructors: [instructor],
       });
       await this.server.create('offering', {
         session: session1,
-        startDate: new Date('2019-12-21T12:00:00'),
-        endDate: new Date('2019-12-21T17:30:00'),
+        startDate: DateTime.fromObject({ year: 2019, month: 12, day: 21, hour: 12 }).toISO(),
+        endDate: DateTime.fromObject({
+          year: 2019,
+          month: 12,
+          day: 21,
+          hour: 17,
+          minute: 30,
+        }).toISO(),
         instructors: [instructor],
       });
       await this.server.create('offering', {
         session: session2,
-        startDate: new Date('2019-12-05T18:00:00'),
-        endDate: new Date('2019-12-05T21:00:00'),
+        startDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 18 }).toISO(),
+        endDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 21 }).toISO(),
         instructors: [instructor],
       });
       await this.server.create('offering', {
         session: session3,
-        startDate: new Date('2019-12-05T18:00:00'),
-        endDate: new Date('2019-12-05T18:00:00'),
+        startDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 18 }).toISO(),
+        endDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 18 }).toISO(),
         instructors: [instructor],
       });
       await this.server.create('offering', {
         session: session4,
-        startDate: new Date('2019-12-05T18:00:00'),
-        endDate: new Date('2019-12-05T18:00:00'),
+        startDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 18 }).toISO(),
+        endDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 18 }).toISO(),
         instructors: [instructor],
       });
       this.emptyCourse = await this.owner

@@ -10,7 +10,7 @@ export const schema = z.looseObject({
   publishedAsTbd: z.boolean().nullish(),
   published: z.boolean().nullish(),
   instructionalNotes: z.string().nullish(),
-  updatedAt: z.date().nullish(),
+  updatedAt: z.iso.datetime({ offset: true }).nullish(),
 });
 
 export const relationships = [

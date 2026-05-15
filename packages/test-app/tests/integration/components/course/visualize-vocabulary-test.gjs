@@ -29,8 +29,8 @@ module('Integration | Component | course/visualize-vocabulary', function (hooks)
     });
     await this.server.create('offering', {
       session: session2,
-      startDate: new Date('2022-07-20T09:00:00'),
-      endDate: new Date('2022-07-20T10:00:00'),
+      startDate: '2022-07-20T09:00:00',
+      endDate: '2022-07-20T10:00:00',
     });
     this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.vocabularyModel = await this.owner
