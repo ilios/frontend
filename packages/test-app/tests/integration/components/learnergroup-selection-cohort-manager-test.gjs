@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -44,7 +44,11 @@ module('Integration | Component | learnergroup-selection-cohort-manager', functi
     );
   });
 
-  test('it renders', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
+  skip('it renders', async function (assert) {
     this.set('learnerGroups', [this.secondLevelLearnerGroup1, this.secondLevelLearnerGroup3]);
     this.set('cohorts', this.cohort);
     this.set('filter', '');
@@ -74,7 +78,7 @@ module('Integration | Component | learnergroup-selection-cohort-manager', functi
     assert.notOk(component.trees[0].subgroups[1].isChecked);
   });
 
-  test('remove group in picker', async function (assert) {
+  skip('remove group in picker', async function (assert) {
     this.set('filter', '');
     this.set('remove', (learnerGroup) => {
       assert.step('remove called');
@@ -98,7 +102,7 @@ module('Integration | Component | learnergroup-selection-cohort-manager', functi
     assert.verifySteps(['remove called']);
   });
 
-  test('add available group', async function (assert) {
+  skip('add available group', async function (assert) {
     this.set('filter', '');
     this.set('add', (learnerGroup) => {
       assert.step('add called');
@@ -122,7 +126,7 @@ module('Integration | Component | learnergroup-selection-cohort-manager', functi
     assert.verifySteps(['add called']);
   });
 
-  test('filter applies', async function (assert) {
+  skip('filter applies', async function (assert) {
     this.set('filter', 'Second 2');
     this.set('learnerGroups', [this.secondLevelLearnerGroup1, this.secondLevelLearnerGroup2]);
     this.set('cohort', this.cohort);
