@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const schema = z.looseObject({
   id: z.number(),
   title: z.string().nullish(),
+  assessment: z.boolean().nullish(),
   calendarColor: z.string().nullish(),
   active: z.boolean().nullish(),
 });
