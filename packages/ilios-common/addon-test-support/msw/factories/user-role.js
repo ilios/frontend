@@ -1,3 +1,3 @@
 export default {
-  title: (i) => `role ${i}`,
+  title: (i) => `user role ${i}`,
 };
