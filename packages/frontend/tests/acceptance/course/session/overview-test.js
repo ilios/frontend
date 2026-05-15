@@ -234,14 +234,14 @@ module('Acceptance | Session - Overview', function (hooks) {
       hour: 17,
       minute: 0,
       second: 0,
-    }).toJSDate();
+    });
     await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
-      updatedAt,
+      updatedAt: updatedAt.toISO(),
     });
     await page.visit({ courseId: 1, sessionId: 1 });
-    const updatedAtString = this.intl.formatDate(updatedAt, {
+    const updatedAtString = this.intl.formatDate(updatedAt.toJSDate(), {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',

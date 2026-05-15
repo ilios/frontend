@@ -40,22 +40,22 @@ module('Acceptance | Session - Publish', function (hooks) {
     });
     await this.server.create('ilm-session', {
       session: this.ilmSession,
-      dueDate: DateTime.now().toJSDate(),
+      dueDate: DateTime.now().toISO(),
     });
     await this.server.create('offering', {
       session: this.publishedSession,
-      startDate: DateTime.now().toJSDate(),
-      endDate: DateTime.now().plus({ hours: 6 }).toJSDate(),
+      startDate: DateTime.now().toISO(),
+      endDate: DateTime.now().plus({ hours: 6 }).toISO(),
     });
     await this.server.create('offering', {
       session: this.scheduledSession,
-      startDate: DateTime.now().toJSDate(),
-      endDate: DateTime.now().plus({ hours: 6 }).toJSDate(),
+      startDate: DateTime.now().toISO(),
+      endDate: DateTime.now().plus({ hours: 6 }).toISO(),
     });
     await this.server.create('offering', {
       session: this.draftSession,
-      startDate: DateTime.now().toJSDate(),
-      endDate: DateTime.now().plus({ hours: 6 }).toJSDate(),
+      startDate: DateTime.now().toISO(),
+      endDate: DateTime.now().plus({ hours: 6 }).toISO(),
     });
   });
 

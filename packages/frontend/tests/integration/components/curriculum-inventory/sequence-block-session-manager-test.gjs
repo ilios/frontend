@@ -16,18 +16,18 @@ module(
 
     test('it renders', async function (assert) {
       const now = DateTime.now();
-      const in15Hours = now.plus({ hours: 15 }).toJSDate();
-      const in30Hours = now.plus({ hours: 30 }).toJSDate();
+      const in15Hours = now.plus({ hours: 15 }).toISO();
+      const in30Hours = now.plus({ hours: 30 }).toISO();
       const offering1 = await this.server.create('offering', {
-        startDate: now.toJSDate(),
+        startDate: now.toISO(),
         endDate: in30Hours,
       });
       const offering2 = await this.server.create('offering', {
-        startDate: now.toJSDate(),
+        startDate: now.toISO(),
         endDate: in15Hours,
       });
       const offering3 = await this.server.create('offering', {
-        startDate: now.toJSDate(),
+        startDate: now.toISO(),
         endDate: in15Hours,
       });
       const sessionType1 = await this.server.create('session-type', { title: 'Lecture' });
@@ -333,14 +333,14 @@ module(
 
     test('change count as one offering', async function (assert) {
       const now = DateTime.now();
-      const in15Hours = now.plus({ hours: 15 }).toJSDate();
-      const in30Hours = now.plus({ hours: 30 }).toJSDate();
+      const in15Hours = now.plus({ hours: 15 }).toISO();
+      const in30Hours = now.plus({ hours: 30 }).toISO();
       const offering1 = await this.server.create('offering', {
-        startDate: now.toJSDate(),
+        startDate: now.toISO(),
         endDate: in30Hours,
       });
       const offering2 = await this.server.create('offering', {
-        startDate: now.toJSDate(),
+        startDate: now.toISO(),
         endDate: in15Hours,
       });
       const sessionType = await this.server.create('session-type');
@@ -382,22 +382,22 @@ module(
 
     test('check all/uncheck count offerings as one', async function (assert) {
       const now = DateTime.now();
-      const in15Hours = now.plus({ hours: 15 }).toJSDate();
-      const in30Hours = now.plus({ hours: 30 }).toJSDate();
+      const in15Hours = now.plus({ hours: 15 }).toISO();
+      const in30Hours = now.plus({ hours: 30 }).toISO();
       const offering1 = await this.server.create('offering', {
-        startDate: now.toJSDate(),
+        startDate: now.toISO(),
         endDate: in30Hours,
       });
       const offering2 = await this.server.create('offering', {
-        startDate: now.toJSDate(),
+        startDate: now.toISO(),
         endDate: in15Hours,
       });
       const offering3 = await this.server.create('offering', {
-        startDate: now.toJSDate(),
+        startDate: now.toISO(),
         endDate: in30Hours,
       });
       const offering4 = await this.server.create('offering', {
-        startDate: now.toJSDate(),
+        startDate: now.toISO(),
         endDate: in30Hours,
       });
       const sessionType = await this.server.create('session-type');

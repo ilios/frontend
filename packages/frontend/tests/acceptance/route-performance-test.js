@@ -30,9 +30,9 @@ module('Acceptance | performance', function (hooks) {
       await this.server.create('userevent', {
         user: Number(this.user.id),
         name: `user event ${i}`,
-        startDate: startOfWeek.plus({ hour: i }).toJSDate(),
-        endDate: startOfWeek.plus({ hour: i + i }).toJSDate(),
-        lastModified: today.minus({ year: 1 }).toJSDate(),
+        startDate: startOfWeek.plus({ hour: i }).toISO(),
+        endDate: startOfWeek.plus({ hour: i + i }).toISO(),
+        lastModified: today.minus({ year: 1 }).toISO(),
         isPublished: true,
         offering: i,
       });
