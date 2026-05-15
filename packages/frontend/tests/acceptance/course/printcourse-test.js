@@ -2,6 +2,7 @@ import { find, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { DateTime } from 'luxon';
 
 module('Acceptance | Course - Print Course', function (hooks) {
   setupApplicationTest(hooks);
@@ -139,7 +140,14 @@ module('Acceptance | Course - Print Course', function (hooks) {
     await this.server.create('ilm-session', {
       session,
       hours: 1.5,
-      dueDate: new Date(1995, 11, 17, 3, 24, 0),
+      dueDate: DateTime.fromObject({
+        year: 1995,
+        month: 12,
+        day: 17,
+        hour: 3,
+        minute: 24,
+        second: 0,
+      }).toISO(),
     });
 
     await visit('/course/1/print');
