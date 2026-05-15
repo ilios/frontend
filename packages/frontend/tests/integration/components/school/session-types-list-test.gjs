@@ -70,6 +70,7 @@ module('Integration | Component | school/session-types-list', function (hooks) {
     assert.strictEqual(component.sessionTypes[0].aamcMethod, aamcMethod1.description);
     assert.strictEqual(component.sessionTypes[0].assessmentOption, '');
     assert.strictEqual(component.sessionTypes[0].calendarColor, 'background-color: #cccccc');
+
     assert.strictEqual(component.sessionTypes[1].title.text, 'second');
     assert.strictEqual(component.sessionTypes[1].sessionCount, '0');
     assert.ok(component.sessionTypes[1].isAssessment);
@@ -196,7 +197,7 @@ module('Integration | Component | school/session-types-list', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(this.server.db.sessionTypes.length, 1);
+    assert.strictEqual(this.server.db.sessionType.all().length, 1);
     assert.notOk(component.sessionTypes[0].confirmRemoval.isVisible);
     await component.sessionTypes[0].delete();
     assert.strictEqual(
@@ -204,6 +205,6 @@ module('Integration | Component | school/session-types-list', function (hooks) {
       'Are you sure you want to delete this session type? This action cannot be undone. Yes Cancel',
     );
     await component.sessionTypes[0].confirmRemoval.confirm();
-    assert.strictEqual(this.server.db.sessionTypes.length, 0);
+    assert.strictEqual(this.server.db.sessionType.all().length, 0);
   });
 });
