@@ -117,7 +117,7 @@ module('Unit | Service | permission-checker', function (hooks) {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return ['SCHOOL_ADMINISTRATOR'];
       }
     }
@@ -141,7 +141,7 @@ module('Unit | Service | permission-checker', function (hooks) {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return ['SCHOOL_ADMINISTRATOR'];
       }
     }
@@ -165,7 +165,7 @@ module('Unit | Service | permission-checker', function (hooks) {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return [];
       }
     }
@@ -189,7 +189,7 @@ module('Unit | Service | permission-checker', function (hooks) {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return [];
       }
     }
@@ -213,7 +213,7 @@ module('Unit | Service | permission-checker', function (hooks) {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return ['SCHOOL_ADMINISTRATOR'];
       }
     }
@@ -238,7 +238,7 @@ module('Unit | Service | permission-checker', function (hooks) {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return [];
       }
       async getRolesInCurriculumInventoryReport(rpt) {
