@@ -9,37 +9,32 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
     this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
-    await this.server.createList('user', 6);
+    const instructors = await this.server.createList('user', 6);
     await this.server.create('academic-year');
     this.course = await this.server.create('course', { school });
     const instructorGroups = await this.server.createList('instructor-group', 5, { school });
-    const instructors1 = await this.server.createList('user', 2, {
+    await this.server.createList('user', 2, {
       instructorGroups: [instructorGroups[0]],
     });
-    const instructors2 = await this.server.createList('user', 3, {
+    await this.server.createList('user', 3, {
       instructorGroups: [instructorGroups[1]],
     });
     this.sessionType = await this.server.create('session-type', { school });
     this.ilmSession = await this.server.create('ilm-session', {
       instructorGroups: [instructorGroups[0], instructorGroups[1], instructorGroups[2]],
-      instructors: [instructors1[0], instructors1[1], instructors2[0]],
+      instructors: [instructors[0], instructors[1], instructors[2]],
     });
   });
 
   test('initial selected instructors', async function (assert) {
-    await this.server.create('session', {
-      course: this.course,
-      ilmSession: this.ilmSession,
-      sessionType: this.sessionType,
-    });
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
 
@@ -94,7 +89,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       page.details.instructors.selectedInstructorGroups.instructorGroups[2].members.members.length,
       0,
     );
-
     assert.strictEqual(page.details.instructors.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[0].userNameInfo.fullName,
@@ -111,14 +105,14 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('manage instructors lists', async function (assert) {
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
@@ -186,14 +180,14 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('manage instructors search users', async function (assert) {
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
@@ -229,14 +223,14 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('manage instructors search groups', async function (assert) {
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
@@ -258,14 +252,14 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('add instructor group', async function (assert) {
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
@@ -430,14 +424,14 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('remove instructor group', async function (assert) {
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
@@ -499,14 +493,14 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('remove instructor', async function (assert) {
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
@@ -568,14 +562,14 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('undo instructor/group changes', async function (assert) {
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
@@ -619,14 +613,14 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('ilm due date is visible if session has no post-requisite', async function (assert) {
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
@@ -636,29 +630,29 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     const postrequisite = await this.server.create('session', {
       course: this.course,
     });
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
       postrequisite,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isHidden);
   });
 
   test('ilm-only subcomponents disappear/reappear if ilm gets toggled off/on', async function (assert) {
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       ilmSession: this.ilmSession,
       sessionType: this.sessionType,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
