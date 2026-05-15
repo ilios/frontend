@@ -71,12 +71,12 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
         <List @instructorGroups={{this.instructorGroups}} @sortBy="title" @setSortBy={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(this.server.db.instructorGroups.length, 3);
+    assert.strictEqual(this.server.db.instructorGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'instructor group 0');
     await component.items[0].remove();
     await component.confirmRemoval.confirm();
-    assert.strictEqual(this.server.db.instructorGroups.length, 2);
+    assert.strictEqual(this.server.db.instructorGroup.all().length, 2);
     assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].title, 'instructor group 1');
   });
@@ -93,12 +93,12 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
         <List @instructorGroups={{this.instructorGroups}} @sortBy="title" @setSortBy={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(this.server.db.instructorGroups.length, 3);
+    assert.strictEqual(this.server.db.instructorGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'instructor group 0');
     await component.items[0].remove();
     await component.confirmRemoval.cancel();
-    assert.strictEqual(this.server.db.instructorGroups.length, 3);
+    assert.strictEqual(this.server.db.instructorGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'instructor group 0');
   });
@@ -106,7 +106,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
   test('sort', async function (assert) {
     const school = await this.server.create('school');
     const users = await this.server.createList('user', 5);
-    const courses = await this.server.createList('course');
+    const courses = await this.server.createList('course', 5);
 
     const sessions = [];
     for (let i = 0; i < courses.length; i++) {

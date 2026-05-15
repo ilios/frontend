@@ -72,7 +72,7 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
     await component.editTitle();
     await component.changeTitle('new title');
     await component.saveTitle();
-    assert.strictEqual(this.server.db.vocabularies[0].title, 'new title');
+    assert.strictEqual(this.server.db.vocabulary.all()[0].title, 'new title');
   });
 
   test('cancel vocabulary title changes', async function (assert) {
@@ -125,7 +125,7 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
     await component.saveTitle();
     assert.ok(component.hasError);
     assert.strictEqual(component.error, 'Title can not be blank');
-    assert.strictEqual(this.server.db.vocabularies[0].title, 'Vocabulary 1');
+    assert.strictEqual(this.server.db.vocabulary.all()[0].title, 'Vocabulary 1');
   });
 
   test('validation fails if vocabulary title is too long', async function (assert) {
@@ -153,7 +153,7 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
     await component.saveTitle();
     assert.ok(component.hasError);
     assert.strictEqual(component.error, 'Title is too long (maximum is 200 characters)');
-    assert.strictEqual(this.server.db.vocabularies[0].title, 'Vocabulary 1');
+    assert.strictEqual(this.server.db.vocabulary.all()[0].title, 'Vocabulary 1');
   });
 
   test('prevent duplicate vocabulary title', async function (assert) {
@@ -185,7 +185,7 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
     await component.saveTitle();
     assert.ok(component.hasError);
     assert.strictEqual(component.error, 'Title is a duplicate');
-    assert.strictEqual(this.server.db.vocabularies[0].title, 'Vocabulary 1');
+    assert.strictEqual(this.server.db.vocabulary.all()[0].title, 'Vocabulary 1');
   });
 
   test('add term', async function (assert) {
@@ -211,10 +211,10 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
 
     await component.terms.newTermForm.setTitle('new term');
     await component.terms.newTermForm.save();
-    assert.strictEqual(component.terms.list.length, 1);
+    assert.strictEqual(component.terms.list.length, 1, 'term count correct');
 
-    assert.strictEqual(this.server.db.terms[0].title, 'new term');
-    assert.strictEqual(this.server.db.terms[0].vocabularyId, vocabulary.id);
+    assert.strictEqual(this.server.db.term.all()[0].title, 'new term');
+    assert.strictEqual(this.server.db.term.all()[0].id, vocabulary.id);
   });
 
   test('cant add term with empty title', async function (assert) {
