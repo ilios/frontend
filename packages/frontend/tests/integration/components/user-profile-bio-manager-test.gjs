@@ -532,10 +532,9 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.user.username = this.authentication.username;
-    this.server.get(`application/directory/find/:id`, (scheme, { params }) => {
+    this.server.get(`application/directory/find/:id`, ({ params }) => {
+      assert.strictEqual(Number(params.id), 13, 'id is correct');
       assert.step('API called');
-      assert.ok('id' in params, 'id param is in directory sync');
-      assert.strictEqual(parseInt(params.id, 10), 13, 'id is correct');
       return {
         result: {
           firstName: 'new-first-name',

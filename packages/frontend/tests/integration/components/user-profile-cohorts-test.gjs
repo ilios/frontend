@@ -136,10 +136,11 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     assert.strictEqual(component.manager.secondaryCohorts.length, 1);
     assert.strictEqual(component.manager.secondaryCohorts[0].title, 'school 1 program 1 cohort 3');
 
-    const user = this.server.schema.users.find(this.user.id);
+    const user = this.server.db.user.findFirst((q) => q.where({ id: Number(this.user.id) }));
     assert.strictEqual(user.primaryCohort.id, this.cohort2.id, 'user has correct primary cohort');
-    assert.notOk(user.attrs.cohortIds.includes(this.cohort1.id), 'cohort1 has been removed');
-    assert.ok(user.attrs.cohortIds.includes(this.cohort2.id), 'cohort2 is still present');
-    assert.ok(user.attrs.cohortIds.includes(this.cohort4.id), 'cohort4 has been added');
+    const cohortIds = user.cohorts.map(({ id }) => id);
+    assert.notOk(cohortIds.includes(this.cohort1.id), 'cohort1 has been removed');
+    assert.ok(cohortIds.includes(this.cohort2.id), 'cohort2 is still present');
+    assert.ok(cohortIds.includes(this.cohort4.id), 'cohort4 has been added');
   });
 });
