@@ -56,7 +56,7 @@ module('Unit | Service | reporting', function (hooks) {
       school,
       prepositionalObject: 'instructor',
       subject: 'competency',
-      prepositionalObjectTableRowId: user.id,
+      prepositionalObjectTableRowId: `${user.id}`,
     });
 
     const store = this.owner.lookup('service:store');
@@ -80,7 +80,7 @@ module('Unit | Service | reporting', function (hooks) {
       school,
       prepositionalObject: 'instructor',
       subject: 'competency',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
 
     const store = this.owner.lookup('service:store');
@@ -137,7 +137,7 @@ module('Unit | Service | reporting', function (hooks) {
       school,
       prepositionalObject: 'instructor',
       subject: 'course',
-      prepositionalObjectTableRowId: user.id,
+      prepositionalObjectTableRowId: `${user.id}`,
     });
 
     const store = this.owner.lookup('service:store');
@@ -168,7 +168,7 @@ module('Unit | Service | reporting', function (hooks) {
       school,
       prepositionalObject: 'course',
       subject: 'term',
-      prepositionalObjectTableRowId: course.id,
+      prepositionalObjectTableRowId: `${course.id}`,
     });
 
     const store = this.owner.lookup('service:store');
@@ -209,7 +209,7 @@ module('Unit | Service | reporting', function (hooks) {
       school,
       prepositionalObject: 'course',
       subject: 'term',
-      prepositionalObjectTableRowId: course.id,
+      prepositionalObjectTableRowId: `${course.id}`,
     });
 
     const store = this.owner.lookup('service:store');
@@ -246,7 +246,7 @@ module('Unit | Service | reporting', function (hooks) {
     const report = await this.server.create('report', {
       subject: 'term',
       prepositionalObject: 'program year',
-      prepositionalObjectTableRowId: programYear.id,
+      prepositionalObjectTableRowId: `${programYear.id}`,
       school,
     });
 
@@ -276,7 +276,7 @@ module('Unit | Service | reporting', function (hooks) {
       school,
       prepositionalObject: 'user',
       subject: 'competency',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
 
     const store = this.owner.lookup('service:store');
@@ -312,7 +312,7 @@ module('Unit | Service | reporting', function (hooks) {
       school,
       prepositionalObject: 'course',
       subject: 'term',
-      prepositionalObjectTableRowId: course.id,
+      prepositionalObjectTableRowId: `${course.id}`,
     });
 
     const store = this.owner.lookup('service:store');
