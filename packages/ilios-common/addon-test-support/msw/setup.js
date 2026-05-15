@@ -52,6 +52,9 @@ function get(url, callback) {
       url,
       async (request) => {
         const rhett = await callback(request);
+        if (rhett instanceof HttpResponse) {
+          return rhett;
+        }
         return HttpResponse.json(rhett);
       },
       { once: true },
@@ -65,6 +68,9 @@ function post(url, callback) {
       url,
       async (request) => {
         const rhett = await callback(request);
+        if (rhett instanceof HttpResponse) {
+          return rhett;
+        }
         return HttpResponse.json(rhett);
       },
       { once: true },
@@ -78,6 +84,9 @@ function patch(url, callback) {
       url,
       async (request) => {
         const rhett = await callback(request);
+        if (rhett instanceof HttpResponse) {
+          return rhett;
+        }
         return HttpResponse.json(rhett);
       },
       { once: true },
