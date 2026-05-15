@@ -1,7 +1,6 @@
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { DateTime } from 'luxon';
+import { module, test, skip } from 'qunit';
 import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-details';
 import SequenceBlockDetails from 'frontend/components/curriculum-inventory/sequence-block-details';
@@ -11,7 +10,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  test('it renders', async function (assert) {
+  test('skip tests for MSW', function (assert) {
+    assert.ok(false, 'unskip tests and then remove this one. MSW');
+  });
+
+  skip('it renders', async function (assert) {
     const school = await this.server.create('school');
     const academicLevels = [];
     for (let i = 0; i < 10; i++) {
@@ -39,8 +42,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
       report,
       parent: parentBlock,
       duration: 12,
-      startDate: DateTime.fromObject({ year: 2015, month: 1, day: 2 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2015, month: 4, day: 30 }).toJSDate(),
+      startDate: '2015-01-02',
+      endDate: '2015-04-30',
       childSequenceOrder: 1,
       orderInSequence: 1,
       required: 2,
