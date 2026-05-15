@@ -5,9 +5,9 @@ export const schema = z.looseObject({
   room: z.string().nullish(),
   site: z.string().nullish(),
   url: z.string().nullish(),
-  startDate: z.date(),
-  endDate: z.date(),
-  updatedAt: z.date(),
+  startDate: z.iso.datetime({ offset: true, local: true }),
+  endDate: z.iso.datetime({ offset: true, local: true }),
+  updatedAt: z.iso.datetime({ offset: true, local: true }),
 });
 
 export const relationships = [

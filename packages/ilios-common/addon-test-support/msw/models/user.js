@@ -6,6 +6,7 @@ export const schema = z.looseObject({
   lastName: z.string().nullish(),
   middleName: z.string().nullish(),
   displayName: z.string().nullish(),
+  pronouns: z.string().nullish(),
   phone: z.string().nullish(),
   email: z.string().nullish(),
   preferredEmail: z.string().nullish(),

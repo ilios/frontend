@@ -28,20 +28,20 @@ module('Integration | Component | course/visualize-instructors', function (hooks
     });
     await this.server.create('offering', {
       session: session1,
-      startDate: new Date('2019-12-08T12:00:00'),
-      endDate: new Date('2019-12-08T17:00:00'),
+      startDate: '2019-12-08T12:00:00',
+      endDate: '2019-12-08T17:00:00',
       instructors: [instructor1],
     });
     await this.server.create('offering', {
       session: session1,
-      startDate: new Date('2019-12-21T12:00:00'),
-      endDate: new Date('2019-12-21T17:30:00'),
+      startDate: '2019-12-21T12:00:00',
+      endDate: '2019-12-21T17:30:00',
       instructors: [instructor1, instructor4],
     });
     await this.server.create('offering', {
       session: session2,
-      startDate: new Date('2019-12-05T18:00:00'),
-      endDate: new Date('2019-12-05T21:00:00'),
+      startDate: '2019-12-05T18:00:00',
+      endDate: '2019-12-05T21:00:00',
       instructors: [instructor1, instructor2, instructor3, instructor4],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -68,8 +68,8 @@ module('Integration | Component | course/visualize-instructors', function (hooks
     const instructor2 = await this.server.create('user', { firstName: 'bar' });
     await this.server.create('offering', {
       session,
-      startDate: new Date('2021/03/01'),
-      endDate: new Date('2021/03/02'),
+      startDate: '2021-03-01T12:00:00',
+      endDate: '2021-03-02T17:00:00',
       instructors: [instructor1, instructor2],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
