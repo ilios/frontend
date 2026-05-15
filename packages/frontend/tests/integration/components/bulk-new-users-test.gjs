@@ -206,41 +206,41 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
     await click('.done');
-    assert.strictEqual(this.server.db.users[1].firstName, 'jasper');
-    assert.strictEqual(this.server.db.users[1].lastName, 'johnson');
-    assert.strictEqual(this.server.db.users[1].middleName, null);
-    assert.strictEqual(this.server.db.users[1].phone, '1234567890');
-    assert.strictEqual(this.server.db.users[1].email, 'jasper.johnson@example.com');
-    assert.strictEqual(this.server.db.users[1].campusId, '123Campus');
-    assert.strictEqual(this.server.db.users[1].otherId, '123Other');
-    assert.true(this.server.db.users[1].addedViaIlios);
-    assert.true(this.server.db.users[1].enabled);
-    assert.strictEqual(this.server.db.users[1].roleIds, null);
-    assert.strictEqual(this.server.db.users[1].cohortIds, null);
-    assert.strictEqual(this.server.db.users[1].primaryCohortId, null);
-    assert.strictEqual(this.server.db.users[1].authenticationId, '2');
+    assert.strictEqual(this.server.db.user.all()[1].firstName, 'jasper');
+    assert.strictEqual(this.server.db.user.all()[1].lastName, 'johnson');
+    assert.strictEqual(this.server.db.user.all()[1].middleName, null);
+    assert.strictEqual(this.server.db.user.all()[1].phone, '1234567890');
+    assert.strictEqual(this.server.db.user.all()[1].email, 'jasper.johnson@example.com');
+    assert.strictEqual(this.server.db.user.all()[1].campusId, '123Campus');
+    assert.strictEqual(this.server.db.user.all()[1].otherId, '123Other');
+    assert.true(this.server.db.user.all()[1].addedViaIlios);
+    assert.true(this.server.db.user.all()[1].enabled);
+    assert.strictEqual(this.server.db.user.all()[1].roles.length, 0);
+    assert.strictEqual(this.server.db.user.all()[1].cohorts.length, 0);
+    assert.strictEqual(this.server.db.user.all()[1].primaryCohort, undefined);
+    assert.strictEqual(this.server.db.user.all()[1].authentication.id, 2);
 
-    assert.strictEqual(this.server.db.authentications[1].username, 'jasper');
-    assert.strictEqual(this.server.db.authentications[1].password, '123Test');
-    assert.strictEqual(this.server.db.authentications[1].userId, '2');
+    assert.strictEqual(this.server.db.authentication.all()[1].username, 'jasper');
+    assert.strictEqual(this.server.db.authentication.all()[1].password, '123Test');
+    assert.strictEqual(this.server.db.authentication.all()[1].id, 2);
 
-    assert.strictEqual(this.server.db.users[2].firstName, 'jackson');
-    assert.strictEqual(this.server.db.users[2].lastName, 'johnson');
-    assert.strictEqual(this.server.db.users[2].middleName, 'middle');
-    assert.strictEqual(this.server.db.users[2].phone, '12345');
-    assert.strictEqual(this.server.db.users[2].email, 'jj@example.com');
-    assert.strictEqual(this.server.db.users[2].campusId, '1234Campus');
-    assert.strictEqual(this.server.db.users[2].otherId, '1234Other');
-    assert.true(this.server.db.users[2].addedViaIlios);
-    assert.true(this.server.db.users[2].enabled);
-    assert.strictEqual(this.server.db.users[2].roleIds, null);
-    assert.strictEqual(this.server.db.users[2].cohortIds, null);
-    assert.strictEqual(this.server.db.users[2].primaryCohortId, null);
-    assert.strictEqual(this.server.db.users[2].authenticationId, '3');
+    assert.strictEqual(this.server.db.user.all()[2].firstName, 'jackson');
+    assert.strictEqual(this.server.db.user.all()[2].lastName, 'johnson');
+    assert.strictEqual(this.server.db.user.all()[2].middleName, 'middle');
+    assert.strictEqual(this.server.db.user.all()[2].phone, '12345');
+    assert.strictEqual(this.server.db.user.all()[2].email, 'jj@example.com');
+    assert.strictEqual(this.server.db.user.all()[2].campusId, '1234Campus');
+    assert.strictEqual(this.server.db.user.all()[2].otherId, '1234Other');
+    assert.true(this.server.db.user.all()[2].addedViaIlios);
+    assert.true(this.server.db.user.all()[2].enabled);
+    assert.strictEqual(this.server.db.user.all()[2].roles.length, 0);
+    assert.strictEqual(this.server.db.user.all()[2].cohorts.length, 0);
+    assert.strictEqual(this.server.db.user.all()[2].primaryCohort, undefined);
+    assert.strictEqual(this.server.db.user.all()[2].authentication.id, 3);
 
-    assert.strictEqual(this.server.db.authentications[2].username, 'jck');
-    assert.strictEqual(this.server.db.authentications[2].password, '1234Test');
-    assert.strictEqual(parseInt(this.server.db.authentications[2].userId, 10), 3);
+    assert.strictEqual(this.server.db.authentication.all()[2].username, 'jck');
+    assert.strictEqual(this.server.db.authentication.all()[2].password, '1234Test');
+    assert.strictEqual(parseInt(this.server.db.authentication.all()[2].id, 10), 3);
   });
 
   test('saves valid student users', async function (assert) {
@@ -277,39 +277,43 @@ module('Integration | Component | bulk new users', function (hooks) {
     await triggerUpload(users, find('input[type=file]'));
     await click('.done');
 
-    assert.strictEqual(this.server.db.users[1].firstName, 'jasper');
-    assert.strictEqual(this.server.db.users[1].lastName, 'johnson');
-    assert.strictEqual(this.server.db.users[1].middleName, null);
-    assert.strictEqual(this.server.db.users[1].phone, '1234567890');
-    assert.strictEqual(this.server.db.users[1].email, 'jasper.johnson@example.com');
-    assert.strictEqual(this.server.db.users[1].campusId, '123Campus');
-    assert.strictEqual(this.server.db.users[1].otherId, '123Other');
-    assert.true(this.server.db.users[1].addedViaIlios);
-    assert.true(this.server.db.users[1].enabled);
-    assert.deepEqual(this.server.db.users[1].roleIds, ['4']);
-    assert.strictEqual(this.server.db.users[1].primaryCohortId, '1');
-    assert.strictEqual(this.server.db.users[1].authenticationId, '2');
+    assert.strictEqual(this.server.db.user.all()[1].firstName, 'jasper');
+    assert.strictEqual(this.server.db.user.all()[1].lastName, 'johnson');
+    assert.strictEqual(this.server.db.user.all()[1].middleName, null);
+    assert.strictEqual(this.server.db.user.all()[1].phone, '1234567890');
+    assert.strictEqual(this.server.db.user.all()[1].email, 'jasper.johnson@example.com');
+    assert.strictEqual(this.server.db.user.all()[1].campusId, '123Campus');
+    assert.strictEqual(this.server.db.user.all()[1].otherId, '123Other');
+    assert.true(this.server.db.user.all()[1].addedViaIlios);
+    assert.true(this.server.db.user.all()[1].enabled);
+    assert.deepEqual(
+      this.server.db.user.all()[1].roles.map((role) => Number(role.id)),
+      [4],
+    );
+    assert.strictEqual(this.server.db.user.all()[1].primaryCohort.id, 1);
+    assert.strictEqual(this.server.db.user.all()[1].authentication.id, 2);
+    assert.strictEqual(this.server.db.authentication.all()[1].username, 'jasper');
+    assert.strictEqual(this.server.db.authentication.all()[1].password, '123Test');
+    assert.strictEqual(this.server.db.authentication.all()[1].user.id, 2);
 
-    assert.strictEqual(this.server.db.authentications[1].username, 'jasper');
-    assert.strictEqual(this.server.db.authentications[1].password, '123Test');
-    assert.strictEqual(this.server.db.authentications[1].userId, '2');
-
-    assert.strictEqual(this.server.db.users[2].firstName, 'jackson');
-    assert.strictEqual(this.server.db.users[2].lastName, 'johnson');
-    assert.strictEqual(this.server.db.users[2].middleName, 'middle');
-    assert.strictEqual(this.server.db.users[2].phone, '12345');
-    assert.strictEqual(this.server.db.users[2].email, 'jj@example.com');
-    assert.strictEqual(this.server.db.users[2].campusId, '1234Campus');
-    assert.strictEqual(this.server.db.users[2].otherId, '1234Other');
-    assert.true(this.server.db.users[2].addedViaIlios);
-    assert.true(this.server.db.users[2].enabled);
-    assert.deepEqual(this.server.db.users[2].roleIds, ['4']);
-    assert.strictEqual(this.server.db.users[2].primaryCohortId, '1');
-    assert.strictEqual(this.server.db.users[2].authenticationId, '3');
-
-    assert.strictEqual(this.server.db.authentications[2].username, 'jck');
-    assert.strictEqual(this.server.db.authentications[2].password, '1234Test');
-    assert.strictEqual(parseInt(this.server.db.authentications[2].userId, 10), 3);
+    assert.strictEqual(this.server.db.user.all()[2].firstName, 'jackson');
+    assert.strictEqual(this.server.db.user.all()[2].lastName, 'johnson');
+    assert.strictEqual(this.server.db.user.all()[2].middleName, 'middle');
+    assert.strictEqual(this.server.db.user.all()[2].phone, '12345');
+    assert.strictEqual(this.server.db.user.all()[2].email, 'jj@example.com');
+    assert.strictEqual(this.server.db.user.all()[2].campusId, '1234Campus');
+    assert.strictEqual(this.server.db.user.all()[2].otherId, '1234Other');
+    assert.true(this.server.db.user.all()[2].addedViaIlios);
+    assert.true(this.server.db.user.all()[2].enabled);
+    assert.deepEqual(
+      this.server.db.user.all()[2].roles.map((role) => Number(role.id)),
+      [4],
+    );
+    assert.strictEqual(this.server.db.user.all()[2].primaryCohort.id, 1);
+    assert.strictEqual(this.server.db.user.all()[2].authentication.id, 3);
+    assert.strictEqual(this.server.db.authentication.all()[2].username, 'jck');
+    assert.strictEqual(this.server.db.authentication.all()[2].password, '1234Test');
+    assert.strictEqual(parseInt(this.server.db.authentication.all()[2].user.id, 10), 3);
   });
 
   test('cancel fires close', async function (assert) {
@@ -800,8 +804,8 @@ module('Integration | Component | bulk new users', function (hooks) {
       return findAll(proposedNewUsers).length === 0 && findAll(waitSaving).length === 0;
     });
     await settled();
-    assert.strictEqual(this.server.db.users[1].firstName, 'jasper');
-    assert.strictEqual(this.server.db.users[1].authenticationId, null);
+    assert.strictEqual(this.server.db.user.all()[1].firstName, 'jasper');
+    assert.strictEqual(this.server.db.user.all()[1].authentication, undefined);
   });
 
   test('ignore header row', async function (assert) {
