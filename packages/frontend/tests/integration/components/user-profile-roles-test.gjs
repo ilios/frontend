@@ -97,8 +97,8 @@ module('Integration | Component | user profile roles', function (hooks) {
     await component.enabled.check();
     await component.excludeFromSync.check();
     await component.save.click();
-    assert.ok(userModel.hasMany('roles').ids().includes(this.studentRole.id));
-    assert.ok(userModel.hasMany('roles').ids().includes(this.formerStudentRole.id));
+    assert.ok(userModel.hasMany('roles').ids().includes(`${this.studentRole.id}`));
+    assert.ok(userModel.hasMany('roles').ids().includes(`${this.formerStudentRole.id}`));
     assert.false(userModel.get('enabled'), 'user is disabled');
     assert.true(userModel.get('userSyncIgnore'), 'user is sync ignored');
   });
