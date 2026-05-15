@@ -12,7 +12,8 @@ module('Integration | Component | session/ilm', function (hooks) {
 
   test('it renders and is accessible when not editable with ILM', async function (assert) {
     const ilmSession = await this.server.create('ilmSession', { hours: 8 });
-    this.set('session', await this.server.create('session', { ilmSession }));
+    const session = await this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
     await render(<template><Ilm @session={{this.session}} @editable={{false}} /></template>);
     assert.ok(component.ilmHours.isVisible);
     assert.strictEqual(component.ilmHours.value, '8');
@@ -27,7 +28,8 @@ module('Integration | Component | session/ilm', function (hooks) {
   });
 
   test('it renders and is accessible when not editable with no ILM', async function (assert) {
-    this.set('session', await this.server.create('session'));
+    const session = await this.server.create('session');
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
     await render(<template><Ilm @session={{this.session}} @editable={{false}} /></template>);
     assert.notOk(component.ilmHours.isVisible);
     assert.notOk(component.ilmDueDateAndTime.isVisible);
@@ -40,7 +42,8 @@ module('Integration | Component | session/ilm', function (hooks) {
 
   test('it renders and is accessible when editable with ILM', async function (assert) {
     const ilmSession = await this.server.create('ilmSession');
-    this.set('session', await this.server.create('session', { ilmSession }));
+    const session = await this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
     await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
     assert.ok(component.ilmHours.isVisible);
     assert.ok(component.ilmDueDateAndTime.isVisible);
@@ -52,7 +55,8 @@ module('Integration | Component | session/ilm', function (hooks) {
   });
 
   test('it renders and is accessible when editable with no ILM', async function (assert) {
-    this.set('session', await this.server.create('session'));
+    const session = await this.server.create('session');
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
     await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
     assert.notOk(component.ilmHours.isVisible);
     assert.notOk(component.ilmDueDateAndTime.isVisible);
@@ -65,7 +69,8 @@ module('Integration | Component | session/ilm', function (hooks) {
 
   test('shows error with hours less than zero', async function (assert) {
     const ilmSession = await this.server.create('ilmSession');
-    this.set('session', await this.server.create('session', { ilmSession }));
+    const session = await this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
     await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
     await component.ilmHours.edit();
     await component.ilmHours.set('-1');
@@ -75,7 +80,8 @@ module('Integration | Component | session/ilm', function (hooks) {
 
   test('error clears with close and re-open', async function (assert) {
     const ilmSession = await this.server.create('ilmSession');
-    this.set('session', await this.server.create('session', { ilmSession }));
+    const session = await this.server.create('session', { ilmSession });
+    this.set('session', await this.owner.lookup('service:store').findRecord('session', session.id));
     await render(<template><Ilm @session={{this.session}} @editable={{true}} /></template>);
     await component.ilmHours.edit();
     await component.ilmHours.set('-1');
