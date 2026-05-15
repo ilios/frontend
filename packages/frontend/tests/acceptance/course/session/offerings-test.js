@@ -20,7 +20,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
-    const course = await this.server.create('course', {
+    this.course = await this.server.create('course', {
       cohorts: [cohort],
       school: this.school,
       directors: [this.user],
@@ -53,35 +53,35 @@ module('Acceptance | Session - Offerings', function (hooks) {
       location: 'default 2',
       instructorGroups: [instructorGroup1],
     });
-    const session = await this.server.create('session', { course, sessionType });
+    this.session = await this.server.create('session', { course: this.course, sessionType });
 
     this.today = DateTime.fromObject({ hour: 9 });
 
     this.offering1 = await this.server.create('offering', {
-      session,
+      session: this.session,
       instructors: [users[4], users[5], users[6], users[7]],
       instructorGroups: [instructorGroup1, instructorGroup2],
       learnerGroups: [learnerGroup1, learnerGroup2],
-      startDate: this.today.toJSDate(),
-      endDate: this.today.plus({ hours: 1 }).toJSDate(),
+      startDate: this.today.toISO(),
+      endDate: this.today.plus({ hours: 1 }).toISO(),
       url: 'https://ucsf.edu/',
     });
 
     this.offering2 = await this.server.create('offering', {
-      session,
+      session: this.session,
       instructors: [users[6], users[7]],
       instructorGroups: [instructorGroup2],
       learnerGroups: [learnerGroup2],
-      startDate: this.today.plus({ days: 1 }).toJSDate(),
-      endDate: this.today.plus({ days: 1, hours: 1 }).toJSDate(),
+      startDate: this.today.plus({ days: 1 }).toISO(),
+      endDate: this.today.plus({ days: 1, hours: 1 }).toISO(),
     });
     this.offering3 = await this.server.create('offering', {
-      session,
+      session: this.session,
       instructorGroups: [instructorGroup2],
       learnerGroups: [learnerGroup2],
       instructors: [],
-      startDate: this.today.plus({ days: 2 }).toJSDate(),
-      endDate: this.today.plus({ days: 3, hours: 1 }).toJSDate(),
+      startDate: this.today.plus({ days: 2 }).toISO(),
+      endDate: this.today.plus({ days: 3, hours: 1 }).toISO(),
       url: 'https://example.edu/',
     });
     this.cohort = cohort;
@@ -92,7 +92,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('basics', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await takeScreenshot(assert);
 
     assert.ok(page.details.offerings.header.isVisible);
@@ -101,7 +101,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('offering dates', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
     const blocks = page.details.offerings.dateBlocks;
     assert.ok(blocks[0].hasStartTime);
@@ -109,19 +109,19 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(blocks[0].hasMultiDay);
     assert.strictEqual(
       blocks[0].dayOfWeek,
-      DateTime.fromJSDate(this.offering1.startDate).toFormat('cccc'),
+      DateTime.fromISO(this.offering1.startDate).toFormat('cccc'),
     );
     assert.strictEqual(
       blocks[0].dayOfMonth,
-      DateTime.fromJSDate(this.offering1.startDate).toFormat('MMMM d'),
+      DateTime.fromISO(this.offering1.startDate).toFormat('MMMM d'),
     );
     assert.strictEqual(
       blocks[0].startTime,
-      'Starts: ' + DateTime.fromJSDate(this.offering1.startDate).toFormat('hh:mm a'),
+      'Starts: ' + DateTime.fromISO(this.offering1.startDate).toFormat('hh:mm a'),
     );
     assert.strictEqual(
       blocks[0].endTime,
-      'Ends: ' + DateTime.fromJSDate(this.offering1.endDate).toFormat('h:mm a'),
+      'Ends: ' + DateTime.fromISO(this.offering1.endDate).toFormat('h:mm a'),
     );
     assert.strictEqual(blocks[0].timeBlockOfferings.offerings.length, 1);
 
@@ -129,19 +129,19 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.ok(blocks[1].hasEndTime);
     assert.strictEqual(
       blocks[1].dayOfWeek,
-      DateTime.fromJSDate(this.offering2.startDate).toFormat('cccc'),
+      DateTime.fromISO(this.offering2.startDate).toFormat('cccc'),
     );
     assert.strictEqual(
       blocks[1].dayOfMonth,
-      DateTime.fromJSDate(this.offering2.startDate).toFormat('MMMM d'),
+      DateTime.fromISO(this.offering2.startDate).toFormat('MMMM d'),
     );
     assert.strictEqual(
       blocks[1].startTime,
-      'Starts: ' + DateTime.fromJSDate(this.offering2.startDate).toFormat('hh:mm a'),
+      'Starts: ' + DateTime.fromISO(this.offering2.startDate).toFormat('hh:mm a'),
     );
     assert.strictEqual(
       blocks[1].endTime,
-      'Ends: ' + DateTime.fromJSDate(this.offering2.endDate).toFormat('h:mm a'),
+      'Ends: ' + DateTime.fromISO(this.offering2.endDate).toFormat('h:mm a'),
     );
     assert.strictEqual(blocks[1].timeBlockOfferings.offerings.length, 1);
 
@@ -149,11 +149,11 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(blocks[2].hasEndTime);
     assert.strictEqual(
       blocks[2].dayOfWeek,
-      DateTime.fromJSDate(this.offering3.startDate).toFormat('cccc'),
+      DateTime.fromISO(this.offering3.startDate).toFormat('cccc'),
     );
     assert.strictEqual(
       blocks[2].dayOfMonth,
-      DateTime.fromJSDate(this.offering3.startDate).toFormat('MMMM d'),
+      DateTime.fromISO(this.offering3.startDate).toFormat('MMMM d'),
     );
     assert.strictEqual(blocks[2].timeBlockOfferings.offerings.length, 1);
     assert.strictEqual(
@@ -182,7 +182,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('offering details', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     const blocks = page.details.offerings.dateBlocks;
     assert.strictEqual(blocks[0].timeBlockOfferings.offerings[0].learnerGroups.length, 2);
     assert.strictEqual(
@@ -300,7 +300,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('confirm removal message', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].remove();
     assert.ok(
       page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].hasRemoveConfirm,
@@ -312,7 +312,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('remove offering', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].remove();
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].confirmRemoval();
     assert.strictEqual(page.details.offerings.top.title, 'Offerings (2)');
@@ -320,7 +320,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('cancel remove offering', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].remove();
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].cancelRemoval();
     assert.strictEqual(page.details.offerings.top.title, 'Offerings (3)');
@@ -328,7 +328,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can create a new offering single day', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.singleOffering();
@@ -376,7 +376,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
   test('users can create a new offering multi-day', async function (assert) {
     const sep112011 = DateTime.fromObject({ year: 2011, month: 9, day: 11, hour: 2, minute: 15 });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.singleOffering();
@@ -442,7 +442,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can create a new small group offering', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.smallGroup();
@@ -506,7 +506,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can edit existing offerings', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     assert.ok(page.details.offerings.header.isVisible);
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].edit();
     assert.notOk(page.details.offerings.header.isVisible);
@@ -556,7 +556,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('user can cancel offering edits', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
 
     assert.ok(page.details.offerings.header.isVisible);
     let block = page.details.offerings.dateBlocks[0];
@@ -635,7 +635,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can create recurring small groups', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.smallGroup();
@@ -707,7 +707,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('users can create recurring single offerings', async function (assert) {
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.singleOffering();
@@ -776,7 +776,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       parent: subSubGroup,
     });
 
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].edit();
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].offeringForm.save();
     assert.strictEqual(
