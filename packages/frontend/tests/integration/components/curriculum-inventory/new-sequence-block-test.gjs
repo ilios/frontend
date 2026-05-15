@@ -17,7 +17,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       school,
     });
     const report = await this.server.create('curriculum-inventory-report', {
-      year: '2016',
+      year: 2016,
       program,
       isFinalized: false,
     });
@@ -40,19 +40,19 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       school: this.school,
       published: true,
       title: 'Unlinked Course 1',
-      year: '2016',
+      year: 2016,
     });
     await this.server.create('course', {
       school: this.school,
       published: true,
       title: 'Unlinked Course 2',
-      year: '2016',
+      year: 2016,
     });
     const course = await this.server.create('course', {
       school: this.school,
       published: true,
       title: 'Linked Course',
-      year: '2016',
+      year: 2016,
     });
     await this.server.create('curriculum-inventory-sequence-block', {
       course,
@@ -175,7 +175,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const clerkshipType = await this.server.create('course-clerkship-type');
     const course = await this.server.create('course', {
       school: this.school,
-      year: '2016',
+      year: 2016,
       published: true,
       title: 'my fancy course',
       clerkshipType,
@@ -253,7 +253,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const maximum = 12;
     const duration = 6;
     const course = await this.server.create('course', {
-      year: '2016',
+      year: 2016,
       published: true,
       school: this.school,
     });
@@ -751,7 +751,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const clerkshipType = await this.server.create('course-clerkship-type');
     const course = await this.server.create('course', {
       school: this.school,
-      year: '2016',
+      year: 2016,
       published: true,
       title: 'my fancy course',
       clerkshipType,
@@ -786,7 +786,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const clerkshipType = await this.server.create('course-clerkship-type');
     const course = await this.server.create('course', {
       school: this.school,
-      year: '2016',
+      year: 2016,
       published: true,
       title: 'my fancy course',
       clerkshipType,

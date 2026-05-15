@@ -22,7 +22,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
     const program = await this.server.create('program', { school });
     const report = await this.server.create('curriculum-inventory-report', {
       academicLevels,
-      year: '2016',
+      year: 2016,
       program,
     });
     const grandParentBlock = await this.server.create('curriculum-inventory-sequence-block', {

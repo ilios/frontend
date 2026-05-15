@@ -4,9 +4,9 @@ export const schema = z.looseObject({
   id: z.number(),
   name: z.string().nullish(),
   description: z.string().nullish(),
-  year: z.number().nullish(),
-  startDate: z.string().nullish(),
-  endDate: z.string().nullish(),
+  year: z.number(),
+  startDate: z.iso.date(),
+  endDate: z.iso.date(),
 });
 
 export const relationships = [

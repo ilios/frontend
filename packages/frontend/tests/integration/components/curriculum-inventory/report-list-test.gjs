@@ -2,7 +2,6 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
 import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-list';
 import ReportList from 'frontend/components/curriculum-inventory/report-list';
@@ -30,8 +29,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
-      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
     const reportExport = await this.server.create('curriculum-inventory-export');
     const report2 = await this.server.create('curriculum-inventory-report', {
@@ -39,8 +38,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       export: reportExport,
       name: 'Aardvark',
       year: 2016,
-      startDate: DateTime.fromObject({ year: 2016, month: 7, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2017, month: 6, day: 30 }).toJSDate(),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
 
     const reportModel1 = await this.owner
@@ -143,8 +142,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
-      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -168,8 +167,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       name: 'Zeppelin',
       year: 2017,
       export: reportExport,
-      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -275,8 +274,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
-      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
 
     const reportModel1 = await this.owner

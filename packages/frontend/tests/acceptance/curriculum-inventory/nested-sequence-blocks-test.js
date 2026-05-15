@@ -17,7 +17,7 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
     this.report = await this.server.create('curriculum-inventory-report', {
       academicLevels: this.academicLevels,
       program,
-      year: '2016',
+      year: 2016,
       isFinalized: false,
     });
     this.sequence = await this.server.create('curriculum-inventory-sequence', {

@@ -10,8 +10,8 @@ export const schema = z.looseObject({
   minimum: z.number().nullish(),
   maximum: z.number().nullish(),
   track: z.boolean().nullish(),
-  startDate: z.string().nullish(),
-  endDate: z.string().nullish(),
+  startDate: z.iso.date().nullish(),
+  endDate: z.iso.date().nullish(),
   duration: z.number().nullish(),
   academicLevel: z.number().nullish(),
 });
