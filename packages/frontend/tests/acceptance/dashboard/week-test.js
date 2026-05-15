@@ -35,9 +35,9 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     await this.server.create('userevent', {
       user: Number(this.user.id),
       name: 'start of week',
-      startDate: startOfWeek.toJSDate(),
-      endDate: startOfWeek.plus({ hour: 1 }).toJSDate(),
-      lastModified: today.minus({ year: 1 }).toJSDate(),
+      startDate: startOfWeek.toISO(),
+      endDate: startOfWeek.plus({ hour: 1 }).toISO(),
+      lastModified: today.minus({ year: 1 }).toISO(),
       isPublished: true,
       offering: 1,
     });
@@ -45,9 +45,9 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     await this.server.create('userevent', {
       user: Number(this.user.id),
       name: 'end of week',
-      startDate: endOfWeek.minus({ hour: 1 }).toJSDate(),
-      endDate: endOfWeek.toJSDate(),
-      lastModified: today.minus({ year: 1 }).toJSDate(),
+      startDate: endOfWeek.minus({ hour: 1 }).toISO(),
+      endDate: endOfWeek.toISO(),
+      lastModified: today.minus({ year: 1 }).toISO(),
       isPublished: true,
       offering: 2,
     });
@@ -105,9 +105,9 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
 
     await this.server.create('userevent', {
       user: Number(this.user.id),
-      startDate: oct31st2018.toJSDate(),
-      endDate: oct31st2018.plus({ hour: 1 }).toJSDate(),
-      lastModified: oct31st2018.minus({ year: 1 }).toJSDate(),
+      startDate: oct31st2018.toISO(),
+      endDate: oct31st2018.plus({ hour: 1 }).toISO(),
+      lastModified: oct31st2018.minus({ year: 1 }).toISO(),
       isPublished: true,
       offering: 1,
       prerequisites,
@@ -145,15 +145,15 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
 
     await this.server.create('userevent', {
       user: this.user.id,
-      startDate: startOfTheWeek.toJSDate(),
-      endDate: startOfTheWeek.plus({ hour: 1 }).toJSDate(),
+      startDate: startOfTheWeek.toISO(),
+      endDate: startOfTheWeek.plus({ hour: 1 }).toISO(),
       offering: 1,
       isPublished: true,
     });
     await this.server.create('userevent', {
       user: this.user.id,
-      startDate: endOfTheWeek.toJSDate(),
-      endDate: endOfTheWeek.plus({ hour: 1 }).toJSDate(),
+      startDate: endOfTheWeek.toISO(),
+      endDate: endOfTheWeek.plus({ hour: 1 }).toISO(),
       offering: 2,
       isPublished: true,
     });

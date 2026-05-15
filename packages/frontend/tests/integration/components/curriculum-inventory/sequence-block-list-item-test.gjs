@@ -19,8 +19,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
       program: this.program,
       name: 'CI Report',
       year: '2017',
-      startDate: new Date('2017-07-01'),
-      endDate: new Date('2018-06-30'),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
   });
 
@@ -35,8 +35,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
     const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       title: 'block 1',
-      startDate: new Date('2021-03-17'),
-      endDate: new Date('2021-05-22'),
+      startDate: '2021-03-17',
+      endDate: '2021-05-22',
       orderInSequence: 3,
       startingAcademicLevel,
       endingAcademicLevel,

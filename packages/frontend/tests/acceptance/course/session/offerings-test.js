@@ -62,8 +62,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
       instructors: [users[4], users[5], users[6], users[7]],
       instructorGroups: [instructorGroup1, instructorGroup2],
       learnerGroups: [learnerGroup1, learnerGroup2],
-      startDate: this.today.toJSDate(),
-      endDate: this.today.plus({ hours: 1 }).toJSDate(),
+      startDate: this.today.toISO(),
+      endDate: this.today.plus({ hours: 1 }).toISO(),
       url: 'https://ucsf.edu/',
     });
 
@@ -72,16 +72,16 @@ module('Acceptance | Session - Offerings', function (hooks) {
       instructors: [users[6], users[7]],
       instructorGroups: [instructorGroup2],
       learnerGroups: [learnerGroup2],
-      startDate: this.today.plus({ days: 1 }).toJSDate(),
-      endDate: this.today.plus({ days: 1, hours: 1 }).toJSDate(),
+      startDate: this.today.plus({ days: 1 }).toISO(),
+      endDate: this.today.plus({ days: 1, hours: 1 }).toISO(),
     });
     this.offering3 = await this.server.create('offering', {
       session,
       instructorGroups: [instructorGroup2],
       learnerGroups: [learnerGroup2],
       instructors: [],
-      startDate: this.today.plus({ days: 2 }).toJSDate(),
-      endDate: this.today.plus({ days: 3, hours: 1 }).toJSDate(),
+      startDate: this.today.plus({ days: 2 }).toISO(),
+      endDate: this.today.plus({ days: 3, hours: 1 }).toISO(),
       url: 'https://example.edu/',
     });
     this.cohort = cohort;

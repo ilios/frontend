@@ -15,19 +15,19 @@ module(
 
     test('it renders', async function (assert) {
       const now = DateTime.now();
-      const in15Hours = now.plus({ hours: 15 }).toJSDate();
-      const in30Hours = now.plus({ hours: 30 }).toJSDate();
+      const in15Hours = now.plus({ hours: 15 }).toISO();
+      const in30Hours = now.plus({ hours: 30 }).toISO();
 
       const offering1 = await this.server.create('offering', {
-        startDate: now,
+        startDate: now.toISO(),
         endDate: in30Hours,
       });
       const offering2 = await this.server.create('offering', {
-        startDate: now,
+        startDate: now.toISO(),
         endDate: in15Hours,
       });
       const offering3 = await this.server.create('offering', {
-        startDate: now,
+        startDate: now.toISO(),
         endDate: in15Hours,
       });
 
