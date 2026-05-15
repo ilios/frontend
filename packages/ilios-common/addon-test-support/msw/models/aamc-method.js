@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const schema = z.looseObject({
-  id: z.number(),
+  id: z.string(),
   description: z.string().nullish(),
   active: z.boolean().nullish(),
 });
