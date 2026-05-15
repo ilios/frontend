@@ -881,7 +881,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
-    assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: session 1');
+    assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: session 0');
     assert.notOk(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
   });
 
