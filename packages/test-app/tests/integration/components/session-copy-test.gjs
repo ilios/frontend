@@ -135,7 +135,7 @@ module('Integration | Component | session copy', function (hooks) {
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.step('visit called');
-      assert.strictEqual(parseInt(newSession.id, 10), 2);
+      assert.strictEqual(Number(newSession.id), 2);
     });
     await render(
       <template><SessionCopy @session={{this.session}} @visit={{this.visit}} /></template>,
@@ -164,7 +164,10 @@ module('Integration | Component | session copy', function (hooks) {
     assert.strictEqual(sessionLearningMaterial.publicNotes, newSessionLm.publicNotes);
     assert.strictEqual(sessionLearningMaterial.position, newSessionLm.position);
     assert.strictEqual(newSessionLm.belongsTo('session').id(), newSession.id);
-    assert.strictEqual(newSessionLm.belongsTo('learningMaterial').id(), learningMaterial.id);
+    assert.strictEqual(
+      Number(newSessionLm.belongsTo('learningMaterial').id()),
+      learningMaterial.id,
+    );
 
     const sessionObjectives = await this.store.findAll('session-objective');
     assert.strictEqual(sessionObjectives.length, 2);
@@ -313,7 +316,7 @@ module('Integration | Component | session copy', function (hooks) {
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.step('visit called');
-      assert.strictEqual(parseInt(newSession.id, 10), 2);
+      assert.strictEqual(Number(newSession.id), 2);
     });
 
     await render(
@@ -368,7 +371,7 @@ module('Integration | Component | session copy', function (hooks) {
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.step('visit called');
-      assert.strictEqual(parseInt(newSession.id, 10), 3);
+      assert.strictEqual(Number(newSession.id), 3);
     });
 
     await render(
@@ -426,7 +429,7 @@ module('Integration | Component | session copy', function (hooks) {
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.step('visit called');
-      assert.strictEqual(parseInt(newSession.id, 10), 3);
+      assert.strictEqual(Number(newSession.id), 3);
     });
 
     await render(
@@ -485,7 +488,7 @@ module('Integration | Component | session copy', function (hooks) {
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.step('visit called');
-      assert.strictEqual(parseInt(newSession.id, 10), 4);
+      assert.strictEqual(Number(newSession.id), 4);
     });
 
     await render(
@@ -547,7 +550,7 @@ module('Integration | Component | session copy', function (hooks) {
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.step('visit called');
-      assert.strictEqual(parseInt(newSession.id, 10), 4);
+      assert.strictEqual(Number(newSession.id), 4);
     });
 
     await render(
