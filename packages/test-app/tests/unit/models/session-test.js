@@ -273,8 +273,8 @@ module('Unit | Model | Session', function (hooks) {
     assert.strictEqual(total, 0);
 
     this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toISO(),
-      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toJSDate(),
       session,
     });
     this.store.createRecord('offering', {
@@ -285,7 +285,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 9,
         minute: 30,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -293,7 +293,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 10,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       session,
     });
     total = await waitForResource(session, 'totalSumOfferingsDuration');
@@ -307,8 +307,8 @@ module('Unit | Model | Session', function (hooks) {
     assert.strictEqual(max, 0);
 
     this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toISO(),
-      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toJSDate(),
       session,
     });
     this.store.createRecord('offering', {
@@ -319,7 +319,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 9,
         minute: 30,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -327,7 +327,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 10,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       session,
     });
     max = await waitForResource(session, 'maxSingleOfferingDuration');
@@ -344,7 +344,7 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.store.createRecord('session');
 
     const ilm = this.store.createRecord('ilm-session', {
-      dueDate: DateTime.fromObject({ year: 2015, month: 1, day: 1 }).toISO(),
+      dueDate: DateTime.fromObject({ year: 2015, month: 1, day: 1 }).toJSDate(),
       session,
     });
 
@@ -356,11 +356,11 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.store.createRecord('session');
 
     this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
       session,
     });
     const offering2 = this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2016, month: 1, day: 1 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2016, month: 1, day: 1 }).toJSDate(),
       session,
     });
     const firstDate = await waitForResource(session, 'firstOfferingDate');
@@ -371,15 +371,15 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.store.createRecord('session');
 
     const offering1 = this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
       session,
     });
     const offering2 = this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2016, month: 1, day: 1 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2016, month: 1, day: 1 }).toJSDate(),
       session,
     });
     const offering3 = this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2015, month: 1, day: 1 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2015, month: 1, day: 1 }).toJSDate(),
       session,
     });
     this.store.createRecord('offering', { session });
@@ -394,8 +394,10 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.store.createRecord('session');
 
     this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toISO(),
-      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).plus({ minutes: 30 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 })
+        .plus({ minutes: 30 })
+        .toJSDate(),
       session,
     });
     this.store.createRecord('offering', {
@@ -406,7 +408,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 9,
         minute: 30,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -414,7 +416,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 10,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       session,
     });
     this.store.createRecord('ilm-session', { hours: 2.1, session });
@@ -427,8 +429,8 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.store.createRecord('session');
 
     this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toISO(),
-      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toJSDate(),
       session,
     });
     this.store.createRecord('offering', {
@@ -439,7 +441,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 9,
         minute: 30,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -447,7 +449,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 10,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       session,
     });
 
@@ -468,8 +470,10 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.store.createRecord('session');
 
     this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toISO(),
-      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).plus({ minutes: 30 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 })
+        .plus({ minutes: 30 })
+        .toJSDate(),
       session,
     });
     this.store.createRecord('offering', {
@@ -480,7 +484,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 9,
         minute: 30,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -488,7 +492,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 10,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       session,
     });
     this.store.createRecord('ilm-session', { hours: 2.1, session });
@@ -501,8 +505,8 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.store.createRecord('session');
 
     this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toISO(),
-      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toJSDate(),
       session,
     });
     this.store.createRecord('offering', {
@@ -513,7 +517,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 9,
         minute: 30,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -521,7 +525,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 10,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       session,
     });
 
@@ -683,8 +687,10 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.store.createRecord('session');
 
     this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toISO(),
-      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).plus({ minutes: 30 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 })
+        .plus({ minutes: 30 })
+        .toJSDate(),
       session,
     });
     this.store.createRecord('offering', {
@@ -695,7 +701,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 9,
         minute: 30,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -703,7 +709,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 10,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       session,
     });
     this.store.createRecord('ilm-session', { hours: 2.1, session });
@@ -716,8 +722,8 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.store.createRecord('session');
 
     this.store.createRecord('offering', {
-      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toISO(),
-      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toISO(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toJSDate(),
       session,
     });
     this.store.createRecord('offering', {
@@ -728,7 +734,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 9,
         minute: 30,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -736,7 +742,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 10,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       session,
     });
 
@@ -773,7 +779,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 0,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -781,7 +787,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 0,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       instructorGroups: [instructorGroup1],
     });
     const offering2 = this.store.createRecord('offering', {
@@ -792,7 +798,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 9,
         minute: 30,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -800,7 +806,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 10,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       instructors: [instructor1, instructor2],
     });
     const subject = this.store.createRecord('session', {
@@ -830,7 +836,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 0,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -838,7 +844,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 0,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       instructorGroups: [instructorGroup1],
     });
     const offering2 = this.store.createRecord('offering', {
@@ -849,7 +855,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 9,
         minute: 30,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       endDate: DateTime.fromObject({
         year: 2017,
         month: 1,
@@ -857,7 +863,7 @@ module('Unit | Model | Session', function (hooks) {
         hour: 10,
         minute: 0,
         second: 0,
-      }).toISO(),
+      }).toJSDate(),
       instructors: [instructor1, instructor2],
     });
     const subject = this.store.createRecord('session', {
