@@ -5,8 +5,8 @@ const FailureOnlyReporter = require('testem-failure-only-reporter');
 module.exports = {
   test_page: 'tests/index.html?hidepassed&enableA11yAudit',
   disable_watching: true,
-  launch_in_ci: ['Chrome'],
-  launch_in_dev: ['Chrome'],
+  launch_in_ci: ['Firefox'],
+  launch_in_dev: ['Firefox'],
   browser_disconnect_timeout: 120,
   browser_start_timeout: 30,
   reporter: FailureOnlyReporter,
