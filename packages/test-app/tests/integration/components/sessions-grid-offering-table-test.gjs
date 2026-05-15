@@ -23,18 +23,18 @@ module('Integration | Component | sessions-grid-offering-table', function (hooks
     const session = await this.server.create('session');
     await this.server.createList('offering', 3, {
       session,
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
     });
     await this.server.createList('offering', 3, {
       session,
-      startDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 8 }).plus({ minutes: 110 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 9 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 8 }).plus({ minutes: 110 }).toISO(),
     });
     await this.server.createList('offering', 3, {
       session,
-      startDate: DateTime.fromObject({ hour: 9 }).plus({ day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 10 }).plus({ day: 1 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 9 }).plus({ day: 1 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 10 }).plus({ day: 1 }).toISO(),
     });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('model', model);

@@ -597,14 +597,14 @@ module('Integration | Component | offering form', function (hooks) {
         day: 24,
         hour: 18,
         minute: 24,
-      }).toJSDate(),
+      }).toISO(),
       endDate: DateTime.fromObject({
         year: 2005,
         month: 6,
         day: 24,
         hour: 19,
         minute: 24,
-      }).toJSDate(),
+      }).toISO(),
     });
     const offeringModel = await this.owner
       .lookup('service:store')
@@ -626,7 +626,7 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(component.duration.minutes.value, '0');
     const selectedDate = DateTime.fromFormat(component.startDate.datePicker.value, 'M/d/y');
     assert.ok(
-      selectedDate.hasSame(DateTime.fromJSDate(offering.startDate), 'day'),
+      selectedDate.hasSame(DateTime.fromISO(offering.startDate), 'day'),
       'Selected date initialized to offering start date day.',
     );
   });
@@ -660,20 +660,20 @@ module('Integration | Component | offering form', function (hooks) {
     });
     const offering = await this.server.create('offering', {
       room: 'emerald bay',
-      startDate: startDateTime.toJSDate(),
-      endDate: endDateTime.toJSDate(),
+      startDate: startDateTime.toISO(),
+      endDate: endDateTime.toISO(),
     });
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', async (startDate, endDate) => {
-      assert.step('save called');
       assert.strictEqual(
         DateTime.fromJSDate(startDate).toUTC().toISO(),
         '2005-06-25T05:24:00.000Z',
       );
       assert.strictEqual(DateTime.fromJSDate(endDate).toUTC().toISO(), '2005-06-25T06:24:00.000Z');
+      assert.step('save called');
     });
     const timezoneService = this.owner.lookup('service:timezone');
     await render(

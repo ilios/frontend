@@ -86,18 +86,18 @@ module('Integration | Component | course/visualize-objectives', function (hooks)
 
     await this.server.create('offering', {
       session: session1,
-      startDate: new Date('2019-12-08T12:00:00'),
-      endDate: new Date('2019-12-08T17:00:00'),
+      startDate: '2019-12-08T12:00:00',
+      endDate: '2019-12-08T17:00:00',
     });
     await this.server.create('offering', {
       session: session1,
-      startDate: new Date('2019-12-21T12:00:00'),
-      endDate: new Date('2019-12-21T17:30:00'),
+      startDate: '2019-12-21T12:00:00',
+      endDate: '2019-12-21T17:30:00',
     });
     await this.server.create('offering', {
       session: session2,
-      startDate: new Date('2019-12-05T18:00:00'),
-      endDate: new Date('2019-12-05T21:00:00'),
+      startDate: '2019-12-05T18:00:00',
+      endDate: '2019-12-05T21:00:00',
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);

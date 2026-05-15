@@ -54,32 +54,32 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
     });
     await this.server.create('offering', {
       session: session1,
-      startDate: new Date('2019-12-08T12:00:00'),
-      endDate: new Date('2019-12-08T17:00:00'),
+      startDate: '2019-12-08T12:00:00',
+      endDate: '2019-12-08T17:00:00',
       instructors: [instructor],
     });
     await this.server.create('offering', {
       session: session1,
-      startDate: new Date('2019-12-21T12:00:00'),
-      endDate: new Date('2019-12-21T17:30:00'),
+      startDate: '2019-12-21T12:00:00',
+      endDate: '2019-12-21T17:30:00',
       instructors: [instructor],
     });
     await this.server.create('offering', {
       session: session2,
-      startDate: new Date('2019-12-05T18:00:00'),
-      endDate: new Date('2019-12-05T21:00:00'),
+      startDate: '2019-12-05T18:00:00',
+      endDate: '2019-12-05T21:00:00',
       instructors: [instructor],
     });
     await this.server.create('offering', {
       session: session3,
-      startDate: new Date('2019-12-05T18:00:00'),
-      endDate: new Date('2019-12-05T18:00:00'),
+      startDate: '2019-12-05T18:00:00',
+      endDate: '2019-12-05T18:00:00',
       instructors: [instructor],
     });
     await this.server.create('offering', {
       session: session4,
-      startDate: new Date('2019-12-05T18:00:00'),
-      endDate: new Date('2019-12-05T18:00:00'),
+      startDate: '2019-12-05T18:00:00',
+      endDate: '2019-12-05T18:00:00',
       instructors: [instructor],
     });
     this.emptyCourse = await this.owner

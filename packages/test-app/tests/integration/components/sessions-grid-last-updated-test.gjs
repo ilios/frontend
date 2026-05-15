@@ -28,7 +28,7 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
         hour: 17,
         minute: 0,
         second: 0,
-      }).toJSDate(),
+      }).toISO(),
     });
 
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
