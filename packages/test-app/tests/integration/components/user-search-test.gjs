@@ -4,14 +4,16 @@ import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/user-search';
 import UserSearch from 'ilios-common/components/user-search';
+import formatJsonApi from 'ilios-common/msw/utils/json-api-formatter';
 
 module('Integration | Component | user search', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
   hooks.beforeEach(function () {
-    this.server.get('api/users', (schema) => {
-      return schema.users.all();
+    this.server.get('api/users', async () => {
+      const users = await this.server.db.user.all();
+      return formatJsonApi(users, 'user');
     });
   });
 
@@ -30,10 +32,13 @@ module('Integration | Component | user search', function (hooks) {
 
   test('input triggers search', async function (assert) {
     await this.server.create('user');
-    this.server.get('api/users', (schema, { queryParams }) => {
+    this.server.get('api/users', async ({ request }) => {
+      const { searchParams } = new URL(request.url);
+
+      assert.strictEqual(searchParams.get('q'), 'search words');
       assert.step('API called');
-      assert.strictEqual(queryParams['q'], 'search words');
-      return schema.users.all();
+      const users = await this.server.db.user.all();
+      return formatJsonApi(users, 'user');
     });
     await render(<template><UserSearch /></template>);
     await component.searchBox.set('search words');
@@ -134,8 +139,9 @@ module('Integration | Component | user search', function (hooks) {
 
   test('reads currentlyActiveUsers', async function (assert) {
     const user = await this.server.create('user');
-    this.server.get('api/users', (schema) => {
-      return schema.users.all();
+    this.server.get('api/users', async () => {
+      const users = await this.server.db.user.all();
+      return formatJsonApi(users, 'user');
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('currentlyActiveUsers', [userModel]);
@@ -151,8 +157,9 @@ module('Integration | Component | user search', function (hooks) {
 
   test('reads currentlyActiveUsers from a promise', async function (assert) {
     const user = await this.server.create('user');
-    this.server.get('api/users', (schema) => {
-      return schema.users.all();
+    this.server.get('api/users', async () => {
+      const users = await this.server.db.user.all();
+      return formatJsonApi(users, 'user');
     });
     const users = this.owner.lookup('service:store').query('user', { id: user.id });
     this.set('currentlyActiveUsers', users);

@@ -3,6 +3,7 @@ import { setupTest } from 'ember-qunit';
 import { setupMSW } from 'ilios-common/msw';
 import { authenticateSession, invalidateSession } from 'ember-simple-auth/test-support';
 import { mapBy } from 'ilios-common/utils/array-helpers';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Service | Current User', function (hooks) {
   setupTest(hooks);
@@ -46,13 +47,15 @@ module('Integration | Service | Current User', function (hooks) {
     await this.server.create('user', { id: 100 });
     let calledAlready = false;
 
-    this.server.get('api/users/:id', (schema, request) => {
+    this.server.get('api/users/:id', async ({ params }) => {
       assert.step('API called');
-      const id = request.params.id;
-      assert.strictEqual(parseInt(id, 10), 100);
+      const id = Number(params.id);
+      assert.strictEqual(id, 100);
       assert.notOk(calledAlready);
       calledAlready = true;
-      return schema.users.find(id);
+
+      const user = await this.server.db.user.findFirst((q) => q.where({ id }));
+      return formatJsonApi(user, 'user');
     });
     const subject = this.owner.lookup('service:current-user');
     await subject.getModel();
@@ -112,23 +115,22 @@ module('Integration | Service | Current User', function (hooks) {
       administeredCourses: [courses[1]],
     });
 
-    this.server.get('/api/courses', (schema, { queryParams }) => {
-      assert.step('API called');
-      assert.ok('my' in queryParams);
-      assert.strictEqual(queryParams.my, 'true');
-      assert.ok('filters[year]' in queryParams);
-      assert.ok('filters[locked]' in queryParams);
-      assert.ok('filters[archived]' in queryParams);
-      assert.strictEqual(queryParams['filters[locked]'], 'false');
-      assert.strictEqual(queryParams['filters[archived]'], 'false');
-      assert.ok(queryParams['filters[year]'].length, 3);
+    this.server.get('/api/courses', async ({ request }) => {
+      const { searchParams } = new URL(request.url);
 
-      return schema.courses.all();
+      assert.strictEqual(searchParams.get('my'), 'true');
+      assert.strictEqual(searchParams.get('filters[locked]'), 'false');
+      assert.strictEqual(searchParams.get('filters[archived]'), 'false');
+      assert.strictEqual(searchParams.getAll('filters[year][]').length, 3);
+
+      assert.step('API called');
+      const courses = await this.server.db.course.all();
+      return formatJsonApi(courses, 'course');
     });
     const subject = this.owner.lookup('service:current-user');
     const activeRelatedCourses = await subject.getActiveRelatedCoursesInThisYearAndLastYear();
-    assert.ok(mapBy(activeRelatedCourses, 'id').includes(courses[0].id));
-    assert.ok(mapBy(activeRelatedCourses, 'id').includes(courses[1].id));
+    assert.ok(mapBy(activeRelatedCourses, 'id').map(Number).includes(courses[0].id));
+    assert.ok(mapBy(activeRelatedCourses, 'id').map(Number).includes(courses[1].id));
     assert.verifySteps(['API called']);
   });
 
@@ -180,7 +182,7 @@ module('Integration | Service | Current User', function (hooks) {
     assert.strictEqual(instructedSessions.length, 6);
     const sessionIds = sessions.map((session) => session.id);
     instructedSessions.forEach((session) => {
-      assert.ok(sessionIds.includes(session.id));
+      assert.ok(sessionIds.includes(Number(session.id)));
     });
   });
 
@@ -239,7 +241,7 @@ module('Integration | Service | Current User', function (hooks) {
     assert.strictEqual(instructedCourses.length, 6);
     const courseIds = courses.map((course) => course.id);
     instructedCourses.forEach((course) => {
-      assert.ok(courseIds.includes(course.id));
+      assert.ok(courseIds.includes(Number(course.id)));
     });
   });
 
