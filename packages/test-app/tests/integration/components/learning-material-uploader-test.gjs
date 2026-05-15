@@ -4,7 +4,6 @@ import { render } from '@ember/test-helpers';
 import { selectFiles } from 'ember-file-upload/test-support';
 import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
-import { HttpResponse } from 'msw';
 import LearningMaterialUploader from 'ilios-common/components/learning-material-uploader';
 import noop from 'ilios-common/helpers/noop';
 
@@ -20,15 +19,15 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
     }
     this.owner.register('service:iliosConfig', IliosConfigMock);
 
-    this.server.post('/upload', (schema, request) => {
+    this.server.post('/upload', async ({ request }) => {
+      const data = await request.formData();
+      assert.ok(data.has('file'));
+      assert.strictEqual(data.get('file').name, 'test.file');
       assert.step('API called');
-      assert.ok(request.requestBody.has('file'));
-      const file = request.requestBody.get('file');
-      assert.strictEqual(file.name, 'test.file');
-      return HttpResponse.json({
+      return {
         filename: 'test.file',
         fileHash: '1234',
-      });
+      };
     });
     let filename = null;
     let fileHash = null;
