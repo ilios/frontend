@@ -114,7 +114,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.strictEqual(component.isActive.yesNoToggle.checked, 'false');
     await component.isActive.yesNoToggle.click();
     assert.strictEqual(component.isActive.yesNoToggle.checked, 'true');
-    assert.ok(this.server.db.terms[0].active);
+    assert.ok(this.server.db.term.all()[0].active);
   });
 
   skip('inactivate active term', async function (assert) {
@@ -146,7 +146,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     assert.strictEqual(component.isActive.yesNoToggle.checked, 'true');
     await component.isActive.yesNoToggle.click();
     assert.strictEqual(component.isActive.yesNoToggle.checked, 'false');
-    assert.notOk(this.server.db.terms[0].active);
+    assert.notOk(this.server.db.term.all()[0].active);
   });
 
   skip('change term title', async function (assert) {
@@ -179,7 +179,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     await component.editTitle();
     await component.changeTitle('new title');
     await component.saveTitle();
-    assert.strictEqual(this.server.db.terms[0].title, 'new title');
+    assert.strictEqual(this.server.db.term.all()[0].title, 'new title');
   });
 
   skip('cancel term title changes', async function (assert) {
@@ -248,7 +248,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     await component.saveTitle();
     assert.ok(component.hasError);
     assert.strictEqual(component.error, 'Title can not be blank');
-    assert.strictEqual(this.server.db.terms[0].title, 'term 0');
+    assert.strictEqual(this.server.db.term.all()[0].title, 'term 0');
   });
 
   skip('validation fails if term title is too long', async function (assert) {
@@ -284,7 +284,7 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     await component.saveTitle();
     assert.ok(component.hasError);
     assert.strictEqual(component.error, 'Title is too long (maximum is 200 characters)');
-    assert.strictEqual(this.server.db.terms[0].title, 'term 0');
+    assert.strictEqual(this.server.db.term.all()[0].title, 'term 0');
   });
 
   skip('add term', async function (assert) {
@@ -320,8 +320,8 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
     await component.subTerms.newTermForm.save();
     assert.strictEqual(component.subTerms.list.length, 1);
 
-    assert.strictEqual(this.server.db.terms[1].title, 'new term');
-    assert.strictEqual(this.server.db.terms[1].vocabularyId, vocabulary.id);
+    assert.strictEqual(this.server.db.term.all()[1].title, 'new term');
+    assert.strictEqual(this.server.db.term.all()[1].id, vocabulary.id);
   });
 
   skip("can't add term with empty title", async function (assert) {

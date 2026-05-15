@@ -68,15 +68,17 @@ module('Integration | Component | pending single user update', function (hooks) 
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
-    assert.strictEqual(this.server.db.users[0].email, 'user-email');
-    assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
+    // console.log('pending single user update: this.server.db', this.server.db);
+
+    assert.strictEqual(this.server.db.user.all()[0].email, 'user-email');
+    assert.strictEqual(this.server.db.pendingUserUpdate.count(), 1);
     this.set('user', userModel);
     await render(<template><PendingSingleUserUpdate @user={{this.user}} /></template>);
     assert.strictEqual(component.updates.length, 1);
     assert.ok(component.updates[0].hasUpdateEmailButton);
     await component.updates[0].updateEmail();
-    assert.strictEqual(this.server.db.users[0].email, 'directory-email');
-    assert.strictEqual(this.server.db.pendingUserUpdates.length, 0);
+    assert.strictEqual(this.server.db.user.all()[0].email, 'directory-email');
+    assert.strictEqual(this.server.db.pendingUserUpdate.count(), 0);
 
     a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -93,15 +95,15 @@ module('Integration | Component | pending single user update', function (hooks) 
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
-    assert.ok(this.server.db.users[0].enabled);
-    assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
+    assert.ok(this.server.db.user.all()[0].enabled);
+    assert.strictEqual(this.server.db.pendingUserUpdate.count(), 1);
     this.set('user', userModel);
     await render(<template><PendingSingleUserUpdate @user={{this.user}} /></template>);
     assert.strictEqual(component.updates.length, 1);
     assert.ok(component.updates[0].hasUpdateEmailButton);
     await component.updates[0].disable();
-    assert.notOk(this.server.db.users[0].enabled);
-    assert.strictEqual(this.server.db.pendingUserUpdates.length, 0);
+    assert.notOk(this.server.db.user.all()[0].enabled);
+    assert.strictEqual(this.server.db.pendingUserUpdate.count(), 0);
 
     a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -118,15 +120,15 @@ module('Integration | Component | pending single user update', function (hooks) 
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
-    assert.notOk(this.server.db.users[0].userSyncIgnore);
-    assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
+    assert.notOk(this.server.db.user.all()[0].userSyncIgnore);
+    assert.strictEqual(this.server.db.pendingUserUpdate.count(), 1);
     this.set('user', userModel);
     await render(<template><PendingSingleUserUpdate @user={{this.user}} /></template>);
     assert.strictEqual(component.updates.length, 1);
     assert.ok(component.updates[0].hasUpdateEmailButton);
     await component.updates[0].excludeFromSync();
-    assert.ok(this.server.db.users[0].userSyncIgnore);
-    assert.strictEqual(this.server.db.pendingUserUpdates.length, 0);
+    assert.ok(this.server.db.user.all()[0].userSyncIgnore);
+    assert.strictEqual(this.server.db.pendingUserUpdate.count(), 0);
 
     a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
