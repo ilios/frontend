@@ -1,7 +1,6 @@
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { DateTime } from 'luxon';
 import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-details';
@@ -29,12 +28,12 @@ module('Integration | Component | curriculum-inventory/report-details', function
     });
     const report = await this.server.create('curriculum-inventory-report', {
       academicLevels,
-      year: '2016',
+      year: 2016,
       program,
       isFinalized: false,
       name: 'Lorem Ipsum',
-      startDate: DateTime.fromObject({ year: 2015, month: 6, day: 12 }),
-      endDate: DateTime.fromObject({ year: 2016, month: 4, day: 11 }),
+      startDate: '2015-06-12',
+      endDate: '2016-04-11',
       description: 'Lorem Ipsum',
     });
     const reportModel = await this.owner
@@ -64,12 +63,12 @@ module('Integration | Component | curriculum-inventory/report-details', function
     });
     const report = await this.server.create('curriculum-inventory-report', {
       academicLevels,
-      year: '2016',
+      year: 2016,
       program,
       isFinalized: false,
       name: 'Lorem Ipsum',
-      startDate: DateTime.fromObject({ year: 2015, month: 6, day: 12 }),
-      endDate: DateTime.fromObject({ year: 2016, month: 4, day: 11 }),
+      startDate: '2016-06-12',
+      endDate: '2016-04-11',
       description: 'Lorem Ipsum',
     });
     const reportModel = await this.owner
@@ -128,12 +127,12 @@ module('Integration | Component | curriculum-inventory/report-details', function
     });
     await this.server.create('curriculum-inventory-report', {
       academicLevels,
-      year: '2016',
+      year: 2016,
       program,
       isFinalized: false,
       name: 'Lorem Ipsum',
-      startDate: DateTime.fromObject({ year: 2015, month: 6, day: 12 }),
-      endDate: DateTime.fromObject({ year: 2016, month: 4, day: 11 }),
+      startDate: '2016-06-12',
+      endDate: '2016-04-11',
       description: 'Lorem Ipsum',
     });
     const report = await this.owner

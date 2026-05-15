@@ -18,7 +18,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'CI Report',
-      year: '2017',
+      year: 2017,
       startDate: '2017-07-01',
       endDate: '2018-06-30',
     });

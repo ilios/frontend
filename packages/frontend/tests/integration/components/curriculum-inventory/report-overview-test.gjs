@@ -23,12 +23,12 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     });
     this.report = await this.server.create('curriculum-inventory-report', {
       academicLevels,
-      year: currentYear.toString(),
+      year: currentYear,
       program: this.program,
       isFinalized: false,
       name: 'Lorem Ipsum',
-      startDate: DateTime.fromObject({ year: currentYear - 1, month: 6, day: 12 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: currentYear, month: 4, day: 11 }).toJSDate(),
+      startDate: `${currentYear - 1}-06-12`,
+      endDate: `${currentYear}-04-11`,
       description: 'Lorem Ipsum',
     });
     class PermissionCheckerMock extends Service {

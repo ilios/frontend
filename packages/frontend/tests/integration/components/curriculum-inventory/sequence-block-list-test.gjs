@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
 import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-list';
 import SequenceBlockList from 'frontend/components/curriculum-inventory/sequence-block-list';
@@ -28,11 +27,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     });
     const report = await this.server.create('curriculum-inventory-report', {
       academicLevels: [academicLevel1, academicLevel2, academicLevel3],
-      year: '2016',
+      year: 2016,
       program,
       name: 'Lorem Ipsum',
-      startDate: DateTime.fromObject({ year: 2015, month: 6, day: 12 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2016, month: 4, day: 11 }).toJSDate(),
+      startDate: '2015-06-12',
+      endDate: '2016-04-11',
       description: 'Lorem Ipsum',
     });
 
@@ -40,8 +39,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       startingAcademicLevel: academicLevel1,
       endingAcademicLevel: academicLevel2,
       title: 'Foo',
-      startDate: DateTime.fromObject({ year: 2015, month: 2, day: 23 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2016, month: 12, day: 3 }).toJSDate(),
+      startDate: '2015-02-23',
+      endDate: '2016-12-03',
       course,
       orderInSequence: 0,
       report,
