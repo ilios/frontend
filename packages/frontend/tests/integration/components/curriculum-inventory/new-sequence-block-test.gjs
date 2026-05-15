@@ -213,23 +213,29 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
-      assert.step('save called');
       assert.strictEqual(block.title, newTitle);
       assert.strictEqual(block.description, newDescription);
       assert.strictEqual(block.belongsTo('parent').id(), null);
-      assert.strictEqual(block.belongsTo('startingAcademicLevel').id(), this.academicLevels[0].id);
-      assert.strictEqual(block.belongsTo('endingAcademicLevel').id(), this.academicLevels[0].id);
-      assert.strictEqual(parseInt(block.required, 10), 1);
+      assert.strictEqual(
+        Number(block.belongsTo('startingAcademicLevel').id()),
+        this.academicLevels[0].id,
+      );
+      assert.strictEqual(
+        Number(block.belongsTo('endingAcademicLevel').id()),
+        this.academicLevels[0].id,
+      );
+      assert.strictEqual(Number(block.required), 1);
       assert.notOk(block.track);
-      assert.strictEqual(parseInt(block.orderInSequence, 10), 0);
-      assert.strictEqual(parseInt(block.childSequenceOrder, 10), 1);
+      assert.strictEqual(Number(block.orderInSequence), 0);
+      assert.strictEqual(Number(block.childSequenceOrder), 1);
       assert.strictEqual(block.startDate.getTime(), newStartDate.getTime());
       assert.strictEqual(block.endDate.getTime(), newEndDate.getTime());
-      assert.strictEqual(parseInt(block.minimum, 10), 0);
-      assert.strictEqual(parseInt(block.minimum, 10), 0);
+      assert.strictEqual(Number(block.minimum), 0);
+      assert.strictEqual(Number(block.minimum), 0);
       assert.strictEqual(block.belongsTo('course').id(), null);
-      assert.strictEqual(parseInt(block.duration, 10), 0);
+      assert.strictEqual(Number(block.duration), 0);
       assert.strictEqual(block.belongsTo('report').id(), reportModel.id);
+      assert.step('save called');
     });
 
     await render(
@@ -322,9 +328,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('save', (block) => {
       assert.step('save called');
       assert.strictEqual(block.orderInSequence, 2);
-      assert.strictEqual(block.belongsTo('parent').id(), parent.id);
-      assert.strictEqual(parseInt(block.belongsTo('startingAcademicLevel').id(), 10), 1);
-      assert.strictEqual(parseInt(block.belongsTo('endingAcademicLevel').id(), 10), 2);
+      assert.strictEqual(Number(block.belongsTo('parent').id()), parent.id);
+      assert.strictEqual(Number(block.belongsTo('startingAcademicLevel').id()), 1);
+      assert.strictEqual(Number(block.belongsTo('endingAcademicLevel').id()), 2);
     });
 
     await render(

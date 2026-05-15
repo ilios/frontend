@@ -341,7 +341,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       'Course: Gamma Level: 1, Start Date: 03/01/2016, End Date: 03/02/2016 - Clerkship (clerkship type 0)',
     );
     const blockCourse = await sequenceBlockModel.course;
-    assert.strictEqual(blockCourse.id, newCourse.id);
+    assert.strictEqual(blockCourse.id, `${newCourse.id}`);
   });
 
   test('change description', async function (assert) {
