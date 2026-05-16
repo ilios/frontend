@@ -1,6 +1,6 @@
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-details';
 import SequenceBlockDetails from 'frontend/components/curriculum-inventory/sequence-block-details';
@@ -10,11 +10,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  test('skip tests for MSW', function (assert) {
-    assert.ok(false, 'unskip tests and then remove this one. MSW');
-  });
-
-  skip('it renders', async function (assert) {
+  test('it renders', async function (assert) {
     const school = await this.server.create('school');
     const academicLevels = [];
     for (let i = 0; i < 10; i++) {

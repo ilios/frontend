@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { click, render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -26,11 +26,7 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
     this.group = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
   });
 
-  test('skip tests for MSW', function (assert) {
-    assert.ok(false, 'fail for msw');
-  });
-
-  skip('it renders', async function (assert) {
+  test('it renders', async function (assert) {
     this.set('group', this.group);
     await render(
       <template><DetailLearnergroupsListItem @group={{this.group}} @remove={{(noop)}} /></template>,
@@ -40,7 +36,7 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
     assert.notOk(component.needsAccommodation);
   });
 
-  skip('it renders in edit mode', async function (assert) {
+  test('it renders in edit mode', async function (assert) {
     this.set('group', this.group);
     await render(
       <template>
@@ -55,7 +51,7 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
     assert.ok(component.isRemovable);
   });
 
-  skip('needs special accommodation', async function (assert) {
+  test('needs special accommodation', async function (assert) {
     this.group.set('needsAccommodation', true);
     this.set('group', this.group);
     await render(
@@ -68,7 +64,7 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
     );
   });
 
-  skip('click to remove', async function (assert) {
+  test('click to remove', async function (assert) {
     this.set('group', this.group);
     this.set('remove', (group, cascade) => {
       assert.step('remove called');
@@ -88,7 +84,7 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
     assert.verifySteps(['remove called']);
   });
 
-  skip('shift-click to remove', async function (assert) {
+  test('shift-click to remove', async function (assert) {
     this.set('group', this.group);
     this.set('remove', (group, cascade) => {
       assert.step('remove called');
@@ -109,7 +105,7 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
     assert.verifySteps(['remove called']);
   });
 
-  skip('control-click to remove', async function (assert) {
+  test('control-click to remove', async function (assert) {
     this.set('group', this.group);
     this.set('remove', (group, cascade) => {
       assert.step('remove called');

@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -39,11 +39,7 @@ module(
         .findRecord('session-type', vocabulary.id);
     });
 
-    test('skip tests for MSW', function (assert) {
-      assert.ok(false, 'unskip tests and then remove this one. MSW');
-    });
-
-    skip('it renders', async function (assert) {
+    test('it renders', async function (assert) {
       this.set('sessionType', this.sessionType);
       this.set('vocabulary', this.vocabulary);
       await render(
@@ -85,7 +81,7 @@ module(
       assert.strictEqual(component.dataTable.rows[2].sessionsCount, '1');
     });
 
-    skip('sort data-table by term title', async function (assert) {
+    test('sort data-table by term title', async function (assert) {
       this.set('sessionType', this.sessionType);
       this.set('vocabulary', this.vocabulary);
       await render(
@@ -111,7 +107,7 @@ module(
       assert.strictEqual(component.dataTable.rows[2].term, 'term 3');
     });
 
-    skip('sort data-table by sessions count', async function (assert) {
+    test('sort data-table by sessions count', async function (assert) {
       this.set('sessionType', this.sessionType);
       this.set('vocabulary', this.vocabulary);
       await render(

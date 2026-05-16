@@ -1,4 +1,4 @@
-import { module, skip, test } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -201,7 +201,7 @@ module('Integration | Component | assign-students/root', function (hooks) {
   });
 
   // TODO: primaryCohort is not set on .toggle(); can't figure out yet
-  skip('save', async function (assert) {
+  test('save', async function (assert) {
     this.set('model', {
       primarySchool: this.school1,
       schools: [this.school1, this.school2],

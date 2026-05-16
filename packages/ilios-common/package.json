@@ -36,7 +36,7 @@
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
-    "@msw/data": "^1.1.2",
+    "@msw/data": "^1.1.6",
     "@popperjs/core": ">= 2.1.0",
     "@zumer/snapdom": "~2.9.0",
     "broccoli-file-creator": "^2.1.1",

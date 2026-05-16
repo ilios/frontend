@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -54,11 +54,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.term5 = await this.owner.lookup('service:store').findRecord('term', term5.id);
   });
 
-  test('skip tests for MSW', function (assert) {
-    assert.ok(false, 'unskip tests and then remove this one. MSW');
-  });
-
-  skip('it renders', async function (assert) {
+  test('it renders', async function (assert) {
     this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     await render(
@@ -82,7 +78,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     assert.strictEqual(component.lists[1].items[0].title, 'Gamma');
   });
 
-  skip('inactive terms are not rendered', async function (assert) {
+  test('inactive terms are not rendered', async function (assert) {
     this.term2.set('active', false);
     this.term3.set('active', false);
     this.term5.set('active', false);
@@ -106,7 +102,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     assert.strictEqual(component.lists[0].items[0].title, 'Alpha');
   });
 
-  skip('select/deselect term', async function (assert) {
+  test('select/deselect term', async function (assert) {
     this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     this.set('add', (term) => {
@@ -139,7 +135,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     assert.verifySteps(['add called']);
   });
 
-  skip('filter terms', async function (assert) {
+  test('filter terms', async function (assert) {
     this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     this.set('termFilter', 'Gamma');
@@ -160,7 +156,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     assert.strictEqual(component.lists[0].items[0].title, 'Gamma');
   });
 
-  skip('filter terms - partial match', async function (assert) {
+  test('filter terms - partial match', async function (assert) {
     this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     this.set('termFilter', 'amma');
