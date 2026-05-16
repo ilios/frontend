@@ -27,7 +27,7 @@ module('Integration | Component | course/visualize-term', function (hooks) {
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

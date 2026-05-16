@@ -33,7 +33,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
       roles: [studentRole],
     });
 
-    this.server.get('api/users', (schema, { queryParams }) => {
+    this.server.get('/api/users', (schema, { queryParams }) => {
       assert.step('API called');
       assert.strictEqual(parseInt(queryParams['filters[school]'], 10), 1);
       assert.deepEqual(queryParams['filters[roles]'], ['4']);

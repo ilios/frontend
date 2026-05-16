@@ -282,7 +282,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report1.id);
     const reports = [reportModel1];
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

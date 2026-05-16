@@ -14,7 +14,7 @@ module('Unit | Service | search', function (hooks) {
   test('test search for curriculum', async function (assert) {
     const courses = [{ id: 1, title: 'Sweet', sessions: [] }];
     const autocomplete = ['one', 'two'];
-    this.server.get('api/search/v2/curriculum', ({ request }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
       const { searchParams } = new URL(request.url);
       assert.strictEqual(searchParams.get('q'), 'codejam');
       assert.strictEqual(Number(searchParams.get('size')), 10);
@@ -36,7 +36,7 @@ module('Unit | Service | search', function (hooks) {
   });
 
   test('test search for users', async function (assert) {
-    this.server.get('api/search/v1/users', ({ request }) => {
+    this.server.get('/api/search/v1/users', ({ request }) => {
       const { searchParams } = new URL(request.url);
       assert.strictEqual(searchParams.get('q'), 'codejam');
       assert.strictEqual(Number(searchParams.get('size')), 100);
@@ -76,7 +76,7 @@ module('Unit | Service | search', function (hooks) {
   });
 
   test('test search for users with size parameters', async function (assert) {
-    this.server.get('api/search/v1/users', ({ request }) => {
+    this.server.get('/api/search/v1/users', ({ request }) => {
       const { searchParams } = new URL(request.url);
       assert.strictEqual(searchParams.get('q'), 'codejam');
       assert.strictEqual(Number(searchParams.get('size')), 9);
@@ -94,7 +94,7 @@ module('Unit | Service | search', function (hooks) {
   });
 
   test('test search for users with onlySuggest parameters', async function (assert) {
-    this.server.get('api/search/v1/users', ({ request }) => {
+    this.server.get('/api/search/v1/users', ({ request }) => {
       const { searchParams } = new URL(request.url);
       assert.strictEqual(searchParams.get('q'), 'codejam');
       assert.strictEqual(Number(searchParams.get('size')), 19);

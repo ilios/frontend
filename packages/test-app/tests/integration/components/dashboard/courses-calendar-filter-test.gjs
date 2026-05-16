@@ -58,7 +58,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
   });
 
   test('course years are shown as ranges if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

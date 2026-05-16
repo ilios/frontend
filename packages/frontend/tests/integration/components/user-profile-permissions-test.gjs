@@ -379,7 +379,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
 
   test('if academic year does not cross year boundaries, and its the first half of the year then last year is selected', async function (assert) {
     freezeDateAt(new Date(`1/1/${this.thisYear}`));
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -410,7 +410,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
 
   test('academic year shows range as applicable by configuration', async function (assert) {
     freezeDateAt(new Date(`7/1/${this.thisYear}`));
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

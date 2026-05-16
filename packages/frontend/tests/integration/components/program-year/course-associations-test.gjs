@@ -157,7 +157,7 @@ module('Integration | Component | program-year/course-associations', function (h
 
   test('crossing academic year boundaries is correctly reflected', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

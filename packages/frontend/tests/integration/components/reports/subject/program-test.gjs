@@ -21,7 +21,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
 
   test('it renders for user with permissions', async function (assert) {
     await setupAuthentication({}, true);
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
@@ -55,7 +55,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
 
   test('it renders for user with no permissions', async function (assert) {
     await setupAuthentication();
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
@@ -88,7 +88,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
     await setupAuthentication({}, true);
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
@@ -132,7 +132,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
       });
     }
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
@@ -162,7 +162,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -191,7 +191,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   });
 
   test('filter by session', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -219,7 +219,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   });
 
   test('filter by school and session', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(

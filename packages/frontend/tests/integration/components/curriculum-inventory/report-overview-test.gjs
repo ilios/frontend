@@ -148,7 +148,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -169,7 +169,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

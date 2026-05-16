@@ -16,7 +16,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
   };
 
   test('it renders', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
@@ -43,7 +43,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
@@ -85,7 +85,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
       });
     }
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
@@ -115,7 +115,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -144,7 +144,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
   });
 
   test('filter by course', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -172,7 +172,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
   });
 
   test('filter by school and session', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(

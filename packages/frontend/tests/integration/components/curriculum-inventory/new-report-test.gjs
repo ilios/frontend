@@ -79,7 +79,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
 
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -154,7 +154,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
     const expectedSelectedYear = currentYear - 5;
 
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {

@@ -60,7 +60,7 @@ module('Integration | Component | program-year/list', function (hooks) {
   });
 
   test('it renders short year', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: false,
@@ -77,7 +77,7 @@ module('Integration | Component | program-year/list', function (hooks) {
   });
 
   test('it renders long year', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

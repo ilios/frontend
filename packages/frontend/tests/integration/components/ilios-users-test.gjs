@@ -101,7 +101,7 @@ module('Integration | Component | ilios-users', function (hooks) {
   test('add user form renders when configured to', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           type: 'form',
@@ -153,7 +153,7 @@ module('Integration | Component | ilios-users', function (hooks) {
   test('directory search renders when configured to', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           type: 'form',
@@ -202,7 +202,7 @@ module('Integration | Component | ilios-users', function (hooks) {
 
   test('closing directory search form resets search terms', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -258,7 +258,7 @@ module('Integration | Component | ilios-users', function (hooks) {
 
   test('close bulk new users form callback fires', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -311,7 +311,7 @@ module('Integration | Component | ilios-users', function (hooks) {
 
   test('close new user form callback fires', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -363,7 +363,7 @@ module('Integration | Component | ilios-users', function (hooks) {
 
   test('collapse button fires', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {

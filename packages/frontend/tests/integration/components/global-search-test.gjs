@@ -22,7 +22,7 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('handles empty and non-empty query', async function (assert) {
-    this.server.get('api/search/v2/curriculum', ({ request }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
       const { searchParams } = new URL(request.url);
       assert.strictEqual(searchParams.get('q'), 'hello world');
@@ -80,7 +80,7 @@ module('Integration | Component | global-search', function (hooks) {
     await this.server.create('academic-year', { id: 2020 });
     await this.server.create('academic-year', { id: 2021 });
     const testYears = (years) => {
-      this.server.get('api/search/v2/curriculum', ({ request }) => {
+      this.server.get('/api/search/v2/curriculum', ({ request }) => {
         assert.step('API called');
         const { searchParams } = new URL(request.url);
         const queryYears = searchParams.get('years')
@@ -154,7 +154,7 @@ module('Integration | Component | global-search', function (hooks) {
   test('school filter works properly', async function (assert) {
     await this.server.createList('school', 3);
     const testSchools = (schools) => {
-      this.server.get('api/search/v2/curriculum', ({ request }) => {
+      this.server.get('/api/search/v2/curriculum', ({ request }) => {
         assert.step('API called');
         const { searchParams } = new URL(request.url);
         const querySchools = searchParams.get('schools')
@@ -228,7 +228,7 @@ module('Integration | Component | global-search', function (hooks) {
   test('if only one school in system no school filter', async function (assert) {
     await this.server.create('school');
 
-    this.server.get('api/search/v2/curriculum', () => {
+    this.server.get('/api/search/v2/curriculum', () => {
       assert.step('API called');
       return {
         results: {
@@ -288,7 +288,7 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('did you mean only shows up if score is high enough', async function (assert) {
-    this.server.get('api/search/v2/curriculum', () => {
+    this.server.get('/api/search/v2/curriculum', () => {
       assert.step('API called');
       return {
         results: {
@@ -320,7 +320,7 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('did you mean works', async function (assert) {
-    this.server.get('api/search/v2/curriculum', () => {
+    this.server.get('/api/search/v2/curriculum', () => {
       assert.step('API called');
       return {
         results: {

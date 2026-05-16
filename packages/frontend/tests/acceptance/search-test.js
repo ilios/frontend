@@ -13,7 +13,7 @@ module('Acceptance | search', function (hooks) {
     const school = await this.server.create('school');
     await setupAuthentication({ school }, true);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           searchEnabled: true,
@@ -26,7 +26,7 @@ module('Acceptance | search', function (hooks) {
   test('visiting /search', async function (assert) {
     const input = 'hello';
 
-    this.server.get('api/search/v2/curriculum', ({ request }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
       const { searchParams } = new URL(request.url);
       assert.strictEqual(searchParams.get('q'), input);
@@ -52,7 +52,7 @@ module('Acceptance | search', function (hooks) {
 
   test('visiting /search?q', async function (assert) {
     const input = 'hello';
-    this.server.get('api/search/v2/curriculum', ({ request }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
       const { searchParams } = new URL(request.url);
       assert.strictEqual(searchParams.get('q'), input);
@@ -74,7 +74,7 @@ module('Acceptance | search', function (hooks) {
   test('search with special chars #4752', async function (assert) {
     const input = 'H&L+foo=bar';
 
-    this.server.get('api/search/v2/curriculum', () => {
+    this.server.get('/api/search/v2/curriculum', () => {
       assert.step('API called');
       return {
         results: {
@@ -98,7 +98,7 @@ module('Acceptance | search', function (hooks) {
   test('search with special chars from dashboard #4752', async function (assert) {
     const input = 'H&L+foo=bar';
 
-    this.server.get('api/search/v2/curriculum', () => {
+    this.server.get('/api/search/v2/curriculum', () => {
       assert.step('API called');
       return {
         results: {
@@ -152,10 +152,10 @@ module('Acceptance | search', function (hooks) {
       };
     };
 
-    this.server.get('api/search/v2/curriculum', callback);
+    this.server.get('/api/search/v2/curriculum', callback);
     await page.visit();
     assert.strictEqual(currentURL(), '/search', 'url is correct');
-    this.server.get('api/search/v2/curriculum', callback);
+    this.server.get('/api/search/v2/curriculum', callback);
     await page.globalSearch.searchBox.input(firstInput);
     await page.globalSearch.searchBox.clickIcon();
     await page.paginationLinks.pageLinks[1].click();
@@ -177,7 +177,7 @@ module('Acceptance | search', function (hooks) {
     assert.strictEqual(currentURL(), `/search?page=2&q=${firstInput}`, 'url is correct');
     await page.globalSearch.searchResults[0].clickCourse();
     assert.strictEqual(currentURL(), `/courses/11`, 'course url is correct');
-    this.server.get('api/search/v2/curriculum', callback);
+    this.server.get('/api/search/v2/curriculum', callback);
     await page.visit({
       page: 2,
       q: firstInput,
@@ -206,7 +206,7 @@ module('Acceptance | search', function (hooks) {
       },
     };
 
-    this.server.get('api/search/v2/curriculum', ({ request }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
       const { searchParams } = new URL(request.url);
       assert.step('API called');
       assert.strictEqual(searchParams.get('q'), firstInput, 'first time, first input');
@@ -219,7 +219,7 @@ module('Acceptance | search', function (hooks) {
     assert.strictEqual(page.globalSearch.searchBox.inputValue, firstInput);
     assert.strictEqual(currentURL(), `/search?q=${firstInput}`);
 
-    this.server.get('api/search/v2/curriculum', ({ request }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
       const { searchParams } = new URL(request.url);
       assert.step('API called');
       assert.strictEqual(searchParams.get('q'), secondInput, 'second time, second input');
@@ -230,7 +230,7 @@ module('Acceptance | search', function (hooks) {
     assert.strictEqual(page.globalSearch.searchBox.inputValue, secondInput);
     assert.strictEqual(currentURL(), `/search?q=${secondInput}`);
 
-    this.server.get('api/search/v2/curriculum', ({ request }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
       const { searchParams } = new URL(request.url);
       assert.step('API called');
       assert.strictEqual(searchParams.get('q'), firstInput, 'third time, first input');
@@ -256,7 +256,7 @@ module('Acceptance | search', function (hooks) {
       });
     }
 
-    this.server.get('api/search/v2/curriculum', ({ request }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
       const { searchParams } = new URL(request.url);
       assert.ok(searchParams.has('schools'));
@@ -293,7 +293,7 @@ module('Acceptance | search', function (hooks) {
     await this.server.create('academic-year', { id: '2024', title: '2024' });
     await this.server.create('academic-year', { id: '2023', title: '2023' });
 
-    this.server.get('api/search/v2/curriculum', ({ request }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
       const { searchParams } = new URL(request.url);
       assert.ok(searchParams.has('years'));

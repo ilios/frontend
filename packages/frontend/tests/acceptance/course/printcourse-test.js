@@ -72,7 +72,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
 
   test('course year shows as range if applicable by configuration', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {

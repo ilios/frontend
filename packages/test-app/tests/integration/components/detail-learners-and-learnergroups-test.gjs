@@ -420,7 +420,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
 
-    this.server.get('api/users', async ({ request }) => {
+    this.server.get('/api/users', async ({ request }) => {
       const { searchParams } = new URL(request.url);
 
       assert.strictEqual(searchParams.get('q'), 'does not matter');

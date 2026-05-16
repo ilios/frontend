@@ -111,7 +111,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
   });
 
   test('academic year shows as range depending on application config', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

@@ -189,7 +189,7 @@ module('Unit | Service | reporting', function (hooks) {
 
   test('buildReportDescription() - all terms for course X in school Y with year-range', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -292,7 +292,7 @@ module('Unit | Service | reporting', function (hooks) {
 
   test('getDescriptiveProperties() - with prepositional object', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

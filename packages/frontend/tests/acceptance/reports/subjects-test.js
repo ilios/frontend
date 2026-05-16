@@ -137,7 +137,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'new report link has correct link title',
     );
 
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       const course = db.courses[0];
@@ -220,7 +220,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'All Terms for Session session 1 (2016) in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       const { id, title } = db.terms[0];
@@ -274,7 +274,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
     let graphQueryCounter = 0;
-    this.server.post('api/graphql', function ({ db }, { requestBody }) {
+    this.server.post('/api/graphql', function ({ db }, { requestBody }) {
       assert.step('API called');
       graphQueryCounter++;
       const { query } = JSON.parse(requestBody);
@@ -394,7 +394,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'my report 0',
       'third report title correct',
     );
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
 
@@ -455,7 +455,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.newSubject.objects.choose('course');
     await page.subjects.list.newSubject.course.input('cour');
     await page.subjects.list.newSubject.course.results[1].click();
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       const course = db.courses[0];
@@ -502,7 +502,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.toggleNewSubjectReportForm();
     await page.subjects.list.newSubject.schools.choose('1');
     await page.subjects.list.newSubject.subjects.choose('course');
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -546,7 +546,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
   test('remove report title', async function (assert) {
     await page.visit();
-    this.server.post('api/graphql', () => {
+    this.server.post('/api/graphql', () => {
       assert.step('API called');
       //send wrong data back, who cares
       return {
@@ -602,7 +602,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
 
     let counter = 0;
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       const users = db.users.map(({ id, firstName, middleName, lastName, displayName }) => {
@@ -657,7 +657,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.newSubject.objects.choose('academic year');
     await page.subjects.list.newSubject.prepositionalObjects.choose('2015');
     await page.subjects.list.newSubject.save();
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(

@@ -640,7 +640,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('duplicate username errors on save', async function (assert) {
-    this.server.post('api/authentications', function () {
+    this.server.post('/api/authentications', function () {
       return new HttpResponse(null, { status: 500 });
     });
     const user = await this.server.create('user');
@@ -669,7 +669,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('error saving user', async function (assert) {
-    this.server.post('api/users', function () {
+    this.server.post('/api/users', function () {
       return new HttpResponse(null, { status: 500 });
     });
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);

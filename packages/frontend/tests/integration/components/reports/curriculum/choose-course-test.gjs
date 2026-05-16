@@ -16,7 +16,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
 
   hooks.beforeEach(async function () {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

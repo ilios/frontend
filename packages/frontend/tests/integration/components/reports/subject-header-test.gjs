@@ -14,7 +14,7 @@ module('Integration | Component | reports/subject-header', function (hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     //override default handler to just return all courses
-    this.server.get('api/courses', (schema) => {
+    this.server.get('/api/courses', (schema) => {
       return schema.courses.all();
     });
   });

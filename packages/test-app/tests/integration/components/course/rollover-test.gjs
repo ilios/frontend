@@ -89,7 +89,7 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('academic year options are labeled with year ranges as applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

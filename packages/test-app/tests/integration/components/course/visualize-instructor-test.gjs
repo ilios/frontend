@@ -30,7 +30,7 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -53,7 +53,7 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
   });
 
   test('breadcrumb', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

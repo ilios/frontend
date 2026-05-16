@@ -30,7 +30,7 @@ module('Integration | Component | user-material-status', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
 
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           materialStatusEnabled: true,
@@ -91,7 +91,7 @@ module('Integration | Component | user-material-status', function (hooks) {
 
   test('it does not render when not enabled', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           materialStatusEnabled: false,

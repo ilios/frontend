@@ -15,7 +15,7 @@ module('Integration | Component | reports/subject-copy', function (hooks) {
     this.intl = this.owner.lookup('service:intl');
     this.user = await setupAuthentication();
     //override default handler to just return all courses
-    this.server.get('api/courses', (schema) => {
+    this.server.get('/api/courses', (schema) => {
       return schema.courses.all();
     });
   });

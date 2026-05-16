@@ -12,7 +12,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
     await setupAuthentication({ school: this.school }, true);
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
       if (query.includes('courses(academicYears:')) {
         const courses = db.courses.map(({ id, title, year, externalId }) => {
@@ -109,7 +109,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     });
     await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     await this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', (schema) => {
+    this.server.post('/api/graphql', (schema) => {
       assert.step('API called');
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);
@@ -192,7 +192,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     });
     await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     await this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', (schema) => {
+    this.server.post('/api/graphql', (schema) => {
       assert.step('API called');
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);
@@ -314,7 +314,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     });
     await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     await this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', ({ db }) => {
       assert.step('API called');
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = db.courses.map((c) => c.id);
@@ -418,7 +418,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     });
     await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     await this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', ({ db }) => {
       assert.step('API called');
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = db.courses.map((c) => c.id);
@@ -546,7 +546,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     });
     await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     await this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', (schema) => {
+    this.server.post('/api/graphql', (schema) => {
       assert.step('API called');
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);

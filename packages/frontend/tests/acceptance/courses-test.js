@@ -719,7 +719,7 @@ module('Acceptance | Courses', function (hooks) {
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year - 1, title: `${year - 1}` });
     await this.server.create('academic-year', { id: year, title: `${year}` });
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -743,7 +743,7 @@ module('Acceptance | Courses', function (hooks) {
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year - 1, title: `${year - 1}` });
     await this.server.create('academic-year', { id: year, title: `${year}` });
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -767,7 +767,7 @@ module('Acceptance | Courses', function (hooks) {
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year - 1, title: `${year - 1}` });
     await this.server.create('academic-year', { id: year, title: `${year}` });
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -791,7 +791,7 @@ module('Acceptance | Courses', function (hooks) {
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year - 1, title: `${year - 1}` });
     await this.server.create('academic-year', { id: year, title: `${year}` });
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {

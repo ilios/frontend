@@ -16,7 +16,7 @@ module('Integration | Component | user profile ics', function (hooks) {
       icsFeedKey: 'testkey',
     });
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           apiVersion,
