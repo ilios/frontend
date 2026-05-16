@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -50,11 +50,7 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
     this.subGroup2 = await store.findRecord('learner-group', subGroup2.id);
   });
 
-  test('skip tests for MSW', function (assert) {
-    assert.ok(false, 'unskip tests and then remove this one. MSW');
-  });
-
-  skip('it renders', async function (assert) {
+  test('it renders', async function (assert) {
     this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
     await render(
       <template>
@@ -81,7 +77,7 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  skip('read-only', async function (assert) {
+  test('read-only', async function (assert) {
     this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
     await render(
       <template>
@@ -104,7 +100,7 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  skip('remove', async function (assert) {
+  test('remove', async function (assert) {
     this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
     this.set('remove', (learnerGroup) => {
       assert.step('remove called');

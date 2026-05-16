@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { click, render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -86,11 +86,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.ilmSession = await store.findRecord('ilm-session', ilmSession.id);
   });
 
-  test('skip tests for MSW', function (assert) {
-    assert.ok(false, 'fail for msw');
-  });
-
-  skip('it renders', async function (assert) {
+  test('it renders', async function (assert) {
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(
@@ -147,7 +143,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('manage', async function (assert) {
+  test('manage', async function (assert) {
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(
@@ -284,7 +280,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     assert.ok(component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[1].isChecked);
   });
 
-  skip('read-only', async function (assert) {
+  test('read-only', async function (assert) {
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(
@@ -299,7 +295,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     assert.notOk(component.hasManageButton);
   });
 
-  skip('remove selected learner', async function (assert) {
+  test('remove selected learner', async function (assert) {
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(
@@ -317,7 +313,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 2);
   });
 
-  skip('remove learner-group from list', async function (assert) {
+  test('remove learner-group from list', async function (assert) {
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(
@@ -351,7 +347,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('remove learner-group from picker', async function (assert) {
+  test('remove learner-group from picker', async function (assert) {
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(
@@ -385,7 +381,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('add available learner-group', async function (assert) {
+  test('add available learner-group', async function (assert) {
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(
@@ -419,7 +415,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('add learner', async function (assert) {
+  test('add learner', async function (assert) {
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
 
@@ -446,7 +442,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     assert.verifySteps(['API called']);
   });
 
-  skip('cancel', async function (assert) {
+  test('cancel', async function (assert) {
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(
@@ -494,7 +490,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('save', async function (assert) {
+  test('save', async function (assert) {
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(
@@ -542,7 +538,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('it updates when relationships change #1550', async function (assert) {
+  test('it updates when relationships change #1550', async function (assert) {
     this.set('session', this.session);
     await render(
       <template>
@@ -564,7 +560,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 0);
   });
 
-  skip('adding a group with children adds them as well', async function (assert) {
+  test('adding a group with children adds them as well', async function (assert) {
     this.ilmSession.set('learnerGroups', []);
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
@@ -616,7 +612,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('removing a group with children from the picker removes them as well', async function (assert) {
+  test('removing a group with children from the picker removes them as well', async function (assert) {
     this.ilmSession.set('learnerGroups', [
       this.topLevelLearnerGroup1,
       this.secondLevelLearnerGroup1,
@@ -672,7 +668,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('removing a group with children from the list removes them as well', async function (assert) {
+  test('removing a group with children from the list removes them as well', async function (assert) {
     this.ilmSession.set('learnerGroups', [
       this.topLevelLearnerGroup1,
       this.secondLevelLearnerGroup1,
@@ -728,7 +724,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('selectively adding a group with children does not add the children', async function (assert) {
+  test('selectively adding a group with children does not add the children', async function (assert) {
     this.ilmSession.set('learnerGroups', []);
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
@@ -782,7 +778,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('selectively removing a group with children from the picker does not remove the children', async function (assert) {
+  test('selectively removing a group with children from the picker does not remove the children', async function (assert) {
     this.ilmSession.set('learnerGroups', [
       this.topLevelLearnerGroup1,
       this.secondLevelLearnerGroup1,
@@ -835,7 +831,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
   });
 
-  skip('selectively removing a group with children from the list does not remove the children', async function (assert) {
+  test('selectively removing a group with children from the list does not remove the children', async function (assert) {
     this.ilmSession.set('learnerGroups', [
       this.topLevelLearnerGroup1,
       this.secondLevelLearnerGroup1,

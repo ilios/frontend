@@ -1,5 +1,5 @@
 import ObjectProxy from '@ember/object/proxy';
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -11,11 +11,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  test('skip tests for MSW', function (assert) {
-    assert.ok(false, 'unskip tests and then remove this one. MSW');
-  });
-
-  skip('it renders when editing', async function (assert) {
+  test('it renders when editing', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const user1 = await this.server.create('user', {
       firstName: 'Jasper',
@@ -96,7 +92,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersInCurrentGroup[1].name.userStatus.accountIsDisabled);
   });
 
-  skip('sort by full name', async function (assert) {
+  test('sort by full name', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const user1 = await this.server.create('user', {
       firstName: 'Jasper',
@@ -165,7 +161,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     );
   });
 
-  skip('add multiple users', async function (assert) {
+  test('add multiple users', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const subGroup = await this.server.create('learner-group', { parent: learnerGroup });
     const user = await this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
@@ -215,7 +211,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.verifySteps(['addMany called']);
   });
 
-  skip('remove multiple users', async function (assert) {
+  test('remove multiple users', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -261,7 +257,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.verifySteps(['removeMany called']);
   });
 
-  skip('remove single user', async function (assert) {
+  test('remove single user', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -303,7 +299,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.verifySteps(['removeOne called']);
   });
 
-  skip('add single user', async function (assert) {
+  test('add single user', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const learnerGroup2 = await this.server.create('learner-group', { id: 2 });
     const user = await this.server.create('user', {
@@ -351,7 +347,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.verifySteps(['addOne called']);
   });
 
-  skip('when users are selected single action is disabled', async function (assert) {
+  test('when users are selected single action is disabled', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const learnerGroup2 = await this.server.create('learner-group', { id: 2 });
     const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
@@ -406,7 +402,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.notOk(component.usersNotInCurrentGroup[0].canBeAdded);
   });
 
-  skip('check all users in group', async function (assert) {
+  test('check all users in group', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const user2 = await this.server.create('user', {
@@ -464,7 +460,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.verifySteps(['removeMany called']);
   });
 
-  skip('check all users not in group', async function (assert) {
+  test('check all users not in group', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const subGroup = await this.server.create('learner-group', { parent: learnerGroup });
     const user = await this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
@@ -522,7 +518,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.verifySteps(['addMany called']);
   });
 
-  skip('checking one puts checkall box into indeterminate state', async function (assert) {
+  test('checking one puts checkall box into indeterminate state', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const user2 = await this.server.create('user', {
@@ -583,7 +579,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
   });
 
-  skip('filter applies', async function (assert) {
+  test('filter applies', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const subgroup = await this.server.create('learner-group', { id: 2, parent: learnerGroup });
     const user1 = await this.server.create('user', {
@@ -692,7 +688,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     );
   });
 
-  skip('user not in group: click on name', async function (assert) {
+  test('user not in group: click on name', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const learnerGroup2 = await this.server.create('learner-group', { id: 2 });
     const user = await this.server.create('user', {
@@ -737,7 +733,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersNotInCurrentGroup[0].isSelected);
   });
 
-  skip('user not in group: click on campus id', async function (assert) {
+  test('user not in group: click on campus id', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const learnerGroup2 = await this.server.create('learner-group', { id: 2 });
     const user = await this.server.create('user', {
@@ -782,7 +778,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersNotInCurrentGroup[0].isSelected);
   });
 
-  skip('user not in group: click on email', async function (assert) {
+  test('user not in group: click on email', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const learnerGroup2 = await this.server.create('learner-group', { id: 2 });
     const user = await this.server.create('user', {
@@ -827,7 +823,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersNotInCurrentGroup[0].isSelected);
   });
 
-  skip('user in group: click on name', async function (assert) {
+  test('user in group: click on name', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -865,7 +861,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersInCurrentGroup[0].isSelected);
   });
 
-  skip('user in group: click on campus id', async function (assert) {
+  test('user in group: click on campus id', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -903,7 +899,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersInCurrentGroup[0].isSelected);
   });
 
-  skip('user in group: click on email', async function (assert) {
+  test('user in group: click on email', async function (assert) {
     const learnerGroup = await this.server.create('learner-group', { id: 1 });
     const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -941,7 +937,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersInCurrentGroup[0].isSelected);
   });
 
-  skip('learner-group hierarchy is shown in group-title and aria-label', async function (assert) {
+  test('learner-group hierarchy is shown in group-title and aria-label', async function (assert) {
     const parentGroup = await this.server.create('learner-group');
     const learnerGroup = await this.server.create('learner-group', { parent: parentGroup });
     const childGroup = await this.server.create('learner-group', { parent: learnerGroup });
