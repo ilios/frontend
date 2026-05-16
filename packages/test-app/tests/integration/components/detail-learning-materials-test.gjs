@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/detail-learning-materials';
 import DetailLearningMaterials from 'ilios-common/components/detail-learning-materials';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | detail learning materials', function (hooks) {
   setupRenderingTest(hooks);
@@ -236,13 +237,15 @@ module('Integration | Component | detail learning materials', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
-    this.server.patch('/api/courselearningmaterials/1', (schema) => {
-      assert.step('API called for LM 1');
-      return schema.courseLearningMaterials.find(1);
+    this.server.patch('/api/courselearningmaterials/1', () => {
+      const cLm = this.server.db.courseLearningMaterial.findFirst((q) => q.where({ id: 1 }));
+      assert.step('API called');
+      return formatJsonApi(cLm, 'courseLearningMaterial');
     });
-    this.server.patch('/api/courselearningmaterials/2', (schema) => {
-      assert.step('API called for LM 2');
-      return schema.courseLearningMaterials.find(2);
+    this.server.patch('/api/courselearningmaterials/2', () => {
+      const cLm = this.server.db.courseLearningMaterial.findFirst((q) => q.where({ id: 2 }));
+      assert.step('API called');
+      return formatJsonApi(cLm, 'courseLearningMaterial');
     });
 
     await render(
@@ -252,6 +255,6 @@ module('Integration | Component | detail learning materials', function (hooks) {
     );
     await component.sort();
     await component.sortManager.save();
-    assert.verifySteps(['API called for LM 2', 'API called for LM 1']);
+    assert.verifySteps(['API called', 'API called']);
   });
 });
