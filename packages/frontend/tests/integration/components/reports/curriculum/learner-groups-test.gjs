@@ -38,7 +38,7 @@ module('Integration | Component | reports/curriculum/learner-groups', function (
     });
     await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     await this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', ({ db }) => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(db, id));

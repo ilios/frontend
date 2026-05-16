@@ -216,7 +216,7 @@ module('Integration | Component | instructor selection manager', function (hooks
   });
 
   test('search and add instructor', async function (assert) {
-    this.server.get('api/users', async () => {
+    this.server.get('/api/users', async () => {
       const rhett = await this.server.db.user.all();
       return formatJsonApi(rhett, 'user');
     });

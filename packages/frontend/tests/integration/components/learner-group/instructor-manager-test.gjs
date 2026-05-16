@@ -271,7 +271,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
   });
 
   test('search and add instructor', async function (assert) {
-    this.server.get('api/users', (schema) => {
+    this.server.get('/api/users', (schema) => {
       return schema.users.all();
     });
 

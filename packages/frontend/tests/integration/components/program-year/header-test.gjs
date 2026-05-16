@@ -34,7 +34,7 @@ module('Integration | Component | program-year/header', function (hooks) {
   });
 
   test('matriculation year shows as year-range based on application config', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

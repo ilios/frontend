@@ -47,7 +47,7 @@ module('Integration | Service | Current User', function (hooks) {
     await this.server.create('user', { id: 100 });
     let calledAlready = false;
 
-    this.server.get('api/users/:id', async ({ params }) => {
+    this.server.get('/api/users/:id', async ({ params }) => {
       assert.step('API called');
       const id = Number(params.id);
       assert.strictEqual(id, 100);

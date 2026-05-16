@@ -20,7 +20,7 @@ module('Acceptance | API Version Check', function (hooks) {
   test('No warning shows up when api versions match', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -38,7 +38,7 @@ module('Acceptance | API Version Check', function (hooks) {
   });
 
   test('Warning shows up when api versions do not match', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {

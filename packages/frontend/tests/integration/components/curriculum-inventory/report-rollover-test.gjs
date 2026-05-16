@@ -73,7 +73,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   });
 
   test('academic years labeled as range if configured accordingly', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

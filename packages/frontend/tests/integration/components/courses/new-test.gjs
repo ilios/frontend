@@ -88,7 +88,7 @@ module('Integration | Component | courses/new', function (hooks) {
   });
 
   test('year options show range if applicable', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {

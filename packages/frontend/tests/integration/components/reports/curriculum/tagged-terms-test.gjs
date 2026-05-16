@@ -45,7 +45,7 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
       terms: [sessionTerm1, sessionTerm2],
     });
 
-    await this.server.post('api/graphql', (schema) => {
+    await this.server.post('/api/graphql', (schema) => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));

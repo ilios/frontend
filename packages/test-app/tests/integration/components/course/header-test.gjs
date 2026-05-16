@@ -151,7 +151,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('course academic year shows range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

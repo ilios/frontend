@@ -11,7 +11,7 @@ module('Integration | Component | user search', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(function () {
-    this.server.get('api/users', async () => {
+    this.server.get('/api/users', async () => {
       const users = await this.server.db.user.all();
       return formatJsonApi(users, 'user');
     });
@@ -32,7 +32,7 @@ module('Integration | Component | user search', function (hooks) {
 
   test('input triggers search', async function (assert) {
     await this.server.create('user');
-    this.server.get('api/users', async ({ request }) => {
+    this.server.get('/api/users', async ({ request }) => {
       const { searchParams } = new URL(request.url);
 
       assert.strictEqual(searchParams.get('q'), 'search words');
@@ -139,7 +139,7 @@ module('Integration | Component | user search', function (hooks) {
 
   test('reads currentlyActiveUsers', async function (assert) {
     const user = await this.server.create('user');
-    this.server.get('api/users', async () => {
+    this.server.get('/api/users', async () => {
       const users = await this.server.db.user.all();
       return formatJsonApi(users, 'user');
     });
@@ -157,7 +157,7 @@ module('Integration | Component | user search', function (hooks) {
 
   test('reads currentlyActiveUsers from a promise', async function (assert) {
     const user = await this.server.create('user');
-    this.server.get('api/users', async () => {
+    this.server.get('/api/users', async () => {
       const users = await this.server.db.user.all();
       return formatJsonApi(users, 'user');
     });

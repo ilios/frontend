@@ -14,7 +14,7 @@ module('Integration | Component | reports/subject', function (hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     //override default handler to just return all courses
-    this.server.get('api/courses', (schema) => {
+    this.server.get('/api/courses', (schema) => {
       return schema.courses.all();
     });
   });
@@ -51,7 +51,7 @@ module('Integration | Component | reports/subject', function (hooks) {
       this.set('selectedYear', year);
       assert.strictEqual(year, '2016', 'report year bubbles up for query params');
     });
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
 
@@ -91,7 +91,7 @@ module('Integration | Component | reports/subject', function (hooks) {
   });
 
   test('report results show academic year as range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -116,7 +116,7 @@ module('Integration | Component | reports/subject', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', '');
-    this.server.post('api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', ({ db }) => {
       return {
         data: {
           courses: db.courses.map(({ id, title, year, externalId }) => {
@@ -162,7 +162,7 @@ module('Integration | Component | reports/subject', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', '');
-    this.server.post('api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', ({ db }) => {
       return {
         data: {
           courses: db.courses.map(({ id, title, year, externalId }) => {
@@ -207,7 +207,7 @@ module('Integration | Component | reports/subject', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', '');
-    this.server.post('api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', ({ db }) => {
       return {
         data: {
           courses: db.courses.map(({ id, title, year, externalId }) => {

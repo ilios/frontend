@@ -47,7 +47,7 @@ module('Acceptance | Admin', function (hooks) {
 
   test('api lookup when search is disabled', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           type: 'form',
@@ -62,7 +62,7 @@ module('Acceptance | Admin', function (hooks) {
     const userSearch = '.user-search input';
     await visit(url);
 
-    this.server.get('api/users', async ({ request }) => {
+    this.server.get('/api/users', async ({ request }) => {
       assert.step('API called');
       const { searchParams } = new URL(request.url);
       assert.strictEqual(searchParams.get('order_by[lastName]'), 'ASC');
@@ -78,7 +78,7 @@ module('Acceptance | Admin', function (hooks) {
 
   test('index search when search is enabled', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           type: 'form',
@@ -93,7 +93,7 @@ module('Acceptance | Admin', function (hooks) {
     const userSearch = '.user-search input';
     await visit(url);
 
-    this.server.get('api/search/v1/users', async ({ request }) => {
+    this.server.get('/api/search/v1/users', async ({ request }) => {
       assert.step('API called');
       const { searchParams } = new URL(request.url);
       assert.strictEqual(searchParams.get('q'), 'son');

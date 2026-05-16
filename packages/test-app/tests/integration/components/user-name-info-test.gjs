@@ -36,7 +36,7 @@ module('Integration | Component | user-name-info', function (hooks) {
   });
 
   test('it hides additional info when configured to do so', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           showCampusNameOfRecord: false,

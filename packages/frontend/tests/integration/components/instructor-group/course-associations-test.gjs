@@ -216,7 +216,7 @@ module('Integration | Component | instructor-group/course-associations', functio
       .findRecord('instructor-group', this.instructorGroup.id);
     this.set('instructorGroup', instructorGroup);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

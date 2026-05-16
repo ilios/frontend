@@ -32,7 +32,7 @@ module('Integration | Component | reports/curriculum/session-objectives', functi
     });
     await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     await this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', (schema) => {
+    this.server.post('/api/graphql', (schema) => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));

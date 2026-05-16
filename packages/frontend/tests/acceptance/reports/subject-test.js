@@ -86,11 +86,11 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
 
       return { data: { sessions: reportData } };
     };
-    this.server.post('api/graphql', async () => this.getReportData(['1', '2']));
+    this.server.post('/api/graphql', async () => this.getReportData(['1', '2']));
   });
 
   test('course report works', async function (assert) {
-    this.server.post('api/graphql', async () => {
+    this.server.post('/api/graphql', async () => {
       assert.step('API called');
       return this.getReportData(['1']);
     });
@@ -119,7 +119,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
 
   test('academic years is shown as range as applicable by configuration', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -140,7 +140,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   });
 
   test('academic year filter works', async function (assert) {
-    this.server.post('api/graphql', async () => {
+    this.server.post('/api/graphql', async () => {
       assert.step('API called');
       return this.getReportData(['1', '2']);
     });
@@ -157,7 +157,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   });
 
   test('copy report button works with auto-generated title', async function (assert) {
-    this.server.post('api/graphql', async () => {
+    this.server.post('/api/graphql', async () => {
       assert.step('API called');
       return this.getReportData(['1', '2']);
     });
@@ -171,7 +171,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   });
 
   test('copy report button works with custom title', async function (assert) {
-    this.server.post('api/graphql', async () => {
+    this.server.post('/api/graphql', async () => {
       assert.step('API called');
       return this.getReportData(['1', '2']);
     });

@@ -19,7 +19,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   };
 
   test('it renders', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
@@ -46,7 +46,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
@@ -85,7 +85,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       });
     }
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
@@ -115,7 +115,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors(schools: [33]) { name } }');
@@ -141,7 +141,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   });
 
   test('filter by session', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -169,7 +169,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   });
 
   test('filter by school and session', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -201,7 +201,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
 
   test('filter by course', async function (assert) {
     let graphQueryCounter = 0;
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       graphQueryCounter++;
       const { query } = JSON.parse(requestBody);
