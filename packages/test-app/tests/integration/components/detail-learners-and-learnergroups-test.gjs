@@ -5,6 +5,7 @@ import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/detail-learners-and-learner-groups';
 import DetailLearnersAndLearnerGroups from 'ilios-common/components/detail-learners-and-learner-groups';
 import { array } from '@ember/helper';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | detail-learners-and-learner-groups', function (hooks) {
   setupRenderingTest(hooks);
@@ -419,10 +420,13 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
 
-    this.server.get('api/users', (schema, { queryParams }) => {
+    this.server.get('api/users', async ({ request }) => {
+      const { searchParams } = new URL(request.url);
+
+      assert.strictEqual(searchParams.get('q'), 'does not matter');
       assert.step('API called');
-      assert.strictEqual(queryParams['q'], 'does not matter');
-      return schema.users.all();
+      const users = await this.server.db.user.all();
+      return formatJsonApi(users, 'user');
     });
     await render(
       <template>

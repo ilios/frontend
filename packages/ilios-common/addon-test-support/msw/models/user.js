@@ -87,7 +87,7 @@ export const relationships = [
     field: 'learnerIlmSessions',
     type: 'manyOf',
     target: 'ilmSession',
-    role: 'ilmInstructors',
+    role: 'ilmLearners',
   },
   {
     field: 'offerings',
