@@ -131,8 +131,8 @@ module('Integration | Component | detail terms list', function (hooks) {
     this.set('terms', terms);
 
     this.set('remove', (val) => {
+      assert.strictEqual(Number(val.id), term1.id);
       assert.step('remove called');
-      assert.strictEqual(val.id, term1.id);
     });
     await render(
       <template>
