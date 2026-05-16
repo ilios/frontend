@@ -42,6 +42,8 @@ export function setupMSW(hooks) {
         return await collection.deleteMany();
       }),
     );
+    //reset all the MSW handerls added with `use`
+    this.server.resetHandlers();
     resetIdCounter();
   });
 }
