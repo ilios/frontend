@@ -50,30 +50,34 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       level: 2,
       cohorts: [cohort2],
     });
-    const session1 = await this.server.create('session', {
+    this.session1 = await this.server.create('session', {
       course: course1,
-      sessionType: this.sessionType1,
+      sessionTypeId: this.sessionType1.id,
+      sessionTypeTitle: this.sessionType1.title,
     });
-    const session2 = await this.server.create('session', {
+    this.session2 = await this.server.create('session', {
       course: course1,
-      sessionType: this.sessionType2,
+      sessionTypeId: this.sessionType2.id,
+      sessionTypeTitle: this.sessionType2.title,
     });
     const session3 = await this.server.create('session', {
       course: course2,
-      sessionType: this.sessionType2,
+      sessionTypeId: this.sessionType2.id,
+      sessionTypeTitle: this.sessionType2.title,
     });
     const session4 = await this.server.create('session', {
       course: course2,
-      sessionType: this.sessionType2,
+      sessionTypeId: this.sessionType2.id,
+      sessionTypeTitle: this.sessionType2.title,
     });
     await this.server.create('academic-year', {
       id: 2015,
     });
     await this.server.create('offering', {
-      session: session1,
+      session: this.session1,
     });
     await this.server.create('offering', {
-      session: session2,
+      session: this.session2,
     });
     await this.server.create('offering', {
       session: session3,
@@ -106,14 +110,14 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       name: 'start of month',
       startDate: startOfMonth.toISO(),
       endDate: startOfMonth.plus({ hour: 1 }).toISO(),
-      lastModified: today.minus({ year: 1 }),
+      lastModified: today.minus({ year: 1 }).toISO(),
     });
     await this.server.create('userevent', {
       user: this.user.id,
       name: 'end of month',
       startDate: endOfMonth.toISO(),
       endDate: endOfMonth.plus({ hour: 1 }).toISO(),
-      lastModified: today.minus({ year: 1 }),
+      lastModified: today.minus({ year: 1 }).toISO(),
     });
     await this.server.create('userevent', {
       user: this.user.id,
@@ -193,14 +197,14 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       name: 'start of week',
       startDate: startOfWeek.toISO(),
       endDate: startOfWeek.plus({ hour: 1 }).toISO(),
-      lastModified: DateTime.now().minus({ year: 1 }),
+      lastModified: DateTime.now().minus({ year: 1 }).toISO(),
     });
     await this.server.create('userevent', {
       user: this.user.id,
       name: 'end of week',
       startDate: endOfWeek.toISO(),
       endDate: endOfWeek.plus({ hour: 1 }).toISO(),
-      lastModified: DateTime.now().minus({ year: 1 }),
+      lastModified: DateTime.now().minus({ year: 1 }).toISO(),
     });
     await this.server.create('userevent', {
       user: this.user.id,
@@ -257,14 +261,14 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       name: 'start of week',
       startDate: startOfWeek.toISO(),
       endDate: startOfWeek.plus({ hour: 1 }).toISO(),
-      lastModified: DateTime.now().minus({ year: 1 }),
+      lastModified: DateTime.now().minus({ year: 1 }).toISO(),
     });
     await this.server.create('userevent', {
       user: this.user.id,
       name: 'end of week',
       startDate: endOfWeek.toISO(),
       endDate: endOfWeek.plus({ hour: 1 }).toISO(),
-      lastModified: DateTime.now().minus({ year: 1 }),
+      lastModified: DateTime.now().minus({ year: 1 }).toISO(),
     });
     await page.visit({ show: 'calendar' });
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
@@ -305,21 +309,21 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       name: 'today',
       startDate: today.toISO(),
       endDate: today.plus({ hour: 1 }).toISO(),
-      lastModified: today.minus({ year: 1 }),
+      lastModified: today.minus({ year: 1 }).toISO(),
     });
     await this.server.create('userevent', {
       user: this.user.id,
       name: 'tomorow',
       startDate: tomorow.toISO(),
       endDate: tomorow.plus({ hour: 1 }).toISO(),
-      lastModified: today.minus({ year: 1 }),
+      lastModified: today.minus({ year: 1 }).toISO(),
     });
     await this.server.create('userevent', {
       user: this.user.id,
       name: 'yesterday',
       startDate: yesterday.toISO(),
       endDate: yesterday.plus({ hour: 1 }).toISO(),
-      lastModified: today.minus({ year: 1 }),
+      lastModified: today.minus({ year: 1 }).toISO(),
     });
     await this.server.create('userevent', {
       user: this.user.id,
@@ -738,13 +742,15 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       school: this.school.id,
       startDate: today.toISO(),
       endDate: today.plus({ hour: 1 }).toISO(),
-      sessionType: this.sessionType1,
+      sessionTypeId: this.sessionType1.id,
+      sessionTypeTitle: this.sessionType1.title,
     });
     await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toISO(),
       endDate: today.plus({ hour: 1 }).toISO(),
-      sessionType: this.sessionType2,
+      sessionTypeId: this.sessionType2.id,
+      sessionTypeTitle: this.sessionType2.title,
     });
     await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
     await page.calendar.controls.showFilters.toggle.secondLabel.click();
@@ -766,13 +772,15 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       school: this.school.id,
       startDate: today.toISO(),
       endDate: today.plus({ hour: 1 }).toISO(),
-      sessionType: this.sessionType1,
+      sessionTypeId: this.sessionType1.id,
+      sessionTypeTitle: this.sessionType1.title,
     });
     await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toISO(),
       endDate: today.plus({ hour: 1 }).toISO(),
-      sessionType: this.sessionType2,
+      sessionTypeId: this.sessionType2.id,
+      sessionTypeTitle: this.sessionType2.title,
     });
     await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
     await page.calendar.controls.showFilters.toggle.secondLabel.click();
@@ -984,21 +992,24 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       startDate: today.toISO(),
       endDate: today.plus({ hour: 1 }).toISO(),
       course: 1,
-      sessionType: this.sessionType1,
+      sessionTypeId: this.sessionType1.id,
+      sessionTypeTitle: this.sessionType1.title,
     });
     await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toISO(),
       endDate: today.plus({ hour: 1 }).toISO(),
       course: 2,
-      sessionType: this.sessionType2,
+      sessionTypeId: this.sessionType2.id,
+      sessionTypeTitle: this.sessionType2.title,
     });
     await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toISO(),
       endDate: today.plus({ hour: 1 }).toISO(),
       course: 1,
-      sessionType: this.sessionType2,
+      sessionTypeId: this.sessionType2.id,
+      sessionTypeTitle: this.sessionType2.title,
     });
     await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
     await page.calendar.controls.showFilters.toggle.secondLabel.click();
@@ -1145,7 +1156,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await this.server.create('term', {
       vocabulary,
-      sessionIds: [1, 2],
+      sessions: [this.session1, this.session2],
     });
     await this.server.create('term', {
       vocabulary,

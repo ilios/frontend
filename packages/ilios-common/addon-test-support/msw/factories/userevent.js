@@ -7,4 +7,5 @@ export default {
   prerequisites: [],
   postrequisites: [],
   color: '#ffffff',
+  userContexts: [],
 };
