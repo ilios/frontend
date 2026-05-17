@@ -220,9 +220,9 @@ const userEventsHandler = http.get('/api/userevents/:userid', async ({ request, 
   const to = Number(url.searchParams.get('to'));
   const userid = Number(params.userid);
 
-  const userEvents = db.userevent.all().filter((event) => {
-    const st = DateTime.fromJSDate(event.startDate).toUnixInteger();
-    const et = DateTime.fromJSDate(event.endDate).toUnixInteger();
+  const userEvents = (await db.userevent.all()).filter((event) => {
+    const st = DateTime.fromISO(event.startDate).toUnixInteger();
+    const et = DateTime.fromISO(event.endDate).toUnixInteger();
     return Number(event.user) === userid && from <= st && to >= et;
   });
 
@@ -238,9 +238,9 @@ const schoolEventsHandler = http.get('/api/schoolevents/:schoolid', async ({ req
   const to = Number(url.searchParams.get('to'));
   const schoolId = Number(params.schoolid);
 
-  const schoolEvents = db.schoolevent.all().filter((event) => {
-    const st = DateTime.fromJSDate(event.startDate).toUnixInteger();
-    const et = DateTime.fromJSDate(event.endDate).toUnixInteger();
+  const schoolEvents = (await db.schoolevent.all()).filter((event) => {
+    const st = DateTime.fromISO(event.startDate).toUnixInteger();
+    const et = DateTime.fromISO(event.endDate).toUnixInteger();
     return Number(event.school) === schoolId && from <= st && to >= et;
   });
 
