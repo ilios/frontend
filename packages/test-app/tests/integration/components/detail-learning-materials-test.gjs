@@ -1,22 +1,23 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/detail-learning-materials';
 import DetailLearningMaterials from 'ilios-common/components/detail-learning-materials';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | detail learning materials', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.status = this.server.createList('learning-material-status', 3);
-    this.roles = this.server.createList('learning-material-user-role', 3);
-    this.user = this.server.create('user');
+  hooks.beforeEach(async function () {
+    this.status = await this.server.createList('learning-material-status', 3);
+    this.roles = await this.server.createList('learning-material-user-role', 3);
+    this.user = await this.server.create('user');
   });
 
   test('lm table items', async function (assert) {
-    const learningMaterial = this.server.create('learning-material', {
+    const learningMaterial = await this.server.create('learning-material', {
       title: 'test title',
       citation: 'some text',
       owningUser: this.user,
@@ -24,13 +25,13 @@ module('Integration | Component | detail learning materials', function (hooks) {
       userRole: this.roles[0],
     });
 
-    const clm = this.server.create('course-learning-material', {
+    const clm = await this.server.create('course-learning-material', {
       learningMaterial,
       required: true,
       notes: 'notes',
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials: [clm],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -55,9 +56,9 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('custom user display name', async function (assert) {
-    const user = this.server.create('user', { displayName: 'Clem Chowder' });
+    const user = await this.server.create('user', { displayName: 'Clem Chowder' });
 
-    const learningMaterial = this.server.create('learning-material', {
+    const learningMaterial = await this.server.create('learning-material', {
       title: 'test title',
       citation: 'some text',
       owningUser: user,
@@ -65,13 +66,13 @@ module('Integration | Component | detail learning materials', function (hooks) {
       userRole: this.roles[0],
     });
 
-    const clm = this.server.create('course-learning-material', {
+    const clm = await this.server.create('course-learning-material', {
       learningMaterial,
       required: true,
       notes: 'notes',
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials: [clm],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -96,17 +97,17 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('sort button visible when lm list has 2+ items and editing is allowed', async function (assert) {
-    const learningMaterial = this.server.create('learning-material', {
+    const learningMaterial = await this.server.create('learning-material', {
       owningUser: this.user,
       status: this.status[1],
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList('course-learning-material', 2, {
+    const learningMaterials = await this.server.createList('course-learning-material', 2, {
       learningMaterial,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -122,17 +123,17 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('sort button not visible when in read-only mode', async function (assert) {
-    const learningMaterial = this.server.create('learning-material', {
+    const learningMaterial = await this.server.create('learning-material', {
       owningUser: this.user,
       status: this.status[1],
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList('course-learning-material', 2, {
+    const learningMaterials = await this.server.createList('course-learning-material', 2, {
       learningMaterial,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -148,7 +149,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('sort button not visible when lm list is empty', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
 
@@ -162,19 +163,19 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('sort button not visible when lm list only contains one item', async function (assert) {
-    const learningMaterial = this.server.create('learning-material', {
+    const learningMaterial = await this.server.create('learning-material', {
       owningUser: this.user,
       status: this.status[1],
       userRole: this.roles[0],
     });
 
-    const clm = this.server.create('course-learning-material', {
+    const clm = await this.server.create('course-learning-material', {
       learningMaterial,
       required: true,
       notes: 'notes',
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials: [clm],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -191,17 +192,17 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('click sort button, then cancel', async function (assert) {
-    const learningMaterial = this.server.create('learning-material', {
+    const learningMaterial = await this.server.create('learning-material', {
       owningUser: this.user,
       status: this.status[1],
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList('course-learning-material', 2, {
+    const learningMaterials = await this.server.createList('course-learning-material', 2, {
       learningMaterial,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -222,27 +223,29 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('click sort button, then save', async function (assert) {
-    const learningMaterial = this.server.create('learning-material', {
+    const learningMaterial = await this.server.create('learning-material', {
       owningUser: this.user,
       status: this.status[1],
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList('course-learning-material', 2, {
+    const learningMaterials = await this.server.createList('course-learning-material', 2, {
       learningMaterial,
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
-    this.server.patch('/api/courselearningmaterials/1', (schema) => {
-      assert.step('API called for LM 1');
-      return schema.courseLearningMaterials.find(1);
+    this.server.patch('/api/courselearningmaterials/1', () => {
+      const cLm = this.server.db.courseLearningMaterial.findFirst((q) => q.where({ id: 1 }));
+      assert.step('API called');
+      return formatJsonApi(cLm, 'courseLearningMaterial');
     });
-    this.server.patch('/api/courselearningmaterials/2', (schema) => {
-      assert.step('API called for LM 2');
-      return schema.courseLearningMaterials.find(2);
+    this.server.patch('/api/courselearningmaterials/2', () => {
+      const cLm = this.server.db.courseLearningMaterial.findFirst((q) => q.where({ id: 2 }));
+      assert.step('API called');
+      return formatJsonApi(cLm, 'courseLearningMaterial');
     });
 
     await render(
@@ -252,6 +255,6 @@ module('Integration | Component | detail learning materials', function (hooks) {
     );
     await component.sort();
     await component.sortManager.save();
-    assert.verifySteps(['API called for LM 2', 'API called for LM 1']);
+    assert.verifySteps(['API called', 'API called']);
   });
 });

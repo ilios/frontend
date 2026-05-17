@@ -9,25 +9,30 @@ module('Acceptance | User', function (hooks) {
 
   hooks.beforeEach(async function () {
     freezeDateAt(new Date('10/31/2002'));
-    this.school = this.server.create('school');
-    const userObject = {
+    this.school = await this.server.create('school');
+    const program = await this.server.create('program', { school: this.school });
+    const programYears = await this.server.createList('programYear', 3, { program });
+    this.cohort1 = await this.server.create('cohort', {
+      title: 'Medicine',
+      programYear: programYears[0],
+    });
+    this.cohort2 = await this.server.create('cohort', { programYear: programYears[1] });
+    this.cohort3 = await this.server.create('cohort', { programYear: programYears[2] });
+    const learnerGroups = await this.server.createList('learner-group', 5, {
+      title: 'Group 1',
+      cohort: this.cohort1,
+    });
+    await setupAuthentication({
       id: 100,
       campusId: '123',
       email: 'user@example.edu',
       phone: '111-111-1111',
-      primaryCohortId: 1,
-      cohortIds: [1, 2, 3],
-      learnerGroupIds: [3, 5],
+      primaryCohort: this.cohort1,
+      cohorts: [this.cohort1, this.cohort2, this.cohort3],
+      learnerGroups: [learnerGroups[2], learnerGroups[4]],
       administeredSchools: [this.school],
       school: this.school,
-    };
-    this.server.create('program', { school: this.school });
-    this.server.createList('programYear', 3, { programId: 1 });
-    this.cohort1 = this.server.create('cohort', { title: 'Medicine', programYearId: 1 });
-    this.cohort2 = this.server.create('cohort', { programYearId: 2 });
-    this.cohort3 = this.server.create('cohort', { programYearId: 3 });
-    this.server.createList('learner-group', 5, { title: 'Group 1', cohortId: 1 });
-    await setupAuthentication(userObject);
+    });
   });
 
   hooks.afterEach(() => {
@@ -35,8 +40,8 @@ module('Acceptance | User', function (hooks) {
   });
 
   test('can search for users', async function (assert) {
-    this.server.createList('user', 20, { email: 'user@example.edu', school: this.school });
-    this.server.createList('authentication', 20);
+    await this.server.createList('user', 20, { email: 'user@example.edu', school: this.school });
+    await this.server.createList('authentication', 20);
 
     const userSearch = '.user-search input';
     const secondResult = '.user-search .results li:nth-of-type(3)';
@@ -58,19 +63,19 @@ module('Acceptance | User', function (hooks) {
   });
 
   test('User roles display', async function (assert) {
-    const studentRole = this.server.create('user-role', {
+    const studentRole = await this.server.create('user-role', {
       title: 'Student',
     });
-    const formerStudentRole = this.server.create('user-role', {
+    const formerStudentRole = await this.server.create('user-role', {
       title: 'Former Student',
     });
-    const user1 = this.server.create('user', {
+    const user1 = await this.server.create('user', {
       enabled: true,
       userSyncIgnore: true,
       roles: [studentRole, formerStudentRole],
       school: this.school,
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       enabled: false,
       userSyncIgnore: false,
       school: this.school,
@@ -109,13 +114,13 @@ module('Acceptance | User', function (hooks) {
   });
 
   test('Change user roles #3887', async function (assert) {
-    const studentRole = this.server.create('user-role', {
+    const studentRole = await this.server.create('user-role', {
       title: 'Student',
     });
-    const formerStudentRole = this.server.create('user-role', {
+    const formerStudentRole = await this.server.create('user-role', {
       title: 'Former Student',
     });
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       enabled: true,
       userSyncIgnore: true,
       roles: [studentRole, formerStudentRole],
@@ -150,27 +155,27 @@ module('Acceptance | User', function (hooks) {
   });
 
   test('Visit another user #4809', async function (assert) {
-    const studentRole = this.server.create('user-role', {
+    const studentRole = await this.server.create('user-role', {
       title: 'Student',
     });
-    const formerStudentRole = this.server.create('user-role', {
+    const formerStudentRole = await this.server.create('user-role', {
       title: 'Former Student',
     });
-    const user1 = this.server.create('user', {
+    const user1 = await this.server.create('user', {
       enabled: true,
       userSyncIgnore: true,
       roles: [formerStudentRole],
       school: this.school,
       primaryCohort: this.cohort1,
-      authentication: this.server.create('authentication'),
+      authentication: await this.server.create('authentication'),
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       enabled: false,
       userSyncIgnore: false,
       roles: [studentRole],
       school: this.school,
       primaryCohort: this.cohort2,
-      authentication: this.server.create('authentication'),
+      authentication: await this.server.create('authentication'),
     });
     await page.visit({ userId: user1.id });
     assert.strictEqual(page.bioDetails.username.text, 'Username: username1');
@@ -195,12 +200,12 @@ module('Acceptance | User', function (hooks) {
   });
 
   test('permissions view #7048', async function (assert) {
-    this.server.create('academic-year', { id: 2002 });
-    const user = this.server.create('user', {
+    await this.server.create('academic-year', { id: 2002 });
+    const user = await this.server.create('user', {
       school: this.school,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school: this.school,
       directors: [user],
       administrators: [user],
@@ -208,10 +213,10 @@ module('Acceptance | User', function (hooks) {
       year: 2002,
     });
 
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       session,
       instructors: [user],
     });

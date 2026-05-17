@@ -8,12 +8,12 @@ module('Acceptance | Program Year - Cohort members', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] });
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    this.server.create('user', { cohorts: [cohort] });
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.create('user', { cohorts: [cohort] });
     this.program = program;
     this.programYear = programYear;
   });

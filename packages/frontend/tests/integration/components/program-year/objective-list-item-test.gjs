@@ -3,20 +3,22 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, settled } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/objective-list-item';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItem from 'frontend/components/program-year/objective-list-item';
 import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | program-year/objective-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const programYearObjective = this.server.create('program-year-objective', { programYear });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const programYearObjective = await this.server.create('program-year-objective', {
+      programYear,
+    });
     this.model = await this.owner
       .lookup('service:store')
       .findRecord('program-year-objective', programYearObjective.id);

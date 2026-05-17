@@ -1,18 +1,18 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/vocabularies-expanded';
 import VocabulariesExpanded from 'frontend/components/school/vocabularies-expanded';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/vocabularies-expanded', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('vocabulary', 2, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('vocabulary', 2, { school });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
@@ -36,8 +36,8 @@ module('Integration | Component | school/vocabularies-expanded', function (hooks
   });
 
   test('collapse', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('vocabulary', 2, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('vocabulary', 2, { school });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('collapse', () => {
       assert.step('collapse called');
@@ -60,8 +60,8 @@ module('Integration | Component | school/vocabularies-expanded', function (hooks
   });
 
   test('manage vocabulary', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('vocabularyId', vocabulary.id);
@@ -84,9 +84,9 @@ module('Integration | Component | school/vocabularies-expanded', function (hooks
   });
 
   test('manage term', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term = this.server.create('term', { vocabulary });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term = await this.server.create('term', { vocabulary });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('termId', term.id);

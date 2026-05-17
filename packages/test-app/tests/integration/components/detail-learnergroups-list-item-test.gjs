@@ -1,27 +1,27 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { click, render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/detail-learnergroups-list-item';
 import DetailLearnergroupsListItem from 'ilios-common/components/detail-learnergroups-list-item';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | detail-learnergroups-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const root = this.server.create('learner-group', {
+    const root = await this.server.create('learner-group', {
       title: 'bar',
     });
-    const parent = this.server.create('learner-group', {
+    const parent = await this.server.create('learner-group', {
       title: 'baz',
       parent: root,
     });
-    const group = this.server.create('learner-group', {
+    const group = await this.server.create('learner-group', {
       title: 'foo',
       parent,
-      users: this.server.createList('user', 3),
+      users: await this.server.createList('user', 3),
     });
     this.group = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
   });

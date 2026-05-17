@@ -7,17 +7,17 @@ module('Acceptance | School - Session Attributes', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     await setupAuthentication({ school: this.school }, true);
   });
 
   test('check fields collapsed', async function (assert) {
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
       value: false,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSupplemental',
       value: true,
@@ -47,12 +47,12 @@ module('Acceptance | School - Session Attributes', function (hooks) {
   });
 
   test('check fields expanded', async function (assert) {
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
       value: false,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSupplemental',
       value: true,
@@ -82,12 +82,12 @@ module('Acceptance | School - Session Attributes', function (hooks) {
   });
 
   test('manage session attributes', async function (assert) {
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
       value: false,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSupplemental',
       value: true,

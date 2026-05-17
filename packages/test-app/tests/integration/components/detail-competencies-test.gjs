@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/detail-competencies';
 import DetailCompetencies from 'ilios-common/components/detail-competencies';
@@ -9,40 +9,82 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | detail-competencies', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    this.server.create('cohort', { programYear });
-    const domains = this.server.createList('competency', 2, { school });
-    const competencies = domains
-      .map((domain) => {
-        return this.server.createList('competency', 2, {
-          parent: domain,
-          school,
-          programYears: [programYear],
-        });
-      })
-      .flat();
-    const programYearObjectives = competencies.map((competency) => {
-      return this.server.create('program-year-objective', {
-        competency,
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    await this.server.create('cohort', { programYear });
+    const domains = await this.server.createList('competency', 2, { school });
+
+    const competencies = [];
+    competencies.push(
+      await this.server.create('competency', {
+        parent: domains[0],
+        school,
+        programYears: [programYear],
+      }),
+    );
+    competencies.push(
+      await this.server.create('competency', {
+        parent: domains[0],
+        school,
+        programYears: [programYear],
+      }),
+    );
+    competencies.push(
+      await this.server.create('competency', {
+        parent: domains[1],
+        school,
+        programYears: [programYear],
+      }),
+    );
+    competencies.push(
+      await this.server.create('competency', {
+        parent: domains[1],
+        school,
+        programYears: [programYear],
+      }),
+    );
+
+    const programYearObjectives = [];
+
+    programYearObjectives.push(
+      await this.server.create('program-year-objective', {
+        competency: competencies[0],
         programYear,
-      });
-    });
-    const course = this.server.create('course', {
+      }),
+    );
+    programYearObjectives.push(
+      await this.server.create('program-year-objective', {
+        competency: competencies[1],
+        programYear,
+      }),
+    );
+    programYearObjectives.push(
+      await this.server.create('program-year-objective', {
+        competency: competencies[2],
+        programYear,
+      }),
+    );
+    programYearObjectives.push(
+      await this.server.create('program-year-objective', {
+        competency: competencies[3],
+        programYear,
+      }),
+    );
+    const course = await this.server.create('course', {
       school,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjectives[0]],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjectives[2]],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjectives[1], programYearObjectives[3]],
     });

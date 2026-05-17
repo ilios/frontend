@@ -1,24 +1,24 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/cohort-user-manager';
 import CohortUserManager from 'frontend/components/learner-group/cohort-user-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learner-group/cohort-user-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const user1 = this.server.create('user', {
+    const user1 = await this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
       campusId: '1234',
       email: 'testemail',
       enabled: true,
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       firstName: 'Jackson',
       lastName: 'Doggy',
       campusId: '123',
@@ -63,9 +63,12 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('sort by full name', async function (assert) {
-    const user1 = this.server.create('user', { firstName: 'Jasper' });
-    const user2 = this.server.create('user', { firstName: 'Jackson' });
-    const user3 = this.server.create('user', { firstName: 'Jayden', displayName: 'Captain J' });
+    const user1 = await this.server.create('user', { firstName: 'Jasper' });
+    const user2 = await this.server.create('user', { firstName: 'Jackson' });
+    const user3 = await this.server.create('user', {
+      firstName: 'Jayden',
+      displayName: 'Captain J',
+    });
     const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
     const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const userModel3 = await this.owner.lookup('service:store').findRecord('user', user3.id);
@@ -93,7 +96,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('add multiple users', async function (assert) {
-    const user = this.server.create('user', { enabled: true });
+    const user = await this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('users', [userModel]);
@@ -126,7 +129,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('add single user', async function (assert) {
-    const user = this.server.create('user', { enabled: true });
+    const user = await this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('users', [userModel]);
@@ -154,7 +157,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('when users are selected single action is disabled', async function (assert) {
-    const user = this.server.create('user', { enabled: true });
+    const user = await this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('users', [userModel]);
@@ -179,8 +182,8 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('checkall', async function (assert) {
-    const user1 = this.server.create('user', { firstName: 'Jasper' });
-    const user2 = this.server.create('user', { firstName: 'Jackson' });
+    const user1 = await this.server.create('user', { firstName: 'Jasper' });
+    const user2 = await this.server.create('user', { firstName: 'Jackson' });
     const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
     const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
 
@@ -216,8 +219,8 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('checking one puts checkall box into indeterminate state', async function (assert) {
-    const user1 = this.server.create('user', { enabled: true });
-    const user2 = this.server.create('user', { enabled: true });
+    const user1 = await this.server.create('user', { enabled: true });
+    const user2 = await this.server.create('user', { enabled: true });
     const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
     const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
 
@@ -255,9 +258,9 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('filtering and bulk-selection', async function (assert) {
-    const user1 = this.server.create('user', { enabled: true, displayName: 'Alpha' });
-    const user2 = this.server.create('user', { enabled: true, displayName: 'Beta' });
-    const user3 = this.server.create('user', { enabled: true, displayName: 'Gamma' });
+    const user1 = await this.server.create('user', { enabled: true, displayName: 'Alpha' });
+    const user2 = await this.server.create('user', { enabled: true, displayName: 'Beta' });
+    const user3 = await this.server.create('user', { enabled: true, displayName: 'Gamma' });
     const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
     const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const userModel3 = await this.owner.lookup('service:store').findRecord('user', user3.id);
@@ -338,17 +341,17 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('filter users', async function (assert) {
-    const user1 = this.server.create('user', {
+    const user1 = await this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
       email: 'jasper.dog@example.edu',
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       firstName: 'Jackson',
       lastName: 'Doggy',
       email: 'jackson.doggy@example.edu',
     });
-    const user3 = this.server.create('user', {
+    const user3 = await this.server.create('user', {
       firstName: 'Jayden',
       lastName: 'Pup',
       displayName: 'Just Jayden',
@@ -388,7 +391,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('click on name', async function (assert) {
-    const user = this.server.create('user', { enabled: true });
+    const user = await this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('users', [userModel]);
     await render(
@@ -410,7 +413,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('click on campus id', async function (assert) {
-    const user = this.server.create('user', { enabled: true });
+    const user = await this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('users', [userModel]);
     await render(
@@ -432,7 +435,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('click on email', async function (assert) {
-    const user = this.server.create('user', { enabled: true });
+    const user = await this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('users', [userModel]);
     await render(

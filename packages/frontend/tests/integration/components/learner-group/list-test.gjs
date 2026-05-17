@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/list';
 import Service from '@ember/service';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -11,7 +11,7 @@ import set from 'ember-set-helper/helpers/set';
 
 module('Integration | Component | learner-group/list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.permissionCheckerMock = class extends Service {
@@ -23,17 +23,21 @@ module('Integration | Component | learner-group/list', function (hooks) {
       }
     };
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    this.cohort = this.server.create('cohort', { programYear });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    this.cohort = await this.server.create('cohort', { programYear });
   });
 
   test('it renders', async function (assert) {
-    this.server.createList('learner-group', 3, { cohort: this.cohort });
-    this.server.createList('learner-group', 3, { cohort: this.cohort, parentId: 2 });
-    this.server.createList('learner-group', 3, { cohort: this.cohort, parentId: 5 });
     const store = this.owner.lookup('service:store');
+
+    const learnerGroup1 = await this.server.create('learner-group', { cohort: this.cohort });
+    await this.server.createList('learner-group', 2, { cohort: this.cohort });
+    await this.server.createList('learner-group', 3, {
+      cohort: this.cohort,
+      parent: learnerGroup1,
+    });
     const learnerGroupModels = [
       await store.findRecord('learner-group', 1),
       await store.findRecord('learner-group', 2),
@@ -49,10 +53,10 @@ module('Integration | Component | learner-group/list', function (hooks) {
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
     assert.strictEqual(component.items[0].users, '0');
-    assert.strictEqual(component.items[0].children, '0');
+    assert.strictEqual(component.items[0].children, '3');
     assert.strictEqual(component.items[1].title, 'learner group 1');
     assert.strictEqual(component.items[1].users, '0');
-    assert.strictEqual(component.items[1].children, '3');
+    assert.strictEqual(component.items[1].children, '0');
     assert.strictEqual(component.items[2].title, 'learner group 2');
     assert.strictEqual(component.items[2].users, '0');
     assert.strictEqual(component.items[2].children, '0');
@@ -60,21 +64,21 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('sort', async function (assert) {
-    const group1 = this.server.create('learner-group', {
+    const group1 = await this.server.create('learner-group', {
       cohort: this.cohort,
-      users: this.server.createList('user', 5),
+      users: await this.server.createList('user', 5),
     });
-    const group2 = this.server.create('learner-group', {
+    const group2 = await this.server.create('learner-group', {
       cohort: this.cohort,
-      users: this.server.createList('user', 3),
+      users: await this.server.createList('user', 3),
     });
-    const group3 = this.server.create('learner-group', {
+    const group3 = await this.server.create('learner-group', {
       cohort: this.cohort,
-      users: this.server.createList('user', 4),
+      users: await this.server.createList('user', 4),
     });
-    this.server.createList('learner-group', 2, { parent: group1 });
-    this.server.createList('learner-group', 5, { parent: group2 });
-    this.server.createList('learner-group', 4, { parent: group3 });
+    await this.server.createList('learner-group', 2, { parent: group1 });
+    await this.server.createList('learner-group', 5, { parent: group2 });
+    await this.server.createList('learner-group', 4, { parent: group3 });
     const store = this.owner.lookup('service:store');
     const learnerGroupModels = [
       await store.findRecord('learner-group', group1.id),
@@ -149,7 +153,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('remove', async function (assert) {
-    this.server.createList('learner-group', 3, { cohort: this.cohort });
+    await this.server.createList('learner-group', 3, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     await render(
@@ -157,18 +161,18 @@ module('Integration | Component | learner-group/list', function (hooks) {
         <List @learnerGroups={{this.learnerGroups}} @sortBy="title" @setSortBy={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(this.server.db.learnerGroups.length, 3);
+    assert.strictEqual(this.server.db.learnerGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
     await component.items[0].remove();
     await component.confirmRemoval.confirm();
-    assert.strictEqual(this.server.db.learnerGroups.length, 2);
+    assert.strictEqual(this.server.db.learnerGroup.all().length, 2);
     assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].title, 'learner group 1');
   });
 
   test('cancel remove', async function (assert) {
-    this.server.createList('learner-group', 3, { cohort: this.cohort });
+    await this.server.createList('learner-group', 3, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     await render(
@@ -176,18 +180,18 @@ module('Integration | Component | learner-group/list', function (hooks) {
         <List @learnerGroups={{this.learnerGroups}} @sortBy="title" @setSortBy={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(this.server.db.learnerGroups.length, 3);
+    assert.strictEqual(this.server.db.learnerGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
     await component.items[0].remove();
     await component.confirmRemoval.cancel();
-    assert.strictEqual(this.server.db.learnerGroups.length, 3);
+    assert.strictEqual(this.server.db.learnerGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
   });
 
   test('copy with learners', async function (assert) {
-    this.server.createList('learner-group', 1, { cohort: this.cohort });
+    await this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
@@ -213,7 +217,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('copy without learners when with learners is enabled', async function (assert) {
-    this.server.createList('learner-group', 1, { cohort: this.cohort });
+    await this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
@@ -239,7 +243,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('copy without learners', async function (assert) {
-    this.server.createList('learner-group', 1, { cohort: this.cohort });
+    await this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
@@ -265,7 +269,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('cancel copy with learners enabled', async function (assert) {
-    this.server.createList('learner-group', 1, { cohort: this.cohort });
+    await this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', () => {
@@ -291,7 +295,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('cancel copy with learners disabled', async function (assert) {
-    this.server.createList('learner-group', 1, { cohort: this.cohort });
+    await this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', () => {

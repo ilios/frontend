@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { settled, render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'ilios-common/page-objects/components/session/overview';
@@ -8,21 +8,21 @@ import Overview from 'ilios-common/components/session/overview';
 
 module('Integration | Component | session/overview', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.server.create('academic-year');
-    this.course = this.server.create('course', {
+    this.school = await this.server.create('school');
+    await this.server.create('academic-year');
+    this.course = await this.server.create('course', {
       school: this.school,
     });
-    this.sessionTypes = this.server.createList('session-type', 2, {
+    this.sessionTypes = await this.server.createList('session-type', 2, {
       school: this.school,
     });
   });
 
   test('validate description', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       description: '',
@@ -49,7 +49,7 @@ module('Integration | Component | session/overview', function (hooks) {
   });
 
   test('validate instructional notes', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       instructionalNotes: '',
@@ -76,7 +76,7 @@ module('Integration | Component | session/overview', function (hooks) {
   });
 
   test('saving empty description and notes sets to null', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       description: '',
@@ -104,7 +104,7 @@ module('Integration | Component | session/overview', function (hooks) {
   });
 
   test('can save descrription when notes is empty string', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       description: 'not empty',
@@ -127,7 +127,7 @@ module('Integration | Component | session/overview', function (hooks) {
   });
 
   test('can save notes when description is empty string', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       description: '',

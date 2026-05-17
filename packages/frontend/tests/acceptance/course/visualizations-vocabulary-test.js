@@ -3,50 +3,49 @@ import { currentURL, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-vocabulary';
 import { setupAuthentication } from 'ilios-common';
-import { DateTime } from 'luxon';
 
 module('Acceptance | course visualizations - vocabulary', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication({}, true);
-    this.vocabulary = this.server.create('vocabulary');
-    const term1 = this.server.create('term', {
+    this.vocabulary = await this.server.create('vocabulary');
+    const term1 = await this.server.create('term', {
       vocabulary: this.vocabulary,
     });
-    const term2 = this.server.create('term', {
+    const term2 = await this.server.create('term', {
       vocabulary: this.vocabulary,
     });
-    const term3 = this.server.create('term', {
+    const term3 = await this.server.create('term', {
       vocabulary: this.vocabulary,
     });
-    const sessionType = this.server.create('session-type');
-    const session1 = this.server.create('session', {
+    const sessionType = await this.server.create('session-type');
+    const session1 = await this.server.create('session', {
       sessionType,
       terms: [term1],
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create('session', {
       sessionType,
       terms: [term2, term3],
     });
-    const session3 = this.server.create('session', {
+    const session3 = await this.server.create('session', {
       sessionType,
       terms: [term3],
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       session: session3,
       hours: 2,
     });
-    this.server.create('offering', {
-      startDate: DateTime.fromISO('2022-07-20T09:00:00').toJSDate(),
-      endDate: DateTime.fromISO('2022-07-20T10:00:00').toJSDate(),
+    await this.server.create('offering', {
+      startDate: '2022-07-20T09:00:00',
+      endDate: '2022-07-20T10:00:00',
       session: session1,
     });
-    this.server.create('offering', {
-      startDate: DateTime.fromISO('2022-07-20T09:00:00').toJSDate(),
-      endDate: DateTime.fromISO('2022-07-20T09:30:00').toJSDate(),
+    await this.server.create('offering', {
+      startDate: '2022-07-20T09:00:00',
+      endDate: '2022-07-20T09:30:00',
       session: session2,
     });
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       sessions: [session1, session2, session3],
       year: 2022,
     });

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/session-type-form';
 import SessionTypeForm from 'frontend/components/school/session-type-form';
 import noop from 'ilios-common/helpers/noop';
@@ -9,32 +9,32 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | school/session-type-form', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.store = this.owner.lookup('service:store');
   });
 
   test('it renders', async function (assert) {
-    this.server.create('aamc-method', {
+    await this.server.create('aamc-method', {
       id: 'AM001',
       description: 'lorem ipsum',
       active: true,
     });
-    this.server.create('aamc-method', {
+    await this.server.create('aamc-method', {
       id: 'AM002',
       description: 'dolor sit',
       active: false,
     });
-    this.server.create('aamc-method', {
+    await this.server.create('aamc-method', {
       id: 'IM001',
       description: 'amet',
       active: true,
     });
-    this.server.create('assessment-option', {
+    await this.server.create('assessment-option', {
       name: 'formative',
     });
-    const summative = this.server.create('assessment-option', {
+    const summative = await this.server.create('assessment-option', {
       name: 'summative',
     });
     this.set('assessmentOptionId', summative.id);
@@ -84,21 +84,21 @@ module('Integration | Component | school/session-type-form', function (hooks) {
   });
 
   test('changing assessment changes available aamcMethods', async function (assert) {
-    this.server.create('aamc-method', {
+    await this.server.create('aamc-method', {
       id: 'AM001',
       description: 'lorem ipsum',
       active: true,
     });
-    this.server.create('aamc-method', {
+    await this.server.create('aamc-method', {
       id: 'IM001',
       description: 'dolor sit',
       active: true,
     });
 
-    this.server.create('assessment-option', {
+    await this.server.create('assessment-option', {
       name: 'formative',
     });
-    this.server.create('assessment-option', {
+    await this.server.create('assessment-option', {
       name: 'summative',
     });
     const assessmentOptions = await this.store.findAll('assessment-option');
@@ -190,12 +190,12 @@ module('Integration | Component | school/session-type-form', function (hooks) {
   });
 
   test('save fires action', async function (assert) {
-    const method = this.server.create('aamc-method', {
+    const method = await this.server.create('aamc-method', {
       id: 'AM001',
       description: 'lorem ipsum',
       active: true,
     });
-    const formative = this.server.create('assessment-option', {
+    const formative = await this.server.create('assessment-option', {
       name: 'formative',
     });
     const aamcMethodModel = await this.store.findRecord('aamc-method', method.id);
@@ -246,13 +246,13 @@ module('Integration | Component | school/session-type-form', function (hooks) {
   });
 
   test('read-only mode works correctly', async function (assert) {
-    this.server.create('aamc-method', {
+    await this.server.create('aamc-method', {
       id: 'AM001',
       description: 'lorem ipsum',
       active: true,
     });
 
-    this.server.create('assessment-option', {
+    await this.server.create('assessment-option', {
       name: 'formative',
     });
 
@@ -296,13 +296,13 @@ module('Integration | Component | school/session-type-form', function (hooks) {
   });
 
   test('inactive method is labeled as such in dropdown', async function (assert) {
-    this.server.create('aamc-method', {
+    await this.server.create('aamc-method', {
       id: 'AM001',
       description: 'lorem ipsum',
       active: false,
     });
 
-    this.server.create('assessment-option', {
+    await this.server.create('assessment-option', {
       name: 'formative',
     });
 
@@ -327,13 +327,13 @@ module('Integration | Component | school/session-type-form', function (hooks) {
   test('inactive method is labeled as such in read-only mode', async function (assert) {
     const aamcMethodId = 'AM001';
 
-    this.server.create('aamc-method', {
+    await this.server.create('aamc-method', {
       id: aamcMethodId,
       description: 'lorem ipsum',
       active: false,
     });
 
-    this.server.create('assessment-option', {
+    await this.server.create('assessment-option', {
       name: 'formative',
     });
 

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/reports/subject-download';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -9,19 +9,19 @@ import SubjectDownload from 'frontend/components/reports/subject-download';
 
 module('Integration | Component | reports/subject-download', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
     this.user = await setupAuthentication();
     //override default handler to just return all courses
-    this.server.get('api/courses', (schema) => {
+    this.server.get('/api/courses', (schema) => {
       return schema.courses.all();
     });
   });
 
   test('it renders', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
       prepositionalObjectTableRowId: this.user.id,
@@ -47,7 +47,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
   });
 
   test('it renders with message', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
       prepositionalObjectTableRowId: this.user.id,
@@ -77,7 +77,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
   });
 
   test('download is disabled when not ready', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
       prepositionalObjectTableRowId: this.user.id,
@@ -92,7 +92,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
   });
 
   test('download enabled', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
       prepositionalObjectTableRowId: this.user.id,

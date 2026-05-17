@@ -1,25 +1,25 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'ilios-common/page-objects/components/session-publicationcheck';
 import SessionPublicationcheck from 'ilios-common/components/session-publicationcheck';
 
 module('Integration | Component | session-publicationcheck', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it shows unlink icon', async function (assert) {
-    const courseObjective = this.server.create('course-objective');
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const session = this.server.create('session', { course });
-    this.server.create('session-objective', {
+    const courseObjective = await this.server.create('course-objective');
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const session = await this.server.create('session', { course });
+    await this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective],
     });
-    this.server.create('session-objective', { session });
+    await this.server.create('session-objective', { session });
 
     await setupAuthentication({ school, administeredSchools: [school] });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
@@ -29,15 +29,15 @@ module('Integration | Component | session-publicationcheck', function (hooks) {
   });
 
   test('it does not shows unlink icon', async function (assert) {
-    const courseObjective = this.server.create('course-objective');
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const session = this.server.create('session', { course });
-    this.server.create('session-objective', {
+    const courseObjective = await this.server.create('course-objective');
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const session = await this.server.create('session', { course });
+    await this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective],
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective],
     });

@@ -2,36 +2,36 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/selected-instructor-groups';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import SelectedInstructorGroups from 'ilios-common/components/selected-instructor-groups';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | selected-instructor-groups', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const instructor1 = this.server.create('user', {
+    const instructor1 = await this.server.create('user', {
       firstName: 'Joe',
       lastName: 'Doe',
       middleName: 'Michael',
     });
-    const instructor2 = this.server.create('user', {
+    const instructor2 = await this.server.create('user', {
       firstName: 'Jane',
       lastName: 'Doe',
       middleName: 'Anette',
     });
-    const instructor3 = this.server.create('user', {
+    const instructor3 = await this.server.create('user', {
       displayName: 'Clem Chowder',
     });
-    const instructorGroup1 = this.server.create('instructor-group', {
+    const instructorGroup1 = await this.server.create('instructor-group', {
       users: [instructor1, instructor2],
     });
-    const instructorGroup2 = this.server.create('instructor-group', {
+    const instructorGroup2 = await this.server.create('instructor-group', {
       users: [instructor3],
     });
-    const instructorGroup3 = this.server.create('instructor-group');
+    const instructorGroup3 = await this.server.create('instructor-group');
 
     this.instructorGroup1 = await this.owner
       .lookup('service:store')

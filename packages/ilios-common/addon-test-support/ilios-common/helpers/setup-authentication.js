@@ -40,8 +40,8 @@ export default async function (
 
   if (userObject) {
     const properties = Object.assign({ id: userId }, userObject);
-    const user = server.create('user', properties);
-    server.create('authentication', { id: user.id, user });
+    const user = await server.create('user', properties);
+    await server.create('authentication', { id: user.id, user });
     return user;
   }
 

@@ -1,33 +1,33 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/program-year/competencies';
 import Competencies from 'frontend/components/program-year/competencies';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | program-year/competencies', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('program-year', { program });
-    this.server.create('cohort', { programYear });
-    const domain = this.server.create('competency', { school });
-    this.server.createList('competency', 2, {
+    const programYear = await this.server.create('program-year', { program });
+    await this.server.create('cohort', { programYear });
+    const domain = await this.server.create('competency', { school });
+    await this.server.createList('competency', 2, {
       parent: domain,
       school,
       programYears: [programYear],
     });
-    const domain2 = this.server.create('competency', {
+    const domain2 = await this.server.create('competency', {
       school,
       programYears: [programYear],
     });
-    this.server.createList('competency', 2, {
+    await this.server.createList('competency', 2, {
       school,
       parent: domain2,
     });

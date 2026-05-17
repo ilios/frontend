@@ -2,14 +2,14 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/programs/list';
 import List from 'frontend/components/programs/list';
 import { array } from '@ember/helper';
 
 module('Integration | Component | programs/list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.permissionCheckerMock = class extends Service {
@@ -21,8 +21,8 @@ module('Integration | Component | programs/list', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('program', 3, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('program', 3, { school });
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
     await render(<template><List @programs={{this.programs}} /></template>);
@@ -43,32 +43,32 @@ module('Integration | Component | programs/list', function (hooks) {
   });
 
   test('remove', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('program', 3, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('program', 3, { school });
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
     await render(<template><List @programs={{this.programs}} /></template>);
-    assert.strictEqual(this.server.db.programs.length, 3);
+    assert.strictEqual(this.server.db.program.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'program 0');
     await component.items[0].remove();
     await component.items[0].confirmRemoval.confirm();
-    assert.strictEqual(this.server.db.programs.length, 2);
+    assert.strictEqual(this.server.db.program.all().length, 2);
     assert.strictEqual(component.items.length, 2);
   });
 
   test('cancel remove', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('program', 3, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('program', 3, { school });
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
     await render(<template><List @programs={{this.programs}} /></template>);
-    assert.strictEqual(this.server.db.programs.length, 3);
+    assert.strictEqual(this.server.db.program.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'program 0');
     await component.items[0].remove();
     await component.items[0].confirmRemoval.cancel();
-    assert.strictEqual(this.server.db.programs.length, 3);
+    assert.strictEqual(this.server.db.program.all().length, 3);
     assert.strictEqual(component.items.length, 3);
   });
 });

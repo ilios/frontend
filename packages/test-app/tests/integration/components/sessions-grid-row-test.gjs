@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
@@ -11,7 +11,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | sessions-grid-session-row', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
@@ -19,27 +19,27 @@ module('Integration | Component | sessions-grid-session-row', function (hooks) {
 
   test('it renders', async function (assert) {
     const date = DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 });
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
-    this.server.create('session-type', { sessions: [session] });
-    this.server.createList('term', 2, { sessions: [session] });
-    this.server.createList('session-objective', 3, { session });
-    const offering1 = this.server.create('offering', {
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
+    await this.server.create('session-type', { sessions: [session] });
+    await this.server.createList('term', 2, { sessions: [session] });
+    await this.server.createList('session-objective', 3, { session });
+    const offering1 = await this.server.create('offering', {
       session,
-      startDate: date.toJSDate(),
+      startDate: date.toISO(),
     });
-    const offering2 = this.server.create('offering', {
+    const offering2 = await this.server.create('offering', {
       session,
-      startDate: date.plus({ hour: 1 }).toJSDate(),
+      startDate: date.plus({ hour: 1 }).toISO(),
     });
-    this.server.create('learner-group', { offerings: [offering1] });
-    this.server.createList('learner-group', 3, { offerings: [offering2] });
-    const ilmSession = this.server.create('ilm-session', {
-      id: '1',
+    await this.server.create('learner-group', { offerings: [offering1] });
+    await this.server.createList('learner-group', 3, { offerings: [offering2] });
+    const ilmSession = await this.server.create('ilm-session', {
+      id: 1,
       session,
-      dueDate: date.toJSDate(),
+      dueDate: date.toISO(),
     });
-    this.server.create('learner-group', { ilmSessions: [ilmSession] });
+    await this.server.create('learner-group', { ilmSessions: [ilmSession] });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     await render(
@@ -74,11 +74,11 @@ module('Integration | Component | sessions-grid-session-row', function (hooks) {
   });
 
   test('it renders expanded', async function (assert) {
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
-    this.set('expandedSessionIds', [session.id]);
+    this.set('expandedSessionIds', [`${session.id}`]);
     await render(
       <template>
         <SessionsGridSessionRow
@@ -103,8 +103,8 @@ module('Integration | Component | sessions-grid-session-row', function (hooks) {
       }
     }
     this.owner.register('service:permission-checker', PermissionCheckerServiceMock);
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     this.set('confirmDelete', (s) => {
@@ -127,11 +127,11 @@ module('Integration | Component | sessions-grid-session-row', function (hooks) {
   });
 
   test('closeSession fires', async function (assert) {
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
-    this.set('expandedSessionIds', [session.id]);
+    this.set('expandedSessionIds', [`${session.id}`]);
     this.set('closeSession', (s) => {
       assert.step('closeSession called');
       assert.strictEqual(s, model);
@@ -152,12 +152,12 @@ module('Integration | Component | sessions-grid-session-row', function (hooks) {
   });
 
   test('expandSession fires', async function (assert) {
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
-    this.server.create('offering', { session });
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
-    this.set('expandedSessionIds', [session.id]);
+    this.set('expandedSessionIds', [`${session.id}`]);
     this.set('expandSession', (s) => {
       assert.step('expandSession called');
       assert.strictEqual(s, model);

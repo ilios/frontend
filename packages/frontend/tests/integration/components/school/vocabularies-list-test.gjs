@@ -1,20 +1,20 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/vocabularies-list';
 import VocabulariesList from 'frontend/components/school/vocabularies-list';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/vocabularies-list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const vocabularies = this.server.createList('vocabulary', 2, { school });
-    this.server.createList('term', 2, { vocabulary: vocabularies[0] });
-    this.server.create('term', { vocabulary: vocabularies[1] });
+    const school = await this.server.create('school');
+    const vocabularies = await this.server.createList('vocabulary', 2, { school });
+    await this.server.createList('term', 2, { vocabulary: vocabularies[0] });
+    await this.server.create('term', { vocabulary: vocabularies[1] });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
@@ -31,10 +31,10 @@ module('Integration | Component | school/vocabularies-list', function (hooks) {
   });
 
   test('cannot delete vocabularies with terms', async function (assert) {
-    const school = this.server.create('school');
-    const vocabularies = this.server.createList('vocabulary', 3, { school });
-    this.server.createList('term', 2, { vocabulary: vocabularies[0] });
-    this.server.create('term', { vocabulary: vocabularies[1] });
+    const school = await this.server.create('school');
+    const vocabularies = await this.server.createList('vocabulary', 3, { school });
+    await this.server.createList('term', 2, { vocabulary: vocabularies[0] });
+    await this.server.create('term', { vocabulary: vocabularies[1] });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
@@ -57,8 +57,8 @@ module('Integration | Component | school/vocabularies-list', function (hooks) {
   });
 
   test('clicking delete removes the vocabulary', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    await this.server.create('vocabulary', { school });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(
@@ -80,8 +80,8 @@ module('Integration | Component | school/vocabularies-list', function (hooks) {
   });
 
   test('clicking edit fires the action to manage the vocab', async function (assert) {
-    const school = this.server.create('school');
-    const vocabularies = this.server.createList('vocabulary', 2, { school });
+    const school = await this.server.create('school');
+    const vocabularies = await this.server.createList('vocabulary', 2, { school });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);

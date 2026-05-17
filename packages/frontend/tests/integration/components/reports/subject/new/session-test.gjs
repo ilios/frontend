@@ -1,30 +1,30 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/session';
 import Session from 'frontend/components/reports/subject/new/session';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/subject/new/session', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.server.create('academic-year', { id: 2027 });
-    this.server.create('academic-year', { id: 2006 });
-    const [school1, school2] = this.server.createList('school', 2);
+  hooks.beforeEach(async function () {
+    await this.server.create('academic-year', { id: 2027 });
+    await this.server.create('academic-year', { id: 2006 });
+    const [school1, school2] = await this.server.createList('school', 2);
 
-    const course1 = this.server.create('course', {
+    const course1 = await this.server.create('course', {
       school: school1,
       year: 2006,
     });
-    const course2 = this.server.create('course', {
+    const course2 = await this.server.create('course', {
       school: school2,
       year: 2027,
     });
-    this.server.createList('session', 2, { course: course1 });
-    this.server.createList('session', 3, { course: course2 });
+    await this.server.createList('session', 2, { course: course1 });
+    await this.server.createList('session', 3, { course: course2 });
   });
 
   test('it renders', async function (assert) {

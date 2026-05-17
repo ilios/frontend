@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/learner-group/header';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -8,15 +8,15 @@ import Header from 'frontend/components/learner-group/header';
 
 module('Integration | Component | learner-group/header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const users = this.server.createList('user', 3);
-    const school = this.server.create('school', { title: 'Medicine' });
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const learnerGroup = this.server.create('learner-group', {
+    const users = await this.server.createList('user', 3);
+    const school = await this.server.create('school', { title: 'Medicine' });
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'lorem ipsum',
       cohort,
       users,

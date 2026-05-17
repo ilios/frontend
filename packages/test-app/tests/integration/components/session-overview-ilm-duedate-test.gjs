@@ -1,18 +1,26 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/session-overview-ilm-duedate';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import SessionOverviewIlmDuedate from 'ilios-common/components/session-overview-ilm-duedate';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | session-overview-ilm-duedate', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const ilmSession = this.server.create('ilm-session', {
-      dueDate: new Date(2021, 4, 19, 23, 55, 0),
+    const ilmSession = await this.server.create('ilm-session', {
+      dueDate: DateTime.fromObject({
+        year: 2021,
+        month: 5,
+        day: 19,
+        hour: 23,
+        minute: 55,
+        second: 0,
+      }).toISO(),
     });
     this.ilmSession = await this.owner
       .lookup('service:store')

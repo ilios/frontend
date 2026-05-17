@@ -1,11 +1,11 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 
 module('Unit | Service | permission-checker', function (hooks) {
   setupTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it exists', function (assert) {
     const service = this.owner.lookup('service:permission-checker');
@@ -106,18 +106,18 @@ module('Unit | Service | permission-checker', function (hooks) {
   });
 
   test('can update learner group', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const group = this.server.create('learner-group', { cohort });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const group = await this.server.create('learner-group', { cohort });
     const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return ['SCHOOL_ADMINISTRATOR'];
       }
     }
@@ -130,18 +130,18 @@ module('Unit | Service | permission-checker', function (hooks) {
   });
 
   test('can delete learner group', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const group = this.server.create('learner-group', { cohort });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const group = await this.server.create('learner-group', { cohort });
     const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return ['SCHOOL_ADMINISTRATOR'];
       }
     }
@@ -154,18 +154,18 @@ module('Unit | Service | permission-checker', function (hooks) {
   });
 
   test('can not update learner group', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const group = this.server.create('learner-group', { cohort });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const group = await this.server.create('learner-group', { cohort });
     const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return [];
       }
     }
@@ -178,18 +178,18 @@ module('Unit | Service | permission-checker', function (hooks) {
   });
 
   test('can not delete learner group', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const group = this.server.create('learner-group', { cohort });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const group = await this.server.create('learner-group', { cohort });
     const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return [];
       }
     }
@@ -202,9 +202,9 @@ module('Unit | Service | permission-checker', function (hooks) {
   });
 
   test('can delete curriculum inventory report as school administrator', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', { program });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', { program });
     const model = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report.id);
@@ -213,7 +213,7 @@ module('Unit | Service | permission-checker', function (hooks) {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return ['SCHOOL_ADMINISTRATOR'];
       }
     }
@@ -227,9 +227,9 @@ module('Unit | Service | permission-checker', function (hooks) {
   });
 
   test('can delete own curriculum inventory report', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', { program });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', { program });
     const model = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report.id);
@@ -238,7 +238,7 @@ module('Unit | Service | permission-checker', function (hooks) {
       isRoot = false;
       async getRolesInSchool(sch) {
         assert.step('getRolesInSchool called');
-        assert.strictEqual(sch.id, school.id);
+        assert.strictEqual(Number(sch.id), school.id);
         return [];
       }
       async getRolesInCurriculumInventoryReport(rpt) {
@@ -257,10 +257,13 @@ module('Unit | Service | permission-checker', function (hooks) {
   });
 
   test('can not delete finalized curriculum inventory report', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const ciExport = this.server.create('curriculum-inventory-export');
-    const report = this.server.create('curriculum-inventory-report', { program, export: ciExport });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const ciExport = await this.server.create('curriculum-inventory-export');
+    const report = await this.server.create('curriculum-inventory-report', {
+      program,
+      export: ciExport,
+    });
     const model = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report.id);

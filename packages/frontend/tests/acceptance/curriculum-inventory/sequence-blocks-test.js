@@ -7,26 +7,26 @@ module('Acceptance | curriculum inventory sequence blocks', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({
       school: this.school,
       administeredSchools: [this.school],
     });
-    const program = this.server.create('program', { school: this.school });
-    this.academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
-    this.report = this.server.create('curriculum-inventory-report', {
+    const program = await this.server.create('program', { school: this.school });
+    this.academicLevels = await this.server.createList('curriculum-inventory-academic-level', 10);
+    this.report = await this.server.create('curriculum-inventory-report', {
       academicLevels: this.academicLevels,
       program,
-      year: '2016',
+      year: 2016,
       isFinalized: false,
     });
-    this.sequence = this.server.create('curriculum-inventory-sequence', {
+    this.sequence = await this.server.create('curriculum-inventory-sequence', {
       report: this.report,
     });
   });
 
   test('delete sequence block', async function (assert) {
-    this.server.create('curriculum-inventory-sequence-block', {
+    await this.server.create('curriculum-inventory-sequence-block', {
       title: 'alpha',
       description: 'lorem ipsum',
       report: this.report,
@@ -35,7 +35,7 @@ module('Acceptance | curriculum inventory sequence blocks', function (hooks) {
       startingAcademicLevel: this.academicLevels[0],
       endingAcademicLevel: this.academicLevels[1],
     });
-    this.server.create('curriculum-inventory-sequence-block', {
+    await this.server.create('curriculum-inventory-sequence-block', {
       title: 'beta',
       description: 'lorem ipsum',
       report: this.report,
@@ -55,7 +55,7 @@ module('Acceptance | curriculum inventory sequence blocks', function (hooks) {
   });
 
   test('block title is correctly linked to block details page', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       title: 'alpha',
       description: 'lorem ipsum',
       report: this.report,

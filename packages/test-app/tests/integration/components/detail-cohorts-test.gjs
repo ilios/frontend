@@ -1,39 +1,42 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import DetailCohorts from 'ilios-common/components/detail-cohorts';
 import { component } from 'ilios-common/page-objects/components/detail-cohorts';
 import { setupAuthentication } from 'ilios-common';
 
 module('Integration | Component | detail cohorts', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('objective linkage is removed when cohort is removed', async function (assert) {
-    const school1 = this.server.create('school');
-    const school2 = this.server.create('school');
-    const program1 = this.server.create('program', { school: school1 });
-    const program2 = this.server.create('program', { school: school2 });
-    const programYear1 = this.server.create('program-year', { program: program1 });
-    const programYear2 = this.server.create('program-year', { program: program2 });
-    const cohort1 = this.server.create('cohort', { programYear: programYear1 });
-    const cohort2 = this.server.create('cohort', { programYear: programYear2 });
-    const course = this.server.create('course', { school: school1, cohorts: [cohort1, cohort2] });
-    const programYearObjective1a = this.server.create('program-year-objective', {
+    const school1 = await this.server.create('school');
+    const school2 = await this.server.create('school');
+    const program1 = await this.server.create('program', { school: school1 });
+    const program2 = await this.server.create('program', { school: school2 });
+    const programYear1 = await this.server.create('program-year', { program: program1 });
+    const programYear2 = await this.server.create('program-year', { program: program2 });
+    const cohort1 = await this.server.create('cohort', { programYear: programYear1 });
+    const cohort2 = await this.server.create('cohort', { programYear: programYear2 });
+    const course = await this.server.create('course', {
+      school: school1,
+      cohorts: [cohort1, cohort2],
+    });
+    const programYearObjective1a = await this.server.create('program-year-objective', {
       programYear: programYear1,
     });
-    const programYearObjective1b = this.server.create('program-year-objective', {
+    const programYearObjective1b = await this.server.create('program-year-objective', {
       programYear: programYear1,
     });
-    const programYearObjective2 = this.server.create('program-year-objective', {
+    const programYearObjective2 = await this.server.create('program-year-objective', {
       programYear: programYear2,
     });
-    const courseObjective1 = this.server.create('course-objective', {
+    const courseObjective1 = await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective1a, programYearObjective2],
     });
-    const courseObjective2 = this.server.create('course-objective', {
+    const courseObjective2 = await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective1b, programYearObjective2],
     });

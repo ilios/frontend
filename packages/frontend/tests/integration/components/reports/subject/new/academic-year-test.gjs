@@ -1,26 +1,26 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/academic-year';
 import AcademicYear from 'frontend/components/reports/subject/new/academic-year';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/subject/new/academic-year', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2015,
       title: 2015,
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2031,
       title: 2031,
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2060,
       title: 2060,
     });

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/learner-group/course-associations';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -9,43 +9,45 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learner-group/course-associations', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school', { title: 'Medicine' });
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    this.learnerGroup = this.server.create('learner-group', { cohort });
+    const school = await this.server.create('school', { title: 'Medicine' });
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    this.learnerGroup = await this.server.create('learner-group', { cohort });
   });
 
   test('it renders expanded with data', async function (assert) {
-    const schools = this.server.createList('school', 2);
-    const coursesInSchool1 = this.server.createList('course', 2, {
+    const schools = await this.server.createList('school', 2);
+    const coursesInSchool1 = await this.server.createList('course', 2, {
       school: schools[0],
       year: 2025,
     });
-    const courseInSchool2 = this.server.create('course', { school: schools[1], year: 2025 });
-    const sessionInCourse1 = this.server.create('session', { course: coursesInSchool1[0] });
-    const sessionsInCourse2 = this.server.createList('session', 2, { course: coursesInSchool1[1] });
-    const sessionInCourse3 = this.server.create('session', { course: courseInSchool2 });
-    this.server.create('ilmSession', {
+    const courseInSchool2 = await this.server.create('course', { school: schools[1], year: 2025 });
+    const sessionInCourse1 = await this.server.create('session', { course: coursesInSchool1[0] });
+    const sessionsInCourse2 = await this.server.createList('session', 2, {
+      course: coursesInSchool1[1],
+    });
+    const sessionInCourse3 = await this.server.create('session', { course: courseInSchool2 });
+    await this.server.create('ilmSession', {
       session: sessionsInCourse2[0],
       learnerGroups: [this.learnerGroup],
     });
-    this.server.create('ilmSession', {
+    await this.server.create('ilmSession', {
       session: sessionInCourse3,
       learnerGroups: [this.learnerGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionsInCourse2[0],
       learnerGroups: [this.learnerGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionsInCourse2[1],
       learnerGroups: [this.learnerGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionInCourse1,
       learnerGroups: [this.learnerGroup],
     });
@@ -97,32 +99,34 @@ module('Integration | Component | learner-group/course-associations', function (
   });
 
   test('it renders collapsed with data', async function (assert) {
-    const schools = this.server.createList('school', 2);
-    const coursesInSchool1 = this.server.createList('course', 2, {
+    const schools = await this.server.createList('school', 2);
+    const coursesInSchool1 = await this.server.createList('course', 2, {
       school: schools[0],
       year: 2025,
     });
-    const courseInSchool2 = this.server.create('course', { school: schools[1], year: 2025 });
-    const sessionInCourse1 = this.server.create('session', { course: coursesInSchool1[0] });
-    const sessionsInCourse2 = this.server.createList('session', 2, { course: coursesInSchool1[1] });
-    const sessionInCourse3 = this.server.create('session', { course: courseInSchool2 });
-    this.server.create('ilmSession', {
+    const courseInSchool2 = await this.server.create('course', { school: schools[1], year: 2025 });
+    const sessionInCourse1 = await this.server.create('session', { course: coursesInSchool1[0] });
+    const sessionsInCourse2 = await this.server.createList('session', 2, {
+      course: coursesInSchool1[1],
+    });
+    const sessionInCourse3 = await this.server.create('session', { course: courseInSchool2 });
+    await this.server.create('ilmSession', {
       session: sessionsInCourse2[0],
       learnerGroups: [this.learnerGroup],
     });
-    this.server.create('ilmSession', {
+    await this.server.create('ilmSession', {
       session: sessionInCourse3,
       learnerGroups: [this.learnerGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionsInCourse2[0],
       learnerGroups: [this.learnerGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionsInCourse2[1],
       learnerGroups: [this.learnerGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionInCourse1,
       learnerGroups: [this.learnerGroup],
     });
@@ -164,13 +168,13 @@ module('Integration | Component | learner-group/course-associations', function (
   });
 
   test('sorting works', async function (assert) {
-    const schools = this.server.createList('school', 2);
-    const course1 = this.server.create('course', { school: schools[0], year: 2025 });
-    const course2 = this.server.create('course', { school: schools[1], year: 2025 });
-    const session1 = this.server.create('session', { course: course1 });
-    const session2 = this.server.create('session', { course: course2 });
-    this.server.create('offering', { session: session1, learnerGroups: [this.learnerGroup] });
-    this.server.create('offering', { session: session2, learnerGroups: [this.learnerGroup] });
+    const schools = await this.server.createList('school', 2);
+    const course1 = await this.server.create('course', { school: schools[0], year: 2025 });
+    const course2 = await this.server.create('course', { school: schools[1], year: 2025 });
+    const session1 = await this.server.create('session', { course: course1 });
+    const session2 = await this.server.create('session', { course: course2 });
+    await this.server.create('offering', { session: session1, learnerGroups: [this.learnerGroup] });
+    await this.server.create('offering', { session: session2, learnerGroups: [this.learnerGroup] });
     const learnerGroup = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
@@ -202,16 +206,16 @@ module('Integration | Component | learner-group/course-associations', function (
   });
 
   test('crossing academic year boundaries is correctly reflected', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school, year: 2025 });
-    const session = this.server.create('session', { course });
-    this.server.create('offering', { session, learnerGroups: [this.learnerGroup] });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school, year: 2025 });
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session, learnerGroups: [this.learnerGroup] });
     const learnerGroup = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroup);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -237,10 +241,10 @@ module('Integration | Component | learner-group/course-associations', function (
   });
 
   test('collapse action fires', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school, year: 2025 });
-    const session = this.server.create('session', { course });
-    this.server.create('offering', { session, learnerGroups: [this.learnerGroup] });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school, year: 2025 });
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session, learnerGroups: [this.learnerGroup] });
     const learnerGroup = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
@@ -264,10 +268,10 @@ module('Integration | Component | learner-group/course-associations', function (
   });
 
   test('expand action fires', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school, year: 2025 });
-    const session = this.server.create('session', { course });
-    this.server.create('offering', { session, learnerGroups: [this.learnerGroup] });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school, year: 2025 });
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session, learnerGroups: [this.learnerGroup] });
     const learnerGroup = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);

@@ -2,18 +2,18 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/leadership-expanded';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | leadership expanded', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   module('course', function () {
     test('it renders', async function (assert) {
-      const users = this.server.createList('user', 2);
-      const course = this.server.create('course', {
+      const users = await this.server.createList('user', 2);
+      const course = await this.server.create('course', {
         directors: [users[0]],
         administrators: users,
         studentAdvisors: [users[0]],
@@ -44,8 +44,8 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses when there are administrators', async function (assert) {
-      const administrators = this.server.createList('user', 1);
-      const course = this.server.create('course', {
+      const administrators = await this.server.createList('user', 1);
+      const course = await this.server.create('course', {
         administrators,
       });
       const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -70,8 +70,8 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses when there are directors', async function (assert) {
-      const directors = this.server.createList('user', 1);
-      const course = this.server.create('course', {
+      const directors = await this.server.createList('user', 1);
+      const course = await this.server.create('course', {
         directors,
       });
       const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -96,8 +96,8 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses when there are student advisors', async function (assert) {
-      const studentAdvisors = this.server.createList('user', 1);
-      const course = this.server.create('course', {
+      const studentAdvisors = await this.server.createList('user', 1);
+      const course = await this.server.create('course', {
         studentAdvisors,
       });
       const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -122,7 +122,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking manage fires action', async function (assert) {
-      const course = this.server.create('course');
+      const course = await this.server.create('course');
       const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
       this.set('course', courseModel);
       this.set('click', () => {
@@ -147,9 +147,9 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
   module('session', function () {
     test('it renders', async function (assert) {
-      const users = this.server.createList('user', 2);
-      const course = this.server.create('course');
-      const session = this.server.create('session', {
+      const users = await this.server.createList('user', 2);
+      const course = await this.server.create('course');
+      const session = await this.server.create('session', {
         course,
         administrators: users,
         studentAdvisors: [users[0]],
@@ -180,9 +180,9 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses when there are administrators', async function (assert) {
-      const administrators = this.server.createList('user', 1);
-      const course = this.server.create('course');
-      const session = this.server.create('session', {
+      const administrators = await this.server.createList('user', 1);
+      const course = await this.server.create('course');
+      const session = await this.server.create('session', {
         course,
         administrators,
       });
@@ -210,9 +210,9 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses when there are student advisors', async function (assert) {
-      const studentAdvisors = this.server.createList('user', 1);
-      const course = this.server.create('course');
-      const session = this.server.create('session', {
+      const studentAdvisors = await this.server.createList('user', 1);
+      const course = await this.server.create('course');
+      const session = await this.server.create('session', {
         course,
         studentAdvisors,
       });
@@ -240,7 +240,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking manage fires action', async function (assert) {
-      const session = this.server.create('session');
+      const session = await this.server.create('session');
       const sessionModel = await this.owner
         .lookup('service:store')
         .findRecord('session', session.id);
@@ -267,15 +267,15 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
   module('program', function () {
     test('it renders', async function (assert) {
-      const user1 = this.server.create('user', {
+      const user1 = await this.server.create('user', {
         firstName: 'a',
         lastName: 'person',
       });
-      const user2 = this.server.create('user', {
+      const user2 = await this.server.create('user', {
         firstName: 'b',
         lastName: 'person',
       });
-      const program = this.server.create('program', {
+      const program = await this.server.create('program', {
         directors: [user1, user2],
       });
       const programModel = await this.owner
@@ -302,7 +302,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses', async function (assert) {
-      const program = this.server.create('program');
+      const program = await this.server.create('program');
       const programModel = await this.owner
         .lookup('service:store')
         .findRecord('program', program.id);
@@ -328,7 +328,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking manage fires action', async function (assert) {
-      const program = this.server.create('program');
+      const program = await this.server.create('program');
       const programModel = await this.owner
         .lookup('service:store')
         .findRecord('program', program.id);
@@ -356,16 +356,16 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
   module('program year', function () {
     test('it renders', async function (assert) {
-      const user1 = this.server.create('user', {
+      const user1 = await this.server.create('user', {
         firstName: 'a',
         lastName: 'person',
       });
-      const user2 = this.server.create('user', {
+      const user2 = await this.server.create('user', {
         firstName: 'b',
         lastName: 'person',
       });
-      const program = this.server.create('program');
-      const programYear = this.server.create('program-year', {
+      const program = await this.server.create('program');
+      const programYear = await this.server.create('program-year', {
         directors: [user1, user2],
         program,
       });
@@ -392,8 +392,8 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses', async function (assert) {
-      const program = this.server.create('program');
-      const programYear = this.server.create('program-year', {
+      const program = await this.server.create('program');
+      const programYear = await this.server.create('program-year', {
         program,
       });
       const programYearModel = await this.owner
@@ -420,8 +420,8 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking manage fires action', async function (assert) {
-      const program = this.server.create('program');
-      const programYear = this.server.create('program-year', {
+      const program = await this.server.create('program');
+      const programYear = await this.server.create('program-year', {
         program,
       });
       const programYearModel = await this.owner
@@ -450,9 +450,9 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
   module('school', function () {
     test('it renders', async function (assert) {
-      const user1 = this.server.create('user');
-      const user2 = this.server.create('user');
-      const school = this.server.create('school', {
+      const user1 = await this.server.create('user');
+      const user2 = await this.server.create('user');
+      const school = await this.server.create('school', {
         directors: [user1],
         administrators: [user1, user2],
       });
@@ -480,8 +480,8 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses', async function (assert) {
-      const user1 = this.server.create('user');
-      const school = this.server.create('school', {
+      const user1 = await this.server.create('user');
+      const school = await this.server.create('school', {
         directors: [user1],
       });
       const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
@@ -506,7 +506,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking manage fires action', async function (assert) {
-      const school = this.server.create('school', {});
+      const school = await this.server.create('school', {});
       const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
       this.set('school', schoolModel);
       this.set('manage', () => {
@@ -531,7 +531,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
     // @link https://github.com/ilios/frontend/issues/5732
     test('managing mode', async function (assert) {
-      const school = this.server.create('school');
+      const school = await this.server.create('school');
       const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
       this.set('school', schoolModel);
       await render(
@@ -553,8 +553,8 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
   module('curriculum inventory report', function () {
     test('it renders', async function (assert) {
-      const administrators = this.server.createList('user', 2);
-      const report = this.server.create('curriculum-inventory-report', {
+      const administrators = await this.server.createList('user', 2);
+      const report = await this.server.create('curriculum-inventory-report', {
         administrators,
       });
       const reportModel = await this.owner
@@ -579,7 +579,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses', async function (assert) {
-      const report = this.server.create('curriculum-inventory-report');
+      const report = await this.server.create('curriculum-inventory-report');
       const reportModel = await this.owner
         .lookup('service:store')
         .findRecord('curriculum-inventory-report', report.id);
@@ -605,7 +605,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking manage fires action', async function (assert) {
-      const report = this.server.create('curriculum-inventory-report');
+      const report = await this.server.create('curriculum-inventory-report');
       const reportModel = await this.owner
         .lookup('service:store')
         .findRecord('curriculum-inventory-report', report.id);

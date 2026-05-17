@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/instructor-group/course-associations';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -9,38 +9,38 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | instructor-group/course-associations', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.instructorGroup = this.server.create('instructor-group');
+    this.instructorGroup = await this.server.create('instructor-group');
   });
 
   test('it renders expanded with data', async function (assert) {
-    const school = this.server.create('school');
-    const courses = this.server.createList('course', 3, {
+    const school = await this.server.create('school');
+    const courses = await this.server.createList('course', 3, {
       school,
       year: 2025,
     });
-    const sessionInCourse1 = this.server.create('session', { course: courses[0] });
-    const sessionsInCourse2 = this.server.createList('session', 2, { course: courses[1] });
-    const sessionInCourse3 = this.server.create('session', { course: courses[2] });
-    this.server.create('ilmSession', {
+    const sessionInCourse1 = await this.server.create('session', { course: courses[0] });
+    const sessionsInCourse2 = await this.server.createList('session', 2, { course: courses[1] });
+    const sessionInCourse3 = await this.server.create('session', { course: courses[2] });
+    await this.server.create('ilmSession', {
       session: sessionsInCourse2[0],
       instructorGroups: [this.instructorGroup],
     });
-    this.server.create('ilmSession', {
+    await this.server.create('ilmSession', {
       session: sessionInCourse3,
       instructorGroups: [this.instructorGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionsInCourse2[0],
       instructorGroups: [this.instructorGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionsInCourse2[1],
       instructorGroups: [this.instructorGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionInCourse1,
       instructorGroups: [this.instructorGroup],
     });
@@ -92,32 +92,34 @@ module('Integration | Component | instructor-group/course-associations', functio
   });
 
   test('it renders collapsed with data', async function (assert) {
-    const schools = this.server.createList('school', 2);
-    const coursesInSchool1 = this.server.createList('course', 2, {
+    const schools = await this.server.createList('school', 2);
+    const coursesInSchool1 = await this.server.createList('course', 2, {
       school: schools[0],
       year: 2025,
     });
-    const courseInSchool2 = this.server.create('course', { school: schools[1], year: 2025 });
-    const sessionInCourse1 = this.server.create('session', { course: coursesInSchool1[0] });
-    const sessionsInCourse2 = this.server.createList('session', 2, { course: coursesInSchool1[1] });
-    const sessionInCourse3 = this.server.create('session', { course: courseInSchool2 });
-    this.server.create('ilmSession', {
+    const courseInSchool2 = await this.server.create('course', { school: schools[1], year: 2025 });
+    const sessionInCourse1 = await this.server.create('session', { course: coursesInSchool1[0] });
+    const sessionsInCourse2 = await this.server.createList('session', 2, {
+      course: coursesInSchool1[1],
+    });
+    const sessionInCourse3 = await this.server.create('session', { course: courseInSchool2 });
+    await this.server.create('ilmSession', {
       session: sessionsInCourse2[0],
       instructorGroups: [this.instructorGroup],
     });
-    this.server.create('ilmSession', {
+    await this.server.create('ilmSession', {
       session: sessionInCourse3,
       instructorGroups: [this.instructorGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionsInCourse2[0],
       instructorGroups: [this.instructorGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionsInCourse2[1],
       instructorGroups: [this.instructorGroup],
     });
-    this.server.createList('offering', 2, {
+    await this.server.createList('offering', 2, {
       session: sessionInCourse1,
       instructorGroups: [this.instructorGroup],
     });
@@ -161,13 +163,19 @@ module('Integration | Component | instructor-group/course-associations', functio
   });
 
   test('sorting works', async function (assert) {
-    const schools = this.server.createList('school', 2);
-    const course1 = this.server.create('course', { school: schools[0], year: 2025 });
-    const course2 = this.server.create('course', { school: schools[1], year: 2025 });
-    const session1 = this.server.create('session', { course: course1 });
-    const session2 = this.server.create('session', { course: course2 });
-    this.server.create('offering', { session: session1, instructorGroups: [this.instructorGroup] });
-    this.server.create('offering', { session: session2, instructorGroups: [this.instructorGroup] });
+    const schools = await this.server.createList('school', 2);
+    const course1 = await this.server.create('course', { school: schools[0], year: 2025 });
+    const course2 = await this.server.create('course', { school: schools[1], year: 2025 });
+    const session1 = await this.server.create('session', { course: course1 });
+    const session2 = await this.server.create('session', { course: course2 });
+    await this.server.create('offering', {
+      session: session1,
+      instructorGroups: [this.instructorGroup],
+    });
+    await this.server.create('offering', {
+      session: session2,
+      instructorGroups: [this.instructorGroup],
+    });
     const instructorGroup = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', this.instructorGroup.id);
@@ -199,16 +207,16 @@ module('Integration | Component | instructor-group/course-associations', functio
   });
 
   test('crossing academic year boundaries is correctly reflected', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school, year: 2025 });
-    const session = this.server.create('session', { course });
-    this.server.create('offering', { session, instructorGroups: [this.instructorGroup] });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school, year: 2025 });
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session, instructorGroups: [this.instructorGroup] });
     const instructorGroup = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', this.instructorGroup.id);
     this.set('instructorGroup', instructorGroup);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -231,10 +239,10 @@ module('Integration | Component | instructor-group/course-associations', functio
   });
 
   test('collapse action fires', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school, year: 2025 });
-    const session = this.server.create('session', { course });
-    this.server.create('offering', { session, instructorGroups: [this.instructorGroup] });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school, year: 2025 });
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session, instructorGroups: [this.instructorGroup] });
     const instructorGroup = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', this.instructorGroup.id);
@@ -258,10 +266,10 @@ module('Integration | Component | instructor-group/course-associations', functio
   });
 
   test('expand action fires', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school, year: 2025 });
-    const session = this.server.create('session', { course });
-    this.server.create('offering', { session, instructorGroups: [this.instructorGroup] });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school, year: 2025 });
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session, instructorGroups: [this.instructorGroup] });
     const instructorGroup = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', this.instructorGroup.id);

@@ -1,19 +1,19 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/visualize-term';
 import VisualizeTerm from 'ilios-common/components/course/visualize-term';
 
 module('Integration | Component | course/visualize-term', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term = this.server.create('term', { vocabulary });
-    const course = this.server.create('course', { year: 2021, school, terms: [term] });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term = await this.server.create('term', { vocabulary });
+    const course = await this.server.create('course', { year: 2021, school, terms: [term] });
     this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
   });
@@ -27,7 +27,7 @@ module('Integration | Component | course/visualize-term', function (hooks) {
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

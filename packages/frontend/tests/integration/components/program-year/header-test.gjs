@@ -1,24 +1,24 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/header';
 import Header from 'frontend/components/program-year/header';
 
 module('Integration | Component | program-year/header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
       startYear: 2019,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       programYear,
       title: 'Lorem Ipsum',
     });
@@ -34,22 +34,22 @@ module('Integration | Component | program-year/header', function (hooks) {
   });
 
   test('matriculation year shows as year-range based on application config', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
         },
       };
     });
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
       startYear: 2019,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       programYear,
       title: 'Lorem Ipsum',
     });
@@ -62,15 +62,15 @@ module('Integration | Component | program-year/header', function (hooks) {
   });
 
   test('default cohort title', async function (assert) {
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
       startYear: 2019,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       title: '',
       programYear,
     });
@@ -83,16 +83,16 @@ module('Integration | Component | program-year/header', function (hooks) {
   });
 
   test('locked', async function (assert) {
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
       startYear: 2019,
       locked: true,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       programYear,
       title: 'Lorem Ipsum',
     });

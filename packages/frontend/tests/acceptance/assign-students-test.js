@@ -8,25 +8,26 @@ import { DateTime } from 'luxon';
 module('Acceptance | assign students', function (hooks) {
   setupApplicationTest(hooks);
 
-  hooks.beforeEach(function () {
-    this.school = this.server.create('school');
-    this.school2 = this.server.create('school');
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('program-year', {
+  hooks.beforeEach(async function () {
+    this.school = await this.server.create('school');
+    this.school2 = await this.server.create('school');
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('program-year', {
       program,
       startYear: DateTime.now().year,
     });
-    this.server.create('cohort', { programYear });
-    this.server.createList('userRole', 5);
-    this.server.create('user', {
+    await this.server.create('cohort', { programYear });
+    const roles = await this.server.createList('userRole', 5);
+    this.studentRole = roles[3];
+    await this.server.create('user', {
       school: this.school,
-      roleIds: [4],
+      roles: [this.studentRole],
       firstName: 'Clem',
       lastName: 'Chowder',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       school: this.school,
-      roleIds: [4],
+      roles: [this.studentRole],
       displayName: 'Aardvark',
     });
   });
@@ -41,9 +42,9 @@ module('Acceptance | assign students', function (hooks) {
   });
 
   test('school filter', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       school: this.school2,
-      roleIds: [4],
+      roles: [this.studentRole],
       displayName: 'Aardvark',
     });
     await setupAuthentication({
@@ -51,7 +52,7 @@ module('Acceptance | assign students', function (hooks) {
       administeredSchools: [this.school, this.school2],
     });
     await page.visit();
-    assert.strictEqual(page.root.schoolFilter.selectedSchool, this.school.id);
+    assert.strictEqual(Number(page.root.schoolFilter.selectedSchool), this.school.id);
     assert.strictEqual(page.root.schoolFilter.options.length, 2);
     assert.strictEqual(page.root.schoolFilter.options[0].text, 'school 0');
     assert.strictEqual(page.root.schoolFilter.options[1].text, 'school 1');
@@ -112,9 +113,9 @@ module('Acceptance | assign students', function (hooks) {
   });
 
   test('changing school filter resets user selections', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       school: this.school2,
-      roleIds: [4],
+      roles: [this.studentRole],
       displayName: 'Zeb',
     });
     await setupAuthentication({
@@ -122,7 +123,7 @@ module('Acceptance | assign students', function (hooks) {
       administeredSchools: [this.school, this.school2],
     });
     await page.visit();
-    assert.strictEqual(page.root.schoolFilter.selectedSchool, this.school.id);
+    assert.strictEqual(Number(page.root.schoolFilter.selectedSchool), this.school.id);
     assert.strictEqual(page.root.schoolFilter.options.length, 2);
     assert.strictEqual(page.root.schoolFilter.options[0].text, 'school 0');
     assert.strictEqual(page.root.schoolFilter.options[1].text, 'school 1');
@@ -137,7 +138,7 @@ module('Acceptance | assign students', function (hooks) {
     assert.ok(page.root.manager.isToggleAllIndeterminate);
     assert.notOk(page.root.manager.isToggleAllChecked);
     await page.root.schoolFilter.set(this.school2.id);
-    assert.strictEqual(page.root.schoolFilter.selectedSchool, this.school2.id);
+    assert.strictEqual(Number(page.root.schoolFilter.selectedSchool), this.school2.id);
     assert.notOk(page.root.manager.isToggleAllIndeterminate);
     assert.notOk(page.root.manager.isToggleAllChecked);
     assert.strictEqual(page.root.manager.students.length, 1);

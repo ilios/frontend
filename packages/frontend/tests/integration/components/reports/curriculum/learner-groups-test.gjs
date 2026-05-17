@@ -1,7 +1,7 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/learner-groups';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { graphQL } from 'frontend/tests/helpers/curriculum-report';
@@ -11,34 +11,34 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/curriculum/learner-groups', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.school = this.server.create('school');
-    const course = this.server.create('course', { school: this.school });
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', { course, sessionType });
-    const learnerGroups = this.server.createList('learner-group', 5);
-    const offering = this.server.create('offering', {
+  hooks.beforeEach(async function () {
+    this.school = await this.server.create('school');
+    const course = await this.server.create('course', { school: this.school });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', { course, sessionType });
+    const learnerGroups = await this.server.createList('learner-group', 5);
+    const offering = await this.server.create('offering', {
       session,
       learnerGroups: [learnerGroups[0], learnerGroups[3]],
     });
-    const offeringInstructorGroup = this.server.create('instructor-group', {
+    const offeringInstructorGroup = await this.server.create('instructor-group', {
       offerings: [offering],
     });
-    this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
-    this.server.create('user', { instructedOfferings: [offering] });
+    await this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
+    await this.server.create('user', { instructedOfferings: [offering] });
 
-    const ilmSession = this.server.create('ilm-session', {
+    const ilmSession = await this.server.create('ilm-session', {
       session,
       learnerGroups: [learnerGroups[1], learnerGroups[2]],
     });
-    const ilmSessionInstructorGroup = this.server.create('instructor-group', {
+    const ilmSessionInstructorGroup = await this.server.create('instructor-group', {
       ilmSessions: [ilmSession],
     });
-    this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
-    this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', ({ db }) => {
+    await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
+    await this.server.create('user', { instructorIlmSessions: [ilmSession] });
+    this.server.post('/api/graphql', ({ db }) => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(db, id));

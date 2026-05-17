@@ -2,14 +2,14 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import Service from '@ember/service';
 import { click, render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/sessions-grid';
 import SessionsGrid from 'ilios-common/components/sessions-grid';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | sessions-grid', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     class PermissionCheckerStub extends Service {
@@ -35,23 +35,23 @@ module('Integration | Component | sessions-grid', function (hooks) {
   });
 
   test('it renders with prereq', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const sessionType = this.server.create('session-type', { school });
-    this.server.createList('instructor-group', 5, { school });
-    this.server.createList('user', 2, { instructorGroupIds: [1] });
-    this.server.createList('user', 3, { instructorGroupIds: [2] });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const sessionType = await this.server.create('session-type', { school });
+    await this.server.createList('instructor-group', 5, { school });
+    await this.server.createList('user', 2, { instructorGroupIds: [1] });
+    await this.server.createList('user', 3, { instructorGroupIds: [2] });
 
-    const ilmSession = this.server.create('ilm-session', {
+    const ilmSession = await this.server.create('ilm-session', {
       instructorGroupIds: [1, 2, 3],
       instructorIds: [2, 3, 4],
     });
-    const session1 = this.server.create('session', {
+    const session1 = await this.server.create('session', {
       course,
       ilmSession,
       sessionType,
     });
-    const session2 = this.server.create('session', { course, prerequisites: [session1] });
+    const session2 = await this.server.create('session', { course, prerequisites: [session1] });
     const sessionModel1 = await this.owner
       .lookup('service:store')
       .findRecord('session', session1.id);
@@ -76,9 +76,9 @@ module('Integration | Component | sessions-grid', function (hooks) {
   });
 
   test('clicking expand fires action', async function (assert) {
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
-    this.server.create('offering', { session });
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('sessions', [sessionModel]);
     this.set('sortBy', 'title');
@@ -101,8 +101,8 @@ module('Integration | Component | sessions-grid', function (hooks) {
   });
 
   test('clicking expand does not fire action when there are no offerings', async function (assert) {
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('sessions', [sessionModel]);
     this.set('sortBy', 'title');
@@ -125,9 +125,9 @@ module('Integration | Component | sessions-grid', function (hooks) {
 
   // @see issue ilios/common#1820 [ST 2020/12/10]
   test('deletion of session is disabled if it has prerequisites', async function (assert) {
-    const course = this.server.create('course');
-    const session1 = this.server.create('session', { course });
-    const session2 = this.server.create('session', { course, postrequisite: session1 });
+    const course = await this.server.create('course');
+    const session1 = await this.server.create('session', { course });
+    const session2 = await this.server.create('session', { course, postrequisite: session1 });
     const sessionModel1 = await this.owner
       .lookup('service:store')
       .findRecord('session', session1.id);
@@ -152,11 +152,11 @@ module('Integration | Component | sessions-grid', function (hooks) {
   });
 
   test('multiple sessions with the same title', async function (assert) {
-    const course = this.server.create('course');
-    const session1 = this.server.create('session', { course, title: 'super duper' });
-    const session2 = this.server.create('session', { course, title: 'super duper' });
-    const session3 = this.server.create('session', { course, title: 'zeppelin' });
-    this.server.create('offering', { session: session1 });
+    const course = await this.server.create('course');
+    const session1 = await this.server.create('session', { course, title: 'super duper' });
+    const session2 = await this.server.create('session', { course, title: 'super duper' });
+    const session3 = await this.server.create('session', { course, title: 'zeppelin' });
+    await this.server.create('offering', { session: session1 });
     const sessionModel1 = await this.owner
       .lookup('service:store')
       .findRecord('session', session1.id);

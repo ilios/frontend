@@ -1,17 +1,17 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/emails-editor';
 import EmailsEditor from 'frontend/components/school/emails-editor';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/emails-editor', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       iliosAdministratorEmail: 'admin@school.edu',
       changeAlertRecipients: 'email1@school.edu, email2@school.edu',
     });
@@ -30,7 +30,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
   });
 
   test('save', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('save', (administratorEmail, changeAlertRecipients) => {
@@ -56,7 +56,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
   });
 
   test('save with empty change alerts recipients', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       iliosAdministratorEmail: 'admin@school.edu',
       changeAlertRecipients: 'email1@school.edu, email2@school.edu',
     });
@@ -87,7 +87,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
   });
 
   test('validation fails if given admin email is empty', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       iliosAdministratorEmail: 'admin@school.edu',
       changeAlertRecipients: 'email1@school.edu, email2@school.edu',
     });
@@ -112,7 +112,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
   });
 
   test('validation fails if input contains invalid emails', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(
@@ -136,7 +136,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
   });
 
   test('cancel', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('cancel', () => {
@@ -152,7 +152,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
   });
 
   test('save on enter in administrator email input', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('save', (administratorEmail, changeAlertRecipients) => {
@@ -172,7 +172,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
   });
 
   test('save on enter in change-alerts recipients input', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('save', (administratorEmail, changeAlertRecipients) => {

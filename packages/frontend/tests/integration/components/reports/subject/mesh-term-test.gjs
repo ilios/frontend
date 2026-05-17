@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/mesh-term';
 import MeshTerm from 'frontend/components/reports/subject/mesh-term';
 
 module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   const responseData = {
     data: {
@@ -19,13 +19,13 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   };
 
   test('it renders', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -46,13 +46,13 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -85,13 +85,13 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       });
     }
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseDataLarge;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -115,15 +115,15 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors(schools: [33]) { name } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
-      school: this.server.create('school', { id: 33 }),
+      school: await this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
@@ -141,7 +141,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   });
 
   test('filter by session', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -150,7 +150,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
       prepositionalObject: 'session',
       prepositionalObjectTableRowId: 13,
@@ -169,7 +169,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   });
 
   test('filter by school and session', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -178,9 +178,9 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
-      school: this.server.create('school', { id: 24 }),
+      school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'session',
       prepositionalObjectTableRowId: 13,
     });
@@ -201,7 +201,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
 
   test('filter by course', async function (assert) {
     let graphQueryCounter = 0;
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       graphQueryCounter++;
       const { query } = JSON.parse(requestBody);
@@ -265,7 +265,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
 
       return rhett;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
       prepositionalObject: 'course',
       prepositionalObjectTableRowId: 11,

@@ -1,36 +1,36 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/visualize-vocabulary';
 import VisualizeVocabulary from 'ilios-common/components/course/visualize-vocabulary';
 
 module('Integration | Component | course/visualize-vocabulary', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term1 = this.server.create('term', { vocabulary });
-    const term2 = this.server.create('term', { vocabulary });
-    const course = this.server.create('course', { year: 2021, school });
-    const session1 = this.server.create('session', {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term1 = await this.server.create('term', { vocabulary });
+    const term2 = await this.server.create('term', { vocabulary });
+    const course = await this.server.create('course', { year: 2021, school });
+    const session1 = await this.server.create('session', {
       course,
       terms: [term1],
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create('session', {
       course,
       terms: [term2],
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       session: session1,
       hours: 2.5,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session2,
-      startDate: new Date('2022-07-20T09:00:00'),
-      endDate: new Date('2022-07-20T10:00:00'),
+      startDate: '2022-07-20T09:00:00',
+      endDate: '2022-07-20T10:00:00',
     });
     this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.vocabularyModel = await this.owner
@@ -49,7 +49,7 @@ module('Integration | Component | course/visualize-vocabulary', function (hooks)
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

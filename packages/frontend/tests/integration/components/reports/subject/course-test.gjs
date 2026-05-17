@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/course';
 import { setupAuthentication } from 'ilios-common';
 import Course from 'frontend/components/reports/subject/course';
 
 module('Integration | Component | reports/subject/course', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   const responseData = {
     data: {
@@ -27,7 +27,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
   test('it renders for user with permissions', async function (assert) {
     await setupAuthentication({}, true);
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -36,7 +36,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -88,7 +88,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
   test('it renders for user with no permissions', async function (assert) {
     await setupAuthentication();
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -97,7 +97,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -124,7 +124,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
     await setupAuthentication({}, true);
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -133,7 +133,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -170,7 +170,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       });
     }
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -179,7 +179,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseDataLarge;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -204,7 +204,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
   test('it renders school link if all schools is chosen', async function (assert) {
     await setupAuthentication({}, true);
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -213,7 +213,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -235,7 +235,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('it reads academic year config', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('application/config API called');
       return {
         config: {
@@ -243,7 +243,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
         },
       };
     });
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('api/graphql API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -252,7 +252,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -275,7 +275,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('year filter works', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -284,7 +284,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -306,7 +306,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -315,9 +315,9 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
-      school: this.server.create('school', { id: 33 }),
+      school: await this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
@@ -335,7 +335,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('filter by program', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -344,7 +344,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'program',
       prepositionalObjectTableRowId: 13,
@@ -363,7 +363,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('filter by school and program', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -372,9 +372,9 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
-      school: this.server.create('school', { id: 24 }),
+      school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'program',
       prepositionalObjectTableRowId: 13,
     });
@@ -394,7 +394,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('filter by program year', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -403,7 +403,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'program year',
       prepositionalObjectTableRowId: 13,
@@ -423,7 +423,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
   test('filter by mesh', async function (assert) {
     let graphQueryCounter = 0;
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       graphQueryCounter++;
       const { query } = JSON.parse(requestBody);
@@ -458,7 +458,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
       return rhett;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'mesh term',
       prepositionalObjectTableRowId: 'ABC',
@@ -477,7 +477,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('filter by academic year', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', function (schema, { requestBody }) {
       assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -490,7 +490,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
         },
       };
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'academic year',
       prepositionalObjectTableRowId: '2015',
@@ -510,11 +510,11 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
   test('download', async function (assert) {
     await setupAuthentication({}, true);
-    this.server.post('api/graphql', () => {
+    this.server.post('/api/graphql', () => {
       assert.step('API called');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));

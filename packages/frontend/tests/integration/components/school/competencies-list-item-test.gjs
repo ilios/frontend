@@ -1,26 +1,26 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/school/competencies-list-item';
 import CompetenciesListItem from 'frontend/components/school/competencies-list-item';
 
 module('Integration | Component | school/competencies-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const pcrs1 = this.server.create('aamc-pcrs', {
+    const pcrs1 = await this.server.create('aamc-pcrs', {
       description: 'Zylinder',
     });
-    const pcrs2 = this.server.create('aamc-pcrs', {
+    const pcrs2 = await this.server.create('aamc-pcrs', {
       description: 'Alfons',
     });
-    const domain = this.server.create('competency', {
+    const domain = await this.server.create('competency', {
       aamcPcrses: [pcrs1, pcrs2],
     });
-    const competency = this.server.create('competency', {
+    const competency = await this.server.create('competency', {
       parent: domain,
     });
     this.competencyModel = await this.owner

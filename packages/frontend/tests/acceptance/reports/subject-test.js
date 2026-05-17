@@ -8,36 +8,36 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const user = await setupAuthentication({ school }, true);
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       school,
     });
-    const term = this.server.create('term', { vocabulary });
-    this.server.create('academic-year', {
+    const term = await this.server.create('term', { vocabulary });
+    await this.server.create('academic-year', {
       id: 2015,
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2016,
     });
-    const firstCourse = this.server.create('course', {
+    const firstCourse = await this.server.create('course', {
       school,
       year: 2015,
       externalId: 'Theoretical Phys Ed',
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       course: firstCourse,
       terms: [term],
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       school,
       year: 2016,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       course: secondCourse,
       terms: [term],
     });
-    const courseReport = this.server.create('report', {
+    const courseReport = await this.server.create('report', {
       title: 'my report 0',
       subject: 'session',
       prepositionalObject: 'course',
@@ -45,7 +45,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
       user,
       school,
     });
-    const termReport = this.server.create('report', {
+    const termReport = await this.server.create('report', {
       title: null,
       subject: 'session',
       prepositionalObject: 'term',
@@ -53,7 +53,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
       user,
       school,
     });
-    const courseNoTitleReport = this.server.create('report', {
+    const courseNoTitleReport = await this.server.create('report', {
       subject: 'session',
       prepositionalObject: 'course',
       prepositionalObjectTableRowId: firstCourse.id,
@@ -86,11 +86,11 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
 
       return { data: { sessions: reportData } };
     };
-    this.server.post('api/graphql', async () => this.getReportData(['1', '2']));
+    this.server.post('/api/graphql', async () => this.getReportData(['1', '2']));
   });
 
   test('course report works', async function (assert) {
-    this.server.post('api/graphql', async () => {
+    this.server.post('/api/graphql', async () => {
       assert.step('API called');
       return this.getReportData(['1']);
     });
@@ -119,7 +119,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
 
   test('academic years is shown as range as applicable by configuration', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -140,7 +140,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   });
 
   test('academic year filter works', async function (assert) {
-    this.server.post('api/graphql', async () => {
+    this.server.post('/api/graphql', async () => {
       assert.step('API called');
       return this.getReportData(['1', '2']);
     });
@@ -157,7 +157,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   });
 
   test('copy report button works with auto-generated title', async function (assert) {
-    this.server.post('api/graphql', async () => {
+    this.server.post('/api/graphql', async () => {
       assert.step('API called');
       return this.getReportData(['1', '2']);
     });
@@ -171,7 +171,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   });
 
   test('copy report button works with custom title', async function (assert) {
-    this.server.post('api/graphql', async () => {
+    this.server.post('/api/graphql', async () => {
       assert.step('API called');
       return this.getReportData(['1', '2']);
     });

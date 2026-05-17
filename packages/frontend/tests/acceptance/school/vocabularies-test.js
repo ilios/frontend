@@ -8,17 +8,17 @@ module('Acceptance | School - Vocabularies', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     await setupAuthentication({ administeredSchools: [this.school] });
 
-    this.server.create('vocabulary', {
+    await this.server.create('vocabulary', {
       school: this.school,
-      terms: this.server.createList('term', 2),
+      terms: await this.server.createList('term', 2),
     });
 
-    this.server.create('vocabulary', {
+    await this.server.create('vocabulary', {
       school: this.school,
-      terms: this.server.createList('term', 1),
+      terms: await this.server.createList('term', 1),
     });
   });
 
@@ -121,7 +121,7 @@ module('Acceptance | School - Vocabularies', function (hooks) {
   });
 
   test('delete vocabulary', async function (assert) {
-    this.server.create('vocabulary', {
+    await this.server.create('vocabulary', {
       school: this.school,
     });
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });

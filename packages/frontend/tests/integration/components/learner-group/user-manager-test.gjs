@@ -2,18 +2,18 @@ import ObjectProxy from '@ember/object/proxy';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/user-manager';
 import UserManager from 'frontend/components/learner-group/user-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learner-group/user-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders when editing', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user1 = this.server.create('user', {
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const user1 = await this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
       campusId: '1234',
@@ -21,7 +21,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       enabled: true,
       learnerGroups: [learnerGroup],
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       firstName: 'Jackson',
       lastName: 'Doggy',
       campusId: '123',
@@ -93,16 +93,16 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('sort by full name', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user1 = this.server.create('user', {
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const user1 = await this.server.create('user', {
       firstName: 'Jasper',
       learnerGroups: [learnerGroup],
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       firstName: 'Jackson',
       learnerGroups: [learnerGroup],
     });
-    const user3 = this.server.create('user', {
+    const user3 = await this.server.create('user', {
       firstName: 'Jayden',
       displayName: 'Captain J',
       learnerGroups: [learnerGroup],
@@ -162,9 +162,9 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('add multiple users', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const subGroup = this.server.create('learner-group', { parent: learnerGroup });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const subGroup = await this.server.create('learner-group', { parent: learnerGroup });
+    const user = await this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -212,8 +212,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('remove multiple users', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -258,8 +258,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('remove single user', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -300,9 +300,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('add single user', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const learnerGroup2 = this.server.create('learner-group', { id: 2 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const learnerGroup2 = await this.server.create('learner-group', { id: 2 });
+    const user = await this.server.create('user', {
+      enabled: true,
+      learnerGroups: [learnerGroup2],
+    });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -345,10 +348,13 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('when users are selected single action is disabled', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const learnerGroup2 = this.server.create('learner-group', { id: 2 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const user2 = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const learnerGroup2 = await this.server.create('learner-group', { id: 2 });
+    const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const user2 = await this.server.create('user', {
+      enabled: true,
+      learnerGroups: [learnerGroup2],
+    });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const learnerGroupModel = await this.owner
@@ -397,9 +403,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('check all users in group', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const user2 = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const user2 = await this.server.create('user', {
+      enabled: true,
+      learnerGroups: [learnerGroup],
+    });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const learnerGroupModel = await this.owner
@@ -452,10 +461,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('check all users not in group', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const subGroup = this.server.create('learner-group', { parent: learnerGroup });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
-    const user2 = this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const subGroup = await this.server.create('learner-group', { parent: learnerGroup });
+    const user = await this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
+    const user2 = await this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const learnerGroupModel = await this.owner
@@ -510,9 +519,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('checking one puts checkall box into indeterminate state', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const user2 = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const user2 = await this.server.create('user', {
+      enabled: true,
+      learnerGroups: [learnerGroup],
+    });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const learnerGroupModel = await this.owner
@@ -568,28 +580,28 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('filter applies', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const subgroup = this.server.create('learner-group', { id: 2, parent: learnerGroup });
-    const user1 = this.server.create('user', {
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const subgroup = await this.server.create('learner-group', { id: 2, parent: learnerGroup });
+    const user1 = await this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
       email: 'jasper.dog@example.edu',
       learnerGroups: [learnerGroup],
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       firstName: 'Jayden',
       lastName: 'Pup',
       displayName: 'Just Jayden',
       email: 'jayden@example.edu',
       learnerGroups: [learnerGroup],
     });
-    const user3 = this.server.create('user', {
+    const user3 = await this.server.create('user', {
       firstName: 'Jackson',
       lastName: 'Doggy',
       email: 'jackson.doggy@example.edu',
       learnerGroups: [subgroup],
     });
-    const user4 = this.server.create('user', {
+    const user4 = await this.server.create('user', {
       firstName: 'Beetlejuice',
       lastName: 'Beetlejuice',
       displayName: 'Beet',
@@ -677,9 +689,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('user not in group: click on name', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const learnerGroup2 = this.server.create('learner-group', { id: 2 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const learnerGroup2 = await this.server.create('learner-group', { id: 2 });
+    const user = await this.server.create('user', {
+      enabled: true,
+      learnerGroups: [learnerGroup2],
+    });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -719,9 +734,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('user not in group: click on campus id', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const learnerGroup2 = this.server.create('learner-group', { id: 2 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const learnerGroup2 = await this.server.create('learner-group', { id: 2 });
+    const user = await this.server.create('user', {
+      enabled: true,
+      learnerGroups: [learnerGroup2],
+    });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -761,9 +779,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('user not in group: click on email', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const learnerGroup2 = this.server.create('learner-group', { id: 2 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const learnerGroup2 = await this.server.create('learner-group', { id: 2 });
+    const user = await this.server.create('user', {
+      enabled: true,
+      learnerGroups: [learnerGroup2],
+    });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -803,8 +824,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('user in group: click on name', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -841,8 +862,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('user in group: click on campus id', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -879,8 +900,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('user in group: click on email', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const user = await this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -917,13 +938,13 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('learner-group hierarchy is shown in group-title and aria-label', async function (assert) {
-    const parentGroup = this.server.create('learner-group');
-    const learnerGroup = this.server.create('learner-group', { parent: parentGroup });
-    const childGroup = this.server.create('learner-group', { parent: learnerGroup });
-    const user1 = this.server.create('user', {
+    const parentGroup = await this.server.create('learner-group');
+    const learnerGroup = await this.server.create('learner-group', { parent: parentGroup });
+    const childGroup = await this.server.create('learner-group', { parent: learnerGroup });
+    const user1 = await this.server.create('user', {
       learnerGroups: [learnerGroup],
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       learnerGroups: [childGroup],
     });
     const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);

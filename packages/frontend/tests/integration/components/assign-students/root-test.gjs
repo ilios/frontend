@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/assign-students/root';
 import { DateTime } from 'luxon';
 import Root from 'frontend/components/assign-students/root';
@@ -9,51 +9,51 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | assign-students/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const thisYear = DateTime.now().year;
-    const school1 = this.server.create('school');
-    const school2 = this.server.create('school');
-    const program = this.server.create('program', { school: school1 });
-    const programYear1 = this.server.create('program-year', {
+    const school1 = await this.server.create('school');
+    const school2 = await this.server.create('school');
+    const program = await this.server.create('program', { school: school1 });
+    const programYear1 = await this.server.create('program-year', {
       program,
       startYear: thisYear,
     });
-    const programYear2 = this.server.create('program-year', {
+    const programYear2 = await this.server.create('program-year', {
       program,
       startYear: thisYear + 1,
     });
-    const programYear3 = this.server.create('program-year', {
+    const programYear3 = await this.server.create('program-year', {
       program,
       startYear: thisYear + 2,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       programYear: programYear1,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       programYear: programYear2,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       programYear: programYear3,
     });
-    const user1 = this.server.create('user', {
+    const user1 = await this.server.create('user', {
       school: school1,
       displayName: 'Alpha',
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       school: school1,
       displayName: 'Beta',
     });
-    const user3 = this.server.create('user', {
+    const user3 = await this.server.create('user', {
       school: school1,
       displayName: 'Gamma',
     });
-    const user4 = this.server.create('user', {
+    const user4 = await this.server.create('user', {
       school: school2,
       displayName: 'Eins',
     });
-    const user5 = this.server.create('user', {
+    const user5 = await this.server.create('user', {
       school: school2,
       displayName: 'Zwei',
     });
@@ -200,6 +200,7 @@ module('Integration | Component | assign-students/root', function (hooks) {
     assert.verifySteps(['setQuery called']);
   });
 
+  // TODO: primaryCohort is not set on .toggle(); can't figure out yet
   test('save', async function (assert) {
     this.set('model', {
       primarySchool: this.school1,
@@ -215,15 +216,15 @@ module('Integration | Component | assign-students/root', function (hooks) {
     assert.notOk(component.manager.students[0].isToggleChecked);
     assert.notOk(component.manager.students[1].isToggleChecked);
     assert.notOk(component.manager.students[2].isToggleChecked);
-    assert.strictEqual(this.server.db.users[0].primaryCohortId, null);
-    assert.strictEqual(this.server.db.users[1].primaryCohortId, null);
-    assert.strictEqual(this.server.db.users[2].primaryCohortId, null);
+    assert.strictEqual(this.server.db.user.all()[0].primaryCohort.id, undefined);
+    assert.strictEqual(this.server.db.user.all()[1].primaryCohort.id, undefined);
+    assert.strictEqual(this.server.db.user.all()[2].primaryCohort.id, undefined);
     assert.strictEqual(component.manager.cohorts.value, '3');
     await component.manager.students[0].toggle();
     await component.manager.students[2].toggle();
     await component.manager.save();
-    assert.strictEqual(this.server.db.users[0].primaryCohortId, '3');
-    assert.strictEqual(this.server.db.users[1].primaryCohortId, null);
-    assert.strictEqual(this.server.db.users[2].primaryCohortId, '3');
+    assert.strictEqual(this.server.db.user.all()[0].primaryCohort.id, '3');
+    assert.strictEqual(this.server.db.user.all()[1].primaryCohort, undefined);
+    assert.strictEqual(this.server.db.user.all()[2].primaryCohort.id, '3');
   });
 });

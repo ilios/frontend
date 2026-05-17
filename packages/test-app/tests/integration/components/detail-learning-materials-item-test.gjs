@@ -1,28 +1,28 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/detail-learning-materials-item';
 import DetailLearningMaterialsItem from 'ilios-common/components/detail-learning-materials-item';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | detail-learning-materials-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const status = this.server.createList('learning-material-status', 3);
-    const roles = this.server.createList('learning-material-user-role', 3);
-    const user = this.server.create('user');
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
-    const learningMaterial = this.server.create('learning-material', {
+    const status = await this.server.createList('learning-material-status', 3);
+    const roles = await this.server.createList('learning-material-user-role', 3);
+    const user = await this.server.create('user');
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
+    const learningMaterial = await this.server.create('learning-material', {
       title: 'test title',
       citation: 'some text',
       owningUser: user,
       status: status[1],
       userRole: roles[0],
     });
-    const clm = this.server.create('course-learning-material', {
+    const clm = await this.server.create('course-learning-material', {
       learningMaterial,
       required: true,
       notes: 'notes',

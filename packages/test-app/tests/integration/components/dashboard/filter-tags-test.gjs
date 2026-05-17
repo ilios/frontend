@@ -1,20 +1,20 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import FilterTags from 'ilios-common/components/dashboard/filter-tags';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | dashboard/filter-tags', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    this.server.createList('session-type', 3);
-    this.server.createList('course', 3);
-    const vocabulary = this.server.create('vocabulary');
-    this.server.createList('term', 3, { vocabulary });
+    await this.server.createList('session-type', 3);
+    await this.server.createList('course', 3);
+    const vocabulary = await this.server.create('vocabulary');
+    await this.server.createList('term', 3, { vocabulary });
     this.set('cohortProxies', [
       { id: 1, displayTitle: 'cohort 1', programTitle: 'program 1' },
       { id: 2, displayTitle: 'cohort 2', programTitle: 'program 1' },

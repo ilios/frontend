@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, settled } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/global-search';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import GlobalSearch from 'frontend/components/global-search';
 import noop from 'ilios-common/helpers/noop';
@@ -10,7 +10,7 @@ import set from 'ember-set-helper/helpers/set';
 
 module('Integration | Component | global-search', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     await render(
@@ -22,10 +22,11 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('handles empty and non-empty query', async function (assert) {
-    this.server.get('api/search/v2/curriculum', (schema, { queryParams: { q, onlySuggest } }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
-      assert.strictEqual(q, 'hello world');
-      assert.notOk(onlySuggest);
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('q'), 'hello world');
+      assert.notOk(searchParams.get('onlySuggest'));
       return {
         results: {
           courses: [
@@ -52,7 +53,7 @@ module('Integration | Component | global-search', function (hooks) {
         />
       </template>,
     );
-    assert.ok(component.noResultsIsVisible);
+    assert.ok(component.noResultsIsVisible, 'no results');
     this.set('query', 'hello world');
     await settled();
     assert.notOk(component.noResultsIsVisible);
@@ -75,13 +76,16 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('academic year filter works properly', async function (assert) {
-    this.server.create('academic-year', { id: 2019 });
-    this.server.create('academic-year', { id: 2020 });
-    this.server.create('academic-year', { id: 2021 });
+    await this.server.create('academic-year', { id: 2019 });
+    await this.server.create('academic-year', { id: 2020 });
+    await this.server.create('academic-year', { id: 2021 });
     const testYears = (years) => {
-      this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      this.server.get('/api/search/v2/curriculum', ({ request }) => {
         assert.step('API called');
-        const queryYears = queryParams.years ? queryParams.years.split('-').map(Number) : [];
+        const { searchParams } = new URL(request.url);
+        const queryYears = searchParams.get('years')
+          ? searchParams.get('years').split('-').map(Number)
+          : [];
         assert.deepEqual(queryYears.sort(), years);
         return {
           results: {
@@ -148,11 +152,14 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('school filter works properly', async function (assert) {
-    this.server.createList('school', 3);
+    await this.server.createList('school', 3);
     const testSchools = (schools) => {
-      this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      this.server.get('/api/search/v2/curriculum', ({ request }) => {
         assert.step('API called');
-        const querySchools = queryParams.schools ? queryParams.schools.split('-').map(Number) : [];
+        const { searchParams } = new URL(request.url);
+        const querySchools = searchParams.get('schools')
+          ? searchParams.get('schools').split('-').map(Number)
+          : [];
         assert.deepEqual(querySchools, schools);
         return {
           results: {
@@ -219,9 +226,9 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('if only one school in system no school filter', async function (assert) {
-    this.server.create('school');
+    await this.server.create('school');
 
-    this.server.get('api/search/v2/curriculum', () => {
+    this.server.get('/api/search/v2/curriculum', () => {
       assert.step('API called');
       return {
         results: {
@@ -281,7 +288,7 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('did you mean only shows up if score is high enough', async function (assert) {
-    this.server.get('api/search/v2/curriculum', () => {
+    this.server.get('/api/search/v2/curriculum', () => {
       assert.step('API called');
       return {
         results: {
@@ -313,7 +320,7 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('did you mean works', async function (assert) {
-    this.server.get('api/search/v2/curriculum', () => {
+    this.server.get('/api/search/v2/curriculum', () => {
       assert.step('API called');
       return {
         results: {

@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/offering-manager';
 import noop from 'ilios-common/helpers/noop';
@@ -10,25 +10,25 @@ import OfferingManager from 'ilios-common/components/offering-manager';
 
 module('Integration | Component | offering-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders with individual learners and learner groups', async function (assert) {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
-    const users = this.server.createList('user', 4);
+    const users = await this.server.createList('user', 4);
     const today = DateTime.fromObject({ hour: 8 });
-    const course = this.server.create('course');
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const course = await this.server.create('course');
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
-    const learnerGroup1 = this.server.create('learner-group');
-    const learnerGroup2 = this.server.create('learner-group');
-    const offering = this.server.create('offering', {
+    const learnerGroup1 = await this.server.create('learner-group');
+    const learnerGroup2 = await this.server.create('learner-group');
+    const offering = await this.server.create('offering', {
       session,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: today.toISO(),
+      endDate: today.plus({ hour: 1 }).toISO(),
       room: 'room 123',
       learners: [users[0], users[1]],
       learnerGroups: [learnerGroup1, learnerGroup2],
@@ -80,22 +80,22 @@ module('Integration | Component | offering-manager', function (hooks) {
   });
 
   test('it renders with only learner groups', async function (assert) {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
-    const users = this.server.createList('user', 2);
+    const users = await this.server.createList('user', 2);
     const today = DateTime.fromObject({ hour: 8 });
-    const course = this.server.create('course');
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const course = await this.server.create('course');
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
-    const learnerGroup1 = this.server.create('learner-group');
-    const learnerGroup2 = this.server.create('learner-group');
-    const offering = this.server.create('offering', {
+    const learnerGroup1 = await this.server.create('learner-group');
+    const learnerGroup2 = await this.server.create('learner-group');
+    const offering = await this.server.create('offering', {
       session,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: today.toISO(),
+      endDate: today.plus({ hour: 1 }).toISO(),
       room: 'room 123',
       learnerGroups: [learnerGroup1, learnerGroup2],
       instructors: [users[0], users[1]],
@@ -141,20 +141,20 @@ module('Integration | Component | offering-manager', function (hooks) {
   });
 
   test('it renders with only individual learners', async function (assert) {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
-    const users = this.server.createList('user', 4);
+    const users = await this.server.createList('user', 4);
     const today = DateTime.fromObject({ hour: 8 });
-    const course = this.server.create('course');
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const course = await this.server.create('course');
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       session,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: today.toISO(),
+      endDate: today.plus({ hour: 1 }).toISO(),
       room: 'room 123',
       learners: [users[0], users[1]],
       instructors: [users[2], users[3]],
@@ -199,20 +199,20 @@ module('Integration | Component | offering-manager', function (hooks) {
   });
 
   test('it renders with no individual learners or learner groups', async function (assert) {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
-    const users = this.server.createList('user', 2);
+    const users = await this.server.createList('user', 2);
     const today = DateTime.fromObject({ hour: 8 });
-    const course = this.server.create('course');
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const course = await this.server.create('course');
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       session,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: today.toISO(),
+      endDate: today.plus({ hour: 1 }).toISO(),
       room: 'room 123',
       instructors: [users[0], users[1]],
       url: 'http://foo.com',

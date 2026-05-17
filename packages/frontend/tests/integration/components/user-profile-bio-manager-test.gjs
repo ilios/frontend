@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/user-profile-bio-manager';
 import UserProfileBioManager from 'frontend/components/user-profile-bio-manager';
@@ -9,7 +9,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | user profile bio manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   const setupApplicationConfig = function (userSearchType, context) {
     const { apiVersion } = context.owner.resolveRegistration('config:environment');
@@ -24,10 +24,10 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   };
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school', {
+    this.school = await this.server.create('school', {
       title: 'Cool School',
     });
-    this.user = this.server.create('user', {
+    this.user = await this.server.create('user', {
       id: 13,
       fullName: 'Test Person Name Thing',
       firstName: 'Test Person',
@@ -42,7 +42,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
       phone: 'x1234',
       school: this.school,
     });
-    this.authentication = this.server.create('authentication', {
+    this.authentication = await this.server.create('authentication', {
       username: 'test-username',
       user: this.user,
       password: null,
@@ -162,10 +162,10 @@ module('Integration | Component | user profile bio manager', function (hooks) {
 
   test('can edit user bio for ldap config', async function (assert) {
     setupApplicationConfig('ldap', this);
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: this.user,
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: this.user,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
@@ -532,10 +532,9 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.user.username = this.authentication.username;
-    this.server.get(`application/directory/find/:id`, (scheme, { params }) => {
+    this.server.get(`application/directory/find/:id`, ({ params }) => {
+      assert.strictEqual(Number(params.id), 13, 'id is correct');
       assert.step('API called');
-      assert.ok('id' in params, 'id param is in directory sync');
-      assert.strictEqual(parseInt(params.id, 10), 13, 'id is correct');
       return {
         result: {
           firstName: 'new-first-name',
@@ -662,8 +661,8 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('validate username', async function (assert) {
-    const user = this.server.create('user');
-    this.server.create('authentication', { username: 'geflarknik', user });
+    const user = await this.server.create('user');
+    await this.server.create('authentication', { username: 'geflarknik', user });
     setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);

@@ -1,25 +1,25 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/user-profile-roles';
 import UserProfileRoles from 'frontend/components/user-profile-roles';
 
 module('Integration | Component | user profile roles', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.formerStudentRole = this.server.create('user-role', {
+    this.formerStudentRole = await this.server.create('user-role', {
       title: 'Former Student',
     });
-    this.studentRole = this.server.create('user-role', {
+    this.studentRole = await this.server.create('user-role', {
       title: 'Student',
     });
   });
 
   test('it renders', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       root: false,
       roles: [this.studentRole],
     });
@@ -42,7 +42,7 @@ module('Integration | Component | user profile roles', function (hooks) {
 
   // @link https://github.com/ilios/frontend/issues/3899
   test('check root flag', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       root: true,
       roles: [this.studentRole],
     });
@@ -56,7 +56,7 @@ module('Integration | Component | user profile roles', function (hooks) {
   });
 
   test('clicking manage sends the action', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       root: true,
       roles: [this.studentRole],
     });
@@ -80,7 +80,7 @@ module('Integration | Component | user profile roles', function (hooks) {
   });
 
   test('can edit user roles', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       root: true,
       roles: [this.studentRole],
     });
@@ -97,8 +97,8 @@ module('Integration | Component | user profile roles', function (hooks) {
     await component.enabled.check();
     await component.excludeFromSync.check();
     await component.save.click();
-    assert.ok(userModel.hasMany('roles').ids().includes(this.studentRole.id));
-    assert.ok(userModel.hasMany('roles').ids().includes(this.formerStudentRole.id));
+    assert.ok(userModel.hasMany('roles').ids().includes(`${this.studentRole.id}`));
+    assert.ok(userModel.hasMany('roles').ids().includes(`${this.formerStudentRole.id}`));
     assert.false(userModel.get('enabled'), 'user is disabled');
     assert.true(userModel.get('userSyncIgnore'), 'user is sync ignored');
   });

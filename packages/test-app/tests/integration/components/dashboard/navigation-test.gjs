@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/dashboard/navigation';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
@@ -9,10 +9,10 @@ import Service from '@ember/service';
 
 module('Integration | Component | dashboard/navigation', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       id: 13,
       icsFeedKey: 'testkey',
     });

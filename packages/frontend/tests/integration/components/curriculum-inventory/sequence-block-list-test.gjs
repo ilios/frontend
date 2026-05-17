@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-list';
 import SequenceBlockList from 'frontend/components/curriculum-inventory/sequence-block-list';
 import noop from 'ilios-common/helpers/noop';
@@ -10,37 +9,43 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | curriculum-inventory/sequence-block-list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const course = this.server.create('course', { title: 'Life Lessons' });
-    const academicLevel1 = this.server.create('curriculum-inventory-academic-level', { level: 1 });
-    const academicLevel2 = this.server.create('curriculum-inventory-academic-level', { level: 2 });
-    const academicLevel3 = this.server.create('curriculum-inventory-academic-level', { level: 3 });
-    const report = this.server.create('curriculum-inventory-report', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const course = await this.server.create('course', { title: 'Life Lessons' });
+    const academicLevel1 = await this.server.create('curriculum-inventory-academic-level', {
+      level: 1,
+    });
+    const academicLevel2 = await this.server.create('curriculum-inventory-academic-level', {
+      level: 2,
+    });
+    const academicLevel3 = await this.server.create('curriculum-inventory-academic-level', {
+      level: 3,
+    });
+    const report = await this.server.create('curriculum-inventory-report', {
       academicLevels: [academicLevel1, academicLevel2, academicLevel3],
-      year: '2016',
+      year: 2016,
       program,
       name: 'Lorem Ipsum',
-      startDate: DateTime.fromObject({ year: 2015, month: 6, day: 12 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2016, month: 4, day: 11 }).toJSDate(),
+      startDate: '2015-06-12',
+      endDate: '2016-04-11',
       description: 'Lorem Ipsum',
     });
 
-    const block1 = this.server.create('curriculum-inventory-sequence-block', {
+    const block1 = await this.server.create('curriculum-inventory-sequence-block', {
       startingAcademicLevel: academicLevel1,
       endingAcademicLevel: academicLevel2,
       title: 'Foo',
-      startDate: DateTime.fromObject({ year: 2015, month: 2, day: 23 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2016, month: 12, day: 3 }).toJSDate(),
+      startDate: '2015-02-23',
+      endDate: '2016-12-03',
       course,
       orderInSequence: 0,
       report,
     });
-    const block2 = this.server.create('curriculum-inventory-sequence-block', {
+    const block2 = await this.server.create('curriculum-inventory-sequence-block', {
       startingAcademicLevel: academicLevel2,
       endingAcademicLevel: academicLevel3,
       title: 'Bar',
@@ -169,7 +174,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
   });
 
   test('it renders with nested blocks', async function (assert) {
-    const parentBlock = this.server.create('curriculum-inventory-sequence-block');
+    const parentBlock = await this.server.create('curriculum-inventory-sequence-block');
     const parentBlockModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-sequence-block', parentBlock.id);
@@ -312,7 +317,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
   });
 
   test('empty nested blocks list', async function (assert) {
-    const parentBlock = this.server.create('curriculum-inventory-sequence-block');
+    const parentBlock = await this.server.create('curriculum-inventory-sequence-block');
     const parentBlockModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-sequence-block', parentBlock.id);

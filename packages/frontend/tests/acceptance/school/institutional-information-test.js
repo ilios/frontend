@@ -7,7 +7,7 @@ module('Acceptance | School - Institutional Information', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     await setupAuthentication({ administeredSchools: [this.school] });
   });
 
@@ -63,7 +63,7 @@ module('Acceptance | School - Institutional Information', function (hooks) {
   });
 
   test('update institutional information', async function (assert) {
-    this.server.create('curriculum-inventory-institution', {
+    await this.server.create('curriculum-inventory-institution', {
       school: this.school,
       name: 'School of Rocket Surgery',
       aamcCode: '12345',

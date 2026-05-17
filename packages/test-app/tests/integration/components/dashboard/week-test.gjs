@@ -3,14 +3,14 @@ import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/dashboard/week';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
 import Week from 'ilios-common/components/dashboard/week';
 
 module('Integration | Component | dashboard/week', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   const today = DateTime.fromObject({ hour: 8 });
 
@@ -61,7 +61,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('it renders with events', async function (assert) {
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       startDate: today.toISO(),
       isBlanked: false,
@@ -69,7 +69,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
       isScheduled: false,
       offering: 1,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Finding the Point in Life',
       startDate: today.toISO(),
       isBlanked: false,
@@ -77,25 +77,24 @@ module('Integration | Component | dashboard/week', function (hooks) {
       isScheduled: false,
       ilmSession: 1,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Blank',
       isBlanked: true,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Not Published',
       isBlanked: false,
       isPublished: false,
       isScheduled: false,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Scheduled',
       isBlanked: false,
       isPublished: true,
       isScheduled: true,
     });
 
-    const { userevents } = this.server.db;
-    this.setupEvents(userevents);
+    this.setupEvents(await this.server.db.userevent.all());
 
     await render(<template><Week /></template>);
     const expectedTitle = this.getTitle();

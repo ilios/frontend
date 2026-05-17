@@ -1,29 +1,29 @@
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-overview';
 import SequenceBlockOverview from 'frontend/components/curriculum-inventory/sequence-block-overview';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | curriculum-inventory/sequence-block-overview', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', {
       school,
     });
-    const report = this.server.create('curriculum-inventory-report', {
-      year: '2016',
+    const report = await this.server.create('curriculum-inventory-report', {
+      year: 2016,
       program,
       isFinalized: false,
     });
     const academicLevels = [];
     for (let i = 1; i <= 10; i++) {
       academicLevels.push(
-        this.server.create('curriculum-inventory-academic-level', {
+        await this.server.create('curriculum-inventory-academic-level', {
           report,
           level: i,
           name: `Year ${i}`,
@@ -36,8 +36,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('it renders', async function (assert) {
-    const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
-    const course = this.server.create('course', {
+    const clerkshipType = await this.server.create('course-clerkship-type', { title: 'Block' });
+    const course = await this.server.create('course', {
       title: 'Course A',
       startDate: '2015-02-02',
       endDate: '2015-03-30',
@@ -45,35 +45,39 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       level: 4,
       school: this.school,
     });
-    const parentBlock = this.server.create('curriculum-inventory-sequence-block', {
+    const parentBlock = await this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 1,
     });
     const startingAcademicLevel = this.academicLevels[0];
     const endingAcademicLevel = this.academicLevels[1];
-    const ilmSessionType = this.server.create('session-type', { title: 'Independent Learning' });
-    const ilmSession = this.server.create('ilm-session');
-    this.server.create('session', {
+    const ilmSessionType = await this.server.create('session-type', {
+      title: 'Independent Learning',
+    });
+    const ilmSession = await this.server.create('ilm-session');
+    await this.server.create('session', {
       course,
       title: 'Session A',
       sessionType: ilmSessionType,
       ilmSession,
       published: true,
     });
-    const presentationSessionType = this.server.create('session-type', { title: 'Presentation' });
-    this.server.create('session', {
+    const presentationSessionType = await this.server.create('session-type', {
+      title: 'Presentation',
+    });
+    await this.server.create('session', {
       course,
       title: 'Session B',
       sessionType: presentationSessionType,
       published: true,
     });
-    const lectureSessionType = this.server.create('session-type', { title: 'Lecture' });
-    this.server.create('session', {
+    const lectureSessionType = await this.server.create('session-type', { title: 'Lecture' });
+    await this.server.create('session', {
       course,
       title: 'Session C',
       sessionType: lectureSessionType,
       published: true,
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       description: 'lorem ipsum',
       report: this.report,
       parent: parentBlock,
@@ -160,7 +164,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('order in sequence is n/a for top level block', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       description: 'lorem ipsum',
       report: this.report,
       duration: 0,
@@ -199,11 +203,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('order in sequence is n/a for nested sequence block in non-ordered sequence ', async function (assert) {
-    const parentBlock = this.server.create('curriculum-inventory-sequence-block', {
+    const parentBlock = await this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 0,
       report: this.report,
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       id: 2,
       description: 'lorem ipsum',
       report: this.report,
@@ -244,35 +248,35 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('change course', async function (assert) {
-    const clerkshipType = this.server.create('course-clerkship-type');
-    const course = this.server.create('course', {
+    const clerkshipType = await this.server.create('course-clerkship-type');
+    const course = await this.server.create('course', {
       title: 'Alpha',
       school: this.school,
       clerkshipType,
       published: true,
-      year: '2016',
+      year: 2016,
       startDate: '2016-01-01',
       endDate: '2016-01-02',
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       title: 'Beta',
       school: this.school,
       clerkshipType,
       published: true,
-      year: '2016',
+      year: 2016,
       startDate: '2016-02-01',
       endDate: '2016-02-02',
     });
-    const newCourse = this.server.create('course', {
+    const newCourse = await this.server.create('course', {
       title: 'Gamma',
       school: this.school,
       clerkshipType,
       published: true,
-      year: '2016',
+      year: 2016,
       startDate: '2016-03-01',
       endDate: '2016-03-02',
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 0,
       childSequenceOrder: 1,
@@ -337,12 +341,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       'Course: Gamma Level: 1, Start Date: 03/01/2016, End Date: 03/02/2016 - Clerkship (clerkship type 0)',
     );
     const blockCourse = await sequenceBlockModel.course;
-    assert.strictEqual(blockCourse.id, newCourse.id);
+    assert.strictEqual(blockCourse.id, `${newCourse.id}`);
   });
 
   test('change description', async function (assert) {
     const newDescription = 'Lorem Ipsum';
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 0,
       childSequenceOrder: 1,
@@ -385,7 +389,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
   test('change required', async function (assert) {
     const newVal = 1;
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 0,
       childSequenceOrder: 1,
@@ -428,7 +432,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('change track', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 0,
       childSequenceOrder: 1,
@@ -470,7 +474,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
   test('change child sequence order', async function (assert) {
     const newVal = 2;
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 0,
       childSequenceOrder: 1,
@@ -514,10 +518,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
   test('change order in sequence', async function (assert) {
     const newVal = 2;
-    const parent = this.server.create('curriculum-inventory-sequence-block', {
+    const parent = await this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 1,
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       description: 'lorem ipsum',
       report: this.report,
       parent,
@@ -533,7 +537,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       startingAcademicLevel: this.academicLevels[0],
       endingAcademicLevel: this.academicLevels[1],
     });
-    this.server.create('curriculum-inventory-sequence-block', {
+    await this.server.create('curriculum-inventory-sequence-block', {
       orderInSequence: 2,
       report: this.report,
       parent,
@@ -574,7 +578,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
   test('change starting academic level', async function (assert) {
     const newVal = 2;
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 0,
       childSequenceOrder: 1,
@@ -621,7 +625,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
   test('change ending academic level', async function (assert) {
     const newVal = 1;
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 0,
       childSequenceOrder: 1,
@@ -667,8 +671,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('manage sessions', async function (assert) {
-    const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
-    const course = this.server.create('course', {
+    const clerkshipType = await this.server.create('course-clerkship-type', { title: 'Block' });
+    const course = await this.server.create('course', {
       title: 'Course A',
       startDate: '2015-02-02',
       endDate: '2015-03-30',
@@ -676,24 +680,26 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       level: 4,
       school: this.school,
     });
-    const parentBlock = this.server.create('curriculum-inventory-sequence-block', {
+    const parentBlock = await this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 1,
     });
-    const ilmSessionType = this.server.create('session-type', { title: 'Independent Learning' });
-    const ilmSession = this.server.create('ilm-session');
-    this.server.create('session', {
+    const ilmSessionType = await this.server.create('session-type', {
+      title: 'Independent Learning',
+    });
+    const ilmSession = await this.server.create('ilm-session');
+    await this.server.create('session', {
       course,
       sessionType: ilmSessionType,
       ilmSession,
       published: true,
     });
-    const lectureSessionType = this.server.create('session-type', { title: 'Lecture' });
-    this.server.create('session', {
+    const lectureSessionType = await this.server.create('session-type', { title: 'Lecture' });
+    await this.server.create('session', {
       course,
       sessionType: lectureSessionType,
       published: true,
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       description: 'lorem ipsum',
       report: this.report,
       parent: parentBlock,
@@ -742,8 +748,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('read-only mode', async function (assert) {
-    const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
-    const course = this.server.create('course', {
+    const clerkshipType = await this.server.create('course-clerkship-type', { title: 'Block' });
+    const course = await this.server.create('course', {
       title: 'Course A',
       startDate: '2015-02-02',
       endDate: '2015-03-30',
@@ -751,33 +757,37 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       level: 4,
       school: this.school,
     });
-    const parentBlock = this.server.create('curriculum-inventory-sequence-block', {
+    const parentBlock = await this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 1,
     });
-    const ilmSessionType = this.server.create('session-type', { title: 'Independent Learning' });
-    const ilmSession = this.server.create('ilm-session');
-    this.server.create('session', {
+    const ilmSessionType = await this.server.create('session-type', {
+      title: 'Independent Learning',
+    });
+    const ilmSession = await this.server.create('ilm-session');
+    await this.server.create('session', {
       course,
       title: 'Session A',
       sessionType: ilmSessionType,
       ilmSession,
       published: true,
     });
-    const presentationSessionType = this.server.create('session-type', { title: 'Presentation' });
-    this.server.create('session', {
+    const presentationSessionType = await this.server.create('session-type', {
+      title: 'Presentation',
+    });
+    await this.server.create('session', {
       course,
       title: 'Session B',
       sessionType: presentationSessionType,
       published: true,
     });
-    const lectureSessionType = this.server.create('session-type', { title: 'Lecture' });
-    this.server.create('session', {
+    const lectureSessionType = await this.server.create('session-type', { title: 'Lecture' });
+    await this.server.create('session', {
       course,
       title: 'Session C',
       sessionType: lectureSessionType,
       published: true,
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       description: 'lorem ipsum',
       report: this.report,
       parent: parentBlock,
@@ -861,7 +871,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('flagging block as elective sets minimum value to 0', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2015-01-02',
       endDate: '2015-04-30',
@@ -906,7 +916,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('selectives are indicated as such', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 10,
       startDate: '2015-01-02',
@@ -971,7 +981,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('edit minimum and maximum values, then save', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2015-01-02',
       endDate: '2015-04-30',
@@ -1020,7 +1030,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('edit minimum and maximum values, then cancel', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2015-01-02',
       endDate: '2015-04-30',
@@ -1069,7 +1079,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails when minimum is larger than maximum', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2015-01-02',
       endDate: '2015-04-30',
@@ -1117,7 +1127,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails when minimum is less than zero', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2015-01-02',
       endDate: '2015-04-30',
@@ -1164,7 +1174,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails when minimum is empty', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2015-01-02',
       endDate: '2015-04-30',
@@ -1208,7 +1218,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails when maximum is empty', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2015-01-02',
       endDate: '2015-04-30',
@@ -1252,7 +1262,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('minimum field is set to 0 and disabled for electives', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2015-01-02',
       endDate: '2015-04-30',
@@ -1296,7 +1306,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
   test('edit duration and start/end date, then save', async function (assert) {
     const newDuration = 15;
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -1357,7 +1367,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
   test('save with date range and a zero duration', async function (assert) {
     const newDuration = 0;
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -1415,7 +1425,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
   test('save with non-zero duration and no date range', async function (assert) {
     const newDuration = 10;
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 5,
       childSequenceOrder: 1,
@@ -1467,7 +1477,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
   test('edit duration and start/end date, then cancel', async function (assert) {
     const newDuration = 20;
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -1526,7 +1536,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails if start-date is older than end-date', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -1571,7 +1581,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails on missing duration', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -1615,7 +1625,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails on invalid duration', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -1662,7 +1672,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails if neither date range nor duration is provided', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: null,
       endDate: null,
@@ -1710,8 +1720,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails if linked course is clerkship and start date is not provided', async function (assert) {
-    const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
-    const course = this.server.create('course', {
+    const clerkshipType = await this.server.create('course-clerkship-type', { title: 'Block' });
+    const course = await this.server.create('course', {
       title: 'Course A',
       startDate: '2015-02-02',
       endDate: '2015-03-30',
@@ -1719,7 +1729,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       level: 4,
       school: this.school,
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       course,
       startDate: '2015-02-02',
@@ -1769,8 +1779,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails if linked course is clerkship and duration is zero', async function (assert) {
-    const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
-    const course = this.server.create('course', {
+    const clerkshipType = await this.server.create('course-clerkship-type', { title: 'Block' });
+    const course = await this.server.create('course', {
       title: 'Course A',
       startDate: '2015-02-02',
       endDate: '2015-03-30',
@@ -1778,7 +1788,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       level: 4,
       school: this.school,
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       course,
       startDate: '2015-02-02',
@@ -1830,7 +1840,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails if start-date is given but no end-date is provided', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: null,
       endDate: null,
@@ -1874,7 +1884,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('cancel editing on escape in minimum input', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -1919,7 +1929,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save on enter in minimum input', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -1964,7 +1974,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('cancel editing on escape in maximum input', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -2009,7 +2019,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save on enter in maximum input', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -2054,7 +2064,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('cancel editing on escape in duration input', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 5,
       childSequenceOrder: 1,
@@ -2097,7 +2107,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save on enter in duration input', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2016-04-23',
       endDate: '2016-06-22',
@@ -2142,7 +2152,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('manage-sessions button is not available if no course is linked', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 5,
       childSequenceOrder: 1,
@@ -2181,8 +2191,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('manage-sessions button is not available if linked course has no sessions', async function (assert) {
-    const course = this.server.create('course', { school: this.school });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const course = await this.server.create('course', { school: this.school });
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 5,
       childSequenceOrder: 1,
@@ -2222,7 +2232,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('zero duration renders as n/a in read-only mode', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       startDate: '2015-01-02',
       endDate: '2015-04-30',

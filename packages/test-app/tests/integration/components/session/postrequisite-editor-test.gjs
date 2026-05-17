@@ -1,18 +1,18 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/session/postrequisite-editor';
 import PostrequisiteEditor from 'ilios-common/components/session/postrequisite-editor';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | session/postrequisite-editor', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders with no postrequisite selected', async function (assert) {
-    const sessions = this.server.createList('session', 5);
-    this.server.create('course', {
+    const sessions = await this.server.createList('session', 5);
+    await this.server.create('course', {
       sessions,
     });
     const sessionModel = await this.owner
@@ -33,11 +33,11 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
   });
 
   test('it renders with a postrequisite selected', async function (assert) {
-    const sessions = this.server.createList('session', 4);
-    const course = this.server.create('course', {
+    const sessions = await this.server.createList('session', 4);
+    const course = await this.server.create('course', {
       sessions,
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       postrequisite: sessions[1],
       course,
     });
@@ -56,11 +56,11 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
   });
 
   test('can remove postrequisite from header', async function (assert) {
-    const sessions = this.server.createList('session', 4);
-    const course = this.server.create('course', {
+    const sessions = await this.server.createList('session', 4);
+    const course = await this.server.create('course', {
       sessions,
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       postrequisite: sessions[1],
       course,
     });
@@ -86,11 +86,11 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
   });
 
   test('can remove postrequisite from row', async function (assert) {
-    const sessions = this.server.createList('session', 4);
-    const course = this.server.create('course', {
+    const sessions = await this.server.createList('session', 4);
+    const course = await this.server.create('course', {
       sessions,
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       postrequisite: sessions[1],
       course,
     });
@@ -116,8 +116,8 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
   });
 
   test('can add postrequisite from row', async function (assert) {
-    const sessions = this.server.createList('session', 5);
-    this.server.create('course', {
+    const sessions = await this.server.createList('session', 5);
+    await this.server.create('course', {
       sessions,
     });
     const sessionModel = await this.owner
@@ -144,8 +144,8 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
   });
 
   test('closes when canceled', async function (assert) {
-    const sessions = this.server.createList('session', 5);
-    this.server.create('course', {
+    const sessions = await this.server.createList('session', 5);
+    await this.server.create('course', {
       sessions,
     });
     const sessionModel = await this.owner
@@ -164,8 +164,8 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
   });
 
   test('closes when saved', async function (assert) {
-    const sessions = this.server.createList('session', 5);
-    this.server.create('course', {
+    const sessions = await this.server.createList('session', 5);
+    await this.server.create('course', {
       sessions,
     });
     const sessionModel = await this.owner
@@ -184,19 +184,19 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
   });
 
   test('filters by title', async function (assert) {
-    const course = this.server.create('course');
-    const session = this.server.create('session', {
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', {
       course,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       title: 'jasper dog',
       course,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       title: 'jackson dog',
       course,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       title: 'fuzzy the cat',
       course,
     });

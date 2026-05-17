@@ -2,58 +2,63 @@ import { find, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { DateTime } from 'luxon';
 
 module('Acceptance | Course - Print Course', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     await setupAuthentication({ school: this.school }, true);
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('program-year', { program });
-    this.server.create('academic-year');
-    this.server.create('cohort', { programYear });
-    this.learningMaterialUserRole = this.server.create('learning-material-user-role');
-    this.learningMaterialStatus = this.server.create('learning-material-status');
-    this.course = this.server.create('course', {
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('program-year', { program });
+    await this.server.create('academic-year');
+    const cohort = await this.server.create('cohort', { programYear });
+    const userRole = (this.learningMaterialUserRole = await this.server.create(
+      'learning-material-user-role',
+    ));
+    const status = (this.learningMaterialStatus = await this.server.create(
+      'learning-material-status',
+    ));
+    this.course = await this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       published: true,
       title: 'Back to the Future',
-      cohortIds: [1],
+      cohorts: [cohort],
     });
-    this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       title: 'Topics',
-      schoolId: 1,
+      school: this.school,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       title: 'Time Travel',
-      courseIds: [1],
-      vocabularyId: 1,
+      courses: [this.course],
+      vocabulary,
     });
-    this.user = this.server.create('user', {
+    this.user = await this.server.create('user', {
       lastName: 'Brown',
       firstName: 'Emmet',
       id: 1,
     });
-    this.server.create('learning-material', {
+    const learningMaterial = await this.server.create('learning-material', {
       title: 'Save the Clock Tower',
       originalAuthor: 'Jennifer Johnson',
       filename: 'Clock Tower Flyer',
-      owningUserId: 1,
-      statusId: 1,
-      userRoleId: 1,
+      owningUser: this.user,
+      status,
+      userRole,
       copyrightPermission: true,
       citation: 'Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955',
       description:
         'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.',
     });
-    this.server.create('courseLearningMaterial', {
-      learningMaterialId: 1,
-      courseId: 1,
+    await this.server.create('courseLearningMaterial', {
+      learningMaterial,
+      course: this.course,
       required: false,
     });
-    this.server.create('mesh-descriptor', {
-      courseIds: [1],
+    await this.server.create('mesh-descriptor', {
+      courses: [this.course],
       name: 'Flux Capacitor',
     });
   });
@@ -67,7 +72,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
 
   test('course year shows as range if applicable by configuration', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -101,17 +106,17 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print unpublished sessions for elevated privileges', async function (assert) {
-    this.server.create('session', {
+    await this.server.create('session', {
       course: this.course,
       published: false,
       publishedAsTbd: false,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       course: this.course,
       published: true,
       publishedAsTbd: false,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       course: this.course,
       published: true,
       publishedAsTbd: true,
@@ -126,16 +131,23 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print ILM details', async function (assert) {
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       published: true,
       publishedAsTbd: false,
     });
 
-    this.server.create('ilm-session', {
-      sessionId: 1,
+    await this.server.create('ilm-session', {
+      session,
       hours: 1.5,
-      dueDate: new Date(1995, 11, 17, 3, 24, 0),
+      dueDate: DateTime.fromObject({
+        year: 1995,
+        month: 12,
+        day: 17,
+        hour: 3,
+        minute: 24,
+        second: 0,
+      }).toISO(),
     });
 
     await visit('/course/1/print');
@@ -154,32 +166,32 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print session objectives', async function (assert) {
-    const session = this.server.create('session', {
-      courseId: 1,
+    const session = await this.server.create('session', {
+      course: this.course,
       published: true,
       publishedAsTbd: false,
     });
-    const courseObjective = this.server.create('course-objective', {
+    const courseObjective = await this.server.create('course-objective', {
       course: this.course,
       title: 'Course Objective 1',
     });
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       school: this.school,
     });
-    const term = this.server.create('term', { vocabulary, active: true });
-    const sessionObjective = this.server.create('session-objective', {
+    const term = await this.server.create('term', { vocabulary, active: true });
+    const sessionObjective = await this.server.create('session-objective', {
       session,
       title: 'Session Objective 1',
       courseObjectives: [courseObjective],
       terms: [term],
     });
 
-    this.server.create('mesh-descriptor', {
+    await this.server.create('mesh-descriptor', {
       sessionObjectives: [sessionObjective],
       name: 'MeSH Descriptor 1',
     });
 
-    this.server.create('mesh-descriptor', {
+    await this.server.create('mesh-descriptor', {
       sessionObjectives: [sessionObjective],
       name: 'MeSH Descriptor 2',
     });
@@ -202,31 +214,31 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print course objectives', async function (assert) {
-    const competency = this.server.create('competency', {
+    const competency = await this.server.create('competency', {
       school: this.school,
       title: 'Competency 1',
     });
-    const programYearObjective = this.server.create('program-year-objective', {
+    const programYearObjective = await this.server.create('program-year-objective', {
       competency,
       title: 'Program Year Objective 1',
     });
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       school: this.school,
     });
-    const term = this.server.create('term', { vocabulary, active: true });
-    const courseObjective = this.server.create('course-objective', {
+    const term = await this.server.create('term', { vocabulary, active: true });
+    const courseObjective = await this.server.create('course-objective', {
       course: this.course,
       title: 'Course Objective 1',
       programYearObjectives: [programYearObjective],
       terms: [term],
     });
 
-    this.server.create('mesh-descriptor', {
+    await this.server.create('mesh-descriptor', {
       courseObjectives: [courseObjective],
       name: 'MeSH Descriptor 1',
     });
 
-    this.server.create('mesh-descriptor', {
+    await this.server.create('mesh-descriptor', {
       courseObjectives: [courseObjective],
       name: 'MeSH Descriptor 2',
     });
@@ -249,12 +261,12 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print session learning materials', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       published: true,
       publishedAsTbd: false,
     });
-    const learningMaterial = this.server.create('learning-material', {
+    const learningMaterial = await this.server.create('learning-material', {
       title: 'Foo',
       originalAuthor: 'Bar',
       owningUser: this.user,
@@ -263,7 +275,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
       copyrightPermission: true,
       citation: 'lorem ipsum',
     });
-    this.server.create('session-learning-material', {
+    await this.server.create('session-learning-material', {
       learningMaterial,
       session,
       required: false,
@@ -276,19 +288,19 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print session vocabulary terms', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       published: true,
       publishedAsTbd: false,
     });
-    const vocabulary1 = this.server.create('vocabulary', { school: this.school });
-    const vocabulary2 = this.server.create('vocabulary', { school: this.school });
-    this.server.createList('term', 3, {
+    const vocabulary1 = await this.server.create('vocabulary', { school: this.school });
+    const vocabulary2 = await this.server.create('vocabulary', { school: this.school });
+    await this.server.createList('term', 3, {
       vocabulary: vocabulary1,
       sessions: [session],
       active: true,
     });
-    this.server.createList('term', 2, {
+    await this.server.createList('term', 2, {
       vocabulary: vocabulary2,
       sessions: [session],
       active: true,

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/learner-group/list-item';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -9,7 +9,7 @@ import ListItem from 'frontend/components/learner-group/list-item';
 
 module('Integration | Component | learner-group/list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.permissionCheckerMock = class extends Service {
@@ -21,17 +21,17 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
       }
     };
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    this.cohort = this.server.create('cohort', { programYear });
-    this.learnerGroup = this.server.create('learner-group', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    this.cohort = await this.server.create('cohort', { programYear });
+    this.learnerGroup = await this.server.create('learner-group', {
       cohort: this.cohort,
     });
   });
 
   test('it renders', async function (assert) {
-    this.server.createList('learner-group', 3, {
+    await this.server.createList('learner-group', 3, {
       parent: this.learnerGroup,
     });
     const learnerGroupModel = await this.owner
@@ -82,7 +82,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('can delete with users in group', async function (assert) {
-    this.server.create('user', { learnerGroups: [this.learnerGroup] });
+    await this.server.create('user', { learnerGroups: [this.learnerGroup] });
 
     const learnerGroupModel = await this.owner
       .lookup('service:store')
@@ -95,10 +95,10 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('can delete with users in subgroup', async function (assert) {
-    const parent = this.server.create('learner-group', { parent: this.learnerGroup });
-    this.server.create('learner-group', {
+    const parent = await this.server.create('learner-group', { parent: this.learnerGroup });
+    await this.server.create('learner-group', {
       parent,
-      users: [this.server.create('user')],
+      users: [await this.server.create('user')],
     });
 
     const learnerGroupModel = await this.owner
@@ -113,7 +113,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('can not delete group linked to offering', async function (assert) {
-    this.server.create('offering', {
+    await this.server.create('offering', {
       learnerGroups: [this.learnerGroup],
     });
     const learnerGroupModel = await this.owner
@@ -126,10 +126,10 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('can not delete group with sub-group linked to offering', async function (assert) {
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       parent: this.learnerGroup,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       learnerGroups: [subGroup],
     });
     const learnerGroupModel = await this.owner
@@ -142,7 +142,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('can not delete group linked to ILM', async function (assert) {
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       learnerGroups: [this.learnerGroup],
     });
     const learnerGroupModel = await this.owner
@@ -155,10 +155,10 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('can not delete group with sub-group linked to ILM', async function (assert) {
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       parent: this.learnerGroup,
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       learnerGroups: [subGroup],
     });
     const learnerGroupModel = await this.owner
@@ -171,7 +171,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('group needs accommodations', async function (assert) {
-    const group = this.server.create('learner-group', {
+    const group = await this.server.create('learner-group', {
       needsAccommodation: true,
     });
     const learnerGroupModel = await this.owner
@@ -183,7 +183,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('group does not need accommodations', async function (assert) {
-    const group = this.server.create('learner-group', {
+    const group = await this.server.create('learner-group', {
       needsAccommodation: false,
     });
     const learnerGroupModel = await this.owner
@@ -195,12 +195,12 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('subgroups needs accommodations', async function (assert) {
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       title: 'omega',
       parent: this.learnerGroup,
       needsAccommodation: true,
     });
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       title: 'alpha',
       parent: this.learnerGroup,
       needsAccommodation: true,
@@ -218,7 +218,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('subgroup does not need accommodations', async function (assert) {
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       parent: this.learnerGroup,
       needsAccommodation: false,
     });

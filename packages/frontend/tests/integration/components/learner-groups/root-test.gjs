@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/learner-groups/root';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -10,45 +10,45 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learner-groups/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     for (let i = 0; i < 4; i++) {
-      const school = this.server.create('school');
-      const programs = this.server.createList('program', 2, { school });
-      this.server.createList('cohort', 2, {
-        programYear: this.server.create('program-year', {
+      const school = await this.server.create('school');
+      const programs = await this.server.createList('program', 2, { school });
+      await this.server.createList('cohort', 2, {
+        programYear: await this.server.create('program-year', {
           program: programs[0],
         }),
       });
-      this.server.create('cohort', {
-        programYear: this.server.create('program-year', {
+      await this.server.create('cohort', {
+        programYear: await this.server.create('program-year', {
           program: programs[1],
         }),
       });
 
-      const programYear = this.server.create('program-year', { program: programs[1] });
-      const cohort = this.server.create('cohort', { programYear });
-      this.server.createList('learner-group', 2, {
+      const programYear = await this.server.create('program-year', { program: programs[1] });
+      const cohort = await this.server.create('cohort', { programYear });
+      await this.server.createList('learner-group', 2, {
         cohort,
       });
     }
 
     // school without programs
-    this.server.create('school', { title: 'School without Programs' });
+    await this.server.create('school', { title: 'School without Programs' });
 
     // school with one program. that program doesn't have program-years/cohorts.
-    const schoolWithProgramButWithoutCohorts = this.server.create('school', {
+    const schoolWithProgramButWithoutCohorts = await this.server.create('school', {
       title: 'School without Cohorts',
     });
-    this.server.create('program', {
+    await this.server.create('program', {
       title: 'Program without Cohorts',
       school: schoolWithProgramButWithoutCohorts,
     });
 
     this.schools = await this.owner.lookup('service:store').findAll('school');
 
-    const user = this.server.create('user', { schoolId: 2 });
+    const user = await this.server.create('user', { schoolId: 2 });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {

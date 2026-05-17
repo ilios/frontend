@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import queryString from 'query-string';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-rollover';
 import ReportRollover from 'frontend/components/curriculum-inventory/report-rollover';
@@ -10,13 +10,13 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | curriculum-inventory/report-rollover', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
@@ -45,10 +45,10 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
   test('multiple target programs, source program is selected by default', async function (assert) {
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school, title: 'Zeppelin' });
-    this.server.createList('program', 3, { school });
-    const report = this.server.create('curriculum-inventory-report', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school, title: 'Zeppelin' });
+    await this.server.createList('program', 3, { school });
+    const report = await this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
@@ -73,7 +73,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   });
 
   test('academic years labeled as range if configured accordingly', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -81,9 +81,9 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       };
     });
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
@@ -106,9 +106,9 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   test('rollover report with future year', async function (assert) {
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
     const sourceYear = thisYear + 1;
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: sourceYear,
@@ -137,10 +137,10 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   });
 
   test('rollover report', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
@@ -181,10 +181,10 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   });
 
   test('submit rollover report by pressing enter in name field', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
@@ -215,11 +215,14 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   });
 
   test('rollover report with new name, description, year and program', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school, title: 'doctor of rocket surgery' });
-    const otherProgram = this.server.create('program', { school, title: 'doktor eisenbart' });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', {
+      school,
+      title: 'doctor of rocket surgery',
+    });
+    const otherProgram = await this.server.create('program', { school, title: 'doktor eisenbart' });
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
@@ -269,9 +272,9 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   });
 
   test('no input validation errors are shown initially', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', { program });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', { program });
     const reportModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report.id);
@@ -282,9 +285,9 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   });
 
   test('input validation fails on blank report name', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', { program });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', { program });
     const reportModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report.id);
@@ -298,9 +301,9 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   });
 
   test('input validation fails on blank description', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', {
       program,
       description: 'lorem ipsum',
     });

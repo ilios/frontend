@@ -10,7 +10,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
   module('User in single school', function (hooks) {
     hooks.beforeEach(async function () {
-      this.school = this.server.create('school');
+      this.school = await this.server.create('school');
       this.user = await setupAuthentication(
         { school: this.school, administeredSchools: [this.school] },
         true,
@@ -23,28 +23,28 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('list groups', async function (assert) {
-      this.server.createList('user', 5);
-      this.server.createList('course', 2, { school: this.school });
-      this.server.create('session', {
-        courseId: 1,
+      const users = await this.server.createList('user', 5);
+      const courses = await this.server.createList('course', 2, { school: this.school });
+      const session1 = await this.server.create('session', {
+        course: courses[0],
       });
-      this.server.create('session', {
-        courseId: 2,
+      const session2 = await this.server.create('session', {
+        course: courses[1],
       });
-      const firstInstructorGroup = this.server.create('instructor-group', {
+      const firstInstructorGroup = await this.server.create('instructor-group', {
         school: this.school,
-        userIds: [2, 3, 4, 5, 6],
+        users,
       });
-      const secondInstructorGroup = this.server.create('instructor-group', {
+      const secondInstructorGroup = await this.server.create('instructor-group', {
         school: this.school,
       });
-      this.server.create('offering', {
-        instructorGroupIds: [1],
-        sessionId: 1,
+      await this.server.create('offering', {
+        instructorGroups: [firstInstructorGroup],
+        session: session1,
       });
-      this.server.create('offering', {
-        instructorGroupIds: [1],
-        sessionId: 2,
+      await this.server.create('offering', {
+        instructorGroups: [firstInstructorGroup],
+        session: session2,
       });
 
       await page.visit();
@@ -61,20 +61,20 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('filters by title', async function (assert) {
-      this.server.create('school');
-      const firstInstructorGroup = this.server.create('instructor-group', {
+      await this.server.create('school');
+      const firstInstructorGroup = await this.server.create('instructor-group', {
         title: 'specialfirstinstructorgroup',
         school: this.school,
       });
-      const secondInstructorGroup = this.server.create('instructor-group', {
+      const secondInstructorGroup = await this.server.create('instructor-group', {
         title: 'specialsecondinstructorgroup',
         school: this.school,
       });
-      const regularInstructorGroup = this.server.create('instructor-group', {
+      const regularInstructorGroup = await this.server.create('instructor-group', {
         title: 'regularinstructorgroup',
         school: this.school,
       });
-      const regexInstructorGroup = this.server.create('instructor-group', {
+      const regexInstructorGroup = await this.server.create('instructor-group', {
         title: '\\yoo hoo',
         school: this.school,
       });
@@ -137,7 +137,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('cancel adding new instructor group', async function (assert) {
-      this.server.create('instructor-group', {
+      await this.server.create('instructor-group', {
         school: this.school,
       });
       await page.visit();
@@ -152,7 +152,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('remove instructor group', async function (assert) {
-      this.server.create('instructor-group', {
+      await this.server.create('instructor-group', {
         school: this.school,
       });
       await page.visit();
@@ -167,7 +167,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('cancel remove instructor group', async function (assert) {
-      this.server.create('instructor-group', {
+      await this.server.create('instructor-group', {
         school: this.school,
       });
       await page.visit();
@@ -180,8 +180,8 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('confirmation of remove message', async function (assert) {
-      const users = this.server.createList('user', 5);
-      this.server.create('instructor-group', {
+      const users = await this.server.createList('user', 5);
+      await this.server.create('instructor-group', {
         school: this.school,
         users,
       });
@@ -197,7 +197,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('click title takes you to instructor group route', async function (assert) {
-      this.server.create('instructor-group', {
+      await this.server.create('instructor-group', {
         school: this.school,
       });
       await page.visit();
@@ -206,7 +206,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('title filter escapes regex', async function (assert) {
-      this.server.create('instructor-group', {
+      await this.server.create('instructor-group', {
         title: 'yes\\no',
         school: this.school,
       });
@@ -219,17 +219,17 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('cannot delete instructor group with attached courses #3767', async function (assert) {
-      const group1 = this.server.create('instructor-group', {
+      const group1 = await this.server.create('instructor-group', {
         school: this.school,
       });
-      const group2 = this.server.create('instructor-group', {
+      const group2 = await this.server.create('instructor-group', {
         school: this.school,
       });
-      const course = this.server.create('course');
-      const session1 = this.server.create('session', { course });
-      const session2 = this.server.create('session', { course });
-      this.server.create('ilm-session', { session: session1, instructorGroups: [group1] });
-      this.server.create('offering', { session: session2, instructorGroups: [group2] });
+      const course = await this.server.create('course');
+      const session1 = await this.server.create('session', { course });
+      const session2 = await this.server.create('session', { course });
+      await this.server.create('ilm-session', { session: session1, instructorGroups: [group1] });
+      await this.server.create('offering', { session: session2, instructorGroups: [group2] });
       await page.visit();
       assert.strictEqual(page.list.items.length, 2);
       assert.strictEqual(page.list.items[0].title, 'instructor group 0');
@@ -240,7 +240,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
   });
 
   test('filters options', async function (assert) {
-    const schools = this.server.createList('school', 2);
+    const schools = await this.server.createList('school', 2);
     await setupAuthentication({ school: schools[1] }, true);
 
     await page.visit();

@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 
 module('Unit | Service | ilios config', function (hooks) {
   setupTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           type: 'authenticationType-foo',
@@ -54,7 +54,7 @@ module('Unit | Service | ilios config', function (hooks) {
     assert.strictEqual(await service.getAppVersion(), '3.3.3');
   });
   test('it ignores empty appVersion', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {},
       };
@@ -63,7 +63,7 @@ module('Unit | Service | ilios config', function (hooks) {
     assert.strictEqual(await service.getAppVersion(), '');
   });
   test('it ignores development appVersion', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           appVersion: '0.1.0',

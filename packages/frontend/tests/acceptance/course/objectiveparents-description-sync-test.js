@@ -14,51 +14,51 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     this.fadedSelector = '.faded';
 
     this.user = await setupAuthentication({}, true);
-    this.school = this.server.create('school');
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const competency1 = this.server.create('competency', {
+    this.school = await this.server.create('school');
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const competency1 = await this.server.create('competency', {
       school: this.school,
       programYears: [programYear],
     });
-    const competency2 = this.server.create('competency', {
+    const competency2 = await this.server.create('competency', {
       school: this.school,
       programYears: [programYear],
     });
-    const competency3 = this.server.create('competency', {
+    const competency3 = await this.server.create('competency', {
       school: this.school,
       programYears: [programYear],
     });
-    const parent1 = this.server.create('program-year-objective', {
+    const parent1 = await this.server.create('program-year-objective', {
       programYear,
       competency: competency1,
     });
-    const parent2 = this.server.create('program-year-objective', {
+    const parent2 = await this.server.create('program-year-objective', {
       programYear,
       competency: competency2,
       title: this.longParentObjTitle,
     });
-    const parent3 = this.server.create('program-year-objective', {
+    const parent3 = await this.server.create('program-year-objective', {
       programYear,
       competency: competency3,
       title: this.longParentObjTitle,
     });
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       year: 2024,
       school: this.school,
       cohorts: [cohort],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course: this.course,
       programYearObjectives: [parent1],
       title: this.longObjDescription,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course: this.course,
       programYearObjectives: [parent2],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course: this.course,
       programYearObjectives: [parent3],
       title: this.longObjDescription,

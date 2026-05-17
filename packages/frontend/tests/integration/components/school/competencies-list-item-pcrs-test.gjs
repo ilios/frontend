@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/school/competencies-list-item-pcrs';
 import CompetenciesListItemPcrs from 'frontend/components/school/competencies-list-item-pcrs';
@@ -9,16 +9,16 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/competencies-list-item-pcrs', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const pcrs1 = this.server.create('aamc-pcrs', {
+    const pcrs1 = await this.server.create('aamc-pcrs', {
       description: 'Zylinder',
     });
-    const pcrs2 = this.server.create('aamc-pcrs', {
+    const pcrs2 = await this.server.create('aamc-pcrs', {
       description: 'Alfons',
     });
-    const competency = this.server.create('competency', {
+    const competency = await this.server.create('competency', {
       aamcPcrses: [pcrs1, pcrs2],
     });
     this.pcrsModel1 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs1.id);

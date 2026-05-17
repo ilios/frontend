@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
-import { Response } from 'miragejs';
+import { setupMSW } from 'ilios-common/msw';
+import { HttpResponse } from 'msw';
 import config from 'frontend/config/environment';
 
 module('Unit | Service | new-version', function (hooks) {
   setupTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('new version available', async function (assert) {
     const service = this.owner.lookup('service:new-version');
@@ -14,7 +14,7 @@ module('Unit | Service | new-version', function (hooks) {
     assert.notOk(service.isNewVersionAvailable);
 
     this.server.get('/VERSION.txt', function () {
-      return 'some-version';
+      return new HttpResponse('some-version');
     });
     await service.updateVersion.perform();
     assert.strictEqual(service.latestVersion, 'some-version');
@@ -28,7 +28,7 @@ module('Unit | Service | new-version', function (hooks) {
     assert.notOk(service.isNewVersionAvailable);
 
     this.server.get('/VERSION.txt', function () {
-      return config.newVersion.currentVersion;
+      return new HttpResponse(config.newVersion.currentVersion);
     });
     await service.updateVersion.perform();
     assert.strictEqual(service.latestVersion, config.newVersion.currentVersion);
@@ -42,7 +42,7 @@ module('Unit | Service | new-version', function (hooks) {
     assert.notOk(service.isNewVersionAvailable);
 
     this.server.get('/VERSION.txt', function () {
-      return new Response(500);
+      return new HttpResponse(null, { status: 500 });
     });
     await service.updateVersion.perform();
     assert.strictEqual(service.latestVersion, undefined);

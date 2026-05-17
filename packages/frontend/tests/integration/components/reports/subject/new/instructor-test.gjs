@@ -1,18 +1,18 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/instructor';
 import Instructor from 'frontend/components/reports/subject/new/instructor';
 
 module('Integration | Component | reports/subject/new/instructor', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    const school = this.server.create('school');
-    this.server.createList('user', 4, { school });
-    this.server.create('user', { school, enabled: false });
+  hooks.beforeEach(async function () {
+    const school = await this.server.create('school');
+    await this.server.createList('user', 4, { school });
+    await this.server.create('user', { school, enabled: false });
   });
 
   test('it works', async function (assert) {

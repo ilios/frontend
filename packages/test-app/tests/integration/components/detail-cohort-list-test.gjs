@@ -1,43 +1,43 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import DetailCohortList from 'ilios-common/components/detail-cohort-list';
 import { component } from 'ilios-common/page-objects/components/detail-cohort-list';
 
 module('Integration | Component | detail cohort list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school1 = this.server.create('school', {
+    const school1 = await this.server.create('school', {
       title: 'School of Life',
     });
-    const school2 = this.server.create('school', {
+    const school2 = await this.server.create('school', {
       title: 'Starfleet Academy',
     });
 
-    const program1 = this.server.create('program', {
+    const program1 = await this.server.create('program', {
       title: 'Professional Pie Eating',
       school: school1,
     });
-    const program2 = this.server.create('program', {
+    const program2 = await this.server.create('program', {
       title: 'Doctor of Rocket Surgery',
       school: school2,
       duration: 5,
     });
-    const programYear1 = this.server.create('program-year', {
+    const programYear1 = await this.server.create('program-year', {
       program: program1,
     });
-    const programYear2 = this.server.create('program-year', {
+    const programYear2 = await this.server.create('program-year', {
       startYear: 2006,
       program: program2,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       title: 'Aardvark',
       programYear: programYear1,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       title: null,
       programYear: programYear2,
     });

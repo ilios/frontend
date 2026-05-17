@@ -2,25 +2,25 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-list-item';
 import ReportListItem from 'frontend/components/curriculum-inventory/report-list-item';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | curriculum-inventory/report-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const school = this.server.create('school');
-    this.program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', {
+    const school = await this.server.create('school');
+    this.program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'CI Report',
-      year: '2017',
-      startDate: new Date('2017-07-01'),
-      endDate: new Date('2018-06-30'),
+      year: 2017,
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
     this.report = await this.owner
       .lookup('service:store')
@@ -97,7 +97,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
   });
 
   test('report with export shows as "finalized"', async function (assert) {
-    const reportExport = this.server.create('curriculum-inventory-export');
+    const reportExport = await this.server.create('curriculum-inventory-export');
     this.report.export = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-export', reportExport.id);
@@ -111,7 +111,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
   });
 
   test('academic year shows as range depending on application config', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

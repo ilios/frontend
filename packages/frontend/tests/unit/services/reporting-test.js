@@ -1,20 +1,20 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 
 module('Unit | Service | reporting', function (hooks) {
   setupTest(hooks);
   setupIntl(hooks, 'en-us');
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.service = this.owner.lookup('service:reporting');
   });
 
   test('buildReportTitle() - all competencies in all schools', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'competency',
     });
 
@@ -29,8 +29,8 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('buildReportTitle() - all competencies in school X', async function (assert) {
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const report = this.server.create('report', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const report = await this.server.create('report', {
       school,
       subject: 'competency',
     });
@@ -47,16 +47,16 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('buildReportTitle() - all competencies for user X in school Y', async function (assert) {
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const user = this.server.create('user', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const user = await this.server.create('user', {
       firstName: 'Chip',
       lastName: 'Whitley',
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       school,
       prepositionalObject: 'instructor',
       subject: 'competency',
-      prepositionalObjectTableRowId: user.id,
+      prepositionalObjectTableRowId: `${user.id}`,
     });
 
     const store = this.owner.lookup('service:store');
@@ -75,12 +75,12 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('buildReportTitle() - broken report', async function (assert) {
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const report = this.server.create('report', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const report = await this.server.create('report', {
       school,
       prepositionalObject: 'instructor',
       subject: 'competency',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
 
     const store = this.owner.lookup('service:store');
@@ -95,7 +95,7 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('buildReportDescription() - all competencies in all schools', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'competency',
     });
 
@@ -110,8 +110,8 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('buildReportDescription() - all competencies in school X', async function (assert) {
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const report = this.server.create('report', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const report = await this.server.create('report', {
       school,
       subject: 'competency',
     });
@@ -128,16 +128,16 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('buildReportDescription() - all courses for instructor X in school Y', async function (assert) {
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const user = this.server.create('user', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const user = await this.server.create('user', {
       firstName: 'Chip',
       lastName: 'Whitley',
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       school,
       prepositionalObject: 'instructor',
       subject: 'course',
-      prepositionalObjectTableRowId: user.id,
+      prepositionalObjectTableRowId: `${user.id}`,
     });
 
     const store = this.owner.lookup('service:store');
@@ -156,19 +156,19 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('buildReportDescription() - all terms for course X in school Y', async function (assert) {
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const course = this.server.create('course', { school, year: 2023 });
-    const vocabulary = this.server.create('vocabulary', { school });
-    this.server.create('term', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const course = await this.server.create('course', { school, year: 2023 });
+    const vocabulary = await this.server.create('vocabulary', { school });
+    await this.server.create('term', {
       title: 'foo bar',
       courses: [course],
       vocabulary,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       school,
       prepositionalObject: 'course',
       subject: 'term',
-      prepositionalObjectTableRowId: course.id,
+      prepositionalObjectTableRowId: `${course.id}`,
     });
 
     const store = this.owner.lookup('service:store');
@@ -189,7 +189,7 @@ module('Unit | Service | reporting', function (hooks) {
 
   test('buildReportDescription() - all terms for course X in school Y with year-range', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -197,19 +197,19 @@ module('Unit | Service | reporting', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const course = this.server.create('course', { school, year: 2023 });
-    const vocabulary = this.server.create('vocabulary', { school });
-    this.server.create('term', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const course = await this.server.create('course', { school, year: 2023 });
+    const vocabulary = await this.server.create('vocabulary', { school });
+    await this.server.create('term', {
       title: 'foo bar',
       courses: [course],
       vocabulary,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       school,
       prepositionalObject: 'course',
       subject: 'term',
-      prepositionalObjectTableRowId: course.id,
+      prepositionalObjectTableRowId: `${course.id}`,
     });
 
     const store = this.owner.lookup('service:store');
@@ -231,22 +231,22 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('buildReportDescription() - all terms for program year X in school Y', async function (assert) {
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const program = this.server.create('program', { school: school });
-    const programYear = this.server.create('program-year', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const program = await this.server.create('program', { school: school });
+    const programYear = await this.server.create('program-year', {
       program,
       startYear: DateTime.now().year,
     });
-    const vocabulary = this.server.create('vocabulary', { school });
-    this.server.create('term', {
+    const vocabulary = await this.server.create('vocabulary', { school });
+    await this.server.create('term', {
       title: 'foo bar',
       programYears: [programYear],
       vocabulary,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'term',
       prepositionalObject: 'program year',
-      prepositionalObjectTableRowId: programYear.id,
+      prepositionalObjectTableRowId: `${programYear.id}`,
       school,
     });
 
@@ -271,12 +271,12 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('buildReportDescription() - broken report', async function (assert) {
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const report = this.server.create('report', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const report = await this.server.create('report', {
       school,
       prepositionalObject: 'user',
       subject: 'competency',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
 
     const store = this.owner.lookup('service:store');
@@ -292,7 +292,7 @@ module('Unit | Service | reporting', function (hooks) {
 
   test('getDescriptiveProperties() - with prepositional object', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -300,19 +300,19 @@ module('Unit | Service | reporting', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const course = this.server.create('course', { school, year: 2023 });
-    const vocabulary = this.server.create('vocabulary', { school });
-    this.server.create('term', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const course = await this.server.create('course', { school, year: 2023 });
+    const vocabulary = await this.server.create('vocabulary', { school });
+    await this.server.create('term', {
       title: 'foo bar',
       courses: [course],
       vocabulary,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       school,
       prepositionalObject: 'course',
       subject: 'term',
-      prepositionalObjectTableRowId: course.id,
+      prepositionalObjectTableRowId: `${course.id}`,
     });
 
     const store = this.owner.lookup('service:store');
@@ -332,7 +332,7 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('getDescriptiveProperties() - without prepositional object, all schools', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'competency',
     });
     const store = this.owner.lookup('service:store');
@@ -350,8 +350,8 @@ module('Unit | Service | reporting', function (hooks) {
   });
 
   test('getDescriptiveProperties() - without prepositional object, school X', async function (assert) {
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const report = this.server.create('report', {
+    const school = await this.server.create('school', { title: 'School of Schools' });
+    const report = await this.server.create('report', {
       subject: 'competency',
       school,
     });

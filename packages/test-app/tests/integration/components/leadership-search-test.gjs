@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/leadership-search';
 import LeadershipSearch from 'ilios-common/components/leadership-search';
 import { array } from '@ember/helper';
@@ -9,7 +9,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | leadership-search', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('less than 3 characters triggers warning', async function (assert) {
     await render(
@@ -21,7 +21,7 @@ module('Integration | Component | leadership-search', function (hooks) {
   });
 
   test('input triggers search', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       email: 'testemail',
@@ -66,7 +66,7 @@ module('Integration | Component | leadership-search', function (hooks) {
   });
 
   test('click user fires add user', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       email: 'testemail',
@@ -88,12 +88,12 @@ module('Integration | Component | leadership-search', function (hooks) {
   });
 
   test('can not add users twice', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       email: 'testemail',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'test',
       lastName: 'person2',
       email: 'testemail2',

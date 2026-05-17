@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 
 module('Unit | Service | search', function (hooks) {
   setupTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it exists', function (assert) {
     const service = this.owner.lookup('service:search');
@@ -14,13 +14,14 @@ module('Unit | Service | search', function (hooks) {
   test('test search for curriculum', async function (assert) {
     const courses = [{ id: 1, title: 'Sweet', sessions: [] }];
     const autocomplete = ['one', 'two'];
-    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+    this.server.get('/api/search/v2/curriculum', ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('q'), 'codejam');
+      assert.strictEqual(Number(searchParams.get('size')), 10);
+      assert.strictEqual(Number(searchParams.get('from')), 11);
+      assert.strictEqual(searchParams.get('schools'), '1-2');
+      assert.strictEqual(searchParams.get('years'), '2021-2028');
       assert.step('API called');
-      assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(Number(queryParams.size), 10);
-      assert.strictEqual(Number(queryParams.from), 11);
-      assert.strictEqual(queryParams.schools, '1-2');
-      assert.strictEqual(queryParams.years, '2021-2028');
       return {
         results: {
           courses,
@@ -35,10 +36,11 @@ module('Unit | Service | search', function (hooks) {
   });
 
   test('test search for users', async function (assert) {
-    this.server.get('api/search/v1/users', (schema, { queryParams }) => {
+    this.server.get('/api/search/v1/users', ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('q'), 'codejam');
+      assert.strictEqual(Number(searchParams.get('size')), 100);
       assert.step('API called');
-      assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(parseInt(queryParams.size, 10), 100);
       return {
         results: {
           users: [
@@ -74,10 +76,11 @@ module('Unit | Service | search', function (hooks) {
   });
 
   test('test search for users with size parameters', async function (assert) {
-    this.server.get('api/search/v1/users', (schema, { queryParams }) => {
+    this.server.get('/api/search/v1/users', ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('q'), 'codejam');
+      assert.strictEqual(Number(searchParams.get('size')), 9);
       assert.step('API called');
-      assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(parseInt(queryParams.size, 10), 9);
       return {
         results: {
           users: [],
@@ -91,11 +94,12 @@ module('Unit | Service | search', function (hooks) {
   });
 
   test('test search for users with onlySuggest parameters', async function (assert) {
-    this.server.get('api/search/v1/users', (schema, { queryParams }) => {
+    this.server.get('/api/search/v1/users', ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('q'), 'codejam');
+      assert.strictEqual(Number(searchParams.get('size')), 19);
+      assert.strictEqual(searchParams.get('onlySuggest'), 'true');
       assert.step('API called');
-      assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(Number(queryParams.size), 19);
-      assert.strictEqual(queryParams.onlySuggest, 'true');
       return {
         results: {
           users: [],

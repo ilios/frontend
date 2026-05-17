@@ -1,17 +1,17 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/leadership-manager';
 import LeadershipManager from 'ilios-common/components/leadership-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | leadership-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders with data', async function (assert) {
-    this.server.createList('user', 2);
+    await this.server.createList('user', 2);
     const users = await this.owner.lookup('service:store').findAll('user');
     this.set('directors', [users[0]]);
     this.set('administrators', users);
@@ -82,7 +82,7 @@ module('Integration | Component | leadership-manager', function (hooks) {
   });
 
   test('remove director', async function (assert) {
-    this.server.createList('user', 1);
+    await this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', [user]);
     this.set('administrators', []);
@@ -117,7 +117,7 @@ module('Integration | Component | leadership-manager', function (hooks) {
   });
 
   test('remove administrator', async function (assert) {
-    this.server.createList('user', 1);
+    await this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', []);
     this.set('administrators', [user]);
@@ -155,7 +155,7 @@ module('Integration | Component | leadership-manager', function (hooks) {
   });
 
   test('remove student advisor', async function (assert) {
-    this.server.createList('user', 1);
+    await this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', []);
     this.set('administrators', []);
@@ -193,7 +193,7 @@ module('Integration | Component | leadership-manager', function (hooks) {
   });
 
   test('add director', async function (assert) {
-    this.server.createList('user', 1);
+    await this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', []);
     this.set('administrators', [user]);
@@ -237,7 +237,7 @@ module('Integration | Component | leadership-manager', function (hooks) {
   });
 
   test('add administrator', async function (assert) {
-    this.server.createList('user', 1);
+    await this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', [user]);
     this.set('administrators', []);
@@ -284,7 +284,7 @@ module('Integration | Component | leadership-manager', function (hooks) {
   });
 
   test('add student advisor', async function (assert) {
-    this.server.createList('user', 1);
+    await this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', [user]);
     this.set('administrators', [user]);
@@ -331,10 +331,10 @@ module('Integration | Component | leadership-manager', function (hooks) {
   });
 
   test('disabled user accounts are indicated with an icon', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       enabled: true,
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       enabled: false,
     });
     const users = await this.owner.lookup('service:store').findAll('user');
@@ -373,13 +373,13 @@ module('Integration | Component | leadership-manager', function (hooks) {
   });
 
   test('users are sorted by full name', async function (assert) {
-    this.server.create('user', { firstName: 'Aaron', lastName: 'Aardvark' });
-    this.server.create('user', {
+    await this.server.create('user', { firstName: 'Aaron', lastName: 'Aardvark' });
+    await this.server.create('user', {
       firstName: 'Ursula',
       middleName: 'Undine',
       lastName: 'Unbekannt',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'Zeb',
       lastName: 'Zoober',
       displayName: 'The Bane of Iowa',
@@ -441,13 +441,13 @@ module('Integration | Component | leadership-manager', function (hooks) {
   });
 
   test('username info tooltip shows as applicable', async function (assert) {
-    this.server.create('user', { firstName: 'Aaron', lastName: 'Aardvark' });
-    this.server.create('user', {
+    await this.server.create('user', { firstName: 'Aaron', lastName: 'Aardvark' });
+    await this.server.create('user', {
       firstName: 'Ursula',
       middleName: 'Undine',
       lastName: 'Unbekannt',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'Zeb',
       lastName: 'Zoober',
       displayName: 'The Bane of Iowa',

@@ -1,23 +1,23 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/programs/root';
 import Root from 'frontend/components/programs/root';
 
 module('Integration | Component | programs/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     for (let i = 0; i < 4; i++) {
-      const school = this.server.create('school');
-      this.server.createList('program', 3, { school });
+      const school = await this.server.create('school');
+      await this.server.createList('program', 3, { school });
     }
     this.schools = await this.owner.lookup('service:store').findAll('school');
 
-    const user = this.server.create('user', { schoolId: 2 });
+    const user = await this.server.create('user', { schoolId: 2 });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {

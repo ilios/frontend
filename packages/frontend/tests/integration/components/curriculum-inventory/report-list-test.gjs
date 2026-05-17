@@ -2,8 +2,7 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-list';
 import ReportList from 'frontend/components/curriculum-inventory/report-list';
 import noop from 'ilios-common/helpers/noop';
@@ -11,12 +10,12 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | curriculum-inventory/report-list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const school = this.server.create('school');
-    this.program = this.server.create('program', { school });
+    const school = await this.server.create('school');
+    this.program = await this.server.create('program', { school });
     this.permissionCheckerMock = class extends Service {
       async canDeleteCurriculumInventoryReport() {
         return true;
@@ -26,21 +25,21 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('it renders', async function (assert) {
-    const report1 = this.server.create('curriculum-inventory-report', {
+    const report1 = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
-      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
-    const reportExport = this.server.create('curriculum-inventory-export');
-    const report2 = this.server.create('curriculum-inventory-report', {
+    const reportExport = await this.server.create('curriculum-inventory-export');
+    const report2 = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       export: reportExport,
       name: 'Aardvark',
       year: 2016,
-      startDate: DateTime.fromObject({ year: 2016, month: 7, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2017, month: 6, day: 30 }).toJSDate(),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
 
     const reportModel1 = await this.owner
@@ -139,12 +138,12 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('report can be deleted', async function (assert) {
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
-      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -162,14 +161,14 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
         return false;
       },
     });
-    const reportExport = this.server.create('curriculum-inventory-export');
-    const report = this.server.create('curriculum-inventory-report', {
+    const reportExport = await this.server.create('curriculum-inventory-export');
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
       export: reportExport,
-      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -187,7 +186,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('delete and confirm', async function (assert) {
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
     });
@@ -210,7 +209,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('delete and cancel', async function (assert) {
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
     });
@@ -234,7 +233,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('sorting', async function (assert) {
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
     });
@@ -271,19 +270,19 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('academic year shows range depending on application config', async function (assert) {
-    const report1 = this.server.create('curriculum-inventory-report', {
+    const report1 = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
-      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
 
     const reportModel1 = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report1.id);
     const reports = [reportModel1];
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,

@@ -1,18 +1,18 @@
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, findAll } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ObjectiveSortManager from 'ilios-common/components/objective-sort-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | objective sort manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders for session', async function (assert) {
-    const session = this.server.create('session');
-    this.server.create('session-objective', { session, position: 1 });
-    this.server.create('session-objective', { session, position: 0 });
+    const session = await this.server.create('session');
+    await this.server.create('session-objective', { session, position: 1 });
+    await this.server.create('session-objective', { session, position: 0 });
     const subject = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('subject', subject);
     await render(
@@ -26,9 +26,9 @@ module('Integration | Component | objective sort manager', function (hooks) {
   });
 
   test('it renders for course', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('course-objective', { course, position: 1 });
-    this.server.create('course-objective', { course, position: 0 });
+    const course = await this.server.create('course');
+    await this.server.create('course-objective', { course, position: 1 });
+    await this.server.create('course-objective', { course, position: 0 });
     const subject = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', subject);
     await render(
@@ -42,9 +42,9 @@ module('Integration | Component | objective sort manager', function (hooks) {
   });
 
   test('it renders for program-year', async function (assert) {
-    const programYear = this.server.create('program-year');
-    this.server.create('program-year-objective', { programYear, position: 1 });
-    this.server.create('program-year-objective', { programYear, position: 0 });
+    const programYear = await this.server.create('program-year');
+    await this.server.create('program-year-objective', { programYear, position: 1 });
+    await this.server.create('program-year-objective', { programYear, position: 0 });
     const subject = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -60,7 +60,7 @@ module('Integration | Component | objective sort manager', function (hooks) {
   });
 
   test('cancel', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const subject = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', subject);
     this.set('cancel', () => {

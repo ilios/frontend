@@ -1,17 +1,17 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/visualizations';
 import Visualizations from 'ilios-common/components/course/visualizations';
 
 module('Integration | Component | course/visualizations', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
@@ -25,15 +25,15 @@ module('Integration | Component | course/visualizations', function (hooks) {
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
         },
       };
     });
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
@@ -43,8 +43,8 @@ module('Integration | Component | course/visualizations', function (hooks) {
   });
 
   test('breadcrumb', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 

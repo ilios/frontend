@@ -3,32 +3,32 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-overview';
 import ReportOverview from 'frontend/components/curriculum-inventory/report-overview';
 
 module('Integration | Component | curriculum-inventory/report-overview', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
-    const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
-    this.program = this.server.create('program', {
+    const academicLevels = await this.server.createList('curriculum-inventory-academic-level', 10);
+    this.program = await this.server.create('program', {
       school,
       title: 'Doctor of Rocket Surgery',
       shortTitle: 'DRS',
     });
-    this.report = this.server.create('curriculum-inventory-report', {
+    this.report = await this.server.create('curriculum-inventory-report', {
       academicLevels,
-      year: currentYear.toString(),
+      year: currentYear,
       program: this.program,
       isFinalized: false,
       name: 'Lorem Ipsum',
-      startDate: DateTime.fromObject({ year: currentYear - 1, month: 6, day: 12 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: currentYear, month: 4, day: 11 }).toJSDate(),
+      startDate: `${currentYear - 1}-06-12`,
+      endDate: `${currentYear}-04-11`,
       description: 'Lorem Ipsum',
     });
     class PermissionCheckerMock extends Service {
@@ -148,7 +148,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -169,7 +169,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -335,8 +335,8 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   });
 
   test('academic year unchangeable if course has been linked', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('curriculum-inventory-sequence-block', {
+    const course = await this.server.create('course');
+    await this.server.create('curriculum-inventory-sequence-block', {
       course,
       report: this.report,
     });

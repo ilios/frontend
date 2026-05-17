@@ -2,41 +2,41 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-list-item';
 import SequenceBlockListItem from 'frontend/components/curriculum-inventory/sequence-block-list-item';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | curriculum-inventory/sequence-block-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const school = this.server.create('school');
-    this.program = this.server.create('program', { school });
-    this.report = this.server.create('curriculum-inventory-report', {
+    const school = await this.server.create('school');
+    this.program = await this.server.create('program', { school });
+    this.report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'CI Report',
-      year: '2017',
-      startDate: new Date('2017-07-01'),
-      endDate: new Date('2018-06-30'),
+      year: 2017,
+      startDate: '2017-07-01',
+      endDate: '2018-06-30',
     });
   });
 
   test('it renders', async function (assert) {
-    const course = this.server.create('course');
-    const startingAcademicLevel = this.server.create('curriculum-inventory-academic-level', {
+    const course = await this.server.create('course');
+    const startingAcademicLevel = await this.server.create('curriculum-inventory-academic-level', {
       level: 5,
     });
-    const endingAcademicLevel = this.server.create('curriculum-inventory-academic-level', {
+    const endingAcademicLevel = await this.server.create('curriculum-inventory-academic-level', {
       level: 6,
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       title: 'block 1',
-      startDate: new Date('2021-03-17'),
-      endDate: new Date('2021-05-22'),
+      startDate: '2021-03-17',
+      endDate: '2021-05-22',
       orderInSequence: 3,
       startingAcademicLevel,
       endingAcademicLevel,
@@ -83,7 +83,9 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
   });
 
   test('sequence block is nested inside unordered block', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', { orderInSequence: 3 });
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
+      orderInSequence: 3,
+    });
     const blockModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-sequence-block', block.id);
@@ -104,7 +106,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
   });
 
   test('read-only mode', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block');
+    const block = await this.server.create('curriculum-inventory-sequence-block');
     const blockModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-sequence-block', block.id);
@@ -125,7 +127,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
   });
 
   test('delete', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block');
+    const block = await this.server.create('curriculum-inventory-sequence-block');
     const blockModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-sequence-block', block.id);

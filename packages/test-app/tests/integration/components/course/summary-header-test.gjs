@@ -2,26 +2,26 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/summary-header';
 import SummaryHeader from 'ilios-common/components/course/summary-header';
 
 module('Integration | Component | course summary header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     class PermissionCheckerStub extends Service {
       async canCreateCourse(inSchool) {
         assert.step('canCreateCourse called');
-        assert.strictEqual(school.id, inSchool.id);
+        assert.strictEqual(school.id, Number(inSchool.id));
         return true;
       }
     }
 
     this.owner.register('service:permissionChecker', PermissionCheckerStub);
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       school: school,
       externalId: 'abc',
       level: 3,
@@ -45,14 +45,14 @@ module('Integration | Component | course summary header', function (hooks) {
     class PermissionCheckerStub extends Service {
       async canCreateCourse(inSchool) {
         assert.step('canCreateCourse called');
-        assert.strictEqual(school.id, inSchool.id);
+        assert.strictEqual(school.id, Number(inSchool.id));
         return false;
       }
     }
 
     this.owner.register('service:permissionChecker', PermissionCheckerStub);
-    const school = this.server.create('school', {});
-    const course = this.server.create('course', {
+    const school = await this.server.create('school', {});
+    const course = await this.server.create('course', {
       school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -65,8 +65,8 @@ module('Integration | Component | course summary header', function (hooks) {
   });
 
   test('no link to rollover if course is locked', async function (assert) {
-    const school = this.server.create('school', {});
-    const course = this.server.create('course', {
+    const school = await this.server.create('school', {});
+    const course = await this.server.create('course', {
       school,
       locked: true,
     });

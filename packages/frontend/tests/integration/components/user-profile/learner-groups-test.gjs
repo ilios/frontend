@@ -1,54 +1,54 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/user-profile/learner-groups';
 import LearnerGroups from 'frontend/components/user-profile/learner-groups';
 
 module('Integration | Component | user-profile/learner-groups', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const som = this.server.create('school', {
+    const som = await this.server.create('school', {
       title: 'SOM',
     });
-    const sod = this.server.create('school', {
+    const sod = await this.server.create('school', {
       title: 'SOD',
     });
-    const program1 = this.server.create('program', {
+    const program1 = await this.server.create('program', {
       title: 'Program1',
       school: som,
     });
-    const program2 = this.server.create('program', {
+    const program2 = await this.server.create('program', {
       title: 'Program2',
       school: sod,
     });
-    const programYear1 = this.server.create('program-year', {
+    const programYear1 = await this.server.create('program-year', {
       program: program1,
       archived: false,
     });
-    const programYear2 = this.server.create('program-year', {
+    const programYear2 = await this.server.create('program-year', {
       program: program2,
       archived: false,
     });
-    const cohort1 = this.server.create('cohort', {
+    const cohort1 = await this.server.create('cohort', {
       title: 'Cohort1',
       programYear: programYear1,
     });
-    const cohort2 = this.server.create('cohort', {
+    const cohort2 = await this.server.create('cohort', {
       title: 'Cohort2',
       programYear: programYear2,
     });
-    const learnerGroup1 = this.server.create('learner-group', {
+    const learnerGroup1 = await this.server.create('learner-group', {
       title: 'LearnerGroup1',
       cohort: cohort1,
     });
-    const learnerGroup2 = this.server.create('learner-group', {
+    const learnerGroup2 = await this.server.create('learner-group', {
       title: 'LearnerGroup2',
       cohort: cohort2,
     });
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       learnerGroups: [learnerGroup1, learnerGroup2],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);

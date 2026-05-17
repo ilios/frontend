@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/results';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import SubjectResults from 'frontend/components/reports/subject-results';
@@ -9,17 +9,17 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/subject-results', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school', { id: 1, title: 'school 0' });
-    this.server.create('course', { school: this.school });
+    this.school = await this.server.create('school', { id: 1, title: 'school 0' });
+    await this.server.create('course', { school: this.school });
 
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
-      user: this.server.create('user'),
+      user: await this.server.create('user'),
     });
-    this.server.post('api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', ({ db }) => {
       return {
         data: {
           courses: db.courses.map(({ id, title, year, externalId, schoolId }) => {
@@ -56,9 +56,9 @@ module('Integration | Component | reports/subject-results', function (hooks) {
   });
 
   test('it renders with all schools', async function (assert) {
-    this.school2 = this.server.create('school', { id: 2, title: 'school 1' });
-    this.server.create('course', { school: this.school2 });
-    this.server.post('api/graphql', ({ db }) => {
+    this.school2 = await this.server.create('school', { id: 2, title: 'school 1' });
+    await this.server.create('course', { school: this.school2 });
+    this.server.post('/api/graphql', ({ db }) => {
       return {
         data: {
           courses: db.courses.map(({ id, title, year, externalId, schoolId }) => {

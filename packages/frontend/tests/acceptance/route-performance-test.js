@@ -10,7 +10,7 @@ module('Acceptance | performance', function (hooks) {
   hooks.beforeEach(async function () {
     this.set('maxDuration', 10000);
 
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
   });
 
@@ -27,12 +27,12 @@ module('Acceptance | performance', function (hooks) {
     const startOfWeek = DateTime.fromJSDate(firstDayOfThisWeek);
 
     for (let i = 0; i < 7; i++) {
-      this.server.create('userevent', {
+      await this.server.create('userevent', {
         user: Number(this.user.id),
         name: `user event ${i}`,
-        startDate: startOfWeek.plus({ hour: i }).toJSDate(),
-        endDate: startOfWeek.plus({ hour: i + i }).toJSDate(),
-        lastModified: today.minus({ year: 1 }).toJSDate(),
+        startDate: startOfWeek.plus({ hour: i }).toISO(),
+        endDate: startOfWeek.plus({ hour: i + i }).toISO(),
+        lastModified: today.minus({ year: 1 }).toISO(),
         isPublished: true,
         offering: i,
       });
@@ -88,13 +88,13 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/courses', async function (assert) {
-    this.server.create('academic-year');
-    this.sessionTypes = this.server.createList('session-type', 1, {
+    await this.server.create('academic-year');
+    this.sessionTypes = await this.server.createList('session-type', 1, {
       school: this.school,
     });
 
     for (let i = 0; i < 100; i++) {
-      this.server.create('course', {
+      await this.server.create('course', {
         school: this.school,
       });
     }
@@ -111,17 +111,17 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/courses/[course-id]/sessions', async function (assert) {
-    this.server.create('academic-year');
-    this.sessionTypes = this.server.createList('session-type', 1, {
+    await this.server.create('academic-year');
+    this.sessionTypes = await this.server.createList('session-type', 1, {
       school: this.school,
     });
 
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       school: this.school,
     });
 
     for (let i = 0; i < 100; i++) {
-      this.server.create('session', {
+      await this.server.create('session', {
         course: this.course,
         sessionType: this.sessionTypes[0],
         instructionalNotes: `session ${i} notes`,
@@ -140,13 +140,13 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/learnergroups', async function (assert) {
-    this.server.createList('user', 20);
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
+    await this.server.createList('user', 20);
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
 
     for (let i = 2; i < 22; i += 5) {
-      this.server.create('learner-group', {
+      await this.server.create('learner-group', {
         cohort,
         userIds: [i, i + 1, i + 2, i + 3, i + 4],
       });
@@ -164,10 +164,10 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/instructorgroups', async function (assert) {
-    this.server.createList('user', 50);
+    await this.server.createList('user', 50);
 
     for (let i = 2; i < 52; i += 5) {
-      this.server.create('instructor-group', {
+      await this.server.create('instructor-group', {
         school: this.school,
         userIds: [i, i + 1, i + 2, i + 3, i + 4],
       });
@@ -186,7 +186,7 @@ module('Acceptance | performance', function (hooks) {
 
   test('/schools', async function (assert) {
     for (let i = 0; i < 20; i++) {
-      this.server.create('school');
+      await this.server.create('school');
     }
 
     let start = performance.now();
@@ -202,7 +202,7 @@ module('Acceptance | performance', function (hooks) {
 
   test('/programs', async function (assert) {
     for (let i = 0; i < 20; i++) {
-      this.server.create('program');
+      await this.server.create('program');
     }
 
     let start = performance.now();
@@ -217,15 +217,15 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/reports', async function (assert) {
-    this.server.create('academic-year');
-    this.sessionTypes = this.server.createList('session-type', 1, {
+    await this.server.create('academic-year');
+    this.sessionTypes = await this.server.createList('session-type', 1, {
       school: this.school,
     });
 
     const courses = [];
     for (let i = 0; i < 10; i++) {
       courses.push(
-        this.server.create('course', {
+        await this.server.create('course', {
           id: i,
           school: this.school,
         }),
@@ -234,7 +234,7 @@ module('Acceptance | performance', function (hooks) {
 
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
-        this.server.create('session', {
+        await this.server.create('session', {
           id: j,
           course: courses[i],
           sessionType: this.sessionTypes[0],
@@ -244,7 +244,7 @@ module('Acceptance | performance', function (hooks) {
     }
 
     for (let i = 0; i < 10; i++) {
-      this.server.create('report', {
+      await this.server.create('report', {
         title: `my report {i}`,
         subject: 'session',
         prepositionalObject: 'course',
@@ -278,7 +278,7 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/users', async function (assert) {
-    this.server.createList('user', 25);
+    await this.server.createList('user', 25);
 
     let start = performance.now();
 
@@ -292,10 +292,10 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/curriculum-inventory-reports', async function (assert) {
-    this.program = this.server.create('program', { school: this.school });
+    this.program = await this.server.create('program', { school: this.school });
 
     for (let i = 0; i < 10; i++) {
-      this.server.create('curriculum-inventory-report', {
+      await this.server.create('curriculum-inventory-report', {
         program: this.program,
       });
     }

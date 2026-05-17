@@ -3,15 +3,15 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/session/publication-menu';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import PublicationMenu from 'ilios-common/components/session/publication-menu';
 
 module('Integration | Component | session/publication-menu', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders and is accessible for draft session', async function (assert) {
-    this.server.create('session');
+    await this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
@@ -36,7 +36,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('it renders and is accessible for scheduled session', async function (assert) {
-    this.server.create('session', {
+    await this.server.create('session', {
       published: true,
       publishedAsTbd: true,
     });
@@ -52,7 +52,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('it renders and is accessible for published session', async function (assert) {
-    this.server.create('session', {
+    await this.server.create('session', {
       published: true,
       publishedAsTbd: false,
     });
@@ -68,7 +68,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('click opens menu', async function (assert) {
-    this.server.create('session');
+    await this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
@@ -78,7 +78,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('correct actions for unpublished session', async function (assert) {
-    this.server.create('session');
+    await this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
@@ -92,7 +92,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('correct actions for scheduled session', async function (assert) {
-    this.server.create('session', {
+    await this.server.create('session', {
       published: true,
       publishedAsTbd: true,
     });
@@ -109,7 +109,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('correct actions for published session', async function (assert) {
-    this.server.create('session', {
+    await this.server.create('session', {
       published: true,
       publishedAsTbd: false,
     });
@@ -126,7 +126,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('down opens menu', async function (assert) {
-    this.server.create('session');
+    await this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
@@ -137,7 +137,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('escape closes menu', async function (assert) {
-    this.server.create('session');
+    await this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
@@ -149,11 +149,11 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('dropdown options are accessible for unpublished session', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       published: false,
       publishedAsTbd: false,
     });
-    this.server.create('offering', { session });
+    await this.server.create('offering', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
@@ -181,11 +181,11 @@ module('Integration | Component | session/publication-menu', function (hooks) {
   });
 
   test('dropdown options are accessible for published session', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       published: true,
       publishedAsTbd: false,
     });
-    this.server.create('offering', { session });
+    await this.server.create('offering', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
