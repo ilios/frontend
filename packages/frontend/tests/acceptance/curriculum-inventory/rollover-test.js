@@ -3,8 +3,8 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/curriculum-inventory-report-rollover';
-import queryString from 'query-string';
 import { DateTime } from 'luxon';
+import formatJsonApi from 'ilios-common/addon-test-support/msw/utils/json-api-formatter';
 
 module('Acceptance | curriculum inventory report/rollover', function (hooks) {
   setupApplicationTest(hooks);
@@ -51,32 +51,34 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
 
     this.server.post(
       `/api/curriculuminventoryreports/:id/rollover`,
-      function (schema, { params, requestBody }) {
-        assert.step('API called');
+      async ({ params, request }) => {
         assert.ok('id' in params);
         assert.strictEqual(params.id, reportModel.id);
-        const data = queryString.parse(requestBody);
-        assert.strictEqual(parseInt(data.year, 10), thisYear + 1);
-        assert.strictEqual(data.name, reportModel.name);
-        assert.strictEqual(data.description, reportModel.description);
-        const startDate = DateTime.fromObject({ year: data.year, hour: 8 });
-        return this.serialize(
-          schema.curriculumInventoryReports.create({
-            id: reportModel.id + 1,
-            programId: program.id,
-            year: data.year,
-            name: data.name,
-            description: data.description,
-            startDate: startDate.toJSDate(),
-            endDate: startDate.plus({ weeks: 7 }).toJSDate(),
-          }),
-        );
+        const data = await request.formData();
+
+        assert.strictEqual(Number(data.get('year')), thisYear + 1);
+        assert.strictEqual(data.get('name'), reportModel.name);
+        assert.strictEqual(data.get('description'), reportModel.description);
+        const startDate = DateTime.fromObject({ year: data.get('year'), hour: 8 });
+
+        const newReport = await this.server.create('curriculum-inventory-report', {
+          id: Number(reportModel.id) + 1,
+          program: program,
+          year: Number(data.get('year')),
+          name: data.get('name'),
+          description: data.get('description'),
+          startDate: startDate.toISODate(),
+          endDate: startDate.plus({ weeks: 7 }).toISODate(),
+        });
+
+        assert.step('API called');
+        return formatJsonApi(newReport, 'curriculumInventoryReport');
       },
     );
 
     await page.visit({ reportId: reportModel.id });
     await page.rollover.save();
-    assert.strictEqual(currentURL(), `/curriculum-inventory-reports/${reportModel.id + 1}`);
+    assert.strictEqual(currentURL(), `/curriculum-inventory-reports/${report.id + 1}`);
     assert.verifySteps(['API called']);
   });
 });
