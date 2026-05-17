@@ -4,7 +4,7 @@ export const schema = z.looseObject({
   id: z.number(),
   name: z.string().nullish(),
   description: z.string().nullish(),
-  year: z.number(),
+  year: z.coerce.number(),
   startDate: z.iso.date(),
   endDate: z.iso.date(),
 });
