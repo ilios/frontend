@@ -3,7 +3,7 @@ import { singularize, pluralize } from 'ember-inflector';
 import { db, validateRecordData, modelsWithStringIds, filterByParams } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
-import { extractRelationshipsInUpdate, handlePost } from './helpers.js';
+import { extractRelationshipsInUpdate, createFromPostData } from './helpers.js';
 
 // Create generic CRUD handlers for a model
 export function createCrudHandlers(modelName, apiRoute) {
@@ -61,7 +61,14 @@ export function createCrudHandlers(modelName, apiRoute) {
 
     // POST new record
     http.post(`/api/${apiPath}`, async ({ request }) => {
-      const record = await handlePost(modelName, request);
+      const body = await request.json();
+      const data = body.data;
+      if (Array.isArray(data)) {
+        const records = await Promise.all(data.map((d) => createFromPostData(modelName, d)));
+        return HttpResponse.json(formatJsonApi(records, modelName), { status: 201 });
+      }
+
+      const record = await createFromPostData(modelName, data);
       return HttpResponse.json(formatJsonApi(record, modelName), { status: 201 });
     }),
 
