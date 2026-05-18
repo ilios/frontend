@@ -11,9 +11,9 @@ module('Integration | Component | school/competencies-list', function (hooks) {
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const pcrs1 = await this.server.create('aamc-pcrs');
-    const pcrs2 = await this.server.create('aamc-pcrs');
-    const pcrs3 = await this.server.create('aamc-pcrs');
+    const pcrs1 = await this.server.create('aamc-pcrs', { id: '101' });
+    const pcrs2 = await this.server.create('aamc-pcrs', { id: '102' });
+    const pcrs3 = await this.server.create('aamc-pcrs', { id: '103' });
     const domain = await this.server.create('competency', { title: 'domain 0' });
     await this.server.create('competency', {
       title: 'competency 0',
@@ -38,13 +38,13 @@ module('Integration | Component | school/competencies-list', function (hooks) {
     assert.ok(component.items[0].title.isDomain);
     assert.strictEqual(component.items[1].title.text, 'competency 0');
     assert.strictEqual(component.items[1].pcrs.items.length, 2);
-    assert.strictEqual(component.items[1].pcrs.items[0].text, '1 aamc pcrs 0');
-    assert.strictEqual(component.items[1].pcrs.items[1].text, '2 aamc pcrs 1');
+    assert.strictEqual(component.items[1].pcrs.items[0].text, '101 aamc pcrs 0');
+    assert.strictEqual(component.items[1].pcrs.items[1].text, '102 aamc pcrs 1');
     assert.ok(component.items[1].title.isCompetency);
     assert.strictEqual(component.items[2].title.text, 'competency 1');
     assert.ok(component.items[2].title.isCompetency);
     assert.strictEqual(component.items[2].pcrs.items.length, 1);
-    assert.strictEqual(component.items[2].pcrs.items[0].text, '3 aamc pcrs 2');
+    assert.strictEqual(component.items[2].pcrs.items[0].text, '103 aamc pcrs 2');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
