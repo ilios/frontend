@@ -1,15 +1,9 @@
 import { http, HttpResponse } from 'msw';
 import { singularize, pluralize } from 'ember-inflector';
-import {
-  db,
-  getRelatedRecord,
-  validateRecordData,
-  modelsWithStringIds,
-  filterByParams,
-} from '../db.js';
+import { db, validateRecordData, modelsWithStringIds, filterByParams } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
-import { getIdentityManager } from '../utils/identity-managers.js';
+import { extractRelationshipsInUpdate, handlePost } from './helpers.js';
 
 // Create generic CRUD handlers for a model
 export function createCrudHandlers(modelName, apiRoute) {
@@ -67,29 +61,7 @@ export function createCrudHandlers(modelName, apiRoute) {
 
     // POST new record
     http.post(`/api/${apiPath}`, async ({ request }) => {
-      const body = await request.json();
-      const data = body.data;
-
-      if (!data) {
-        return new HttpResponse(JSON.stringify({ errors: ['Invalid request body'] }), {
-          status: 400,
-        });
-      }
-
-      // Extract attributes
-      const attrs = { ...data.attributes };
-
-      if (!attrs.id) {
-        // Auto-generate an ID if it doesn't exist yet.
-        // TODO: consider throwing an error here since POST should be used to update given records [ST 2026/05/11]
-        attrs.id = getIdentityManager(modelName).inc();
-      }
-      await extractRelationshipsInUpdate(modelName, data, attrs);
-
-      validateRecordData(modelName, attrs);
-
-      const record = await db[modelName].create(attrs);
-
+      const record = await handlePost(modelName, request);
       return HttpResponse.json(formatJsonApi(record, modelName), { status: 201 });
     }),
 
@@ -171,37 +143,6 @@ export function createCrudHandlers(modelName, apiRoute) {
       return new HttpResponse(null, { status: 204 });
     }),
   ];
-}
-
-async function extractRelationshipsInUpdate(modelName, data, attrs) {
-  if (data.relationships) {
-    const keys = Object.keys(data.relationships);
-
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      const relationship = data.relationships[key];
-
-      if (Array.isArray(relationship.data)) {
-        attrs[key] = await Promise.all(
-          relationship.data.map((item) => {
-            const relatedModelName = singularize(item.type);
-            const id = modelsWithStringIds.has(relatedModelName) ? item.id : Number(item.id);
-            return getRelatedRecord(modelName, key, id);
-          }),
-        );
-      } else {
-        if (relationship.data) {
-          const relatedModelName = singularize(relationship.data.type);
-          const id = modelsWithStringIds.has(relatedModelName)
-            ? relationship.data.id
-            : Number(relationship.data.id);
-          attrs[key] = relationship.data ? await getRelatedRecord(modelName, key, id) : null;
-        } else {
-          attrs[key] = undefined;
-        }
-      }
-    }
-  }
 }
 
 // Generate handlers for all standard models

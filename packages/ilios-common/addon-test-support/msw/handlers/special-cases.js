@@ -3,6 +3,8 @@ import { DateTime } from 'luxon';
 import { db, filterByParams } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
+import { createFromPostData } from './helpers.js';
+import { createModel } from '../create-model.js';
 
 // Cohorts with school filter
 // Overrides the generic GET /api/cohorts handler
@@ -167,50 +169,18 @@ const pendingUserUpdatesHandler = http.get('/api/pendinguserupdates', async ({ r
 const programYearCreateHandler = http.post('/api/programyears', async ({ request }) => {
   const body = await request.json();
   const data = body.data;
-
-  if (!data) {
-    return new HttpResponse(JSON.stringify({ errors: ['Invalid request body'] }), {
-      status: 400,
-    });
-  }
-
-  // Extract attributes and relationships
-  const attrs = { ...data.attributes };
-  if (data.relationships) {
-    Object.keys(data.relationships).forEach((key) => {
-      const relationship = data.relationships[key];
-      if (relationship.data) {
-        if (Array.isArray(relationship.data)) {
-          attrs[key] = relationship.data.map((item) => item.id);
-        } else {
-          attrs[key] = relationship.data.id;
-        }
-      }
-    });
-  }
-
-  // Create the program year
-  const programYear = await db.programYear.create(attrs);
+  const programYear = await createFromPostData('programYear', data);
 
   // Automatically create associated cohort
-  const program = programYear.program;
-  const graduationYear = parseInt(programYear.startYear, 10) + parseInt(program?.duration || 4, 10);
+  const graduationYear = programYear.startYear + (programYear.program.duration || 4);
   const cohortTitle = `Class of ${graduationYear}`;
 
-  const cohort = await db.cohort.create({
-    programYear: programYear.id,
+  await createModel('cohort', {
+    programYear: programYear,
     title: cohortTitle,
   });
 
-  // Update program year with cohort reference
-  db.programYear.update({
-    where: { id: { equals: programYear.id } },
-    data: { cohort: cohort.id },
-  });
-
-  const updated = db.programYear.findFirst((q) => q.where({ id: programYear.id }));
-
-  return HttpResponse.json(formatJsonApi(updated, 'programYear'), { status: 201 });
+  return HttpResponse.json(formatJsonApi(programYear, 'programYear'), { status: 201 });
 });
 
 // User events with date range filtering
