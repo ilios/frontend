@@ -7,7 +7,7 @@ export const schema = z.looseObject({
   addressStreet: z.string().nullish(),
   addressCity: z.string().nullish(),
   addressStateOrProvince: z.string().nullish(),
-  addressZipcode: z.string().nullish(),
+  addressZipCode: z.string().nullish(),
   addressCountryCode: z.string().nullish(),
 });
 
