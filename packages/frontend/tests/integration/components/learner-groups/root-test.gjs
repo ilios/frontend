@@ -13,8 +13,9 @@ module('Integration | Component | learner-groups/root', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    for (let i = 0; i < 4; i++) {
-      const school = await this.server.create('school');
+    const schools = await this.server.createList('school', 4);
+    for (let i = 0, n = schools.length; i < n; i++) {
+      const school = schools[i];
       const programs = await this.server.createList('program', 2, { school });
       await this.server.createList('cohort', 2, {
         programYear: await this.server.create('program-year', {
@@ -45,10 +46,8 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       title: 'Program without Cohorts',
       school: schoolWithProgramButWithoutCohorts,
     });
-
+    const user = await this.server.create('user', { school: schools[1] });
     this.schools = await this.owner.lookup('service:store').findAll('school');
-
-    const user = await this.server.create('user', { schoolId: 2 });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
