@@ -28,7 +28,7 @@ const cohortsHandler = http.get('/api/cohorts', async ({ request }) => {
     });
   }
 
-  const { limit, offset } = parseQueryParams(params.toString());
+  const { limit, offset, include } = parseQueryParams(params.toString());
   const total = cohorts.length;
   const paginatedCohorts = cohorts.slice(offset, offset + limit);
 
@@ -36,7 +36,7 @@ const cohortsHandler = http.get('/api/cohorts', async ({ request }) => {
     totalCount: total,
   };
 
-  return HttpResponse.json(formatJsonApi(paginatedCohorts, 'cohort', { meta }));
+  return HttpResponse.json(formatJsonApi(paginatedCohorts, 'cohort', { meta, include }));
 });
 
 // Courses with school filter
@@ -57,7 +57,7 @@ const coursesHandler = http.get('/api/courses', async ({ request }) => {
     });
   }
 
-  const { filterParams, limit, offset, queryTerms } = parseQueryParams(params.toString());
+  const { filterParams, limit, offset, queryTerms, include } = parseQueryParams(params.toString());
 
   // Apply other filters
   if (filterParams.length > 0) {
@@ -92,7 +92,7 @@ const coursesHandler = http.get('/api/courses', async ({ request }) => {
     totalCount: total,
   };
 
-  return HttpResponse.json(formatJsonApi(paginatedCourses, 'course', { meta }));
+  return HttpResponse.json(formatJsonApi(paginatedCourses, 'course', { meta, include }));
 });
 
 // Sessions with school filter
@@ -151,7 +151,7 @@ const pendingUserUpdatesHandler = http.get('/api/pendinguserupdates', async ({ r
     });
   }
 
-  const { limit, offset } = parseQueryParams(params.toString());
+  const { limit, offset, include } = parseQueryParams(params.toString());
   const total = updates.length;
   const paginatedUpdates = updates.slice(offset, offset + limit);
 
@@ -159,7 +159,7 @@ const pendingUserUpdatesHandler = http.get('/api/pendinguserupdates', async ({ r
     totalCount: total,
   };
 
-  return HttpResponse.json(formatJsonApi(paginatedUpdates, 'pendingUserUpdate', { meta }));
+  return HttpResponse.json(formatJsonApi(paginatedUpdates, 'pendingUserUpdate', { meta, include }));
 });
 
 // Program year creation with auto-cohort creation
