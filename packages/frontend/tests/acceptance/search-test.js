@@ -289,9 +289,9 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('year filter in query param', async function (assert) {
-    await this.server.create('academic-year', { id: '2025', title: '2025' });
-    await this.server.create('academic-year', { id: '2024', title: '2024' });
-    await this.server.create('academic-year', { id: '2023', title: '2023' });
+    await this.server.create('academic-year', { id: 2025, title: '2025' });
+    await this.server.create('academic-year', { id: 2024, title: '2024' });
+    await this.server.create('academic-year', { id: 2023, title: '2023' });
 
     this.server.get('/api/search/v2/curriculum', ({ request }) => {
       assert.step('API called');
