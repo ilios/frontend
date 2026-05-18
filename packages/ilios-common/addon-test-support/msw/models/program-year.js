@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const schema = z.looseObject({
   id: z.number(),
-  startYear: z.number().nullish(),
+  startYear: z.coerce.number().nullish(),
   locked: z.boolean().nullish(),
   archived: z.boolean().nullish(),
   publishedAsTbd: z.boolean().nullish(),
