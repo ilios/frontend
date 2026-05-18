@@ -37,7 +37,8 @@ module('Integration | Component | school/session-type-form', function (hooks) {
     const summative = await this.server.create('assessment-option', {
       name: 'summative',
     });
-    this.set('assessmentOptionId', summative.id);
+    const selectedAssessmentOptionId = summative.id.toString();
+    this.set('assessmentOptionId', selectedAssessmentOptionId);
     this.set('title', 'one');
     this.set('calendarColor', '#ffffff');
     await this.store.findAll('aamc-method');
@@ -73,7 +74,7 @@ module('Integration | Component | school/session-type-form', function (hooks) {
     assert.strictEqual(component.calendarColor.value, '#ffffff');
     assert.strictEqual(component.assessment.yesNoToggle.checked, 'true');
     assert.strictEqual(component.active.yesNoToggle.checked, 'true');
-    assert.strictEqual(component.assessmentSelector.value, '2');
+    assert.strictEqual(component.assessmentSelector.value, selectedAssessmentOptionId);
     assert.strictEqual(component.assessmentSelector.options.length, 2);
     assert.strictEqual(component.assessmentSelector.options[0].value, '1');
     assert.strictEqual(component.assessmentSelector.options[0].text, 'formative');
