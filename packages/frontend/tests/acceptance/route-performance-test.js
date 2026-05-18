@@ -222,37 +222,29 @@ module('Acceptance | performance', function (hooks) {
       school: this.school,
     });
 
-    const courses = [];
-    for (let i = 0; i < 10; i++) {
-      courses.push(
-        await this.server.create('course', {
-          id: i,
+    const courses = await this.server.createList('course', 10, { school: this.school });
+    const promises = [];
+
+    for (let i = 0, n = courses.length; i < n; i++) {
+      promises.push(
+        await this.server.createList('session', 10, {
+          course: courses[i],
+          sessionType: this.sessionTypes[0],
+        }),
+      );
+      promises.push(
+        await this.server.create('report', {
+          title: `my report {i}`,
+          subject: 'session',
+          prepositionalObject: 'course',
+          prepositionalObjectTableRowId: String(courses[0].id),
+          user: this.user,
           school: this.school,
         }),
       );
     }
 
-    for (let i = 0; i < 10; i++) {
-      for (let j = 0; j < 10; j++) {
-        await this.server.create('session', {
-          id: j,
-          course: courses[i],
-          sessionType: this.sessionTypes[0],
-          instructionalNotes: `course ${i} session ${j} notes`,
-        });
-      }
-    }
-
-    for (let i = 0; i < 10; i++) {
-      await this.server.create('report', {
-        title: `my report {i}`,
-        subject: 'session',
-        prepositionalObject: 'course',
-        prepositionalObjectTableRowId: courses[i].id,
-        user: this.user,
-        school: this.school,
-      });
-    }
+    await Promise.all(promises);
 
     let start = performance.now();
 
