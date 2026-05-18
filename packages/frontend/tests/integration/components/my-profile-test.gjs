@@ -94,15 +94,16 @@ module('Integration | Component | my profile', function (hooks) {
   });
 
   test('generates token when asked with good expiration date', async function (assert) {
-    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
-      assert.step('API called');
-      assert.ok('ttl' in queryParams);
-      const duration = Duration.fromISO(queryParams.ttl);
+    this.server.get(`/auth/token`, ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('ttl'));
+      const duration = Duration.fromISO(searchParams.get('ttl'));
       assert.strictEqual(duration.days, 14);
       assert.ok(duration.hours < 24);
       assert.ok(duration.minutes < 60);
       assert.ok(duration.seconds < 60);
 
+      assert.step('API called');
       return {
         jwt: 'new token',
       };
@@ -186,15 +187,16 @@ module('Integration | Component | my profile', function (hooks) {
   });
 
   test('Setting date changes request length', async function (assert) {
-    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
-      assert.step('API called');
-      assert.ok('ttl' in queryParams);
-      const duration = Duration.fromISO(queryParams.ttl);
+    this.server.get(`/auth/token`, ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('ttl'));
+      const duration = Duration.fromISO(searchParams.get('ttl'));
       assert.strictEqual(duration.days, 41);
       assert.ok(duration.hours < 24);
       assert.ok(duration.minutes < 60);
       assert.ok(duration.seconds < 60);
 
+      assert.step('API called');
       return {
         jwt: 'new token',
       };
@@ -292,10 +294,11 @@ module('Integration | Component | my profile', function (hooks) {
       }).toJSDate(),
     );
 
-    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+    this.server.get(`/auth/token`, ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('ttl'));
+      assert.strictEqual(searchParams.get('ttl'), 'P14DT48M35S');
       assert.step('API called');
-      assert.ok('ttl' in queryParams);
-      assert.strictEqual(queryParams.ttl, 'P14DT48M35S');
       return {
         jwt: 'new token',
       };
@@ -331,10 +334,11 @@ module('Integration | Component | my profile', function (hooks) {
       }).toJSDate(),
     );
 
-    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+    this.server.get(`/auth/token`, ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('ttl'));
+      assert.strictEqual(searchParams.get('ttl'), 'P14DT22H53M35S');
       assert.step('API called');
-      assert.ok('ttl' in queryParams);
-      assert.strictEqual(queryParams.ttl, 'P14DT22H53M35S');
       return {
         jwt: 'new token',
       };
