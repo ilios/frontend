@@ -6,6 +6,9 @@ import { camelize } from '@ember/string';
 // Almost all of our models has numeric IDs, except MeSH related data points.
 // We'll need to distinguish between those and the rest when creating IDs for our mock models.
 const modelsWithStringIds = new Set([
+  'aamcMethod',
+  'aamcPcrs',
+  'aamcResourceType',
   'meshConcept',
   'meshDescriptor',
   'meshQualifier',
