@@ -6,6 +6,8 @@ import { component } from 'frontend/tests/pages/components/learner-group/instruc
 import InstructorManager from 'frontend/components/learner-group/instructor-manager';
 import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
+import { HttpResponse } from 'msw';
 
 module('Integration | Component | learner-group/instructor-manager', function (hooks) {
   setupRenderingTest(hooks);
@@ -271,8 +273,8 @@ module('Integration | Component | learner-group/instructor-manager', function (h
   });
 
   test('search and add instructor', async function (assert) {
-    this.server.get('/api/users', (schema) => {
-      return schema.users.all();
+    this.server.get('/api/users', () => {
+      return HttpResponse.json(formatJsonApi(this.server.db.user.all(), 'user'));
     });
 
     await this.server.create('user', { firstName: 'test', lastName: 'person', middleName: '' });
