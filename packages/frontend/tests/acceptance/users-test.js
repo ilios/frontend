@@ -11,7 +11,6 @@ module('Acceptance | Users', function (hooks) {
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
     this.user = await setupAuthentication({
-      lastName: 'Awkward',
       school: this.school,
       campusId: '123',
       administeredSchools: [this.school],
