@@ -32,7 +32,7 @@ module('Acceptance | Programs', function (hooks) {
       await page.root.newProgramForm.title.set('Test Title');
       await page.root.newProgramForm.done.click();
       await takeScreenshot(assert, 'saveButton');
-      assert.strictEqual(this.server.db.programs.length, 1);
+      assert.strictEqual(this.server.db.program.all().length, 1);
       assert.strictEqual(page.root.list.items.length, 1);
       assert.dom('.flash-messages').exists({ count: 1 });
       assert.strictEqual(page.root.list.items[0].title, 'Test Title');
@@ -44,12 +44,12 @@ module('Acceptance | Programs', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      assert.strictEqual(this.server.db.programs.length, 1);
+      assert.strictEqual(this.server.db.program.all().length, 1);
       assert.strictEqual(page.root.list.items.length, 1);
       assert.strictEqual(page.root.list.items[0].title, 'program 0');
       await page.root.list.items[0].remove();
       await page.root.list.items[0].confirmRemoval.confirm();
-      assert.strictEqual(this.server.db.programs.length, 0);
+      assert.strictEqual(this.server.db.program.all().length, 0);
       assert.strictEqual(page.root.list.items.length, 0);
       assert.dom('.flash-messages').exists({ count: 1 });
     });
@@ -59,12 +59,12 @@ module('Acceptance | Programs', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      assert.strictEqual(this.server.db.programs.length, 1);
+      assert.strictEqual(this.server.db.program.all().length, 1);
       assert.strictEqual(page.root.list.items.length, 1);
       assert.strictEqual(page.root.list.items[0].title, 'program 0');
       await page.root.list.items[0].remove();
       await page.root.list.items[0].confirmRemoval.cancel();
-      assert.strictEqual(this.server.db.programs.length, 1);
+      assert.strictEqual(this.server.db.program.all().length, 1);
       assert.strictEqual(page.root.list.items.length, 1);
     });
 
