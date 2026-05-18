@@ -1132,14 +1132,14 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
     await this.server.createList('learner-group', 2, {
       cohort,
     });
-    await this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
     await this.server.create('ilm-session', {
-      session: this.session,
+      session,
     });
-    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
+    await page.visit({ courseId: course.id, sessionId: session.id });
     await page.details.detailLearnersAndLearnerGroups.manage();
     await page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].toggle();
     await page.details.detailLearnersAndLearnerGroups.save();
