@@ -28,17 +28,17 @@ module('Integration | Component | learner-group/calendar', function (hooks) {
       sessionType,
     });
     const offering1 = await this.server.create('offering', {
-      startDate: today.toJSON(),
+      startDate: today.toISO(),
       endDate: today.plus({ hour: 1 }).toISO(),
       location: '123',
-      updatedAt: Date.now(),
+      updatedAt: DateTime.now().toISO(),
       session: session1,
     });
     const offering2 = await this.server.create('offering', {
-      startDate: today.toJSON(),
+      startDate: today.toISO(),
       endDate: today.plus({ hour: 1 }).toISO(),
       location: '123',
-      updatedAt: Date.now(),
+      updatedAt: DateTime.now().toISO(),
       session: session2,
     });
     const learnerGroup1 = await this.server.create('learner-group', {
