@@ -90,7 +90,6 @@ export default class AssignStudentsRootComponent extends Component {
       return;
     }
     studentsToModify.forEach((student) => student.set('primaryCohort', cohort.model));
-
     while (studentsToModify.length > 0) {
       const parts = studentsToModify.splice(0, 3);
       await all(parts.map((part) => part.save()));

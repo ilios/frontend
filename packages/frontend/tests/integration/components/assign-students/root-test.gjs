@@ -59,6 +59,7 @@ module('Integration | Component | assign-students/root', function (hooks) {
     });
 
     const store = this.owner.lookup('service:store');
+    this.store = store;
     this.school1 = await store.findRecord('school', school1.id);
     this.school2 = await store.findRecord('school', school2.id);
     this.user1 = await store.findRecord('user', user1.id);
@@ -200,7 +201,6 @@ module('Integration | Component | assign-students/root', function (hooks) {
     assert.verifySteps(['setQuery called']);
   });
 
-  // TODO: primaryCohort is not set on .toggle(); can't figure out yet
   test('save', async function (assert) {
     this.set('model', {
       primarySchool: this.school1,
@@ -216,15 +216,20 @@ module('Integration | Component | assign-students/root', function (hooks) {
     assert.notOk(component.manager.students[0].isToggleChecked);
     assert.notOk(component.manager.students[1].isToggleChecked);
     assert.notOk(component.manager.students[2].isToggleChecked);
-    assert.strictEqual(this.server.db.user.all()[0].primaryCohort.id, undefined);
-    assert.strictEqual(this.server.db.user.all()[1].primaryCohort.id, undefined);
-    assert.strictEqual(this.server.db.user.all()[2].primaryCohort.id, undefined);
-    assert.strictEqual(component.manager.cohorts.value, '3');
+    assert.strictEqual(await this.user1.primaryCohort, null);
+    assert.strictEqual(await this.user2.primaryCohort, null);
+    assert.strictEqual(await this.user3.primaryCohort, null);
     await component.manager.students[0].toggle();
     await component.manager.students[2].toggle();
     await component.manager.save();
-    assert.strictEqual(this.server.db.user.all()[0].primaryCohort.id, '3');
-    assert.strictEqual(this.server.db.user.all()[1].primaryCohort, undefined);
-    assert.strictEqual(this.server.db.user.all()[2].primaryCohort.id, '3');
+    const user1 = await this.store.findRecord('user', this.user1.id);
+    const primaryCohort1 = await user1.primaryCohort;
+    const user2 = await this.store.findRecord('user', this.user2.id);
+    const primaryCohort2 = await user2.primaryCohort;
+    const user3 = await this.store.findRecord('user', this.user3.id);
+    const primaryCohort3 = await user3.primaryCohort;
+    assert.strictEqual(primaryCohort1.id, '3');
+    assert.strictEqual(primaryCohort2, null);
+    assert.strictEqual(primaryCohort3.id, '3');
   });
 });
