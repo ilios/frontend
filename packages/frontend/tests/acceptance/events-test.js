@@ -40,11 +40,13 @@ module('Acceptance | Event', function (hooks) {
     const slug = 'U' + date.toFormat('yyyyMMdd') + 'O12345';
     const fromDate = date.set({ hour: 0 });
     const toDate = date.set({ hour: 24 });
-    this.server.get(`/api/userevents/:userid`, (scheme, { params, queryParams }) => {
+    this.server.get(`/api/userevents/:userid`, ({ params, request }) => {
       assert.step('API called');
-      assert.strictEqual(params.userid, this.user.id);
-      assert.strictEqual(fromDate.toFormat('X'), queryParams.from);
-      assert.strictEqual(toDate.toFormat('X'), queryParams.to);
+      const { searchParams } = new URL(request.url);
+      assert.ok('userid' in params);
+      assert.strictEqual(Number(params.userid), this.user.id);
+      assert.strictEqual(fromDate.toFormat('X'), searchParams.get('from'));
+      assert.strictEqual(toDate.toFormat('X'), searchParams.get('to'));
       return { userEvents: [] };
     });
     await page.visit({ slug });
