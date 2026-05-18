@@ -12,8 +12,8 @@ module('Integration | Component | courses/root', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const year1 = await this.server.create('academic-year', { id: 2022 });
-    const year2 = await this.server.create('academic-year', { id: 2023 });
+    const year1 = await this.server.create('academic-year', { id: 2022, title: '2022' });
+    const year2 = await this.server.create('academic-year', { id: 2023, title: '2023' });
     const school1 = await this.server.create('school');
     const school2 = await this.server.create('school');
     await this.server.create('course', {
