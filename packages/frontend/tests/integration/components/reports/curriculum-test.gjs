@@ -28,7 +28,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('it renders and is accessible with no courses selected', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     await render(
       <template>
         <Curriculum
@@ -51,7 +51,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('it renders and is accessible with courses selected', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     await render(
       <template>
         <Curriculum
@@ -78,7 +78,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('run works', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('run', () => {
       assert.step('run called');
     });
@@ -101,7 +101,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('stop works', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('stop', () => {
       assert.step('stop called');
     });
@@ -124,7 +124,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('adding course works', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('setSelectedCourseIds', (selectedCourseIds) => {
       assert.step('setSelectedCourseIds called');
       assert.deepEqual(selectedCourseIds, [1, 2]);
@@ -148,7 +148,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('removing course works', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('setSelectedCourseIds', (selectedCourseIds) => {
       assert.step('setSelectedCourseIds called');
       assert.deepEqual(selectedCourseIds, [1]);
@@ -172,7 +172,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('set report works', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('setReport', (report) => {
       assert.step('setReport called');
       assert.strictEqual(report, 'learnerGroups');
