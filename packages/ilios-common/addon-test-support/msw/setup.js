@@ -49,6 +49,9 @@ export function setupMSW(hooks) {
 }
 
 function get(url, callback) {
+  if (!url.startsWith('/')) {
+    throw new Error(`Handler URL must start with /, you passed: ${url}`);
+  }
   this.server.use(
     http.get(
       url,
@@ -65,6 +68,9 @@ function get(url, callback) {
 }
 
 function post(url, callback) {
+  if (!url.startsWith('/')) {
+    throw new Error(`Handler URL must start with /, you passed: ${url}`);
+  }
   this.server.use(
     http.post(
       url,
@@ -81,6 +87,9 @@ function post(url, callback) {
 }
 
 function patch(url, callback) {
+  if (!url.startsWith('/')) {
+    throw new Error(`Handler URL must start with /, you passed: ${url}`);
+  }
   this.server.use(
     http.patch(
       url,
