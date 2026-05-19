@@ -33,30 +33,30 @@ module('Integration | Component | reports/curriculum/instructional-time', functi
     await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     await this.server.create('user', { instructorIlmSessions: [ilmSession] });
 
-    this.server.post('/api/graphql', () => {
-      //use all the courses, getting the id filter from graphQL is a bit tricky
-      const serverCourses = this.server.db.course.all();
-      const rawCourses = serverCourses.map((course) => graphQL.fetchCourse(this.server.db, course));
-      const courses = rawCourses.map((course) => {
-        course.sessions.forEach((session) => {
-          session.sessionObjectives = this.server.db.sessionObjective
-            .findMany((q) =>
-              q.where((sessionObjective) => {
-                return sessionObjective.id === session.id;
-              }),
-            )
-            .map(({ id, title }) => ({ id, title }));
-        });
+    this.getSessionObjectiveResponse = (assert) => {
+      return () => {
+        assert.step('API called');
+        //use all the courses, getting the id filter from graphQL is a bit tricky
+        const rawCourses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+        const courses = rawCourses.map((course) => {
+          course.sessions.forEach((session) => {
+            session.sessionObjectives = this.server.db.sessionObjective
+              .findMany((q) => q.where({ session: (s) => s.id === session.id }))
+              .map(({ id, title }) => ({ id, title }));
+          });
 
-        return course;
-      });
-      return { data: { courses } };
-    });
+          return course;
+        });
+        return { data: { courses } };
+      };
+    };
   });
 
   test('it renders and is accessible', async function (assert) {
     const courseModels = await this.owner.lookup('service:store').findAll('course');
     this.set('courses', courseModels);
+
+    this.server.post('/api/graphql', this.getSessionObjectiveResponse(assert));
 
     await render(
       <template>
@@ -82,6 +82,7 @@ module('Integration | Component | reports/curriculum/instructional-time', functi
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+    assert.verifySteps(['API called']);
   });
 
   skip('download report', async function (assert) {
