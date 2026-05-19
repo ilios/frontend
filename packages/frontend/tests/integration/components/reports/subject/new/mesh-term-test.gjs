@@ -10,15 +10,19 @@ module('Integration | Component | reports/subject/new/mesh-term', function (hook
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    await this.server.createList('mesh-descriptor', 5);
+    await this.server.create('mesh-descriptor', { id: '1' });
+    await this.server.create('mesh-descriptor', { id: '2' });
+    await this.server.create('mesh-descriptor', { id: '3' });
+    await this.server.create('mesh-descriptor', { id: '4' });
+    await this.server.create('mesh-descriptor', { id: '5' });
   });
 
   test('it works', async function (assert) {
     this.set('currentId', null);
-    this.set('changeId', (userId) => {
+    this.set('changeId', (descriptorId) => {
       assert.step('changeId called');
-      assert.strictEqual(userId, '3');
-      this.set('currentId', userId);
+      assert.strictEqual(descriptorId, '3');
+      this.set('currentId', descriptorId);
     });
     await render(
       <template><MeshTerm @currentId={{this.currentId}} @changeId={{this.changeId}} /></template>,
