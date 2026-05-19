@@ -38,21 +38,35 @@ module('Integration | Component | reports/curriculum/learner-groups', function (
     });
     await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     await this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('/api/graphql', ({ db }) => {
+
+    this.server.post('/api/graphql', () => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
-      const courseIds = db.courses.map((c) => c.id);
-      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(db, id));
+      const serverCourses = this.server.db.course.all();
+      const rawCourses = serverCourses.map((course) => graphQL.fetchCourse(this.server.db, course));
       const courses = rawCourses.map((course) => {
         course.sessions.forEach((session) => {
           session.offerings.forEach((offering) => {
             offering.learnerGroups = graphQL.fetchLearnerGroups(
-              db,
-              db.offerings.find(offering.id).learnerGroupIds,
+              this.server.db,
+              this.server.db.offering
+                .findFirst((q) =>
+                  q.where((offering) => {
+                    return offering.id === session.id;
+                  }),
+                )
+                .learnerGroups.map((lg) => lg.id),
             );
           });
           if (session.ilmSession) {
-            const ilm = db.ilmSessions.find(session.ilmSession.id);
-            session.ilmSession.learnerGroups = graphQL.fetchLearnerGroups(db, ilm.learnerGroupIds);
+            const ilm = this.server.db.ilmSession.findFirst((q) =>
+              q.where((ilmSession) => {
+                return ilmSession.id === session.ilmSession.id;
+              }),
+            );
+            session.ilmSession.learnerGroups = graphQL.fetchLearnerGroups(
+              this.server.db,
+              ilm.learnerGroups.map((lg) => lg.id),
+            );
           }
         });
 
@@ -82,13 +96,30 @@ module('Integration | Component | reports/curriculum/learner-groups', function (
     assert.strictEqual(
       component.header.runSummaryText,
       'Run Learner Groups report for one course. Each attached learner group is listed along with instructors and course data.',
+      'summary text correct',
     );
 
-    assert.strictEqual(component.results.length, 1);
-    assert.strictEqual(component.results.objectAt(0).courseTitle, 'course 0');
-    assert.strictEqual(component.results.objectAt(0).sessionCount, '1');
-    assert.strictEqual(component.results.objectAt(0).instructorCount, '4');
-    assert.strictEqual(component.results.objectAt(0).learnerGroupCount, '4');
+    assert.strictEqual(component.results.length, 1, 'result count correct');
+    assert.strictEqual(
+      component.results.objectAt(0).courseTitle,
+      'course 0',
+      'result course title correct',
+    );
+    assert.strictEqual(
+      component.results.objectAt(0).sessionCount,
+      '1',
+      'result session count correct',
+    );
+    assert.strictEqual(
+      component.results.objectAt(0).instructorCount,
+      '4',
+      'result instructor count correct',
+    );
+    assert.strictEqual(
+      component.results.objectAt(0).learnerGroupCount,
+      '4',
+      'result learner group count correct',
+    );
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

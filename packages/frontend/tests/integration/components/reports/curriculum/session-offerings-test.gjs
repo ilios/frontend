@@ -32,14 +32,19 @@ module('Integration | Component | reports/curriculum/session-offerings', functio
     });
     await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     await this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('/api/graphql', (schema) => {
+
+    this.server.post('/api/graphql', () => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
-      const courseIds = schema.db.courses.map((c) => c.id);
-      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
+      const serverCourses = this.server.db.course.all();
+      const rawCourses = serverCourses.map((course) => graphQL.fetchCourse(this.server.db, course));
       const courses = rawCourses.map((course) => {
         course.sessions.forEach((session) => {
-          session.sessionObjectives = schema.db.sessionObjectives
-            .where({ sessionId: session.id })
+          session.sessionObjectives = this.server.db.sessionObjective
+            .findMany((q) =>
+              q.where((sessionObjective) => {
+                return sessionObjective.id === session.id;
+              }),
+            )
             .map(({ id, title }) => ({ id, title }));
         });
 
