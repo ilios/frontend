@@ -6,14 +6,15 @@ export function buildSchoolsFromData(db) {
 
   const rhett = schools.map((school) => {
     const data = {
-      id: school.id.toString(),
+      id: `${school.id}`,
       title: school.title,
       years: uniqueYears.map((year) => {
         return {
           year,
           courses: courses
+            .filter((course) => course.school.id == school.id)
             .filter((course) => course.year == year)
-            .map((course) => fetchCourse(db, course)),
+            .map((course) => buildCourse(course)),
         };
       }),
     };
@@ -23,65 +24,60 @@ export function buildSchoolsFromData(db) {
   return rhett;
 }
 
-const fetchCourse = (db, course) => {
+const buildCourse = (course) => {
   const { id, title, year } = course;
-  const school = { id: course.school.id.toString(), title: course.school.title };
-  const sessions = course.sessions.map((session) => fetchSession(db, session));
+  const school = { id: `${course.school.id}`, title: course.school.title };
+  const sessions = course.sessions.map((session) => buildSession(session));
 
-  return { id: id.toString(), title, year, school, sessions };
+  return { id: `${id}`, title, year, school, sessions };
 };
 
-const fetchSession = (db, session) => {
-  const { id, title, sessionTypeId } = session;
-  const { title: sessionTypeTitle } = db.sessionType.findFirst(sessionTypeId);
-  const sessionId = session.id;
-  const offerings = db.offering
-    .findMany((q) => q.where({ session: sessionId }))
-    .map((offering) => fetchOffering(db, offering));
-  const ilmSession = fetchIlmSession(
-    db,
-    db.ilmSession.findFirst((q) => q.where({ session: sessionId })),
-  );
+const buildSession = (session) => {
+  const { id, title, sessionType, offerings, ilmSession } = session;
+  const { title: sessionTypeTitle } = sessionType;
   return {
-    id,
+    id: `${id}`,
     title,
     sessionType: { title: sessionTypeTitle },
-    offerings,
-    ilmSession,
+    offerings: offerings.map(buildOffering),
+    ilmSession: buildIlmSession(ilmSession),
   };
 };
 
-const fetchIlmSession = (db, ilmSession) => {
+const buildIlmSession = (ilmSession) => {
   if (!ilmSession) {
     return null;
   }
-  const { id, dueDate, hours, instructorIds, instructorGroupIds } = ilmSession;
-  const { instructors, instructorGroups } = fetchInstructors(db, instructorIds, instructorGroupIds);
-  return { id, dueDate, hours, instructors, instructorGroups };
-};
-
-const fetchOffering = (db, offering) => {
-  const { id, startDate, endDate, instructorIds, instructorGroupIds } = offering;
-  const { instructors, instructorGroups } = fetchInstructors(db, instructorIds, instructorGroupIds);
-  return { id, startDate, endDate, instructors, instructorGroups };
-};
-
-const fetchInstructors = (db, instructorIds, instructorGroupIds) => {
-  const instructors = db.user.findMany(instructorIds);
-  const instructorGroups = db.instructorGroup.findMany(instructorGroupIds);
-  const instructorData = instructors.map((instructor) => fetchUser(db, instructor.id));
-  const instructorGroupData = instructorGroups.map((ig) => {
-    const users = ig.users.map((u) => u.id).map((id) => fetchUser(db, id));
-    return { id: ig.id, users };
+  const instructors = ilmSession.instructors.map(buildUser);
+  const instructorGroups = ilmSession.instructorGroups.map((ig) => {
+    const users = ig.users.map(buildUser);
+    return {
+      id: `${ig.id}`,
+      users,
+    };
   });
-  return { instructors: instructorData, instructorGroups: instructorGroupData };
+
+  const { id, dueDate, hours } = ilmSession;
+  return { id: `${id}`, dueDate, hours, instructors, instructorGroups };
 };
 
-const fetchUser = (db, userId) => {
-  const { id, firstName, lastName, middleName, displayName } = db.user.findFirst((q) =>
-    q.where({ id: userId }),
-  );
-  return { id, firstName, lastName, middleName, displayName };
+const buildOffering = (offering) => {
+  const instructors = offering.instructors.map(buildUser);
+  const instructorGroups = offering.instructorGroups.map((ig) => {
+    const users = ig.users.map(buildUser);
+    return {
+      id: `${ig.id}`,
+      users,
+    };
+  });
+
+  const { id, startDate, endDate } = offering;
+  return { id: `${id}`, startDate, endDate, instructors, instructorGroups };
+};
+
+const buildUser = (user) => {
+  const { id, firstName, lastName, middleName, displayName } = user;
+  return { id: `${id}`, firstName, lastName, middleName, displayName };
 };
 
 const fetchLearnerGroups = (db, ids) => {
@@ -92,4 +88,4 @@ const fetchLearnerGroups = (db, ids) => {
     });
 };
 
-export const graphQL = { fetchCourse, fetchLearnerGroups };
+export const graphQL = { buildCourse, fetchLearnerGroups };

@@ -41,38 +41,28 @@ module('Integration | Component | reports/curriculum/learner-groups', function (
 
     this.server.post('/api/graphql', () => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
-      const serverCourses = this.server.db.course.all();
-      const rawCourses = serverCourses.map((course) => graphQL.fetchCourse(this.server.db, course));
+      const rawCourses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+      const allLearnerGroups = this.server.db.learnerGroup.all();
       const courses = rawCourses.map((course) => {
         course.sessions.forEach((session) => {
-          session.offerings.forEach((offering) => {
-            offering.learnerGroups = graphQL.fetchLearnerGroups(
-              this.server.db,
-              this.server.db.offering
-                .findFirst((q) =>
-                  q.where((offering) => {
-                    return offering.id === session.id;
-                  }),
-                )
-                .learnerGroups.map((lg) => lg.id),
-            );
+          session.offerings = session.offerings.map((offeringData) => {
+            offeringData.learnerGroups = allLearnerGroups
+              .filter((lg) => lg.offerings.map(({ id }) => id).includes(Number(offeringData.id)))
+              .map(({ id, title }) => ({ id, title }));
+
+            return offeringData;
           });
+
           if (session.ilmSession) {
-            const ilm = this.server.db.ilmSession.findFirst((q) =>
-              q.where((ilmSession) => {
-                return ilmSession.id === session.ilmSession.id;
-              }),
-            );
-            session.ilmSession.learnerGroups = graphQL.fetchLearnerGroups(
-              this.server.db,
-              ilm.learnerGroups.map((lg) => lg.id),
-            );
+            session.ilmSession.learnerGroups = allLearnerGroups
+              .filter((lg) =>
+                lg.ilmSessions.map(({ id }) => id).includes(Number(session.ilmSession.id)),
+              )
+              .map(({ id, title }) => ({ id, title }));
           }
         });
-
         return course;
       });
-
       return { data: { courses } };
     });
   });

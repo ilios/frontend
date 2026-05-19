@@ -56,7 +56,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     });
     await setupAuthentication({ school });
     this.set('selectedCourseIds', ['2']);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     await render(
       <template>
         <ChooseCourse
@@ -108,7 +108,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school: school2,
       year: 1984,
     });
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('selectedCourseIds', []);
     await render(
       <template>
@@ -124,7 +124,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
 
     assert.ok(component.hasMultipleSchools);
     assert.strictEqual(component.schoolSelector.options.length, 2);
-    assert.strictEqual(component.schoolSelector.value, school.id);
+    assert.strictEqual(Number(Number(component.schoolSelector.value)), school.id);
     assert.strictEqual(component.schoolSelector.options[0].text, school.title);
     assert.ok(component.schoolSelector.options[0].isSelected);
     assert.strictEqual(component.schoolSelector.options[1].text, school2.title);
@@ -159,8 +159,8 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school: school2,
       year: 1984,
     });
-    this.set('schools', buildSchoolsFromData(this.server));
-    this.set('selectedCourseIds', [course1.id, course2.id]);
+    this.set('schools', buildSchoolsFromData(this.server.db));
+    this.set('selectedCourseIds', [`${course1.id}`, `${course2.id}`]);
     await render(
       <template>
         <ChooseCourse
@@ -175,7 +175,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
 
     assert.ok(component.hasMultipleSchools);
     assert.strictEqual(component.schoolSelector.options.length, 2);
-    assert.strictEqual(component.schoolSelector.value, school2.id);
+    assert.strictEqual(Number(component.schoolSelector.value), school2.id);
     assert.strictEqual(component.schoolSelector.options[0].text, school2.title);
     assert.ok(component.schoolSelector.options[0].isSelected);
     assert.strictEqual(component.schoolSelector.options[1].text, school.title);
@@ -204,7 +204,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school,
       year: 1984,
     });
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('selectedCourseIds', []);
     await render(
       <template>
@@ -246,10 +246,10 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       year: 1984,
     });
     this.set('selectedCourseIds', []);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('add', (courseId) => {
       assert.step('add called');
-      assert.strictEqual(courseId, course.id);
+      assert.strictEqual(Number(courseId), course.id);
     });
     await render(
       <template>
@@ -276,11 +276,11 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school,
       year: 1984,
     });
-    this.set('selectedCourseIds', [course.id]);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('selectedCourseIds', [`${course.id}`]);
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('remove', (courseId) => {
       assert.step('remove called');
-      assert.strictEqual(courseId, course.id);
+      assert.strictEqual(Number(courseId), course.id);
     });
     await render(
       <template>
@@ -307,8 +307,8 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school,
       year: 1984,
     });
-    this.set('selectedCourseIds', [course.id]);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('selectedCourseIds', [`${course.id}`]);
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('add', (courseId) => {
       assert.step('add called');
       this.set('selectedCourseIds', [...this.selectedCourseIds, courseId]);
@@ -356,8 +356,8 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school,
       year: 1985,
     });
-    this.set('selectedCourseIds', [course1.id, course2.id]);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('selectedCourseIds', [`${course1.id}`, `${course2.id}`]);
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('removeAll', () => {
       assert.step('removeAll called');
       this.set('selectedCourseIds', []);
@@ -395,8 +395,8 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school,
       year: 1984,
     });
-    this.set('selectedCourseIds', [courses[0].id]);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('selectedCourseIds', [`${courses[0].id}`]);
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('add', (courseId) => {
       this.set('selectedCourseIds', [...this.selectedCourseIds, courseId]);
     });
@@ -434,9 +434,9 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     });
     this.set(
       'selectedCourseIds',
-      courses.map(({ id }) => id),
+      courses.map(({ id }) => `${id}`),
     );
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('remove', (courseId) => {
       this.set(
         'selectedCourseIds',
