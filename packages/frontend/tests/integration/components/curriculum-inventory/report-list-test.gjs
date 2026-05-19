@@ -196,7 +196,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     this.set('reports', [reportModel]);
     this.set('removeAction', (obj) => {
       assert.step('removeAction called');
-      assert.strictEqual(report.id, obj.id, 'Report is passed to remove action.');
+      assert.strictEqual(Number(obj.id), report.id, 'Report is passed to remove action.');
     });
     await render(
       <template><ReportList @reports={{this.reports}} @remove={{this.removeAction}} /></template>,
