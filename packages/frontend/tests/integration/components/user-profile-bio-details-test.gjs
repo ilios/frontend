@@ -10,18 +10,6 @@ module('Integration | Component | user profile bio details', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  const setupApplicationConfig = function (userSearchType, context) {
-    const { apiVersion } = context.owner.resolveRegistration('config:environment');
-    context.server.get('application/config', function () {
-      return {
-        config: {
-          userSearchType: userSearchType,
-          apiVersion,
-        },
-      };
-    });
-  };
-
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school', {
       title: 'Cool School',
@@ -49,7 +37,6 @@ module('Integration | Component | user profile bio details', function (hooks) {
   });
 
   test('it renders for ldap user search', async function (assert) {
-    setupApplicationConfig('ldap', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const schoolModel = await this.owner
       .lookup('service:store')
@@ -131,7 +118,6 @@ module('Integration | Component | user profile bio details', function (hooks) {
   });
 
   test('it renders for non ldap user search', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const schoolModel = await this.owner
       .lookup('service:store')

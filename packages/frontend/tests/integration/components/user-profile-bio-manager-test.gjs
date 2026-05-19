@@ -11,18 +11,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  const setupApplicationConfig = function (userSearchType, context) {
-    const { apiVersion } = context.owner.resolveRegistration('config:environment');
-    context.server.get('application/config', function () {
-      return {
-        config: {
-          userSearchType: userSearchType,
-          apiVersion,
-        },
-      };
-    });
-  };
-
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school', {
       title: 'Cool School',
@@ -50,7 +38,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('it renders for ldap user search', async function (assert) {
-    setupApplicationConfig('ldap', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const schoolModel = await this.owner
       .lookup('service:store')
@@ -104,7 +91,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('it renders for non ldap user search', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const schoolModel = await this.owner
       .lookup('service:store')
@@ -161,7 +147,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('can edit user bio for ldap config', async function (assert) {
-    setupApplicationConfig('ldap', this);
     await this.server.create('pending-user-update', {
       user: this.user,
     });
@@ -237,7 +222,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('can edit non-ldap without setting a password', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const authenticationModel = await this.owner
       .lookup('service:store')
@@ -299,7 +283,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('can edit user bio for non-ldap config', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const authenticationModel = await this.owner
       .lookup('service:store')
@@ -368,7 +351,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('closing password box clears input', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
@@ -391,7 +373,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('password validation', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
@@ -418,7 +399,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('password strength 0 display', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
@@ -440,7 +420,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('password strength 1 display', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
@@ -462,7 +441,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('password strength 2 display', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
@@ -484,7 +462,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('password strength 3 display', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
@@ -506,7 +483,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('password strength 4 display', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
@@ -528,11 +504,10 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('sync user from directory', async function (assert) {
-    setupApplicationConfig('ldap', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.user.username = this.authentication.username;
-    this.server.get(`application/directory/find/:id`, ({ params }) => {
+    this.server.get(`/application/directory/find/:id`, ({ params }) => {
       assert.strictEqual(Number(params.id), 13, 'id is correct');
       assert.step('API called');
       return {
@@ -609,7 +584,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('preferred email can be blanked', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.user.username = this.authentication.username;
@@ -629,7 +603,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('display name can be blanked', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.user.username = this.authentication.username;
@@ -645,7 +618,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('pronouns can be blanked', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.user.username = this.authentication.username;
@@ -663,7 +635,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   test('validate username', async function (assert) {
     const user = await this.server.create('user');
     await this.server.create('authentication', { username: 'geflarknik', user });
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
