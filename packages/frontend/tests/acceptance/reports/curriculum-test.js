@@ -12,12 +12,14 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
     await setupAuthentication({ school: this.school }, true);
-    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
-      const { query } = JSON.parse(requestBody);
+    await this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       if (query.includes('courses(academicYears:')) {
-        const courses = db.courses.map(({ id, title, year, externalId }) => {
-          return { id, title, year, externalId };
-        });
+        const courses = (await this.server.db.course.all()).map(
+          ({ id, title, year, externalId }) => {
+            return { id: id.toString(), title, year, externalId };
+          },
+        );
         return {
           data: {
             courses,
@@ -75,14 +77,17 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     assert.ok(page.curriculum.isPresent);
     assert.ok(page.curriculum.chooseCourse.hasMultipleSchools);
     assert.strictEqual(page.curriculum.chooseCourse.schoolSelector.options.length, 2);
-    assert.strictEqual(page.curriculum.chooseCourse.schoolSelector.value, this.school.id);
+    assert.strictEqual(
+      page.curriculum.chooseCourse.schoolSelector.value,
+      this.school.id.toString(),
+    );
     assert.strictEqual(page.curriculum.chooseCourse.years.length, 2);
     assert.notOk(page.curriculum.chooseCourse.years[0].isExpanded);
     assert.notOk(page.curriculum.chooseCourse.years[1].isExpanded);
     await takeScreenshot(assert, 'default school');
 
     await page.curriculum.chooseCourse.schoolSelector.set(school.id);
-    assert.strictEqual(page.curriculum.chooseCourse.schoolSelector.value, school.id);
+    assert.strictEqual(page.curriculum.chooseCourse.schoolSelector.value, school.id.toString());
     assert.strictEqual(page.curriculum.chooseCourse.years.length, 1);
     assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
     await takeScreenshot(assert, 'school with current year');
