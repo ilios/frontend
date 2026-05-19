@@ -89,8 +89,8 @@ module('Integration | Component | school/vocabularies-expanded', function (hooks
     const term = await this.server.create('term', { vocabulary });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    this.set('termId', term.id);
-    this.set('vocabularyId', vocabulary.id);
+    this.set('termId', `${term.id}`);
+    this.set('vocabularyId', `${vocabulary.id}`);
 
     await render(
       <template>

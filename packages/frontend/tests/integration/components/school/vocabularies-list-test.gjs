@@ -86,8 +86,8 @@ module('Integration | Component | school/vocabularies-list', function (hooks) {
 
     this.set('school', schoolModel);
     this.set('edit', (id) => {
+      assert.strictEqual(Number(id), vocabularies[0].id);
       assert.step('edit called');
-      assert.strictEqual(id, vocabularies[0].id);
     });
     await render(
       <template>

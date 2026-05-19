@@ -172,14 +172,14 @@ module('Integration | Component | new user', function (hooks) {
     assert.strictEqual(newUser.phone, 'phone', 'with the correct phone');
     assert.strictEqual(newUser.email, 'test@test.com', 'with the correct email');
     const roles = await newUser.roles;
-    assert.ok(mapBy(roles, 'id').includes(studentRole.id));
+    assert.ok(mapBy(roles, 'id').map(Number).includes(studentRole.id));
 
     const authentication = await newUser.authentication;
     assert.strictEqual(authentication.username, 'user123', 'with the correct username');
     assert.strictEqual(authentication.password, 'password123', 'with the correct password');
 
     const primaryCohort = await newUser.primaryCohort;
-    assert.strictEqual(primaryCohort.id, cohort.id);
+    assert.strictEqual(Number(primaryCohort.id), cohort.id);
     assert.verifySteps(['transitionToUser called']);
   });
 

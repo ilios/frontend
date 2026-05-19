@@ -17,9 +17,18 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     this.schools = await this.server.createList('school', 2);
     this.thisYear = DateTime.now().year;
     this.currentAcademicYear = this.thisYear;
-    await this.server.create('academic-year', { id: this.thisYear - 1 });
-    await this.server.create('academic-year', { id: this.thisYear });
-    await this.server.create('academic-year', { id: this.thisYear + 1 });
+    await this.server.create('academic-year', {
+      id: this.thisYear - 1,
+      title: `${this.thisYear - 1} - ${this.thisYear}`,
+    });
+    await this.server.create('academic-year', {
+      id: this.thisYear,
+      title: `${this.thisYear} - ${this.thisYear + 1}`,
+    });
+    await this.server.create('academic-year', {
+      id: this.thisYear + 1,
+      title: `${this.thisYear + 1} - ${this.thisYear + 2}`,
+    });
   });
 
   test('it renders empty', async function (assert) {
@@ -480,7 +489,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    this.set('schoolId', this.schools[1].id);
+    this.set('schoolId', `${this.schools[1].id}`);
     this.set('year', this.thisYear + 1);
     await render(
       <template>
@@ -494,7 +503,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(component.selectedSchool, this.schools[1].id);
-    assert.strictEqual(parseInt(component.selectedYear, 10), this.thisYear + 1);
+    assert.strictEqual(Number(component.selectedSchool), this.schools[1].id);
+    assert.strictEqual(Number(component.selectedYear), this.thisYear + 1);
   });
 });
