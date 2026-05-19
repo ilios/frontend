@@ -85,9 +85,11 @@ const fetchUser = (db, userId) => {
 };
 
 const fetchLearnerGroups = (db, ids) => {
-  return db.learnerGroup.findMany(ids).map(({ id, title }) => {
-    return { id, title };
-  });
+  return db.learnerGroup
+    .findMany((q) => q.where((lg) => ids.includes(lg.id)))
+    .map(({ id, title }) => {
+      return { id, title };
+    });
 };
 
 export const graphQL = { fetchCourse, fetchLearnerGroups };
