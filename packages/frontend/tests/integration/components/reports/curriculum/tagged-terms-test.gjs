@@ -48,12 +48,12 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
     this.server.post('/api/graphql', () => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const serverCourses = this.server.db.course.all();
-      const rawCourses = serverCourses.map((course) => graphQL.fetchCourse(this.server.db, course));
+      const rawCourses = serverCourses.map((course) => graphQL.buildCourse(course));
       const courses = rawCourses.map((course) => {
         course.terms = this.server.db.term
           .findMany((q) =>
-            q.where((term) => {
-              return term.courses.map((c) => c.id).includes(Number(course.id));
+            q.where(({ courses }) => {
+              return courses.map(({ id }) => id).includes(Number(course.id));
             }),
           )
           .map(({ id, title }) => ({ id, title }));
@@ -61,8 +61,8 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
         course.sessions.forEach((session) => {
           session.terms = this.server.db.term
             .findMany((q) =>
-              q.where((term) => {
-                return term.sessions.map((s) => s.id).includes(Number(session.id));
+              q.where(({ sessions }) => {
+                return sessions.map(({ id }) => id).includes(Number(session.id));
               }),
             )
             .map(({ id, title }) => ({ id, title }));
