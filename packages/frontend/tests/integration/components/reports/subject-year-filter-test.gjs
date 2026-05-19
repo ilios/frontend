@@ -12,9 +12,11 @@ module('Integration | Component | reports/subject-year-filter', function (hooks)
   hooks.beforeEach(async function () {
     await this.server.create('academic-year', {
       id: 2015,
+      title: '2015 - 2016',
     });
     await this.server.create('academic-year', {
       id: 2016,
+      title: '2016 - 2017',
     });
   });
 

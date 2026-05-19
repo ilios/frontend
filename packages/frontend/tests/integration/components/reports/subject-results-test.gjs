@@ -19,12 +19,11 @@ module('Integration | Component | reports/subject-results', function (hooks) {
       subject: 'course',
       user: await this.server.create('user'),
     });
-    this.server.post('/api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', () => {
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId, schoolId }) => {
-            const school = db.schools.find(schoolId);
-            return { id, title, year, externalId, school };
+          courses: this.server.db.course.all().map(({ id, title, year, externalId, school }) => {
+            return { id, title, year, externalId, school: { id: school.id, title: school.title } };
           }),
         },
       };
@@ -58,12 +57,11 @@ module('Integration | Component | reports/subject-results', function (hooks) {
   test('it renders with all schools', async function (assert) {
     this.school2 = await this.server.create('school', { id: 2, title: 'school 1' });
     await this.server.create('course', { school: this.school2 });
-    this.server.post('/api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', () => {
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId, schoolId }) => {
-            const school = db.schools.find(schoolId);
-            return { id, title, year, externalId, school };
+          courses: this.server.db.course.all().map(({ id, title, year, externalId, school }) => {
+            return { id, title, year, externalId, school: { id: school.id, title: school.title } };
           }),
         },
       };

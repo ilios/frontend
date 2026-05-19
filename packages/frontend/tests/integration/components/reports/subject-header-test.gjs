@@ -6,6 +6,7 @@ import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/reports/subject-header';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import SubjectHeader from 'frontend/components/reports/subject-header';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | reports/subject-header', function (hooks) {
   setupRenderingTest(hooks);
@@ -14,8 +15,9 @@ module('Integration | Component | reports/subject-header', function (hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     //override default handler to just return all courses
-    this.server.get('/api/courses', (schema) => {
-      return schema.courses.all();
+    this.server.get('/api/courses', () => {
+      const rhett = this.server.db.course.all();
+      return formatJsonApi(rhett, 'course');
     });
   });
 
@@ -23,7 +25,7 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
@@ -68,7 +70,7 @@ module('Integration | Component | reports/subject-header', function (hooks) {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
       school,
     });
@@ -106,7 +108,7 @@ module('Integration | Component | reports/subject-header', function (hooks) {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
       school,
     });
@@ -147,7 +149,7 @@ module('Integration | Component | reports/subject-header', function (hooks) {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
       school,
     });
@@ -182,7 +184,7 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
@@ -209,7 +211,7 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
@@ -236,7 +238,7 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);

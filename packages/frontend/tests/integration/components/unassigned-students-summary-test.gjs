@@ -5,6 +5,7 @@ import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/unassigned-students-summary';
 import UnassignedStudentsSummary from 'frontend/components/unassigned-students-summary';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | unassigned students summary', function (hooks) {
   setupRenderingTest(hooks);
@@ -28,17 +29,20 @@ module('Integration | Component | unassigned students summary', function (hooks)
       id: 4,
       title: 'Student',
     });
-    await this.server.createList('user', 5, {
+    this.users = await this.server.createList('user', 5, {
       school,
       roles: [studentRole],
     });
 
-    this.server.get('/api/users', (schema, { queryParams }) => {
+    this.server.get('/api/users', ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(Number(searchParams.get('filters[school]')), 1);
+      assert.strictEqual(searchParams.getAll('filters[roles][]').length, 1);
+      assert.deepEqual(searchParams.getAll('filters[roles][]'), ['4']);
+      assert.strictEqual(searchParams.get('filters[cohorts]'), '');
+
       assert.step('API called');
-      assert.strictEqual(parseInt(queryParams['filters[school]'], 10), 1);
-      assert.deepEqual(queryParams['filters[roles]'], ['4']);
-      assert.strictEqual(queryParams['filters[cohorts]'], '');
-      return schema.users.find([2, 3, 4, 5, 6]);
+      return formatJsonApi(this.users, 'user');
     });
 
     this.set('schools', schoolModels);

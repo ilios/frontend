@@ -41,7 +41,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
       title: 'my report 0',
       subject: 'session',
       prepositionalObject: 'course',
-      prepositionalObjectTableRowId: firstCourse.id,
+      prepositionalObjectTableRowId: `${firstCourse.id}`,
       user,
       school,
     });
@@ -49,14 +49,14 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
       title: null,
       subject: 'session',
       prepositionalObject: 'term',
-      prepositionalObjectTableRowId: term.id,
+      prepositionalObjectTableRowId: `${term.id}`,
       user,
       school,
     });
     const courseNoTitleReport = await this.server.create('report', {
       subject: 'session',
       prepositionalObject: 'course',
-      prepositionalObjectTableRowId: firstCourse.id,
+      prepositionalObjectTableRowId: `${firstCourse.id}`,
       user,
       school,
     });
@@ -79,7 +79,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
               id: course.id,
               title: course.title,
               year: course.year,
-              school: school,
+              school: { id: school.id, title: school.title },
             },
           };
         });

@@ -65,12 +65,11 @@ module('Integration | Component | new-directory-user', function (hooks) {
 
   test('initial search input fires search and fills input', async function (assert) {
     const startingSearchTerms = 'start here';
-    this.server.get(`/application/directory/search`, (scheme, { queryParams }) => {
+    this.server.get(`/application/directory/search`, ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(Number(searchParams.get('limit')), 51);
+      assert.strictEqual(searchParams.get('searchTerms'), startingSearchTerms);
       assert.step('API called');
-      assert.ok('limit' in queryParams);
-      assert.strictEqual(parseInt(queryParams.limit, 10), 51);
-      assert.ok('searchTerms' in queryParams);
-      assert.strictEqual(queryParams.searchTerms, startingSearchTerms);
       return {
         results: [],
       };
@@ -127,7 +126,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       displayName: 'user1-display',
       campusId: 'user1-campus',
       email: 'user1@test.com',
-      telephoneNumber: 'user11234',
+      phone: 'user11234',
     });
     const user2 = await this.server.create('user', {
       firstName: 'user2-first',
@@ -135,7 +134,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       displayName: '',
       campusId: 'user2-campus',
       email: 'user2@test.com',
-      telephoneNumber: 'user21234',
+      phone: 'user21234',
     });
     const auth2 = await this.server.create('authentication', {
       user: user2,
@@ -147,7 +146,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       displayName: '',
       campusId: null,
       email: null,
-      telephoneNumber: 'user31234',
+      phone: 'user31234',
     });
     const searchResult1 = {
       firstName: user1.firstName,
@@ -155,7 +154,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       displayName: user1.displayName,
       campusId: user1.campusId,
       email: user1.email,
-      telephoneNumber: user1.telephoneNumber,
+      telephoneNumber: user1.phone,
       username: 'user1-username',
       user: null,
     };
@@ -165,7 +164,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       displayName: user2.displayName,
       campusId: user2.campusId,
       email: user2.email,
-      telephoneNumber: user2.telephoneNumber,
+      telephoneNumber: user2.phone,
       username: auth2.username,
       user: 4136,
     };
@@ -175,7 +174,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       displayName: user3.displayName,
       campusId: user3.campusId,
       email: user3.email,
-      telephoneNumber: user3.telephoneNumber,
+      telephoneNumber: user3.phone,
       username: null,
       user: null,
     };
@@ -189,12 +188,11 @@ module('Integration | Component | new-directory-user', function (hooks) {
         },
       };
     });
-    this.server.get('/application/directory/search', (scheme, { queryParams }) => {
+    this.server.get('/application/directory/search', ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(Number(searchParams.get('limit')), 51);
+      assert.strictEqual(searchParams.get('searchTerms'), 'searchterm');
       assert.step('application/directory/search API called');
-      assert.ok('limit' in queryParams);
-      assert.ok('searchTerms' in queryParams);
-      assert.strictEqual(parseInt(queryParams.limit, 10), 51);
-      assert.strictEqual(queryParams.searchTerms, 'searchterm');
       return {
         results: [searchResult1, searchResult2, searchResult3],
       };

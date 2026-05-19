@@ -21,9 +21,9 @@ module('Integration | Component | reports/subject/program', function (hooks) {
 
   test('it renders for user with permissions', async function (assert) {
     await setupAuthentication({}, true);
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
       return responseData;
     });
@@ -55,9 +55,9 @@ module('Integration | Component | reports/subject/program', function (hooks) {
 
   test('it renders for user with no permissions', async function (assert) {
     await setupAuthentication();
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
       return responseData;
     });
@@ -88,9 +88,9 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
     await setupAuthentication({}, true);
 
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
       return responseData;
     });
@@ -132,9 +132,9 @@ module('Integration | Component | reports/subject/program', function (hooks) {
       });
     }
 
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
       return responseDataLarge;
     });
@@ -162,9 +162,9 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { programs(schools: [33]) { id, title, school { title } } }',
@@ -191,9 +191,9 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   });
 
   test('filter by session', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { programs(sessions: [13]) { id, title, school { title } } }',
@@ -203,7 +203,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
     const { id } = await this.server.create('report', {
       subject: 'program',
       prepositionalObject: 'session',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(
@@ -219,9 +219,9 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   });
 
   test('filter by school and session', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { programs(schools: [24], sessions: [13]) { id, title, school { title } } }',
@@ -232,7 +232,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
       subject: 'program',
       school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'session',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 24));

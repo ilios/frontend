@@ -14,15 +14,15 @@ module('Integration | Component | reports/subject/new/academic-year', function (
     this.intl = this.owner.lookup('service:intl');
     await this.server.create('academic-year', {
       id: 2015,
-      title: 2015,
+      title: '2015',
     });
     await this.server.create('academic-year', {
       id: 2031,
-      title: 2031,
+      title: '2031',
     });
     await this.server.create('academic-year', {
       id: 2060,
-      title: 2060,
+      title: '2060',
     });
   });
 

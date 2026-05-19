@@ -16,9 +16,9 @@ module('Integration | Component | reports/subject/session-type', function (hooks
   };
 
   test('it renders', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { sessionTypes { title, school { title } } }');
       return responseData;
     });
@@ -43,9 +43,9 @@ module('Integration | Component | reports/subject/session-type', function (hooks
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { sessionTypes { title, school { title } } }');
       return responseData;
     });
@@ -81,9 +81,9 @@ module('Integration | Component | reports/subject/session-type', function (hooks
       });
     }
 
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { sessionTypes { title, school { title } } }');
       return responseDataLarge;
     });
@@ -111,9 +111,9 @@ module('Integration | Component | reports/subject/session-type', function (hooks
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { sessionTypes(schools: [33]) { title, school { title } } }',
@@ -140,9 +140,9 @@ module('Integration | Component | reports/subject/session-type', function (hooks
   });
 
   test('filter by course', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { sessionTypes(courses: [13]) { title, school { title } } }',
@@ -152,7 +152,7 @@ module('Integration | Component | reports/subject/session-type', function (hooks
     const { id } = await this.server.create('report', {
       subject: 'session type',
       prepositionalObject: 'course',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(
@@ -168,9 +168,9 @@ module('Integration | Component | reports/subject/session-type', function (hooks
   });
 
   test('filter by school and session', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { sessionTypes(schools: [24], sessions: [13]) { title, school { title } } }',
@@ -181,7 +181,7 @@ module('Integration | Component | reports/subject/session-type', function (hooks
       subject: 'session type',
       school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'session',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 24));
@@ -199,9 +199,9 @@ module('Integration | Component | reports/subject/session-type', function (hooks
   });
 
   test('filter by mesh', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { sessionTypes(meshDescriptors: ["ABC"]) { title, school { title } } }',

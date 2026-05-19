@@ -6,6 +6,7 @@ import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/reports/subject';
 import Subject from 'frontend/components/reports/subject';
 import noop from 'ilios-common/helpers/noop';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | reports/subject', function (hooks) {
   setupRenderingTest(hooks);
@@ -14,17 +15,20 @@ module('Integration | Component | reports/subject', function (hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     //override default handler to just return all courses
-    this.server.get('/api/courses', (schema) => {
-      return schema.courses.all();
+    this.server.get('/api/courses', () => {
+      const rhett = this.server.db.course.all();
+      return formatJsonApi(rhett, 'course');
     });
   });
 
   test('year filter works', async function (assert) {
     await this.server.create('academic-year', {
       id: 2015,
+      title: '2015',
     });
     await this.server.create('academic-year', {
       id: 2016,
+      title: '2016',
     });
     const school = await this.server.create('school');
     await this.server.create('course', {
@@ -39,7 +43,7 @@ module('Integration | Component | reports/subject', function (hooks) {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
       school,
     });
@@ -51,17 +55,17 @@ module('Integration | Component | reports/subject', function (hooks) {
       this.set('selectedYear', year);
       assert.strictEqual(year, '2016', 'report year bubbles up for query params');
     });
-    this.server.post('/api/graphql', ({ db }, { requestBody }) => {
-      assert.step('API called');
-      const { query } = JSON.parse(requestBody);
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
 
       assert.strictEqual(
         query,
         'query { courses(schools: [1], instructors: [100]) { id, title, year, externalId, school { title } } }',
       );
+      assert.step('API called');
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId }) => {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
             return { id, title, year, externalId };
           }),
         },
@@ -109,17 +113,17 @@ module('Integration | Component | reports/subject', function (hooks) {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'program',
-      prepositionalObjectTableRowId: program.id,
+      prepositionalObjectTableRowId: `${program.id}`,
       user: this.user,
       school,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', '');
-    this.server.post('/api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', () => {
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId }) => {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
             return { id, title, year, externalId };
           }),
         },
@@ -162,10 +166,10 @@ module('Integration | Component | reports/subject', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', '');
-    this.server.post('/api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', () => {
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId }) => {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
             return { id, title, year, externalId };
           }),
         },
@@ -207,10 +211,10 @@ module('Integration | Component | reports/subject', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', '');
-    this.server.post('/api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', () => {
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId }) => {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
             return { id, title, year, externalId };
           }),
         },

@@ -18,31 +18,28 @@ module('Integration | Component | curriculum-inventory/verification-preview', fu
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', 1);
 
-    this.server.get(
-      `/api/curriculuminventoryreports/:id/verificationpreview`,
-      (scheme, { params }) => {
-        assert.step('API called');
-        assert.ok('id' in params);
-        assert.strictEqual(params.id, report.id);
+    this.server.get(`/api/curriculuminventoryreports/:id/verificationpreview`, ({ params }) => {
+      assert.step('API called');
+      assert.ok('id' in params);
+      assert.strictEqual(params.id, report.id);
 
-        return {
-          preview: {
-            program_expectations_mapped_to_pcrs: [],
-            primary_instructional_methods_by_non_clerkship_sequence_blocks: {
-              methods: [],
-              rows: [],
-            },
-            non_clerkship_sequence_block_instructional_time: [],
-            clerkship_sequence_block_instructional_time: [],
-            instructional_method_counts: [],
-            non_clerkship_sequence_block_assessment_methods: { methods: [], rows: [] },
-            clerkship_sequence_block_assessment_methods: { methods: [], rows: [] },
-            all_events_with_assessments_tagged_as_formative_or_summative: [],
-            all_resource_types: [],
+      return {
+        preview: {
+          program_expectations_mapped_to_pcrs: [],
+          primary_instructional_methods_by_non_clerkship_sequence_blocks: {
+            methods: [],
+            rows: [],
           },
-        };
-      },
-    );
+          non_clerkship_sequence_block_instructional_time: [],
+          clerkship_sequence_block_instructional_time: [],
+          instructional_method_counts: [],
+          non_clerkship_sequence_block_assessment_methods: { methods: [], rows: [] },
+          clerkship_sequence_block_assessment_methods: { methods: [], rows: [] },
+          all_events_with_assessments_tagged_as_formative_or_summative: [],
+          all_resource_types: [],
+        },
+      };
+    });
 
     this.set('report', report);
     await render(<template><VerificationPreview @report={{this.report}} /></template>);

@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { setupMSW } from 'ilios-common/msw';
-import queryString from 'query-string';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-rollover';
 import ReportRollover from 'frontend/components/curriculum-inventory/report-rollover';
 import noop from 'ilios-common/helpers/noop';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | curriculum-inventory/report-rollover', function (hooks) {
   setupRenderingTest(hooks);
@@ -152,20 +152,16 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
     this.server.post(
       `/api/curriculuminventoryreports/:id/rollover`,
-      function (schema, { params, requestBody }) {
-        assert.step('API called');
-        assert.ok('id' in params);
+      async ({ params, request }) => {
+        const data = await request.formData();
         assert.strictEqual(params.id, reportModel.id);
-        const data = queryString.parse(requestBody);
-        assert.strictEqual(parseInt(data.year, 10), thisYear + 1);
-        assert.strictEqual(data.name, reportModel.name);
-        assert.strictEqual(data.description, reportModel.description);
+        assert.strictEqual(Number(data.get('year')), thisYear + 1);
+        assert.strictEqual(data.get('name'), reportModel.name);
+        assert.strictEqual(data.get('description'), reportModel.description);
 
-        return this.serialize(
-          schema.curriculumInventoryReports.create({
-            id: 14,
-          }),
-        );
+        const rhett = await this.server.create('curriculum-inventory-report', { id: 14 });
+        assert.step('API called');
+        return formatJsonApi(rhett, 'curriculumInventoryReport');
       },
     );
     this.set('report', reportModel);
@@ -194,13 +190,10 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report.id);
 
-    this.server.post(`/api/curriculuminventoryreports/:id/rollover`, function (schema) {
+    this.server.post(`/api/curriculuminventoryreports/:id/rollover`, async () => {
+      const rhett = await this.server.create('curriculum-inventory-report', { id: 14 });
       assert.step('API called');
-      return this.serialize(
-        schema.curriculumInventoryReports.create({
-          id: 14,
-        }),
-      );
+      return formatJsonApi(rhett, 'curriculumInventoryReport');
     });
     this.set('report', reportModel);
     this.set('visit', (newReport) => {
@@ -237,21 +230,21 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
     this.server.post(
       `/api/curriculuminventoryreports/:id/rollover`,
-      function (schema, { params, requestBody }) {
-        assert.step('API called');
-        assert.ok('id' in params);
-        assert.strictEqual(params.id, report.id);
-        const data = queryString.parse(requestBody);
-        assert.strictEqual(data.name, newName, 'The new name gets passed.');
-        assert.strictEqual(data.description, newDescription, 'The new description gets passed.');
-        assert.strictEqual(parseInt(data.year, 10), newYear, 'The new year gets passed.');
-        assert.strictEqual(data.program, otherProgram.id);
-
-        return this.serialize(
-          schema.curriculumInventoryReports.create({
-            id: 14,
-          }),
+      async ({ params, request }) => {
+        const data = await request.formData();
+        assert.strictEqual(Number(params.id), report.id);
+        assert.strictEqual(data.get('name'), newName, 'The new name gets passed.');
+        assert.strictEqual(
+          data.get('description'),
+          newDescription,
+          'The new description gets passed.',
         );
+        assert.strictEqual(Number(data.get('year')), newYear, 'The new year gets passed.');
+        assert.strictEqual(Number(data.get('program')), otherProgram.id);
+
+        const rhett = await this.server.create('curriculum-inventory-report', { id: 14 });
+        assert.step('API called');
+        return formatJsonApi(rhett, 'curriculumInventoryReport');
       },
     );
 

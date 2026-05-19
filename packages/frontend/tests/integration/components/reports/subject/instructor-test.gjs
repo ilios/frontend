@@ -33,9 +33,9 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   };
 
   test('it renders', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { users { firstName, middleName, lastName, displayName, school { title } } }',
@@ -65,9 +65,9 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { users { firstName, middleName, lastName, displayName, school { title } } }',
@@ -110,9 +110,9 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       });
     }
 
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { users { firstName, middleName, lastName, displayName, school { title } } }',
@@ -143,9 +143,9 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { users(schools: [33]) { firstName, middleName, lastName, displayName, school { title } } }',
@@ -172,9 +172,9 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   });
 
   test('filter by course', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         `query { courses(ids: [13]) { sessions {
@@ -187,7 +187,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
     const { id } = await this.server.create('report', {
       subject: 'instructor',
       prepositionalObject: 'course',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(
@@ -203,9 +203,9 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   });
 
   test('filter by school and session', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { sessions(ids: [13]) { ilmSession { instructorGroups { users { id firstName middleName lastName displayName school { title } }} instructors { id firstName middleName lastName displayName school { title } } }, offerings { instructorGroups { users { id firstName middleName lastName displayName school { title } }} instructors { id firstName middleName lastName displayName school { title } } } } }',
@@ -216,7 +216,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       subject: 'instructor',
       school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'session',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 24));
@@ -234,51 +234,45 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   });
 
   test('filter by academic year', async function (assert) {
-    let counter = 0;
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
-      assert.step('API called');
-      const { query } = JSON.parse(requestBody);
-      counter++;
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       const { users } = responseData.data;
-      let rhett = null;
-      switch (counter) {
-        case 1:
-          assert.strictEqual(
-            query,
-            'query { courses(academicYears: [2005]) { id, school { title } } }',
-          );
-          rhett = {
-            data: {
-              courses: [{ id: 1 }, { id: 31 }],
-            },
-          };
-          break;
-        case 2:
-          assert.ok(query.includes('query { courses(ids: [1,31])'));
-          rhett = {
-            data: {
-              courses: [
-                { sessions: [{ offerings: [{ instructors: [users[1]], instructorGroups: [] }] }] },
+      assert.ok(query.includes('query { courses(ids: [1,31])'));
+      assert.step('API called');
+      return {
+        data: {
+          courses: [
+            { sessions: [{ offerings: [{ instructors: [users[1]], instructorGroups: [] }] }] },
+            {
+              sessions: [
                 {
-                  sessions: [
-                    {
-                      ilmSession: { instructors: [users[0]], instructorGroups: [] },
-                      offerings: [],
-                      instructorGroups: [],
-                    },
-                  ],
+                  ilmSession: { instructors: [users[0]], instructorGroups: [] },
+                  offerings: [],
+                  instructorGroups: [],
                 },
               ],
             },
-          };
-          break;
-      }
-      return rhett;
+          ],
+        },
+      };
+    });
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.strictEqual(
+        query,
+        'query { courses(academicYears: [2005]) { id, school { title } } }',
+      );
+      assert.step('API called');
+      return {
+        data: {
+          courses: [{ id: 1 }, { id: 31 }],
+        },
+      };
     });
     const { id } = await this.server.create('report', {
       subject: 'instructor',
       prepositionalObject: 'academic year',
-      prepositionalObjectTableRowId: 2005,
+      prepositionalObjectTableRowId: '2005',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(
@@ -300,9 +294,9 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   });
 
   test('filter by session types', async function (assert) {
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { users(instructedSessionTypes: [4]) { firstName, middleName, lastName, displayName, school { title } } }',
@@ -312,7 +306,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
     const { id } = await this.server.create('report', {
       subject: 'instructor',
       prepositionalObject: 'session type',
-      prepositionalObjectTableRowId: 4,
+      prepositionalObjectTableRowId: '4',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(
@@ -328,56 +322,50 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   });
 
   test('filter by learning material', async function (assert) {
-    let counter = 0;
-    this.server.post('/api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
-      counter++;
       const { users } = responseData.data;
-      let rhett;
-      switch (counter) {
-        case 1:
-          assert.strictEqual(
-            query,
-            'query { courses(learningMaterials: [1]) { id, school { title } } }',
-            'correct first query is run',
-          );
-          rhett = {
-            data: {
-              courses: [
+      assert.ok(query.includes('query { courses(ids: [1])'), 'correct second query is run');
+      return {
+        data: {
+          courses: [
+            { sessions: [{ offerings: [{ instructors: [users[1]], instructorGroups: [] }] }] },
+            {
+              sessions: [
                 {
-                  id: 1,
+                  ilmSession: { instructors: [users[0]], instructorGroups: [] },
+                  offerings: [],
+                  instructorGroups: [],
                 },
               ],
             },
-          };
-          break;
-        case 2:
-          assert.ok(query.includes('query { courses(ids: [1])'), 'correct second query is run');
-          rhett = {
-            data: {
-              courses: [
-                { sessions: [{ offerings: [{ instructors: [users[1]], instructorGroups: [] }] }] },
-                {
-                  sessions: [
-                    {
-                      ilmSession: { instructors: [users[0]], instructorGroups: [] },
-                      offerings: [],
-                      instructorGroups: [],
-                    },
-                  ],
-                },
-              ],
+          ],
+        },
+      };
+    });
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.strictEqual(
+        query,
+        'query { courses(learningMaterials: [1]) { id, school { title } } }',
+        'correct first query is run',
+      );
+      assert.step('API called');
+      return {
+        data: {
+          courses: [
+            {
+              id: 1,
             },
-          };
-          break;
-      }
-      return rhett;
+          ],
+        },
+      };
     });
     const { id } = await this.server.create('report', {
       subject: 'instructor',
       prepositionalObject: 'learning material',
-      prepositionalObjectTableRowId: 1,
+      prepositionalObjectTableRowId: '1',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(
