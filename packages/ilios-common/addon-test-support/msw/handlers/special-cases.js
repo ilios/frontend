@@ -234,6 +234,17 @@ const uploadHandler = http.post('/upload', async () => {
   });
 });
 
+// Report year creation sets createdAt
+// Overrides the generic POST /api/reports handler
+const reportCreateHandler = http.post('/api/reports', async ({ request }) => {
+  const body = await request.json();
+  const data = body.data;
+  data.attributes.createdAt = DateTime.fromObject({ hour: 8 }).toISO();
+  const report = await createFromPostData('report', data);
+
+  return HttpResponse.json(formatJsonApi(report, 'report'), { status: 201 });
+});
+
 export const specialCaseHandlers = [
   cohortsHandler,
   coursesHandler,
@@ -243,4 +254,5 @@ export const specialCaseHandlers = [
   userEventsHandler,
   schoolEventsHandler,
   uploadHandler,
+  reportCreateHandler,
 ];
