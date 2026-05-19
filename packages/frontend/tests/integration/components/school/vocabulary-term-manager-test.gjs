@@ -289,11 +289,11 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await this.owner
-      .lookup('service:store')
-      .findRecord('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
-
+    const store = this.owner.lookup('service:store');
+    const vocabularyModel = await store.findRecord('vocabulary', vocabulary.id);
+    let termModel = await store.findRecord('term', term.id);
+    let subTerms = termModel.children;
+    assert.strictEqual(subTerms.length, 0);
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
     await render(
@@ -314,10 +314,12 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
 
     await component.subTerms.newTermForm.setTitle('new term');
     await component.subTerms.newTermForm.save();
+    termModel = await store.findRecord('term', termModel.id);
+    subTerms = await termModel.children;
+    assert.strictEqual(subTerms.length, 1);
     assert.strictEqual(component.subTerms.list.length, 1);
-
-    assert.strictEqual(this.server.db.term.all()[1].title, 'new term');
-    assert.strictEqual(this.server.db.term.all()[1].id, vocabulary.id);
+    assert.strictEqual(subTerms[0].title, 'new term');
+    assert.strictEqual((await subTerms[0].vocabulary).id, vocabularyModel.id);
   });
 
   test("can't add term with empty title", async function (assert) {
