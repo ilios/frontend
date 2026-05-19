@@ -40,4 +40,9 @@ export const relationships = [
     type: 'manyOf',
     target: 'programYearObjective',
   },
+  {
+    field: 'sessionObjectives',
+    type: 'manyOf',
+    target: 'sessionObjective',
+  },
 ];
