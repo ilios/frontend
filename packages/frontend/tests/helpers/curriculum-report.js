@@ -1,47 +1,47 @@
-export function buildSchoolsFromData(server) {
-  const schools = server.db.schools;
-  const allCourseData = server.db.courses;
-  return schools.map((school) => {
-    const courseIds = school.courseIds;
-    let courses = allCourseData.filter((course) => courseIds.includes(course.id));
-    // add school's id in format expected by component
-    courses.map((course) => {
-      course.school = fetchSchool(server.db, course.schoolId);
-    });
-    const years = courses.map(({ year }) => year);
-    const uniqueYears = [...new Set(years)].sort().reverse().map(Number);
-    return {
-      id: school.id,
+export function buildSchoolsFromData(db) {
+  const schools = db.school.all();
+  const courses = db.course.all();
+  const years = courses.map(({ year }) => year);
+  const uniqueYears = [...new Set(years)].sort().reverse();
+
+  const rhett = schools.map((school) => {
+    const data = {
+      id: school.id.toString(),
       title: school.title,
       years: uniqueYears.map((year) => {
         return {
           year,
-          courses: courses.filter((course) => Number(course.year) === year),
+          courses: courses
+            .filter((course) => course.year == year)
+            .map((course) => fetchCourse(db, course)),
         };
       }),
     };
+    return data;
   });
+
+  return rhett;
 }
 
-const fetchSchool = (db, schoolId) => {
-  const { id, title } = db.schools.find(schoolId);
-  return { id, title };
+const fetchCourse = (db, course) => {
+  const { id, title, year } = course;
+  const school = { id: course.school.id.toString(), title: course.school.title };
+  const sessions = course.sessions.map((session) => fetchSession(db, session));
+
+  return { id: id.toString(), title, year, school, sessions };
 };
 
-const fetchCourse = (db, courseId) => {
-  const { id, title, year, schoolId } = db.courses.find(courseId);
-  const school = fetchSchool(db, schoolId);
-  const sessions = db.sessions.where({ courseId }).map((session) => fetchSession(db, session.id));
-  return { id, title, year, school, sessions };
-};
-
-const fetchSession = (db, sessionId) => {
-  const { id, title, sessionTypeId } = db.sessions.find(sessionId);
-  const { title: sessionTypeTitle } = db.sessionTypes.find(sessionTypeId);
-  const offerings = db.offerings
-    .where({ sessionId })
+const fetchSession = (db, session) => {
+  const { id, title, sessionTypeId } = session;
+  const { title: sessionTypeTitle } = db.sessionType.findFirst(sessionTypeId);
+  const sessionId = session.id;
+  const offerings = db.offering
+    .findMany((q) => q.where({ session: sessionId }))
     .map((offering) => fetchOffering(db, offering));
-  const ilmSession = fetchIlmSession(db, db.ilmSessions.findBy({ sessionId }));
+  const ilmSession = fetchIlmSession(
+    db,
+    db.ilmSession.findFirst((q) => q.where({ session: sessionId })),
+  );
   return {
     id,
     title,
@@ -67,23 +67,25 @@ const fetchOffering = (db, offering) => {
 };
 
 const fetchInstructors = (db, instructorIds, instructorGroupIds) => {
-  const instructors = db.users.find(instructorIds);
-  const instructorGroups = db.instructorGroups.find(instructorGroupIds);
+  const instructors = db.user.findMany(instructorIds);
+  const instructorGroups = db.instructorGroup.findMany(instructorGroupIds);
   const instructorData = instructors.map((instructor) => fetchUser(db, instructor.id));
   const instructorGroupData = instructorGroups.map((ig) => {
-    const users = ig.userIds.map((id) => fetchUser(db, id));
+    const users = ig.users.map((u) => u.id).map((id) => fetchUser(db, id));
     return { id: ig.id, users };
   });
   return { instructors: instructorData, instructorGroups: instructorGroupData };
 };
 
 const fetchUser = (db, userId) => {
-  const { id, firstName, lastName, middleName, displayName } = db.users.find(userId);
+  const { id, firstName, lastName, middleName, displayName } = db.user.findFirst((q) =>
+    q.where({ id: userId }),
+  );
   return { id, firstName, lastName, middleName, displayName };
 };
 
 const fetchLearnerGroups = (db, ids) => {
-  return db.learnerGroups.find(ids).map(({ id, title }) => {
+  return db.learnerGroup.findMany(ids).map(({ id, title }) => {
     return { id, title };
   });
 };
