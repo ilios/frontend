@@ -94,7 +94,7 @@
     "stylelint-config-recommended-scss": "^16.0.2",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-scales": "^5.0.0",
-    "stylelint-scss": "^7.0.0",
+    "stylelint-scss": "^7.1.1",
     "testem-failure-only-reporter": "^1.0.0",
     "tracked-built-ins": "^3.4.0",
     "webpack": "^5.104.1"
