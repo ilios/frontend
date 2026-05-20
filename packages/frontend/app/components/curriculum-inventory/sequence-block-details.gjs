@@ -1,14 +1,18 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
+import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import SequenceBlockHeader from './sequence-block-header';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import reverse from 'ilios-common/helpers/reverse';
 import { pageTitle } from 'ember-page-title';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import SequenceBlockOverview from './sequence-block-overview';
 
 export default class CurriculumInventorySequenceBlockDetailsComponent extends Component {
+  @service intl;
+
   @cached
   get allParentsData() {
     return new TrackedAsyncData(this.args.sequenceBlock.getAllParents(this.args.sequenceBlock));
@@ -21,6 +25,13 @@ export default class CurriculumInventorySequenceBlockDetailsComponent extends Co
   get associatedReportTitle() {
     return this.args.sequenceBlock.report.content.name;
   }
+
+  paths = [
+    {
+      route: 'curriculum-inventory-report',
+      title: this.intl.t('general.curriculumInventoryReport'),
+    },
+  ];
 
   <template>
     {{pageTitle
@@ -38,23 +49,23 @@ export default class CurriculumInventorySequenceBlockDetailsComponent extends Co
 
     <div data-test-curriculum-inventory-sequence-block-details ...attributes>
       <SequenceBlockHeader @canUpdate={{@canUpdate}} @sequenceBlock={{@sequenceBlock}} />
-      <div class="breadcrumbs" data-test-breadcrumbs>
-        <span data-test-report-crumb>
-          <LinkTo @route="curriculum-inventory-report" @model={{@sequenceBlock.report}}>
-            {{t "general.curriculumInventoryReport"}}
-          </LinkTo>
-        </span>
+
+      <Breadcrumbs
+        @paths={{this.paths}}
+        @model={{@sequenceBlock.report}}
+        @rootTitle={{@sequenceBlock.title}}
+        as |path model|
+      >
+        <LinkTo @route={{path.route}} @model={{model}} class="crumb">
+          {{path.title}}
+        </LinkTo>
         {{#each (reverse this.allParents) as |parent|}}
-          <span data-test-block-crumb>
-            <LinkTo @route="curriculum-inventory-sequence-block" @model={{parent}}>
-              {{parent.title}}
-            </LinkTo>
-          </span>
+          <LinkTo @route="curriculum-inventory-sequence-block" @model={{parent}} class="crumb">
+            {{parent.title}}
+          </LinkTo>
         {{/each}}
-        <span data-test-block-crumb>
-          {{@sequenceBlock.title}}
-        </span>
-      </div>
+      </Breadcrumbs>
+
       <SequenceBlockOverview
         @sequenceBlock={{@sequenceBlock}}
         @canUpdate={{@canUpdate}}
