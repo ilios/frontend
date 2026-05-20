@@ -7,7 +7,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     await setupAuthentication(
       {
         school: this.school,
@@ -15,22 +15,22 @@ module('Acceptance | Session - Offering Management', function (hooks) {
       },
       true,
     );
-    this.sessionType = this.server.create('session-type', { school: this.school });
+    this.sessionType = await this.server.create('session-type', { school: this.school });
   });
 
   test('search for instructor who is a course director #2838', async function (assert) {
-    const users = this.server.createList('user', 3, {
+    const users = await this.server.createList('user', 3, {
       school: this.school,
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school: this.school,
       directors: [users[0], users[1], users[2]],
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       sessionType: this.sessionType,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session,
     });
 
@@ -43,19 +43,19 @@ module('Acceptance | Session - Offering Management', function (hooks) {
   });
 
   test('searching for course directors as instructors does not remove existing instructors #3479', async function (assert) {
-    const users = this.server.createList('user', 3, {
+    const users = await this.server.createList('user', 3, {
       school: this.school,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school: this.school,
       directors: [users[0], users[1]],
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       sessionType: this.sessionType,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session,
     });
 
@@ -93,13 +93,13 @@ module('Acceptance | Session - Offering Management', function (hooks) {
   });
 
   test('Instructors additional name info is displayed if applicable', async function (assert) {
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course, sessionType: this.sessionType });
-    const instructor1 = this.server.create('user');
-    const instructor2 = this.server.create('user', {
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course, sessionType: this.sessionType });
+    const instructor1 = await this.server.create('user');
+    const instructor2 = await this.server.create('user', {
       displayName: 'Clem Chowder',
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session,
       instructors: [instructor1, instructor2],
     });
@@ -148,27 +148,27 @@ module('Acceptance | Session - Offering Management', function (hooks) {
   });
 
   test('Learner Group parents are shown in tooltip if applicable', async function (assert) {
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course, sessionType: this.sessionType });
-    const learnerGroup = this.server.create('learner-group', {
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course, sessionType: this.sessionType });
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'Top Group',
     });
-    const learnerGroup2 = this.server.create('learner-group', {
+    const learnerGroup2 = await this.server.create('learner-group', {
       title: 'Other Top Group',
     });
-    const subLearnerGroup = this.server.create('learner-group', {
+    const subLearnerGroup = await this.server.create('learner-group', {
       parent: learnerGroup,
       title: 'Sub-Group',
     });
-    const subSubLearnerGroup = this.server.create('learner-group', {
+    const subSubLearnerGroup = await this.server.create('learner-group', {
       parent: subLearnerGroup,
       title: 'Sub-sub Group',
     });
-    const subLearnerGroup2 = this.server.create('learner-group', {
+    const subLearnerGroup2 = await this.server.create('learner-group', {
       parent: learnerGroup,
       title: 'Sub-Group 2',
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session,
       learnerGroups: [subSubLearnerGroup, subLearnerGroup2, learnerGroup2],
     });
@@ -236,29 +236,29 @@ module('Acceptance | Session - Offering Management', function (hooks) {
   });
 
   test('Offerings are sorted by first learner group name', async function (assert) {
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course, sessionType: this.sessionType });
-    const learnerGroup = this.server.create('learner-group', {
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course, sessionType: this.sessionType });
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'Alpha',
     });
-    const learnerGroup2 = this.server.create('learner-group', {
+    const learnerGroup2 = await this.server.create('learner-group', {
       title: 'Beta',
     });
-    const learnerGroup3 = this.server.create('learner-group', {
+    const learnerGroup3 = await this.server.create('learner-group', {
       title: 'Gamma',
     });
-    const learnerGroup4 = this.server.create('learner-group', {
+    const learnerGroup4 = await this.server.create('learner-group', {
       title: 'Delta',
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session,
       learnerGroups: [learnerGroup2, learnerGroup3],
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session,
       learnerGroups: [learnerGroup],
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session,
       learnerGroups: [learnerGroup4],
     });

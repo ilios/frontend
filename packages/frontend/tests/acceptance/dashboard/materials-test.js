@@ -15,27 +15,27 @@ module('Acceptance | Dashboard Materials', function (hooks) {
         day: 5,
       }).toJSDate(),
     );
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
 
     const today = DateTime.now();
     const tomorrow = today.plus({ day: 1 });
     const nextWeek = today.plus({ week: 1 });
     const courses = [
-      this.server.create('course', {
+      await this.server.create('course', {
         externalId: 'ID1234',
         year: 2021,
       }),
-      ...this.server.createList('course', 4, {
+      ...(await this.server.createList('course', 4, {
         year: 2022,
-      }),
+      })),
     ];
     const lm1 = {
       title: 'title1',
       absoluteFileUri: 'http://myhost.com/url1',
       sessionTitle: 'session1title',
       sessionLearningMaterial: 1,
-      course: courses[0].id,
+      course: `${courses[0].id}`,
       mimetype: 'application/pdf',
       courseTitle: courses[0].title,
       courseYear: courses[0].year,
@@ -48,7 +48,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       link: 'http://myhost.com/url2',
       sessionTitle: 'session2title',
       sessionLearningMaterial: 2,
-      course: courses[1].id,
+      course: `${courses[1].id}`,
       courseTitle: courses[1].title,
       courseYear: courses[1].year,
       courseExternalId: courses[1].externalId,
@@ -60,7 +60,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       citation: 'citationtext',
       sessionTitle: 'session3title',
       sessionLearningMaterial: 3,
-      course: courses[2].id,
+      course: `${courses[2].id}`,
       courseYear: courses[2].year,
       courseTitle: courses[2].title,
       firstOfferingDate: today.toJSDate(),
@@ -70,7 +70,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       absoluteFileUri: 'http://myhost.com/document.txt',
       sessionTitle: 'session4title',
       sessionLearningMaterial: 4,
-      course: courses[0].id,
+      course: `${courses[0].id}`,
       mimetype: 'text/plain',
       courseTitle: courses[0].title,
       courseYear: courses[0].year,
@@ -81,7 +81,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     const lm5 = {
       title: 'title5',
       isBlanked: true,
-      course: courses[4].id,
+      course: `${courses[4].id}`,
       sessionTitle: 'session5title',
       sessionLearningMaterial: 5,
       courseTitle: courses[4].title,
@@ -93,7 +93,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     const lm6 = {
       title: 'title6',
       absoluteFileUri: 'http://myhost.com/document.txt',
-      course: courses[0].id,
+      course: `${courses[0].id}`,
       mimetype: 'text/plain',
       courseTitle: courses[0].title,
       courseYear: courses[0].year,
@@ -110,7 +110,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
         citation: `citationtext ${i}`,
         sessionTitle: `session title`,
         sessionLearningMaterial: i,
-        course: courses[3].id,
+        course: `${courses[3].id}`,
         courseTitle: courses[3].title,
         courseYear: courses[3].year,
         courseExternalId: courses[3].externalId,
@@ -118,17 +118,17 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       });
     }
 
-    this.server.createList('session-learning-material', 6);
+    const sessionLearningMaterials = await this.server.createList('session-learning-material', 6);
 
-    this.server.create('user-session-material-status', {
+    await this.server.create('user-session-material-status', {
       user: this.user,
-      materialId: 3,
+      material: sessionLearningMaterials[2],
       status: 1,
     });
 
-    this.server.create('user-session-material-status', {
+    await this.server.create('user-session-material-status', {
       user: this.user,
-      material: this.server.create('session-learning-material', { id: 2 }),
+      material: await this.server.create('session-learning-material', { id: 2 }),
       status: 2,
     });
 
@@ -145,14 +145,15 @@ module('Acceptance | Dashboard Materials', function (hooks) {
   });
 
   test('it renders with materials in show-current mode', async function (assert) {
-    this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
+    this.server.get('/api/usermaterials/:id', ({ params, request }) => {
+      const { searchParams } = new URL(request.url);
       assert.step('API called');
       assert.ok('id' in params);
-      assert.strictEqual(parseInt(params.id, 10), 100);
-      assert.ok('before' in queryParams);
-      assert.ok('after' in queryParams);
-      const before = DateTime.fromSeconds(Number(queryParams.before));
-      const after = DateTime.fromSeconds(Number(queryParams.after));
+      assert.strictEqual(Number(params.id), 100);
+      assert.ok(searchParams.has('before'));
+      assert.ok(searchParams.has('after'));
+      const before = DateTime.fromSeconds(Number(searchParams.get('before')));
+      const after = DateTime.fromSeconds(Number(searchParams.get('after')));
       assert.ok(before.hasSame(this.today.plus({ days: 60 }), 'day'));
       assert.ok(after.hasSame(this.today, 'day'));
       return {
@@ -296,12 +297,13 @@ module('Acceptance | Dashboard Materials', function (hooks) {
   });
 
   test('it renders with materials in show-all mode', async function (assert) {
-    this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
+    this.server.get('/api/usermaterials/:id', ({ params, request }) => {
+      const { searchParams } = new URL(request.url);
       assert.step('API called');
       assert.ok('id' in params);
-      assert.strictEqual(parseInt(params.id, 10), 100);
-      assert.notOk('before' in queryParams);
-      assert.notOk('after' in queryParams);
+      assert.strictEqual(Number(params.id), 100);
+      assert.notOk(searchParams.has('before'));
+      assert.notOk(searchParams.has('after'));
       return {
         userMaterials: this.allMaterials,
       };
@@ -408,6 +410,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       };
     });
     await page.visit();
+
     assert.ok(page.materials.header.displayToggle.firstButton.isChecked);
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
@@ -419,6 +422,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       page.materials.topPaginator.controls.pagerDetails.text,
       'Showing 51 - 100 of 206',
     );
+    this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
+      return {
+        userMaterials: this.allMaterials,
+      };
+    });
     await page.materials.header.displayToggle.secondButton.click();
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,

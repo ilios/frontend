@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { buildSchoolsFromData } from 'frontend/tests/helpers/curriculum-report';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 import { component } from 'frontend/tests/pages/components/reports/curriculum';
@@ -13,22 +13,22 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/curriculum', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school });
-    const year = this.server.create('academicYear', {
+    const year = await this.server.create('academicYear', {
       id: currentAcademicYear(),
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: year.id,
     });
   });
 
   test('it renders and is accessible with no courses selected', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     await render(
       <template>
         <Curriculum
@@ -51,7 +51,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('it renders and is accessible with courses selected', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     await render(
       <template>
         <Curriculum
@@ -78,7 +78,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('run works', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('run', () => {
       assert.step('run called');
     });
@@ -101,7 +101,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('stop works', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('stop', () => {
       assert.step('stop called');
     });
@@ -124,7 +124,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('adding course works', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('setSelectedCourseIds', (selectedCourseIds) => {
       assert.step('setSelectedCourseIds called');
       assert.deepEqual(selectedCourseIds, [1, 2]);
@@ -148,7 +148,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('removing course works', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('setSelectedCourseIds', (selectedCourseIds) => {
       assert.step('setSelectedCourseIds called');
       assert.deepEqual(selectedCourseIds, [1]);
@@ -172,7 +172,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('set report works', async function (assert) {
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('setReport', (report) => {
       assert.step('setReport called');
       assert.strictEqual(report, 'learnerGroups');

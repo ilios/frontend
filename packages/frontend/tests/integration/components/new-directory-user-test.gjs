@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/new-directory-user';
 import NewDirectoryUser from 'frontend/components/new-directory-user';
@@ -10,11 +10,11 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | new-directory-user', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const schools = this.server.createList('school', 3);
-    const user = this.server.create('user', {
+    const schools = await this.server.createList('school', 3);
+    const user = await this.server.create('user', {
       school: schools[0],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -65,12 +65,11 @@ module('Integration | Component | new-directory-user', function (hooks) {
 
   test('initial search input fires search and fills input', async function (assert) {
     const startingSearchTerms = 'start here';
-    this.server.get(`/application/directory/search`, (scheme, { queryParams }) => {
+    this.server.get(`/application/directory/search`, ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(Number(searchParams.get('limit')), 51);
+      assert.strictEqual(searchParams.get('searchTerms'), startingSearchTerms);
       assert.step('API called');
-      assert.ok('limit' in queryParams);
-      assert.strictEqual(parseInt(queryParams.limit, 10), 51);
-      assert.ok('searchTerms' in queryParams);
-      assert.strictEqual(queryParams.searchTerms, startingSearchTerms);
       return {
         results: [],
       };
@@ -117,37 +116,37 @@ module('Integration | Component | new-directory-user', function (hooks) {
   });
 
   test('create new user', async function (assert) {
-    this.server.create('user-role', {
+    await this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
-    const user1 = this.server.create('user', {
+    const user1 = await this.server.create('user', {
       firstName: 'user1-first',
       lastName: 'user1-last',
       displayName: 'user1-display',
       campusId: 'user1-campus',
       email: 'user1@test.com',
-      telephoneNumber: 'user11234',
+      phone: 'user11234',
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       firstName: 'user2-first',
       lastName: 'user2-last',
       displayName: '',
       campusId: 'user2-campus',
       email: 'user2@test.com',
-      telephoneNumber: 'user21234',
+      phone: 'user21234',
     });
-    const auth2 = this.server.create('authentication', {
+    const auth2 = await this.server.create('authentication', {
       user: user2,
       username: 'user2-username',
     });
-    const user3 = this.server.create('user', {
+    const user3 = await this.server.create('user', {
       firstName: 'user3-first',
       lastName: 'user3-last',
       displayName: '',
       campusId: null,
       email: null,
-      telephoneNumber: 'user31234',
+      phone: 'user31234',
     });
     const searchResult1 = {
       firstName: user1.firstName,
@@ -155,7 +154,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       displayName: user1.displayName,
       campusId: user1.campusId,
       email: user1.email,
-      telephoneNumber: user1.telephoneNumber,
+      telephoneNumber: user1.phone,
       username: 'user1-username',
       user: null,
     };
@@ -165,7 +164,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       displayName: user2.displayName,
       campusId: user2.campusId,
       email: user2.email,
-      telephoneNumber: user2.telephoneNumber,
+      telephoneNumber: user2.phone,
       username: auth2.username,
       user: 4136,
     };
@@ -175,7 +174,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       displayName: user3.displayName,
       campusId: user3.campusId,
       email: user3.email,
-      telephoneNumber: user3.telephoneNumber,
+      telephoneNumber: user3.phone,
       username: null,
       user: null,
     };
@@ -189,12 +188,11 @@ module('Integration | Component | new-directory-user', function (hooks) {
         },
       };
     });
-    this.server.get('/application/directory/search', (scheme, { queryParams }) => {
+    this.server.get('/application/directory/search', ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(Number(searchParams.get('limit')), 51);
+      assert.strictEqual(searchParams.get('searchTerms'), 'searchterm');
       assert.step('application/directory/search API called');
-      assert.ok('limit' in queryParams);
-      assert.ok('searchTerms' in queryParams);
-      assert.strictEqual(parseInt(queryParams.limit, 10), 51);
-      assert.strictEqual(queryParams.searchTerms, 'searchterm');
       return {
         results: [searchResult1, searchResult2, searchResult3],
       };
@@ -271,7 +269,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
   });
 
   test('create new user in another school #4830', async function (assert) {
-    this.server.create('user-role', {
+    await this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
@@ -341,7 +339,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       }
     }
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
-    this.server.create('user-role', {
+    await this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
@@ -404,7 +402,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
   });
 
   test('save with custom otherId', async function (assert) {
-    this.server.create('user-role', {
+    await this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
@@ -464,7 +462,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
   });
 
   test('save with custom username and password', async function (assert) {
-    this.server.create('user-role', {
+    await this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
@@ -535,7 +533,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
   });
 
   test('validation works', async function (assert) {
-    this.server.create('user-role', {
+    await this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });

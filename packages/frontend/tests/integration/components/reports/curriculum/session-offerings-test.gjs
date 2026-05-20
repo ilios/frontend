@@ -1,7 +1,7 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/session-offerings';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { graphQL } from 'frontend/tests/helpers/curriculum-report';
@@ -11,47 +11,52 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/curriculum/session-offerings', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.school = this.server.create('school');
-    const course = this.server.create('course', { school: this.school });
-    const sessionType = this.server.create('sessionType');
-    const session = this.server.create('session', { course, sessionType });
-    this.server.create('sessionObjective', { session });
-    const offering = this.server.create('offering', { session });
-    const offeringInstructorGroup = this.server.create('instructorGroup', {
+  hooks.beforeEach(async function () {
+    this.school = await this.server.create('school');
+    const course = await this.server.create('course', { school: this.school });
+    const sessionType = await this.server.create('sessionType');
+    const session = await this.server.create('session', { course, sessionType });
+    await this.server.create('sessionObjective', { session });
+    const offering = await this.server.create('offering', { session });
+    const offeringInstructorGroup = await this.server.create('instructorGroup', {
       offerings: [offering],
     });
-    this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
-    this.server.create('user', { instructedOfferings: [offering] });
+    await this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
+    await this.server.create('user', { instructedOfferings: [offering] });
 
-    const ilmSession = this.server.create('ilmSession', { session });
-    const ilmSessionInstructorGroup = this.server.create('instructorGroup', {
+    const ilmSession = await this.server.create('ilmSession', { session });
+    const ilmSessionInstructorGroup = await this.server.create('instructorGroup', {
       ilmSessions: [ilmSession],
     });
-    this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
-    this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', (schema) => {
-      //use all the courses, getting the id filter from graphQL is a bit tricky
-      const courseIds = schema.db.courses.map((c) => c.id);
-      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
-      const courses = rawCourses.map((course) => {
-        course.sessions.forEach((session) => {
-          session.sessionObjectives = schema.db.sessionObjectives
-            .where({ sessionId: session.id })
-            .map(({ id, title }) => ({ id, title }));
-        });
+    await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
+    await this.server.create('user', { instructorIlmSessions: [ilmSession] });
 
-        return course;
-      });
-      return { data: { courses } };
-    });
+    this.getSessionObjectiveResponse = (assert) => {
+      return () => {
+        assert.step('API called');
+        //use all the courses, getting the id filter from graphQL is a bit tricky
+        const rawCourses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+        const courses = rawCourses.map((course) => {
+          course.sessions.forEach((session) => {
+            session.sessionObjectives = this.server.db.sessionObjective
+              .findMany((q) => q.where({ session: (s) => s.id === session.id }))
+              .map(({ id, title }) => ({ id, title }));
+          });
+
+          return course;
+        });
+        return { data: { courses } };
+      };
+    };
   });
 
   test('it renders and is accessible', async function (assert) {
     const courseModels = await this.owner.lookup('service:store').findAll('course');
     this.set('courses', courseModels);
+
+    this.server.post('/api/graphql', this.getSessionObjectiveResponse(assert));
 
     await render(
       <template>
@@ -80,6 +85,7 @@ module('Integration | Component | reports/curriculum/session-offerings', functio
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+    assert.verifySteps(['API called']);
   });
 
   skip('download report', async function (assert) {

@@ -8,7 +8,7 @@ import sessionsPage from 'ilios-common/page-objects/sessions';
 module('Acceptance | Session - Publish All', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication(
       {
         school,
@@ -16,33 +16,36 @@ module('Acceptance | Session - Publish All', function (hooks) {
       },
       true,
     );
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       school,
     });
-    this.course = this.server.create('course', { school });
-    this.sessionTypes = this.server.createList('session-type', 2, {
+    this.course = await this.server.create('course', { school });
+    this.sessionTypes = await this.server.createList('session-type', 2, {
       school,
     });
-    this.term = this.server.create('term', { vocabulary });
-    this.meshDescriptor = this.server.create('mesh-descriptor');
+    this.term = await this.server.create('term', { vocabulary });
+    this.meshDescriptor = await this.server.create('mesh-descriptor');
   });
 
   test('expand/collapse state of sections are tracked in url', async function (assert) {
-    this.server.create('session', {
+    const sessionObjectives = await this.server.createList('session-objective', 2);
+    const offerings = await this.server.createList('offering', 4);
+    await this.server.create('session', {
       course: this.course,
       terms: [this.term],
       meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
-      sessionObjectives: [this.server.create('session-objective')],
-      offerings: this.server.createList('offering', 2),
+      sessionObjectives: [sessionObjectives[0]],
+      offerings: [offerings[0], offerings[1]],
     });
-    this.server.create('session', {
+
+    await this.server.create('session', {
       course: this.course,
       terms: [this.term],
       meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
-      sessionObjectives: [this.server.create('session-objective')],
-      offerings: this.server.createList('offering', 2),
+      sessionObjectives: [sessionObjectives[1]],
+      offerings: [offerings[2], offerings[3]],
     });
 
     await page.visit({ courseId: this.course.id });
@@ -75,21 +78,21 @@ module('Acceptance | Session - Publish All', function (hooks) {
   });
 
   test('publish publishable sessions', async function (assert) {
-    this.server.create('session', {
+    await this.server.create('session', {
       course: this.course,
       terms: [this.term],
       meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
-      sessionObjectives: [this.server.create('session-objective')],
-      offerings: this.server.createList('offering', 2),
+      sessionObjectives: [await this.server.create('session-objective')],
+      offerings: await this.server.createList('offering', 2),
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       course: this.course,
       terms: [this.term],
       meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
-      sessionObjectives: [this.server.create('session-objective')],
-      offerings: this.server.createList('offering', 2),
+      sessionObjectives: [await this.server.create('session-objective')],
+      offerings: await this.server.createList('offering', 2),
     });
 
     await sessionsPage.visit({ courseId: this.course.id });
@@ -124,15 +127,15 @@ module('Acceptance | Session - Publish All', function (hooks) {
   });
 
   test('publish overridable sessions #2816', async function (assert) {
-    this.server.create('session', {
+    await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
-      offerings: this.server.createList('offering', 2),
+      offerings: await this.server.createList('offering', 2),
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
-      offerings: this.server.createList('offering', 2),
+      offerings: await this.server.createList('offering', 2),
     });
 
     await sessionsPage.visit({ courseId: this.course.id });

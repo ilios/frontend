@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/instructor-groups/list';
 import Service from '@ember/service';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -12,7 +12,7 @@ import set from 'ember-set-helper/helpers/set';
 
 module('Integration | Component | instructor-groups/list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const PermissionCheckerMock = class extends Service {
@@ -24,8 +24,8 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('instructor-group', 3, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('instructor-group', 3, { school });
     const instructorGroupModels = await this.owner
       .lookup('service:store')
       .findAll('instructor-group');
@@ -60,8 +60,8 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
   });
 
   test('remove', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('instructor-group', 3, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('instructor-group', 3, { school });
     const instructorGroupModels = await this.owner
       .lookup('service:store')
       .findAll('instructor-group');
@@ -71,19 +71,19 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
         <List @instructorGroups={{this.instructorGroups}} @sortBy="title" @setSortBy={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(this.server.db.instructorGroups.length, 3);
+    assert.strictEqual(this.server.db.instructorGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'instructor group 0');
     await component.items[0].remove();
     await component.confirmRemoval.confirm();
-    assert.strictEqual(this.server.db.instructorGroups.length, 2);
+    assert.strictEqual(this.server.db.instructorGroup.all().length, 2);
     assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].title, 'instructor group 1');
   });
 
   test('cancel remove', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('instructor-group', 3, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('instructor-group', 3, { school });
     const instructorGroupModels = await this.owner
       .lookup('service:store')
       .findAll('instructor-group');
@@ -93,44 +93,47 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
         <List @instructorGroups={{this.instructorGroups}} @sortBy="title" @setSortBy={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(this.server.db.instructorGroups.length, 3);
+    assert.strictEqual(this.server.db.instructorGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'instructor group 0');
     await component.items[0].remove();
     await component.confirmRemoval.cancel();
-    assert.strictEqual(this.server.db.instructorGroups.length, 3);
+    assert.strictEqual(this.server.db.instructorGroup.all().length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'instructor group 0');
   });
 
   test('sort', async function (assert) {
-    const school = this.server.create('school');
-    const users = this.server.createList('user', 5);
-    let sessions = this.server
-      .createList('course', 5, { school })
-      .map((course) => this.server.create('session', { course }));
+    const school = await this.server.create('school');
+    const users = await this.server.createList('user', 5);
+    const courses = await this.server.createList('course', 5);
 
-    this.server.create('instructor-group', {
+    const sessions = [];
+    for (let i = 0; i < courses.length; i++) {
+      sessions.push(await this.server.create('session', { course: courses[i] }));
+    }
+
+    await this.server.create('instructor-group', {
       school,
       users: [users[0], users[1]],
       offerings: [
-        this.server.create('offering', { session: sessions[0] }),
-        this.server.create('offering', { session: sessions[1] }),
+        await this.server.create('offering', { session: sessions[0] }),
+        await this.server.create('offering', { session: sessions[1] }),
       ],
-      ilmSessions: [this.server.create('ilm-session', { session: sessions[3] })],
+      ilmSessions: [await this.server.create('ilm-session', { session: sessions[3] })],
     });
-    this.server.create('instructor-group', {
+    await this.server.create('instructor-group', {
       school,
       offerings: [],
-      ilmSessions: [this.server.create('ilm-session', { session: sessions[2] })],
+      ilmSessions: [await this.server.create('ilm-session', { session: sessions[2] })],
     });
-    this.server.create('instructor-group', {
+    await this.server.create('instructor-group', {
       school,
       users: [users[2], users[3], users[4]],
       offerings: [
-        this.server.create('offering', { session: sessions[0] }),
-        this.server.create('offering', { session: sessions[4] }),
-        this.server.create('offering', { session: sessions[4] }),
+        await this.server.create('offering', { session: sessions[0] }),
+        await this.server.create('offering', { session: sessions[4] }),
+        await this.server.create('offering', { session: sessions[4] }),
       ],
     });
 

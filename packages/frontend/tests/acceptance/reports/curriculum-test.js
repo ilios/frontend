@@ -10,14 +10,16 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     await setupAuthentication({ school: this.school }, true);
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
-      const { query } = JSON.parse(requestBody);
+    await this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       if (query.includes('courses(academicYears:')) {
-        const courses = db.courses.map(({ id, title, year, externalId }) => {
-          return { id, title, year, externalId };
-        });
+        const courses = (await this.server.db.course.all()).map(
+          ({ id, title, year, externalId }) => {
+            return { id: id.toString(), title, year, externalId };
+          },
+        );
         return {
           data: {
             courses,
@@ -25,18 +27,66 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
         };
       }
     });
+
+    this.getSessionObjectiveResponse = (assert) => {
+      return () => {
+        assert.step('API called');
+        //use all the courses, getting the id filter from graphQL is a bit tricky
+        const rawCourses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+        const courses = rawCourses.map((course) => {
+          course.sessions.forEach((session) => {
+            session.sessionObjectives = this.server.db.sessionObjective
+              .findMany((q) => q.where({ session: (s) => s.id === session.id }))
+              .map(({ id, title }) => ({ id, title }));
+          });
+
+          return course;
+        });
+        return { data: { courses } };
+      };
+    };
+
+    this.getLearnerGroupsResponse = (assert) => {
+      return () => {
+        assert.step('API called');
+        //use all the courses, getting the id filter from graphQL is a bit tricky
+        const rawCourses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+        const allLearnerGroups = this.server.db.learnerGroup.all();
+        const courses = rawCourses.map((course) => {
+          course.sessions.forEach((session) => {
+            session.offerings = session.offerings.map((offeringData) => {
+              offeringData.learnerGroups = allLearnerGroups
+                .filter((lg) => lg.offerings.map(({ id }) => id).includes(Number(offeringData.id)))
+                .map(({ id, title }) => ({ id, title }));
+
+              return offeringData;
+            });
+
+            if (session.ilmSession) {
+              session.ilmSession.learnerGroups = allLearnerGroups
+                .filter((lg) =>
+                  lg.ilmSessions.map(({ id }) => id).includes(Number(session.ilmSession.id)),
+                )
+                .map(({ id, title }) => ({ id, title }));
+            }
+          });
+          return course;
+        });
+        return { data: { courses } };
+      };
+    };
   });
 
   test('visiting reports with one school', async function (assert) {
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school: this.school,
       year: currentAcademicYear() - 1,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school: this.school,
       year: currentAcademicYear(),
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school: this.school,
       year: currentAcademicYear() + 1,
     });
@@ -55,16 +105,16 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('visiting reports with multiple schools', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('course', 2, {
+    const school = await this.server.create('school');
+    await this.server.createList('course', 2, {
       school: this.school,
       year: currentAcademicYear() - 1,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: currentAcademicYear(),
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school: this.school,
       year: currentAcademicYear() + 1,
     });
@@ -75,56 +125,47 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     assert.ok(page.curriculum.isPresent);
     assert.ok(page.curriculum.chooseCourse.hasMultipleSchools);
     assert.strictEqual(page.curriculum.chooseCourse.schoolSelector.options.length, 2);
-    assert.strictEqual(page.curriculum.chooseCourse.schoolSelector.value, this.school.id);
+    assert.strictEqual(
+      page.curriculum.chooseCourse.schoolSelector.value,
+      this.school.id.toString(),
+    );
     assert.strictEqual(page.curriculum.chooseCourse.years.length, 2);
     assert.notOk(page.curriculum.chooseCourse.years[0].isExpanded);
     assert.notOk(page.curriculum.chooseCourse.years[1].isExpanded);
     await takeScreenshot(assert, 'default school');
 
     await page.curriculum.chooseCourse.schoolSelector.set(school.id);
-    assert.strictEqual(page.curriculum.chooseCourse.schoolSelector.value, school.id);
+    assert.strictEqual(page.curriculum.chooseCourse.schoolSelector.value, school.id.toString());
     assert.strictEqual(page.curriculum.chooseCourse.years.length, 1);
     assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
     await takeScreenshot(assert, 'school with current year');
   });
 
   test('run session objectives report, single school', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
     });
-    const sessionType = this.server.create('sessionType');
-    const session = this.server.create('session', { course, sessionType });
-    this.server.create('sessionObjective', { session });
-    const offering = this.server.create('offering', { session });
-    const offeringInstructorGroup = this.server.create('instructorGroup', {
+    const sessionType = await this.server.create('sessionType');
+    const session = await this.server.create('session', { course, sessionType });
+    await this.server.create('sessionObjective', { session });
+    const offering = await this.server.create('offering', { session });
+    const offeringInstructorGroup = await this.server.create('instructorGroup', {
       offerings: [offering],
     });
-    this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
-    this.server.create('user', { instructedOfferings: [offering] });
+    await this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
+    await this.server.create('user', { instructedOfferings: [offering] });
 
-    const ilmSession = this.server.create('ilmSession', { session });
-    const ilmSessionInstructorGroup = this.server.create('instructorGroup', {
+    const ilmSession = await this.server.create('ilmSession', { session });
+    const ilmSessionInstructorGroup = await this.server.create('instructorGroup', {
       ilmSessions: [ilmSession],
     });
-    this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
-    this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', (schema) => {
-      assert.step('API called');
-      //use all the courses, getting the id filter from graphQL is a bit tricky
-      const courseIds = schema.db.courses.map((c) => c.id);
-      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
-      const courses = rawCourses.map((course) => {
-        course.sessions.forEach((session) => {
-          session.sessionObjectives = schema.db.sessionObjectives
-            .where({ sessionId: session.id })
-            .map(({ id, title }) => ({ id, title }));
-        });
+    await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
+    await this.server.create('user', { instructorIlmSessions: [ilmSession] });
 
-        return course;
-      });
-      return { data: { courses } };
-    });
+    //handle both requests so we have two
+    this.server.post('/api/graphql', this.getSessionObjectiveResponse(assert));
+    this.server.post('/api/graphql', this.getSessionObjectiveResponse(assert));
     const so = page.curriculum.sessionObjectivesResult;
 
     await page.visitCurriculumReports();
@@ -163,51 +204,39 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('run session objectives report, multiple schools', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
     });
-    const school = this.server.create('school');
-    this.server.createList('course', 2, {
+    const school = await this.server.create('school');
+    await this.server.createList('course', 2, {
       school: this.school,
       year: currentAcademicYear() - 1,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school: school,
       year: currentAcademicYear(),
     });
-    const sessionType = this.server.create('sessionType');
-    const session = this.server.create('session', { course, sessionType });
-    this.server.create('sessionObjective', { session });
-    const offering = this.server.create('offering', { session });
-    const offeringInstructorGroup = this.server.create('instructorGroup', {
+    const sessionType = await this.server.create('sessionType');
+    const session = await this.server.create('session', { course, sessionType });
+    await this.server.create('sessionObjective', { session });
+    const offering = await this.server.create('offering', { session });
+    const offeringInstructorGroup = await this.server.create('instructorGroup', {
       offerings: [offering],
     });
-    this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
-    this.server.create('user', { instructedOfferings: [offering] });
+    await this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
+    await this.server.create('user', { instructedOfferings: [offering] });
 
-    const ilmSession = this.server.create('ilmSession', { session });
-    const ilmSessionInstructorGroup = this.server.create('instructorGroup', {
+    const ilmSession = await this.server.create('ilmSession', { session });
+    const ilmSessionInstructorGroup = await this.server.create('instructorGroup', {
       ilmSessions: [ilmSession],
     });
-    this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
-    this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', (schema) => {
-      assert.step('API called');
-      //use all the courses, getting the id filter from graphQL is a bit tricky
-      const courseIds = schema.db.courses.map((c) => c.id);
-      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
-      const courses = rawCourses.map((course) => {
-        course.sessions.forEach((session) => {
-          session.sessionObjectives = schema.db.sessionObjectives
-            .where({ sessionId: session.id })
-            .map(({ id, title }) => ({ id, title }));
-        });
+    await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
+    await this.server.create('user', { instructorIlmSessions: [ilmSession] });
 
-        return course;
-      });
-      return { data: { courses } };
-    });
+    //handle both requests so we have two
+    this.server.post('/api/graphql', this.getSessionObjectiveResponse(assert));
+    this.server.post('/api/graphql', this.getSessionObjectiveResponse(assert));
     const so = page.curriculum.sessionObjectivesResult;
 
     await page.visitCurriculumReports();
@@ -288,56 +317,34 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('run learner groups report, single school', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
     });
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', { course, sessionType });
-    const learnerGroups = this.server.createList('learner-group', 5);
-    const offering = this.server.create('offering', {
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', { course, sessionType });
+    const learnerGroups = await this.server.createList('learner-group', 5);
+    const offering = await this.server.create('offering', {
       session,
       learnerGroups: [learnerGroups[0], learnerGroups[3]],
     });
-    const offeringInstructorGroup = this.server.create('instructor-group', {
+    const offeringInstructorGroup = await this.server.create('instructor-group', {
       offerings: [offering],
     });
-    this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
-    this.server.create('user', { instructedOfferings: [offering] });
+    await this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
+    await this.server.create('user', { instructedOfferings: [offering] });
 
-    const ilmSession = this.server.create('ilm-session', {
+    const ilmSession = await this.server.create('ilm-session', {
       session,
       learnerGroups: [learnerGroups[1], learnerGroups[2]],
     });
-    const ilmSessionInstructorGroup = this.server.create('instructor-group', {
+    const ilmSessionInstructorGroup = await this.server.create('instructor-group', {
       ilmSessions: [ilmSession],
     });
-    this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
-    this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', ({ db }) => {
-      assert.step('API called');
-      //use all the courses, getting the id filter from graphQL is a bit tricky
-      const courseIds = db.courses.map((c) => c.id);
-      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(db, id));
-      const courses = rawCourses.map((course) => {
-        course.sessions.forEach((session) => {
-          session.offerings.forEach((offering) => {
-            offering.learnerGroups = graphQL.fetchLearnerGroups(
-              db,
-              db.offerings.find(offering.id).learnerGroupIds,
-            );
-          });
-          if (session.ilmSession) {
-            const ilm = db.ilmSessions.find(session.ilmSession.id);
-            session.ilmSession.learnerGroups = graphQL.fetchLearnerGroups(db, ilm.learnerGroupIds);
-          }
-        });
-
-        return course;
-      });
-
-      return { data: { courses } };
-    });
+    await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
+    await this.server.create('user', { instructorIlmSessions: [ilmSession] });
+    this.server.post('/api/graphql', this.getLearnerGroupsResponse(assert));
+    this.server.post('/api/graphql', this.getLearnerGroupsResponse(assert));
     const lg = page.curriculum.learnerGroupsResult;
 
     await page.visitCurriculumReports();
@@ -383,65 +390,43 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('run learner groups report, multiple schools', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
     });
-    const school = this.server.create('school');
-    this.server.createList('course', 2, {
+    const school = await this.server.create('school');
+    await this.server.createList('course', 2, {
       school: this.school,
       year: currentAcademicYear() - 1,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school: school,
       year: currentAcademicYear(),
     });
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', { course, sessionType });
-    const learnerGroups = this.server.createList('learner-group', 5);
-    const offering = this.server.create('offering', {
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', { course, sessionType });
+    const learnerGroups = await this.server.createList('learner-group', 5);
+    const offering = await this.server.create('offering', {
       session,
       learnerGroups: [learnerGroups[0], learnerGroups[3]],
     });
-    const offeringInstructorGroup = this.server.create('instructor-group', {
+    const offeringInstructorGroup = await this.server.create('instructor-group', {
       offerings: [offering],
     });
-    this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
-    this.server.create('user', { instructedOfferings: [offering] });
+    await this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
+    await this.server.create('user', { instructedOfferings: [offering] });
 
-    const ilmSession = this.server.create('ilm-session', {
+    const ilmSession = await this.server.create('ilm-session', {
       session,
       learnerGroups: [learnerGroups[1], learnerGroups[2]],
     });
-    const ilmSessionInstructorGroup = this.server.create('instructor-group', {
+    const ilmSessionInstructorGroup = await this.server.create('instructor-group', {
       ilmSessions: [ilmSession],
     });
-    this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
-    this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', ({ db }) => {
-      assert.step('API called');
-      //use all the courses, getting the id filter from graphQL is a bit tricky
-      const courseIds = db.courses.map((c) => c.id);
-      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(db, id));
-      const courses = rawCourses.map((course) => {
-        course.sessions.forEach((session) => {
-          session.offerings.forEach((offering) => {
-            offering.learnerGroups = graphQL.fetchLearnerGroups(
-              db,
-              db.offerings.find(offering.id).learnerGroupIds,
-            );
-          });
-          if (session.ilmSession) {
-            const ilm = db.ilmSessions.find(session.ilmSession.id);
-            session.ilmSession.learnerGroups = graphQL.fetchLearnerGroups(db, ilm.learnerGroupIds);
-          }
-        });
-
-        return course;
-      });
-
-      return { data: { courses } };
-    });
+    await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
+    await this.server.create('user', { instructorIlmSessions: [ilmSession] });
+    this.server.post('/api/graphql', this.getLearnerGroupsResponse(assert));
+    this.server.post('/api/graphql', this.getLearnerGroupsResponse(assert));
     const lg = page.curriculum.learnerGroupsResult;
 
     await page.visitCurriculumReports();
@@ -526,42 +511,27 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       assert.expect(0);
       return;
     }
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
     });
-    const sessionType = this.server.create('sessionType');
-    const session = this.server.create('session', { course, sessionType });
-    this.server.create('sessionObjective', { session });
-    const offering = this.server.create('offering', { session });
-    const offeringInstructorGroup = this.server.create('instructorGroup', {
+    const sessionType = await this.server.create('sessionType');
+    const session = await this.server.create('session', { course, sessionType });
+    await this.server.create('sessionObjective', { session });
+    const offering = await this.server.create('offering', { session });
+    const offeringInstructorGroup = await this.server.create('instructorGroup', {
       offerings: [offering],
     });
-    this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
-    this.server.create('user', { instructedOfferings: [offering] });
+    await this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
+    await this.server.create('user', { instructedOfferings: [offering] });
 
-    const ilmSession = this.server.create('ilmSession', { session });
-    const ilmSessionInstructorGroup = this.server.create('instructorGroup', {
+    const ilmSession = await this.server.create('ilmSession', { session });
+    const ilmSessionInstructorGroup = await this.server.create('instructorGroup', {
       ilmSessions: [ilmSession],
     });
-    this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
-    this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', (schema) => {
-      assert.step('API called');
-      //use all the courses, getting the id filter from graphQL is a bit tricky
-      const courseIds = schema.db.courses.map((c) => c.id);
-      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
-      const courses = rawCourses.map((course) => {
-        course.sessions.forEach((session) => {
-          session.sessionObjectives = schema.db.sessionObjectives
-            .where({ sessionId: session.id })
-            .map(({ id, title }) => ({ id, title }));
-        });
-
-        return course;
-      });
-      return { data: { courses } };
-    });
+    await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
+    await this.server.create('user', { instructorIlmSessions: [ilmSession] });
+    this.server.post('/api/graphql', this.getSessionObjectiveResponse(assert));
     await page.visitCurriculumReports();
     await page.curriculum.chooseCourse.years[0].toggleAll.click();
 

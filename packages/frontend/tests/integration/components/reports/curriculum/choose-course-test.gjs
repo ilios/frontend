@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/choose-course';
 import { buildSchoolsFromData } from 'frontend/tests/helpers/curriculum-report';
@@ -12,11 +12,11 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/curriculum/choose-course', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -38,25 +38,25 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('it renders with one school and is accessible', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('academicYear', { id: 1984 });
-    this.server.create('academicYear', { id: 1985 });
-    this.server.create('academicYear', { id: 1983 });
-    this.server.createList('course', 3, {
+    const school = await this.server.create('school');
+    await this.server.create('academicYear', { id: 1984 });
+    await this.server.create('academicYear', { id: 1985 });
+    await this.server.create('academicYear', { id: 1983 });
+    await this.server.createList('course', 3, {
       school,
       year: 1984,
     });
-    this.server.createList('course', 1, {
+    await this.server.createList('course', 1, {
       school,
       year: 1985,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: 1983,
     });
     await setupAuthentication({ school });
     this.set('selectedCourseIds', ['2']);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     await render(
       <template>
         <ChooseCourse
@@ -95,20 +95,20 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('it renders with multiple schools and is accessible', async function (assert) {
-    const school = this.server.create('school');
-    const school2 = this.server.create('school');
+    const school = await this.server.create('school');
+    const school2 = await this.server.create('school');
     await setupAuthentication({ school });
 
-    this.server.create('academicYear', { id: 1984 });
-    this.server.create('course', {
+    await this.server.create('academicYear', { id: 1984 });
+    await this.server.create('course', {
       school,
       year: 1984,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       school: school2,
       year: 1984,
     });
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('selectedCourseIds', []);
     await render(
       <template>
@@ -124,7 +124,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
 
     assert.ok(component.hasMultipleSchools);
     assert.strictEqual(component.schoolSelector.options.length, 2);
-    assert.strictEqual(component.schoolSelector.value, school.id);
+    assert.strictEqual(Number(Number(component.schoolSelector.value)), school.id);
     assert.strictEqual(component.schoolSelector.options[0].text, school.title);
     assert.ok(component.schoolSelector.options[0].isSelected);
     assert.strictEqual(component.schoolSelector.options[1].text, school2.title);
@@ -146,21 +146,21 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('it renders with selected courses across multiple schools', async function (assert) {
-    const school = this.server.create('school', { title: 'Pharmacy' });
-    const school2 = this.server.create('school', { title: 'Medicine' });
+    const school = await this.server.create('school', { title: 'Pharmacy' });
+    const school2 = await this.server.create('school', { title: 'Medicine' });
     await setupAuthentication({ school });
 
-    this.server.create('academicYear', { id: 1984 });
-    const course1 = this.server.create('course', {
+    await this.server.create('academicYear', { id: 1984 });
+    const course1 = await this.server.create('course', {
       school,
       year: 1984,
     });
-    const course2 = this.server.create('course', {
+    const course2 = await this.server.create('course', {
       school: school2,
       year: 1984,
     });
-    this.set('schools', buildSchoolsFromData(this.server));
-    this.set('selectedCourseIds', [course1.id, course2.id]);
+    this.set('schools', buildSchoolsFromData(this.server.db));
+    this.set('selectedCourseIds', [`${course1.id}`, `${course2.id}`]);
     await render(
       <template>
         <ChooseCourse
@@ -175,7 +175,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
 
     assert.ok(component.hasMultipleSchools);
     assert.strictEqual(component.schoolSelector.options.length, 2);
-    assert.strictEqual(component.schoolSelector.value, school2.id);
+    assert.strictEqual(Number(component.schoolSelector.value), school2.id);
     assert.strictEqual(component.schoolSelector.options[0].text, school2.title);
     assert.ok(component.schoolSelector.options[0].isSelected);
     assert.strictEqual(component.schoolSelector.options[1].text, school.title);
@@ -194,17 +194,17 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('expand and collapse', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school });
-    this.server.create('course', {
+    await this.server.create('course', {
       school,
       year: 1985,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       school,
       year: 1984,
     });
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('selectedCourseIds', []);
     await render(
       <template>
@@ -238,18 +238,18 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('select course fires action', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school });
-    this.server.create('academicYear', { id: 1984 });
-    const course = this.server.create('course', {
+    await this.server.create('academicYear', { id: 1984 });
+    const course = await this.server.create('course', {
       school,
       year: 1984,
     });
     this.set('selectedCourseIds', []);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('add', (courseId) => {
       assert.step('add called');
-      assert.strictEqual(courseId, course.id);
+      assert.strictEqual(Number(courseId), course.id);
     });
     await render(
       <template>
@@ -269,18 +269,18 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('remove course fires action', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school });
-    this.server.create('academicYear', { id: 1984 });
-    const course = this.server.create('course', {
+    await this.server.create('academicYear', { id: 1984 });
+    const course = await this.server.create('course', {
       school,
       year: 1984,
     });
-    this.set('selectedCourseIds', [course.id]);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('selectedCourseIds', [`${course.id}`]);
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('remove', (courseId) => {
       assert.step('remove called');
-      assert.strictEqual(courseId, course.id);
+      assert.strictEqual(Number(courseId), course.id);
     });
     await render(
       <template>
@@ -300,15 +300,15 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('deselect all button visible only when course is selected', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school });
-    this.server.create('academicYear', { id: 1984 });
-    const course = this.server.create('course', {
+    await this.server.create('academicYear', { id: 1984 });
+    const course = await this.server.create('course', {
       school,
       year: 1984,
     });
-    this.set('selectedCourseIds', [course.id]);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('selectedCourseIds', [`${course.id}`]);
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('add', (courseId) => {
       assert.step('add called');
       this.set('selectedCourseIds', [...this.selectedCourseIds, courseId]);
@@ -345,19 +345,19 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('deselect all courses fires action', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school });
-    this.server.create('academicYear', { id: 1984 });
-    const course1 = this.server.create('course', {
+    await this.server.create('academicYear', { id: 1984 });
+    const course1 = await this.server.create('course', {
       school,
       year: 1984,
     });
-    const course2 = this.server.create('course', {
+    const course2 = await this.server.create('course', {
       school,
       year: 1985,
     });
-    this.set('selectedCourseIds', [course1.id, course2.id]);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('selectedCourseIds', [`${course1.id}`, `${course2.id}`]);
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('removeAll', () => {
       assert.step('removeAll called');
       this.set('selectedCourseIds', []);
@@ -388,15 +388,15 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('select all fires action', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school });
-    this.server.create('academicYear', { id: 1984 });
-    const courses = this.server.createList('course', 2, {
+    await this.server.create('academicYear', { id: 1984 });
+    const courses = await this.server.createList('course', 2, {
       school,
       year: 1984,
     });
-    this.set('selectedCourseIds', [courses[0].id]);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('selectedCourseIds', [`${courses[0].id}`]);
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('add', (courseId) => {
       this.set('selectedCourseIds', [...this.selectedCourseIds, courseId]);
     });
@@ -425,18 +425,18 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('select none fires action', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school });
-    this.server.create('academicYear', { id: 1984 });
-    const courses = this.server.createList('course', 2, {
+    await this.server.create('academicYear', { id: 1984 });
+    const courses = await this.server.createList('course', 2, {
       school,
       year: 1984,
     });
     this.set(
       'selectedCourseIds',
-      courses.map(({ id }) => id),
+      courses.map(({ id }) => `${id}`),
     );
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('remove', (courseId) => {
       this.set(
         'selectedCourseIds',

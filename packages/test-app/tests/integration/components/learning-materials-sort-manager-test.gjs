@@ -1,52 +1,52 @@
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, find } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { capitalize } from '@ember/string';
 import LearningMaterialsSortManager from 'ilios-common/components/learning-materials-sort-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learning materials sort manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const user1 = this.server.create('user', {
+    const user1 = await this.server.create('user', {
       firstName: 'Hans',
       lastName: 'Wurst',
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       firstName: 'Hans',
       lastName: 'Dampf',
     });
-    const status1 = this.server.create('learning-material-status', {
+    const status1 = await this.server.create('learning-material-status', {
       title: 'Done and done',
     });
-    const status2 = this.server.create('learning-material-status', {
+    const status2 = await this.server.create('learning-material-status', {
       title: 'Draft',
     });
-    const lm1 = this.server.create('learning-material', {
+    const lm1 = await this.server.create('learning-material', {
       title: 'Lorem Ipsum',
       status: status1,
       owningUser: user1,
       filename: 'loremipsum.txt',
       mimetype: 'application/pdf',
     });
-    const lm2 = this.server.create('learning-material', {
+    const lm2 = await this.server.create('learning-material', {
       title: 'Foo Bar',
       status: status2,
       owningUser: user2,
       citation: 'Lorem Ipsum',
     });
-    const clm1 = this.server.create('course-learning-material', {
+    const clm1 = await this.server.create('course-learning-material', {
       learningMaterial: lm1,
       position: 1,
     });
-    const clm2 = this.server.create('course-learning-material', {
+    const clm2 = await this.server.create('course-learning-material', {
       learningMaterial: lm2,
       position: 0,
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials: [clm1, clm2],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -96,30 +96,30 @@ module('Integration | Component | learning materials sort manager', function (ho
   });
 
   test('cancel', async function (assert) {
-    const owningUser = this.server.create('user', {
+    const owningUser = await this.server.create('user', {
       firstName: 'foo',
       lastName: 'bar',
     });
-    const status = this.server.create('learning-material-status', { title: 'Something' });
-    const learningMaterial1 = this.server.create('learning-material', {
+    const status = await this.server.create('learning-material-status', { title: 'Something' });
+    const learningMaterial1 = await this.server.create('learning-material', {
       owningUser,
       status,
       title: 'First',
       citation: 'Lorem Ipsum',
     });
-    const learningMaterial2 = this.server.create('learning-material', {
+    const learningMaterial2 = await this.server.create('learning-material', {
       owningUser,
       status,
       title: 'Second',
       citation: 'Lorem Ipsum',
     });
-    const clm1 = this.server.create('course-learning-material', {
+    const clm1 = await this.server.create('course-learning-material', {
       learningMaterial: learningMaterial1,
     });
-    const clm2 = this.server.create('course-learning-material', {
+    const clm2 = await this.server.create('course-learning-material', {
       learningMaterial: learningMaterial2,
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials: [clm1, clm2],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -137,32 +137,32 @@ module('Integration | Component | learning materials sort manager', function (ho
   });
 
   test('save', async function (assert) {
-    const owningUser = this.server.create('user', {
+    const owningUser = await this.server.create('user', {
       firstName: 'foo',
       lastName: 'bar',
     });
-    const status = this.server.create('learning-material-status', { title: 'Something' });
-    const learningMaterial1 = this.server.create('learning-material', {
+    const status = await this.server.create('learning-material-status', { title: 'Something' });
+    const learningMaterial1 = await this.server.create('learning-material', {
       owningUser,
       status,
       title: 'First',
       citation: 'Lorem Ipsum',
     });
-    const learningMaterial2 = this.server.create('learning-material', {
+    const learningMaterial2 = await this.server.create('learning-material', {
       owningUser,
       status,
       title: 'Second',
       citation: 'Lorem Ipsum',
     });
-    const clm1 = this.server.create('course-learning-material', {
+    const clm1 = await this.server.create('course-learning-material', {
       learningMaterial: learningMaterial1,
       position: 1,
     });
-    const clm2 = this.server.create('course-learning-material', {
+    const clm2 = await this.server.create('course-learning-material', {
       learningMaterial: learningMaterial2,
       position: 2,
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials: [clm1, clm2],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);

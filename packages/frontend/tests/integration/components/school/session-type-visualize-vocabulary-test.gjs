@@ -1,25 +1,29 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/session-type-visualize-vocabulary';
 import SessionTypeVisualizeVocabulary from 'frontend/components/school/session-type-visualize-vocabulary';
 
 module('Integration | Component | school/session-type-visualize-vocabulary', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const sessionType = this.server.create('session-type', { school });
-    const vocabulary = this.server.create('vocabulary', { school });
-    const terms = this.server.createList('term', 5, { vocabulary });
-    this.server.create('session', { course, sessionType, terms: [terms[0], terms[1]] });
-    this.server.create('session', { course, sessionType, terms: [terms[2]] });
-    this.server.create('session', { course, sessionType, terms: [terms[0], terms[3], terms[4]] });
-    this.server.create('session', { course, sessionType, terms: [terms[1], terms[3]] });
-    this.server.create('session', { course, sessionType, terms: [terms[0], terms[3]] });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const sessionType = await this.server.create('session-type', { school });
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const terms = await this.server.createList('term', 5, { vocabulary });
+    await this.server.create('session', { course, sessionType, terms: [terms[0], terms[1]] });
+    await this.server.create('session', { course, sessionType, terms: [terms[2]] });
+    await this.server.create('session', {
+      course,
+      sessionType,
+      terms: [terms[0], terms[3], terms[4]],
+    });
+    await this.server.create('session', { course, sessionType, terms: [terms[1], terms[3]] });
+    await this.server.create('session', { course, sessionType, terms: [terms[0], terms[3]] });
 
     this.vocabulary = await this.owner
       .lookup('service:store')

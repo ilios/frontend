@@ -1,46 +1,46 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/detail-learnergroups-list';
 import DetailLearnergroupsList from 'ilios-common/components/detail-learnergroups-list';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | detail-learnergroups-list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const program = this.server.create('program');
-    const programYear = this.server.create('program-year', { program });
-    const programYear2 = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const cohort2 = this.server.create('cohort', { programYear: programYear2 });
-    const users = this.server.createList('user', 5);
-    const tlg1 = this.server.create('learner-group', {
+    const program = await this.server.create('program');
+    const programYear = await this.server.create('program-year', { program });
+    const programYear2 = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const cohort2 = await this.server.create('cohort', { programYear: programYear2 });
+    const users = await this.server.createList('user', 5);
+    const tlg1 = await this.server.create('learner-group', {
       title: 'tlg1',
       users: [users[0], users[1]],
       cohort,
     });
-    const subGroup1 = this.server.create('learner-group', {
+    const subGroup1 = await this.server.create('learner-group', {
       title: 'sub group 1',
       parent: tlg1,
       users: [users[0], users[1], users[2]],
       cohort,
     });
-    const subSubGroup1 = this.server.create('learner-group', {
+    const subSubGroup1 = await this.server.create('learner-group', {
       title: 'sub sub group 1',
       parent: subGroup1,
       users: [users[0]],
       cohort,
     });
 
-    const tlg2 = this.server.create('learner-group', {
+    const tlg2 = await this.server.create('learner-group', {
       title: 'tlg2',
       users: [users[0], users[1]],
       cohort: cohort2,
     });
-    const subGroup2 = this.server.create('learner-group', {
+    const subGroup2 = await this.server.create('learner-group', {
       title: 'sub group 2',
       parent: tlg2,
       cohort: cohort2,

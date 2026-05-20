@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/instructor-group';
 import InstructorGroup from 'frontend/components/reports/subject/instructor-group';
 
 module('Integration | Component | reports/subject/instructor-group', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   const responseData = {
     data: {
@@ -16,13 +16,13 @@ module('Integration | Component | reports/subject/instructor-group', function (h
   };
 
   test('it renders', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -43,13 +43,13 @@ module('Integration | Component | reports/subject/instructor-group', function (h
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -85,13 +85,13 @@ module('Integration | Component | reports/subject/instructor-group', function (h
       });
     }
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
       return responseDataLarge;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -115,18 +115,18 @@ module('Integration | Component | reports/subject/instructor-group', function (h
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { instructorGroups(schools: [33]) { title, school { title } } }',
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
-      school: this.server.create('school', { id: 33 }),
+      school: await this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
@@ -144,19 +144,19 @@ module('Integration | Component | reports/subject/instructor-group', function (h
   });
 
   test('filter by course', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { instructorGroups(courses: [13]) { title, school { title } } }',
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
       prepositionalObject: 'course',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(
@@ -172,20 +172,20 @@ module('Integration | Component | reports/subject/instructor-group', function (h
   });
 
   test('filter by school and session', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { instructorGroups(schools: [24], sessions: [13]) { title, school { title } } }',
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
-      school: this.server.create('school', { id: 24 }),
+      school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'session',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 24));

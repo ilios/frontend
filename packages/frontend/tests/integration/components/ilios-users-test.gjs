@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/ilios-users';
 import IliosUsers from 'frontend/components/ilios-users';
 import { array } from '@ember/helper';
@@ -10,7 +10,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | ilios-users', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     await render(
@@ -101,7 +101,7 @@ module('Integration | Component | ilios-users', function (hooks) {
   test('add user form renders when configured to', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           type: 'form',
@@ -110,8 +110,8 @@ module('Integration | Component | ilios-users', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -153,7 +153,7 @@ module('Integration | Component | ilios-users', function (hooks) {
   test('directory search renders when configured to', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           type: 'form',
@@ -163,8 +163,8 @@ module('Integration | Component | ilios-users', function (hooks) {
       };
     });
 
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -202,7 +202,7 @@ module('Integration | Component | ilios-users', function (hooks) {
 
   test('closing directory search form resets search terms', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -213,8 +213,8 @@ module('Integration | Component | ilios-users', function (hooks) {
       };
     });
 
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -258,7 +258,7 @@ module('Integration | Component | ilios-users', function (hooks) {
 
   test('close bulk new users form callback fires', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -268,8 +268,8 @@ module('Integration | Component | ilios-users', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -311,7 +311,7 @@ module('Integration | Component | ilios-users', function (hooks) {
 
   test('close new user form callback fires', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -321,8 +321,8 @@ module('Integration | Component | ilios-users', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -363,7 +363,7 @@ module('Integration | Component | ilios-users', function (hooks) {
 
   test('collapse button fires', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -373,8 +373,8 @@ module('Integration | Component | ilios-users', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);

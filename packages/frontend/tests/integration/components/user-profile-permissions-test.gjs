@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/user-profile-permissions';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
@@ -11,19 +11,28 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | user-profile-permissions', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.schools = this.server.createList('school', 2);
+    this.schools = await this.server.createList('school', 2);
     this.thisYear = DateTime.now().year;
     this.currentAcademicYear = this.thisYear;
-    this.server.create('academic-year', { id: this.thisYear - 1 });
-    this.server.create('academic-year', { id: this.thisYear });
-    this.server.create('academic-year', { id: this.thisYear + 1 });
+    await this.server.create('academic-year', {
+      id: this.thisYear - 1,
+      title: `${this.thisYear - 1} - ${this.thisYear}`,
+    });
+    await this.server.create('academic-year', {
+      id: this.thisYear,
+      title: `${this.thisYear} - ${this.thisYear + 1}`,
+    });
+    await this.server.create('academic-year', {
+      id: this.thisYear + 1,
+      title: `${this.thisYear + 1} - ${this.thisYear + 2}`,
+    });
   });
 
   test('it renders empty', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school: this.schools[1],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -76,7 +85,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
   });
 
   test('change school', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school: this.schools[1],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -101,17 +110,17 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
   });
 
   test('change year', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school: this.schools[1],
     });
 
-    this.server.create('course', {
+    await this.server.create('course', {
       school: this.schools[1],
       directors: [user],
       year: this.currentAcademicYear,
     });
 
-    this.server.create('course', {
+    await this.server.create('course', {
       school: this.schools[1],
       administrators: [user],
       year: this.currentAcademicYear + 1,
@@ -141,7 +150,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
 
   test('it renders with school data', async function (assert) {
     const school = this.schools[0];
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school,
       directedSchools: [school],
       administeredSchools: [school],
@@ -160,10 +169,10 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
 
   test('it renders with program data', async function (assert) {
     const school = this.schools[0];
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school,
     });
-    this.server.create('program', {
+    await this.server.create('program', {
       school,
       directors: [user],
     });
@@ -192,17 +201,17 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
 
   test('it renders with program year data', async function (assert) {
     const school = this.schools[0];
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school,
     });
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
       directors: [user],
     });
-    this.server.create('cohort', { programYear });
+    await this.server.create('cohort', { programYear });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(
@@ -228,27 +237,27 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
 
   test('it renders with course data', async function (assert) {
     const school = this.schools[0];
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school,
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school,
       directors: [user],
       administrators: [user],
       studentAdvisors: [user],
       year: this.currentAcademicYear,
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       session,
       instructors: [user],
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create('session', {
       course,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session2,
       instructors: [user],
     });
@@ -310,19 +319,19 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
 
   test('it renders with session data', async function (assert) {
     const school = this.schools[0];
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school,
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school,
       year: this.currentAcademicYear,
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       administrators: [user],
       studentAdvisors: [user],
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       session,
       instructors: [user],
     });
@@ -379,7 +388,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
 
   test('if academic year does not cross year boundaries, and its the first half of the year then last year is selected', async function (assert) {
     freezeDateAt(new Date(`1/1/${this.thisYear}`));
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -388,7 +397,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     });
     const currentDate = new Date();
     this.currentAcademicYear = currentDate.getFullYear() - 1;
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school: this.schools[1],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -410,7 +419,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
 
   test('academic year shows range as applicable by configuration', async function (assert) {
     freezeDateAt(new Date(`7/1/${this.thisYear}`));
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -418,22 +427,22 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       };
     });
     const school = this.schools[0];
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school,
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school,
       directors: [user],
       administrators: [user],
       studentAdvisors: [user],
       year: this.currentAcademicYear,
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       administrators: [user],
       studentAdvisors: [user],
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       session,
       instructors: [user],
     });
@@ -475,12 +484,12 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
   });
 
   test('selected year and school as input', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       school: this.schools[1],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    this.set('schoolId', this.schools[1].id);
+    this.set('schoolId', `${this.schools[1].id}`);
     this.set('year', this.thisYear + 1);
     await render(
       <template>
@@ -494,7 +503,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(component.selectedSchool, this.schools[1].id);
-    assert.strictEqual(parseInt(component.selectedYear, 10), this.thisYear + 1);
+    assert.strictEqual(Number(component.selectedSchool), this.schools[1].id);
+    assert.strictEqual(Number(component.selectedYear), this.thisYear + 1);
   });
 });

@@ -16,7 +16,7 @@ module('Acceptance | login', function (hooks) {
   });
 
   test('form login type shows form', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {
@@ -31,7 +31,7 @@ module('Acceptance | login', function (hooks) {
   });
 
   test('invalid login type does not show form and throws error', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       assert.step('API called');
       return {
         config: {

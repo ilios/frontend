@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/daily-calendar-event';
 import DailyCalendarEvent from 'ilios-common/components/daily-calendar-event';
@@ -10,7 +10,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | daily-calendar-event', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   this.createEvent = function (
     name,

@@ -1,82 +1,89 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/visualize-instructor-session-type-graph';
 import VisualizeInstructorSessionTypeGraph from 'ilios-common/components/course/visualize-instructor-session-type-graph';
+import { DateTime } from 'luxon';
 
 module(
   'Integration | Component | course/visualize-instructor-session-type-graph',
   function (hooks) {
     setupRenderingTest(hooks);
-    setupMirage(hooks);
+    setupMSW(hooks);
 
     hooks.beforeEach(async function () {
-      const instructor = this.server.create('user');
-      const sessionType1 = this.server.create('session-type', {
+      const instructor = await this.server.create('user');
+      const sessionType1 = await this.server.create('session-type', {
         title: 'Standalone',
       });
-      const sessionType2 = this.server.create('session-type', {
+      const sessionType2 = await this.server.create('session-type', {
         title: 'Campaign',
       });
-      const sessionType3 = this.server.create('session-type', {
+      const sessionType3 = await this.server.create('session-type', {
         title: 'Prelude',
       });
-      const linkedCourseWithTime = this.server.create('course');
-      const linkedCourseWithoutTime = this.server.create('course');
-      const session1 = this.server.create('session', {
+      const linkedCourseWithTime = await this.server.create('course');
+      const linkedCourseWithoutTime = await this.server.create('course');
+      const session1 = await this.server.create('session', {
         title: 'Berkeley Investigations',
         course: linkedCourseWithTime,
         sessionType: sessionType1,
       });
-      const session2 = this.server.create('session', {
+      const session2 = await this.server.create('session', {
         title: 'The San Leandro Horror',
         course: linkedCourseWithTime,
         sessionType: sessionType2,
       });
-      const session3 = this.server.create('session', {
+      const session3 = await this.server.create('session', {
         title: 'Two Slices of Pizza',
         course: linkedCourseWithoutTime,
         sessionType: sessionType3,
       });
-      const session4 = this.server.create('session', {
+      const session4 = await this.server.create('session', {
         title: 'Aardvark',
         course: linkedCourseWithTime,
         sessionType: sessionType2,
       });
-      this.server.create('offering', {
+      await this.server.create('offering', {
         session: session1,
-        startDate: new Date('2019-12-08T12:00:00'),
-        endDate: new Date('2019-12-08T17:00:00'),
+        startDate: DateTime.fromObject({ year: 2019, month: 12, day: 8, hour: 12 }).toISO(),
+        endDate: DateTime.fromObject({ year: 2019, month: 12, day: 8, hour: 17 }).toISO(),
         instructors: [instructor],
       });
-      this.server.create('offering', {
+      await this.server.create('offering', {
         session: session1,
-        startDate: new Date('2019-12-21T12:00:00'),
-        endDate: new Date('2019-12-21T17:30:00'),
+        startDate: DateTime.fromObject({ year: 2019, month: 12, day: 21, hour: 12 }).toISO(),
+        endDate: DateTime.fromObject({
+          year: 2019,
+          month: 12,
+          day: 21,
+          hour: 17,
+          minute: 30,
+        }).toISO(),
         instructors: [instructor],
       });
-      this.server.create('offering', {
+      await this.server.create('offering', {
         session: session2,
-        startDate: new Date('2019-12-05T18:00:00'),
-        endDate: new Date('2019-12-05T21:00:00'),
+        startDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 18 }).toISO(),
+        endDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 21 }).toISO(),
         instructors: [instructor],
       });
-      this.server.create('offering', {
+      await this.server.create('offering', {
         session: session3,
-        startDate: new Date('2019-12-05T18:00:00'),
-        endDate: new Date('2019-12-05T18:00:00'),
+        startDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 18 }).toISO(),
+        endDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 18 }).toISO(),
         instructors: [instructor],
       });
-      this.server.create('offering', {
+      await this.server.create('offering', {
         session: session4,
-        startDate: new Date('2019-12-05T18:00:00'),
-        endDate: new Date('2019-12-05T18:00:00'),
+        startDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 18 }).toISO(),
+        endDate: DateTime.fromObject({ year: 2019, month: 12, day: 5, hour: 18 }).toISO(),
         instructors: [instructor],
       });
       this.emptyCourse = await this.owner
         .lookup('service:store')
-        .findRecord('course', this.server.create('course').id);
+        .findRecord('course', (await this.server.create('course')).id);
       this.linkedCourseWithTime = await this.owner
         .lookup('service:store')
         .findRecord('course', linkedCourseWithTime.id);

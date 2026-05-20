@@ -4,12 +4,12 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import UserProfileCalendar from 'frontend/components/user-profile-calendar';
 
 module('Integration | Component | user profile calendar', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     class IliosConfigMock extends Service {
@@ -19,20 +19,20 @@ module('Integration | Component | user profile calendar', function (hooks) {
   });
 
   test('shows events for this week', async function (assert) {
-    this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
+    this.server.get(`/userevents/:id`, ({ params, request }) => {
       assert.step('API called');
       assert.ok('id' in params);
-      assert.strictEqual(parseInt(params.id, 10), 13);
+      assert.strictEqual(Number(params.id), 13);
 
       const today = DateTime.fromObject({ hour: 8 });
       const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
       const from = DateTime.fromJSDate(firstDayOfThisWeek).toUnixInteger();
       const to = DateTime.fromJSDate(lastDayOfThisWeek).toUnixInteger();
 
-      assert.ok('from' in queryParams);
-      assert.strictEqual(Number(queryParams.from), from, 'from is correct');
-      assert.ok('to' in queryParams);
-      assert.strictEqual(Number(queryParams.to), to, 'to is correct');
+      const { searchParams } = new URL(request.url);
+
+      assert.strictEqual(Number(searchParams.get('from')), from, 'from is correct');
+      assert.strictEqual(Number(searchParams.get('to')), to, 'to is correct');
 
       const userEvents = [
         {
@@ -87,21 +87,18 @@ module('Integration | Component | user profile calendar', function (hooks) {
   });
 
   test('clicking forward goes to next week', async function (assert) {
-    let called = 0;
     const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
-    this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
-      assert.step('API called');
+    this.server.get(`/userevents/:id`, ({ params, request }) => {
       assert.ok('id' in params);
-      assert.strictEqual(parseInt(params.id, 10), 13);
-      assert.ok('from' in queryParams);
-      assert.ok('to' in queryParams);
-      const from = DateTime.fromJSDate(firstDayOfThisWeek).plus({ weeks: called }).toUnixInteger();
-      const to = DateTime.fromJSDate(lastDayOfThisWeek).plus({ weeks: called }).toUnixInteger();
+      assert.strictEqual(Number(params.id), 13);
+      const { searchParams } = new URL(request.url);
+      const from = DateTime.fromJSDate(firstDayOfThisWeek).toUnixInteger();
+      const to = DateTime.fromJSDate(lastDayOfThisWeek).toUnixInteger();
 
-      assert.strictEqual(Number(queryParams.from), from);
-      assert.strictEqual(Number(queryParams.to), to);
+      assert.strictEqual(Number(searchParams.get('from')), from);
+      assert.strictEqual(Number(searchParams.get('to')), to);
 
-      called++;
+      assert.step('API called');
       return { userEvents: [] };
     });
     const user = EmberObject.create({
@@ -109,27 +106,38 @@ module('Integration | Component | user profile calendar', function (hooks) {
     });
     this.set('user', user);
     await render(<template><UserProfileCalendar @user={{this.user}} /></template>);
+    this.server.get(`/userevents/:id`, ({ params, request }) => {
+      assert.ok('id' in params);
+      assert.strictEqual(Number(params.id), 13);
+      const { searchParams } = new URL(request.url);
+      const from = DateTime.fromJSDate(firstDayOfThisWeek).plus({ weeks: 1 }).toUnixInteger();
+      const to = DateTime.fromJSDate(lastDayOfThisWeek).plus({ weeks: 1 }).toUnixInteger();
+
+      assert.strictEqual(Number(searchParams.get('from')), from);
+      assert.strictEqual(Number(searchParams.get('to')), to);
+
+      assert.step('API called');
+      return { userEvents: [] };
+    });
     await click('[data-test-go-forward]');
     assert.verifySteps(['API called', 'API called']);
   });
 
   test('clicking backward goes to last week', async function (assert) {
-    let called = 0;
     const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
-    this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
-      assert.step('API called');
+    this.server.get(`/userevents/:id`, ({ params, request }) => {
       assert.ok('id' in params);
-      assert.strictEqual(parseInt(params.id, 10), 13);
-      assert.ok('from' in queryParams);
-      assert.ok('to' in queryParams);
+      assert.strictEqual(Number(params.id), 13);
 
-      const from = DateTime.fromJSDate(firstDayOfThisWeek).minus({ weeks: called }).toUnixInteger();
-      const to = DateTime.fromJSDate(lastDayOfThisWeek).minus({ weeks: called }).toUnixInteger();
+      const { searchParams } = new URL(request.url);
 
-      assert.strictEqual(Number(queryParams.from), from);
-      assert.strictEqual(Number(queryParams.to), to);
+      const from = DateTime.fromJSDate(firstDayOfThisWeek).toUnixInteger();
+      const to = DateTime.fromJSDate(lastDayOfThisWeek).toUnixInteger();
 
-      called++;
+      assert.strictEqual(Number(searchParams.get('from')), from);
+      assert.strictEqual(Number(searchParams.get('to')), to);
+
+      assert.step('API called');
       return { userEvents: [] };
     });
 
@@ -138,6 +146,21 @@ module('Integration | Component | user profile calendar', function (hooks) {
     });
     this.set('user', user);
     await render(<template><UserProfileCalendar @user={{this.user}} /></template>);
+    this.server.get(`/userevents/:id`, ({ params, request }) => {
+      assert.ok('id' in params);
+      assert.strictEqual(Number(params.id), 13);
+
+      const { searchParams } = new URL(request.url);
+
+      const from = DateTime.fromJSDate(firstDayOfThisWeek).minus({ weeks: 1 }).toUnixInteger();
+      const to = DateTime.fromJSDate(lastDayOfThisWeek).minus({ weeks: 1 }).toUnixInteger();
+
+      assert.strictEqual(Number(searchParams.get('from')), from);
+      assert.strictEqual(Number(searchParams.get('to')), to);
+
+      assert.step('API called');
+      return { userEvents: [] };
+    });
     await click('[data-test-go-back]');
     assert.verifySteps(['API called', 'API called']);
   });

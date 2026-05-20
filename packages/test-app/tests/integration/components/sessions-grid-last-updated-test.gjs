@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setLocale } from 'ember-intl/test-support';
 import { DateTime } from 'luxon';
 import SessionsGridLastUpdated from 'ilios-common/components/sessions-grid-last-updated';
 
 module('Integration | Component | sessions-grid-last-updated', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
@@ -20,7 +20,7 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
   });
 
   test('it renders', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       updatedAt: DateTime.fromObject({
         year: 2019,
         month: 7,
@@ -28,7 +28,7 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
         hour: 17,
         minute: 0,
         second: 0,
-      }).toJSDate(),
+      }).toISO(),
     });
 
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);

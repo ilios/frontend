@@ -1,22 +1,22 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/session-types-collapsed';
 import SessionTypesCollapsed from 'frontend/components/school/session-types-collapsed';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/session-types-collapsed', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('session-type', 2, {
+    const school = await this.server.create('school');
+    await this.server.createList('session-type', 2, {
       school,
       assessment: true,
     });
-    this.server.create('session-type', {
+    await this.server.create('session-type', {
       school,
       assessment: false,
     });
@@ -36,7 +36,7 @@ module('Integration | Component | school/session-types-collapsed', function (hoo
   });
 
   test('expand', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('expand', () => {

@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import DetailCohortManager from 'ilios-common/components/detail-cohort-manager';
 import { component } from 'ilios-common/page-objects/components/detail-cohort-manager';
 import { setupAuthentication } from 'ilios-common';
@@ -10,25 +10,25 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | detail cohort manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const now = new Date();
-    const school1 = this.server.create('school');
-    const school2 = this.server.create('school');
-    const program1 = this.server.create('program', { school: school1 });
-    const program2 = this.server.create('program', { school: school2 });
-    const programYear1 = this.server.create('program-year', {
+    const school1 = await this.server.create('school');
+    const school2 = await this.server.create('school');
+    const program1 = await this.server.create('program', { school: school1 });
+    const program2 = await this.server.create('program', { school: school2 });
+    const programYear1 = await this.server.create('program-year', {
       program: program1,
       startYear: now.getFullYear(),
     });
-    const programYear2 = this.server.create('program-year', {
+    const programYear2 = await this.server.create('program-year', {
       program: program2,
       startYear: now.getFullYear(),
     });
-    const cohort1 = this.server.create('cohort', { programYear: programYear1 });
-    const cohort2 = this.server.create('cohort', { programYear: programYear2 });
-    const course = this.server.create('course', { school: school1 });
+    const cohort1 = await this.server.create('cohort', { programYear: programYear1 });
+    const cohort2 = await this.server.create('cohort', { programYear: programYear2 });
+    const course = await this.server.create('course', { school: school1 });
     await setupAuthentication({ school: school1, directedPrograms: [program1, program2] });
 
     const store = this.owner.lookup('service:store');

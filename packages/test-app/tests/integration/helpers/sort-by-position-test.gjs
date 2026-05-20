@@ -1,28 +1,28 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import sortByPosition from 'ilios-common/helpers/sort-by-position';
 import { array } from '@ember/helper';
 
 module('Integration | Helper | sort-by-position', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('sort objectives', async function (assert) {
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       title: 'Aardvark',
       position: 3,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       title: 'Zeppelin',
       position: 2,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       title: 'Oscar',
       position: 1,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       title: 'Bockwurst',
       position: 1,
     });

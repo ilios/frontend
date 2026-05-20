@@ -1,19 +1,19 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/course/visualize-instructor';
 import VisualizeInstructor from 'ilios-common/components/course/visualize-instructor';
 
 module('Integration | Component | course/visualize-instructor', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
-    const user = this.server.create('user');
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
+    const user = await this.server.create('user');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('course', courseModel);
@@ -30,16 +30,16 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
         },
       };
     });
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
-    const user = this.server.create('user');
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
+    const user = await this.server.create('user');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('course', courseModel);
@@ -53,16 +53,16 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
   });
 
   test('breadcrumb', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
         },
       };
     });
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
-    const user = this.server.create('user');
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
+    const user = await this.server.create('user');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('course', courseModel);
@@ -83,50 +83,50 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
   });
 
   test('visualizations', async function (assert) {
-    const instructor = this.server.create('user');
-    const vocabulary1 = this.server.create('vocabulary');
-    const vocabulary2 = this.server.create('vocabulary');
-    const term1 = this.server.create('term', {
+    const instructor = await this.server.create('user');
+    const vocabulary1 = await this.server.create('vocabulary');
+    const vocabulary2 = await this.server.create('vocabulary');
+    const term1 = await this.server.create('term', {
       vocabulary: vocabulary1,
     });
-    const term2 = this.server.create('term', {
+    const term2 = await this.server.create('term', {
       vocabulary: vocabulary1,
     });
-    const term3 = this.server.create('term', {
+    const term3 = await this.server.create('term', {
       vocabulary: vocabulary2,
     });
-    const sessionType1 = this.server.create('session-type');
-    const sessionType2 = this.server.create('session-type');
-    const session1 = this.server.create('session', {
+    const sessionType1 = await this.server.create('session-type');
+    const sessionType2 = await this.server.create('session-type');
+    const session1 = await this.server.create('session', {
       sessionType: sessionType1,
       terms: [term1],
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create('session', {
       sessionType: sessionType2,
       terms: [term2, term3],
     });
-    const session3 = this.server.create('session');
-    this.server.create('ilm-session', {
+    const session3 = await this.server.create('session');
+    await this.server.create('ilm-session', {
       session: session3,
       hours: 2,
       instructors: [instructor],
     });
-    const instructorGroup1 = this.server.create('instructor-group', {
+    const instructorGroup1 = await this.server.create('instructor-group', {
       users: [instructor],
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       instructorGroups: [instructorGroup1],
-      startDate: DateTime.fromISO('2022-07-20T09:00:00').toJSDate(),
-      endDate: DateTime.fromISO('2022-07-20T10:00:00').toJSDate(),
+      startDate: DateTime.fromISO('2022-07-20T09:00:00').toISO(),
+      endDate: DateTime.fromISO('2022-07-20T10:00:00').toISO(),
       session: session1,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       instructors: [instructor],
-      startDate: DateTime.fromISO('2022-07-20T09:00:00').toJSDate(),
-      endDate: DateTime.fromISO('2022-07-20T09:30:00').toJSDate(),
+      startDate: DateTime.fromISO('2022-07-20T09:00:00').toISO(),
+      endDate: DateTime.fromISO('2022-07-20T09:30:00').toISO(),
       session: session2,
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       sessions: [session1, session2, session3],
       year: 2022,
     });

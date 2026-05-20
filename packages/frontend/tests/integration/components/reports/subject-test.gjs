@@ -1,45 +1,49 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/reports/subject';
 import Subject from 'frontend/components/reports/subject';
 import noop from 'ilios-common/helpers/noop';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | reports/subject', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     //override default handler to just return all courses
-    this.server.get('api/courses', (schema) => {
-      return schema.courses.all();
+    this.server.get('/api/courses', () => {
+      const rhett = this.server.db.course.all();
+      return formatJsonApi(rhett, 'course');
     });
   });
 
   test('year filter works', async function (assert) {
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2015,
+      title: '2015',
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2016,
+      title: '2016',
     });
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
       year: 2015,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       school,
       year: 2016,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
       school,
     });
@@ -51,17 +55,17 @@ module('Integration | Component | reports/subject', function (hooks) {
       this.set('selectedYear', year);
       assert.strictEqual(year, '2016', 'report year bubbles up for query params');
     });
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
-      assert.step('API called');
-      const { query } = JSON.parse(requestBody);
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
 
       assert.strictEqual(
         query,
         'query { courses(schools: [1], instructors: [100]) { id, title, year, externalId, school { title } } }',
       );
+      assert.step('API called');
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId }) => {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
             return { id, title, year, externalId };
           }),
         },
@@ -91,7 +95,7 @@ module('Integration | Component | reports/subject', function (hooks) {
   });
 
   test('report results show academic year as range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -99,27 +103,27 @@ module('Integration | Component | reports/subject', function (hooks) {
       };
     });
     const year = 2016;
-    this.server.create('academic-year', { id: year });
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    this.server.create('course', { school, year, cohorts: [cohort] });
-    const report = this.server.create('report', {
+    await this.server.create('academic-year', { id: year });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.create('course', { school, year, cohorts: [cohort] });
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'program',
-      prepositionalObjectTableRowId: program.id,
+      prepositionalObjectTableRowId: `${program.id}`,
       user: this.user,
       school,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', '');
-    this.server.post('api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', () => {
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId }) => {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
             return { id, title, year, externalId };
           }),
         },
@@ -144,15 +148,15 @@ module('Integration | Component | reports/subject', function (hooks) {
   });
 
   test('changing year changes select #3839', async function (assert) {
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2015,
     });
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
       year: 2015,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       user: this.user,
@@ -162,10 +166,10 @@ module('Integration | Component | reports/subject', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', '');
-    this.server.post('api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', () => {
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId }) => {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
             return { id, title, year, externalId };
           }),
         },
@@ -189,15 +193,15 @@ module('Integration | Component | reports/subject', function (hooks) {
   });
 
   test('validation - report title too long', async function (assert) {
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2015,
     });
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
       year: 2015,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       user: this.user,
@@ -207,10 +211,10 @@ module('Integration | Component | reports/subject', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', '');
-    this.server.post('api/graphql', ({ db }) => {
+    this.server.post('/api/graphql', () => {
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId }) => {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
             return { id, title, year, externalId };
           }),
         },

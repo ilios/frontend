@@ -3,30 +3,30 @@ import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import noop from 'ilios-common/helpers/noop';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/program-year/cohort-members';
 import CohortMembers from 'frontend/components/program-year/cohort-members';
 
 module('Integration | Component | program-year/cohort-members', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    this.cohort = this.server.create('cohort', { programYear });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    this.cohort = await this.server.create('cohort', { programYear });
     this.programYear = programYear;
     this.school = school;
   });
 
   test('it renders expanded with data', async function (assert) {
-    const otherSchool = this.server.create('school');
-    this.server.createList('user', 3, {
+    const otherSchool = await this.server.create('school');
+    await this.server.createList('user', 3, {
       cohorts: [this.cohort],
     });
-    this.server.create('user', { enabled: false, cohorts: [this.cohort] });
-    this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
+    await this.server.create('user', { enabled: false, cohorts: [this.cohort] });
+    await this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
 
     const programYear = await this.owner
       .lookup('service:store')
@@ -81,11 +81,11 @@ module('Integration | Component | program-year/cohort-members', function (hooks)
   });
 
   test('it renders collapsed with data', async function (assert) {
-    const otherSchool = this.server.create('school');
-    this.server.createList('user', 3, {
+    const otherSchool = await this.server.create('school');
+    await this.server.createList('user', 3, {
       cohorts: [this.cohort],
     });
-    this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
+    await this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
 
     const programYear = await this.owner
       .lookup('service:store')
@@ -132,7 +132,7 @@ module('Integration | Component | program-year/cohort-members', function (hooks)
   });
 
   test('sorting works', async function (assert) {
-    this.server.createList('user', 2, {
+    await this.server.createList('user', 2, {
       cohorts: [this.cohort],
     });
 
@@ -185,7 +185,7 @@ module('Integration | Component | program-year/cohort-members', function (hooks)
   });
 
   test('collapse action fires', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       cohorts: [this.cohort],
     });
     const programYear = await this.owner
@@ -211,7 +211,7 @@ module('Integration | Component | program-year/cohort-members', function (hooks)
   });
 
   test('expand action fires', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       cohorts: [this.cohort],
     });
     const programYear = await this.owner

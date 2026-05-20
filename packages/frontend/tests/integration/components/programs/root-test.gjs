@@ -1,23 +1,21 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/programs/root';
 import Root from 'frontend/components/programs/root';
 
 module('Integration | Component | programs/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    for (let i = 0; i < 4; i++) {
-      const school = this.server.create('school');
-      this.server.createList('program', 3, { school });
+    const schools = await this.server.createList('school', 4);
+    for (let i = 0, n = schools.length; i < n; i++) {
+      await this.server.createList('program', 3, { school: schools[i] });
     }
-    this.schools = await this.owner.lookup('service:store').findAll('school');
-
-    const user = this.server.create('user', { schoolId: 2 });
+    const user = await this.server.create('user', { school: schools[1] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -25,6 +23,7 @@ module('Integration | Component | programs/root', function (hooks) {
       }
     }
     this.owner.register('service:currentUser', CurrentUserMock);
+    this.schools = await this.owner.lookup('service:store').findAll('school');
   });
 
   const setupPermissionChecker = function (scope, can) {

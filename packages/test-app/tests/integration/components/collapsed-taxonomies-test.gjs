@@ -1,34 +1,34 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/collapsed-taxonomies';
 import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
 
 module('Integration | Component | collapsed taxonomies', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', {
       school,
       active: true,
     });
-    const term1 = this.server.create('term', {
+    const term1 = await this.server.create('term', {
       vocabulary,
       active: true,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       vocabulary,
       active: true,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school,
     });
-    this.session = this.server.create('session', {
+    this.session = await this.server.create('session', {
       course,
       terms: [term1],
     });

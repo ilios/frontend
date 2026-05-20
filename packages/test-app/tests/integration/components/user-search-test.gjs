@@ -1,17 +1,19 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/user-search';
 import UserSearch from 'ilios-common/components/user-search';
+import formatJsonApi from 'ilios-common/msw/utils/json-api-formatter';
 
 module('Integration | Component | user search', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
-    this.server.get('api/users', (schema) => {
-      return schema.users.all();
+    this.server.get('/api/users', async () => {
+      const users = await this.server.db.user.all();
+      return formatJsonApi(users, 'user');
     });
   });
 
@@ -29,11 +31,14 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('input triggers search', async function (assert) {
-    this.server.create('user');
-    this.server.get('api/users', (schema, { queryParams }) => {
+    await this.server.create('user');
+    this.server.get('/api/users', async ({ request }) => {
+      const { searchParams } = new URL(request.url);
+
+      assert.strictEqual(searchParams.get('q'), 'search words');
       assert.step('API called');
-      assert.strictEqual(queryParams['q'], 'search words');
-      return schema.users.all();
+      const users = await this.server.db.user.all();
+      return formatJsonApi(users, 'user');
     });
     await render(<template><UserSearch /></template>);
     await component.searchBox.set('search words');
@@ -50,7 +55,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('search for groups', async function (assert) {
-    this.server.createList('instructor-group', 2);
+    await this.server.createList('instructor-group', 2);
     const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     await render(
@@ -66,7 +71,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('click user fires add user', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('action', (passedUser) => {
       assert.step('action called');
@@ -82,7 +87,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('click group fires add group', async function (assert) {
-    this.server.createList('instructor-group', 2);
+    await this.server.createList('instructor-group', 2);
     const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('action', (group) => {
       assert.step('action called');
@@ -107,19 +112,19 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('sorting is natural', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: '20',
       lastName: 'person',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: '10',
       lastName: 'person',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: '3',
       lastName: 'person',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       lastName: 'person',
     });
     await render(<template><UserSearch /></template>);
@@ -133,9 +138,10 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('reads currentlyActiveUsers', async function (assert) {
-    const user = this.server.create('user');
-    this.server.get('api/users', (schema) => {
-      return schema.users.all();
+    const user = await this.server.create('user');
+    this.server.get('/api/users', async () => {
+      const users = await this.server.db.user.all();
+      return formatJsonApi(users, 'user');
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('currentlyActiveUsers', [userModel]);
@@ -150,9 +156,10 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('reads currentlyActiveUsers from a promise', async function (assert) {
-    const user = this.server.create('user');
-    this.server.get('api/users', (schema) => {
-      return schema.users.all();
+    const user = await this.server.create('user');
+    this.server.get('/api/users', async () => {
+      const users = await this.server.db.user.all();
+      return formatJsonApi(users, 'user');
     });
     const users = this.owner.lookup('service:store').query('user', { id: user.id });
     this.set('currentlyActiveUsers', users);
@@ -167,7 +174,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('reads currentlyActiveInstructorGroups', async function (assert) {
-    this.server.create('instructor-group');
+    await this.server.create('instructor-group');
     const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     this.set('currentlyActiveInstructorGroups', instructorGroups);
@@ -187,7 +194,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('reads currentlyActiveInstructorGroups from a promise', async function (assert) {
-    this.server.create('instructor-group');
+    await this.server.create('instructor-group');
     const igPromise = this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', await igPromise);
     this.set('currentlyActiveInstructorGroups', igPromise);

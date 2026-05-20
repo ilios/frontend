@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/school/competencies-collapsed';
 import CompetenciesCollapsed from 'frontend/components/school/competencies-collapsed';
@@ -8,15 +8,15 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/competencies-collapsed', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const domain = this.server.create('competency', { school });
-    const domain2 = this.server.create('competency', { school });
-    this.server.create('competency', { school });
-    this.server.create('competency', { school, parent: domain2 });
-    this.server.createList('competency', 3, { school, parent: domain });
+    const school = await this.server.create('school');
+    const domain = await this.server.create('competency', { school });
+    const domain2 = await this.server.create('competency', { school });
+    await this.server.create('competency', { school });
+    await this.server.create('competency', { school, parent: domain2 });
+    await this.server.createList('competency', 3, { school, parent: domain });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
@@ -35,7 +35,7 @@ module('Integration | Component | school/competencies-collapsed', function (hook
   });
 
   test('clicking expand fires action', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);

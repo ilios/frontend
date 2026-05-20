@@ -2,13 +2,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/program-year/list-item';
 import ListItem from 'frontend/components/program-year/list-item';
 
 module('Integration | Component | program-year/list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.permissionCheckerMock = class extends Service {
@@ -26,10 +26,10 @@ module('Integration | Component | program-year/list-item', function (hooks) {
   });
 
   test('it renders with cohort title', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const cohort = this.server.create('cohort');
-    const programYear = this.server.create('program-year', { program, cohort });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const cohort = await this.server.create('cohort');
+    const programYear = await this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -47,10 +47,10 @@ module('Integration | Component | program-year/list-item', function (hooks) {
   });
 
   test('it without cohort title', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const cohort = this.server.create('cohort', { title: null });
-    const programYear = this.server.create('program-year', { program, cohort });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const cohort = await this.server.create('cohort', { title: null });
+    const programYear = await this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -68,10 +68,10 @@ module('Integration | Component | program-year/list-item', function (hooks) {
   });
 
   test('it renders single year', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const cohort = this.server.create('cohort', { title: null });
-    const programYear = this.server.create('program-year', { program, cohort });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const cohort = await this.server.create('cohort', { title: null });
+    const programYear = await this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -89,10 +89,10 @@ module('Integration | Component | program-year/list-item', function (hooks) {
   });
 
   test('it renders double year', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const cohort = this.server.create('cohort', { title: null });
-    const programYear = this.server.create('program-year', { program, cohort });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const cohort = await this.server.create('cohort', { title: null });
+    const programYear = await this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -110,10 +110,10 @@ module('Integration | Component | program-year/list-item', function (hooks) {
   });
 
   test('can be deleted', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const cohort = this.server.create('cohort');
-    const programYear = this.server.create('program-year', { program, cohort });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const cohort = await this.server.create('cohort');
+    const programYear = await this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -136,10 +136,10 @@ module('Integration | Component | program-year/list-item', function (hooks) {
         return false;
       },
     });
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const cohort = this.server.create('cohort');
-    const programYear = this.server.create('program-year', { program, cohort });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const cohort = await this.server.create('cohort');
+    const programYear = await this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);

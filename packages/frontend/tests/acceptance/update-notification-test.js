@@ -1,3 +1,4 @@
+import { HttpResponse } from 'msw';
 import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
@@ -13,7 +14,7 @@ module('Acceptance | Update Notification', function (hooks) {
   test('Noting rendered when versions match', async function (assert) {
     this.server.get('/VERSION.txt', function () {
       assert.step('version.txt called');
-      return config.newVersion.currentVersion;
+      return HttpResponse.text(config.newVersion.currentVersion);
     });
 
     await visit('/');
@@ -26,7 +27,7 @@ module('Acceptance | Update Notification', function (hooks) {
     this.server.logging = true;
     this.server.get('/VERSION.txt', function () {
       assert.step('version.txt called');
-      return 'NEW';
+      return HttpResponse.text('NEW');
     });
 
     await visit('/');

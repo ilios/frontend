@@ -2,34 +2,34 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/mesh-manager';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import MeshManager from 'ilios-common/components/mesh-manager';
 import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | mesh-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.trees = this.server.createList('meshTree', 3);
-    this.concepts = this.server.createList('meshConcept', 3);
+    this.trees = await this.server.createList('meshTree', 3);
+    this.concepts = await this.server.createList('meshConcept', 3);
 
-    const concept = this.server.create('meshConcept', {
+    const concept = await this.server.create('meshConcept', {
       scopeNote: '1234567890'.repeat(30),
     });
     this.concepts.push(concept);
   });
 
   test('searching works', async function (assert) {
-    this.server.create('mesh-descriptor', {
+    await this.server.create('mesh-descriptor', {
       concepts: this.concepts,
       trees: this.trees,
     });
-    this.server.create('mesh-descriptor', {
+    await this.server.create('mesh-descriptor', {
       deleted: true,
     });
-    const descriptors = this.server.createList('mesh-descriptor', 3);
+    const descriptors = await this.server.createList('mesh-descriptor', 3);
 
     this.set('terms', [descriptors[0], descriptors[2]]);
     await render(
@@ -56,7 +56,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('searching with more than 50 results', async function (assert) {
-    this.server.createList('mesh-descriptor', 200);
+    await this.server.createList('mesh-descriptor', 200);
     await render(
       <template>
         <MeshManager @editable={{true}} @terms={{(array)}} @add={{(noop)}} @remove={{(noop)}} />
@@ -77,7 +77,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('clicking on unselected term adds it.', async function (assert) {
-    const descriptors = this.server.createList('mesh-descriptor', 3);
+    const descriptors = await this.server.createList('mesh-descriptor', 3);
     this.set('add', (term) => {
       assert.step('add called');
       assert.strictEqual(term.name, 'descriptor 1');
@@ -101,7 +101,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('clicking on selected term does not add it.', async function (assert) {
-    const descriptors = this.server.createList('mesh-descriptor', 3);
+    const descriptors = await this.server.createList('mesh-descriptor', 3);
     this.set('add', () => {
       assert.step('add called');
     });
@@ -123,7 +123,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('no terms', async function (assert) {
-    this.server.createList('mesh-descriptor', 3);
+    await this.server.createList('mesh-descriptor', 3);
     await render(
       <template><MeshManager @editable={{true}} @add={{(noop)}} @remove={{(noop)}} /></template>,
     );
@@ -134,7 +134,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('search term less than 3 characters', async function (assert) {
-    this.server.createList('mesh-descriptor', 3);
+    await this.server.createList('mesh-descriptor', 3);
     await render(
       <template><MeshManager @editable={{true}} @add={{(noop)}} @remove={{(noop)}} /></template>,
     );
@@ -144,7 +144,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('no search results', async function (assert) {
-    this.server.createList('mesh-descriptor', 3);
+    await this.server.createList('mesh-descriptor', 3);
     await render(
       <template><MeshManager @editable={{true}} @add={{(noop)}} @remove={{(noop)}} /></template>,
     );
@@ -153,7 +153,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
     assert.strictEqual(component.searchResults[0].text, 'no results');
   });
   test('clear search results', async function (assert) {
-    const descriptors = this.server.createList('mesh-descriptor', 3);
+    const descriptors = await this.server.createList('mesh-descriptor', 3);
     this.set('terms', descriptors);
     await render(
       <template>

@@ -7,13 +7,13 @@ module('Acceptance | Program - Leadership', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({
       school: this.school,
       administeredSchools: [this.school],
     });
-    const users = this.server.createList('user', 4);
-    this.server.create('program', {
+    const users = await this.server.createList('user', 4);
+    await this.server.create('program', {
       directors: [users[2], users[3]],
       school: this.school,
     });

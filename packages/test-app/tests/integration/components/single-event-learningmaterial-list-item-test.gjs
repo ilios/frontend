@@ -4,13 +4,13 @@ import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/single-event-learningmaterial-list-item';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import SingleEventLearningmaterialListItem from 'ilios-common/components/single-event-learningmaterial-list-item';
 
 module('Integration | Component | single-event-learningmaterial-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
@@ -271,14 +271,14 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('user material status enabled', async function (assert) {
-    const session = this.server.create('session');
-    const sessionLearningMaterial = this.server.create('session-learning-material', {
+    const session = await this.server.create('session');
+    const sessionLearningMaterial = await this.server.create('session-learning-material', {
       session,
     });
-    const sessionMaterialStatus = this.server.create('user-session-material-status', {
+    const sessionMaterialStatus = await this.server.create('user-session-material-status', {
       material: sessionLearningMaterial,
     });
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       sessionMaterialStatuses: [sessionMaterialStatus],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -309,14 +309,14 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('user material status disabled', async function (assert) {
-    const session = this.server.create('session');
-    const sessionLearningMaterial = this.server.create('session-learning-material', {
+    const session = await this.server.create('session');
+    const sessionLearningMaterial = await this.server.create('session-learning-material', {
       session,
     });
-    const sessionMaterialStatus = this.server.create('user-session-material-status', {
+    const sessionMaterialStatus = await this.server.create('user-session-material-status', {
       material: sessionLearningMaterial,
     });
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       sessionMaterialStatuses: [sessionMaterialStatus],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);

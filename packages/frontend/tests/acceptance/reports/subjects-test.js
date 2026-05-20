@@ -9,55 +9,57 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const user = await setupAuthentication({ school }, true);
-    const vocabulary = this.server.create('vocabulary', {
-      school,
+    this.school = await this.server.create('school');
+    const user = await setupAuthentication({ school: this.school }, true);
+    this.vocabulary = await this.server.create('vocabulary', {
+      school: this.school,
     });
-    const term = this.server.create('term', { vocabulary });
-    this.server.create('academic-year', {
+    this.term = await this.server.create('term', { vocabulary: this.vocabulary });
+    await this.server.create('academic-year', {
       id: 2015,
+      title: '2015 - 2016',
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2016,
+      title: '2016 - 2017',
     });
-    this.server.create('program', { school });
-    const firstCourse = this.server.create('course', {
-      school,
+    await this.server.create('program', { school: this.school });
+    this.firstCourse = await this.server.create('course', {
+      school: this.school,
       year: 2015,
       externalId: 'Theoretical Phys Ed',
     });
-    this.server.create('session', {
-      course: firstCourse,
-      terms: [term],
+    this.session = await this.server.create('session', {
+      course: this.firstCourse,
+      terms: [this.term],
     });
-    const secondCourse = this.server.create('course', {
-      school,
+    this.secondCourse = await this.server.create('course', {
+      school: this.school,
       year: 2016,
     });
-    this.server.create('session', {
-      course: secondCourse,
-      terms: [term],
+    await this.server.create('session', {
+      course: this.secondCourse,
+      terms: [this.term],
     });
-    this.server.create('report', {
+    await this.server.create('report', {
       title: 'my report 0',
       subject: 'session',
       prepositionalObject: 'course',
-      prepositionalObjectTableRowId: firstCourse.id,
+      prepositionalObjectTableRowId: `${this.firstCourse.id}`,
       user,
-      school,
+      school: this.school,
     });
-    this.server.create('report', {
+    await this.server.create('report', {
       title: null,
       subject: 'session',
       prepositionalObject: 'term',
-      prepositionalObjectTableRowId: term.id,
+      prepositionalObjectTableRowId: `${this.term.id}`,
       user,
-      school,
+      school: this.school,
     });
-    this.server.create('mesh-descriptor', {
+    await this.server.create('mesh-descriptor', {
       id: 'D1234',
-      courses: [firstCourse, secondCourse],
+      courses: [this.firstCourse, this.secondCourse],
     });
   });
 
@@ -137,11 +139,14 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'new report link has correct link title',
     );
 
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
-      const course = db.courses[0];
-      const { id, title } = db.sessions[0];
+      const { id, title } = this.session;
+      const school = {
+        id: this.school.id,
+        title: this.school.title,
+      };
 
       assert.strictEqual(
         query,
@@ -155,10 +160,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
               id,
               title,
               course: {
-                id: course.id,
-                title: course.title,
-                year: course.year,
-                school: db.schools.find(course.schoolId),
+                id: this.firstCourse.id,
+                title: this.firstCourse.title,
+                year: this.firstCourse.year,
+                school,
               },
             },
           ],
@@ -220,11 +225,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'All Terms for Session session 1 (2016) in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
-      const { id, title } = db.terms[0];
-      const vocab = db.vocabularies[0];
+      const { id, title } = this.term;
 
       assert.strictEqual(
         query,
@@ -232,7 +236,9 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       );
       return {
         data: {
-          terms: [{ id, title, vocabulary: { id: vocab.id, title: vocab.title } }],
+          terms: [
+            { id, title, vocabulary: { id: this.vocabulary.id, title: this.vocabulary.title } },
+          ],
         },
       };
     });
@@ -273,48 +279,42 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'All Sessions for Term term 0 in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
-    let graphQueryCounter = 0;
-    this.server.post('api/graphql', function ({ db }, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      graphQueryCounter++;
-      const { query } = JSON.parse(requestBody);
-      let rhett;
-      switch (graphQueryCounter) {
-        case 1:
-          assert.strictEqual(
-            query,
-            'query { meshDescriptors(id: "D1234") { courses { id }, courseObjectives { course { id } }, sessions { course { id } }, sessionObjectives { session { course { id } } } } }',
-          );
-          rhett = {
-            data: {
-              meshDescriptors: [
-                {
-                  courses: db.courses.map(({ id }) => {
-                    return { id };
-                  }),
-                  courseObjectives: [],
-                  sessions: [],
-                  sessionObjectives: [],
-                },
-              ],
-            },
-          };
-          break;
-        case 2:
-          assert.strictEqual(
-            query,
-            'query { courses(schools: [1], ids: [1, 2]) { id, title, year, externalId, school { title } } }',
-          );
-          rhett = {
-            data: {
-              courses: db.courses.map(({ id, title, year, externalId }) => {
-                return { id, title, year, externalId };
+      assert.strictEqual(
+        query,
+        'query { courses(schools: [1], ids: [1, 2]) { id, title, year, externalId, school { title } } }',
+      );
+      return {
+        data: {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.step('API called');
+      assert.strictEqual(
+        query,
+        'query { meshDescriptors(id: "D1234") { courses { id }, courseObjectives { course { id } }, sessions { course { id } }, sessionObjectives { session { course { id } } } } }',
+      );
+      return {
+        data: {
+          meshDescriptors: [
+            {
+              courses: this.server.db.course.all().map(({ id }) => {
+                return { id };
               }),
+              courseObjectives: [],
+              sessions: [],
+              sessionObjectives: [],
             },
-          };
-          break;
-      }
-      return rhett;
+          ],
+        },
+      };
     });
     await page.subjects.list.table.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
@@ -394,9 +394,9 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'my report 0',
       'third report title correct',
     );
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
 
       assert.strictEqual(
         query,
@@ -404,9 +404,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       );
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId, schoolId }) => {
-            const school = db.schools.find(schoolId);
-            return { id, title, year, externalId, school };
+          courses: this.server.db.course.all().map(({ id, title, year, externalId, school }) => {
+            return { id, title, year, externalId, school: { id: school.id, title: school.title } };
           }),
         },
       };
@@ -455,11 +454,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.newSubject.objects.choose('course');
     await page.subjects.list.newSubject.course.input('cour');
     await page.subjects.list.newSubject.course.results[1].click();
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
-      const course = db.courses[0];
-      const { id, title } = db.sessions[0];
+      const { id, title } = this.session;
 
       assert.strictEqual(
         query,
@@ -472,10 +470,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
               id,
               title,
               course: {
-                id: course.id,
-                title: course.title,
-                year: course.year,
-                school: db.schools.find(course.schoolId),
+                id: this.firstCourse.id,
+                title: this.firstCourse.title,
+                year: this.firstCourse.year,
+                school: { id: this.firstCourse.school.id, title: this.firstCourse.school.title },
               },
             },
           ],
@@ -502,9 +500,9 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.toggleNewSubjectReportForm();
     await page.subjects.list.newSubject.schools.choose('1');
     await page.subjects.list.newSubject.subjects.choose('course');
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { courses(schools: [1]) { id, title, year, externalId, school { title } } }',
@@ -512,7 +510,23 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       );
       return {
         data: {
-          courses: db.courses.map(({ id, title, year, externalId }) => {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.step('API called');
+      assert.strictEqual(
+        query,
+        'query { courses(schools: [1]) { id, title, year, externalId, school { title } } }',
+        'has correct graphql query',
+      );
+      return {
+        data: {
+          courses: this.server.db.course.all().map(({ id, title, year, externalId }) => {
             return { id, title, year, externalId };
           }),
         },
@@ -546,7 +560,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
   test('remove report title', async function (assert) {
     await page.visit();
-    this.server.post('api/graphql', () => {
+    this.server.post('/api/graphql', () => {
       assert.step('API called');
       //send wrong data back, who cares
       return {
@@ -580,7 +594,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('create new report for instructors by academic year #3594', async function (assert) {
-    this.server.createList('user', 3);
+    await this.server.createList('user', 3);
     await page.visit();
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.ok(page.subjects.list.newReportLinkIsHidden);
@@ -601,39 +615,34 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'All Instructors for Academic Year 2015 - 2016 in school 0',
     );
 
-    let counter = 0;
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      const users = this.server.db.user
+        .all()
+        .map(({ id, firstName, middleName, lastName, displayName }) => {
+          return { id, firstName, middleName, lastName, displayName };
+        });
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
-      const users = db.users.map(({ id, firstName, middleName, lastName, displayName }) => {
-        return { id, firstName, middleName, lastName, displayName };
-      });
-      counter++;
-      let rhett;
-      switch (counter) {
-        case 1:
-          assert.strictEqual(
-            query,
-            'query { courses(schools: [1], academicYears: [2015]) { id, school { title } } }',
-          );
-          rhett = {
-            data: {
-              courses: [{ id: 1 }, { id: 31 }],
-            },
-          };
-          break;
-        case 2:
-          assert.ok(query.includes('query { courses(ids: [1,31])'));
-          rhett = {
-            data: {
-              courses: [
-                { sessions: [{ offerings: [{ instructors: users, instructorGroups: [] }] }] },
-              ],
-            },
-          };
-          break;
-      }
-      return rhett;
+      assert.ok(query.includes('query { courses(ids: [1,31])'));
+      return {
+        data: {
+          courses: [{ sessions: [{ offerings: [{ instructors: users, instructorGroups: [] }] }] }],
+        },
+      };
+    });
+
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.strictEqual(
+        query,
+        'query { courses(schools: [1], academicYears: [2015]) { id, school { title } } }',
+      );
+      assert.step('API called');
+      return {
+        data: {
+          courses: [{ id: 1 }, { id: 31 }],
+        },
+      };
     });
     await page.subjects.list.table.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
@@ -657,19 +666,18 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.newSubject.objects.choose('academic year');
     await page.subjects.list.newSubject.prepositionalObjects.choose('2015');
     await page.subjects.list.newSubject.save();
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { courses(academicYears: [2015]) { id, title, year, externalId, school { title } } }',
       );
-      const coursesIn2015 = db.courses.filter(({ year }) => year === 2015);
+      const coursesIn2015 = this.server.db.course.all().filter(({ year }) => year === 2015);
       return {
         data: {
-          courses: coursesIn2015.map(({ id, title, year, externalId, schoolId }) => {
-            const school = db.schools.find(schoolId);
-            return { id, title, year, externalId, school };
+          courses: coursesIn2015.map(({ id, title, year, externalId, school }) => {
+            return { id, title, year, externalId, school: { id: school.id, title: school.title } };
           }),
         },
       };

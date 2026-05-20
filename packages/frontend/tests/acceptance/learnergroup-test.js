@@ -10,19 +10,19 @@ module('Acceptance | Learner Group', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication(
       { school: this.school, administeredSchools: [this.school] },
       true,
     );
-    this.program = this.server.create('program', { school: this.school });
+    this.program = await this.server.create('program', { school: this.school });
   });
 
   test('move learners individually from cohort to group', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    this.server.create('learner-group', { cohort });
-    this.server.createList('user', 2, { cohorts: [cohort] });
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.create('learner-group', { cohort });
+    await this.server.createList('user', 2, { cohorts: [cohort] });
 
     await page.visit({ learnerGroupId: 1 });
 
@@ -73,10 +73,10 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('remove learners individually from group', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    const learnerGroup = this.server.create('learner-group', { cohort });
-    this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
 
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.manageUsers.click();
@@ -104,22 +104,22 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('generate new subgroups', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    this.server.createList('user', 2);
-    const parent = this.server.create('learner-group', {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.createList('user', 2);
+    const parent = await this.server.create('learner-group', {
       cohort,
     });
-    const parent2 = this.server.create('learner-group', {
+    const parent2 = await this.server.create('learner-group', {
       cohort,
       parent,
       userIds: [2, 3],
     });
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       cohort,
       parent,
     });
-    this.server.createList('learner-group', 2, {
+    await this.server.createList('learner-group', 2, {
       cohort,
       parent: parent2,
     });
@@ -168,18 +168,18 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('copy learnergroup without learners', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', {
       programYear,
     });
-    const parent = this.server.create('learner-group', {
+    const parent = await this.server.create('learner-group', {
       cohort,
     });
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       cohort,
       parent,
     });
-    this.server.createList('learner-group', 2, {
+    await this.server.createList('learner-group', 2, {
       cohort,
       parent: subGroup,
     });
@@ -221,20 +221,20 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('cannot copy learnergroup with learners', async function (assert) {
-    const users = this.server.createList('user', 3);
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', {
+    const users = await this.server.createList('user', 3);
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', {
       programYear,
     });
-    const parent = this.server.create('learner-group', {
+    const parent = await this.server.create('learner-group', {
       cohort,
     });
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       cohort,
       parent,
       users,
     });
-    this.server.createList('learner-group', 2, {
+    await this.server.createList('learner-group', 2, {
       cohort,
       parent: subGroup,
     });
@@ -250,24 +250,24 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('cannot copy learnergroup with learners in subgroup', async function (assert) {
-    const users = this.server.createList('user', 3);
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', {
+    const users = await this.server.createList('user', 3);
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', {
       programYear,
     });
-    const parent = this.server.create('learner-group', {
+    const parent = await this.server.create('learner-group', {
       cohort,
     });
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       cohort,
       parent,
     });
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       cohort,
       parent: subGroup,
       users,
     });
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       cohort,
       parent: subGroup,
     });
@@ -283,18 +283,18 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('Cohort members not in learner group appear after navigating to learner group #3428', async function (assert) {
-    this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', {
-      programYearId: 1,
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', {
+      programYear,
     });
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       cohort,
     });
-    this.server.createList('user', 5, {
+    await this.server.createList('user', 5, {
       cohorts: [cohort],
       primaryCohort: cohort,
     });
-    this.server.createList('user', 5, {
+    await this.server.createList('user', 5, {
       cohorts: [cohort],
       primaryCohort: cohort,
       learnerGroups: [learnerGroup],
@@ -310,24 +310,24 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('learner group calendar', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    const learnerGroup = this.server.create('learner-group', { cohort });
-    const course = this.server.create('course', { school: this.school, cohorts: [cohort] });
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    const course = await this.server.create('course', { school: this.school, cohorts: [cohort] });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session,
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
       learnerGroups: [learnerGroup],
-      updatedAt: Date.now(),
+      updatedAt: DateTime.now().toISO(),
     });
-    this.server.create('offering');
-    this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
+    await this.server.create('offering');
+    await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
 
     await page.visit({ learnerGroupId: 1 });
     assert.ok(
@@ -365,35 +365,35 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('learner group calendar with subgroup events', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    const learnerGroup = this.server.create('learner-group', { cohort });
-    const course = this.server.create('course', { school: this.school, cohorts: [cohort] });
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    const course = await this.server.create('course', { school: this.school, cohorts: [cohort] });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
-    const subgroup = this.server.create('learner-group', {
+    const subgroup = await this.server.create('learner-group', {
       cohort,
       parent: learnerGroup,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session,
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
       learnerGroups: [learnerGroup],
-      updatedAt: Date.now(),
+      updatedAt: DateTime.now().toISO(),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session,
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
       learnerGroups: [subgroup],
-      updatedAt: Date.now(),
+      updatedAt: DateTime.now().toISO(),
     });
-    this.server.create('offering');
-    this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
+    await this.server.create('offering');
+    await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
 
     await page.visit({ learnerGroupId: 1 });
     assert.strictEqual(
@@ -418,22 +418,20 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('Learners with missing parent group affiliation still appear in subgroup manager #3476', async function (assert) {
-    this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', {
-      programYearId: 1,
-    });
-    const learnerGroup = this.server.create('learner-group', {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', {
       cohort,
     });
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       cohort,
       parent: learnerGroup,
     });
-    this.server.createList('user', 2, {
+    await this.server.createList('user', 2, {
       cohorts: [cohort],
       learnerGroups: [learnerGroup],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       cohorts: [cohort],
       learnerGroups: [subGroup],
     });
@@ -447,14 +445,14 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('moving learners to group updates count #3570', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    const learnerGroup = this.server.create('learner-group', { cohort });
-    this.server.createList('user', 2, {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    await this.server.createList('user', 2, {
       cohorts: [cohort],
       learnerGroups: [learnerGroup],
     });
-    this.server.createList('user', 2, { cohorts: [cohort] });
+    await this.server.createList('user', 2, { cohorts: [cohort] });
 
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.manageUsers.click();
@@ -468,14 +466,14 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('moving learners out of group updates count #3570', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    const learnerGroup = this.server.create('learner-group', { cohort });
-    this.server.createList('user', 2, {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    await this.server.createList('user', 2, {
       cohorts: [cohort],
       learnerGroups: [learnerGroup],
     });
-    this.server.createList('user', 2, { cohorts: [cohort] });
+    await this.server.createList('user', 2, { cohorts: [cohort] });
 
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.manageUsers.click();
@@ -490,11 +488,11 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('manage subgroup members does not duplicate members #3936', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    const parent = this.server.create('learner-group', { cohort });
-    const child = this.server.create('learner-group', { cohort, parent });
-    this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [parent, child] });
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const parent = await this.server.create('learner-group', { cohort });
+    const child = await this.server.create('learner-group', { cohort, parent });
+    await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [parent, child] });
 
     await page.visit({ learnerGroupId: child.id });
     await page.root.actions.buttons.manageUsers.click();
@@ -505,11 +503,11 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('move learners individually from subgroup to subgroup #4953', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    const parent = this.server.create('learner-group', { cohort });
-    this.server.createList('learner-group', 2, { cohort, parent });
-    this.server.createList('user', 3, { cohorts: [cohort] });
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const parent = await this.server.create('learner-group', { cohort });
+    await this.server.createList('learner-group', 2, { cohort, parent });
+    await this.server.createList('user', 3, { cohorts: [cohort] });
 
     await page.visit({ learnerGroupId: 1 });
     assert.strictEqual(page.root.subgroups.list.items.length, 2, 'subgroup count is correct');
@@ -596,12 +594,12 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('expand and collapse course associations', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    const learnerGroup = this.server.create('learner-group', { cohort });
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    this.server.create('offering', { session, learnerGroups: [learnerGroup] });
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session, learnerGroups: [learnerGroup] });
     const learnerGroupId = learnerGroup.id;
 
     await page.visit({ learnerGroupId: learnerGroup.id });
@@ -622,12 +620,12 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('course associations are expanded if URL contains corresponding parameter', async function (assert) {
-    const programYear = this.server.create('program-year', { program: this.program });
-    const cohort = this.server.create('cohort', { programYear });
-    const learnerGroup = this.server.create('learner-group', { cohort });
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    this.server.create('offering', { session, learnerGroups: [learnerGroup] });
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session, learnerGroups: [learnerGroup] });
     const learnerGroupId = learnerGroup.id;
 
     await page.visit({ learnerGroupId, showCourseAssociations: 'true' });

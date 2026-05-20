@@ -2,29 +2,29 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/selected-instructor-group-members';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import SelectedInstructorGroupMembers from 'ilios-common/components/selected-instructor-group-members';
 
 module('Integration | Component | selected-instructor-group-members', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const instructor1 = this.server.create('user', {
+    const instructor1 = await this.server.create('user', {
       firstName: 'Joe',
       lastName: 'Doe',
       middleName: 'Michael',
     });
-    const instructor2 = this.server.create('user', {
+    const instructor2 = await this.server.create('user', {
       firstName: 'Jane',
       lastName: 'Doe',
       middleName: 'Anette',
     });
-    const instructor3 = this.server.create('user', {
+    const instructor3 = await this.server.create('user', {
       displayName: 'Clem Chowder',
     });
-    const instructorGroup = this.server.create('instructor-group', {
+    const instructorGroup = await this.server.create('instructor-group', {
       users: [instructor1, instructor2, instructor3],
     });
     this.instructorGroup = await this.owner

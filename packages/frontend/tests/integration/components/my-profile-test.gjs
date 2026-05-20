@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime, Duration } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/my-profile';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
 import MyProfile from 'frontend/components/my-profile';
@@ -11,35 +11,35 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | my profile', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.afterEach(() => {
     unfreezeDate();
   });
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const program1 = this.server.create('program', { school });
-    const program2 = this.server.create('program', { school });
-    const programYear1 = this.server.create('program-year', { program: program1 });
-    const programYear2 = this.server.create('program-year', { program: program1 });
-    const programYear3 = this.server.create('program-year', { program: program2 });
-    const cohort1 = this.server.create('cohort', {
+    const school = await this.server.create('school');
+    const program1 = await this.server.create('program', { school });
+    const program2 = await this.server.create('program', { school });
+    const programYear1 = await this.server.create('program-year', { program: program1 });
+    const programYear2 = await this.server.create('program-year', { program: program1 });
+    const programYear3 = await this.server.create('program-year', { program: program2 });
+    const cohort1 = await this.server.create('cohort', {
       title: 'test cohort',
       programYear: programYear1,
     });
-    const cohort2 = this.server.create('cohort', {
+    const cohort2 = await this.server.create('cohort', {
       title: 'second cohort',
       programYear: programYear2,
     });
-    const cohort3 = this.server.create('cohort', {
+    const cohort3 = await this.server.create('cohort', {
       title: 'a third cohort',
       programYear: programYear3,
     });
-    const studentRole = this.server.create('user-role', {
+    const studentRole = await this.server.create('user-role', {
       title: 'Student',
     });
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       displayName: 'test name',
       roles: [studentRole],
       school,
@@ -70,7 +70,7 @@ module('Integration | Component | my profile', function (hooks) {
   });
 
   test('it renders all no', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       displayName: 'test name',
       userSyncIgnore: false,
     });
@@ -94,22 +94,23 @@ module('Integration | Component | my profile', function (hooks) {
   });
 
   test('generates token when asked with good expiration date', async function (assert) {
-    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
-      assert.step('API called');
-      assert.ok('ttl' in queryParams);
-      const duration = Duration.fromISO(queryParams.ttl);
+    this.server.get(`/auth/token`, ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('ttl'));
+      const duration = Duration.fromISO(searchParams.get('ttl'));
       assert.strictEqual(duration.days, 14);
       assert.ok(duration.hours < 24);
       assert.ok(duration.minutes < 60);
       assert.ok(duration.seconds < 60);
 
+      assert.step('API called');
       return {
         jwt: 'new token',
       };
     });
 
-    const school = this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
@@ -137,8 +138,8 @@ module('Integration | Component | my profile', function (hooks) {
       };
     });
 
-    const school = this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
@@ -163,8 +164,8 @@ module('Integration | Component | my profile', function (hooks) {
   });
 
   test('clicking button fires show token event', async function (assert) {
-    const school = this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
@@ -186,22 +187,23 @@ module('Integration | Component | my profile', function (hooks) {
   });
 
   test('Setting date changes request length', async function (assert) {
-    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
-      assert.step('API called');
-      assert.ok('ttl' in queryParams);
-      const duration = Duration.fromISO(queryParams.ttl);
+    this.server.get(`/auth/token`, ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('ttl'));
+      const duration = Duration.fromISO(searchParams.get('ttl'));
       assert.strictEqual(duration.days, 41);
       assert.ok(duration.hours < 24);
       assert.ok(duration.minutes < 60);
       assert.ok(duration.seconds < 60);
 
+      assert.step('API called');
       return {
         jwt: 'new token',
       };
     });
 
-    const school = this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
@@ -223,8 +225,8 @@ module('Integration | Component | my profile', function (hooks) {
   });
 
   test('clicking button fires invalidate tokens event', async function (assert) {
-    const school = this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
@@ -263,8 +265,8 @@ module('Integration | Component | my profile', function (hooks) {
     this.owner.register('service:session', SessionMock);
     this.session = this.owner.lookup('service:session');
     this.flashMessages = this.owner.lookup('service:flashMessages');
-    const school = this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
@@ -292,17 +294,18 @@ module('Integration | Component | my profile', function (hooks) {
       }).toJSDate(),
     );
 
-    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+    this.server.get(`/auth/token`, ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('ttl'));
+      assert.strictEqual(searchParams.get('ttl'), 'P14DT48M35S');
       assert.step('API called');
-      assert.ok('ttl' in queryParams);
-      assert.strictEqual(queryParams.ttl, 'P14DT48M35S');
       return {
         jwt: 'new token',
       };
     });
 
-    const school = this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
@@ -331,17 +334,18 @@ module('Integration | Component | my profile', function (hooks) {
       }).toJSDate(),
     );
 
-    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+    this.server.get(`/auth/token`, ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.ok(searchParams.has('ttl'));
+      assert.strictEqual(searchParams.get('ttl'), 'P14DT22H53M35S');
       assert.step('API called');
-      assert.ok('ttl' in queryParams);
-      assert.strictEqual(queryParams.ttl, 'P14DT22H53M35S');
       return {
         jwt: 'new token',
       };
     });
 
-    const school = this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);

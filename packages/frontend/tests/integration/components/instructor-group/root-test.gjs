@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/instructor-group/root';
 import Root from 'frontend/components/instructor-group/root';
@@ -9,22 +9,22 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | instructor-group/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const user1 = this.server.create('user', { firstName: 'Anton', lastName: 'Alpha' });
-    const user2 = this.server.create('user', {
+    const user1 = await this.server.create('user', { firstName: 'Anton', lastName: 'Alpha' });
+    const user2 = await this.server.create('user', {
       firstName: 'Zack',
       lastName: 'Zebra',
       displayName: 'Aardvark',
     });
-    const school = this.server.create('school');
-    const courses = this.server.createList('course', 2, { school });
-    const session1 = this.server.create('session', { course: courses[0] });
-    const session2 = this.server.create('session', { course: courses[1] });
-    const offering1 = this.server.create('offering', { session: session1 });
-    const offering2 = this.server.create('offering', { session: session2 });
-    const instructorGroup = this.server.create('instructor-group', {
+    const school = await this.server.create('school');
+    const courses = await this.server.createList('course', 2, { school });
+    const session1 = await this.server.create('session', { course: courses[0] });
+    const session2 = await this.server.create('session', { course: courses[1] });
+    const offering1 = await this.server.create('offering', { session: session1 });
+    const offering2 = await this.server.create('offering', { session: session2 });
+    const instructorGroup = await this.server.create('instructor-group', {
       users: [user1, user2],
       offerings: [offering1, offering2],
       school,

@@ -1,20 +1,20 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/program';
 import Program from 'frontend/components/reports/subject/new/program';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/subject/new/program', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const [school1, school2] = this.server.createList('school', 2);
-    this.server.createList('program', 2, { school: school1 });
-    this.server.createList('program', 3, { school: school2 });
+    const [school1, school2] = await this.server.createList('school', 2);
+    await this.server.createList('program', 2, { school: school1 });
+    await this.server.createList('program', 3, { school: school2 });
   });
 
   test('it renders', async function (assert) {

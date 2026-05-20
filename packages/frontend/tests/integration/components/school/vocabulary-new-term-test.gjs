@@ -2,17 +2,17 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/school/vocabulary-new-term';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import VocabularyNewTerm from 'frontend/components/school/vocabulary-new-term';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/vocabulary-new-term', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('add term', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);
@@ -35,8 +35,8 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
   });
 
   test("can't add term with empty title", async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);
@@ -56,8 +56,8 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
   });
 
   test("can't add term with long title", async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);
@@ -78,9 +78,9 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
 
   test("can't add top-level term with duplicate title", async function (assert) {
     const title = 'Aardvark';
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    this.server.create('term', {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    await this.server.create('term', {
       title,
       vocabulary,
     });
@@ -104,12 +104,12 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
 
   test("can't add nested term with duplicate title", async function (assert) {
     const title = 'duplicate title';
-    const vocabulary = this.server.create('vocabulary');
-    const term = this.server.create('term', {
+    const vocabulary = await this.server.create('vocabulary');
+    const term = await this.server.create('term', {
       vocabulary,
       active: true,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       parent: term,
       title,
       vocabulary,

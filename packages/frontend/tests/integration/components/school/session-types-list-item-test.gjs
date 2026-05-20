@@ -1,39 +1,39 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/session-types-list-item';
 import SessionTypesListItem from 'frontend/components/school/session-types-list-item';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/session-types-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const assessmentOption = this.server.create('assessment-option', {
+    const school = await this.server.create('school');
+    const assessmentOption = await this.server.create('assessment-option', {
       id: 1,
       name: 'formative',
     });
-    const aamcMethod1 = this.server.create('aamc-method', {
+    const aamcMethod1 = await this.server.create('aamc-method', {
       id: 'AM001',
       description: 'Lorem Ipsum',
       active: true,
     });
-    const aamcMethod2 = this.server.create('aamc-method', {
+    const aamcMethod2 = await this.server.create('aamc-method', {
       id: 'AM002',
       description: 'Dolor Et',
       active: false,
     });
-    const sessionType = this.server.create('session-type', {
+    const sessionType = await this.server.create('session-type', {
       school,
       title: 'salt',
       assessment: true,
       assessmentOption,
       calendarColor: '#cccccc',
       aamcMethods: [aamcMethod1, aamcMethod2],
-      sessions: this.server.createList('session', 2),
+      sessions: await this.server.createList('session', 2),
       active: true,
     });
     const sessionTypeModel = await this.owner
@@ -58,8 +58,8 @@ module('Integration | Component | school/session-types-list-item', function (hoo
   });
 
   test('it renders a non-assessment, and without mapped AAMC method', async function (assert) {
-    const school = this.server.create('school');
-    const sessionType = this.server.create('session-type', {
+    const school = await this.server.create('school');
+    const sessionType = await this.server.create('session-type', {
       school,
       title: 'pepper',
       assessment: false,
@@ -85,13 +85,13 @@ module('Integration | Component | school/session-types-list-item', function (hoo
   });
 
   test('inactive AAMC method is indicated as such', async function (assert) {
-    const school = this.server.create('school');
-    const aamcMethod = this.server.create('aamc-method', {
+    const school = await this.server.create('school');
+    const aamcMethod = await this.server.create('aamc-method', {
       id: 'AM001',
       description: 'Lorem Ipsum',
       active: false,
     });
-    const sessionType = this.server.create('session-type', {
+    const sessionType = await this.server.create('session-type', {
       school,
       title: 'sugar',
       assessment: false,
@@ -116,8 +116,8 @@ module('Integration | Component | school/session-types-list-item', function (hoo
   });
 
   test('clicking edit fires action', async function (assert) {
-    const school = this.server.create('school');
-    const sessionType = this.server.create('session-type', {
+    const school = await this.server.create('school');
+    const sessionType = await this.server.create('session-type', {
       school,
       title: 'first',
       assessment: false,
@@ -145,8 +145,8 @@ module('Integration | Component | school/session-types-list-item', function (hoo
   });
 
   test('clicking title fires action', async function (assert) {
-    const school = this.server.create('school');
-    const sessionType = this.server.create('session-type', {
+    const school = await this.server.create('school');
+    const sessionType = await this.server.create('session-type', {
       school,
       title: 'first',
       assessment: false,
@@ -174,8 +174,8 @@ module('Integration | Component | school/session-types-list-item', function (hoo
   });
 
   test('session type without sessions can be deleted', async function (assert) {
-    const school = this.server.create('school');
-    const sessionType = this.server.create('session-type', {
+    const school = await this.server.create('school');
+    const sessionType = await this.server.create('session-type', {
       school,
       title: 'unlinked',
       assessment: false,
@@ -199,8 +199,8 @@ module('Integration | Component | school/session-types-list-item', function (hoo
   });
 
   test("session type without sessions cannot be deleted if user permissions won't allow it", async function (assert) {
-    const school = this.server.create('school');
-    const sessionType = this.server.create('session-type', {
+    const school = await this.server.create('school');
+    const sessionType = await this.server.create('session-type', {
       school,
       title: 'unlinked',
       assessment: false,
@@ -224,14 +224,14 @@ module('Integration | Component | school/session-types-list-item', function (hoo
   });
 
   test('session type with sessions cannot be deleted', async function (assert) {
-    const school = this.server.create('school');
-    const sessionType = this.server.create('session-type', {
+    const school = await this.server.create('school');
+    const sessionType = await this.server.create('session-type', {
       school,
       title: 'linked',
       active: true,
       assessment: false,
       calendarColor: '#fff',
-      sessions: this.server.createList('session', 5),
+      sessions: await this.server.createList('session', 5),
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')

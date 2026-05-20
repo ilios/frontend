@@ -2,17 +2,17 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/schools/root';
 import Root from 'frontend/components/schools/root';
 
 module('Integration | Component | schools/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school1 = this.server.create('school');
-    const school2 = this.server.create('school');
+    const school1 = await this.server.create('school');
+    const school2 = await this.server.create('school');
     this.school1 = await this.owner.lookup('service:store').findRecord('school', school1.id);
     this.school2 = await this.owner.lookup('service:store').findRecord('school', school2.id);
   });

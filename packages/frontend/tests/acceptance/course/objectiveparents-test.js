@@ -6,41 +6,41 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [school] }, true);
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const competency1 = this.server.create('competency', {
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const competency1 = await this.server.create('competency', {
       school,
       programYears: [programYear],
     });
-    const competency2 = this.server.create('competency', {
+    const competency2 = await this.server.create('competency', {
       school,
       programYears: [programYear],
     });
-    const parent = this.server.create('program-year-objective', {
+    const parent = await this.server.create('program-year-objective', {
       programYear,
       competency: competency1,
     });
-    this.server.create('program-year-objective', {
+    await this.server.create('program-year-objective', {
       programYear,
       competency: competency2,
     });
-    this.server.create('program-year-objective', {
+    await this.server.create('program-year-objective', {
       programYear,
       competency: competency2,
     });
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       year: 2013,
       school,
       cohorts: [cohort],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course: this.course,
       programYearObjectives: [parent],
     });
-    this.server.create('course-objective', { course: this.course });
+    await this.server.create('course-objective', { course: this.course });
   });
 
   test('list parent objectives by competency', async function (assert) {

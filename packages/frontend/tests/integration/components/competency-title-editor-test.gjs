@@ -1,16 +1,16 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/competency-title-editor';
 import CompetencyTitleEditor from 'frontend/components/school/competency-title-editor';
 
 module('Integration | Component | competency title editor', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('validation errors do not show up initially', async function (assert) {
-    const competency = this.server.create('competency', { title: 'test' });
+    const competency = await this.server.create('competency', { title: 'test' });
     const competencyModel = await this.owner
       .lookup('service:store')
       .findRecord('competency', competency.id);
@@ -24,7 +24,7 @@ module('Integration | Component | competency title editor', function (hooks) {
   });
 
   test('validation errors show up when blank', async function (assert) {
-    const competency = this.server.create('competency', { title: 'test' });
+    const competency = await this.server.create('competency', { title: 'test' });
     const competencyModel = await this.owner
       .lookup('service:store')
       .findRecord('competency', competency.id);
@@ -41,7 +41,7 @@ module('Integration | Component | competency title editor', function (hooks) {
   });
 
   test('validation errors show up when too long', async function (assert) {
-    const competency = this.server.create('competency', { title: 'test' });
+    const competency = await this.server.create('competency', { title: 'test' });
     const competencyModel = await this.owner
       .lookup('service:store')
       .findRecord('competency', competency.id);

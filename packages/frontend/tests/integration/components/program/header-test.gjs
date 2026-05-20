@@ -1,17 +1,17 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program/header';
 import Header from 'frontend/components/program/header';
 
 module('Integration | Component | program/header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
       title: 'Aardvark',
     });
@@ -25,8 +25,8 @@ module('Integration | Component | program/header', function (hooks) {
   });
 
   test('read-only', async function (assert) {
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
       title: 'Aardvark',
     });
@@ -40,8 +40,8 @@ module('Integration | Component | program/header', function (hooks) {
   });
 
   test('validation fails if title is too short', async function (assert) {
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
       title: 'Aardvark',
     });
@@ -61,8 +61,8 @@ module('Integration | Component | program/header', function (hooks) {
   });
 
   test('validation fails if title is blank', async function (assert) {
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
       title: 'Aardvark',
     });
@@ -82,8 +82,8 @@ module('Integration | Component | program/header', function (hooks) {
   });
 
   test('update title fails - title too long', async function (assert) {
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
       title: 'Aardvark',
     });
@@ -103,8 +103,8 @@ module('Integration | Component | program/header', function (hooks) {
   });
 
   test('update title, then save', async function (assert) {
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
       title: 'Aardvark',
     });
@@ -125,8 +125,8 @@ module('Integration | Component | program/header', function (hooks) {
   });
 
   test('update title, then cancel', async function (assert) {
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    const program = await this.server.create('program', {
       school,
       title: 'Aardvark',
     });

@@ -9,12 +9,12 @@ module('Acceptance | Session - Overview', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.school = this.server.create('school');
-    this.server.create('academic-year');
-    this.course = this.server.create('course', {
+    this.school = await this.server.create('school');
+    await this.server.create('academic-year');
+    this.course = await this.server.create('course', {
       school: this.school,
     });
-    this.sessionTypes = this.server.createList('session-type', 2, {
+    this.sessionTypes = await this.server.createList('session-type', 2, {
       school: this.school,
     });
   });
@@ -27,12 +27,12 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       instructionalNotes: 'session notes',
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(page.details.overview.sessionType.value, 'session type 0');
     assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
     assert.strictEqual(page.details.overview.instructionalNotes.value, 'session notes');
@@ -47,13 +47,13 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const ilmSession = this.server.create('ilm-session');
-    this.server.create('session', {
+    const ilmSession = await this.server.create('ilm-session');
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       ilmSession,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.ilm.ilmHours.isVisible);
@@ -85,11 +85,11 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.notOk(page.details.overview.ilm.ilmHours.isVisible);
@@ -121,15 +121,15 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const ilmSession = this.server.create('ilm-session', {
+    const ilmSession = await this.server.create('ilm-session', {
       hours: 3,
     });
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       ilmSession,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), 3);
@@ -147,24 +147,30 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const ilmSession = this.server.create('ilm-session', {
-      hours: 3,
-      dueDate: new Date(2021, 4, 18, 17, 0, 0),
+    const dueDate = DateTime.fromObject({
+      year: 2021,
+      month: 5,
+      day: 18,
+      hour: 17,
+      minute: 0,
+      second: 0,
     });
-    this.server.create('session', {
+    const ilmSession = await this.server.create('ilm-session', {
+      hours: 3,
+      dueDate: dueDate.toISO(),
+    });
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       ilmSession,
     });
-    const newDate = DateTime.fromJSDate(ilmSession.dueDate)
-      .set({ hour: 23, minute: 55 })
-      .plus({ weeks: 3 });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    const newDate = dueDate.set({ hour: 23, minute: 55 }).plus({ weeks: 3 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(
       page.details.overview.ilm.ilmDueDateAndTime.value,
-      this.intl.formatDate(ilmSession.dueDate, {
+      this.intl.formatDate(dueDate.toJSDate(), {
         month: '2-digit',
         day: '2-digit',
         year: '2-digit',
@@ -205,11 +211,11 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.title.value, session.title);
@@ -234,14 +240,14 @@ module('Acceptance | Session - Overview', function (hooks) {
       hour: 17,
       minute: 0,
       second: 0,
-    }).toJSDate();
-    this.server.create('session', {
+    });
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
-      updatedAt,
+      updatedAt: updatedAt.toISO(),
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
-    const updatedAtString = this.intl.formatDate(updatedAt, {
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    const updatedAtString = this.intl.formatDate(updatedAt.toJSDate(), {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
@@ -264,11 +270,11 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.sessionType.value, 'session type 0');
@@ -280,35 +286,35 @@ module('Acceptance | Session - Overview', function (hooks) {
 
   test('session attributes are shown by school config', async function (assert) {
     await setupAuthentication({ school: this.school }, true);
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[1],
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSupplemental',
       value: true,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialAttireRequired',
       value: true,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialEquipmentRequired',
       value: true,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
       value: true,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.attributes.supplemental.isVisible);
     assert.ok(page.details.overview.attributes.specialAttire.isVisible);
@@ -318,31 +324,31 @@ module('Acceptance | Session - Overview', function (hooks) {
 
   test('session attributes are hidden by school config', async function (assert) {
     await setupAuthentication({ school: this.school }, true);
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSupplemental',
       value: false,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialAttireRequired',
       value: false,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialEquipmentRequired',
       value: false,
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
       value: false,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.notOk(page.details.overview.attributes.isVisible);
     assert.notOk(page.details.overview.attributes.supplemental.isVisible);
@@ -353,11 +359,11 @@ module('Acceptance | Session - Overview', function (hooks) {
 
   test('session attributes are hidden when there is no school config', async function (assert) {
     await setupAuthentication({ school: this.school }, true);
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.notOk(page.details.overview.attributes.isVisible);
     assert.notOk(page.details.overview.attributes.supplemental.isVisible);
@@ -374,16 +380,16 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[1],
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSupplemental',
       value: true,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.attributes.isVisible);
     assert.ok(page.details.overview.attributes.supplemental.isVisible);
@@ -400,16 +406,16 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[1],
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialAttireRequired',
       value: true,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.attributes.isVisible);
     assert.ok(page.details.overview.attributes.specialAttire.isVisible);
@@ -426,16 +432,16 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[1],
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialEquipmentRequired',
       value: true,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.attributes.isVisible);
     assert.ok(page.details.overview.attributes.specialEquipment.isVisible);
@@ -452,16 +458,16 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[1],
     });
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
       value: true,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.attributes.isVisible);
     assert.ok(page.details.overview.attributes.attendanceRequired.isVisible);
@@ -478,12 +484,12 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
     const newDescription = 'some new thing';
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
@@ -501,13 +507,13 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       description: null,
     });
     const newDescription = 'some new thing';
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
@@ -525,12 +531,12 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       description: null,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
@@ -548,11 +554,11 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
@@ -570,12 +576,12 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       description: null,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
@@ -593,12 +599,12 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
 
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     await page.details.overview.copy.visit();
 
     assert.strictEqual(currentRouteName(), 'session.copy');
@@ -612,11 +618,11 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.copy.isVisible);
   });
@@ -629,11 +635,11 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.overview.copy.isVisible);
     await page.details.overview.copy.visit();
@@ -649,13 +655,13 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    let session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       instructionalNotes: 'instructional note',
     });
     const newInstructionalNotes = 'some new thing';
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index', 'route name is correct');
     assert.strictEqual(
@@ -671,8 +677,9 @@ module('Acceptance | Session - Overview', function (hooks) {
       newInstructionalNotes,
       'new instructional notes value is correct',
     );
+    session = (await this.server.db.session.all())[0];
     assert.strictEqual(
-      this.server.db.sessions[0].instructionalNotes,
+      session.instructionalNotes,
       `<p>${newInstructionalNotes}</p>`,
       'instructional notes value in database is correct',
     );
@@ -686,12 +693,12 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    let session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
     const newInstructionalNotes = 'some new thing';
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index', 'route name is correct');
     assert.strictEqual(
@@ -707,8 +714,9 @@ module('Acceptance | Session - Overview', function (hooks) {
       newInstructionalNotes,
       'new instructional notes value is correct',
     );
+    session = (await this.server.db.session.all())[0];
     assert.strictEqual(
-      this.server.db.sessions[0].instructionalNotes,
+      session.instructionalNotes,
       `<p>${newInstructionalNotes}</p>`,
       'instructional notes value in database is correct',
     );
@@ -722,11 +730,11 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    let session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
@@ -734,7 +742,8 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.details.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
     await page.details.overview.instructionalNotes.save();
     assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
-    assert.strictEqual(this.server.db.sessions[0].instructionalNotes, null);
+    session = (await this.server.db.session.all())[0];
+    assert.strictEqual(session.instructionalNotes, null);
   });
 
   test('remove instructionalNotes', async function (assert) {
@@ -745,12 +754,12 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       instructionalNotes: 'instructional note',
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.instructionalNotes.value, 'instructional note');
@@ -768,11 +777,11 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
@@ -790,11 +799,11 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(page.details.overview.prerequisites.text, 'Prerequisites: None');
   });
 
@@ -806,19 +815,19 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    this.server.createList('session', 3, {
+    await this.server.createList('session', 3, {
       course: this.course,
       postrequisite: session,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(
       page.details.overview.prerequisites.text,
       'Prerequisites: session 1, session 2, session 3',
@@ -833,15 +842,15 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const ilmSession = this.server.create('ilm-session');
-    this.server.create('session', {
+    const ilmSession = await this.server.create('ilm-session');
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       ilmSession,
     });
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: None');
@@ -856,23 +865,23 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const ilmSession = this.server.create('ilm-session');
-    const session = this.server.create('session', {
+    const ilmSession = await this.server.create('ilm-session');
+    const postrequisite = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
       ilmSession,
+      postrequisite,
     });
-    const postRequisite = this.server.create('session', {
-      course: this.course,
-      sessionType: this.sessionTypes[0],
-    });
-    session.update('postrequisite', postRequisite);
     await page.visit({
-      courseId: 1,
-      sessionId: 1,
+      courseId: this.course.id,
+      sessionId: session.id,
       sessionLearnergroupDetails: true,
     });
-    assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: session 1');
+    assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: session 0');
     assert.notOk(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
   });
 
@@ -884,14 +893,14 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    this.server.createList('session', 3, {
+    await this.server.createList('session', 3, {
       course: this.course,
     });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(page.details.overview.postrequisite.value, 'None');
     await page.details.overview.postrequisite.edit();
     await page.details.overview.postrequisite.editor.postRequisites[1].click();
@@ -907,8 +916,11 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', { course: this.course, sessionType: this.sessionTypes[0] });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.notOk(page.details.collapsedObjectives.isPresent);
   });
@@ -921,12 +933,12 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    this.server.create('session-objective', { session });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    await this.server.create('session-objective', { session });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.collapsedObjectives.isPresent);
   });
@@ -939,14 +951,14 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
     });
-    const learnerGroups = this.server.createList('learner-group', 3);
-    this.server.create('offering', { session, learnerGroups });
-    this.server.create('offering', { session, learnerGroups });
-    await page.visit({ courseId: 1, sessionId: 1 });
+    const learnerGroups = await this.server.createList('learner-group', 3);
+    await this.server.create('offering', { session, learnerGroups });
+    await this.server.create('offering', { session, learnerGroups });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(
       page.details.overview.associatedGroups.groups,

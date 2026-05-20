@@ -4,8 +4,8 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, find, findAll, fillIn, blur as emberBlur } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
-import queryString from 'query-string';
+import { setupMSW } from 'ilios-common/msw';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
 import Rollover from 'ilios-common/components/course/rollover';
@@ -13,7 +13,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | course/rollover', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.afterEach(() => {
     unfreezeDate();
@@ -30,8 +30,8 @@ module('Integration | Component | course/rollover', function (hooks) {
   };
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -59,19 +59,19 @@ module('Integration | Component | course/rollover', function (hooks) {
       hour: 8,
     });
     freezeDateAt(december11th2025.toJSDate());
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
     for (let startYear = 2025; startYear < 2029; startYear++) {
-      const programYear = this.server.create('program-year', {
+      const programYear = await this.server.create('program-year', {
         program,
         startYear,
       });
-      this.server.create('cohort', {
-        title: startYear,
+      await this.server.create('cohort', {
+        title: `${startYear}`,
         programYear,
       });
     }
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -89,15 +89,15 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('academic year options are labeled with year ranges as applicable by configuration', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
         },
       };
     });
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -117,8 +117,8 @@ module('Integration | Component | course/rollover', function (hooks) {
 
   test('rollover course', async function (assert) {
     const courseStartDate = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old title',
       school,
       startDate: courseStartDate.toFormat('yyyy-MM-dd'),
@@ -126,27 +126,24 @@ module('Integration | Component | course/rollover', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
-      assert.step('API called');
+    this.server.post(`/api/courses/${course.id}/rollover`, async ({ request }) => {
       const firstYear = earliestRolloverYear(new Date());
-      const data = queryString.parse(request.requestBody);
-      assert.ok('year' in data);
-      assert.strictEqual(parseInt(data.year, 10), firstYear);
-      assert.strictEqual(data.newCourseTitle, course.title);
-      assert.ok('newStartDate' in data);
-      assert.strictEqual(courseStartDate.toFormat('yyyy-LL-dd'), data.newStartDate);
-      return this.serialize(
-        schema.courses.create({
-          id: 14,
-          title: data.newCourseTitle,
-          startDate: data.newStartDate,
-          year: data.year,
-        }),
-      );
+      const data = await request.formData();
+      assert.strictEqual(Number(data.get('year')), firstYear);
+      assert.strictEqual(data.get('newCourseTitle'), course.title);
+      assert.strictEqual(courseStartDate.toFormat('yyyy-LL-dd'), data.get('newStartDate'));
+      const rolloverCourse = await this.server.create('course', {
+        id: 14,
+        title: data.get('newCourseTitle'),
+        startDate: data.get('newStartDate'),
+        year: Number(data.get('year')),
+      });
+      assert.step('API called');
+      return formatJsonApi(rolloverCourse, 'course');
     });
     this.set('visit', (newCourse) => {
       assert.step('visit called');
-      assert.strictEqual(parseInt(newCourse.id, 10), 14);
+      assert.strictEqual(Number(newCourse.id), 14);
     });
     await render(<template><Rollover @course={{this.course}} @visit={{this.visit}} /></template>);
     await click('.done');
@@ -154,28 +151,27 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with new title', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old title',
       school,
-      startDate: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }).toFormat('yyyy-MM-dd'),
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     const newTitle = course.title + '2';
 
-    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+    this.server.post(`/api/courses/${course.id}/rollover`, async ({ request }) => {
+      const data = await request.formData();
+      assert.strictEqual(data.get('newCourseTitle'), newTitle, 'The new title gets passed.');
+      const rolloverCourse = await this.server.create('course', {
+        id: 14,
+      });
       assert.step('API called');
-      const data = queryString.parse(request.requestBody);
-      assert.strictEqual(data.newCourseTitle, newTitle, 'The new title gets passed.');
-
-      return this.serialize(
-        schema.courses.create({
-          id: 14,
-        }),
-      );
+      return formatJsonApi(rolloverCourse, 'course');
     });
+
     await render(<template><Rollover @course={{this.course}} @visit={{(noop)}} /></template>);
     const title = '.title';
     const input = `${title} input`;
@@ -185,34 +181,34 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course to selected year', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old title',
       school,
-      startDate: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }).toFormat('yyyy-MM-dd'),
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     const selectedYear = DateTime.now().plus({ year: 2 }).year;
-    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+
+    this.server.post(`/api/courses/${course.id}/rollover`, async ({ request }) => {
+      const data = await request.formData();
+      assert.strictEqual(Number(data.get('year')), selectedYear);
+      assert.strictEqual(data.get('newCourseTitle'), course.title);
+      assert.ok(data.has('newStartDate'));
+
+      const rolloverCourse = await this.server.create('course', {
+        id: 14,
+        title: data.get('newCourseTitle'),
+        startDate: data.get('newStartDate'),
+        year: Number(data.get('year')),
+      });
       assert.step('API called');
-      const data = queryString.parse(request.requestBody);
-      assert.ok('year' in data);
-      assert.strictEqual(parseInt(data.year, 10), selectedYear);
-      assert.strictEqual(data.newCourseTitle, course.title);
-      assert.ok('newStartDate' in data);
-      return this.serialize(
-        schema.courses.create({
-          id: 14,
-          title: data.newCourseTitle,
-          startDate: data.newStartDate,
-          year: data.year,
-        }),
-      );
+      return formatJsonApi(rolloverCourse, 'course');
     });
     this.set('visit', (newCourse) => {
       assert.step('visit called');
-      assert.strictEqual(parseInt(newCourse.id, 10), 14);
+      assert.strictEqual(Number(newCourse.id), 14);
     });
     await render(<template><Rollover @course={{this.course}} @visit={{this.visit}} /></template>);
     await fillIn('[data-test-year]', selectedYear);
@@ -224,19 +220,19 @@ module('Integration | Component | course/rollover', function (hooks) {
   test('disable years when title already exists', async function (assert) {
     const title = 'to be rolled';
     const firstYear = earliestRolloverYear(new Date());
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title,
       school,
       year: firstYear - 1,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       id: 2,
       school,
       title,
       year: firstYear,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       id: 3,
       school,
       title,
@@ -274,8 +270,8 @@ module('Integration | Component | course/rollover', function (hooks) {
   test('rollover into same year with title changed #1342', async function (assert) {
     const thisYear = DateTime.now().year;
 
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       id: 2,
       school,
       year: thisYear,
@@ -294,8 +290,8 @@ module('Integration | Component | course/rollover', function (hooks) {
     const courseStartDate = DateTime.fromISO(`${currentYear}-W20-1`);
     const rolloverDate = courseStartDate.plus({ week: 1 });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
       startDate: courseStartDate.toFormat('yyyy-MM-dd'),
@@ -303,19 +299,18 @@ module('Integration | Component | course/rollover', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
-      assert.step('API called');
-      const data = queryString.parse(request.requestBody);
-      assert.ok('newStartDate' in data, 'A new start date was passed.');
-      const newStartDate = DateTime.fromFormat(data.newStartDate, 'y-MM-dd');
+    this.server.post(`/api/courses/${course.id}/rollover`, async ({ request }) => {
+      const data = await request.formData();
+      assert.ok(data.has('newStartDate'));
+      const newStartDate = DateTime.fromFormat(data.get('newStartDate'), 'y-MM-dd');
       assert.ok(rolloverDate.hasSame(newStartDate, 'day'), 'New start date is rollover date.');
-      assert.strictEqual(rolloverDate.toFormat('yyyy-LL-dd'), data.newStartDate);
+      assert.strictEqual(rolloverDate.toFormat('yyyy-LL-dd'), data.get('newStartDate'));
 
-      return this.serialize(
-        schema.courses.create({
-          id: 14,
-        }),
-      );
+      const rolloverCourse = await this.server.create('course', {
+        id: 14,
+      });
+      assert.step('API called');
+      return formatJsonApi(rolloverCourse, 'course');
     });
     await render(<template><Rollover @course={{this.course}} @visit={{(noop)}} /></template>);
     const advancedOptions = '.advanced-options';
@@ -360,8 +355,8 @@ module('Integration | Component | course/rollover', function (hooks) {
     const courseStartDate = DateTime.fromISO(`${currentYear}-W20-1`);
     const rolloverDate = courseStartDate.plus({ week: 1 }).set({ weekday: 3 });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'test title',
       school,
       startDate: courseStartDate.toFormat('yyyy-MM-dd'),
@@ -369,21 +364,20 @@ module('Integration | Component | course/rollover', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
-      assert.step('API called');
-      const data = queryString.parse(request.requestBody);
-      assert.ok('newStartDate' in data, 'A new start date was passed.');
-      const newStartDate = DateTime.fromFormat(data.newStartDate, 'y-MM-dd');
-
+    this.server.post(`/api/courses/${course.id}/rollover`, async ({ request }) => {
+      const data = await request.formData();
+      assert.ok(data.has('newStartDate'));
+      const newStartDate = DateTime.fromFormat(data.get('newStartDate'), 'y-MM-dd');
       assert.ok(
         courseStartDate.hasSame(newStartDate, 'day'),
         'New start date is course start date.',
       );
-      return this.serialize(
-        schema.courses.create({
-          id: 14,
-        }),
-      );
+
+      const rolloverCourse = await this.server.create('course', {
+        id: 14,
+      });
+      assert.step('API called');
+      return formatJsonApi(rolloverCourse, 'course');
     });
 
     await render(<template><Rollover @course={{this.course}} @visit={{(noop)}} /></template>);
@@ -428,11 +422,11 @@ module('Integration | Component | course/rollover', function (hooks) {
       minute: 0,
     }).set({ weekNumber: courseStartDate.weekNumber, weekday: courseStartDate.weekday });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
-      startDate: courseStartDate.toJSDate(),
+      startDate: courseStartDate.toFormat('yyyy-MM-dd'),
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
@@ -459,26 +453,25 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with no offerings', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       title: 'SOM',
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       title: 'old course',
       school,
     });
     const course = await this.owner.lookup('service:store').findRecord('course', 1);
-    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
-      assert.step('API called');
-      const data = queryString.parse(request.requestBody, {
-        parseBooleans: true,
+
+    this.server.post(`/api/courses/${course.id}/rollover`, async ({ request }) => {
+      const data = await request.formData();
+      assert.ok(data.has('skipOfferings'));
+      assert.strictEqual(data.get('skipOfferings'), 'true');
+
+      const rolloverCourse = await this.server.create('course', {
+        id: 14,
       });
-      assert.ok('skipOfferings' in data);
-      assert.true(data.skipOfferings);
-      return this.serialize(
-        schema.courses.create({
-          id: 14,
-        }),
-      );
+      assert.step('API called');
+      return formatJsonApi(rolloverCourse, 'course');
     });
 
     this.set('course', course);
@@ -494,8 +487,8 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('errors do not show up initially', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -506,8 +499,8 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('errors show up', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -525,40 +518,38 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with cohorts', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       title: 'SOM',
     });
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       title: 'SOM',
       school,
     });
     const startYear = new Date().getFullYear();
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
       published: true,
       archived: false,
       startYear,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       programYear,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       title: 'old course',
       school,
     });
     const course = await this.owner.lookup('service:store').findRecord('course', 1);
-    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
-      assert.step('API called');
-      const data = queryString.parse(request.requestBody, {
-        arrayFormat: 'bracket',
+
+    this.server.post(`/api/courses/${course.id}/rollover`, async ({ request }) => {
+      const data = await request.formData();
+      assert.strictEqual(data.get('newCohorts[]'), '1');
+
+      const rolloverCourse = await this.server.create('course', {
+        id: 14,
       });
-      assert.ok('newCohorts' in data, 'newCohorts key found in rollover found in posted data');
-      assert.deepEqual(data.newCohorts, ['1'], 'posted data correct');
-      return this.serialize(
-        schema.courses.create({
-          id: 14,
-        }),
-      );
+      assert.step('API called');
+      return formatJsonApi(rolloverCourse, 'course');
     });
 
     class CurrentUserMock extends Service {
@@ -590,8 +581,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       hour: 8,
     });
     freezeDateAt(december11th2024.toJSDate());
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -618,8 +609,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       hour: 8,
     });
     freezeDateAt(january1st2025.toJSDate());
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -646,8 +637,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       hour: 8,
     });
     freezeDateAt(june30th2025.toJSDate());
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -674,8 +665,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       hour: 8,
     });
     freezeDateAt(july1st2025.toJSDate());
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });

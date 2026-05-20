@@ -1,54 +1,54 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import noop from 'ilios-common/helpers/noop';
 import { component } from 'ilios-common/page-objects/components/publish-all-sessions';
 import PublishAllSessions from 'ilios-common/components/publish-all-sessions';
 module('Integration | Component | publish all sessions', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const programYearObjective = this.server.create('program-year-objective');
-    const term = this.server.create('term');
-    const linkedCourseObjective = this.server.create('course-objective', {
+    const programYearObjective = await this.server.create('program-year-objective');
+    const term = await this.server.create('term');
+    const linkedCourseObjective = await this.server.create('course-objective', {
       programYearObjectives: [programYearObjective],
     });
-    const unlinkedCourseObjective = this.server.create('course-objective');
-    const unpublishableSession = this.server.create('session', {
+    const unlinkedCourseObjective = await this.server.create('course-objective');
+    const unpublishableSession = await this.server.create('session', {
       title: 'session 1',
       published: false,
       terms: [term],
     });
-    const completeSession = this.server.create('session', {
+    const completeSession = await this.server.create('session', {
       title: 'session 2',
       published: true,
       terms: [term],
     });
-    const publishableSession = this.server.create('session', {
+    const publishableSession = await this.server.create('session', {
       title: 'session 3',
       published: false,
     });
 
-    const fullyPublishedByIncompleteSession = this.server.create('session', {
+    const fullyPublishedByIncompleteSession = await this.server.create('session', {
       title: 'session 4',
       published: true,
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: completeSession,
       courseObjectives: [linkedCourseObjective],
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: fullyPublishedByIncompleteSession,
     });
-    this.server.create('offering', { session: publishableSession });
-    this.server.create('offering', { session: completeSession });
-    this.server.create('offering', {
+    await this.server.create('offering', { session: publishableSession });
+    await this.server.create('offering', { session: completeSession });
+    await this.server.create('offering', {
       session: fullyPublishedByIncompleteSession,
     });
-    this.server.create('session-objective', { session: completeSession });
-    const course = this.server.create('course', {
+    await this.server.create('session-objective', { session: completeSession });
+    const course = await this.server.create('course', {
       courseObjectives: [linkedCourseObjective, unlinkedCourseObjective],
       sessions: [
         unpublishableSession,
@@ -201,7 +201,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
 
   test('it renders empty', async function (assert) {
     const store = this.owner.lookup('service:store');
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const model = await store.findRecord('course', course.id);
     this.set('course', model);
 

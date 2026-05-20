@@ -1,21 +1,22 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/unassigned-students-summary';
 import UnassignedStudentsSummary from 'frontend/components/unassigned-students-summary';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | unassigned students summary', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       id: 1,
       title: 'school 0',
     });
-    this.server.create('school', {
+    await this.server.create('school', {
       id: 2,
       title: 'school 1',
     });
@@ -24,21 +25,24 @@ module('Integration | Component | unassigned students summary', function (hooks)
     });
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
 
-    const studentRole = this.server.create('user-role', {
+    const studentRole = await this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
-    this.server.createList('user', 5, {
+    this.users = await this.server.createList('user', 5, {
       school,
       roles: [studentRole],
     });
 
-    this.server.get('api/users', (schema, { queryParams }) => {
+    this.server.get('/api/users', ({ request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(Number(searchParams.get('filters[school]')), 1);
+      assert.strictEqual(searchParams.getAll('filters[roles][]').length, 1);
+      assert.deepEqual(searchParams.getAll('filters[roles][]'), ['4']);
+      assert.strictEqual(searchParams.get('filters[cohorts]'), '');
+
       assert.step('API called');
-      assert.strictEqual(parseInt(queryParams['filters[school]'], 10), 1);
-      assert.deepEqual(queryParams['filters[roles]'], ['4']);
-      assert.strictEqual(queryParams['filters[cohorts]'], '');
-      return schema.users.find([2, 3, 4, 5, 6]);
+      return formatJsonApi(this.users, 'user');
     });
 
     this.set('schools', schoolModels);
@@ -60,7 +64,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
   });
 
   test('it renders empty', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       id: 1,
       title: 'school 0',
     });

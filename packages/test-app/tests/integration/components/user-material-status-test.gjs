@@ -2,25 +2,25 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/user-material-status';
 import UserMaterialStatus from 'ilios-common/components/user-material-status';
 
 module('Integration | Component | user-material-status', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     for (let i = 1; i < 4; i++) {
-      this.server.create('user-session-material-status', {
+      await this.server.create('user-session-material-status', {
         id: i,
         status: i - 1,
-        material: this.server.create('session-learning-material', { id: i }),
+        material: await this.server.create('session-learning-material', { id: i }),
         user,
       });
     }
-    this.server.create('session-learning-material', { id: 4 });
+    await this.server.create('session-learning-material', { id: 4 });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -30,7 +30,7 @@ module('Integration | Component | user-material-status', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
 
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           materialStatusEnabled: true,
@@ -91,7 +91,7 @@ module('Integration | Component | user-material-status', function (hooks) {
 
   test('it does not render when not enabled', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           materialStatusEnabled: false,

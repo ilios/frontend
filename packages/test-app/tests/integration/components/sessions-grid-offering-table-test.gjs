@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { create } from 'ember-cli-page-object';
 import table from 'ilios-common/page-objects/components/sessions-grid-offering-table';
@@ -12,7 +12,7 @@ const page = create({ table });
 
 module('Integration | Component | sessions-grid-offering-table', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
   test('it renders', async function (assert) {
     class PermissionCheckerServiceMock extends Service {
       async canUpdateSession() {
@@ -20,21 +20,21 @@ module('Integration | Component | sessions-grid-offering-table', function (hooks
       }
     }
     this.owner.register('service:permission-checker', PermissionCheckerServiceMock);
-    const session = this.server.create('session');
-    this.server.createList('offering', 3, {
+    const session = await this.server.create('session');
+    await this.server.createList('offering', 3, {
       session,
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
     });
-    this.server.createList('offering', 3, {
+    await this.server.createList('offering', 3, {
       session,
-      startDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 8 }).plus({ minutes: 110 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 9 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 8 }).plus({ minutes: 110 }).toISO(),
     });
-    this.server.createList('offering', 3, {
+    await this.server.createList('offering', 3, {
       session,
-      startDate: DateTime.fromObject({ hour: 9 }).plus({ day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 10 }).plus({ day: 1 }).toJSDate(),
+      startDate: DateTime.fromObject({ hour: 9 }).plus({ day: 1 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 10 }).plus({ day: 1 }).toISO(),
     });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('model', model);

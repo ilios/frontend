@@ -8,7 +8,7 @@ module('Acceptance | dashboard accessibility', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school });
   });
 

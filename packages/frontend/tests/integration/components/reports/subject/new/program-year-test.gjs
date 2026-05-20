@@ -1,33 +1,33 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/program-year';
 import ProgramYear from 'frontend/components/reports/subject/new/program-year';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/subject/new/program-year', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const [school1, school2] = this.server.createList('school', 2);
-    const program1 = this.server.create('program', { school: school1 });
-    const program2 = this.server.create('program', { school: school2, duration: 7 });
-    this.server.create('program-year', {
+    const [school1, school2] = await this.server.createList('school', 2);
+    const program1 = await this.server.create('program', { school: school1 });
+    const program2 = await this.server.create('program', { school: school2, duration: 7 });
+    await this.server.create('program-year', {
       startYear: 2006,
       program: program1,
     });
-    this.server.create('program-year', {
+    await this.server.create('program-year', {
       startYear: 2007,
       program: program1,
     });
-    this.server.create('program-year', {
+    await this.server.create('program-year', {
       startYear: 2020,
       program: program2,
     });
-    this.server.create('program-year', {
+    await this.server.create('program-year', {
       startYear: 2004,
       program: program1,
     });

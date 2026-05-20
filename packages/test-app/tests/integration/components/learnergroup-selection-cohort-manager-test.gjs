@@ -1,31 +1,31 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/learnergroup-selection-cohort-manager';
 import LearnergroupSelectionCohortManager from 'ilios-common/components/learnergroup-selection-cohort-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learnergroup-selection-cohort-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const program = this.server.create('program');
-    const programYear1 = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', {
+    const program = await this.server.create('program');
+    const programYear1 = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', {
       programYear: programYear1,
     });
-    const secondLevelLearnerGroup1 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup1 = await this.server.create('learner-group', {
       title: 'Second 1',
       cohort,
     });
-    const secondLevelLearnerGroup2 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup2 = await this.server.create('learner-group', {
       title: 'Second 2',
       cohort,
       needsAccommodation: true,
     });
-    const topLevelLearnerGroup1 = this.server.create('learner-group', {
+    const topLevelLearnerGroup1 = await this.server.create('learner-group', {
       title: 'Top Group 1',
       children: [secondLevelLearnerGroup1, secondLevelLearnerGroup2],
       cohort,

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/taxonomy-manager';
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
 import noop from 'ilios-common/helpers/noop';
@@ -9,59 +9,59 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | taxonomy manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school', { title: 'Medicine' });
-    const vocab1 = this.server.create('vocabulary', {
+    const school = await this.server.create('school', { title: 'Medicine' });
+    const vocab1 = await this.server.create('vocabulary', {
       active: true,
       title: 'Foo',
       school,
     });
-    const vocab2 = this.server.create('vocabulary', {
+    const vocab2 = await this.server.create('vocabulary', {
       active: false,
       title: 'Bar',
       school,
     });
-    const vocab3 = this.server.create('vocabulary', {
+    const vocab3 = await this.server.create('vocabulary', {
       active: true,
       title: 'Baz',
       school,
     });
-    const subTerm1 = this.server.create('term', {
+    const subTerm1 = await this.server.create('term', {
       active: true,
       title: 'Palo Alto',
       vocabulary: vocab1,
     });
-    const subTerm2 = this.server.create('term', {
+    const subTerm2 = await this.server.create('term', {
       active: true,
       title: 'Schnitzelwirt',
       vocabulary: vocab1,
     });
-    const subTerm3 = this.server.create('term', {
+    const subTerm3 = await this.server.create('term', {
       active: true,
       title: 'Rainjacket',
       vocabulary: vocab1,
     });
 
-    const term1 = this.server.create('term', {
+    const term1 = await this.server.create('term', {
       active: true,
       title: 'Alpha',
       vocabulary: vocab1,
       children: [subTerm2],
     });
-    const term2 = this.server.create('term', {
+    const term2 = await this.server.create('term', {
       active: true,
       title: 'Beta',
       vocabulary: vocab1,
       children: [subTerm1, subTerm3],
     });
-    const term3 = this.server.create('term', {
+    const term3 = await this.server.create('term', {
       active: true,
       title: 'Gamma',
       vocabulary: vocab2,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       active: true,
       title: 'Banana',
       vocabulary: vocab3,

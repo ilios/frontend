@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/programs/list-item';
 import ListItem from 'frontend/components/programs/list-item';
 
 module('Integration | Component | programs/list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.permissionCheckerMock = class extends Service {
@@ -17,8 +17,8 @@ module('Integration | Component | programs/list-item', function (hooks) {
       }
     };
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
-    const school = this.server.create('school');
-    this.program = this.server.create('program', { school });
+    const school = await this.server.create('school');
+    this.program = await this.server.create('program', { school });
   });
 
   test('it renders', async function (assert) {
@@ -48,7 +48,7 @@ module('Integration | Component | programs/list-item', function (hooks) {
   });
 
   test('can not delete with associated years', async function (assert) {
-    this.server.create('program-year', { program: this.program });
+    await this.server.create('program-year', { program: this.program });
     const programModel = await this.owner
       .lookup('service:store')
       .findRecord('program', this.program.id);
@@ -59,7 +59,7 @@ module('Integration | Component | programs/list-item', function (hooks) {
   });
 
   test('can not delete with associated ci reports', async function (assert) {
-    this.server.create('curriculum-inventory-report', { program: this.program });
+    await this.server.create('curriculum-inventory-report', { program: this.program });
     const programModel = await this.owner
       .lookup('service:store')
       .findRecord('program', this.program.id);

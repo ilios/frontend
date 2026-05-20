@@ -1,24 +1,28 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/mesh-term';
 import MeshTerm from 'frontend/components/reports/subject/new/mesh-term';
 
 module('Integration | Component | reports/subject/new/mesh-term', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.server.createList('mesh-descriptor', 5);
+  hooks.beforeEach(async function () {
+    await this.server.create('mesh-descriptor', { id: '1' });
+    await this.server.create('mesh-descriptor', { id: '2' });
+    await this.server.create('mesh-descriptor', { id: '3' });
+    await this.server.create('mesh-descriptor', { id: '4' });
+    await this.server.create('mesh-descriptor', { id: '5' });
   });
 
   test('it works', async function (assert) {
     this.set('currentId', null);
-    this.set('changeId', (userId) => {
+    this.set('changeId', (descriptorId) => {
       assert.step('changeId called');
-      assert.strictEqual(userId, '3');
-      this.set('currentId', userId);
+      assert.strictEqual(descriptorId, '3');
+      this.set('currentId', descriptorId);
     });
     await render(
       <template><MeshTerm @currentId={{this.currentId}} @changeId={{this.changeId}} /></template>,

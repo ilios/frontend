@@ -12,19 +12,19 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication(
       { school: this.school, administeredSchools: [this.school] },
       true,
     );
-    this.user2 = this.server.create('user', { displayName: 'Clem Chowder' });
-    this.server.create('academic-year');
+    this.user2 = await this.server.create('user', { displayName: 'Clem Chowder' });
+    await this.server.create('academic-year');
 
-    const statuses = this.server.createList('learningMaterialStatus', 5);
-    const roles = this.server.createList('learningMaterialUserRole', 3);
-    const descriptors = this.server.createList('mesh-descriptor', 6);
+    const statuses = await this.server.createList('learningMaterialStatus', 5);
+    const roles = await this.server.createList('learningMaterialUserRole', 3);
+    const descriptors = await this.server.createList('mesh-descriptor', 6);
 
-    this.material1 = this.server.create('learning-material', {
+    this.material1 = await this.server.create('learning-material', {
       originalAuthor: 'Jennifer Johnson',
       owningUser: this.user,
       status: statuses[0],
@@ -33,9 +33,9 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       markedAccessible: false,
       filename: 'something.pdf',
       absoluteFileUri: 'http://somethingsomething.com/something.pdf',
-      uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toJSDate(),
+      uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toISO(),
     });
-    this.material2 = this.server.create('learning-material', {
+    this.material2 = await this.server.create('learning-material', {
       originalAuthor: 'Jennifer Johnson',
       owningUser: this.user2,
       status: statuses[0],
@@ -45,61 +45,61 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       markedAccessible: true,
       filename: 'filename',
       absoluteFileUri: 'http://example.com/file',
-      uploadDate: DateTime.fromObject({ year: 2011, month: 3, day: 14, hour: 8 }).toJSDate(),
+      uploadDate: DateTime.fromObject({ year: 2011, month: 3, day: 14, hour: 8 }).toISO(),
     });
-    this.material3 = this.server.create('learning-material', {
+    this.material3 = await this.server.create('learning-material', {
       originalAuthor: 'Hunter Pence',
       link: 'www.example.com',
       status: statuses[0],
       owningUser: this.user,
       userRole: roles[0],
-      uploadDate: today.toJSDate(),
+      uploadDate: today.toISO(),
     });
-    this.material4 = this.server.create('learning-material', {
+    this.material4 = await this.server.create('learning-material', {
       originalAuthor: 'Willie Mays',
       citation: 'a citation',
       status: statuses[0],
       userRole: roles[0],
       owningUser: this.user,
-      uploadDate: DateTime.fromObject({ year: 2016, month: 12, day: 12, hour: 8 }).toJSDate(),
+      uploadDate: DateTime.fromObject({ year: 2016, month: 12, day: 12, hour: 8 }).toISO(),
     });
-    this.material5 = this.server.create('learning-material', {
+    this.material5 = await this.server.create('learning-material', {
       title: 'Letter to Doc Brown',
       originalAuthor: 'Marty McFly',
       owningUser: this.user,
       status: statuses[0],
       userRole: roles[0],
       copyrightPermission: true,
-      uploadDate: DateTime.fromObject({ year: 2016, month: 3, day: 3, hour: 8 }).toJSDate(),
+      uploadDate: DateTime.fromObject({ year: 2016, month: 3, day: 3, hour: 8 }).toISO(),
       filename: 'letter.txt',
       absoluteFileUri: 'http://bttf.com/letter.txt',
     });
 
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
 
-    this.server.create('courseLearningMaterial', {
+    await this.server.create('courseLearningMaterial', {
       learningMaterial: this.material1,
       course: this.course,
       required: false,
       meshDescriptors: [descriptors[1], descriptors[2]],
       position: 0,
     });
-    this.server.create('courseLearningMaterial', {
+    await this.server.create('courseLearningMaterial', {
       learningMaterial: this.material2,
       course: this.course,
       required: false,
       position: 1,
     });
-    this.server.create('courseLearningMaterial', {
+    await this.server.create('courseLearningMaterial', {
       learningMaterial: this.material3,
       course: this.course,
       publicNotes: false,
       position: 2,
     });
-    this.server.create('courseLearningMaterial', {
+    await this.server.create('courseLearningMaterial', {
       learningMaterial: this.material4,
       course: this.course,
       position: 3,
@@ -178,7 +178,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     const testDescription = 'testsome description';
     const testUrl = 'http://www.ucsf.edu/';
 
-    assert.strictEqual(this.server.db.learningMaterials.length, 5);
+    assert.strictEqual((await this.server.db.learningMaterial.all()).length, 5);
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     assert.ok(page.details.learningMaterials.search.isVisible);
@@ -201,8 +201,9 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.details.learningMaterials.newLearningMaterial.description(testDescription);
     await page.details.learningMaterials.newLearningMaterial.save();
 
-    assert.strictEqual(this.server.db.learningMaterials.length, 6);
-    assert.strictEqual(this.server.db.learningMaterials[5].link, testUrl);
+    const learningMaterials = await this.server.db.learningMaterial.all();
+    assert.strictEqual(learningMaterials.length, 6);
+    assert.strictEqual(learningMaterials[5].link, testUrl);
     assert.strictEqual(page.details.learningMaterials.current.length, 5);
     assert.strictEqual(page.details.learningMaterials.current[4].title, testTitle);
   });
@@ -213,7 +214,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     const testDescription = 'testsome description';
     const testCitation = 'testsome citation';
 
-    assert.strictEqual(this.server.db.learningMaterials.length, 5);
+    assert.strictEqual((await this.server.db.learningMaterial.all()).length, 5);
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
     assert.ok(page.details.learningMaterials.search.isVisible);
@@ -236,8 +237,9 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.details.learningMaterials.newLearningMaterial.description(testDescription);
     await page.details.learningMaterials.newLearningMaterial.save();
 
-    assert.strictEqual(this.server.db.learningMaterials.length, 6);
-    assert.strictEqual(this.server.db.learningMaterials[5].citation, testCitation);
+    const learningMaterials = await this.server.db.learningMaterial.all();
+    assert.strictEqual(learningMaterials.length, 6);
+    assert.strictEqual(learningMaterials[5].citation, testCitation);
 
     assert.strictEqual(page.details.learningMaterials.current.length, 5);
     assert.strictEqual(page.details.learningMaterials.current[4].title, testTitle);
@@ -879,11 +881,11 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('list double linked learning materials', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
-    this.server.create('courseLearningMaterial', {
+    await this.server.create('courseLearningMaterial', {
       learningMaterial: this.material1,
       course,
       required: false,
@@ -909,11 +911,11 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('view double linked learning material details', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
-    this.server.create('courseLearningMaterial', {
+    await this.server.create('courseLearningMaterial', {
       learningMaterial: this.material1,
       course,
       required: false,

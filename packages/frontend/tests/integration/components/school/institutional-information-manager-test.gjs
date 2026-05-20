@@ -1,18 +1,18 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/institutional-information-manager';
 import InstitutionalInformationManager from 'frontend/components/school/institutional-information-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/institutional-information-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const institution = this.server.create('curriculum-inventory-institution', {
+    const school = await this.server.create('school');
+    const institution = await this.server.create('curriculum-inventory-institution', {
       school,
       name: 'School of Rocket Surgery',
       aamcCode: '12345',
@@ -59,7 +59,7 @@ module('Integration | Component | school/institutional-information-manager', fun
   });
 
   test('empty form if no institution exists', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
@@ -84,8 +84,8 @@ module('Integration | Component | school/institutional-information-manager', fun
   });
 
   test('cancel', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('curriculum-inventory-institution', {
+    const school = await this.server.create('school');
+    await this.server.create('curriculum-inventory-institution', {
       school,
     });
 
@@ -111,8 +111,8 @@ module('Integration | Component | school/institutional-information-manager', fun
   });
 
   test('save existing institution', async function (assert) {
-    const school = this.server.create('school');
-    const institution = this.server.create('curriculum-inventory-institution', {
+    const school = await this.server.create('school');
+    const institution = await this.server.create('curriculum-inventory-institution', {
       school,
       name: 'School of Rocket Surgery',
       aamcCode: '12345',
@@ -173,7 +173,7 @@ module('Integration | Component | school/institutional-information-manager', fun
   });
 
   test('save new institution', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     const newName = 'Rocket Surgery Academy';
@@ -221,7 +221,7 @@ module('Integration | Component | school/institutional-information-manager', fun
   });
 
   test('form validation', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
@@ -337,8 +337,8 @@ module('Integration | Component | school/institutional-information-manager', fun
   });
 
   test('no save button in read-only mode', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('curriculum-inventory-institution', {
+    const school = await this.server.create('school');
+    await this.server.create('curriculum-inventory-institution', {
       school,
     });
 

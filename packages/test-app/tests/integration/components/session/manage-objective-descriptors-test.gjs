@@ -1,17 +1,17 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/session/manage-objective-descriptors';
 import ManageObjectiveDescriptors from 'ilios-common/components/session/manage-objective-descriptors';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | session/manage-objective-descriptors', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const descriptors = this.server.createList('mesh-descriptor', 4);
+    const descriptors = await this.server.createList('mesh-descriptor', 4);
     const descriptorModel = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptors[0].id);
@@ -43,7 +43,7 @@ module('Integration | Component | session/manage-objective-descriptors', functio
   });
 
   test('add works', async function (assert) {
-    const descriptors = this.server.createList('mesh-descriptor', 2);
+    const descriptors = await this.server.createList('mesh-descriptor', 2);
     const descriptorModel = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptors[0].id);
@@ -86,7 +86,7 @@ module('Integration | Component | session/manage-objective-descriptors', functio
   });
 
   test('remove works', async function (assert) {
-    const descriptors = this.server.createList('mesh-descriptor', 2);
+    const descriptors = await this.server.createList('mesh-descriptor', 2);
     const descriptorModel = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptors[0].id);

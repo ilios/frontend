@@ -7,14 +7,14 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({
       school: this.school,
       administeredSchools: [this.school],
     });
-    const program = this.server.create('program', { school: this.school });
-    const users = this.server.createList('user', 4);
-    this.report = this.server.create('curriculum-inventory-report', {
+    const program = await this.server.create('program', { school: this.school });
+    const users = await this.server.createList('user', 4);
+    this.report = await this.server.create('curriculum-inventory-report', {
       program,
       administrators: [users[2], users[3]],
     });

@@ -3,6 +3,7 @@ import '@warp-drive/ember/install'; // must be first in this file
 import Application from 'frontend/app';
 import config from 'frontend/config/environment';
 import * as QUnit from 'qunit';
+import { stopMSW } from 'ilios-common/msw';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 import { setupEmberOnerrorValidation } from 'ember-qunit';
@@ -17,6 +18,10 @@ import {
 } from 'ember-a11y-testing/test-support';
 
 import start from 'ember-exam/test-support/start';
+
+QUnit.done(async () => {
+  await stopMSW();
+});
 
 setupConsoleLogger();
 setRunOptions({

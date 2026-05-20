@@ -7,24 +7,24 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({
       school: this.school,
       administeredSchools: [this.school],
     });
-    const program = this.server.create('program', { school: this.school });
-    this.academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
-    this.report = this.server.create('curriculum-inventory-report', {
+    const program = await this.server.create('program', { school: this.school });
+    this.academicLevels = await this.server.createList('curriculum-inventory-academic-level', 10);
+    this.report = await this.server.create('curriculum-inventory-report', {
       academicLevels: this.academicLevels,
       program,
-      year: '2016',
+      year: 2016,
       isFinalized: false,
     });
-    this.sequence = this.server.create('curriculum-inventory-sequence', {
+    this.sequence = await this.server.create('curriculum-inventory-sequence', {
       report: this.report,
     });
 
-    this.block = this.server.create('curriculum-inventory-sequence-block', {
+    this.block = await this.server.create('curriculum-inventory-sequence-block', {
       description: 'lorem ipsum',
       report: this.report,
       duration: 12,
@@ -40,7 +40,7 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
   });
 
   test('delete sub-sequence block', async function (assert) {
-    this.server.create('curriculum-inventory-sequence-block', {
+    await this.server.create('curriculum-inventory-sequence-block', {
       parent: this.block,
       title: 'alpha',
       description: 'lorem ipsum',
@@ -50,7 +50,7 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
       startingAcademicLevel: this.academicLevels[0],
       endingAcademicLevel: this.academicLevels[1],
     });
-    this.server.create('curriculum-inventory-sequence-block', {
+    await this.server.create('curriculum-inventory-sequence-block', {
       parent: this.block,
       title: 'beta',
       description: 'lorem ipsum',
@@ -70,7 +70,7 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
   });
 
   test('change start and end level #6551', async function (assert) {
-    this.server.create('curriculum-inventory-sequence-block', {
+    await this.server.create('curriculum-inventory-sequence-block', {
       parent: this.block,
       report: this.report,
       startingAcademicLevel: this.academicLevels[0],
@@ -93,7 +93,7 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
   });
 
   test('cancel start and end level changes #6551', async function (assert) {
-    this.server.create('curriculum-inventory-sequence-block', {
+    await this.server.create('curriculum-inventory-sequence-block', {
       parent: this.block,
       report: this.report,
       startingAcademicLevel: this.academicLevels[0],

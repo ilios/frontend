@@ -3,26 +3,32 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/objectives';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Objectives from 'frontend/components/program-year/objectives';
 import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | program-year/objectives', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const domains = this.server.createList('competency', 2, { school });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const domains = await this.server.createList('competency', 2, { school });
 
-    const competencies = this.server.createList('competency', 2, { school, parent: domains[0] });
-    this.server.createList('competency', 2, { school, parent: domains[1] });
+    const competencies = await this.server.createList('competency', 2, {
+      school,
+      parent: domains[0],
+    });
+    await this.server.createList('competency', 2, { school, parent: domains[1] });
 
-    this.server.create('program-year-objective', { programYear, competency: competencies[0] });
-    this.server.create('program-year-objective', { programYear });
+    await this.server.create('program-year-objective', {
+      programYear,
+      competency: competencies[0],
+    });
+    await this.server.create('program-year-objective', { programYear });
 
     const programYearModel = await this.owner
       .lookup('service:store')
@@ -71,37 +77,40 @@ module('Integration | Component | program-year/objectives', function (hooks) {
   });
 
   test('it loads data for program year domains', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const domain1 = this.server.create('competency', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const domain1 = await this.server.create('competency', {
       school,
       programYears: [programYear],
     });
-    const domain2 = this.server.create('competency', {
+    const domain2 = await this.server.create('competency', {
       school,
       programYears: [programYear],
     });
 
-    const competencies = this.server.createList('competency', 3, {
+    const competencies = await this.server.createList('competency', 3, {
       school,
       parent: domain1,
       programYears: [programYear],
     });
-    this.server.createList('competency', 2, {
+    await this.server.createList('competency', 2, {
       school,
       parent: domain2,
       programYears: [programYear],
     });
 
-    const domain3 = this.server.create('competency', {
+    const domain3 = await this.server.create('competency', {
       school,
     });
-    this.server.createList('competency', 2, {
+    await this.server.createList('competency', 2, {
       school,
       parent: domain3,
     });
-    this.server.create('program-year-objective', { programYear, competency: competencies[0] });
+    await this.server.create('program-year-objective', {
+      programYear,
+      competency: competencies[0],
+    });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);

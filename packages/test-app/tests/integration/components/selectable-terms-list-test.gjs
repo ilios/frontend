@@ -1,45 +1,45 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/selectable-terms-list';
 import SelectableTermsList from 'ilios-common/components/selectable-terms-list';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | selectable terms list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const vocabulary = this.server.create('vocabulary');
-    const term1 = this.server.create('term', {
+    const vocabulary = await this.server.create('vocabulary');
+    const term1 = await this.server.create('term', {
       title: 'Alpha',
       active: true,
       vocabulary,
     });
-    const term2 = this.server.create('term', {
+    const term2 = await this.server.create('term', {
       title: 'Beta',
       active: true,
       vocabulary,
     });
-    const term3 = this.server.create('term', {
+    const term3 = await this.server.create('term', {
       title: 'Gamma',
       active: true,
       vocabulary,
     });
-    const term4 = this.server.create('term', {
+    const term4 = await this.server.create('term', {
       title: 'First',
       active: true,
       vocabulary,
       children: [term1, term2],
     });
-    const term5 = this.server.create('term', {
+    const term5 = await this.server.create('term', {
       title: 'Second',
       active: true,
       vocabulary,
       children: [term3],
     });
-    const root = this.server.create('term', {
+    const root = await this.server.create('term', {
       title: 'root',
       active: true,
       vocabulary,

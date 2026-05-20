@@ -6,21 +6,20 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Objective Create', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
-    this.server.create('academic-year', { id: 2013 });
-    this.server.createList('program', 2);
-    this.server.createList('programYear', 2);
-    this.server.createList('cohort', 2);
+    await this.server.create('academic-year', { id: 2013 });
+    await this.server.createList('program', 2);
+    await this.server.createList('programYear', 2);
+    await this.server.createList('cohort', 2);
   });
 
   test('save new objective', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
-    this.server.create('course-objective', { course });
-
+    await this.server.create('course-objective', { course });
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({
@@ -53,12 +52,11 @@ module('Acceptance | Course - Objective Create', function (hooks) {
   });
 
   test('cancel new objective', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
-    this.server.create('course-objective', { course });
-
+    await this.server.create('course-objective', { course });
     await page.visit({
       courseId: course.id,
       details: true,
@@ -83,12 +81,11 @@ module('Acceptance | Course - Objective Create', function (hooks) {
   });
 
   test('empty objective title can not be created', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
-    this.server.create('course-objective', { course });
-
+    await this.server.create('course-objective', { course });
     await page.visit({
       courseId: course.id,
       details: true,
@@ -113,7 +110,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
   });
 
   test('create objective in empty course', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });

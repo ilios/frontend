@@ -2,15 +2,15 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/user-name-info';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 
 module('Integration | Component | user-name-info', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserNameInfo @user={{this.user}} /></template>);
@@ -20,7 +20,7 @@ module('Integration | Component | user-name-info', function (hooks) {
   });
 
   test('it renders with additional info when configured to do so', async function (assert) {
-    const user = this.server.create('user', { displayName: 'Clem Chowder' });
+    const user = await this.server.create('user', { displayName: 'Clem Chowder' });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserNameInfo @user={{this.user}} /></template>);
@@ -36,14 +36,14 @@ module('Integration | Component | user-name-info', function (hooks) {
   });
 
   test('it hides additional info when configured to do so', async function (assert) {
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           showCampusNameOfRecord: false,
         },
       };
     });
-    const user = this.server.create('user', { displayName: 'Clem Chowder' });
+    const user = await this.server.create('user', { displayName: 'Clem Chowder' });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserNameInfo @user={{this.user}} /></template>);
@@ -52,7 +52,7 @@ module('Integration | Component | user-name-info', function (hooks) {
   });
 
   test('passing in id as an attributes', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserNameInfo id="test-id" @user={{this.user}} /></template>);
@@ -60,7 +60,7 @@ module('Integration | Component | user-name-info', function (hooks) {
   });
 
   test('pronouns display if present', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       pronouns: 'they/them/tay',
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);

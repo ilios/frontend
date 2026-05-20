@@ -1,17 +1,17 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/instructor-group-members-list';
 import InstructorGroupMembersList from 'frontend/components/learner-group/instructor-group-members-list';
 
 module('Integration | Component | learner-group/instructor-group-members-list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const users = this.server.createList('user', 3);
-    const instructorGroup = this.server.create('instructor-group', { users });
+    const users = await this.server.createList('user', 3);
+    const instructorGroup = await this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);

@@ -2,15 +2,15 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-header';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import SequenceBlockHeader from 'frontend/components/curriculum-inventory/sequence-block-header';
 
 module('Integration | Component | curriculum-inventory/sequence-block-header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       title: 'Block title',
     });
     this.blockModel = await this.owner

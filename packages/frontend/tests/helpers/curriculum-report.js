@@ -1,91 +1,91 @@
-export function buildSchoolsFromData(server) {
-  const schools = server.db.schools;
-  const allCourseData = server.db.courses;
-  return schools.map((school) => {
-    const courseIds = school.courseIds;
-    let courses = allCourseData.filter((course) => courseIds.includes(course.id));
-    // add school's id in format expected by component
-    courses.map((course) => {
-      course.school = fetchSchool(server.db, course.schoolId);
-    });
-    const years = courses.map(({ year }) => year);
-    const uniqueYears = [...new Set(years)].sort().reverse().map(Number);
-    return {
-      id: school.id,
+export function buildSchoolsFromData(db) {
+  const schools = db.school.all();
+  const courses = db.course.all();
+  const years = courses.map(({ year }) => year);
+  const uniqueYears = [...new Set(years)].sort().reverse();
+
+  const rhett = schools.map((school) => {
+    const data = {
+      id: `${school.id}`,
       title: school.title,
       years: uniqueYears.map((year) => {
         return {
           year,
-          courses: courses.filter((course) => Number(course.year) === year),
+          courses: courses
+            .filter((course) => course.school.id == school.id)
+            .filter((course) => course.year == year)
+            .map((course) => buildCourse(course)),
         };
       }),
     };
+    return data;
   });
+
+  return rhett;
 }
 
-const fetchSchool = (db, schoolId) => {
-  const { id, title } = db.schools.find(schoolId);
-  return { id, title };
+const buildCourse = (course) => {
+  const { id, title, year } = course;
+  const school = { id: `${course.school.id}`, title: course.school.title };
+  const sessions = course.sessions.map((session) => buildSession(session));
+
+  return { id: `${id}`, title, year, school, sessions };
 };
 
-const fetchCourse = (db, courseId) => {
-  const { id, title, year, schoolId } = db.courses.find(courseId);
-  const school = fetchSchool(db, schoolId);
-  const sessions = db.sessions.where({ courseId }).map((session) => fetchSession(db, session.id));
-  return { id, title, year, school, sessions };
-};
-
-const fetchSession = (db, sessionId) => {
-  const { id, title, sessionTypeId } = db.sessions.find(sessionId);
-  const { title: sessionTypeTitle } = db.sessionTypes.find(sessionTypeId);
-  const offerings = db.offerings
-    .where({ sessionId })
-    .map((offering) => fetchOffering(db, offering));
-  const ilmSession = fetchIlmSession(db, db.ilmSessions.findBy({ sessionId }));
+const buildSession = (session) => {
+  const { id, title, sessionType, offerings, ilmSession } = session;
+  const { title: sessionTypeTitle } = sessionType;
   return {
-    id,
+    id: `${id}`,
     title,
     sessionType: { title: sessionTypeTitle },
-    offerings,
-    ilmSession,
+    offerings: offerings.map(buildOffering),
+    ilmSession: buildIlmSession(ilmSession),
   };
 };
 
-const fetchIlmSession = (db, ilmSession) => {
+const buildIlmSession = (ilmSession) => {
   if (!ilmSession) {
     return null;
   }
-  const { id, dueDate, hours, instructorIds, instructorGroupIds } = ilmSession;
-  const { instructors, instructorGroups } = fetchInstructors(db, instructorIds, instructorGroupIds);
-  return { id, dueDate, hours, instructors, instructorGroups };
-};
-
-const fetchOffering = (db, offering) => {
-  const { id, startDate, endDate, instructorIds, instructorGroupIds } = offering;
-  const { instructors, instructorGroups } = fetchInstructors(db, instructorIds, instructorGroupIds);
-  return { id, startDate, endDate, instructors, instructorGroups };
-};
-
-const fetchInstructors = (db, instructorIds, instructorGroupIds) => {
-  const instructors = db.users.find(instructorIds);
-  const instructorGroups = db.instructorGroups.find(instructorGroupIds);
-  const instructorData = instructors.map((instructor) => fetchUser(db, instructor.id));
-  const instructorGroupData = instructorGroups.map((ig) => {
-    const users = ig.userIds.map((id) => fetchUser(db, id));
-    return { id: ig.id, users };
+  const instructors = ilmSession.instructors.map(buildUser);
+  const instructorGroups = ilmSession.instructorGroups.map((ig) => {
+    const users = ig.users.map(buildUser);
+    return {
+      id: `${ig.id}`,
+      users,
+    };
   });
-  return { instructors: instructorData, instructorGroups: instructorGroupData };
+
+  const { id, dueDate, hours } = ilmSession;
+  return { id: `${id}`, dueDate, hours, instructors, instructorGroups };
 };
 
-const fetchUser = (db, userId) => {
-  const { id, firstName, lastName, middleName, displayName } = db.users.find(userId);
-  return { id, firstName, lastName, middleName, displayName };
+const buildOffering = (offering) => {
+  const instructors = offering.instructors.map(buildUser);
+  const instructorGroups = offering.instructorGroups.map((ig) => {
+    const users = ig.users.map(buildUser);
+    return {
+      id: `${ig.id}`,
+      users,
+    };
+  });
+
+  const { id, startDate, endDate } = offering;
+  return { id: `${id}`, startDate, endDate, instructors, instructorGroups };
+};
+
+const buildUser = (user) => {
+  const { id, firstName, lastName, middleName, displayName } = user;
+  return { id: `${id}`, firstName, lastName, middleName, displayName };
 };
 
 const fetchLearnerGroups = (db, ids) => {
-  return db.learnerGroups.find(ids).map(({ id, title }) => {
-    return { id, title };
-  });
+  return db.learnerGroup
+    .findMany((q) => q.where((lg) => ids.includes(lg.id)))
+    .map(({ id, title }) => {
+      return { id, title };
+    });
 };
 
-export const graphQL = { fetchCourse, fetchLearnerGroups };
+export const graphQL = { buildCourse, fetchLearnerGroups };

@@ -8,9 +8,9 @@ module('Acceptance | course visualizations', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication({}, true);
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
 
-    this.server.create('course', {
+    await this.server.create('course', {
       year: 2021,
       school: this.school,
     });

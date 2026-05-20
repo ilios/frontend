@@ -1,27 +1,28 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/materials';
 import Materials from 'ilios-common/components/course/materials';
 import noop from 'ilios-common/helpers/noop';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | course/materials', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('course lms render', async function (assert) {
-    const lm1 = this.server.create('learning-material', {
+    const lm1 = await this.server.create('learning-material', {
       title: 'title1',
       description: 'description1',
       originalAuthor: 'author1',
       link: 'url1',
     });
-    const courseLm1 = this.server.create('course-learning-material', {
+    const courseLm1 = await this.server.create('course-learning-material', {
       learningMaterial: lm1,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials: [courseLm1],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -48,36 +49,36 @@ module('Integration | Component | course/materials', function (hooks) {
   });
 
   const setupPage = async function (context) {
-    const lm1 = context.server.create('learning-material', {
+    const lm1 = await context.server.create('learning-material', {
       title: 'title1',
       description: 'description1',
       originalAuthor: 'author1',
       link: 'http://myhost.com/url1',
     });
-    const lm2 = context.server.create('learning-material', {
+    const lm2 = await context.server.create('learning-material', {
       title: 'title2',
       description: 'description2',
       originalAuthor: 'author2',
       filename: 'testfile.txt',
       absoluteFileUri: 'http://myhost.com/url2',
     });
-    const lm3 = context.server.create('learning-material', {
+    const lm3 = await context.server.create('learning-material', {
       title: 'title3',
       description: 'description3',
       originalAuthor: 'author3',
       citation: 'citationtext',
     });
 
-    const courseLm1 = context.server.create('course-learning-material', {
+    const courseLm1 = await context.server.create('course-learning-material', {
       learningMaterial: lm1,
     });
-    const courseLm2 = context.server.create('course-learning-material', {
+    const courseLm2 = await context.server.create('course-learning-material', {
       learningMaterial: lm2,
     });
-    const courseLm3 = context.server.create('course-learning-material', {
+    const courseLm3 = await context.server.create('course-learning-material', {
       learningMaterial: lm3,
     });
-    const session = context.server.create('session', {
+    const session = await context.server.create('session', {
       title: 'session1title',
     });
     context.server.create('session-learning-material', {
@@ -94,11 +95,11 @@ module('Integration | Component | course/materials', function (hooks) {
     });
     context.server.create('offering', {
       session,
-      startDate: new Date(2020, 1, 2, 12).toISOString(),
-      endDate: new Date(2020, 1, 2, 14).toISOString(),
+      startDate: DateTime.fromObject({ year: 2020, month: 2, day: 2, hour: 12 }).toISO(),
+      endDate: DateTime.fromObject({ year: 2020, month: 2, day: 2, hour: 14 }).toISO(),
     });
 
-    const course = context.server.create('course', {
+    const course = await context.server.create('course', {
       sessions: [session],
       learningMaterials: [courseLm1, courseLm2, courseLm3],
     });
@@ -476,7 +477,7 @@ module('Integration | Component | course/materials', function (hooks) {
   });
 
   test('no materials', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 

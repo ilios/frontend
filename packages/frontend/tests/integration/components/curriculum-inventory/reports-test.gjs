@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/reports';
@@ -8,16 +8,19 @@ import Reports from 'frontend/components/curriculum-inventory/reports';
 import noop from 'ilios-common/helpers/noop';
 module('Integration | Component | curriculum-inventory/reports', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school1 = this.server.create('school');
-    const school2 = this.server.create('school');
-    const school3 = this.server.create('school');
-    const program1 = this.server.create('program', { school: school1 });
-    const program2 = this.server.create('program', { school: school1 });
-    const program3 = this.server.create('program', { school: school2 });
-    const user = this.server.create('user', { school: school1, administeredSchools: [school1] });
+    const school1 = await this.server.create('school');
+    const school2 = await this.server.create('school');
+    const school3 = await this.server.create('school');
+    const program1 = await this.server.create('program', { school: school1 });
+    const program2 = await this.server.create('program', { school: school1 });
+    const program3 = await this.server.create('program', { school: school2 });
+    const user = await this.server.create('user', {
+      school: school1,
+      administeredSchools: [school1],
+    });
     this.schoolWithMultiplePrograms = await this.owner
       .lookup('service:store')
       .findRecord('school', school1.id);

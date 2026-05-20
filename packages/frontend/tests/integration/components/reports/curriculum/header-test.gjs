@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/header';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import Header from 'frontend/components/reports/curriculum/header';
@@ -10,7 +10,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | reports/curriculum/header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders for session objectives and is accessible', async function (assert) {
     await render(
@@ -93,9 +93,9 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
   });
 
   test('it renders for session objectives across multiple schools', async function (assert) {
-    this.schools = this.server.createList('school', 2);
-    const course1 = this.server.create('course', { school: this.schools[0] });
-    const course2 = this.server.create('course', { school: this.schools[1] });
+    this.schools = await this.server.createList('school', 2);
+    const course1 = await this.server.create('course', { school: this.schools[0] });
+    const course2 = await this.server.create('course', { school: this.schools[1] });
     this.courses = [course1, course2];
 
     await render(
@@ -257,9 +257,9 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
   });
 
   test('it renders for session offerings across multiple schools', async function (assert) {
-    this.schools = this.server.createList('school', 2);
-    const course1 = this.server.create('course', { school: this.schools[0] });
-    const course2 = this.server.create('course', { school: this.schools[1] });
+    this.schools = await this.server.createList('school', 2);
+    const course1 = await this.server.create('course', { school: this.schools[0] });
+    const course2 = await this.server.create('course', { school: this.schools[1] });
     this.courses = [course1, course2];
 
     await render(

@@ -10,14 +10,13 @@ module('Acceptance | curriculum inventory reports', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.program = this.server.create('program', { school: this.school });
-    this.user = await setupAuthentication({ school: this.school }, true);
-    this.user.update({ directedSchools: [this.school] });
+    const school = await this.server.create('school');
+    this.program = await this.server.create('program', { school });
+    this.user = await setupAuthentication({ school, directedSchools: [school] }, true);
   });
 
   test('report title is correctly linked to report details page', async function (assert) {
-    this.server.create('curriculum-inventory-report', {
+    await this.server.create('curriculum-inventory-report', {
       program: this.program,
     });
     await visit(url);

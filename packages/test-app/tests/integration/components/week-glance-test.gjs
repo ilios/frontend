@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, settled, click } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/week-glance';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
@@ -12,7 +12,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 
 module('Integration | Component | week-glance', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
   setupIntl(hooks, 'en-us');
 
   const testDate = DateTime.fromObject({
@@ -27,7 +27,7 @@ module('Integration | Component | week-glance', function (hooks) {
   const setupUserEvents = (context) => {
     class Mock extends Service {
       async getEvents() {
-        return context.server.db.userevents;
+        return context.server.db.userevent.all();
       }
     }
 
@@ -44,8 +44,8 @@ module('Integration | Component | week-glance', function (hooks) {
     context.owner.register('service:user-events', Mock);
   };
 
-  hooks.beforeEach(function () {
-    this.server.create('userevent', {
+  hooks.beforeEach(async function () {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       startDate: testDate.toISO(),
       isBlanked: false,
@@ -54,7 +54,7 @@ module('Integration | Component | week-glance', function (hooks) {
       offering: 1,
       slug: 'a',
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Finding the Point in Life',
       startDate: testDate.plus({ day: 1 }).toISO(),
       isBlanked: false,
@@ -63,23 +63,23 @@ module('Integration | Component | week-glance', function (hooks) {
       ilmSession: 1,
       slug: 'b',
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Blank',
       isBlanked: true,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Not Published',
       isBlanked: false,
       isPublished: false,
       isScheduled: false,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Scheduled',
       isBlanked: false,
       isPublished: true,
       isScheduled: true,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Schedule some materials',
       startDate: testDate.plus({ day: 1 }).toISO(),
       location: 'Room 123',

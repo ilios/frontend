@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/learning-material';
 import LearningMaterial from 'frontend/components/reports/subject/learning-material';
 
 module('Integration | Component | reports/subject/learning-material', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   const responseData = {
     data: {
@@ -19,13 +19,13 @@ module('Integration | Component | reports/subject/learning-material', function (
   };
 
   test('it renders', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { learningMaterials { id, title } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'learning material',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -46,13 +46,13 @@ module('Integration | Component | reports/subject/learning-material', function (
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { learningMaterials { id, title } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'learning material',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -89,13 +89,13 @@ module('Integration | Component | reports/subject/learning-material', function (
       });
     }
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { learningMaterials { id, title } }');
       return responseDataLarge;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'learning material',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -119,15 +119,15 @@ module('Integration | Component | reports/subject/learning-material', function (
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { learningMaterials(schools: [33]) { id, title } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'learning material',
-      school: this.server.create('school', { id: 33 }),
+      school: await this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
@@ -145,16 +145,16 @@ module('Integration | Component | reports/subject/learning-material', function (
   });
 
   test('filter by course', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { learningMaterials(courses: [13]) { id, title } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'learning material',
       prepositionalObject: 'course',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(
@@ -170,20 +170,20 @@ module('Integration | Component | reports/subject/learning-material', function (
   });
 
   test('filter by school and session', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { learningMaterials(schools: [24], sessions: [13]) { id, title } }',
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'learning material',
-      school: this.server.create('school', { id: 24 }),
+      school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'session',
-      prepositionalObjectTableRowId: 13,
+      prepositionalObjectTableRowId: '13',
     });
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 24));
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -201,16 +201,16 @@ module('Integration | Component | reports/subject/learning-material', function (
   });
 
   test('filter by mesh', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { learningMaterials(meshDescriptors: ["ABC"]) { id, title } }',
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'learning material',
       prepositionalObject: 'mesh term',
       prepositionalObjectTableRowId: 'ABC',

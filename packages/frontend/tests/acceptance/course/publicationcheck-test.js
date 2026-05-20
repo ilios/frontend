@@ -8,30 +8,30 @@ module('Acceptance | Course - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     await setupAuthentication({}, true);
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', {
       school,
     });
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
     });
-    const cohort = this.server.create('cohort', {
+    const cohort = await this.server.create('cohort', {
       programYear,
     });
-    const term = this.server.create('term', {
+    const term = await this.server.create('term', {
       vocabulary,
     });
-    this.fullCourse = this.server.create('course', {
+    this.fullCourse = await this.server.create('course', {
       year: 2013,
       school,
       cohorts: [cohort],
       terms: [term],
     });
-    this.server.create('course-objective', { course: this.fullCourse });
-    this.emptyCourse = this.server.create('course', {
+    await this.server.create('course-objective', { course: this.fullCourse });
+    this.emptyCourse = await this.server.create('course', {
       year: 2013,
       school,
     });

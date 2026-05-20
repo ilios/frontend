@@ -7,22 +7,22 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Objective Create', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
-    this.server.create('academic-year', { id: 2013 });
-    this.server.createList('program', 2);
-    this.server.createList('programYear', 2);
-    this.server.createList('cohort', 2);
-    this.course = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2013 });
+    await this.server.createList('program', 2);
+    await this.server.createList('programYear', 2);
+    await this.server.createList('cohort', 2);
+    this.course = await this.server.create('course', {
       year: 2013,
       school,
     });
-    const sessionType = this.server.create('session-type', { school });
-    const session = this.server.create('session', {
+    const sessionType = await this.server.create('session-type', { school });
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType,
     });
-    this.server.create('session-objective', { session });
+    await this.server.create('session-objective', { session });
   });
 
   test('save new objective', async function (assert) {

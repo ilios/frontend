@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/root';
 import Root from 'frontend/components/learner-group/root';
 import noop from 'ilios-common/helpers/noop';
@@ -10,15 +10,15 @@ import set from 'ember-set-helper/helpers/set';
 
 module('Integration | Component | learner-group/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    const program = this.server.create('program', { school: this.school });
-    this.programYear = this.server.create('program-year', { program });
-    this.cohort = this.server.create('cohort', { programYear: this.programYear });
+    this.school = await this.server.create('school');
+    const program = await this.server.create('program', { school: this.school });
+    this.programYear = await this.server.create('program-year', { program });
+    this.cohort = await this.server.create('cohort', { programYear: this.programYear });
 
-    const user = this.server.create('user', { school: this.school });
+    const user = await this.server.create('user', { school: this.school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -32,40 +32,40 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('renders with data', async function (assert) {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user');
-    const user3 = this.server.create('user');
-    const user4 = this.server.create('user');
-    const user5 = this.server.create('user', {
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user');
+    const user3 = await this.server.create('user');
+    const user4 = await this.server.create('user');
+    const user5 = await this.server.create('user', {
       firstName: 'Walther',
       middleName: 'von der',
       lastName: 'Vogelweide',
     });
-    const user6 = this.server.create('user', {
+    const user6 = await this.server.create('user', {
       firstName: 'Zeb',
       lastName: 'Zoober',
       displayName: 'Aardvark',
     });
-    const cohort = this.server.create('cohort', {
+    const cohort = await this.server.create('cohort', {
       title: 'this cohort',
       users: [user1, user2, user3, user4],
       programYear: this.programYear,
     });
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       title: 'test sub-group',
       cohort,
       users: [user3, user4],
     });
 
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    const offering = await this.server.create('offering', { session });
 
-    const course2 = this.server.create('course', { school: this.school });
-    const session2 = this.server.create('session', { course: course2 });
-    const ilm = this.server.create('ilm-session', { session: session2 });
+    const course2 = await this.server.create('course', { school: this.school });
+    const session2 = await this.server.create('session', { course: course2 });
+    const ilm = await this.server.create('ilm-session', { session: session2 });
 
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       children: [subGroup],
@@ -116,20 +116,20 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('renders with data, but no members', async function (assert) {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user');
-    const user3 = this.server.create('user');
-    const cohort = this.server.create('cohort', {
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user');
+    const user3 = await this.server.create('user');
+    const cohort = await this.server.create('cohort', {
       title: 'this cohort',
       users: [user1, user2, user3],
       programYear: this.programYear,
     });
 
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    const offering = await this.server.create('offering', { session });
 
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       offerings: [offering],
@@ -171,26 +171,26 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('renders with no members, but one member in subgroup', async function (assert) {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user');
-    const user3 = this.server.create('user');
-    const cohort = this.server.create('cohort', {
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user');
+    const user3 = await this.server.create('user');
+    const cohort = await this.server.create('cohort', {
       title: 'this cohort',
       users: [user1, user2],
       programYear: this.programYear,
     });
 
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    const offering = await this.server.create('offering', { session });
 
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       title: 'test sub-group',
       cohort,
       users: [user3],
     });
 
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       offerings: [offering],
@@ -236,11 +236,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('renders with data in read-only mode', async function (assert) {
-    const cohort = this.server.create('cohort', {
+    const cohort = await this.server.create('cohort', {
       title: 'this cohort',
       programYear: this.programYear,
     });
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       cohort,
@@ -279,39 +279,39 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('it renders expanded course associations', async function (assert) {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user');
-    const user3 = this.server.create('user');
-    const user4 = this.server.create('user');
-    const user5 = this.server.create('user', {
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user');
+    const user3 = await this.server.create('user');
+    const user4 = await this.server.create('user');
+    const user5 = await this.server.create('user', {
       firstName: 'Walther',
       middleName: 'von der',
       lastName: 'Vogelweide',
     });
-    const user6 = this.server.create('user', {
+    const user6 = await this.server.create('user', {
       firstName: 'Zeb',
       lastName: 'Zoober',
       displayName: 'Aardvark',
     });
-    const cohort = this.server.create('cohort', {
+    const cohort = await this.server.create('cohort', {
       title: 'this cohort',
       users: [user1, user2, user3, user4],
       programYear: this.programYear,
     });
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       title: 'test sub-group',
       cohort,
     });
 
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    const offering = await this.server.create('offering', { session });
 
-    const course2 = this.server.create('course', { school: this.school });
-    const session2 = this.server.create('session', { course: course2 });
-    const ilm = this.server.create('ilm-session', { session: session2 });
+    const course2 = await this.server.create('course', { school: this.school });
+    const session2 = await this.server.create('session', { course: course2 });
+    const ilm = await this.server.create('ilm-session', { session: session2 });
 
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       children: [subGroup],
@@ -367,39 +367,39 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('it renders collapsed course associations', async function (assert) {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user');
-    const user3 = this.server.create('user');
-    const user4 = this.server.create('user');
-    const user5 = this.server.create('user', {
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user');
+    const user3 = await this.server.create('user');
+    const user4 = await this.server.create('user');
+    const user5 = await this.server.create('user', {
       firstName: 'Walther',
       middleName: 'von der',
       lastName: 'Vogelweide',
     });
-    const user6 = this.server.create('user', {
+    const user6 = await this.server.create('user', {
       firstName: 'Zeb',
       lastName: 'Zoober',
       displayName: 'Aardvark',
     });
-    const cohort = this.server.create('cohort', {
+    const cohort = await this.server.create('cohort', {
       title: 'this cohort',
       users: [user1, user2, user3, user4],
       programYear: this.programYear,
     });
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       title: 'test sub-group',
       cohort,
     });
 
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    const offering = await this.server.create('offering', { session });
 
-    const course2 = this.server.create('course', { school: this.school });
-    const session2 = this.server.create('session', { course: course2 });
-    const ilm = this.server.create('ilm-session', { session: session2 });
+    const course2 = await this.server.create('course', { school: this.school });
+    const session2 = await this.server.create('session', { course: course2 });
+    const ilm = await this.server.create('ilm-session', { session: session2 });
 
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       children: [subGroup],
@@ -437,39 +437,39 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('collapsing course associations fires', async function (assert) {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user');
-    const user3 = this.server.create('user');
-    const user4 = this.server.create('user');
-    const user5 = this.server.create('user', {
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user');
+    const user3 = await this.server.create('user');
+    const user4 = await this.server.create('user');
+    const user5 = await this.server.create('user', {
       firstName: 'Walther',
       middleName: 'von der',
       lastName: 'Vogelweide',
     });
-    const user6 = this.server.create('user', {
+    const user6 = await this.server.create('user', {
       firstName: 'Zeb',
       lastName: 'Zoober',
       displayName: 'Aardvark',
     });
-    const cohort = this.server.create('cohort', {
+    const cohort = await this.server.create('cohort', {
       title: 'this cohort',
       users: [user1, user2, user3, user4],
       programYear: this.programYear,
     });
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       title: 'test sub-group',
       cohort,
     });
 
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    const offering = await this.server.create('offering', { session });
 
-    const course2 = this.server.create('course', { school: this.school });
-    const session2 = this.server.create('session', { course: course2 });
-    const ilm = this.server.create('ilm-session', { session: session2 });
+    const course2 = await this.server.create('course', { school: this.school });
+    const session2 = await this.server.create('session', { course: course2 });
+    const ilm = await this.server.create('ilm-session', { session: session2 });
 
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       children: [subGroup],
@@ -510,39 +510,39 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('expanding course associations fires', async function (assert) {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user');
-    const user3 = this.server.create('user');
-    const user4 = this.server.create('user');
-    const user5 = this.server.create('user', {
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user');
+    const user3 = await this.server.create('user');
+    const user4 = await this.server.create('user');
+    const user5 = await this.server.create('user', {
       firstName: 'Walther',
       middleName: 'von der',
       lastName: 'Vogelweide',
     });
-    const user6 = this.server.create('user', {
+    const user6 = await this.server.create('user', {
       firstName: 'Zeb',
       lastName: 'Zoober',
       displayName: 'Aardvark',
     });
-    const cohort = this.server.create('cohort', {
+    const cohort = await this.server.create('cohort', {
       title: 'this cohort',
       users: [user1, user2, user3, user4],
       programYear: this.programYear,
     });
-    const subGroup = this.server.create('learner-group', {
+    const subGroup = await this.server.create('learner-group', {
       title: 'test sub-group',
       cohort,
     });
 
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    const offering = await this.server.create('offering', { session });
 
-    const course2 = this.server.create('course', { school: this.school });
-    const session2 = this.server.create('session', { course: course2 });
-    const ilm = this.server.create('ilm-session', { session: session2 });
+    const course2 = await this.server.create('course', { school: this.school });
+    const session2 = await this.server.create('session', { course: course2 });
+    const ilm = await this.server.create('ilm-session', { session: session2 });
 
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       children: [subGroup],
@@ -583,7 +583,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('Needs accommodation', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       needsAccommodation: true,
       cohort: this.cohort,
     });
@@ -608,7 +608,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('Does not need accommodation', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       needsAccommodation: false,
       cohort: this.cohort,
     });
@@ -633,7 +633,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('Read-only: Needs accommodation', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       needsAccommodation: true,
       cohort: this.cohort,
     });
@@ -661,7 +661,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('Read-only: Does not need accommodation', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       needsAccommodation: false,
       cohort: this.cohort,
     });
@@ -689,7 +689,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('Toggle needs accommodations', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       needsAccommodation: false,
       cohort: this.cohort,
     });
@@ -716,7 +716,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('Update location', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       location: 'test location',
       cohort: this.cohort,
     });
@@ -747,7 +747,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('Default location can be blank', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       location: 'test location',
       cohort: this.cohort,
     });
@@ -778,7 +778,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('Update default URL', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       url: 'https://iliosproject.org/',
       cohort: this.cohort,
     });
@@ -815,7 +815,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('URL input validation', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       cohort: this.cohort,
     });
     const learnerGroupModel = await this.owner
@@ -868,12 +868,12 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('learnergroup calendar', async function (assert) {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user');
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
-    const learnerGroup = this.server.create('learner-group', {
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user');
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    const offering = await this.server.create('offering', { session });
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       users: [user1, user2],
@@ -915,12 +915,12 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('manage users', async function (assert) {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user');
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
-    const learnerGroup = this.server.create('learner-group', {
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user');
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    const offering = await this.server.create('offering', { session });
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       users: [user1, user2],
@@ -955,12 +955,12 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('bulk assignment', async function (assert) {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user');
-    const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
-    const learnerGroup = this.server.create('learner-group', {
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user');
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    const offering = await this.server.create('offering', { session });
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'test group',
       location: 'test location',
       users: [user1, user2],
@@ -996,7 +996,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('sub-groups list not visible if learner group has no sub-groups', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       cohort: this.cohort,
     });
     const learnerGroupModel = await this.owner
@@ -1024,26 +1024,26 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('toggling between instructor manager and instructor view mode', async function (assert) {
-    const instructor = this.server.create('user', {
+    const instructor = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       middleName: '',
     });
-    const instructor2 = this.server.create('user', {
+    const instructor2 = await this.server.create('user', {
       firstName: 'zeb',
       lastName: 'z00ber',
       displayName: 'aardvark',
     });
-    const instructor3 = this.server.create('user', {
+    const instructor3 = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person2',
       middleName: '',
     });
-    const instructorGroup = this.server.create('instructor-group', {
+    const instructorGroup = await this.server.create('instructor-group', {
       title: 'test group',
       users: [instructor3],
     });
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
       instructors: [instructor, instructor2],
@@ -1121,17 +1121,17 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('edit and cancel', async function (assert) {
-    const instructor = this.server.create('user', {
+    const instructor = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       middleName: '',
     });
-    const instructor2 = this.server.create('user', {
+    const instructor2 = await this.server.create('user', {
       firstName: 'zeb',
       lastName: 'z00ber',
       displayName: 'aardvark',
     });
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
       instructors: [instructor, instructor2],
@@ -1164,27 +1164,29 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('edit and save', async function (assert) {
-    const instructor = this.server.create('user', {
+    const instructor = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       middleName: '',
     });
-    const instructor2 = this.server.create('user', {
+    const instructor2 = await this.server.create('user', {
       firstName: 'zeb',
       lastName: 'z00ber',
       displayName: 'aardvark',
     });
-    const instructor3 = this.server.create('user', {
+    const instructor3 = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person2',
       middleName: '',
     });
-    const instructorGroup = this.server.create('instructor-group', {
+    const instructorGroup = await this.server.create('instructor-group', {
       title: 'test group',
       users: [instructor3],
     });
-    const instructorGroup2 = this.server.create('instructor-group', { title: 'test group 2' });
-    const learnerGroup = this.server.create('learner-group', {
+    const instructorGroup2 = await this.server.create('instructor-group', {
+      title: 'test group 2',
+    });
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
       instructors: [instructor, instructor2],
@@ -1221,28 +1223,28 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('filter applies in edit mode', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const subgroup = this.server.create('learner-group', { id: 2, parent: learnerGroup });
-    this.server.create('user', {
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const subgroup = await this.server.create('learner-group', { id: 2, parent: learnerGroup });
+    await this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
       email: 'jasper.dog@example.edu',
       learnerGroups: [learnerGroup],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'Jayden',
       lastName: 'Pup',
       displayName: 'Just Jayden',
       email: 'jayden@example.edu',
       learnerGroups: [learnerGroup],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'Jackson',
       lastName: 'Doggy',
       email: 'jackson.doggy@example.edu',
       learnerGroups: [subgroup],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'Beetlejuice',
       lastName: 'Beetlejuice',
       displayName: 'Beet',
@@ -1301,14 +1303,14 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('filter applies in view mode', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    this.server.create('user', {
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    await this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
       email: 'jasper.dog@example.edu',
       learnerGroups: [learnerGroup],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'Jayden',
       lastName: 'Pup',
       displayName: 'Just Jayden',

@@ -1,45 +1,45 @@
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import SessionsGridOffering from 'ilios-common/components/sessions-grid-offering';
 import { component } from 'ilios-common/page-objects/components/sessions-grid-offering';
 
 module('Integration | Component | sessions-grid-offering', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.school = this.server.create('school');
-    const course = this.server.create('course', { school: this.school });
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('program-year', { program });
-    this.cohort = this.server.create('cohort', { programYear });
-    this.session = this.server.create('session', { course });
+  hooks.beforeEach(async function () {
+    this.school = await this.server.create('school');
+    const course = await this.server.create('course', { school: this.school });
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('program-year', { program });
+    this.cohort = await this.server.create('cohort', { programYear });
+    this.session = await this.server.create('session', { course });
 
     this.intl = this.owner.lookup('service:intl');
   });
 
   test('it renders', async function (assert) {
-    const instructors = this.server.createList('user', 5);
-    const learners = this.server.createList('user', 5);
-    const learnerGroup1 = this.server.create('learner-group', {
+    const instructors = await this.server.createList('user', 5);
+    const learners = await this.server.createList('user', 5);
+    const learnerGroup1 = await this.server.create('learner-group', {
       cohort: this.cohort,
       users: [learners[0], learners[1]],
     });
-    const learnerGroup2 = this.server.create('learner-group', {
+    const learnerGroup2 = await this.server.create('learner-group', {
       cohort: this.cohort,
       users: [learners[2]],
     });
-    const instructorGroup1 = this.server.create('instructor-group', {
+    const instructorGroup1 = await this.server.create('instructor-group', {
       school: this.school,
       users: [instructors[0], instructors[1]],
     });
-    const instructorGroup2 = this.server.create('instructor-group', {
+    const instructorGroup2 = await this.server.create('instructor-group', {
       school: this.school,
       users: [instructors[2]],
     });
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       session: this.session,
       learnerGroups: [learnerGroup1, learnerGroup2],
       instructors: [instructors[3], instructors[4]],
@@ -78,7 +78,7 @@ module('Integration | Component | sessions-grid-offering', function (hooks) {
   });
 
   test('change location and save', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       session: this.session,
       room: 'Room 101',
     });
@@ -97,7 +97,7 @@ module('Integration | Component | sessions-grid-offering', function (hooks) {
   });
 
   test('change location and cancel', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       session: this.session,
       room: 'Room 101',
     });
@@ -121,7 +121,7 @@ module('Integration | Component | sessions-grid-offering', function (hooks) {
   });
 
   test('change location - validation fails on empty value', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       session: this.session,
       room: 'Room 101',
     });
@@ -140,7 +140,7 @@ module('Integration | Component | sessions-grid-offering', function (hooks) {
   });
 
   test('change location - validation fails if value is too long', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       session: this.session,
       room: 'Room 101',
     });

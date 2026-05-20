@@ -3,17 +3,17 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/school/new-vocabulary-form';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import NewVocabularyForm from 'frontend/components/school/new-vocabulary-form';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/new-vocabulary-form', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    this.server.create('vocabulary', { school, title: 'Vocab A' });
+    const school = await this.server.create('school');
+    await this.server.create('vocabulary', { school, title: 'Vocab A' });
     this.schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
   });
 

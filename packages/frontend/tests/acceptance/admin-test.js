@@ -1,17 +1,16 @@
 import { click, fillIn, currentURL, triggerEvent, visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 const url = '/admin';
-
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 
 module('Acceptance | Admin', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    await setupAuthentication({ school, administeredSchools: [school] }, true);
+    this.school = await this.server.create('school');
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
   });
 
   test('can transition to `users` route', async function (assert) {
@@ -23,8 +22,8 @@ module('Acceptance | Admin', function (hooks) {
   });
 
   test('can search for users', async function (assert) {
-    this.server.createList('user', 20, { schoolId: 1 });
-    this.server.createList('authentication', 20);
+    await this.server.createList('user', 20, { school: this.school });
+    await this.server.createList('authentication', 20);
 
     const userSearch = '.user-search input';
     const secondResult = '.user-search .results li:nth-of-type(3)';
@@ -48,7 +47,7 @@ module('Acceptance | Admin', function (hooks) {
 
   test('api lookup when search is disabled', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           type: 'form',
@@ -57,20 +56,19 @@ module('Acceptance | Admin', function (hooks) {
         },
       };
     });
-    this.server.createList('user', 2, { schoolId: 1 });
-    this.server.createList('authentication', 2);
+    await this.server.createList('user', 2, { school: this.school });
+    await this.server.createList('authentication', 2);
 
     const userSearch = '.user-search input';
     await visit(url);
 
-    this.server.get('api/users', (schema, { queryParams }) => {
+    this.server.get('/api/users', async ({ request }) => {
       assert.step('API called');
-      assert.ok('order_by[lastName]' in queryParams);
-      assert.ok('order_by[firstName]' in queryParams);
-      assert.strictEqual(queryParams['order_by[lastName]'], 'ASC');
-      assert.strictEqual(queryParams['order_by[firstName]'], 'ASC');
-
-      return schema.users.all();
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('order_by[lastName]'), 'ASC');
+      assert.strictEqual(searchParams.get('order_by[firstName]'), 'ASC');
+      const rhett = await this.server.db.user.all();
+      return formatJsonApi(rhett, 'user');
     });
 
     await fillIn(userSearch, 'son');
@@ -80,7 +78,7 @@ module('Acceptance | Admin', function (hooks) {
 
   test('index search when search is enabled', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
+    this.server.get('/application/config', function () {
       return {
         config: {
           type: 'form',
@@ -89,25 +87,37 @@ module('Acceptance | Admin', function (hooks) {
         },
       };
     });
-    this.server.createList('user', 2, { schoolId: 1 });
-    this.server.createList('authentication', 2);
+    await this.server.createList('user', 2, { school: this.school });
+    await this.server.createList('authentication', 2);
 
     const userSearch = '.user-search input';
     await visit(url);
 
-    this.server.get('api/search/v1/users', ({ db }, { queryParams }) => {
+    this.server.get('/api/search/v1/users', async ({ request }) => {
       assert.step('API called');
-      assert.ok('q' in queryParams);
-      assert.strictEqual(queryParams.q, 'son');
-      assert.ok('size' in queryParams);
-      assert.strictEqual(parseInt(queryParams.size, 10), 100);
-      assert.notOk('order_by[firstName]' in queryParams);
-      assert.notOk('order_by[firstName]' in queryParams);
-
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(searchParams.get('q'), 'son');
+      assert.strictEqual(Number(searchParams.get('size')), 100);
+      assert.notOk(searchParams.has('order_by[firstName]'));
+      assert.notOk(searchParams.has('order_by[firstName]'));
+      // user search is non-standard API, we need to remap records here so the payload
+      // adheres to the expected shape.
+      const users = (await this.server.db.user.all()).map((user) => {
+        return {
+          lastName: user.lastName,
+          firstName: user.firstName,
+          displayName: user.displayName,
+          campusId: user.campusId,
+          middleName: user.middleName,
+          id: user.id,
+          enabled: user.enabled,
+          email: user.email,
+        };
+      });
       return {
         results: {
           autocomplete: [],
-          users: db.users,
+          users,
         },
       };
     });
@@ -119,7 +129,7 @@ module('Acceptance | Admin', function (hooks) {
 
   test('search results exceed threshold', async function (assert) {
     const firstName = 'Janusz';
-    this.server.createList('user', 100, { schoolId: 1, firstName });
+    await this.server.createList('user', 100, { school: this.school, firstName });
 
     const userSearch = '.user-search input';
     const results = '.user-search .results li';

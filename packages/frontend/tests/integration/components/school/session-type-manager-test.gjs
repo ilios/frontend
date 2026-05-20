@@ -1,27 +1,27 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/session-type-manager';
 import SessionTypeManager from 'frontend/components/school/session-type-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/session-type-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.server.create('assessment-option', {
+    await this.server.create('assessment-option', {
       name: 'formative',
     });
-    this.summative = this.server.create('assessment-option', {
+    this.summative = await this.server.create('assessment-option', {
       name: 'summative',
     });
     await this.owner.lookup('service:store').findAll('assessment-option');
   });
 
   test('it renders', async function (assert) {
-    const sessionType = this.server.create('session-type', {
+    const sessionType = await this.server.create('session-type', {
       title: 'one',
       calendarColor: '#ffffff',
       assessment: true,
@@ -50,7 +50,7 @@ module('Integration | Component | school/session-type-manager', function (hooks)
   });
 
   test('close fires action', async function (assert) {
-    const sessionType = this.server.create('session-type', {
+    const sessionType = await this.server.create('session-type', {
       title: 'one',
       calendarColor: '#ffffff',
       assessment: true,

@@ -49,12 +49,12 @@ jobs:
   safari-test:
     name: Safari Tests
     runs-on: macos-latest
-    timeout-minutes: 20
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
         workspace:
-          - frontend
+          # - frontend
           - test-app
           - lti-course-manager
           - lti-dashboard

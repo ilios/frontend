@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/monthly-calendar';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setLocale } from 'ember-intl/test-support';
 import MonthlyCalendar from 'ilios-common/components/monthly-calendar';
 import Event from 'ilios-common/classes/event';
@@ -13,7 +13,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | monthly-calendar', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   //reset locale for other tests
   hooks.afterEach(async function () {

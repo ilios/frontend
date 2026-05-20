@@ -33,16 +33,6 @@ module.exports = {
     this.import(path.join('node_modules', 'flatpickr', 'dist', 'flatpickr.css'));
   },
 
-  treeForApp(appTree) {
-    const trees = [appTree];
-    if (['test', 'development'].includes(this._env)) {
-      const mirageDir = path.join(__dirname, 'addon-mirage-support');
-      const mirageTree = new Funnel(mirageDir, { destDir: 'tests/test-support/mirage' });
-      trees.push(mirageTree);
-    }
-    return MergeTrees(trees);
-  },
-
   treeForAddonTestSupport(tree) {
     // intentionally not calling _super here
     // so that we can have our `import`'s be

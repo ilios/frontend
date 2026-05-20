@@ -1,32 +1,20 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/user-profile-bio';
 import UserProfileBio from 'frontend/components/user-profile-bio';
 
 module('Integration | Component | user profile bio', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
-
-  const setupApplicationConfig = function (userSearchType, context) {
-    const { apiVersion } = context.owner.resolveRegistration('config:environment');
-    context.server.get('application/config', function () {
-      return {
-        config: {
-          userSearchType: userSearchType,
-          apiVersion,
-        },
-      };
-    });
-  };
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school', {
+    this.school = await this.server.create('school', {
       title: 'Cool School',
     });
-    this.user = this.server.create('user', {
+    this.user = await this.server.create('user', {
       id: 13,
       fullName: 'Test Person Name Thing',
       firstName: 'Test Person',
@@ -41,15 +29,28 @@ module('Integration | Component | user profile bio', function (hooks) {
       phone: 'x1234',
       school: this.school,
     });
-    this.authentication = this.server.create('authentication', {
+    this.authentication = await this.server.create('authentication', {
       username: 'test-username',
       user: this.user,
       password: null,
     });
+
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.setupApplicationConfig = (userSearchType, assert) => {
+      this.server.get('/application/config', async () => {
+        assert.step('Config API Called');
+        return {
+          config: {
+            userSearchType: userSearchType,
+            apiVersion,
+          },
+        };
+      });
+    };
   });
 
   test('it renders details', async function (assert) {
-    setupApplicationConfig('ldap', this);
+    this.setupApplicationConfig('ldap', assert);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
@@ -59,10 +60,11 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.notOk(component.bioManager.isPresent, 'manager component not loaded');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+    assert.verifySteps(['Config API Called']);
   });
 
   test('it renders manager', async function (assert) {
-    setupApplicationConfig('ldap', this);
+    this.setupApplicationConfig('ldap', assert);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
@@ -72,10 +74,11 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.ok(component.bioManager.isPresent, 'manager component loaded');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+    assert.verifySteps(['Config API Called']);
   });
 
   test('it switches modes', async function (assert) {
-    setupApplicationConfig('ldap', this);
+    this.setupApplicationConfig('ldap', assert);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.set('isManaging', false);
@@ -99,5 +102,6 @@ module('Integration | Component | user profile bio', function (hooks) {
     await component.bioDetails.manage();
     assert.notOk(component.bioDetails.isPresent, 'details component not loaded');
     assert.ok(component.bioManager.isPresent, 'manager component loaded');
+    assert.verifySteps(['Config API Called']);
   });
 });

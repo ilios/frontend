@@ -1,20 +1,20 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, findAll } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import DetailTermsListItem from 'ilios-common/components/detail-terms-list-item';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | detail terms list item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.vocabulary = this.server.create('vocabulary');
+  hooks.beforeEach(async function () {
+    this.vocabulary = await this.server.create('vocabulary');
   });
 
   test('top-level', async function (assert) {
-    const term = this.server.create('term', {
+    const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',
     });
@@ -27,16 +27,16 @@ module('Integration | Component | detail terms list item', function (hooks) {
   });
 
   test('nested', async function (assert) {
-    const term = this.server.create('term', {
+    const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Lorem',
     });
-    const term2 = this.server.create('term', {
+    const term2 = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Ipsum',
       parent: term,
     });
-    const term3 = this.server.create('term', {
+    const term3 = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',
       parent: term2,
@@ -52,7 +52,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
   });
 
   test('remove', async function (assert) {
-    const term = this.server.create('term', {
+    const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',
     });
@@ -73,7 +73,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
   });
 
   test('inactive', async function (assert) {
-    const term = this.server.create('term', {
+    const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',
     });
@@ -89,7 +89,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
   });
 
   test('read-only mode', async function (assert) {
-    const term = this.server.create('term', {
+    const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',
     });

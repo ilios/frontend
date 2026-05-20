@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/program-year';
 import { setupAuthentication } from 'ilios-common';
 import ProgramYear from 'frontend/components/reports/subject/program-year';
 
 module('Integration | Component | reports/subject/program-year', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
   const responseData = {
     data: {
       programYears: [
@@ -33,16 +33,16 @@ module('Integration | Component | reports/subject/program-year', function (hooks
 
   test('it renders for user with permissions', async function (assert) {
     await setupAuthentication({}, true);
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { programYears { id, startYear, program { id, title, duration, school { title } } } }',
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'program year',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -80,16 +80,16 @@ module('Integration | Component | reports/subject/program-year', function (hooks
 
   test('it renders for user with no permissions', async function (assert) {
     await setupAuthentication();
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { programYears { id, startYear, program { id, title, duration, school { title } } } }',
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'program year',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -125,16 +125,16 @@ module('Integration | Component | reports/subject/program-year', function (hooks
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
     await setupAuthentication({}, true);
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { programYears { id, startYear, program { id, title, duration, school { title } } } }',
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'program year',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -177,16 +177,16 @@ module('Integration | Component | reports/subject/program-year', function (hooks
       });
     }
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { programYears { id, startYear, program { id, title, duration, school { title } } } }',
       );
       return responseDataLarge;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'program year',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -210,18 +210,18 @@ module('Integration | Component | reports/subject/program-year', function (hooks
   });
 
   test('filter by school', async function (assert) {
-    this.server.post('api/graphql', function (schema, { requestBody }) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
       assert.step('API called');
-      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
         'query { programYears(schools: [33]) { id, startYear, program { id, title, duration, school { title } } } }',
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'program year',
-      school: this.server.create('school', { id: 33 }),
+      school: await this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));

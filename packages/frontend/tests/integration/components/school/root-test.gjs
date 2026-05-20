@@ -1,22 +1,22 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/root';
 import Root from 'frontend/components/school/root';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    this.server.create('user', { school, administeredSchools: [school] });
-    this.server.create('user', { school, administeredSchools: [school] });
-    this.server.createList('vocabulary', 2, { school });
-    this.server.createList('session-type', 2, { school });
-    this.server.createList('competency', 2, { school });
+    const school = await this.server.create('school');
+    await this.server.create('user', { school, administeredSchools: [school] });
+    await this.server.create('user', { school, administeredSchools: [school] });
+    await this.server.createList('vocabulary', 2, { school });
+    await this.server.createList('session-type', 2, { school });
+    await this.server.createList('competency', 2, { school });
     this.store = this.owner.lookup('service:store');
     this.school = await this.store.findRecord('school', school.id);
   });

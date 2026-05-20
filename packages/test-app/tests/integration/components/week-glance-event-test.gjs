@@ -4,14 +4,14 @@ import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/week-glance-event';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import WeekGlanceEvent from 'ilios-common/components/week-glance-event';
 
 const today = DateTime.fromObject({ hour: 8 });
 
 module('Integration | Component | week-glance-event', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders with some stuff', async function (assert) {
     this.set('event', {

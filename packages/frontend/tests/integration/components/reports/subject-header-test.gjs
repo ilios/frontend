@@ -1,29 +1,31 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/reports/subject-header';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import SubjectHeader from 'frontend/components/reports/subject-header';
+import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | reports/subject-header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     //override default handler to just return all courses
-    this.server.get('api/courses', (schema) => {
-      return schema.courses.all();
+    this.server.get('/api/courses', () => {
+      const rhett = this.server.db.course.all();
+      return formatJsonApi(rhett, 'course');
     });
   });
 
   test('it renders with default title', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
@@ -49,26 +51,26 @@ module('Integration | Component | reports/subject-header', function (hooks) {
   });
 
   test('edit report title, then save', async function (assert) {
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2015,
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2016,
     });
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
       year: 2015,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       school,
       year: 2016,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
       school,
     });
@@ -97,16 +99,16 @@ module('Integration | Component | reports/subject-header', function (hooks) {
   });
 
   test('edit report title, then cancel', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
       year: 2015,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
       school,
     });
@@ -135,19 +137,19 @@ module('Integration | Component | reports/subject-header', function (hooks) {
   });
 
   test('edit and remove report title, then save', async function (assert) {
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2016,
     });
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
       year: 2016,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
       school,
     });
@@ -179,10 +181,10 @@ module('Integration | Component | reports/subject-header', function (hooks) {
   });
 
   test('year filter is hidden when not needed', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
@@ -206,10 +208,10 @@ module('Integration | Component | reports/subject-header', function (hooks) {
   });
 
   test('year filter is shown', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
@@ -233,10 +235,10 @@ module('Integration | Component | reports/subject-header', function (hooks) {
   });
 
   test('title too long', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
+      prepositionalObjectTableRowId: `${this.user.id}`,
       user: this.user,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);

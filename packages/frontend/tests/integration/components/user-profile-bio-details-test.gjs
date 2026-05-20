@@ -1,32 +1,20 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/user-profile-bio-details';
 import UserProfileBioDetails from 'frontend/components/user-profile-bio-details';
 
 module('Integration | Component | user profile bio details', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
-
-  const setupApplicationConfig = function (userSearchType, context) {
-    const { apiVersion } = context.owner.resolveRegistration('config:environment');
-    context.server.get('application/config', function () {
-      return {
-        config: {
-          userSearchType: userSearchType,
-          apiVersion,
-        },
-      };
-    });
-  };
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school', {
+    this.school = await this.server.create('school', {
       title: 'Cool School',
     });
-    this.user = this.server.create('user', {
+    this.user = await this.server.create('user', {
       id: 13,
       fullName: 'Test Person Name Thing',
       firstName: 'Test Person',
@@ -41,7 +29,7 @@ module('Integration | Component | user profile bio details', function (hooks) {
       phone: 'x1234',
       school: this.school,
     });
-    this.authentication = this.server.create('authentication', {
+    this.authentication = await this.server.create('authentication', {
       username: 'test-username',
       user: this.user,
       password: null,
@@ -49,7 +37,6 @@ module('Integration | Component | user profile bio details', function (hooks) {
   });
 
   test('it renders for ldap user search', async function (assert) {
-    setupApplicationConfig('ldap', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const schoolModel = await this.owner
       .lookup('service:store')
@@ -131,7 +118,6 @@ module('Integration | Component | user profile bio details', function (hooks) {
   });
 
   test('it renders for non ldap user search', async function (assert) {
-    setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const schoolModel = await this.owner
       .lookup('service:store')

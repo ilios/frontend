@@ -7,25 +7,25 @@ module('Acceptance | Program Year - Terms', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       school,
       active: true,
     });
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
     });
-    this.server.create('cohort', { programYear });
-    this.server.create('term', {
+    await this.server.create('cohort', { programYear });
+    await this.server.create('term', {
       programYears: [programYear],
       vocabulary,
       active: true,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       vocabulary,
       active: true,
     });

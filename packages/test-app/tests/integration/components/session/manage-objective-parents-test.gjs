@@ -3,18 +3,18 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/session/manage-objective-parents';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ManageObjectiveParents from 'ilios-common/components/session/manage-objective-parents';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | session/manage-objective-parents', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('course-objective', { course });
+    const course = await this.server.create('course');
+    await this.server.create('course-objective', { course });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('courseObjectives', await courseModel.courseObjectives);
     this.set('courseTitle', course.title);
@@ -39,18 +39,18 @@ module('Integration | Component | session/manage-objective-parents', function (h
   });
 
   test('parent objectives are sorted correctly', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('course-objective', {
+    const course = await this.server.create('course');
+    await this.server.create('course-objective', {
       title: 'Aardvark',
       position: 3,
       course,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       title: 'Zeppelin',
       position: 2,
       course,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       title: 'Oscar',
       position: 1,
       course,

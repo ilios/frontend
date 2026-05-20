@@ -1,18 +1,18 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/institutional-information-details';
 import InstitutionalInformationDetails from 'frontend/components/school/institutional-information-details';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/institutional-information-details', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('curriculum-inventory-institution', {
+    const school = await this.server.create('school');
+    await this.server.create('curriculum-inventory-institution', {
       school,
       name: 'School of Rocket Surgery',
       aamcCode: '12345',
@@ -57,8 +57,8 @@ module('Integration | Component | school/institutional-information-details', fun
   });
 
   test('no manage button in read-only mode', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('curriculum-inventory-institution', {
+    const school = await this.server.create('school');
+    await this.server.create('curriculum-inventory-institution', {
       school,
     });
 
@@ -80,8 +80,8 @@ module('Integration | Component | school/institutional-information-details', fun
   });
 
   test('manage button fires', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('curriculum-inventory-institution', {
+    const school = await this.server.create('school');
+    await this.server.create('curriculum-inventory-institution', {
       school,
     });
 
@@ -107,7 +107,7 @@ module('Integration | Component | school/institutional-information-details', fun
   });
 
   test('no institutional information', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);

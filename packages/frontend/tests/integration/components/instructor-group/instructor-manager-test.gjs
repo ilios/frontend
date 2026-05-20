@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/instructor-group/instructor-manager';
@@ -9,12 +9,15 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | instructor-group/instructor-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user', { displayName: 'Aaron Aardvark', enabled: false });
-    const user3 = this.server.create('user');
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user', {
+      displayName: 'Aaron Aardvark',
+      enabled: false,
+    });
+    const user3 = await this.server.create('user');
     const store = this.owner.lookup('service:store');
     this.user1 = await store.findRecord('user', user1.id);
     this.user2 = await store.findRecord('user', user2.id);

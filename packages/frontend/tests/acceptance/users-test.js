@@ -9,14 +9,14 @@ module('Acceptance | Users', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({
-      school: school,
+      school: this.school,
       campusId: '123',
-      administeredSchools: [school],
+      administeredSchools: [this.school],
     });
-    this.server.createList('user', 90, { schoolId: 1, campusId: '555' });
-    this.server.createList('authentication', 90);
+    await this.server.createList('user', 90, { school: this.school, campusId: '555' });
+    await this.server.createList('authentication', 90);
   });
 
   test('can see list of users and transition to user route', async function (assert) {
@@ -45,19 +45,25 @@ module('Acceptance | Users', function (hooks) {
   });
 
   test('can search for a user and transition to user route', async function (assert) {
-    this.server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
+    const users = await this.server.createList('user', 40, {
+      firstName: 'Test',
+      lastName: 'Name',
+      school: this.school,
+    });
     await page.visit();
     await takeScreenshot(assert, 'default');
     await page.root.search.set('Test Name');
     await takeScreenshot(assert, 'search results');
     assert.strictEqual(page.root.userList.users[0].userNameInfo.fullName, 'Test M. Name');
+    assert.strictEqual(page.root.userList.users[0].userNameInfo.fullName, 'Test M. Name');
     assert.strictEqual(currentURL(), '/users?filter=Test%20Name', 'no query params for search');
     await page.root.userList.users[0].viewUserDetails();
-    assert.strictEqual(currentURL(), `/users/${this.user.id}`, 'transitioned to `user` route');
+    assert.strictEqual(currentURL(), `/users/${users[0].id}`, 'transitioned to `user` route');
   });
 
   test('create new user', async function (assert) {
     await page.visit();
+    let userCount = this.server.db.user.all().length;
     await page.root.showNewUserFormButton.click();
     await page.root.newUserForm.firstName.set('Lorem');
     await page.root.newUserForm.lastName.set('Ipsum');
@@ -65,11 +71,14 @@ module('Acceptance | Users', function (hooks) {
     await page.root.newUserForm.username.set('test123');
     await page.root.newUserForm.password.set('G3heimSach*e');
     await page.root.newUserForm.submit();
-    assert.strictEqual(currentURL(), '/users/101');
+    ++userCount;
+    assert.strictEqual(this.server.db.user.all().length, userCount);
+    assert.strictEqual(currentURL(), `/users/${userCount}`);
   });
 
   test('clear search when returning from creating a new user #4356', async function (assert) {
     await page.visit();
+    let userCount = this.server.db.user.all().length;
     await page.root.search.set('searchingterm');
     assert.strictEqual(currentURL(), '/users?filter=searchingterm');
     await page.root.showNewUserFormButton.click();
@@ -79,7 +88,9 @@ module('Acceptance | Users', function (hooks) {
     await page.root.newUserForm.username.set('test123');
     await page.root.newUserForm.password.set('G3heimSach*e');
     await page.root.newUserForm.submit();
-    assert.strictEqual(currentURL(), '/users/101');
+    ++userCount;
+    assert.strictEqual(this.server.db.user.all().length, userCount);
+    assert.strictEqual(currentURL(), `/users/${userCount}`);
     await userPage.manageUsersSummary.visitUsers();
     assert.strictEqual(page.root.search.value, '');
     assert.strictEqual(currentURL(), '/users');
@@ -98,6 +109,7 @@ module('Acceptance | Users', function (hooks) {
   });
 
   test('clear search when returning from creating a new user to creating another new user #4356', async function (assert) {
+    let userCount = this.server.db.user.all().length;
     await page.visit();
     await page.root.search.set('searchingterm');
     assert.strictEqual(currentURL(), '/users?filter=searchingterm');
@@ -108,7 +120,9 @@ module('Acceptance | Users', function (hooks) {
     await page.root.newUserForm.username.set('test123');
     await page.root.newUserForm.password.set('G3heimSach*e');
     await page.root.newUserForm.submit();
-    assert.strictEqual(currentURL(), '/users/101');
+    ++userCount;
+    assert.strictEqual(this.server.db.user.all().length, userCount);
+    assert.strictEqual(currentURL(), `/users/${userCount}`);
     await userPage.manageUsersSummary.createNewUser();
     assert.strictEqual(page.root.search.value, '');
     assert.strictEqual(currentURL(), '/users?addUser=true');

@@ -3,14 +3,14 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/program-year/objective-list-item-descriptors';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItemDescriptors from 'frontend/components/program-year/objective-list-item-descriptors';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | program-year/objective-list-item-descriptors', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders and is accessible when managing', async function (assert) {
     await render(
@@ -52,7 +52,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('it renders and is accessible un-editable', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);
@@ -81,7 +81,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('it renders and is accessible editable', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);
@@ -110,7 +110,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('clicking save fires save', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);
@@ -139,7 +139,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('clicking cancel fires cancel', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);
@@ -168,7 +168,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('clicking descriptor fires manage', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);

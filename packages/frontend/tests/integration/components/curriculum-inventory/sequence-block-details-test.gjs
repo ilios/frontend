@@ -1,46 +1,45 @@
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-details';
 import SequenceBlockDetails from 'frontend/components/curriculum-inventory/sequence-block-details';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | curriculum-inventory/sequence-block-details', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.push(
-        this.server.create('curriculumInventoryAcademicLevel', { name: `Year ${i + 1}` }),
+        await this.server.create('curriculumInventoryAcademicLevel', { name: `Year ${i + 1}` }),
       );
     }
-    const program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', {
+    const program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', {
       academicLevels,
-      year: '2016',
+      year: 2016,
       program,
     });
-    const grandParentBlock = this.server.create('curriculum-inventory-sequence-block', {
+    const grandParentBlock = await this.server.create('curriculum-inventory-sequence-block', {
       title: 'Okely Dokely',
       report,
     });
-    const parentBlock = this.server.create('curriculum-inventory-sequence-block', {
+    const parentBlock = await this.server.create('curriculum-inventory-sequence-block', {
       title: 'Foo',
       parent: grandParentBlock,
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       title: 'bar',
       description: 'lorem ipsum',
       report,
       parent: parentBlock,
       duration: 12,
-      startDate: DateTime.fromObject({ year: 2015, month: 1, day: 2 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2015, month: 4, day: 30 }).toJSDate(),
+      startDate: '2015-01-02',
+      endDate: '2015-04-30',
       childSequenceOrder: 1,
       orderInSequence: 1,
       required: 2,

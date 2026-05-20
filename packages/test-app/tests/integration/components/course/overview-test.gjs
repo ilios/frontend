@@ -2,13 +2,13 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/overview';
 import Overview from 'ilios-common/components/course/overview';
 
 module('Integration | Component | course overview', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
@@ -22,8 +22,8 @@ module('Integration | Component | course overview', function (hooks) {
   });
 
   test('course external id validation fails if value is too short', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('course-clerkship-type', {
+    const course = await this.server.create('course');
+    await this.server.create('course-clerkship-type', {
       courses: [course],
     });
     const courseModel = await this.store.findRecord('course', course.id);
@@ -40,8 +40,8 @@ module('Integration | Component | course overview', function (hooks) {
   });
 
   test('course external id validation fails if value is too long', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('course-clerkship-type', {
+    const course = await this.server.create('course');
+    await this.server.create('course-clerkship-type', {
       courses: [course],
     });
     const courseModel = await this.store.findRecord('course', course.id);
@@ -58,7 +58,7 @@ module('Integration | Component | course overview', function (hooks) {
   });
 
   test('start date validation fails when after end date', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       startDate: '2024-01-01',
       endDate: '2024-06-30',
     });
@@ -78,7 +78,7 @@ module('Integration | Component | course overview', function (hooks) {
   });
 
   test('end date validation fails when before start date', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       startDate: '2024-01-01',
       endDate: '2024-06-30',
     });

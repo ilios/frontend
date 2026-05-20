@@ -1,7 +1,7 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/learner-groups';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { graphQL } from 'frontend/tests/helpers/curriculum-report';
@@ -11,54 +11,58 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/curriculum/learner-groups', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.school = this.server.create('school');
-    const course = this.server.create('course', { school: this.school });
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', { course, sessionType });
-    const learnerGroups = this.server.createList('learner-group', 5);
-    const offering = this.server.create('offering', {
+  hooks.beforeEach(async function () {
+    this.school = await this.server.create('school');
+    const course = await this.server.create('course', { school: this.school });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', { course, sessionType });
+    const learnerGroups = await this.server.createList('learner-group', 5);
+    const offering = await this.server.create('offering', {
       session,
       learnerGroups: [learnerGroups[0], learnerGroups[3]],
     });
-    const offeringInstructorGroup = this.server.create('instructor-group', {
+    const offeringInstructorGroup = await this.server.create('instructor-group', {
       offerings: [offering],
     });
-    this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
-    this.server.create('user', { instructedOfferings: [offering] });
+    await this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
+    await this.server.create('user', { instructedOfferings: [offering] });
 
-    const ilmSession = this.server.create('ilm-session', {
+    const ilmSession = await this.server.create('ilm-session', {
       session,
       learnerGroups: [learnerGroups[1], learnerGroups[2]],
     });
-    const ilmSessionInstructorGroup = this.server.create('instructor-group', {
+    const ilmSessionInstructorGroup = await this.server.create('instructor-group', {
       ilmSessions: [ilmSession],
     });
-    this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
-    this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', ({ db }) => {
+    await this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
+    await this.server.create('user', { instructorIlmSessions: [ilmSession] });
+
+    this.server.post('/api/graphql', () => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
-      const courseIds = db.courses.map((c) => c.id);
-      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(db, id));
+      const rawCourses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+      const allLearnerGroups = this.server.db.learnerGroup.all();
       const courses = rawCourses.map((course) => {
         course.sessions.forEach((session) => {
-          session.offerings.forEach((offering) => {
-            offering.learnerGroups = graphQL.fetchLearnerGroups(
-              db,
-              db.offerings.find(offering.id).learnerGroupIds,
-            );
+          session.offerings = session.offerings.map((offeringData) => {
+            offeringData.learnerGroups = allLearnerGroups
+              .filter((lg) => lg.offerings.map(({ id }) => id).includes(Number(offeringData.id)))
+              .map(({ id, title }) => ({ id, title }));
+
+            return offeringData;
           });
+
           if (session.ilmSession) {
-            const ilm = db.ilmSessions.find(session.ilmSession.id);
-            session.ilmSession.learnerGroups = graphQL.fetchLearnerGroups(db, ilm.learnerGroupIds);
+            session.ilmSession.learnerGroups = allLearnerGroups
+              .filter((lg) =>
+                lg.ilmSessions.map(({ id }) => id).includes(Number(session.ilmSession.id)),
+              )
+              .map(({ id, title }) => ({ id, title }));
           }
         });
-
         return course;
       });
-
       return { data: { courses } };
     });
   });
@@ -82,13 +86,30 @@ module('Integration | Component | reports/curriculum/learner-groups', function (
     assert.strictEqual(
       component.header.runSummaryText,
       'Run Learner Groups report for one course. Each attached learner group is listed along with instructors and course data.',
+      'summary text correct',
     );
 
-    assert.strictEqual(component.results.length, 1);
-    assert.strictEqual(component.results.objectAt(0).courseTitle, 'course 0');
-    assert.strictEqual(component.results.objectAt(0).sessionCount, '1');
-    assert.strictEqual(component.results.objectAt(0).instructorCount, '4');
-    assert.strictEqual(component.results.objectAt(0).learnerGroupCount, '4');
+    assert.strictEqual(component.results.length, 1, 'result count correct');
+    assert.strictEqual(
+      component.results.objectAt(0).courseTitle,
+      'course 0',
+      'result course title correct',
+    );
+    assert.strictEqual(
+      component.results.objectAt(0).sessionCount,
+      '1',
+      'result session count correct',
+    );
+    assert.strictEqual(
+      component.results.objectAt(0).instructorCount,
+      '4',
+      'result instructor count correct',
+    );
+    assert.strictEqual(
+      component.results.objectAt(0).learnerGroupCount,
+      '4',
+      'result learner group count correct',
+    );
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

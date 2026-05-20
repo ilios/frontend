@@ -2,18 +2,18 @@ import ObjectProxy from '@ember/object/proxy';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/members';
 import Members from 'frontend/components/learner-group/members';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learner-group/members', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user1 = this.server.create('user', {
+    const learnerGroup = await this.server.create('learner-group', { id: 1 });
+    const user1 = await this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
       campusId: '1234',
@@ -21,7 +21,7 @@ module('Integration | Component | learner-group/members', function (hooks) {
       enabled: true,
       learnerGroups: [learnerGroup],
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       firstName: 'Jackson',
       lastName: 'Doggy',
       campusId: '123',
