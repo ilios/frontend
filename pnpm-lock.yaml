@@ -124,8 +124,8 @@ importers:
         specifier: 5.2.1
         version: 5.2.1(@babel/core@7.29.0)
       ember-a11y-testing:
-        specifier: ^8.0.0
-        version: 8.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.4)(qunit@2.25.0)
+        specifier: ^8.0.1
+        version: 8.0.1(@babel/core@7.29.0)(@ember/test-helpers@5.4.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.4)(qunit@2.25.0)
       ember-async-data:
         specifier: ^2.0.0
         version: 2.0.1(@babel/core@7.29.0)(@glint/template@1.7.7)
@@ -1217,8 +1217,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       ember-a11y-testing:
-        specifier: ^8.0.0
-        version: 8.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.4)(qunit@2.25.0)
+        specifier: ^8.0.1
+        version: 8.0.1(@babel/core@7.29.0)(@ember/test-helpers@5.4.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.4)(qunit@2.25.0)
       ember-auto-import:
         specifier: ^2.12.0
         version: 2.13.1(@glint/template@1.7.7)(webpack@5.106.2)
@@ -5121,8 +5121,8 @@ packages:
     resolution: {integrity: sha512-vlAygMfm34n/aFrgJE6CDDjIAmZPQEpIaNjNKYO9fEajGhWNhlZmdUgmXip9Yt3cmXYkpIh1NcFgpUsvCtAqUQ==}
     engines: {node: 22.x, pnpm: '>= 10'}
 
-  ember-a11y-testing@8.0.0:
-    resolution: {integrity: sha512-eKUzRPpMRliMqsWMl8MExKjCyAqgJUk6IlLKsyFKGf2dvDJwMH495MDY/XRw0Y9HhG+GXMw756YNtup01cLu9Q==}
+  ember-a11y-testing@8.0.1:
+    resolution: {integrity: sha512-irO7yrqz3nnJrBPFlMw4xvdPL7ElwC7fuQYSL4TbtMGk4gqnY+4dkKiNOqCIAg+AF7tBrjXDASkvpHrAHnmVMg==}
     engines: {node: '>= 18', pnpm: '>= 10'}
     peerDependencies:
       '@ember/test-helpers': ^3.0.3 || ^4.0.2 || ^5.0.0
@@ -8730,6 +8730,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  semver@7.8.0:
+    resolution: {integrity: sha512-AcM7dV/5ul4EekoQ29Agm5vri8JNqRyj39o0qpX6vDF2GZrtutZl5RwgD1XnZjiTAfncsJhMI48QQH3sN87YNA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   send@1.2.1:
     resolution: {integrity: sha512-1gnZf7DFcoIcajTjTwjwuDjzuz4PPcY2StKPlsGAQ1+YH20IRVrBaXSWmdjowTJ6u8Rc01PoYOGHXfP1mYcZNQ==}
     engines: {node: '>= 18'}
@@ -11616,7 +11621,7 @@ snapshots:
       '@embroider/shared-internals': 3.0.2
       broccoli-funnel: 3.0.8
       common-ancestor-path: 1.0.1
-      semver: 7.7.4
+      semver: 7.8.0
     transitivePeerDependencies:
       - supports-color
 
@@ -11765,7 +11770,7 @@ snapshots:
       js-string-escape: 1.0.1
       lodash: 4.18.1
       resolve-package-path: 4.0.3
-      semver: 7.7.4
+      semver: 7.8.0
       typescript-memoize: 1.1.1
 
   '@embroider/shared-internals@2.9.0':
@@ -11780,7 +11785,7 @@ snapshots:
       minimatch: 3.1.5
       pkg-entry-points: 1.1.1
       resolve-package-path: 4.0.3
-      semver: 7.7.4
+      semver: 7.8.0
       typescript-memoize: 1.1.1
     transitivePeerDependencies:
       - supports-color
@@ -15226,7 +15231,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-a11y-testing@8.0.0(@babel/core@7.29.0)(@ember/test-helpers@5.4.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.4)(qunit@2.25.0):
+  ember-a11y-testing@8.0.1(@babel/core@7.29.0)(@ember/test-helpers@5.4.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7))(axe-core@4.11.4)(qunit@2.25.0):
     dependencies:
       '@ember/test-helpers': 5.4.2(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@ember/test-waiters': 4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7)
@@ -15275,7 +15280,7 @@ snapshots:
       mkdirp: 0.5.6
       resolve-package-path: 3.1.0
       rimraf: 2.7.1
-      semver: 7.7.4
+      semver: 7.8.0
       symlink-or-copy: 1.3.1
       typescript-memoize: 1.1.1
       walk-sync: 0.3.4
@@ -16589,7 +16594,7 @@ snapshots:
   eslint-compat-utils@0.5.1(eslint@9.39.4):
     dependencies:
       eslint: 9.39.4
-      semver: 7.7.4
+      semver: 7.8.0
 
   eslint-config-prettier@9.1.2(eslint@9.39.4):
     dependencies:
@@ -18855,7 +18860,7 @@ snapshots:
     dependencies:
       growly: 1.3.0
       is-wsl: 2.2.0
-      semver: 7.7.4
+      semver: 7.8.0
       shellwords: 0.1.1
       uuid: 8.3.2
       which: 2.0.2
@@ -19916,6 +19921,8 @@ snapshots:
 
   semver@7.7.4: {}
 
+  semver@7.8.0: {}
+
   send@1.2.1:
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
@@ -20158,7 +20165,7 @@ snapshots:
       get-stdin: 9.0.0
       git-hooks-list: 3.2.0
       is-plain-obj: 4.1.0
-      semver: 7.7.4
+      semver: 7.8.0
       sort-object-keys: 1.1.3
       tinyglobby: 0.2.16
 
@@ -21144,7 +21151,7 @@ snapshots:
   validate-peer-dependencies@1.2.0:
     dependencies:
       resolve-package-path: 3.1.0
-      semver: 7.7.4
+      semver: 7.8.0
 
   validator@13.15.35: {}
 
