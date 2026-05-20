@@ -180,5 +180,10 @@
     "msw-test-support/",
     "translations/",
     "vendor/"
-  ]
+  ],
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
 }

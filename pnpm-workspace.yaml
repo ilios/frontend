@@ -15,4 +15,5 @@ allowBuilds:
   aws-sdk: true
   core-js: false
   fsevents: true
+  msw: true
   sharp: true
