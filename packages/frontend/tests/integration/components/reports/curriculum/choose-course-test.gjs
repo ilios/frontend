@@ -57,7 +57,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     await setupAuthentication({ school });
     this.set('selectedCourseIds', ['2']);
     this.set('expandedYears', [1984]);
-    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('schools', buildSchoolsFromData(this.server.db));
     await render(
       <template>
         <ChooseCourse
@@ -163,14 +163,9 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school: school2,
       year: 1984,
     });
-<<<<<<< HEAD
     this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('selectedCourseIds', [`${course1.id}`, `${course2.id}`]);
-=======
-    this.set('schools', buildSchoolsFromData(this.server));
-    this.set('selectedCourseIds', [course1.id, course2.id]);
     this.set('expandedYears', [1984]);
->>>>>>> c76392f0c (fixed curriculum and choose-course tests)
     await render(
       <template>
         <ChooseCourse
@@ -271,12 +266,8 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       year: 1984,
     });
     this.set('selectedCourseIds', []);
-<<<<<<< HEAD
-    this.set('schools', buildSchoolsFromData(this.server.db));
-=======
     this.set('expandedYears', [1984]);
-    this.set('schools', buildSchoolsFromData(this.server));
->>>>>>> c76392f0c (fixed curriculum and choose-course tests)
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('add', (courseId) => {
       assert.step('add called');
       assert.strictEqual(Number(courseId), course.id);
@@ -307,14 +298,9 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school,
       year: 1984,
     });
-<<<<<<< HEAD
     this.set('selectedCourseIds', [`${course.id}`]);
-    this.set('schools', buildSchoolsFromData(this.server.db));
-=======
-    this.set('selectedCourseIds', [course.id]);
     this.set('expandedYears', [1984]);
-    this.set('schools', buildSchoolsFromData(this.server));
->>>>>>> c76392f0c (fixed curriculum and choose-course tests)
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('remove', (courseId) => {
       assert.step('remove called');
       assert.strictEqual(Number(courseId), course.id);
@@ -345,14 +331,9 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school,
       year: 1984,
     });
-<<<<<<< HEAD
     this.set('selectedCourseIds', [`${course.id}`]);
-    this.set('schools', buildSchoolsFromData(this.server.db));
-=======
-    this.set('selectedCourseIds', [course.id]);
     this.set('expandedYears', [1984]);
-    this.set('schools', buildSchoolsFromData(this.server));
->>>>>>> c76392f0c (fixed curriculum and choose-course tests)
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('add', (courseId) => {
       assert.step('add called');
       this.set('selectedCourseIds', [...this.selectedCourseIds, courseId]);
@@ -401,14 +382,9 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school,
       year: 1985,
     });
-<<<<<<< HEAD
     this.set('selectedCourseIds', [`${course1.id}`, `${course2.id}`]);
-    this.set('schools', buildSchoolsFromData(this.server.db));
-=======
-    this.set('selectedCourseIds', [course1.id, course2.id]);
     this.set('expandedYears', [1984]);
-    this.set('schools', buildSchoolsFromData(this.server));
->>>>>>> c76392f0c (fixed curriculum and choose-course tests)
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('removeAll', () => {
       assert.step('removeAll called');
       this.set('selectedCourseIds', []);
@@ -447,14 +423,9 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       school,
       year: 1984,
     });
-<<<<<<< HEAD
     this.set('selectedCourseIds', [`${courses[0].id}`]);
-    this.set('schools', buildSchoolsFromData(this.server.db));
-=======
-    this.set('selectedCourseIds', [courses[0].id]);
     this.set('expandedYears', [1984]);
-    this.set('schools', buildSchoolsFromData(this.server));
->>>>>>> c76392f0c (fixed curriculum and choose-course tests)
+    this.set('schools', buildSchoolsFromData(this.server.db));
     this.set('add', (courseId) => {
       this.set('selectedCourseIds', [...this.selectedCourseIds, courseId]);
     });
@@ -495,12 +466,8 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       'selectedCourseIds',
       courses.map(({ id }) => `${id}`),
     );
-<<<<<<< HEAD
     this.set('schools', buildSchoolsFromData(this.server.db));
-=======
-    this.set('schools', buildSchoolsFromData(this.server));
     this.set('expandedYears', [1984]);
->>>>>>> c76392f0c (fixed curriculum and choose-course tests)
     this.set('remove', (courseId) => {
       this.set(
         'selectedCourseIds',
