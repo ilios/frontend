@@ -9,14 +9,27 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import { pageTitle } from 'ember-page-title';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import VisualizeSessionTypesGraph from 'ilios-common/components/course/visualize-session-types-graph';
 
 export default class CourseVisualizeSessionTypesComponent extends Component {
   @service iliosConfig;
+  @service intl;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
+
+  paths = [
+    {
+      route: 'course',
+      title: this.args.model.title,
+    },
+    {
+      route: 'course-visualizations',
+      title: this.intl.t('general.visualizations'),
+    },
+  ];
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
@@ -37,21 +50,11 @@ export default class CourseVisualizeSessionTypesComponent extends Component {
       class="course-visualize-session-types data-visualization"
       data-test-course-visualize-session-types
     >
-      <div class="breadcrumbs" data-test-breadcrumb>
-        <span>
-          <LinkTo @route="course" @model={{@model}}>
-            {{@model.title}}
-          </LinkTo>
-        </span>
-        <span>
-          <LinkTo @route="course-visualizations" @model={{@model}}>
-            {{t "general.visualizations"}}
-          </LinkTo>
-        </span>
-        <span>
-          {{t "general.sessionTypes"}}
-        </span>
-      </div>
+      <Breadcrumbs
+        @paths={{this.paths}}
+        @model={{@model}}
+        @rootTitle={{t "general.sessionTypes"}}
+      />
       <h2>
         {{t "general.sessionTypes"}}
       </h2>

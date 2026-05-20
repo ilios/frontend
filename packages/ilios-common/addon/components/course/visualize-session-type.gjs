@@ -8,11 +8,28 @@ import add from 'ember-math-helpers/helpers/add';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import VisualizeSessionTypeGraph from 'ilios-common/components/course/visualize-session-type-graph';
 
 export default class CourseVisualizeSessionTypeComponent extends Component {
   @service iliosConfig;
+  @service intl;
   @tracked title;
+
+  paths = [
+    {
+      route: 'course',
+      title: this.args.model.course.title,
+    },
+    {
+      route: 'course-visualizations',
+      title: this.intl.t('general.visualizations'),
+    },
+    {
+      route: 'course-visualize-session-types',
+      title: this.intl.t('general.sessionTypes'),
+    },
+  ];
 
   @cached
   get academicYearCrossesCalendarYearBoundariesData() {
@@ -32,26 +49,11 @@ export default class CourseVisualizeSessionTypeComponent extends Component {
       data-test-course-visualize-session-type
     >
       {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
-        <div class="breadcrumbs" data-test-breadcrumb>
-          <span>
-            <LinkTo @route="course" @model={{@model.course}}>
-              {{@model.course.title}}
-            </LinkTo>
-          </span>
-          <span>
-            <LinkTo @route="course-visualizations" @model={{@model.course}}>
-              {{t "general.visualizations"}}
-            </LinkTo>
-          </span>
-          <span>
-            <LinkTo @route="course-visualize-session-types" @model={{@model.course}}>
-              {{t "general.sessionTypes"}}
-            </LinkTo>
-          </span>
-          <span>
-            {{@model.sessionType.title}}
-          </span>
-        </div>
+        <Breadcrumbs
+          @paths={{this.paths}}
+          @model={{@model.course}}
+          @rootTitle={{@model.sessionType.title}}
+        />
         <h2>
           {{t "general.vocabularyTermsFor" subject=@model.sessionType.title}}
         </h2>

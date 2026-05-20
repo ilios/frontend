@@ -7,15 +7,32 @@ import { mapBy } from 'ilios-common/utils/array-helpers';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import VisualizeInstructorTermGraph from 'ilios-common/components/course/visualize-instructor-term-graph';
 import VisualizeInstructorSessionTypeGraph from 'ilios-common/components/course/visualize-instructor-session-type-graph';
 
 export default class CourseVisualizeInstructorComponent extends Component {
   @service iliosConfig;
+  @service intl;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
+
+  paths = [
+    {
+      route: 'course',
+      title: this.args.course.title,
+    },
+    {
+      route: 'course-visualizations',
+      title: this.intl.t('general.visualizations'),
+    },
+    {
+      route: 'course-visualize-instructors',
+      title: this.intl.t('general.instructors'),
+    },
+  ];
 
   @cached
   get sessionsData() {
@@ -70,26 +87,7 @@ export default class CourseVisualizeInstructorComponent extends Component {
       class="course-visualize-instructor data-visualization"
       data-test-course-visualize-instructor
     >
-      <div class="breadcrumbs" data-test-breadcrumb>
-        <span>
-          <LinkTo @route="course" @model={{@course}}>
-            {{@course.title}}
-          </LinkTo>
-        </span>
-        <span>
-          <LinkTo @route="course-visualizations" @model={{@course}}>
-            {{t "general.visualizations"}}
-          </LinkTo>
-        </span>
-        <span>
-          <LinkTo @route="course-visualize-instructors" @model={{@course}}>
-            {{t "general.instructors"}}
-          </LinkTo>
-        </span>
-        <span>
-          {{@user.fullName}}
-        </span>
-      </div>
+      <Breadcrumbs @paths={{this.paths}} @model={{@course}} @rootTitle={{@user.fullName}} />
       <h2 data-test-instructor-name>
         {{@user.fullName}}
       </h2>

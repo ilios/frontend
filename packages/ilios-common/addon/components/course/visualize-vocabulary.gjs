@@ -6,14 +6,31 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import { pageTitle } from 'ember-page-title';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import VisualizeVocabularyGraph from 'ilios-common/components/course/visualize-vocabulary-graph';
 
 export default class CourseVisualizeVocabularyComponent extends Component {
   @service iliosConfig;
+  @service intl;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
+
+  paths = [
+    {
+      route: 'course',
+      title: this.args.model.course.title,
+    },
+    {
+      route: 'course-visualizations',
+      title: this.intl.t('general.visualizations'),
+    },
+    {
+      route: 'course-visualize-vocabularies',
+      title: this.intl.t('general.vocabularies'),
+    },
+  ];
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
@@ -37,26 +54,11 @@ export default class CourseVisualizeVocabularyComponent extends Component {
       data-test-course-visualize-vocabulary
       ...attributes
     >
-      <div class="breadcrumbs" data-test-breadcrumb>
-        <span>
-          <LinkTo @route="course" @model={{@model.course}}>
-            {{@model.course.title}}
-          </LinkTo>
-        </span>
-        <span>
-          <LinkTo @route="course-visualizations" @model={{@model.course}}>
-            {{t "general.visualizations"}}
-          </LinkTo>
-        </span>
-        <span>
-          <LinkTo @route="course-visualize-vocabularies" @model={{@model.course}}>
-            {{t "general.vocabularies"}}
-          </LinkTo>
-        </span>
-        <span>
-          {{@model.vocabulary.title}}
-        </span>
-      </div>
+      <Breadcrumbs
+        @paths={{this.paths}}
+        @model={{@model.course}}
+        @rootTitle={{@model.vocabulary.title}}
+      />
       <h2 data-test-vocabulary-title>
         {{@model.vocabulary.title}}
       </h2>
