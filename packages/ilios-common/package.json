@@ -21,7 +21,8 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:intl": "ember-intl-lint",
-    "lint:intl:fix": "ember-intl-lint --fix"
+    "lint:intl:fix": "ember-intl-lint --fix",
+    "postinstall": "msw init public --no-save"
   },
   "dependencies": {
     "@babel/core": "^7.28.6",
@@ -180,10 +181,5 @@
     "msw-test-support/",
     "translations/",
     "vendor/"
-  ],
-  "msw": {
-    "workerDirectory": [
-      "public"
-    ]
-  }
+  ]
 }
