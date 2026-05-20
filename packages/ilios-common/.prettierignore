@@ -12,5 +12,3 @@
 ember-cli-update.json
 *.html
 
-#msw's worker
-public/mockServiceWorker.js

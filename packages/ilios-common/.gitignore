@@ -22,3 +22,6 @@
 
 # broccoli-debug
 /DEBUG/
+
+#msw's worker
+public/mockServiceWorker.js
