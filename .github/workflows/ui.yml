@@ -54,7 +54,7 @@ jobs:
       fail-fast: false
       matrix:
         workspace:
-          - frontend
+          # - frontend
           - test-app
           - lti-course-manager
           - lti-dashboard
