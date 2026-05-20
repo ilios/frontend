@@ -6,11 +6,11 @@
   $h2: math.div($height, 2);
   $h4: math.div($height, 4);
 
-  display: inline-block;
+  display: flex;
   margin: 0.8rem;
   text-align: left;
 
-  /* stylelint-disable property-disallowed-list, declaration-property-value-disallowed-list */
+  /* stylelint-disable property-disallowed-list, scales/font-weights,declaration-property-value-disallowed-list */
   .crumb {
     background-color: var(--white);
     border: $border;
@@ -65,7 +65,7 @@
       border-top-right-radius: 3px;
       color: var(--black);
       cursor: default;
-      font-weight: 600;
+      font-weight: 700;
       padding-right: $h2;
 
       &::before,
