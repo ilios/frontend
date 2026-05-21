@@ -76,7 +76,8 @@
     }
   }
 
-  a.crumb {
+  a.crumb,
+  button.crumb {
     display: block;
 
     &:hover,
