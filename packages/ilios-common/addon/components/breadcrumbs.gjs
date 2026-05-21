@@ -7,18 +7,24 @@ import { LinkTo } from '@ember/routing';
         {{#if (has-block)}}
           {{yield path index @model}}
         {{else}}
-          <LinkTo @route={{path.route}} @model={{@model}} @query={{path.query}} class="crumb">
+          <LinkTo
+            @route={{path.route}}
+            @model={{@model}}
+            @query={{path.query}}
+            class="crumb"
+            data-test-crumb
+          >
             {{path.title}}
           </LinkTo>
         {{/if}}
       {{/each}}
-      <span class="crumb">
+      <span class="crumb" data-test-crumb>
         {{@rootTitle}}
       </span>
     {{else}}
       {{#if (has-block)}}
         {{yield}}
-        <span class="crumb">
+        <span class="crumb" data-test-crumb>
           {{@rootTitle}}
         </span>
       {{/if}}
