@@ -1,7 +1,7 @@
 import { setupWorker } from 'msw/browser';
 import { http, HttpResponse } from 'msw';
 import { DateTime } from 'luxon';
-import { handlers } from './handlers.js';
+import handlers from './handlers';
 
 let server;
 let serverStartPromise;
