@@ -2,11 +2,11 @@ import { LinkTo } from '@ember/routing';
 
 <template>
   <div class="breadcrumbs" data-test-breadcrumbs>
-    {{#each @paths as |path|}}
+    {{#each @paths as |path index|}}
       {{#if (has-block)}}
-        {{yield path @model}}
+        {{yield path index @model}}
       {{else}}
-        <LinkTo @route={{path.route}} @model={{@model}} class="crumb">
+        <LinkTo @route={{path.route}} @model={{@model}} @query={{path.query}} class="crumb">
           {{path.title}}
         </LinkTo>
       {{/if}}
