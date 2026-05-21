@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
+import { eq } from 'ember-truth-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import EditableField from 'ilios-common/components/editable-field';
@@ -13,11 +14,12 @@ import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { LinkTo } from '@ember/routing';
-import { hash } from '@ember/helper';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import focus from 'ilios-common/modifiers/focus';
 
 export default class InstructorGroupHeaderComponent extends Component {
   @service store;
+  @service intl;
   @tracked title;
 
   constructor() {
@@ -40,6 +42,18 @@ export default class InstructorGroupHeaderComponent extends Component {
     await this.args.instructorGroup.save();
     this.title = this.args.instructorGroup.title;
   });
+
+  paths = [
+    {
+      route: 'instructor-groups',
+      title: this.intl.t('general.instructorGroups'),
+    },
+    {
+      route: 'instructor-groups',
+      title: this.intl.t('general.instructorGroups'),
+      query: { schoolId: this.args.instructorGroup.school.id },
+    },
+  ];
 
   @action
   revertTitleChanges() {
@@ -85,21 +99,18 @@ export default class InstructorGroupHeaderComponent extends Component {
           {{@instructorGroup.users.length}}
         </span>
       </div>
-      <div class="breadcrumbs" data-test-breadcrumb>
-        <span>
-          <LinkTo @route="instructor-groups">
-            {{t "general.instructorGroups"}}
-          </LinkTo>
-        </span>
-        <span>
-          <LinkTo @route="instructor-groups" @query={{hash schoolId=@instructorGroup.school.id}}>
+
+      <Breadcrumbs @paths={{this.paths}} @rootTitle={{@instructorGroup.title}} as |path index|>
+        {{#if (eq index 1)}}
+          <LinkTo @route="instructor-groups" @query={{path.query}} class="crumb">
             {{@instructorGroup.school.title}}
           </LinkTo>
-        </span>
-        <span>
-          {{@instructorGroup.title}}
-        </span>
-      </div>
+        {{else}}
+          <LinkTo @route={{path.route}} class="crumb">
+            {{path.title}}
+          </LinkTo>
+        {{/if}}
+      </Breadcrumbs>
     </div>
   </template>
 }
