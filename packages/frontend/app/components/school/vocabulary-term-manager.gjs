@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { TrackedAsyncData } from 'ember-async-data';
 import { task } from 'ember-concurrency';
-import { uniqueId, fn } from '@ember/helper';
+import { uniqueId, fn, array } from '@ember/helper';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
@@ -21,6 +21,7 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import focus from 'ilios-common/modifiers/focus';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import { faAsterisk, faSquareUpRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabularyTermManagerComponent extends Component {
@@ -169,43 +170,30 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
         {{#if this.isLoading}}
           <LoadingSpinner />
         {{else}}
-          <div class="breadcrumbs" data-test-breadcrumbs>
-            <span>
-              <button
-                class="link-button"
-                type="button"
-                data-test-all
-                {{on "click" this.clearVocabAndTerm}}
-              >
-                {{t "general.allVocabularies"}}
-              </button>
-            </span>
-            <span>
-              <button
-                class="link-button"
-                type="button"
-                data-test-vocabulary
-                {{on "click" (fn @manageTerm null)}}
-              >
-                {{@vocabulary.title}}
-              </button>
-            </span>
+          <Breadcrumbs @paths={{array}} @rootTitle={{@term.title}}>
+            <button class="crumb" type="button" data-test-all {{on "click" this.clearVocabAndTerm}}>
+              {{t "general.allVocabularies"}}
+            </button>
+            <button
+              class="crumb"
+              type="button"
+              data-test-vocabulary
+              {{on "click" (fn @manageTerm null)}}
+            >
+              {{@vocabulary.title}}
+            </button>
             {{#each this.allParents as |parent|}}
-              <span>
-                <button
-                  class="link-button"
-                  type="button"
-                  data-test-term
-                  {{on "click" (fn @manageTerm parent.id)}}
-                >
-                  {{parent.title}}
-                </button>
-              </span>
+              <button
+                class="crumb"
+                type="button"
+                data-test-term
+                {{on "click" (fn @manageTerm parent.id)}}
+              >
+                {{parent.title}}
+              </button>
             {{/each}}
-            <span data-test-term>
-              {{@term.title}}
-            </span>
-          </div>
+          </Breadcrumbs>
+
           {{#if @term}}
             <div class="school-vocabulary-term-manager-properties">
               <div class="block term-title" data-test-title>

@@ -5,7 +5,7 @@ import { service } from '@ember/service';
 import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { uniqueId, fn } from '@ember/helper';
+import { uniqueId, fn, array } from '@ember/helper';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import EditableField from 'ilios-common/components/editable-field';
@@ -18,6 +18,7 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import focus from 'ilios-common/modifiers/focus';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import { faAsterisk, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabularyManagerComponent extends Component {
@@ -106,22 +107,18 @@ export default class SchoolVocabularyManagerComponent extends Component {
   <template>
     {{#let (uniqueId) as |templateId|}}
       <div class="school-vocabulary-manager" data-test-school-vocabulary-manager attributes...>
-        <div class="breadcrumbs" data-test-breadcrumbs>
-          <span>
-            <button
-              class="link-button"
-              type="button"
-              data-test-all
-              {{on "click" (fn @manageVocabulary null)}}
-            >
-              {{t "general.allVocabularies"}}
-            </button>
-          </span>
-          <span data-test-vocabulary>
-            {{@vocabulary.title}}
-          </span>
-        </div>
-        <br />
+
+        <Breadcrumbs @paths={{array}} @rootTitle={{@vocabulary.title}}>
+          <button
+            class="crumb"
+            type="button"
+            data-test-all
+            {{on "click" (fn @manageVocabulary null)}}
+          >
+            {{t "general.allVocabularies"}}
+          </button>
+        </Breadcrumbs>
+
         <div class="school-vocabulary-manager-title" data-test-title>
           <label for="title-{{templateId}}">
             {{t "general.title"}}:
