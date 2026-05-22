@@ -56,11 +56,16 @@ export default class CurriculumInventorySequenceBlockDetailsComponent extends Co
         @rootTitle={{@sequenceBlock.title}}
         as |path model|
       >
-        <LinkTo @route={{path.route}} @model={{model}} class="crumb">
+        <LinkTo @route={{path.route}} @model={{model}} class="crumb" data-test-crumb>
           {{path.title}}
         </LinkTo>
         {{#each (reverse this.allParents) as |parent|}}
-          <LinkTo @route="curriculum-inventory-sequence-block" @model={{parent}} class="crumb">
+          <LinkTo
+            @route="curriculum-inventory-sequence-block"
+            @model={{parent}}
+            class="crumb"
+            data-test-crumb
+          >
             {{parent.title}}
           </LinkTo>
         {{/each}}

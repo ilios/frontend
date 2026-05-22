@@ -42,7 +42,7 @@ module('Integration | Component | course/visualizations', function (hooks) {
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
 
-  test('breadcrumb', async function (assert) {
+  test('breadcrumbs', async function (assert) {
     const school = await this.server.create('school');
     const course = await this.server.create('course', { year: 2021, school });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -50,9 +50,9 @@ module('Integration | Component | course/visualizations', function (hooks) {
 
     await render(<template><Visualizations @model={{this.course}} /></template>);
 
-    assert.strictEqual(component.breadcrumb.crumbs.length, 2);
-    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
-    assert.strictEqual(component.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 2);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'course 0');
+    assert.strictEqual(component.breadcrumbs.crumbs[0].link, '/courses/1');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, 'Visualizations');
   });
 });

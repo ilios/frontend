@@ -171,13 +171,18 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
           <LoadingSpinner />
         {{else}}
           <Breadcrumbs @paths={{array}} @rootTitle={{@term.title}}>
-            <button class="crumb" type="button" data-test-all {{on "click" this.clearVocabAndTerm}}>
+            <button
+              class="crumb"
+              type="button"
+              data-test-crumb
+              {{on "click" this.clearVocabAndTerm}}
+            >
               {{t "general.allVocabularies"}}
             </button>
             <button
               class="crumb"
               type="button"
-              data-test-vocabulary
+              data-test-crumb
               {{on "click" (fn @manageTerm null)}}
             >
               {{@vocabulary.title}}
@@ -186,7 +191,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
               <button
                 class="crumb"
                 type="button"
-                data-test-term
+                data-test-crumb
                 {{on "click" (fn @manageTerm parent.id)}}
               >
                 {{parent.title}}

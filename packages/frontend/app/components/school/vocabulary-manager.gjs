@@ -112,7 +112,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
           <button
             class="crumb"
             type="button"
-            data-test-all
+            data-test-crumb
             {{on "click" (fn @manageVocabulary null)}}
           >
             {{t "general.allVocabularies"}}

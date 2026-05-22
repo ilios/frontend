@@ -1,10 +1,10 @@
-import { attribute, collection, create, text } from 'ember-cli-page-object';
+import { attribute, clickable, collection, create } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-breadcrumbs]',
   crumbs: collection('[data-test-crumb]', {
     link: attribute('href'),
-    title: text(),
+    visit: clickable(),
   }),
 };
 

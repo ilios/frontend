@@ -1,14 +1,10 @@
-import { attribute, collection, create, fillable, text, value } from 'ember-cli-page-object';
+import { create, fillable, text, value } from 'ember-cli-page-object';
 import instructorsChart from './visualize-instructors-graph';
+import breadcrumbs from '../breadcrumbs';
 
 const definition = create({
   scope: '[data-test-course-visualize-instructors]',
-  breadcrumb: {
-    scope: '[data-test-breadcrumb]',
-    crumbs: collection('span', {
-      link: attribute('href', 'a'),
-    }),
-  },
+  breadcrumbs,
   title: text('[data-test-title]'),
   filter: {
     scope: '[data-test-filter]',

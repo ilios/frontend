@@ -1,6 +1,5 @@
 import {
   clickable,
-  collection,
   create,
   fillable,
   hasClass,
@@ -8,6 +7,7 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
+import breadcrumbs from 'ilios-common/page-objects/components/breadcrumbs';
 
 const definition = {
   scope: '[data-test-instructor-group-header]',
@@ -23,10 +23,7 @@ const definition = {
     isEditable: hasClass('editinplace'),
   },
   members: text('[data-test-members]'),
-  breadcrumb: {
-    scope: '[data-test-breadcrumb]',
-    crumbs: collection('span'),
-  },
+  breadcrumbs,
 };
 
 export default definition;

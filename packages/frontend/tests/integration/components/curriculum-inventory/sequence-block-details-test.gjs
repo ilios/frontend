@@ -29,11 +29,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
       report,
     });
     const parentBlock = await this.server.create('curriculum-inventory-sequence-block', {
-      title: 'Foo',
+      title: 'Grand Canyon',
       parent: grandParentBlock,
     });
     const block = await this.server.create('curriculum-inventory-sequence-block', {
-      title: 'bar',
+      title: 'Little River',
       description: 'lorem ipsum',
       report,
       parent: parentBlock,
@@ -81,10 +81,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
       component.overview.description.text,
       `Description: ${blockModel.description}`,
     );
-    assert.strictEqual(component.breadcrumbs.blockCrumbs.length, 3);
-    assert.strictEqual(component.breadcrumbs.reportCrumb.text, 'Curriculum Inventory Report');
-    assert.strictEqual(component.breadcrumbs.blockCrumbs[0].text, grandParentBlockModel.title);
-    assert.strictEqual(component.breadcrumbs.blockCrumbs[1].text, parentBlockModel.title);
-    assert.strictEqual(component.breadcrumbs.blockCrumbs[2].text, blockModel.title);
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 4);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'Curriculum Inventory Report');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, grandParentBlockModel.title);
+    assert.strictEqual(component.breadcrumbs.crumbs[2].text, parentBlockModel.title);
+    assert.strictEqual(component.breadcrumbs.crumbs[3].text, blockModel.title);
   });
 });

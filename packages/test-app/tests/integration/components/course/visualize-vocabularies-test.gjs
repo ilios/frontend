@@ -37,16 +37,16 @@ module('Integration | Component | course/visualize-vocabularies', function (hook
     assert.strictEqual(component.courseTitle.text, 'course 0 2021 - 2022');
   });
 
-  test('breadcrumb', async function (assert) {
+  test('breadcrumbs', async function (assert) {
     this.set('course', this.courseModel);
 
     await render(<template><VisualizeVocabularies @model={{this.course}} /></template>);
 
-    assert.strictEqual(component.breadcrumb.crumbs.length, 3);
-    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
-    assert.strictEqual(component.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.strictEqual(component.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.strictEqual(component.breadcrumb.crumbs[2].text, 'Vocabularies');
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 3);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'course 0');
+    assert.strictEqual(component.breadcrumbs.crumbs[0].link, '/courses/1');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(component.breadcrumbs.crumbs[2].text, 'Vocabularies');
   });
 });

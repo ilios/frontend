@@ -146,6 +146,7 @@ export default class LearnerGroupHeaderComponent extends Component {
                 school=this.school.id program=this.program.id programYear=this.programYear.id
               )
             )
+            (hash)
           }}
           @rootTitle={{@learnerGroup.title}}
           as |path index|
@@ -157,19 +158,19 @@ export default class LearnerGroupHeaderComponent extends Component {
                   @route="learner-group"
                   @model={{parent}}
                   @query={{hash sortUsersBy=@sortUsersBy}}
+                  class="crumb"
+                  data-test-crumb
                 >
                   {{parent.title}}
                 </LinkTo>
               {{/each}}
             {{/if}}
           {{else}}
-            <LinkTo @route={{path.route}} @query={{path.query}} class="crumb">
+            <LinkTo @route={{path.route}} @query={{path.query}} class="crumb" data-test-crumb>
               {{path.title}}
             </LinkTo>
           {{/if}}
         </Breadcrumbs>
-      {{else}}
-        {{this.upstreamRelationshipsData.isResolved}}
       {{/if}}
     </header>
   </template>

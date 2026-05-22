@@ -72,10 +72,10 @@ module('Integration | Component | program-year/visualize-objectives', function (
     await render(<template><VisualizeObjectives @model={{this.model}} /></template>);
     assert.strictEqual(component.title.text, 'program 0 Class of 2022');
     assert.strictEqual(component.title.link, '/programs/1/programyears/1');
-    assert.strictEqual(component.breadcrumb.crumbs.length, 2);
-    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'program 0 Class of 2022');
-    assert.strictEqual(component.breadcrumb.crumbs[0].link, '/programs/1/programyears/1');
-    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Objectives');
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 2);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'program 0 Class of 2022');
+    assert.strictEqual(component.breadcrumbs.crumbs[0].link, '/programs/1/programyears/1');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, 'Objectives');
     assert.notOk(component.treeChart.isIcon);
     await waitFor('.loaded');
     await waitFor('svg .links');

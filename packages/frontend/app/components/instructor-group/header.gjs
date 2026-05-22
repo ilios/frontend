@@ -102,11 +102,11 @@ export default class InstructorGroupHeaderComponent extends Component {
 
       <Breadcrumbs @paths={{this.paths}} @rootTitle={{@instructorGroup.title}} as |path index|>
         {{#if (eq index 1)}}
-          <LinkTo @route="instructor-groups" @query={{path.query}} class="crumb">
+          <LinkTo @route="instructor-groups" @query={{path.query}} class="crumb" data-test-crumb>
             {{@instructorGroup.school.title}}
           </LinkTo>
         {{else}}
-          <LinkTo @route={{path.route}} class="crumb">
+          <LinkTo @route={{path.route}} class="crumb" data-test-crumb>
             {{path.title}}
           </LinkTo>
         {{/if}}

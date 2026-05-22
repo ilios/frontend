@@ -557,7 +557,7 @@ module('Acceptance | Learner Group', function (hooks) {
       'name of first user in current (first) subgroup correct',
     );
 
-    await page.root.header.breadcrumb.crumbs[2].visit();
+    await page.root.header.breadcrumbs.crumbs[2].click();
     await page.root.subgroups.list.items[1].clickTitle();
     await page.root.actions.buttons.manageUsers.click();
 

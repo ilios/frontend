@@ -1,6 +1,7 @@
 import { clickable, create, collection, isPresent, fillable, text } from 'ember-cli-page-object';
 import newTermForm from './vocabulary-new-term';
 import yesNoToggle from 'ilios-common/page-objects/components/toggle-yesno';
+import breadcrumbs from 'ilios-common/page-objects/components/breadcrumbs';
 
 const definition = {
   scope: '[data-test-school-vocabulary-term-manager]',
@@ -13,14 +14,7 @@ const definition = {
   error: text('[data-test-title-validation-error-message]'),
   description: text('[data-test-description]'),
   delete: clickable('[data-test-delete]'),
-  breadcrumbs: {
-    scope: '[data-test-breadcrumbs]',
-    all: text('[data-test-all]'),
-    vocabulary: text('[data-test-vocabulary]'),
-    terms: collection('[data-test-term]', {
-      title: text(),
-    }),
-  },
+  breadcrumbs,
   isActive: {
     scope: '[data-test-is-active]',
     yesNoToggle,

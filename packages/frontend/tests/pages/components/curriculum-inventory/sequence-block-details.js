@@ -1,17 +1,12 @@
-import { collection, create } from 'ember-cli-page-object';
+import { create } from 'ember-cli-page-object';
 import header from './sequence-block-header';
+import breadcrumbs from 'ilios-common/page-objects/components/breadcrumbs';
 import overview from './sequence-block-overview';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-sequence-block-details]',
   header,
-  breadcrumbs: {
-    scope: '[data-test-breadcrumbs]',
-    reportCrumb: {
-      scope: '[data-test-report-crumb]',
-    },
-    blockCrumbs: collection('[data-test-block-crumb]'),
-  },
+  breadcrumbs,
   overview,
 };
 

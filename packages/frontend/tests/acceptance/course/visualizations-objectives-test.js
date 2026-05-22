@@ -59,12 +59,12 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
     await page.visit({ courseId: course.id });
     assert.strictEqual(currentURL(), '/data/courses/1/objectives');
     assert.strictEqual(page.root.title, 'course 0 2021');
-    assert.strictEqual(page.root.breadcrumb.crumbs.length, 3);
-    assert.strictEqual(page.root.breadcrumb.crumbs[0].text, 'course 0');
-    assert.strictEqual(page.root.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.strictEqual(page.root.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.strictEqual(page.root.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.strictEqual(page.root.breadcrumb.crumbs[2].text, 'Objectives');
+    assert.strictEqual(page.root.breadcrumbs.crumbs.length, 3);
+    assert.strictEqual(page.root.breadcrumbs.crumbs[0].text, 'course 0');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[0].link, '/courses/1');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[2].text, 'Objectives');
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .chart');
