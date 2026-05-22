@@ -55,6 +55,9 @@ export default class CourseVisualizeVocabulariesComponent extends Component {
         @model={{@model}}
         @rootTitle={{t "general.vocabularies"}}
       />
+      <h2>
+        {{t "general.vocabularies"}}
+      </h2>
       <h3 class="clickable" data-test-course-title>
         <LinkTo @route="course" @model={{@model}}>
           {{@model.title}}
