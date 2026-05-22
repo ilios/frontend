@@ -46,8 +46,7 @@ async function createFromPostData(modelName, data) {
 
   if (!attrs.id) {
     // Auto-generate an ID if it doesn't exist yet.
-    // TODO: consider throwing an error here since POST should be used to update given records [ST 2026/05/11]
-    attrs.id = getIdentityManager(modelName).inc();
+    attrs.id = getIdentityManager(modelName).getNextId();
   }
   await extractRelationshipsInUpdate(modelName, data, attrs);
 
