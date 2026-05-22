@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { filter } from 'rsvp';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
@@ -247,6 +247,10 @@ export default class NewDirectoryUserComponent extends Component {
   }
 
   findUsersInDirectory = task({ restartable: true }, async (searchTerms) => {
+    // tests fail inconsistently without this marvelous hack
+    while (this.authTypeConfig.isPending) {
+      await timeout(1);
+    }
     this.searchResultsReturned = false;
     this.tooManyResults = false;
     if (!isEmpty(searchTerms)) {
