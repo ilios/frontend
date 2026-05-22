@@ -54,10 +54,15 @@ jobs:
       fail-fast: false
       matrix:
         workspace:
-          # - frontend
+          - frontend
           - test-app
           - lti-course-manager
           - lti-dashboard
+        partition:
+          - 1
+          - 2
+          - 3
+          - 4
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v6
@@ -69,4 +74,4 @@ jobs:
       - name: Safari Version
         run: /usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" /Applications/Safari.app/Contents/Info.plist
       - name: test
-        run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=SafariApplescript
+        run: pnpm --filter ${{matrix.workspace}} exec ember exam --split=4 --partition=${{ matrix.partition }} --launch=SafariApplescript
