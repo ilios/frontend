@@ -7,7 +7,7 @@ import { uniqueId, fn, hash } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import SortableTh from 'ilios-common/components/sortable-th';
-import { eq, gt, or } from 'ember-truth-helpers';
+import { eq, or } from 'ember-truth-helpers';
 import sortBy from 'ilios-common/helpers/sort-by';
 import includes from 'ilios-common/helpers/includes';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -487,7 +487,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
           </div>
 
           <p class="fullwidth">
-            {{#if (gt this.selectedNonGroupUsers.length 0)}}
+            {{#if this.hasSelectedNonGroupUsers}}
               <button type="button" class="done text" {{on "click" (perform this.addUsersToGroup)}}>
                 {{t
                   "general.moveToGroup"
@@ -496,7 +496,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
                 }}
               </button>
             {{/if}}
-            {{#if (gt this.selectedGroupUsers.length 0)}}
+            {{#if this.hasSelectedGroupUsers}}
               <button
                 type="button"
                 class="cancel text"
