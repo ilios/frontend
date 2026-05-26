@@ -1,10 +1,8 @@
-@use "sass:math";
-
 .breadcrumbs {
   $border: 1px solid var(--blue);
   $height: 2rem;
-  $h2: math.div($height, 2);
-  $h4: math.div($height, 4);
+  $h2: calc($height / 2);
+  $h4: calc($height / 4);
 
   display: flex;
   flex-wrap: wrap;
