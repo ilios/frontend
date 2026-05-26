@@ -130,6 +130,7 @@ general:
   didYouMean: Did you mean <a href="{href}">{suggestion}</a>?
   director: Director
   disabledByConfirmation: This cannot be used while confirming deletion.
+  disabledNoPrimaryCohort: User must have a primary cohort.
   disableUser: Disable User
   doesNotMatchUserRecord: 'Uploaded {description} does not match the information in Ilios, which is "{record}"'
   downloadCompetencyMap: Download Competency Map

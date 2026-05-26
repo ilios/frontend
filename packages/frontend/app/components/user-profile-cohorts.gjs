@@ -5,7 +5,7 @@ import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
-import { or } from 'ember-truth-helpers';
+import { or, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -184,9 +184,20 @@ export default class UserProfileCohortsComponent extends Component {
             {{#if @isManaging}}
               <button
                 type="button"
-                disabled={{or this.save.isRunning this.cancel.isRunning}}
-                class="bigadd"
-                aria-label={{t "general.save"}}
+                disabled={{or
+                  this.save.isRunning
+                  this.cancel.isRunning
+                  (not this.currentPrimaryCohort)
+                }}
+                class="bigadd{{if
+                    (or this.save.isRunning this.cancel.isRunning (not this.currentPrimaryCohort))
+                    ' disabled'
+                  }}"
+                title={{if
+                  (or this.save.isRunning this.cancel.isRunning (not this.currentPrimaryCohort))
+                  (t "general.disabledNoPrimaryCohort")
+                  (t "general.save")
+                }}
                 {{on "click" (perform this.save)}}
                 data-test-save
               >

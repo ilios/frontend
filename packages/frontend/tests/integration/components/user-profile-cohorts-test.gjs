@@ -121,7 +121,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     await component.manager.secondaryCohorts[0].promote();
     await component.manager.secondaryCohorts[0].remove();
     await component.manager.assignableCohorts[0].add();
-    await component.save();
+    await component.save.click();
 
     assert.strictEqual(component.manager.schools.filter.value, '2');
     assert.strictEqual(component.manager.assignableCohorts.length, 0);
@@ -142,5 +142,21 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     assert.notOk(cohortIds.includes(this.cohort1.id), 'cohort1 has been removed');
     assert.ok(cohortIds.includes(this.cohort2.id), 'cohort2 is still present');
     assert.ok(cohortIds.includes(this.cohort4.id), 'cohort4 has been added');
+  });
+
+  test('save disabled if no primary cohort', async function (assert) {
+    this.set('user', this.user);
+
+    await render(
+      <template>
+        <UserProfileCohorts @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+      </template>,
+    );
+
+    assert.notOk(component.save.isDisabled);
+    await component.manager.primaryCohort.remove();
+    assert.ok(component.save.isDisabled);
+    await component.manager.secondaryCohorts[0].promote();
+    assert.notOk(component.save.isDisabled);
   });
 });
