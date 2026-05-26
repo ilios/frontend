@@ -130,6 +130,7 @@ general:
   didYouMean: Confirmez-vous <a href="{href}">{suggestion}</a>?
   director: Directeur
   disabledByConfirmation: "Cette fonction ne peut pas être utilisée lors de la confirmation d'une suppression."
+  disabledNoPrimaryCohort: "L'utilisateur doit avoir une cohorte principale."
   disableUser: Désactiver compte d’utilisateur
   doesNotMatchUserRecord: 'Téléchargé {description} ne correspond pas aux informations dans Ilios, qui est "{record}"'
   downloadCompetencyMap: Télécharger la tableau de compétences

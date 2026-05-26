@@ -51,6 +51,11 @@
   .bigadd {
     background-color: var(--green);
     color: var(--white);
+
+    &:disabled {
+      background-color: var(--grey);
+      cursor: default;
+    }
   }
 
   .bigcancel {
