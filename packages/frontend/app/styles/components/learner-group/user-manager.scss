@@ -18,7 +18,7 @@
     width: 100%;
     z-index: 3;
 
-    &.empty {
+    &.group-members.empty {
       border-bottom: 1px dotted var(--orange);
       margin-bottom: 0.5em;
       padding-bottom: 0.5em;
