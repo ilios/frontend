@@ -69,10 +69,9 @@ export default class CourseManageObjectiveParentsComponent extends Component {
           <ul class="parent-picker" data-test-parent-picker>
             {{#each this.competenciesFromSelectedCohort as |competency|}}
               <li
-                class="competency
-                  {{if
+                class="competency{{if
                     (includes competency.id this.selectedCompetencyIdsInSelectedCohort)
-                    'selected'
+                    ' selected'
                   }}"
                 data-test-competency
               >

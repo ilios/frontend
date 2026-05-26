@@ -4,6 +4,10 @@
   margin: 1em 2em;
   grid-column: 1 / -1;
 
+  & > label {
+    @include m.ilios-heading-h3;
+  }
+
   .parent-picker {
     @include m.ilios-list-reset;
     height: auto;
