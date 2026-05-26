@@ -486,30 +486,36 @@ export default class LearnerGroupUserManagerComponent extends Component {
             </div>
           </div>
 
-          <p class="fullwidth">
-            {{#if this.hasSelectedNonGroupUsers}}
-              <button type="button" class="done text" {{on "click" (perform this.addUsersToGroup)}}>
-                {{t
-                  "general.moveToGroup"
-                  groupTitle=@learnerGroupTitle
-                  count=this.selectedNonGroupUsers.length
-                }}
-              </button>
-            {{/if}}
-            {{#if this.hasSelectedGroupUsers}}
-              <button
-                type="button"
-                class="cancel text"
-                {{on "click" (perform this.removeUsersFromGroup)}}
-              >
-                {{t
-                  "general.removeLearnerToCohort"
-                  cohort=@cohortTitle
-                  count=this.selectedGroupUsers.length
-                }}
-              </button>
-            {{/if}}
-          </p>
+          {{#if (or this.hasSelectedNonGroupUsers this.hasSelectedGroupUsers)}}
+            <div class="selected-actions">
+              {{#if this.hasSelectedNonGroupUsers}}
+                <button
+                  type="button"
+                  class="done text"
+                  {{on "click" (perform this.addUsersToGroup)}}
+                >
+                  {{t
+                    "general.moveToGroup"
+                    groupTitle=@learnerGroupTitle
+                    count=this.selectedNonGroupUsers.length
+                  }}
+                </button>
+              {{/if}}
+              {{#if this.hasSelectedGroupUsers}}
+                <button
+                  type="button"
+                  class="cancel text"
+                  {{on "click" (perform this.removeUsersFromGroup)}}
+                >
+                  {{t
+                    "general.removeLearnerToCohort"
+                    cohort=@cohortTitle
+                    count=this.selectedGroupUsers.length
+                  }}
+                </button>
+              {{/if}}
+            </div>
+          {{/if}}
         {{/if}}
       </div>
     {{/let}}

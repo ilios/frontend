@@ -60,6 +60,10 @@
     }
   }
 
+  .selected-actions {
+    margin-bottom: 1rem;
+  }
+
   .inline-button {
     @include m.ilios-button-reset;
     text-align: left;
