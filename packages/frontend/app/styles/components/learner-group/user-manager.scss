@@ -5,13 +5,33 @@
   border-bottom: 0;
   display: grid;
   grid-template-columns: 3fr 1fr;
+  overflow: hidden;
   padding: 0;
 
   .title {
     @include m.detail-container-title-style;
+    background: var(--white);
+    height: 2.1rem;
+    margin: 0 0.5rem;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 3;
 
     &.empty {
+      border-bottom: 1px dotted var(--orange);
       margin-bottom: 0.5em;
+      padding-bottom: 0.5em;
+    }
+
+    & + table {
+      margin: 0 0.5rem 1rem;
+
+      th {
+        padding-top: 0.5em;
+        top: 1.75rem;
+        z-index: 2;
+      }
     }
   }
 
@@ -30,7 +50,8 @@
     .list {
       grid-column: 1 / -1;
       max-height: 540px;
-      overflow: auto;
+      overflow-x: hidden;
+      overflow-y: auto;
       @include m.main-list-box-table;
 
       th:nth-child(1) {
