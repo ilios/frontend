@@ -76,7 +76,7 @@ module('Acceptance | School - Vocabularies', function (hooks) {
     assert.ok(c.vocabularyManager.isVisible);
     await c.vocabularyManager.terms.newTermForm.setTitle('New Term');
     await c.vocabularyManager.terms.newTermForm.save();
-    await c.vocabularyManager.breadcrumbs.returnToList();
+    await c.vocabularyManager.breadcrumbs.crumbs[0].click();
 
     await c.vocabulariesList.vocabularies[1].manage();
     assert.ok(c.vocabularyManager.isVisible);
@@ -86,7 +86,7 @@ module('Acceptance | School - Vocabularies', function (hooks) {
     await c.vocabularyManager.terms.newTermForm.save();
     await c.vocabularyManager.terms.newTermForm.setTitle('New Term 4');
     await c.vocabularyManager.terms.newTermForm.save();
-    await c.vocabularyManager.breadcrumbs.returnToList();
+    await c.vocabularyManager.breadcrumbs.crumbs[0].click();
 
     assert.strictEqual(c.vocabulariesList.vocabularies.length, 2);
     assert.strictEqual(c.vocabulariesList.vocabularies[0].title.text, 'Vocabulary 1');
@@ -104,14 +104,14 @@ module('Acceptance | School - Vocabularies', function (hooks) {
     await c.vocabularyManager.terms.list[1].click();
     assert.ok(c.termManager.isVisible);
     await c.termManager.delete();
-    await c.vocabularyManager.breadcrumbs.returnToList();
+    await c.vocabularyManager.breadcrumbs.crumbs[0].click();
 
     await c.vocabulariesList.vocabularies[1].manage();
     assert.ok(c.vocabularyManager.isVisible);
     await c.vocabularyManager.terms.list[0].click();
     assert.ok(c.termManager.isVisible);
     await c.termManager.delete();
-    await c.vocabularyManager.breadcrumbs.returnToList();
+    await c.vocabularyManager.breadcrumbs.crumbs[0].click();
 
     assert.strictEqual(c.vocabulariesList.vocabularies.length, 2);
     assert.strictEqual(c.vocabulariesList.vocabularies[0].title.text, 'Vocabulary 1');

@@ -52,7 +52,7 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
 
-  test('breadcrumb', async function (assert) {
+  test('breadcrumbs', async function (assert) {
     this.server.get('/application/config', function () {
       return {
         config: {
@@ -72,14 +72,14 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
       <template><VisualizeInstructor @course={{this.course}} @user={{this.user}} /></template>,
     );
 
-    assert.strictEqual(component.breadcrumb.crumbs.length, 4);
-    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
-    assert.strictEqual(component.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.strictEqual(component.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.strictEqual(component.breadcrumb.crumbs[2].text, 'Instructors');
-    assert.strictEqual(component.breadcrumb.crumbs[2].link, '/data/courses/1/instructors');
-    assert.strictEqual(component.breadcrumb.crumbs[3].text, '0 guy M. Mc0son');
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 4);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'course 0');
+    assert.strictEqual(component.breadcrumbs.crumbs[0].link, '/courses/1');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(component.breadcrumbs.crumbs[2].text, 'Instructors');
+    assert.strictEqual(component.breadcrumbs.crumbs[2].link, '/data/courses/1/instructors');
+    assert.strictEqual(component.breadcrumbs.crumbs[3].text, '0 guy M. Mc0son');
   });
 
   test('visualizations', async function (assert) {

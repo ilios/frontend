@@ -1,4 +1,5 @@
-import { attribute, collection, create } from 'ember-cli-page-object';
+import { attribute, create } from 'ember-cli-page-object';
+import breadcrumbs from 'ilios-common/page-objects/components/breadcrumbs';
 import treeChart from './../visualizer-program-year-objectives';
 
 const definition = {
@@ -7,12 +8,7 @@ const definition = {
     scope: '[data-test-title]',
     link: attribute('href', 'a'),
   },
-  breadcrumb: {
-    scope: '[data-test-breadcrumb]',
-    crumbs: collection('span', {
-      link: attribute('href', 'a'),
-    }),
-  },
+  breadcrumbs,
   treeChart,
 };
 

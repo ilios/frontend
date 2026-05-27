@@ -9,11 +9,24 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import { pageTitle } from 'ember-page-title';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import VisualizeInstructorsGraph from 'ilios-common/components/course/visualize-instructors-graph';
 
 export default class CourseVisualizeInstructorsComponent extends Component {
   @service iliosConfig;
+  @service intl;
   @tracked name;
+
+  paths = [
+    {
+      route: 'course',
+      title: this.args.model.title,
+    },
+    {
+      route: 'course-visualizations',
+      title: this.intl.t('general.visualizations'),
+    },
+  ];
 
   @cached
   get academicYearCrossesCalendarYearBoundariesData() {
@@ -43,21 +56,11 @@ export default class CourseVisualizeInstructorsComponent extends Component {
       data-test-course-visualize-instructors
     >
       {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
-        <div class="breadcrumbs" data-test-breadcrumb>
-          <span>
-            <LinkTo @route="course" @model={{@model}}>
-              {{@model.title}}
-            </LinkTo>
-          </span>
-          <span>
-            <LinkTo @route="course-visualizations" @model={{@model}}>
-              {{t "general.visualizations"}}
-            </LinkTo>
-          </span>
-          <span>
-            {{t "general.instructors"}}
-          </span>
-        </div>
+        <Breadcrumbs
+          @paths={{this.paths}}
+          @model={{@model}}
+          @rootTitle={{t "general.instructors"}}
+        />
         <h2>
           {{t "general.instructors"}}
         </h2>

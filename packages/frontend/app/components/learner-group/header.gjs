@@ -1,23 +1,27 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
+import { array, hash } from '@ember/helper';
+import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import EditableField from 'ilios-common/components/editable-field';
+import { eq } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import { hash } from '@ember/helper';
 import { LinkTo } from '@ember/routing';
 import reverse from 'ilios-common/helpers/reverse';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import focus from 'ilios-common/modifiers/focus';
 
 export default class LearnerGroupHeaderComponent extends Component {
+  @service intl;
   @tracked titleBuffer;
 
   validations = new YupValidations(this, {
@@ -47,6 +51,10 @@ export default class LearnerGroupHeaderComponent extends Component {
 
   get school() {
     return this.upstreamRelationships?.school;
+  }
+
+  get programAndYear() {
+    return `${this.program.title} ${this.programYear.cohort.get('title')}`;
   }
 
   get usersOnlyAtThisLevel() {
@@ -120,49 +128,50 @@ export default class LearnerGroupHeaderComponent extends Component {
           {{@learnerGroup.cohort.users.length}}
         </span>
       </div>
-      <div class="breadcrumbs" data-test-breadcrumb>
-        <span>
-          <LinkTo
-            @route="learner-groups"
-            @query={{hash
-              school=this.school.id
-              program=this.program.id
-              programYear=this.programYear.id
-            }}
-          >
-            {{t "general.learnerGroups"}}
-          </LinkTo>
-        </span>
-        <span>
-          <LinkTo
-            @route="learner-groups"
-            @query={{hash
-              school=this.school.id
-              program=this.program.id
-              programYear=this.programYear.id
-            }}
-          >
-            {{this.program.title}}
-            {{this.programYear.cohort.title}}
-          </LinkTo>
-        </span>
-        {{#if @learnerGroup.allParents}}
-          {{#each (reverse @learnerGroup.allParents) as |parent|}}
-            <span>
-              <LinkTo
-                @route="learner-group"
-                @model={{parent}}
-                @query={{hash sortUsersBy=@sortUsersBy}}
-              >
-                {{parent.title}}
-              </LinkTo>
-            </span>
-          {{/each}}
-        {{/if}}
-        <span>
-          {{@learnerGroup.title}}
-        </span>
-      </div>
+
+      {{#if this.upstreamRelationshipsData.isResolved}}
+        <Breadcrumbs
+          @paths={{array
+            (hash
+              route="learner-groups"
+              title=(t "general.learnerGroups")
+              query=(hash
+                school=this.school.id program=this.program.id programYear=this.programYear.id
+              )
+            )
+            (hash
+              route="learner-groups"
+              title=this.programAndYear
+              query=(hash
+                school=this.school.id program=this.program.id programYear=this.programYear.id
+              )
+            )
+            (hash)
+          }}
+          @rootTitle={{@learnerGroup.title}}
+          as |path index|
+        >
+          {{#if (eq index 2)}}
+            {{#if @learnerGroup.allParents}}
+              {{#each (reverse @learnerGroup.allParents) as |parent|}}
+                <LinkTo
+                  @route="learner-group"
+                  @model={{parent}}
+                  @query={{hash sortUsersBy=@sortUsersBy}}
+                  class="crumb"
+                  data-test-crumb
+                >
+                  {{parent.title}}
+                </LinkTo>
+              {{/each}}
+            {{/if}}
+          {{else}}
+            <LinkTo @route={{path.route}} @query={{path.query}} class="crumb" data-test-crumb>
+              {{path.title}}
+            </LinkTo>
+          {{/if}}
+        </Breadcrumbs>
+      {{/if}}
     </header>
   </template>
 }

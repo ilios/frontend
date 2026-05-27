@@ -64,14 +64,14 @@ module('Acceptance | course visualizations - instructor', function (hooks) {
     assert.strictEqual(page.root.instructorName, '1 guy M. Mc1son');
     assert.strictEqual(page.root.totalOfferingsTime, 'Total Instructional Time 90 Minutes');
     assert.strictEqual(page.root.totalIlmTime, 'Total ILM Time 120 Minutes');
-    assert.strictEqual(page.root.breadcrumb.crumbs.length, 4);
-    assert.strictEqual(page.root.breadcrumb.crumbs[0].text, 'course 0');
-    assert.strictEqual(page.root.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.strictEqual(page.root.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.strictEqual(page.root.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.strictEqual(page.root.breadcrumb.crumbs[2].text, 'Instructors');
-    assert.strictEqual(page.root.breadcrumb.crumbs[2].link, '/data/courses/1/instructors');
-    assert.strictEqual(page.root.breadcrumb.crumbs[3].text, '1 guy M. Mc1son');
+    assert.strictEqual(page.root.breadcrumbs.crumbs.length, 4);
+    assert.strictEqual(page.root.breadcrumbs.crumbs[0].text, 'course 0');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[0].link, '/courses/1');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[2].text, 'Instructors');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[2].link, '/data/courses/1/instructors');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[3].text, '1 guy M. Mc1son');
     // wait for charts to load
     await waitFor('.loaded', { count: 2 });
     await waitFor('svg .bars');

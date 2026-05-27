@@ -64,13 +64,12 @@ module('Integration | Component | school/vocabulary-term-manager', function (hoo
 
     assert.strictEqual(component.title, `Title: ${term.title}`);
     assert.strictEqual(component.description, `Description: ${term.description}`);
-    assert.strictEqual(component.breadcrumbs.all, 'All Vocabularies');
-    assert.strictEqual(component.breadcrumbs.vocabulary, vocabulary.title);
-    assert.strictEqual(component.breadcrumbs.terms.length, 3);
-    assert.strictEqual(component.breadcrumbs.terms[0].text, grandParent.title);
-    assert.strictEqual(component.breadcrumbs.terms[1].text, parent.title);
-    assert.strictEqual(component.breadcrumbs.terms[2].text, term.title);
-
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 5);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'All Vocabularies');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, vocabulary.title);
+    assert.strictEqual(component.breadcrumbs.crumbs[2].text, grandParent.title);
+    assert.strictEqual(component.breadcrumbs.crumbs[3].text, parent.title);
+    assert.strictEqual(component.breadcrumbs.crumbs[4].text, term.title);
     assert.strictEqual(component.subTerms.list.length, 2);
     assert.strictEqual(
       component.subTerms.list[0].text,

@@ -6,14 +6,27 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import { pageTitle } from 'ember-page-title';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import VisualizeVocabulariesGraph from 'ilios-common/components/course/visualize-vocabularies-graph';
 
 export default class CourseVisualizeVocabulariesComponent extends Component {
   @service iliosConfig;
+  @service intl;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
+
+  paths = [
+    {
+      route: 'course',
+      title: this.args.model.title,
+    },
+    {
+      route: 'course-visualizations',
+      title: this.intl.t('general.visualizations'),
+    },
+  ];
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
@@ -35,21 +48,11 @@ export default class CourseVisualizeVocabulariesComponent extends Component {
       data-test-course-visualize-vocabularies
       ...attributes
     >
-      <div class="breadcrumbs" data-test-breadcrumb>
-        <span>
-          <LinkTo @route="course" @model={{@model}}>
-            {{@model.title}}
-          </LinkTo>
-        </span>
-        <span>
-          <LinkTo @route="course-visualizations" @model={{@model}}>
-            {{t "general.visualizations"}}
-          </LinkTo>
-        </span>
-        <span>
-          {{t "general.vocabularies"}}
-        </span>
-      </div>
+      <Breadcrumbs
+        @paths={{this.paths}}
+        @model={{@model}}
+        @rootTitle={{t "general.vocabularies"}}
+      />
       <h2>
         {{t "general.vocabularies"}}
       </h2>

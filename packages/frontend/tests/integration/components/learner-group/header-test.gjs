@@ -37,22 +37,10 @@ module('Integration | Component | learner-group/header', function (hooks) {
     assert.strictEqual(component.title.text, 'lorem ipsum', 'title is correct');
     assert.ok(component.title.isEditable, 'title is editable');
     assert.ok(component.members, 'Members: 3');
-    assert.strictEqual(component.breadcrumb.crumbs.length, 3, 'breadcrumb count is correct');
-    assert.strictEqual(
-      component.breadcrumb.crumbs[0].text,
-      'Learner Groups',
-      'first breadcrumb text is correct',
-    );
-    assert.strictEqual(
-      component.breadcrumb.crumbs[1].text,
-      'program 0 cohort 0',
-      'second breadcrumb text is correct',
-    );
-    assert.strictEqual(
-      component.breadcrumb.crumbs[2].text,
-      'lorem ipsum',
-      'third breadcrumb text is correct',
-    );
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 3);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'Learner Groups');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, 'program 0 cohort 0');
+    assert.strictEqual(component.breadcrumbs.crumbs[2].text, 'lorem ipsum');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

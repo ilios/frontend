@@ -59,10 +59,10 @@ module('Acceptance | Instructor Group', function (hooks) {
     assert.strictEqual(currentRouteName(), 'instructor-group');
     assert.strictEqual(page.root.header.title.text, 'instructor group 0');
     assert.strictEqual(page.root.header.members, 'Members: 2');
-    assert.strictEqual(page.root.header.breadcrumb.crumbs.length, 3);
-    assert.strictEqual(page.root.header.breadcrumb.crumbs[0].text, 'Instructor Groups');
-    assert.strictEqual(page.root.header.breadcrumb.crumbs[1].text, 'school 0');
-    assert.strictEqual(page.root.header.breadcrumb.crumbs[2].text, 'instructor group 0');
+    assert.strictEqual(page.root.header.breadcrumbs.crumbs.length, 3);
+    assert.strictEqual(page.root.header.breadcrumbs.crumbs[0].text, 'Instructor Groups');
+    assert.strictEqual(page.root.header.breadcrumbs.crumbs[1].text, 'school 0');
+    assert.strictEqual(page.root.header.breadcrumbs.crumbs[2].text, 'instructor group 0');
     assert.strictEqual(page.root.users.users.length, 2);
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');

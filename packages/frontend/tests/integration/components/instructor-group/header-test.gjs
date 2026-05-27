@@ -34,13 +34,15 @@ module('Integration | Component | instructor-group/header', function (hooks) {
     );
     await takeComponentScreenshot(assert);
 
+    // await this.pauseTest();
+
     assert.strictEqual(component.title.text, 'lorem ipsum');
     assert.ok(component.title.isEditable);
     assert.ok(component.members, 'Members: 3');
-    assert.strictEqual(component.breadcrumb.crumbs.length, 3);
-    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'Instructor Groups');
-    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Medicine');
-    assert.strictEqual(component.breadcrumb.crumbs[2].text, 'lorem ipsum');
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 3);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'Instructor Groups');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, 'Medicine');
+    assert.strictEqual(component.breadcrumbs.crumbs[2].text, 'lorem ipsum');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

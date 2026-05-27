@@ -1,5 +1,6 @@
-import { attribute, collection, create, text } from 'ember-cli-page-object';
+import { attribute, create, text } from 'ember-cli-page-object';
 import termsChart from './visualize-vocabulary-graph';
+import breadcrumbs from '../breadcrumbs';
 
 const definition = create({
   scope: '[data-test-course-visualize-vocabulary]',
@@ -8,12 +9,7 @@ const definition = create({
     scope: '[data-test-course-title]',
     link: attribute('href', 'a'),
   },
-  breadcrumb: {
-    scope: '[data-test-breadcrumb]',
-    crumbs: collection('span', {
-      link: attribute('href', 'a'),
-    }),
-  },
+  breadcrumbs,
   termsChart,
 });
 

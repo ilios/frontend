@@ -6,14 +6,27 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import { pageTitle } from 'ember-page-title';
+import Breadcrumbs from 'ilios-common/components/breadcrumbs';
 import VisualizeObjectivesGraph from 'ilios-common/components/course/visualize-objectives-graph';
 
 export default class CourseVisualizeObjectivesComponent extends Component {
   @service iliosConfig;
+  @service intl;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
+
+  paths = [
+    {
+      route: 'course',
+      title: this.args.model.title,
+    },
+    {
+      route: 'course-visualizations',
+      title: this.intl.t('general.visualizations'),
+    },
+  ];
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
@@ -34,21 +47,7 @@ export default class CourseVisualizeObjectivesComponent extends Component {
       class="course-visualize-objectives data-visualization"
       data-test-course-visualize-objectives
     >
-      <div class="breadcrumbs" data-test-breadcrumb>
-        <span>
-          <LinkTo @route="course" @model={{@model}}>
-            {{@model.title}}
-          </LinkTo>
-        </span>
-        <span>
-          <LinkTo @route="course-visualizations" @model={{@model}}>
-            {{t "general.visualizations"}}
-          </LinkTo>
-        </span>
-        <span>
-          {{t "general.objectives"}}
-        </span>
-      </div>
+      <Breadcrumbs @paths={{this.paths}} @model={{@model}} @rootTitle={{t "general.objectives"}} />
       <h2>
         {{t "general.objectives"}}
       </h2>

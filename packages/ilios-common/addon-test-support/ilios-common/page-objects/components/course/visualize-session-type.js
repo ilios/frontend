@@ -1,15 +1,11 @@
-import { attribute, collection, create, fillable, text, value } from 'ember-cli-page-object';
+import { create, fillable, text, value } from 'ember-cli-page-object';
 import sessionTypeChart from './visualize-session-type-graph';
+import breadcrumbs from '../breadcrumbs';
 
 const definition = create({
   scope: '[data-test-course-visualize-session-type]',
   title: text('[data-test-title]'),
-  breadcrumb: {
-    scope: '[data-test-breadcrumb]',
-    crumbs: collection('span', {
-      link: attribute('href', 'a'),
-    }),
-  },
+  breadcrumbs,
   filter: {
     scope: '[data-test-filter]',
     value: value('input'),

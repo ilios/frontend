@@ -56,12 +56,12 @@ module('Acceptance | course visualizations - vocabularies', function (hooks) {
     assert.strictEqual(currentURL(), '/data/courses/1/vocabularies');
     assert.strictEqual(page.root.courseTitle.text, 'course 0 2022');
     assert.strictEqual(page.root.courseTitle.link, '/courses/1');
-    assert.strictEqual(page.root.breadcrumb.crumbs.length, 3);
-    assert.strictEqual(page.root.breadcrumb.crumbs[0].text, 'course 0');
-    assert.strictEqual(page.root.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.strictEqual(page.root.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.strictEqual(page.root.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.strictEqual(page.root.breadcrumb.crumbs[2].text, 'Vocabularies');
+    assert.strictEqual(page.root.breadcrumbs.crumbs.length, 3);
+    assert.strictEqual(page.root.breadcrumbs.crumbs[0].text, 'course 0');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[0].link, '/courses/1');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[2].text, 'Vocabularies');
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');

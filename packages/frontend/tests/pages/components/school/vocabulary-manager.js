@@ -1,5 +1,6 @@
 import { clickable, create, collection, isPresent, fillable, text } from 'ember-cli-page-object';
 import newTermForm from './vocabulary-new-term';
+import breadcrumbs from 'ilios-common/page-objects/components/breadcrumbs';
 
 const definition = {
   scope: '[data-test-school-vocabulary-manager]',
@@ -10,12 +11,7 @@ const definition = {
   cancelTitleChanges: clickable('[data-test-title] .cancel'),
   hasError: isPresent('[data-test-title-validation-error-message]'),
   error: text('[data-test-title-validation-error-message]'),
-  breadcrumbs: {
-    scope: '[data-test-breadcrumbs]',
-    all: text('[data-test-all]'),
-    vocabulary: text('[data-test-vocabulary]'),
-    returnToList: clickable('[data-test-all]'),
-  },
+  breadcrumbs,
   terms: {
     scope: '[data-test-terms]',
     list: collection('[data-test-term-list] [data-test-term]', {

@@ -91,18 +91,18 @@ module('Integration | Component | course/visualize-session-type', function (hook
     );
   });
 
-  test('breadcrumb', async function (assert) {
+  test('breadcrumbs', async function (assert) {
     this.set('model', { course: this.courseModel, sessionType: this.sessionTypeModel });
 
     await render(<template><VisualizeSessionType @model={{this.model}} /></template>);
 
-    assert.strictEqual(component.breadcrumb.crumbs.length, 4);
-    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
-    assert.strictEqual(component.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.strictEqual(component.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.strictEqual(component.breadcrumb.crumbs[2].text, 'Session Types');
-    assert.strictEqual(component.breadcrumb.crumbs[2].link, '/data/courses/1/session-types');
-    assert.strictEqual(component.breadcrumb.crumbs[3].text, 'session type 0');
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 4);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'course 0');
+    assert.strictEqual(component.breadcrumbs.crumbs[0].link, '/courses/1');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(component.breadcrumbs.crumbs[2].text, 'Session Types');
+    assert.strictEqual(component.breadcrumbs.crumbs[2].link, '/data/courses/1/session-types');
+    assert.strictEqual(component.breadcrumbs.crumbs[3].text, 'session type 0');
   });
 });

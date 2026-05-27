@@ -41,8 +41,9 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.title, `Title: ${vocabulary.title} (3 total)`);
-    assert.strictEqual(component.breadcrumbs.all, 'All Vocabularies');
-    assert.strictEqual(component.breadcrumbs.vocabulary, vocabulary.title);
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 2);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'All Vocabularies');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, vocabulary.title);
     assert.strictEqual(component.terms.list.length, 2);
     assert.strictEqual(component.terms.list[0].text, 'term 0 This term has sub-terms. (inactive)');
     assert.ok(component.terms.list[0].hasChildren);

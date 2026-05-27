@@ -91,16 +91,16 @@ module('Integration | Component | course/visualize-session-types', function (hoo
     assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign\u200b');
   });
 
-  test('breadcrumb', async function (assert) {
+  test('breadcrumbs', async function (assert) {
     this.set('course', this.course);
 
     await render(<template><VisualizeSessionTypes @model={{this.course}} /></template>);
 
-    assert.strictEqual(component.breadcrumb.crumbs.length, 3);
-    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
-    assert.strictEqual(component.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.strictEqual(component.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.strictEqual(component.breadcrumb.crumbs[2].text, 'Session Types');
+    assert.strictEqual(component.breadcrumbs.crumbs.length, 3);
+    assert.strictEqual(component.breadcrumbs.crumbs[0].text, 'course 0');
+    assert.strictEqual(component.breadcrumbs.crumbs[0].link, '/courses/1');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(component.breadcrumbs.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(component.breadcrumbs.crumbs[2].text, 'Session Types');
   });
 });
