@@ -54,7 +54,7 @@ export default class CurriculumInventorySequenceBlockDetailsComponent extends Co
         @paths={{this.paths}}
         @model={{@sequenceBlock.report}}
         @rootTitle={{@sequenceBlock.title}}
-        as |path model|
+        as |path index model|
       >
         <LinkTo @route={{path.route}} @model={{model}} class="crumb" data-test-crumb>
           {{path.title}}

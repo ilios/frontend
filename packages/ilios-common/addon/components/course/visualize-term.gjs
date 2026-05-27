@@ -56,19 +56,19 @@ export default class CourseVisualizeTermComponent extends Component {
           @paths={{this.paths}}
           @model={{@model}}
           @rootTitle={{@model.term.title}}
-          as |path|
+          as |path index model|
         >
           {{#if (eq path.route "course-visualize-vocabulary")}}
             <LinkTo
               @route="course-visualize-vocabulary"
-              @models={{array @model.course.id @model.term.vocabulary.id}}
+              @models={{array model.course.id model.term.vocabulary.id}}
               class="crumb"
               data-test-crumb
             >
-              {{@model.term.vocabulary.title}}
+              {{model.term.vocabulary.title}}
             </LinkTo>
           {{else}}
-            <LinkTo @route={{path.route}} @model={{@model.course}} class="crumb" data-test-crumb>
+            <LinkTo @route={{path.route}} @model={{model.course}} class="crumb" data-test-crumb>
               {{path.title}}
             </LinkTo>
           {{/if}}

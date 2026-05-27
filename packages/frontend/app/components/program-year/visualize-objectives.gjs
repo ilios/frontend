@@ -25,19 +25,19 @@ export default class CourseVisualizeProgramYearObjectivesComponent extends Compo
         @paths={{this.paths}}
         @model={{@model}}
         @rootTitle={{t "general.objectives"}}
-        as |path|
+        as |path index model|
       >
         <LinkTo
           @route={{path.route}}
-          @models={{array @model.program @model}}
+          @models={{array model.program model}}
           class="crumb"
           data-test-crumb
         >
-          {{@model.program.title}}
-          {{#if @model.cohort.title}}
-            {{@model.cohort.title}}
+          {{model.program.title}}
+          {{#if model.cohort.title}}
+            {{model.cohort.title}}
           {{else}}
-            {{t "general.classOf" year=@model.classOfYear}}
+            {{t "general.classOf" year=model.classOfYear}}
           {{/if}}
         </LinkTo>
       </Breadcrumbs>
