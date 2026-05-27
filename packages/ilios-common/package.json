@@ -151,7 +151,7 @@
     "qs": "^6.15.2",
     "sass": "^1.97.2",
     "stylelint": "^16.26.1",
-    "stylelint-config-recommended-scss": "^16.0.2",
+    "stylelint-config-recommended-scss": "^17.0.1",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-scales": "^5.0.0",
     "stylelint-scss": "^7.0.0",
