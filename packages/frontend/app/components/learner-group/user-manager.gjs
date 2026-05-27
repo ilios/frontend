@@ -7,7 +7,7 @@ import { uniqueId, fn, hash } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import SortableTh from 'ilios-common/components/sortable-th';
-import { eq, gt, or } from 'ember-truth-helpers';
+import { eq, or } from 'ember-truth-helpers';
 import sortBy from 'ilios-common/helpers/sort-by';
 import includes from 'ilios-common/helpers/includes';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -218,7 +218,10 @@ export default class LearnerGroupUserManagerComponent extends Component {
         {{#if @users.length}}
           <div class="learner-group-user-manager-content">
             <div class="list">
-              <div class="title{{unless this.groupUsers.length ' empty'}}" data-test-group-members>
+              <div
+                class="title group-members{{unless this.groupUsers.length ' empty'}}"
+                data-test-group-members
+              >
                 {{t "general.groupMembers"}}
                 ({{this.groupUsers.length}})
               </div>
@@ -348,155 +351,171 @@ export default class LearnerGroupUserManagerComponent extends Component {
                   </tbody>
                 </table>
               {{/if}}
-              <div class="title" data-test-all-other-members>
+              <div
+                class="title{{unless this.nonGroupUsers.length ' empty'}}"
+                data-test-all-other-members
+              >
                 {{t "general.allOtherMembers" topLevelGroupTitle=@topLevelGroupTitle}}
                 ({{this.nonGroupUsers.length}})
               </div>
-              <table
-                class="ilios-table ilios-table-colors ilios-zebra-table sticky-header"
-                data-test-assignable-users
-              >
-                <thead>
-                  <tr>
-                    <th class="text-left" colspan="1">
-                      <input
-                        type="checkbox"
-                        checked={{this.hasAllSelectedNonGroupUsers}}
-                        indeterminate={{this.hasSomeSelectedNonGroupUsers}}
-                        aria-label={{t "general.selectAllOrNone"}}
-                        {{on "click" this.toggleAllNonGroupUsersSelection}}
-                        data-test-toggle-all
-                      />
-                    </th>
-                    <SortableTh
-                      @colspan={{4}}
-                      @onClick={{fn this.setSortBy "fullName"}}
-                      @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
-                      @sortedAscending={{this.sortedAscending}}
-                    >
-                      {{t "general.name"}}
-                    </SortableTh>
-                    <th class="text-left" colspan="2">
-                      {{t "general.campusId"}}
-                    </th>
-                    <th class="text-left hide-from-small-screen" colspan="5">
-                      {{t "general.email"}}
-                    </th>
-                    <SortableTh
-                      @colspan={{2}}
-                      @onClick={{fn this.setSortBy "lowestGroupInTreeTitle"}}
-                      @sortedBy={{or
-                        (eq @sortBy "lowestGroupInTreeTitle")
-                        (eq @sortBy "lowestGroupInTreeTitle:desc")
-                      }}
-                      @sortedAscending={{this.sortedAscending}}
-                    >
-                      {{t "general.groupName"}}
-                    </SortableTh>
-                    <th class="text-left" colspan="1">
-                      {{t "general.actions"}}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each (sortBy @sortBy this.nonGroupUsers) as |user index|}}
-                    <tr class={{unless user.enabled "disabled-user-account" ""}}>
-                      <td class="text-left" colspan="1">
+              {{#if this.nonGroupUsers.length}}
+                <table
+                  class="ilios-table ilios-table-colors ilios-zebra-table sticky-header"
+                  data-test-assignable-users
+                >
+                  <thead>
+                    <tr>
+                      <th class="text-left" colspan="1">
                         <input
-                          aria-labelledby="cohort-username-{{index}}-{{templateId}}"
                           type="checkbox"
-                          checked={{includes user.content this.selectedNonGroupUsers}}
-                          {{on "click" (fn this.toggleNonGroupUserSelection user.content)}}
+                          checked={{this.hasAllSelectedNonGroupUsers}}
+                          indeterminate={{this.hasSomeSelectedNonGroupUsers}}
+                          aria-label={{t "general.selectAllOrNone"}}
+                          {{on "click" this.toggleAllNonGroupUsersSelection}}
+                          data-test-toggle-all
                         />
-                        <UserStatus @user={{user}} />
-                      </td>
-                      <td class="text-left" colspan="4">
-                        <button
-                          class="inline-button"
-                          type="button"
-                          {{on "click" (fn this.toggleNonGroupUserSelection user.content)}}
-                        >
-                          <UserNameInfo
-                            id="cohort-username-{{index}}-{{templateId}}"
-                            @user={{user}}
+                      </th>
+                      <SortableTh
+                        @colspan={{4}}
+                        @onClick={{fn this.setSortBy "fullName"}}
+                        @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
+                        @sortedAscending={{this.sortedAscending}}
+                      >
+                        {{t "general.name"}}
+                      </SortableTh>
+                      <th class="text-left" colspan="2">
+                        {{t "general.campusId"}}
+                      </th>
+                      <th class="text-left hide-from-small-screen" colspan="5">
+                        {{t "general.email"}}
+                      </th>
+                      <SortableTh
+                        @colspan={{2}}
+                        @onClick={{fn this.setSortBy "lowestGroupInTreeTitle"}}
+                        @sortedBy={{or
+                          (eq @sortBy "lowestGroupInTreeTitle")
+                          (eq @sortBy "lowestGroupInTreeTitle:desc")
+                        }}
+                        @sortedAscending={{this.sortedAscending}}
+                      >
+                        {{t "general.groupName"}}
+                      </SortableTh>
+                      <th class="text-left" colspan="1">
+                        {{t "general.actions"}}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each (sortBy @sortBy this.nonGroupUsers) as |user index|}}
+                      <tr class={{unless user.enabled "disabled-user-account" ""}}>
+                        <td class="text-left" colspan="1">
+                          <input
+                            aria-labelledby="cohort-username-{{index}}-{{templateId}}"
+                            type="checkbox"
+                            checked={{includes user.content this.selectedNonGroupUsers}}
+                            {{on "click" (fn this.toggleNonGroupUserSelection user.content)}}
                           />
                           <UserStatus @user={{user}} />
-                        </button>
-                      </td>
-                      <td class="text-left" colspan="2">
-                        <button
-                          class="inline-button"
-                          type="button"
-                          {{on "click" (fn this.toggleNonGroupUserSelection user.content)}}
-                        >
-                          {{user.campusId}}
-                        </button>
-                      </td>
-                      <td class="text-left hide-from-small-screen" colspan="5">
-                        <button
-                          class="inline-button"
-                          type="button"
-                          {{on "click" (fn this.toggleNonGroupUserSelection user.content)}}
-                        >
-                          {{user.email}}
-                        </button>
-                      </td>
-                      <td class="text-left" colspan="2" data-test-learnergroup>
-                        <LinkTo
-                          @route="learner-group"
-                          @model={{user.lowestGroupInTree}}
-                          @query={{hash isEditing=true sortUsersBy=@sortBy}}
-                          title={{user.lowestGroupInTree.titleWithParentTitles}}
-                          aria-label={{user.lowestGroupInTree.titleWithParentTitles}}
-                        >
-                          {{user.lowestGroupInTree.title}}
-                        </LinkTo>
-                      </td>
-                      <td>
-                        {{#if (includes user.content this.usersBeingAddedToGroup)}}
-                          <LoadingSpinner />
-                        {{else if (eq this.selectedNonGroupUsers.length 0)}}
+                        </td>
+                        <td class="text-left" colspan="4">
                           <button
+                            class="inline-button"
                             type="button"
-                            class="link-button"
-                            {{on "click" (perform this.addUserToGroup user.content)}}
-                            title={{t "general.moveToGroup" groupTitle=@learnerGroupTitle count=1}}
-                            data-test-add-user
+                            {{on "click" (fn this.toggleNonGroupUserSelection user.content)}}
                           >
-                            <FaIcon @icon={{faPlus}} class="yes" />
+                            <UserNameInfo
+                              id="cohort-username-{{index}}-{{templateId}}"
+                              @user={{user}}
+                            />
+                            <UserStatus @user={{user}} />
                           </button>
-                        {{/if}}
-                      </td>
-                    </tr>
-                  {{/each}}
-                </tbody>
-              </table>
+                        </td>
+                        <td class="text-left" colspan="2">
+                          <button
+                            class="inline-button"
+                            type="button"
+                            {{on "click" (fn this.toggleNonGroupUserSelection user.content)}}
+                          >
+                            {{user.campusId}}
+                          </button>
+                        </td>
+                        <td class="text-left hide-from-small-screen" colspan="5">
+                          <button
+                            class="inline-button"
+                            type="button"
+                            {{on "click" (fn this.toggleNonGroupUserSelection user.content)}}
+                          >
+                            {{user.email}}
+                          </button>
+                        </td>
+                        <td class="text-left" colspan="2" data-test-learnergroup>
+                          <LinkTo
+                            @route="learner-group"
+                            @model={{user.lowestGroupInTree}}
+                            @query={{hash isEditing=true sortUsersBy=@sortBy}}
+                            title={{user.lowestGroupInTree.titleWithParentTitles}}
+                            aria-label={{user.lowestGroupInTree.titleWithParentTitles}}
+                          >
+                            {{user.lowestGroupInTree.title}}
+                          </LinkTo>
+                        </td>
+                        <td>
+                          {{#if (includes user.content this.usersBeingAddedToGroup)}}
+                            <LoadingSpinner />
+                          {{else if (eq this.selectedNonGroupUsers.length 0)}}
+                            <button
+                              type="button"
+                              class="link-button"
+                              {{on "click" (perform this.addUserToGroup user.content)}}
+                              title={{t
+                                "general.moveToGroup"
+                                groupTitle=@learnerGroupTitle
+                                count=1
+                              }}
+                              data-test-add-user
+                            >
+                              <FaIcon @icon={{faPlus}} class="yes" />
+                            </button>
+                          {{/if}}
+                        </td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              {{/if}}
             </div>
           </div>
-          <p class="fullwidth">
-            {{#if (gt this.selectedNonGroupUsers.length 0)}}
-              <button type="button" class="done text" {{on "click" (perform this.addUsersToGroup)}}>
-                {{t
-                  "general.moveToGroup"
-                  groupTitle=@learnerGroupTitle
-                  count=this.selectedNonGroupUsers.length
-                }}
-              </button>
-            {{/if}}
-            {{#if (gt this.selectedGroupUsers.length 0)}}
-              <button
-                type="button"
-                class="cancel text"
-                {{on "click" (perform this.removeUsersFromGroup)}}
-              >
-                {{t
-                  "general.removeLearnerToCohort"
-                  cohort=@cohortTitle
-                  count=this.selectedGroupUsers.length
-                }}
-              </button>
-            {{/if}}
-          </p>
+
+          {{#if (or this.hasSelectedNonGroupUsers this.hasSelectedGroupUsers)}}
+            <div class="selected-actions">
+              {{#if this.hasSelectedNonGroupUsers}}
+                <button
+                  type="button"
+                  class="done text"
+                  {{on "click" (perform this.addUsersToGroup)}}
+                >
+                  {{t
+                    "general.moveToGroup"
+                    groupTitle=@learnerGroupTitle
+                    count=this.selectedNonGroupUsers.length
+                  }}
+                </button>
+              {{/if}}
+              {{#if this.hasSelectedGroupUsers}}
+                <button
+                  type="button"
+                  class="cancel text"
+                  {{on "click" (perform this.removeUsersFromGroup)}}
+                >
+                  {{t
+                    "general.removeLearnerToCohort"
+                    cohort=@cohortTitle
+                    count=this.selectedGroupUsers.length
+                  }}
+                </button>
+              {{/if}}
+            </div>
+          {{/if}}
         {{/if}}
       </div>
     {{/let}}
