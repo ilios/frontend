@@ -20,17 +20,14 @@ export default class CourseVisualizeSessionTypeComponent extends Component {
     {
       route: 'course',
       title: this.args.model.course.title,
-      query: {},
     },
     {
       route: 'course-visualizations',
       title: this.intl.t('general.visualizations'),
-      query: {},
     },
     {
       route: 'course-visualize-session-types',
       title: this.intl.t('general.sessionTypes'),
-      query: {},
     },
   ];
 

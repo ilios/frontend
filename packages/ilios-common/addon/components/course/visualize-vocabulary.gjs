@@ -21,17 +21,14 @@ export default class CourseVisualizeVocabularyComponent extends Component {
     {
       route: 'course',
       title: this.args.model.course.title,
-      query: {},
     },
     {
       route: 'course-visualizations',
       title: this.intl.t('general.visualizations'),
-      query: {},
     },
     {
       route: 'course-visualize-vocabularies',
       title: this.intl.t('general.vocabularies'),
-      query: {},
     },
   ];
 

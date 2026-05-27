@@ -23,17 +23,14 @@ export default class CourseVisualizeInstructorComponent extends Component {
     {
       route: 'course',
       title: this.args.course.title,
-      query: {},
     },
     {
       route: 'course-visualizations',
       title: this.intl.t('general.visualizations'),
-      query: {},
     },
     {
       route: 'course-visualize-instructors',
       title: this.intl.t('general.instructors'),
-      query: {},
     },
   ];
 

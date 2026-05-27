@@ -20,7 +20,6 @@ export default class CourseVisualizationsComponent extends Component {
     {
       route: 'course',
       title: this.args.model.title,
-      query: {},
     },
   ];
 
