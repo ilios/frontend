@@ -134,6 +134,8 @@ export default class ReportsCurriculumComponent extends Component {
         />
         <ChooseCourse
           @selectedCourseIds={{@selectedCourseIds}}
+          @expandedYears={{@expandedYears}}
+          @setExpandedYears={{@setExpandedYears}}
           @schools={{@schools}}
           @add={{this.pickCourse}}
           @remove={{this.removeCourse}}

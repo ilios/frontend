@@ -8,6 +8,8 @@ import { fn } from '@ember/helper';
   <Curriculum
     @selectedCourseIds={{@controller.selectedCourseIds}}
     @setSelectedCourseIds={{@controller.setSelectedCourseIds}}
+    @expandedYears={{@controller.expandedYears}}
+    @setExpandedYears={{@controller.setExpandedYears}}
     @report={{@controller.report}}
     @setReport={{set @controller "report"}}
     @schools={{@model}}

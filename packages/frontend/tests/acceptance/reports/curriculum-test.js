@@ -565,4 +565,101 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     navigator.clipboard.writeText = writeText;
     assert.verifySteps(['API called', ...Array(3).fill('navigator.clipboard.writeText called')]);
   });
+
+  test('toggling years updates url', async function (assert) {
+    let years = '';
+
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear(),
+    });
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear() - 1,
+    });
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear() - 2,
+    });
+    await page.visitCurriculumReports();
+
+    assert.strictEqual(currentRouteName(), 'reports.curriculum');
+    assert.strictEqual(currentURL(), `/reports/curriculum`, 'current URL is correct');
+
+    assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[1].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[2].isExpanded);
+
+    years = `?years=${currentAcademicYear() - 1}-${currentAcademicYear()}`;
+
+    await page.curriculum.chooseCourse.years[1].toggle();
+    assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
+    assert.ok(page.curriculum.chooseCourse.years[1].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[2].isExpanded);
+    assert.strictEqual(currentURL(), `/reports/curriculum${years}`, 'current URL is correct');
+
+    years = `?years=${currentAcademicYear() - 2}-${currentAcademicYear() - 1}-${currentAcademicYear()}`;
+
+    await page.curriculum.chooseCourse.years[2].toggle();
+    assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
+    assert.ok(page.curriculum.chooseCourse.years[1].isExpanded);
+    assert.ok(page.curriculum.chooseCourse.years[2].isExpanded);
+    assert.strictEqual(currentURL(), `/reports/curriculum${years}`, 'current URL is correct');
+
+    years = `?years=${currentAcademicYear() - 2}-${currentAcademicYear()}`;
+
+    await page.curriculum.chooseCourse.years[1].toggle();
+    assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[1].isExpanded);
+    assert.ok(page.curriculum.chooseCourse.years[2].isExpanded);
+    assert.strictEqual(currentURL(), `/reports/curriculum${years}`, 'current URL is correct');
+
+    years = '';
+
+    await page.curriculum.chooseCourse.years[2].toggle();
+    assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[1].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[2].isExpanded);
+    assert.strictEqual(currentURL(), `/reports/curriculum${years}`, 'current URL is correct');
+  });
+
+  test('querystring toggles years', async function (assert) {
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear(),
+    });
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear() - 1,
+    });
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear() - 2,
+    });
+    await page.visitCurriculumReports();
+
+    assert.strictEqual(currentRouteName(), 'reports.curriculum');
+
+    assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[1].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[2].isExpanded);
+
+    await page.visitCurriculumReports2025();
+
+    assert.notOk(page.curriculum.chooseCourse.years[0].isExpanded);
+    assert.ok(page.curriculum.chooseCourse.years[1].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[2].isExpanded);
+
+    await page.visitCurriculumReports2024_2025();
+
+    assert.notOk(page.curriculum.chooseCourse.years[0].isExpanded);
+    assert.ok(page.curriculum.chooseCourse.years[1].isExpanded);
+    assert.ok(page.curriculum.chooseCourse.years[2].isExpanded);
+
+    await page.visitCurriculumReports2026();
+
+    assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[1].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[2].isExpanded);
+  });
 });

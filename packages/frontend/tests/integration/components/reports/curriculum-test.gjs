@@ -43,8 +43,12 @@ module('Integration | Component | reports/curriculum', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.header.reportSelector.isPresent);
-    assert.strictEqual(component.header.runSummaryText, 'Select Courses to Run Report');
+    assert.notOk(component.header.reportSelector.isPresent, 'report selector is present');
+    assert.strictEqual(
+      component.header.runSummaryText,
+      'Select Courses to Run Report',
+      'report header text correct',
+    );
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -129,11 +133,13 @@ module('Integration | Component | reports/curriculum', function (hooks) {
       assert.step('setSelectedCourseIds called');
       assert.deepEqual(selectedCourseIds, [1, 2]);
     });
+    this.set('year', currentAcademicYear());
     await render(
       <template>
         <Curriculum
           @selectedCourseIds={{array "1"}}
           @setSelectedCourseIds={{this.setSelectedCourseIds}}
+          @expandedYears={{array this.year}}
           @report="sessionObjectives"
           @setReport={{(noop)}}
           @schools={{this.schools}}
@@ -143,6 +149,7 @@ module('Integration | Component | reports/curriculum', function (hooks) {
         />
       </template>,
     );
+
     await component.chooseCourse.years[0].courses[1].pick();
     assert.verifySteps(['setSelectedCourseIds called']);
   });
@@ -153,11 +160,13 @@ module('Integration | Component | reports/curriculum', function (hooks) {
       assert.step('setSelectedCourseIds called');
       assert.deepEqual(selectedCourseIds, [1]);
     });
+    this.set('year', currentAcademicYear());
     await render(
       <template>
         <Curriculum
           @selectedCourseIds={{array "1" "2"}}
           @setSelectedCourseIds={{this.setSelectedCourseIds}}
+          @expandedYears={{array this.year}}
           @report="sessionObjectives"
           @setReport={{(noop)}}
           @schools={{this.schools}}
