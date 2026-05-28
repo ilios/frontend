@@ -4,6 +4,7 @@ import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import Breadcrumbs from 'ilios-common/components/breadcrumbs';
+import { pageTitle } from 'ember-page-title';
 import VisualizerProgramYearObjectives from '../visualizer-program-year-objectives';
 
 export default class CourseVisualizeProgramYearObjectivesComponent extends Component {
@@ -17,6 +18,18 @@ export default class CourseVisualizeProgramYearObjectivesComponent extends Compo
   ];
 
   <template>
+    {{pageTitle
+      (t "general.programs")
+      " | "
+      @model.program.title
+      " "
+      @model.cohort.title
+      " | "
+      (t "general.visualizations")
+      " | "
+      (t "general.objectives")
+    }}
+
     <section
       class="program-year-visualize-objectives data-visualization"
       data-test-program-year-visualize-objectives
