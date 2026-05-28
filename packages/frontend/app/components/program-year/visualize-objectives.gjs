@@ -19,22 +19,22 @@ export default class CourseVisualizeProgramYearObjectivesComponent extends Compo
 
   <template>
     {{pageTitle
-    (t "general.programs")
-    " | "
-    @model.program.title
-    " "
-    @model.cohort.title
-    " | "
-    (t "general.visualizations")
-    " | "
-    (t "general.objectives")
-  }}
+      (t "general.programs")
+      " | "
+      @model.program.title
+      " "
+      @model.cohort.title
+      " | "
+      (t "general.visualizations")
+      " | "
+      (t "general.objectives")
+    }}
 
-  <section
-    class="program-year-visualize-objectives data-visualization"
-    data-test-program-year-visualize-objectives
-  >
-    <Breadcrumbs
+    <section
+      class="program-year-visualize-objectives data-visualization"
+      data-test-program-year-visualize-objectives
+    >
+      <Breadcrumbs
         @paths={{this.paths}}
         @model={{@model}}
         @rootTitle={{t "general.objectives"}}
