@@ -1,7 +1,5 @@
 @use "../../mixins" as m;
 
-@use "sass:color";
-
 .course-loading {
   .header {
     @include m.course-header;

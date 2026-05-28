@@ -5,8 +5,6 @@
 @use "ilios-list";
 @use "media";
 
-@use "sass:color";
-
 @mixin objectives() {
   .header {
     align-items: center;
