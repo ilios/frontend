@@ -27,6 +27,7 @@ export default class PublishAllSessionsComponent extends Component {
 
   @tracked totalSessionsToSave;
   @tracked currentSessionsSaved;
+  @tracked userSelectedAction = 'scheduleAll';
 
   @tracked userSelectedSessionsToPublish = [];
   @tracked userSelectedSessionsToSchedule = [];
@@ -245,12 +246,14 @@ export default class PublishAllSessionsComponent extends Component {
   publishAllAsIs() {
     this.userSelectedSessionsToSchedule = [];
     this.userSelectedSessionsToPublish = [...this.overridableSessions];
+    this.userSelectedAction = 'publishAllAsIs';
   }
 
   @action
   scheduleAll() {
     this.userSelectedSessionsToPublish = [];
     this.userSelectedSessionsToSchedule = [...this.overridableSessions];
+    this.userSelectedAction = 'scheduleAll';
   }
 
   @action
@@ -561,22 +564,49 @@ export default class PublishAllSessionsComponent extends Component {
         </div>
         <div class="content">
           {{#if this.overridableSessions.length}}
-            <button
-              type="button"
-              disabled={{this.allSessionsPublished}}
-              {{on "click" this.publishAllAsIs}}
-              data-test-publish-all-as-is
-            >
-              {{t "general.publishAsIs"}}
-            </button>
-            <button
-              type="button"
-              disabled={{this.allSessionsScheduled}}
-              {{on "click" this.scheduleAll}}
-              data-test-mark-all-as-scheduled
-            >
-              {{t "general.markAsScheduled"}}
-            </button>
+
+            {{#if (eq this.userSelectedAction "publishAllAsIs")}}
+              <label class="publish-all-as-is">
+                <input
+                  type="radio"
+                  checked="checked"
+                  {{on "click" this.publishAllAsIs}}
+                  data-test-publish-all-as-is
+                />
+                {{t "general.publishAsIs"}}
+              </label>
+            {{else}}
+              <label class="publish-all-as-is">
+                <input
+                  type="radio"
+                  {{on "click" this.publishAllAsIs}}
+                  data-test-publish-all-as-is
+                />
+                {{t "general.publishAsIs"}}
+              </label>
+            {{/if}}
+
+            {{#if (eq this.userSelectedAction "scheduleAll")}}
+              <label class="mark-all-as-scheduled">
+                <input
+                  type="radio"
+                  checked="checked"
+                  {{on "click" this.scheduleAll}}
+                  data-test-mark-all-as-scheduled
+                />
+                {{t "general.markAsScheduled"}}
+              </label>
+            {{else}}
+              <label class="mark-all-as-scheduled">
+                <input
+                  type="radio"
+                  {{on "click" this.scheduleAll}}
+                  data-test-mark-all-as-scheduled
+                />
+                {{t "general.markAsScheduled"}}
+              </label>
+            {{/if}}
+
             <table class="ilios-table ilios-table-colors sticky-header">
               <thead>
                 <tr>
