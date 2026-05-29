@@ -405,17 +405,24 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.ok(list[0].markAsScheduled.isChecked);
     assert.ok(list[1].publishAsIs.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
-    await component.overridableSessions.markAllAsScheduled.click();
+    await list[1].markAsScheduled.click();
     assert.notOk(component.overridableSessions.publishAllAsIs.isChecked);
     assert.ok(component.overridableSessions.markAllAsScheduled.isChecked);
     assert.notOk(list[0].publishAsIs.isChecked);
     assert.ok(list[0].markAsScheduled.isChecked);
     assert.notOk(list[1].publishAsIs.isChecked);
     assert.ok(list[1].markAsScheduled.isChecked);
+    await component.overridableSessions.publishAllAsIs.click();
+    assert.ok(component.overridableSessions.publishAllAsIs.isChecked);
+    assert.notOk(component.overridableSessions.markAllAsScheduled.isChecked);
+    assert.ok(list[0].publishAsIs.isChecked);
+    assert.notOk(list[0].markAsScheduled.isChecked);
+    assert.ok(list[1].publishAsIs.isChecked);
+    assert.notOk(list[1].markAsScheduled.isChecked);
 
     assert.strictEqual(
       component.review.confirmation,
-      'Publish 1, schedule 2, and ignore 1 sessions',
+      'Publish 3, schedule 0, and ignore 1 sessions',
     );
   });
 });

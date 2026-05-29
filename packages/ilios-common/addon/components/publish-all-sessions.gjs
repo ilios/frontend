@@ -27,7 +27,7 @@ export default class PublishAllSessionsComponent extends Component {
 
   @tracked totalSessionsToSave;
   @tracked currentSessionsSaved;
-  @tracked userSelectedAction = '';
+  @tracked bulkSelectedAction = '';
 
   @tracked userSelectedSessionsToPublish = [];
   @tracked userSelectedSessionsToSchedule = [];
@@ -74,6 +74,22 @@ export default class PublishAllSessionsComponent extends Component {
     return uniqueValues(
       sessionsToPublish.filter((s) => !this.userSelectedSessionsToPublish.includes(s)),
     );
+  }
+
+  get sessionsToAllBePublished() {
+    if (this.sessionsToPublish?.length) {
+      return !this.sessionsToSchedule?.length ? true : false;
+    }
+
+    return false;
+  }
+
+  get sessionsToAllBeScheduled() {
+    if (this.sessionsToSchedule?.length) {
+      return !this.sessionsToPublish?.length ? true : false;
+    }
+
+    return false;
   }
 
   get allSessionsScheduled() {
@@ -241,21 +257,21 @@ export default class PublishAllSessionsComponent extends Component {
       this.userSelectedSessionsToPublish = [...this.userSelectedSessionsToPublish, session];
     }
 
-    this.userSelectedAction = '';
+    this.bulkSelectedAction = '';
   }
 
   @action
   publishAllAsIs() {
     this.userSelectedSessionsToSchedule = [];
     this.userSelectedSessionsToPublish = [...this.overridableSessions];
-    this.userSelectedAction = 'publishAllAsIs';
+    this.bulkSelectedAction = 'publishAllAsIs';
   }
 
   @action
   scheduleAll() {
     this.userSelectedSessionsToPublish = [];
     this.userSelectedSessionsToSchedule = [...this.overridableSessions];
-    this.userSelectedAction = 'scheduleAll';
+    this.bulkSelectedAction = 'scheduleAll';
   }
 
   @action
@@ -571,7 +587,10 @@ export default class PublishAllSessionsComponent extends Component {
                 <input
                   type="radio"
                   name="bulk-selection-action"
-                  checked={{eq this.userSelectedAction "publishAllAsIs"}}
+                  checked={{or
+                    (eq this.bulkSelectedAction "publishAllAsIs")
+                    this.sessionsToAllBePublished
+                  }}
                   {{on "click" this.publishAllAsIs}}
                   data-test-publish-all-as-is
                 />
@@ -581,7 +600,10 @@ export default class PublishAllSessionsComponent extends Component {
                 <input
                   type="radio"
                   name="bulk-selection-action"
-                  checked={{eq this.userSelectedAction "scheduleAll"}}
+                  checked={{or
+                    (eq this.bulkSelectedAction "scheduleAll")
+                    this.sessionsToAllBeScheduled
+                  }}
                   {{on "click" this.scheduleAll}}
                   data-test-mark-all-as-scheduled
                 />
