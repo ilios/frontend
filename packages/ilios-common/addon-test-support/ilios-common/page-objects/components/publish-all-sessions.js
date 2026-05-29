@@ -137,11 +137,11 @@ const definition = {
     title: text('> [data-test-title]'),
     publishAllAsIs: {
       scope: '[data-test-publish-all-as-is]',
-      isDisabled: property('disabled'),
+      isChecked: property('checked'),
     },
     markAllAsScheduled: {
       scope: '[data-test-mark-all-as-scheduled]',
-      isDisabled: property('disabled'),
+      isChecked: property('checked'),
     },
     table: {
       scope: 'table',

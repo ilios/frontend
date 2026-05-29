@@ -27,7 +27,7 @@ export default class PublishAllSessionsComponent extends Component {
 
   @tracked totalSessionsToSave;
   @tracked currentSessionsSaved;
-  @tracked userSelectedAction = 'scheduleAll';
+  @tracked userSelectedAction = '';
 
   @tracked userSelectedSessionsToPublish = [];
   @tracked userSelectedSessionsToSchedule = [];
@@ -566,8 +566,7 @@ export default class PublishAllSessionsComponent extends Component {
         </div>
         <div class="content">
           {{#if this.overridableSessions.length}}
-
-            <fieldset data-bulk-selection-action>
+            <fieldset data-test-bulk-selection-actions>
               <label class="publish-all-as-is">
                 <input
                   type="radio"
