@@ -156,17 +156,19 @@ export default class ReportsSubjectsListComponent extends Component {
   }
   <template>
     <div class="reports-subjects-list main-section" data-test-reports-subjects-list>
-      <div class="filters">
-        <div class="title-filter">
-          <input
-            value={{@titleFilter}}
-            {{on "input" (pick "target.value" @changeTitleFilter)}}
-            aria-label={{t "general.filterByTitle"}}
-            placeholder={{t "general.filterByTitle"}}
-            data-test-title-filter
-          />
+      {{#if this.decoratedReports.length}}
+        <div class="filters">
+          <div class="title-filter">
+            <input
+              value={{@titleFilter}}
+              {{on "input" (pick "target.value" @changeTitleFilter)}}
+              aria-label={{t "general.filterByTitle"}}
+              placeholder={{t "general.filterByTitle"}}
+              data-test-title-filter
+            />
+          </div>
         </div>
-      </div>
+      {{/if}}
       <section class="reports">
         <div class="header">
           <h2 data-test-courses-header-title class="main-list-box-header-title">

@@ -4,7 +4,10 @@ import table from './table';
 import newSubject from './new-subject';
 
 const definition = {
-  filterByTitle: fillable('[data-test-title-filter]'),
+  filterByTitle: {
+    scope: '[data-test-title-filter]',
+    fillIn: fillable(),
+  },
   headerTitle: text('[data-test-reports-header-title]'),
   toggleNewSubjectReportForm: clickable('[data-test-expand-collapse-button] button'),
   newSubject,
