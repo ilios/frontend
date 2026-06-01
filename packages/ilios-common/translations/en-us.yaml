@@ -389,7 +389,7 @@ general:
   universalLocator: Universal Locator
   unlinkedObjectives: This course has unlinked objective(s)
   unPublishCourse: UnPublish Course
-  unPublishedSessions: Unpublished Sessions
+  unPublishedSessions: "Unpublished Sessions: for review"
   unPublishedSuccessfully: UnPublished successfully
   unPublishSession: UnPublish Session
   unusedObjectives: Unused Objectives

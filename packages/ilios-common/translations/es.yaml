@@ -389,7 +389,7 @@ general:
   universalLocator: Localizador universal de
   unlinkedObjectives: Este curso tiene objetivo(s) no vinculados
   unPublishCourse: No Publique El Curso
-  unPublishedSessions: Sesiones No Publicadas
+  unPublishedSessions: "Sesiones No Publicadas: para revisión"
   unPublishedSuccessfully: No Publicado con éxito
   unPublishSession: No Publique La Sesión
   unusedObjectives: Objetivos no Utilizados
