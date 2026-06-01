@@ -1,7 +1,5 @@
 @use "../../ilios-common/mixins" as m;
 
-@use "sass:color";
-
 .learner-group-bulk-assignment {
   border-bottom: 1px dotted var(--orange);
   padding: 1rem 0;

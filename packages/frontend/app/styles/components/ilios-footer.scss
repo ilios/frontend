@@ -1,7 +1,5 @@
 @use "../ilios-common/mixins" as cm;
 
-@use "sass:color";
-
 .ilios-footer {
   background-color: var(--orange);
   display: flex;

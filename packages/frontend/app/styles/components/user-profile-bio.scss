@@ -1,7 +1,5 @@
 @use "../ilios-common/mixins" as m;
 
-@use "sass:color";
-
 .user-profile-bio {
   label {
     @include m.ilios-label;
