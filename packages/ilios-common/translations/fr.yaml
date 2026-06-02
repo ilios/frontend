@@ -218,6 +218,7 @@ general:
   makeRecurring: Activité Récurrente
   manageLeadership: Gérer Dirigeants
   manageLearners: Manager Étudiants
+  markAllAsScheduled: Faire tout à prévu
   markAsScheduled: Faire à prévu
   markedAccessible: Accessible
   materials: Matériels
@@ -286,6 +287,7 @@ general:
   publicationReview: Revue de Publication
   publicationStatus: Statut de Publication
   publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, et ignorer des {ignoreCount} séances"
+  publishAllAsIs: 'Publier tout "as-is"'
   publishAsIs: 'Publier "as-is"'
   publishCourse: Publier Cours
   published: Publié

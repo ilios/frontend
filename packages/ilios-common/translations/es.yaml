@@ -218,6 +218,7 @@ general:
   makeRecurring: Hacer Recurrente
   manageLeadership: Maneje el Liderazgo
   manageLearners: Administrar Aprendedores
+  markAllAsScheduled: Marque Todo Como Programado
   markAsScheduled: Marque Como Programado
   markedAccessible: Accesible
   materials: Materiales
@@ -286,6 +287,7 @@ general:
   publicationReview: Revisión de Publicación
   publicationStatus: Estado de Publicación
   publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
+  publishAllAsIs: Publique Todo Como Es
   publishAsIs: Publique Como Es
   publishCourse: Publique Curso
   published: Publicado

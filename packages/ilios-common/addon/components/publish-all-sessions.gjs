@@ -594,7 +594,7 @@ export default class PublishAllSessionsComponent extends Component {
                   {{on "click" this.publishAllAsIs}}
                   data-test-publish-all-as-is
                 />
-                {{t "general.publishAsIs"}}
+                {{t "general.publishAllAsIs"}}
               </label>
               <label class="mark-all-as-scheduled">
                 <input
@@ -607,7 +607,7 @@ export default class PublishAllSessionsComponent extends Component {
                   {{on "click" this.scheduleAll}}
                   data-test-mark-all-as-scheduled
                 />
-                {{t "general.markAsScheduled"}}
+                {{t "general.markAllAsScheduled"}}
               </label>
             </fieldset>
 
