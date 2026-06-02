@@ -319,20 +319,19 @@ export default class PublishAllSessionsComponent extends Component {
         </span>
       </div>
       <section class="publish-all-sessions-unpublishable" data-test-unpublishable>
-        <div>
-          <button
-            class="title link-button"
-            type="button"
-            aria-expanded={{if @expandIncompleteSessions "true" "false"}}
-            data-test-expand-collapse
-            data-test-title
-            {{on "click" (fn @setExpandIncompleteSessions (not @expandIncompleteSessions))}}
-          >
-            {{t "general.incompleteSessions"}}
-            ({{this.unPublishableSessions.length}})
-            <FaIcon @icon={{if @expandIncompleteSessions faCaretDown faCaretRight}} />
-          </button>
-        </div>
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded={{if @expandIncompleteSessions "true" "false"}}
+          data-test-expand-collapse
+          data-test-title
+          {{on "click" (fn @setExpandIncompleteSessions (not @expandIncompleteSessions))}}
+        >
+          {{t "general.incompleteSessions"}}
+          ({{this.unPublishableSessions.length}})
+          <FaIcon @icon={{if @expandIncompleteSessions faCaretDown faCaretRight}} />
+        </button>
+
         {{#if @expandIncompleteSessions}}
           <div class="content" data-test-content>
             <table class="ilios-table ilios-table-colors sticky-header">
@@ -437,20 +436,19 @@ export default class PublishAllSessionsComponent extends Component {
         {{/if}}
       </section>
       <section class="publish-all-sessions-publishable" data-test-publishable>
-        <div>
-          <button
-            class="title link-button"
-            type="button"
-            aria-expanded={{if @expandCompleteSessions "true" "false"}}
-            data-test-expand-collapse
-            data-test-title
-            {{on "click" (fn @setExpandCompleteSessions (not @expandCompleteSessions))}}
-          >
-            {{t "general.publishedSessions"}}
-            ({{this.publishableSessions.length}})
-            <FaIcon @icon={{if @expandCompleteSessions faCaretDown faCaretRight}} />
-          </button>
-        </div>
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded={{if @expandCompleteSessions "true" "false"}}
+          data-test-expand-collapse
+          data-test-title
+          {{on "click" (fn @setExpandCompleteSessions (not @expandCompleteSessions))}}
+        >
+          {{t "general.publishedSessions"}}
+          ({{this.publishableSessions.length}})
+          <FaIcon @icon={{if @expandCompleteSessions faCaretDown faCaretRight}} />
+        </button>
+
         {{#if @expandCompleteSessions}}
           <div class="content" data-test-content>
             <table class="ilios-table ilios-table-colors sticky-header">
