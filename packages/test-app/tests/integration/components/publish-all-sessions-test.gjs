@@ -5,6 +5,7 @@ import { setupMSW } from 'ilios-common/msw';
 import noop from 'ilios-common/helpers/noop';
 import { component } from 'ilios-common/page-objects/components/publish-all-sessions';
 import PublishAllSessions from 'ilios-common/components/publish-all-sessions';
+
 module('Integration | Component | publish all sessions', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);

@@ -16,7 +16,7 @@ const definition = {
   },
   unpublishableSessions: {
     scope: '[data-test-unpublishable]',
-    title: text('> div > [data-test-title]'),
+    title: text('> [data-test-title]'),
     isExpanded: isVisible('[data-test-content]'),
     canExpandCollapse: isVisible('[data-test-expand-collapse]'),
     toggle: clickable('[data-test-expand-collapse]'),
@@ -36,7 +36,7 @@ const definition = {
   },
   publishableSessions: {
     scope: '[data-test-publishable]',
-    title: text('> div > [data-test-title]'),
+    title: text('> [data-test-title]'),
     isExpanded: isVisible('[data-test-content]'),
     canExpandCollapse: isVisible('[data-test-expand-collapse]'),
     toggle: clickable('[data-test-expand-collapse]'),
