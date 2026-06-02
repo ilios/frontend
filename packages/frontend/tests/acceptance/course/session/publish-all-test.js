@@ -105,7 +105,7 @@ module('Acceptance | Session - Publish All', function (hooks) {
 
     await page.visit({ courseId: this.course.id });
     const { publishableSessions } = page.publishAllSessions;
-    assert.strictEqual(publishableSessions.title, 'Sessions Complete: ready to publish (2)');
+    assert.strictEqual(publishableSessions.title, 'Published Sessions (2)');
     await publishableSessions.toggle();
     assert.strictEqual(publishableSessions.sessions.length, 2);
     assert.strictEqual(publishableSessions.sessions[0].title, 'session 0');
@@ -149,7 +149,7 @@ module('Acceptance | Session - Publish All', function (hooks) {
     await page.visit({ courseId: this.course.id });
     const { overridableSessions } = page.publishAllSessions;
 
-    assert.strictEqual(overridableSessions.title, 'Sessions Requiring Review (2)');
+    assert.strictEqual(overridableSessions.title, 'Unpublished Sessions: for review (2)');
     assert.ok(overridableSessions.markAllAsScheduled.isVisible);
     assert.ok(overridableSessions.publishAllAsIs.isVisible);
     const { sessions: list } = overridableSessions;
