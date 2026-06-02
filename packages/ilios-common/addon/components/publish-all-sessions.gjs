@@ -338,6 +338,7 @@ export default class PublishAllSessionsComponent extends Component {
               <thead>
                 <tr>
                   <SortableTh
+                    @colspan={{2}}
                     @sortedAscending={{this.sortedUnPublishableAscending}}
                     @onClick={{fn this.setSortIncompleteBy "title"}}
                     @sortedBy={{or
@@ -382,7 +383,7 @@ export default class PublishAllSessionsComponent extends Component {
               <tbody>
                 {{#each this.orderedUnPublishableSessions as |session|}}
                   <tr>
-                    <td data-test-title>
+                    <td colspan="2" data-test-title>
                       <LinkTo @route="session" @model={{session}}>
                         {{session.title}}
                       </LinkTo>
@@ -455,6 +456,7 @@ export default class PublishAllSessionsComponent extends Component {
               <thead>
                 <tr>
                   <SortableTh
+                    @colspan={{2}}
                     @sortedAscending={{this.sortedPublishableAscending}}
                     @onClick={{fn this.setSortCompleteBy "title"}}
                     @sortedBy={{or (eq @sortCompleteBy "title") (eq @sortCompleteBy "title:desc")}}
@@ -493,7 +495,7 @@ export default class PublishAllSessionsComponent extends Component {
               <tbody>
                 {{#each this.orderedPublishableSessions as |session|}}
                   <tr>
-                    <td data-test-title>
+                    <td colspan="2" data-test-title>
                       <LinkTo @route="session" @model={{session}}>
                         {{session.title}}
                       </LinkTo>
@@ -576,6 +578,7 @@ export default class PublishAllSessionsComponent extends Component {
                     {{t "general.actions"}}
                   </th>
                   <SortableTh
+                    @colspan={{2}}
                     @sortedAscending={{this.sortedOverridableAscending}}
                     @onClick={{fn this.setSortUnpublishedBy "title"}}
                     @sortedBy={{or
@@ -646,7 +649,7 @@ export default class PublishAllSessionsComponent extends Component {
                         </li>
                       </ul>
                     </td>
-                    <td data-test-title>
+                    <td colspan="2" data-test-title>
                       <LinkTo @route="session" @model={{session}}>
                         {{session.title}}
                       </LinkTo>

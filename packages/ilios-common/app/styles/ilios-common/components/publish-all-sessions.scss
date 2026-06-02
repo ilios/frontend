@@ -45,6 +45,10 @@
       tbody {
         td {
           vertical-align: top;
+
+          @include m.for-tablet-and-up {
+            padding-right: 0.5em;
+          }
         }
       }
     }
