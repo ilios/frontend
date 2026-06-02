@@ -14,6 +14,12 @@ import set from 'ember-set-helper/helpers/set';
       @expandIncompleteSessions={{@controller.expandIncompleteSessions}}
       @setExpandCompleteSessions={{set @controller "expandCompleteSessions"}}
       @setExpandIncompleteSessions={{set @controller "expandIncompleteSessions"}}
+      @sortIncompleteBy={{@controller.sortIncompleteBy}}
+      @setSortIncompleteBy={{set @controller "sortIncompleteBy"}}
+      @sortCompleteBy={{@controller.sortCompleteBy}}
+      @setSortCompleteBy={{set @controller "sortCompleteBy"}}
+      @sortUnpublishedBy={{@controller.sortUnpublishedBy}}
+      @setSortUnpublishedBy={{set @controller "sortUnpublishedBy"}}
     />
   </section>
 </template>

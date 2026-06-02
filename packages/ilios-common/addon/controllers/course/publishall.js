@@ -5,10 +5,19 @@ import { service } from '@ember/service';
 export default class CoursePublishallController extends Controller {
   @service router;
 
-  queryParams = ['expandCompleteSessions', 'expandIncompleteSessions'];
+  queryParams = [
+    'expandCompleteSessions',
+    'expandIncompleteSessions',
+    'sortIncompleteBy',
+    'sortCompleteBy',
+    'sortUnpublishedBy',
+  ];
 
   expandCompleteSessions = false;
   expandIncompleteSessions = false;
+  sortIncompleteBy = 'title';
+  sortCompleteBy = 'title';
+  sortUnpublishedBy = 'title';
 
   @action
   returnToList() {
