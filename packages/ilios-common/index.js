@@ -23,9 +23,6 @@ module.exports = {
     // _findHost is private API but it's been stable in ember-cli for two years.
     this._env = this._findHost().env;
 
-    // Import normalize.css style
-    this.import(path.join('node_modules', 'normalize.css', 'normalize.css'));
-
     // Import the quill editor style
     const quillPath = path.join('node_modules', 'quill');
     this.import(path.join(quillPath, 'dist', 'quill.snow.css'));

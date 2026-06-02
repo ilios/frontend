@@ -73,7 +73,6 @@
     "luxon": ">= 3.6.1",
     "mockdate": ">= 3.0.0",
     "msw": "^2.14.6",
-    "normalize.css": "^8.0.1",
     "query-string": ">= 9.1.0",
     "quill": "^2.0.3",
     "sanitize-html": "^2.17.3",
