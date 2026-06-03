@@ -148,7 +148,7 @@ export default class DashboardFilterTagsComponent extends Component {
             {{/each}}
             <button
               id="calendar-clear-filters"
-              class="filters-clear-filters"
+              class="filters-clear-filters link"
               type="button"
               {{on "click" @clearFilters}}
               data-test-clear-filters
