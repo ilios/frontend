@@ -30,7 +30,8 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
     const sessionData = [
       'id',
       'title',
-      `offerings { id, startDate, learnerGroups { id, title }, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
+      'sessionType { title }',
+      `offerings { id, startDate, endDate, room, learnerGroups { id, title }, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
       `ilmSession { id, dueDate, hours, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
     ].join(', ');
 
@@ -92,12 +93,31 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
       c.sessions.forEach((s) => {
         const path = this.router.urlFor('session', c.id, s.id);
         s.offerings.forEach((o) => {
+          let durationMinutes, durationHours;
+          if (s.ilmSession) {
+            durationHours = s.ilmSession.hours;
+            durationMinutes = s.ilmSession.hours * 60;
+          } else {
+            durationHours = DateTime.fromISO(o.endDate).diff(
+              DateTime.fromISO(o.startDate),
+              'hours',
+            ).hours;
+            durationMinutes = DateTime.fromISO(o.endDate).diff(
+              DateTime.fromISO(o.startDate),
+              'minutes',
+            ).minutes;
+          }
           const sessionOffering = {
             courseId: c.id,
             courseTitle: c.title,
             courseYear: c.year,
+            durationHours: durationHours?.toFixed(2) ?? 0,
+            durationMinutes: durationMinutes?.toFixed(0) ?? 0,
+            startDate: o.startDate,
+            endDate: o.endDate,
+            location: o.room,
             sessionTitle: s.title,
-            offeringDate: o.startDate,
+            sessionType: s.sessionType.title,
             instructors: s.instructors,
             learnerGroups: o.learnerGroups.map((lg) => lg.title),
             sessionLink: `${origin}${path}`,
@@ -192,10 +212,18 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
       }
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.year')] = o.courseYear;
-      rhett[this.intl.t('general.session')] = o.sessionTitle;
-      rhett[this.intl.t('general.offeringDate')] = DateTime.fromISO(o.offeringDate).toFormat(
-        'yyyy-MM-dd, h:mm a',
+      rhett[this.intl.t('general.offeringDate')] = DateTime.fromISO(o.startDate).toFormat(
+        'yyyy-MM-dd',
       );
+      rhett[`${this.intl.t('general.duration')} (${this.intl.t('general.hours')})`] =
+        o.durationHours;
+      rhett[`${this.intl.t('general.duration')} (${this.intl.t('general.minutes')})`] =
+        o.durationMinutes;
+      rhett[this.intl.t('general.startTime')] = DateTime.fromISO(o.startDate).toFormat('h:mm a');
+      rhett[this.intl.t('general.endTime')] = DateTime.fromISO(o.endDate).toFormat('h:mm a');
+      rhett[this.intl.t('general.location')] = o.location;
+      rhett[this.intl.t('general.session')] = o.sessionTitle;
+      rhett[this.intl.t('general.sessionType')] = o.sessionType;
       rhett[this.intl.t('general.instructors')] = o.instructors.join(', ');
       if (o.learnerGroups) {
         rhett[this.intl.t('general.learnerGroups')] = o.learnerGroups.join(', ');
