@@ -6,9 +6,10 @@ const defaultUserId = 100;
 export default async function (
   userObject = { id: defaultUserId },
   performsNonLearnerFunction = false,
+  jwtOptions = {},
 ) {
   const userId = userObject && 'id' in userObject ? userObject.id : defaultUserId;
-  const jwtObject = {
+  let jwtObject = {
     user_id: userId,
   };
   const nonLearnerFunctions = [
@@ -31,6 +32,13 @@ export default async function (
   if (performsNonLearnerFunction || hasNonLearnerFunctionInPassedData) {
     jwtObject['performs_non_learner_function'] = true;
   }
+  // KLUDGE!
+  // merge options into JWT.
+  // this is quite bad, since this has the potential to clobber previously set values.
+  // alas, rewriting the whole thing is not in scope, so let's cheese it like this for now.
+  // TODO: clean this up [ST 2026/06/03]
+  jwtObject = { ...jwtObject, ...jwtOptions };
+
   const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
   const token = {
     jwt: encodedData,
