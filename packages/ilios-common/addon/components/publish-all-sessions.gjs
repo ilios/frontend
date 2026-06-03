@@ -350,6 +350,7 @@ export default class PublishAllSessionsComponent extends Component {
                   </SortableTh>
                   <SortableTh
                     @sortedAscending={{this.sortedUnPublishableAscending}}
+                    @sortType="numeric"
                     @onClick={{fn this.setSortIncompleteBy "offerings"}}
                     @sortedBy={{or
                       (eq @sortIncompleteBy "offerings")
@@ -360,6 +361,7 @@ export default class PublishAllSessionsComponent extends Component {
                   </SortableTh>
                   <SortableTh
                     @sortedAscending={{this.sortedUnPublishableAscending}}
+                    @sortType="numeric"
                     @onClick={{fn this.setSortIncompleteBy "terms"}}
                     @sortedBy={{or
                       (eq @sortIncompleteBy "terms")
@@ -370,6 +372,7 @@ export default class PublishAllSessionsComponent extends Component {
                   </SortableTh>
                   <SortableTh
                     @sortedAscending={{this.sortedUnPublishableAscending}}
+                    @sortType="numeric"
                     @onClick={{fn this.setSortIncompleteBy "objectives"}}
                     @sortedBy={{or
                       (eq @sortIncompleteBy "objectives")
@@ -465,6 +468,7 @@ export default class PublishAllSessionsComponent extends Component {
                   </SortableTh>
                   <SortableTh
                     @sortedAscending={{this.sortedPublishableAscending}}
+                    @sortType="numeric"
                     @onClick={{fn this.setSortCompleteBy "offerings"}}
                     @sortedBy={{or
                       (eq @sortCompleteBy "offerings")
@@ -475,6 +479,7 @@ export default class PublishAllSessionsComponent extends Component {
                   </SortableTh>
                   <SortableTh
                     @sortedAscending={{this.sortedPublishableAscending}}
+                    @sortType="numeric"
                     @onClick={{fn this.setSortCompleteBy "terms"}}
                     @sortedBy={{or (eq @sortCompleteBy "terms") (eq @sortCompleteBy "terms:desc")}}
                   >
@@ -482,6 +487,7 @@ export default class PublishAllSessionsComponent extends Component {
                   </SortableTh>
                   <SortableTh
                     @sortedAscending={{this.sortedPublishableAscending}}
+                    @sortType="numeric"
                     @onClick={{fn this.setSortCompleteBy "objectives"}}
                     @sortedBy={{or
                       (eq @sortCompleteBy "objectives")
@@ -590,6 +596,7 @@ export default class PublishAllSessionsComponent extends Component {
                   </SortableTh>
                   <SortableTh
                     @sortedAscending={{this.sortedOverridableAscending}}
+                    @sortType="numeric"
                     @onClick={{fn this.setSortUnpublishedBy "offerings"}}
                     @sortedBy={{or
                       (eq @sortUnpublishedBy "offerings")
@@ -600,6 +607,7 @@ export default class PublishAllSessionsComponent extends Component {
                   </SortableTh>
                   <SortableTh
                     @sortedAscending={{this.sortedOverridableAscending}}
+                    @sortType="numeric"
                     @onClick={{fn this.setSortUnpublishedBy "terms"}}
                     @sortedBy={{or
                       (eq @sortUnpublishedBy "terms")
@@ -610,6 +618,7 @@ export default class PublishAllSessionsComponent extends Component {
                   </SortableTh>
                   <SortableTh
                     @sortedAscending={{this.sortedOverridableAscending}}
+                    @sortType="numeric"
                     @onClick={{fn this.setSortUnpublishedBy "objectives"}}
                     @sortedBy={{or
                       (eq @sortUnpublishedBy "objectives")

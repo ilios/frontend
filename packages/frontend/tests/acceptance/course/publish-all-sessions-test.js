@@ -1,5 +1,5 @@
-import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
+import { currentURL } from '@ember/test-helpers';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/components/course/publish-all-sessions';
@@ -11,11 +11,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     this.school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
     this.cohort = await this.server.create('cohort');
-
-    const vocabulary = await this.server.create('vocabulary', {
-      school: this.school,
-    });
-    // this.course = await this.server.create('course', { school: this.school });
     this.course = await this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -25,7 +20,10 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     this.sessionTypes = await this.server.createList('session-type', 2, {
       school: this.school,
     });
-    this.term = await this.server.create('term', { vocabulary });
+    this.vocabulary = await this.server.create('vocabulary', {
+      school: this.school,
+    });
+    this.term = await this.server.create('term', { vocabulary: this.vocabulary });
     this.meshDescriptor = await this.server.create('mesh-descriptor');
   });
 
@@ -83,6 +81,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     await page.publishAllSessions.publishableSessions.toggle();
     assert.ok(page.publishAllSessions.publishableSessions.isExpanded);
     assert.strictEqual(page.publishAllSessions.publishableSessions.sessions.length, 3);
+
     assert.strictEqual(page.publishAllSessions.publishableSessions.sessions[0].title, 'session 0');
     assert.strictEqual(
       page.publishAllSessions.publishableSessions.sessions[0].offerings,
@@ -120,7 +119,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.ok(page.publishAllSessions.publishableSessions.sessions[2].objectives.isLinked);
   });
 
-  test('After publishing user is returned to the courses route #4099', async function (assert) {
+  test('after publishing user is returned to the courses route #4099', async function (assert) {
     const terms = await this.server.createList('term', 1);
 
     // const course = await this.server.create('course', {
@@ -154,7 +153,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     );
   });
 
-  test('Updating course objectives updates the unlinked objective warning', async function (assert) {
+  test('updating course objectives updates the unlinked objective warning', async function (assert) {
     const programYear = await this.server.create('program-year', {
       cohort: this.cohort,
     });
@@ -378,5 +377,161 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Published');
     assert.strictEqual(sessions[1].row.title, 'session 1');
     assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Published');
+  });
+
+  test('tables are sortable', async function (assert) {
+    await this.server.create('session', {
+      course: this.course,
+      terms: await this.server.createList('term', 5, { vocabulary: this.vocabulary }),
+      meshDescriptors: [this.meshDescriptor],
+      sessionType: this.sessionTypes[0],
+    });
+    await this.server.create('session', {
+      course: this.course,
+      terms: await this.server.createList('term', 3, { vocabulary: this.vocabulary }),
+      meshDescriptors: [this.meshDescriptor],
+      sessionType: this.sessionTypes[0],
+      sessionObjectives: [await this.server.create('session-objective')],
+    });
+    await this.server.create('session', {
+      course: this.course,
+      terms: await this.server.createList('term', 8, { vocabulary: this.vocabulary }),
+      meshDescriptors: [this.meshDescriptor],
+      sessionType: this.sessionTypes[0],
+      sessionObjectives: await this.server.createList('session-objective', 5),
+    });
+
+    await this.server.create('session', {
+      course: this.course,
+      terms: [this.term],
+      meshDescriptors: [this.meshDescriptor],
+      sessionType: this.sessionTypes[0],
+      sessionObjectives: [await this.server.create('session-objective')],
+      offerings: await this.server.createList('offering', 5),
+    });
+    await this.server.create('session', {
+      course: this.course,
+      terms: [this.term],
+      meshDescriptors: [this.meshDescriptor],
+      sessionType: this.sessionTypes[0],
+      sessionObjectives: [await this.server.create('session-objective')],
+      offerings: await this.server.createList('offering', 3),
+    });
+    await this.server.create('session', {
+      course: this.course,
+      terms: [this.term],
+      meshDescriptors: [this.meshDescriptor],
+      sessionType: this.sessionTypes[0],
+      sessionObjectives: [await this.server.create('session-objective')],
+      offerings: await this.server.createList('offering', 2),
+    });
+
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      sessionObjectives: await this.server.createList('session-objective', 7),
+      offerings: await this.server.createList('offering', 2),
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      sessionObjectives: await this.server.createList('session-objective', 4),
+      offerings: await this.server.createList('offering', 2),
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 3),
+    });
+
+    await page.visit({
+      courseId: this.course.id,
+      expandIncompleteSessions: true,
+      expandCompleteSessions: true,
+    });
+
+    const pubReview = page.publishAllSessions;
+
+    assert.strictEqual(
+      currentURL(),
+      '/courses/1/publishall?expandIncompleteSessions=true&expandCompleteSessions=true',
+    );
+
+    // test 1/3 section: Incomplete/Unpublishable Sessions
+
+    assert.ok(pubReview.unpublishableSessions.table.headers.title.isSortedOn);
+    assert.ok(pubReview.unpublishableSessions.table.headers.title.isSortedAscending);
+    assert.notOk(pubReview.unpublishableSessions.table.headers.offerings.isSortedOn);
+    assert.notOk(pubReview.unpublishableSessions.table.headers.terms.isSortedOn);
+    assert.notOk(pubReview.unpublishableSessions.table.headers.objectives.isSortedOn);
+    assert.strictEqual(pubReview.unpublishableSessions.sessions[0].title, 'session 0');
+
+    await pubReview.unpublishableSessions.table.headers.title.click();
+    assert.notOk(pubReview.unpublishableSessions.table.headers.title.isSortedAscending);
+    assert.ok(pubReview.unpublishableSessions.table.headers.title.isSortedDescending);
+    assert.strictEqual(pubReview.unpublishableSessions.sessions[0].title, 'session 2');
+
+    await pubReview.unpublishableSessions.table.headers.title.click();
+    assert.ok(pubReview.unpublishableSessions.table.headers.title.isSortedAscending);
+    assert.notOk(pubReview.unpublishableSessions.table.headers.title.isSortedDescending);
+    assert.strictEqual(pubReview.unpublishableSessions.sessions[0].title, 'session 0');
+
+    await pubReview.unpublishableSessions.table.headers.offerings.click();
+    assert.ok(pubReview.unpublishableSessions.table.headers.offerings.isSortedOn);
+    assert.notOk(pubReview.unpublishableSessions.table.headers.title.isSortedOn);
+    assert.ok(pubReview.unpublishableSessions.table.headers.offerings.isSortedAscending);
+    assert.strictEqual(pubReview.unpublishableSessions.sessions[0].title, 'session 0');
+
+    // test 2/3 section: Complete/Published Sessions
+
+    assert.ok(pubReview.publishableSessions.table.headers.title.isSortedOn);
+    assert.ok(pubReview.publishableSessions.table.headers.title.isSortedAscending);
+    assert.notOk(pubReview.publishableSessions.table.headers.offerings.isSortedOn);
+    assert.notOk(pubReview.publishableSessions.table.headers.terms.isSortedOn);
+    assert.notOk(pubReview.publishableSessions.table.headers.objectives.isSortedOn);
+    assert.strictEqual(pubReview.publishableSessions.sessions[0].title, 'session 3');
+
+    await pubReview.publishableSessions.table.headers.title.click();
+    assert.notOk(pubReview.publishableSessions.table.headers.title.isSortedAscending);
+    assert.ok(pubReview.publishableSessions.table.headers.title.isSortedDescending);
+    assert.strictEqual(pubReview.publishableSessions.sessions[0].title, 'session 5');
+
+    await pubReview.publishableSessions.table.headers.title.click();
+    assert.ok(pubReview.publishableSessions.table.headers.title.isSortedAscending);
+    assert.notOk(pubReview.publishableSessions.table.headers.title.isSortedDescending);
+    assert.strictEqual(pubReview.publishableSessions.sessions[0].title, 'session 3');
+
+    await pubReview.publishableSessions.table.headers.terms.click();
+    assert.ok(pubReview.publishableSessions.table.headers.terms.isSortedOn);
+    assert.notOk(pubReview.publishableSessions.table.headers.title.isSortedOn);
+    assert.ok(pubReview.publishableSessions.table.headers.terms.isSortedAscending);
+    assert.strictEqual(pubReview.publishableSessions.sessions[0].title, 'session 3');
+
+    // test 3/3 section: Unpublished/Overridable Sessions
+
+    // await this.pauseTest();
+
+    assert.ok(pubReview.overridableSessions.table.headers.title.isSortedOn);
+    assert.ok(pubReview.overridableSessions.table.headers.title.isSortedAscending);
+    assert.notOk(pubReview.overridableSessions.table.headers.offerings.isSortedOn);
+    assert.notOk(pubReview.overridableSessions.table.headers.terms.isSortedOn);
+    assert.notOk(pubReview.overridableSessions.table.headers.objectives.isSortedOn);
+    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 6');
+
+    await pubReview.overridableSessions.table.headers.title.click();
+    assert.notOk(pubReview.overridableSessions.table.headers.title.isSortedAscending);
+    assert.ok(pubReview.overridableSessions.table.headers.title.isSortedDescending);
+    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 8');
+
+    await pubReview.overridableSessions.table.headers.title.click();
+    assert.ok(pubReview.overridableSessions.table.headers.title.isSortedAscending);
+    assert.notOk(pubReview.overridableSessions.table.headers.title.isSortedDescending);
+    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 6');
+
+    await pubReview.overridableSessions.table.headers.objectives.click();
+    assert.ok(pubReview.overridableSessions.table.headers.objectives.isSortedOn);
+    assert.notOk(pubReview.overridableSessions.table.headers.title.isSortedOn);
+    assert.ok(pubReview.overridableSessions.table.headers.objectives.isSortedAscending);
+    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 8');
   });
 });
