@@ -44,6 +44,15 @@ export default class ApplicationController extends Controller {
     return '';
   }
 
+  get hasLtiApplicationScope() {
+    const applicationScope = this.currentUser.applicationScope ?? '';
+    return applicationScope.startsWith('lti-');
+  }
+
+  get hasNavigation() {
+    return this.currentUser.performsNonLearnerFunction && !this.hasLtiApplicationScope;
+  }
+
   @action
   clearErrors() {
     this.errors = [];
