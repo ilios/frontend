@@ -85,21 +85,31 @@ export default class CurrentUserService extends Service {
     });
   }
 
-  getBooleanAttributeFromToken(attribute) {
+  /**
+   * Returns the decoded JWT from the current user session.
+   * @returns {object|null}
+   */
+  get decodedJwt() {
     const session = this.session;
     if (isEmpty(session)) {
-      return false;
+      return null;
     }
 
     const jwt = session.get('data.authenticated.jwt');
 
     if (isEmpty(jwt)) {
-      return false;
+      return null;
     }
-    const obj = jwtDecode(jwt);
-
-    return !!get(obj, attribute);
+    return jwtDecode(jwt);
   }
+
+  getBooleanAttributeFromToken(attribute) {
+    if (this.decodedJwt) {
+      return !!get(this.decodedJwt, attribute);
+    }
+    return false;
+  }
+
   get isRoot() {
     return this.getBooleanAttributeFromToken('is_root');
   }
