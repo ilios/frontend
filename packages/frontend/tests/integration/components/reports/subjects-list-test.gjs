@@ -16,6 +16,25 @@ module('Integration | Component | reports/subjects-list', function (hooks) {
     this.user = await setupAuthentication();
   });
 
+  test('it renders empty', async function (assert) {
+    await render(
+      <template>
+        <SubjectsList
+          @sortReportsBy="title"
+          @setSortReportsBy={{(noop)}}
+          @titleFilter=""
+          @changeTitleFilter={{(noop)}}
+          @showNewReportForm={{false}}
+          @toggleNewReportForm={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.notOk(component.filterByTitle.isVisible);
+    assert.notOk(component.table.isVisible);
+    a11yAudit(this.element);
+  });
+
   test('it renders', async function (assert) {
     await this.server.create('report', {
       title: null,
@@ -41,6 +60,8 @@ module('Integration | Component | reports/subjects-list', function (hooks) {
       </template>,
     );
 
+    assert.ok(component.filterByTitle.isVisible);
+    assert.ok(component.table.isVisible);
     assert.strictEqual(component.table.reports.length, 2);
     assert.strictEqual(component.table.reports[0].title, 'All Courses in All Schools');
     assert.strictEqual(component.table.reports[1].title, 'All Sessions in All Schools');
@@ -49,21 +70,58 @@ module('Integration | Component | reports/subjects-list', function (hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it renders empty', async function (assert) {
+  test('it filters', async function (assert) {
+    await this.server.create('report', {
+      title: null,
+      subject: 'course',
+      user: this.user,
+    });
+    await this.server.create('report', {
+      title: null,
+      subject: 'session',
+      user: this.user,
+    });
+    this.set('titleFilter', 'courses');
+    this.set('changeTitleFilter', (value) => {
+      this.set('titleFilter', value);
+      assert.step('changeTitleFilter called');
+    });
+
     await render(
       <template>
         <SubjectsList
           @sortReportsBy="title"
           @setSortReportsBy={{(noop)}}
-          @titleFilter=""
-          @changeTitleFilter={{(noop)}}
+          @titleFilter={{this.titleFilter}}
+          @changeTitleFilter={{this.changeTitleFilter}}
           @showNewReportForm={{false}}
           @toggleNewReportForm={{(noop)}}
         />
+        {{this.titleFilter}}
       </template>,
     );
-    assert.notOk(component.table.isVisible);
-    a11yAudit(this.element);
+
+    assert.ok(component.filterByTitle.isVisible);
+    assert.ok(component.table.isVisible);
+
+    assert.strictEqual(component.table.reports.length, 1);
+    assert.strictEqual(component.table.reports[0].title, 'All Courses in All Schools');
+
+    await component.filterByTitle.fillIn('sessions');
+
+    assert.ok(component.table.isVisible);
+    assert.strictEqual(component.table.reports.length, 1);
+    assert.strictEqual(component.table.reports[0].title, 'All Sessions in All Schools');
+
+    await component.filterByTitle.fillIn('');
+
+    assert.strictEqual(component.table.reports.length, 2);
+    assert.strictEqual(component.table.reports[0].title, 'All Courses in All Schools');
+    assert.strictEqual(component.table.reports[1].title, 'All Sessions in All Schools');
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+    assert.verifySteps(['changeTitleFilter called', 'changeTitleFilter called']);
   });
 
   test('toggle new report form', async function (assert) {
