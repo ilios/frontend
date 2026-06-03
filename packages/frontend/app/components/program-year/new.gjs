@@ -56,6 +56,10 @@ export default class ProgramYearNewComponent extends Component {
     return findBy(this.availableAcademicYears, 'value', this.year);
   }
 
+  get noAvailableYears() {
+    return !this.selectedYear;
+  }
+
   saveNewYear = task({ drop: true }, async () => {
     await this.args.save(this.selectedYear.value);
   });
@@ -91,7 +95,13 @@ export default class ProgramYearNewComponent extends Component {
         <div class="buttons">
           <button
             type="button"
-            class="done text"
+            class="done text{{if this.noAvailableYears ' disabled'}}"
+            title={{if
+              this.noAvailableYears
+              (t "general.canNotCreateProgramYear")
+              (t "general.done")
+            }}
+            disabled={{this.noAvailableYears}}
             {{on "click" (perform this.saveNewYear)}}
             data-test-done
           >

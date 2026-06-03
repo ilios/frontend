@@ -44,6 +44,7 @@ general:
   bad: Mal
   badCredentials: "Nom d'utilisateur ou mot de passe incorrect"
   campusId: Campus ID
+  canNotCreateProgramYear: "Année de programme ne peut être créé car il n'y a plus d'années universitaires disponibles."
   canNotContinueWithInvalidRecords: "Ne peut pas continuer avec ces rapports invalides, fixez s'il vous plaît et retéléchargez le fichier."
   canNotDeleteCourse: "Ce cours ne peut pas être supprimé car il est publié, planifié, a des éléments associés ou vous n’avez pas la permission."
   canNotDeleteCurriculumInventoryReport: "Ce rapport d'inventaire des programmes d'études ne peut pas être supprimé car vous n’avez pas la permission."
