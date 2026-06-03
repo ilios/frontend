@@ -297,4 +297,17 @@ module('Integration | Service | Current User', function (hooks) {
   skip('requireNonLearner', function (/* assert */) {
     // TODO: implement.
   });
+
+  test('application scope', async function (assert) {
+    // check the current session user's JWT for an application scope value. it doesn't have one.
+    const subject = this.owner.lookup('service:current-user');
+    assert.strictEqual(subject.applicationScope, null);
+
+    // now re-authenticate with a token that carries an "application_scope" attribute.
+    await invalidateSession();
+    await authenticateSession({
+      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwidXNlcl9pZCI6MTAwLCJhcHBsaWNhdGlvbl9zY29wZSI6Imx0aS1kYXNoY2FtIn0.hM_QXikx6hAt-dhorqDp2QKFAHMIYUGkS74Guug55lE',
+    });
+    assert.strictEqual(subject.applicationScope, 'lti-dashcam');
+  });
 });

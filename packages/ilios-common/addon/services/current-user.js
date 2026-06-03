@@ -110,6 +110,15 @@ export default class CurrentUserService extends Service {
     return false;
   }
 
+  get applicationScope() {
+    if (!this.decodedJwt) {
+      return null;
+    }
+    return Object.hasOwn(this.decodedJwt, 'application_scope')
+      ? this.decodedJwt['application_scope']
+      : null;
+  }
+
   get isRoot() {
     return this.getBooleanAttributeFromToken('is_root');
   }
