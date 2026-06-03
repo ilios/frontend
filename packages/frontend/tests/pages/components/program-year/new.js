@@ -12,6 +12,7 @@ const definition = {
   },
   done: {
     scope: '[data-test-done]',
+    isDisabled: property('disabled'),
   },
   cancel: {
     scope: '[data-test-cancel]',
