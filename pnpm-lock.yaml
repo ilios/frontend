@@ -313,8 +313,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(postcss@8.5.15)
       stylelint-scss:
-        specifier: ^7.0.0
-        version: 7.1.1(stylelint@16.26.1(typescript@6.0.3))
+        specifier: ^7.2.0
+        version: 7.2.0(stylelint@16.26.1(typescript@6.0.3))
       terser-webpack-plugin:
         specifier: ^5.3.14
         version: 5.6.1(postcss@8.5.15)(webpack@5.107.2(postcss@8.5.15))
@@ -656,8 +656,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(postcss@8.5.15)
       stylelint-scss:
-        specifier: ^7.0.0
-        version: 7.1.1(stylelint@16.26.1(typescript@6.0.3))
+        specifier: ^7.2.0
+        version: 7.2.0(stylelint@16.26.1(typescript@6.0.3))
       tracked-built-ins:
         specifier: ^3.1.1
         version: 3.4.0(@babel/core@7.29.7)
@@ -887,8 +887,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(postcss@8.5.15)
       stylelint-scss:
-        specifier: ^7.0.0
-        version: 7.1.1(stylelint@16.26.1(typescript@6.0.3))
+        specifier: ^7.2.0
+        version: 7.2.0(stylelint@16.26.1(typescript@6.0.3))
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0(@babel/core@7.29.7)(ejs@3.1.10)(handlebars@4.7.9)(underscore@1.13.8)
@@ -1118,8 +1118,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(postcss@8.5.15)
       stylelint-scss:
-        specifier: ^7.0.0
-        version: 7.1.1(stylelint@16.26.1(typescript@6.0.3))
+        specifier: ^7.2.0
+        version: 7.2.0(stylelint@16.26.1(typescript@6.0.3))
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0(@babel/core@7.29.7)(ejs@3.1.10)(handlebars@4.7.9)(underscore@1.13.8)
@@ -1343,8 +1343,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(postcss@8.5.15)
       stylelint-scss:
-        specifier: ^7.0.0
-        version: 7.1.1(stylelint@16.26.1(typescript@6.0.3))
+        specifier: ^7.2.0
+        version: 7.2.0(stylelint@16.26.1(typescript@6.0.3))
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0(@babel/core@7.29.7)(ejs@3.1.10)(handlebars@4.7.9)(underscore@1.13.8)
@@ -8939,8 +8939,8 @@ packages:
     resolution: {integrity: sha512-bdeA0ZcVSQunLfqk+x/MpQeyBYXdw5EUb0sH4zG3x55tjbYnd5oyfgJXTF96FRXbrSjSOAOx4QiSUlLS7V1btw==}
     engines: {node: '>=18'}
 
-  stylelint-scss@7.1.1:
-    resolution: {integrity: sha512-pLPXJZ7RtAFNLXe8gqarf3B56ScVTd1vPiL9IFgcJkIZsYPzAgLJPh2h9NHrp3BFeKrtAkIgwQ08QSmhvlv1gA==}
+  stylelint-scss@7.2.0:
+    resolution: {integrity: sha512-6E79Bachv0Iz0gqRUZgdqdXCsiq26DWBWIBNHYtjTmAp3wJu6cp/I37VfW7BPntmh2puF3bY09XWl4HZGrLhzw==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       stylelint: ^16.8.2 || ^17.0.0
@@ -19670,7 +19670,7 @@ snapshots:
       postcss-scss: 4.0.9(postcss@8.5.15)
       stylelint: 16.26.1(typescript@6.0.3)
       stylelint-config-recommended: 18.0.0(stylelint@16.26.1(typescript@6.0.3))
-      stylelint-scss: 7.1.1(stylelint@16.26.1(typescript@6.0.3))
+      stylelint-scss: 7.2.0(stylelint@16.26.1(typescript@6.0.3))
     optionalDependencies:
       postcss: 8.5.15
 
@@ -19693,7 +19693,7 @@ snapshots:
     transitivePeerDependencies:
       - postcss
 
-  stylelint-scss@7.1.1(stylelint@16.26.1(typescript@6.0.3)):
+  stylelint-scss@7.2.0(stylelint@16.26.1(typescript@6.0.3)):
     dependencies:
       '@csstools/css-calc': 3.2.1(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
