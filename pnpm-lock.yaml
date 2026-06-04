@@ -103,8 +103,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.2(@babel/core@7.29.7)(@ember/test-waiters@4.1.1(@babel/core@7.29.7)(@glint/template@1.7.7))(@glint/template@1.7.7)
       axe-core:
-        specifier: ^4.11.3
-        version: 4.11.4
+        specifier: ^4.12.0
+        version: 4.12.0
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -125,7 +125,7 @@ importers:
         version: 5.2.1(@babel/core@7.29.7)
       ember-a11y-testing:
         specifier: ^8.0.0
-        version: 8.0.1(@babel/core@7.29.7)(@ember/test-helpers@5.4.2(@babel/core@7.29.7)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.7)(@glint/template@1.7.7))(axe-core@4.11.4)(qunit@2.25.0)
+        version: 8.0.1(@babel/core@7.29.7)(@ember/test-helpers@5.4.2(@babel/core@7.29.7)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.7)(@glint/template@1.7.7))(axe-core@4.12.0)(qunit@2.25.0)
       ember-async-data:
         specifier: ^2.0.0
         version: 2.0.1(@babel/core@7.29.7)(@glint/template@1.7.7)
@@ -1211,14 +1211,14 @@ importers:
         specifier: ~5.8.1
         version: 5.8.2(@babel/core@7.29.7)(@ember/test-waiters@4.1.1(@babel/core@7.29.7)(@glint/template@1.7.7))(@glint/template@1.7.7)
       axe-core:
-        specifier: ^4.11.3
-        version: 4.11.4
+        specifier: ^4.12.0
+        version: 4.12.0
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
       ember-a11y-testing:
         specifier: ^8.0.0
-        version: 8.0.1(@babel/core@7.29.7)(@ember/test-helpers@5.4.2(@babel/core@7.29.7)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.7)(@glint/template@1.7.7))(axe-core@4.11.4)(qunit@2.25.0)
+        version: 8.0.1(@babel/core@7.29.7)(@ember/test-helpers@5.4.2(@babel/core@7.29.7)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.7)(@glint/template@1.7.7))(axe-core@4.12.0)(qunit@2.25.0)
       ember-auto-import:
         specifier: ^2.12.0
         version: 2.13.1(@glint/template@1.7.7)(webpack@5.107.2(postcss@8.5.15))
@@ -3547,8 +3547,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     deprecated: The AWS SDK for JavaScript (v2) has reached end-of-support, and no longer receives updates. Please migrate your code to use AWS SDK for JavaScript (v3). More info https://a.co/cUPnyil
 
-  axe-core@4.11.4:
-    resolution: {integrity: sha512-KunSNx+TVpkAw/6ULfhnx+HWRecjqZGTOyquAoWHYLRSdK1tB5Ihce1ZW+UY3fj33bYAFWPu7W/GRSmmrCGuxA==}
+  axe-core@4.12.0:
+    resolution: {integrity: sha512-FTavr/7Ba0IptwGOPxnQvdyW2tAsdLBMTBXz7rKH6xJ2skpyxpBxyHkDdBs4lf69yRqYpkqCdfhnwS8YULGOmg==}
     engines: {node: '>=4'}
 
   babel-code-frame@6.26.0:
@@ -12790,7 +12790,7 @@ snapshots:
       uuid: 8.0.0
       xml2js: 0.6.2
 
-  axe-core@4.11.4: {}
+  axe-core@4.12.0: {}
 
   babel-code-frame@6.26.0:
     dependencies:
@@ -14497,12 +14497,12 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-a11y-testing@8.0.1(@babel/core@7.29.7)(@ember/test-helpers@5.4.2(@babel/core@7.29.7)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.7)(@glint/template@1.7.7))(axe-core@4.11.4)(qunit@2.25.0):
+  ember-a11y-testing@8.0.1(@babel/core@7.29.7)(@ember/test-helpers@5.4.2(@babel/core@7.29.7)(@glint/template@1.7.7))(@ember/test-waiters@4.1.1(@babel/core@7.29.7)(@glint/template@1.7.7))(axe-core@4.12.0)(qunit@2.25.0):
     dependencies:
       '@ember/test-helpers': 5.4.2(@babel/core@7.29.7)(@glint/template@1.7.7)
       '@ember/test-waiters': 4.1.1(@babel/core@7.29.7)(@glint/template@1.7.7)
       '@embroider/addon-shim': 1.10.2
-      axe-core: 4.11.4
+      axe-core: 4.12.0
       decorator-transforms: 2.3.2(@babel/core@7.29.7)
     optionalDependencies:
       qunit: 2.25.0
