@@ -95,7 +95,7 @@ export default class ProgramYearNewComponent extends Component {
         <div class="buttons">
           <button
             type="button"
-            class="done text{{if this.noAvailableYears ' disabled'}}"
+            class="done text"
             title={{if
               this.noAvailableYears
               (t "general.canNotCreateProgramYear")
