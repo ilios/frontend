@@ -77,19 +77,11 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get sessionsToAllBePublished() {
-    if (this.sessionsToPublish?.length) {
-      return !this.sessionsToSchedule?.length ? true : false;
-    }
-
-    return false;
+    return !this.sessionsToSchedule?.length;
   }
 
   get sessionsToAllBeScheduled() {
-    if (this.sessionsToSchedule?.length) {
-      return !this.sessionsToPublish?.length ? true : false;
-    }
-
-    return false;
+    return !this.sessionsToPublish?.length;
   }
 
   get allSessionsScheduled() {
