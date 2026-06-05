@@ -21,15 +21,34 @@
 
     .title {
       @include m.detail-container-title;
+      background: var(--white);
+      height: 2.1rem;
+      padding: 0.35em 0;
+      position: sticky;
       text-align: left;
+      top: 0;
+      width: 100%;
+      z-index: 3;
     }
 
     .content {
       @include m.detail-container-content;
 
+      thead {
+        th {
+          padding-top: 0.5em;
+          top: 1.75em;
+          z-index: 2;
+        }
+      }
+
       tbody {
         td {
           vertical-align: top;
+
+          @include m.for-tablet-and-up {
+            padding-right: 0.5em;
+          }
         }
       }
     }

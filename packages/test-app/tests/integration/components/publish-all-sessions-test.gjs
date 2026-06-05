@@ -5,6 +5,7 @@ import { setupMSW } from 'ilios-common/msw';
 import noop from 'ilios-common/helpers/noop';
 import { component } from 'ilios-common/page-objects/components/publish-all-sessions';
 import PublishAllSessions from 'ilios-common/components/publish-all-sessions';
+
 module('Integration | Component | publish all sessions', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
@@ -30,11 +31,12 @@ module('Integration | Component | publish all sessions', function (hooks) {
       title: 'session 3',
       published: false,
     });
-
     const fullyPublishedByIncompleteSession = await this.server.create('session', {
       title: 'session 4',
       published: true,
     });
+    this.sortColumn = 'title';
+
     await this.server.create('session-objective', {
       session: completeSession,
       courseObjectives: [linkedCourseObjective],
@@ -72,13 +74,19 @@ module('Integration | Component | publish all sessions', function (hooks) {
           @expandIncompleteSessions={{true}}
           @setExpandCompleteSessions={{(noop)}}
           @setExpandIncompleteSessions={{(noop)}}
+          @sortIncompleteBy={{this.sortColumn}}
+          @setSortIncompleteBy={{(noop)}}
+          @sortCompleteBy={{this.sortColumn}}
+          @setSortCompleteBy={{(noop)}}
+          @sortUnpublishedBy={{this.sortColumn}}
+          @setSortUnpublishedBy={{(noop)}}
         />
       </template>,
     );
     assert.strictEqual(component.header.title, 'Publication Review');
     assert.strictEqual(
       component.unpublishableSessions.title,
-      'Sessions Incomplete: cannot publish (1)',
+      'Incomplete Sessions: cannot publish (1)',
     );
     assert.ok(component.unpublishableSessions.canExpandCollapse);
     assert.strictEqual(component.unpublishableSessions.sessions.length, 1);
@@ -87,10 +95,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.unpublishableSessions.sessions[0].terms, 'Yes (1)');
     assert.strictEqual(component.unpublishableSessions.sessions[0].objectives.text, 'No');
     assert.notOk(component.unpublishableSessions.sessions[0].objectives.isLinked);
-    assert.strictEqual(
-      component.publishableSessions.title,
-      'Sessions Complete: ready to publish (1)',
-    );
+    assert.strictEqual(component.publishableSessions.title, 'Published Sessions (1)');
     assert.ok(component.publishableSessions.canExpandCollapse);
     assert.strictEqual(component.publishableSessions.sessions.length, 1);
     assert.strictEqual(component.publishableSessions.sessions[0].title, 'session 2');
@@ -98,7 +103,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.publishableSessions.sessions[0].terms, 'Yes (1)');
     assert.strictEqual(component.publishableSessions.sessions[0].objectives.text, 'Yes (2)');
     assert.ok(component.publishableSessions.sessions[0].objectives.isLinked);
-    assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
+    assert.strictEqual(component.overridableSessions.title, 'Unpublished Sessions: for review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
     assert.ok(component.overridableSessions.publishAllAsIs.isVisible);
     assert.strictEqual(component.overridableSessions.sessions.length, 2);
@@ -135,6 +140,12 @@ module('Integration | Component | publish all sessions', function (hooks) {
           @expandIncompleteSessions={{false}}
           @setExpandCompleteSessions={{(noop)}}
           @setExpandIncompleteSessions={{(noop)}}
+          @sortIncompleteBy={{this.sortColumn}}
+          @setSortIncompleteBy={{(noop)}}
+          @sortCompleteBy={{this.sortColumn}}
+          @setSortCompleteBy={{(noop)}}
+          @sortUnpublishedBy={{this.sortColumn}}
+          @setSortUnpublishedBy={{(noop)}}
         />
       </template>,
     );
@@ -142,17 +153,14 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.header.title, 'Publication Review');
     assert.notOk(component.publishableSessions.isExpanded);
     assert.strictEqual(component.publishableSessions.sessions.length, 0);
-    assert.strictEqual(
-      component.publishableSessions.title,
-      'Sessions Complete: ready to publish (1)',
-    );
+    assert.strictEqual(component.publishableSessions.title, 'Published Sessions (1)');
     assert.ok(component.publishableSessions.canExpandCollapse);
 
     assert.notOk(component.unpublishableSessions.isExpanded);
     assert.strictEqual(component.unpublishableSessions.sessions.length, 0);
     assert.strictEqual(
       component.unpublishableSessions.title,
-      'Sessions Incomplete: cannot publish (1)',
+      'Incomplete Sessions: cannot publish (1)',
     );
     assert.ok(component.unpublishableSessions.canExpandCollapse);
   });
@@ -170,6 +178,12 @@ module('Integration | Component | publish all sessions', function (hooks) {
           @expandIncompleteSessions={{false}}
           @setExpandCompleteSessions={{this.setExpandCompleteSessions}}
           @setExpandIncompleteSessions={{this.setExpandIncompleteSessions}}
+          @sortIncompleteBy={{this.sortColumn}}
+          @setSortIncompleteBy={{(noop)}}
+          @sortCompleteBy={{this.sortColumn}}
+          @setSortCompleteBy={{(noop)}}
+          @sortUnpublishedBy={{this.sortColumn}}
+          @setSortUnpublishedBy={{(noop)}}
         />
       </template>,
     );
@@ -191,6 +205,12 @@ module('Integration | Component | publish all sessions', function (hooks) {
           @expandIncompleteSessions={{true}}
           @setExpandCompleteSessions={{this.setExpandCompleteSessions}}
           @setExpandIncompleteSessions={{this.setExpandIncompleteSessions}}
+          @sortIncompleteBy={{this.sortColumn}}
+          @setSortIncompleteBy={{(noop)}}
+          @sortCompleteBy={{this.sortColumn}}
+          @setSortCompleteBy={{(noop)}}
+          @sortUnpublishedBy={{this.sortColumn}}
+          @setSortUnpublishedBy={{(noop)}}
         />
       </template>,
     );
@@ -218,14 +238,10 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.header.title, 'Publication Review');
     assert.strictEqual(
       component.unpublishableSessions.text,
-      'Sessions Incomplete: cannot publish (0)',
+      'Incomplete Sessions: cannot publish (0)',
     );
-    assert.strictEqual(
-      component.publishableSessions.text,
-      'Sessions Complete: ready to publish (0)',
-    );
-    assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (0)');
-    assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (0)');
+    assert.strictEqual(component.publishableSessions.text, 'Published Sessions (0)');
+    assert.strictEqual(component.overridableSessions.title, 'Unpublished Sessions: for review (0)');
     assert.notOk(component.overridableSessions.markAllAsScheduled.isVisible);
     assert.notOk(component.overridableSessions.publishAllAsIs.isVisible);
     assert.strictEqual(component.overridableSessions.sessions.length, 0);
@@ -244,6 +260,12 @@ module('Integration | Component | publish all sessions', function (hooks) {
           @course={{this.course}}
           @setExpandCompleteSessions={{(noop)}}
           @setExpandIncompleteSessions={{(noop)}}
+          @sortIncompleteBy={{this.sortColumn}}
+          @setSortIncompleteBy={{(noop)}}
+          @sortCompleteBy={{this.sortColumn}}
+          @setSortCompleteBy={{(noop)}}
+          @sortUnpublishedBy={{this.sortColumn}}
+          @setSortUnpublishedBy={{(noop)}}
         />
       </template>,
     );
@@ -263,6 +285,12 @@ module('Integration | Component | publish all sessions', function (hooks) {
           @course={{this.course}}
           @setExpandCompleteSessions={{(noop)}}
           @setExpandIncompleteSessions={{(noop)}}
+          @sortIncompleteBy={{this.sortColumn}}
+          @setSortIncompleteBy={{(noop)}}
+          @sortCompleteBy={{this.sortColumn}}
+          @setSortCompleteBy={{(noop)}}
+          @sortUnpublishedBy={{this.sortColumn}}
+          @setSortUnpublishedBy={{(noop)}}
         />
       </template>,
     );
@@ -270,7 +298,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
       component.review.confirmation,
       'Publish 2, schedule 1, and ignore 1 sessions',
     );
-    assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
+    assert.strictEqual(component.overridableSessions.title, 'Unpublished Sessions: for review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
     assert.ok(component.overridableSessions.publishAllAsIs.isVisible);
     const { sessions: list } = component.overridableSessions;
@@ -300,6 +328,12 @@ module('Integration | Component | publish all sessions', function (hooks) {
           @course={{this.course}}
           @setExpandCompleteSessions={{(noop)}}
           @setExpandIncompleteSessions={{(noop)}}
+          @sortIncompleteBy={{this.sortColumn}}
+          @setSortIncompleteBy={{(noop)}}
+          @sortCompleteBy={{this.sortColumn}}
+          @setSortCompleteBy={{(noop)}}
+          @sortUnpublishedBy={{this.sortColumn}}
+          @setSortUnpublishedBy={{(noop)}}
         />
       </template>,
     );
@@ -307,7 +341,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
       component.review.confirmation,
       'Publish 2, schedule 1, and ignore 1 sessions',
     );
-    assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
+    assert.strictEqual(component.overridableSessions.title, 'Unpublished Sessions: for review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
     assert.ok(component.overridableSessions.publishAllAsIs.isVisible);
     const { sessions: list } = component.overridableSessions;

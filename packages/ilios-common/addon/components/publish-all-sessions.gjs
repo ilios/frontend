@@ -7,7 +7,7 @@ import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
-import { not } from 'ember-truth-helpers';
+import { eq, or, not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { LinkTo } from '@ember/routing';
@@ -17,6 +17,7 @@ import mapBy from 'ilios-common/helpers/map-by';
 import SaveButton from 'ilios-common/components/save-button';
 import perform from 'ember-concurrency/helpers/perform';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import SortableTh from 'ilios-common/components/sortable-th';
 import { faLinkSlash, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class PublishAllSessionsComponent extends Component {
@@ -111,10 +112,68 @@ export default class PublishAllSessionsComponent extends Component {
     });
   }
 
+  get sortedPublishableSessions() {
+    if (this.args.sortCompleteBy.includes('offerings')) {
+      return this.publishableSessions.sort((a, b) => a.offerings.length - b.offerings.length);
+    }
+
+    if (this.args.sortCompleteBy.includes('terms')) {
+      return this.publishableSessions.sort((a, b) => a.terms.length - b.terms.length);
+    }
+
+    if (this.args.sortCompleteBy.includes('objectives')) {
+      return this.publishableSessions.sort(
+        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
+      );
+    }
+
+    const locale = this.intl.get('primaryLocale');
+    return this.publishableSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
+  }
+
+  get sortedPublishableAscending() {
+    return this.args.sortCompleteBy.search(/desc/) === -1;
+  }
+
+  get orderedPublishableSessions() {
+    return this.sortedPublishableAscending
+      ? this.sortedPublishableSessions
+      : this.sortedPublishableSessions.reverse();
+  }
+
   get unPublishableSessions() {
     return this.sessions.filter((session) => {
       return session.requiredPublicationIssues.length > 0;
     });
+  }
+
+  get sortedUnPublishableSessions() {
+    if (this.args.sortIncompleteBy.includes('offerings')) {
+      return this.unPublishableSessions.sort((a, b) => a.offerings.length - b.offerings.length);
+    }
+
+    if (this.args.sortIncompleteBy.includes('terms')) {
+      return this.unPublishableSessions.sort((a, b) => a.terms.length - b.terms.length);
+    }
+
+    if (this.args.sortIncompleteBy.includes('objectives')) {
+      return this.unPublishableSessions.sort(
+        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
+      );
+    }
+
+    const locale = this.intl.get('primaryLocale');
+    return this.unPublishableSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
+  }
+
+  get sortedUnPublishableAscending() {
+    return this.args.sortIncompleteBy.search(/desc/) === -1;
+  }
+
+  get orderedUnPublishableSessions() {
+    return this.sortedUnPublishableAscending
+      ? this.sortedUnPublishableSessions
+      : this.sortedUnPublishableSessions.reverse();
   }
 
   get overridableSessions() {
@@ -124,6 +183,35 @@ export default class PublishAllSessionsComponent extends Component {
         session.optionalPublicationIssues.length > 0
       );
     });
+  }
+
+  get sortedOverridableSessions() {
+    if (this.args.sortUnpublishedBy.includes('offerings')) {
+      return this.overridableSessions.sort((a, b) => a.offerings.length - b.offerings.length);
+    }
+
+    if (this.args.sortUnpublishedBy.includes('terms')) {
+      return this.overridableSessions.sort((a, b) => a.terms.length - b.terms.length);
+    }
+
+    if (this.args.sortUnpublishedBy.includes('objectives')) {
+      return this.overridableSessions.sort(
+        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
+      );
+    }
+
+    const locale = this.intl.get('primaryLocale');
+    return this.overridableSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
+  }
+
+  get sortedOverridableAscending() {
+    return this.args.sortUnpublishedBy.search(/desc/) === -1;
+  }
+
+  get orderedOverridableSessions() {
+    return this.sortedOverridableAscending
+      ? this.sortedOverridableSessions
+      : this.sortedOverridableSessions.reverse();
   }
 
   get publishCount() {
@@ -163,6 +251,30 @@ export default class PublishAllSessionsComponent extends Component {
   scheduleAll() {
     this.userSelectedSessionsToPublish = [];
     this.userSelectedSessionsToSchedule = [...this.overridableSessions];
+  }
+
+  @action
+  setSortIncompleteBy(what) {
+    if (this.args.sortIncompleteBy === what) {
+      what += ':desc';
+    }
+    this.args.setSortIncompleteBy(what);
+  }
+
+  @action
+  setSortCompleteBy(what) {
+    if (this.args.sortCompleteBy === what) {
+      what += ':desc';
+    }
+    this.args.setSortCompleteBy(what);
+  }
+
+  @action
+  setSortUnpublishedBy(what) {
+    if (this.args.sortUnpublishedBy === what) {
+      what += ':desc';
+    }
+    this.args.setSortUnpublishedBy(what);
   }
 
   async saveSomeSessions(sessions) {
@@ -207,43 +319,74 @@ export default class PublishAllSessionsComponent extends Component {
         </span>
       </div>
       <section class="publish-all-sessions-unpublishable" data-test-unpublishable>
-        <div>
-          <button
-            class="title link-button"
-            type="button"
-            aria-expanded={{if @expandIncompleteSessions "true" "false"}}
-            data-test-expand-collapse
-            data-test-title
-            {{on "click" (fn @setExpandIncompleteSessions (not @expandIncompleteSessions))}}
-          >
-            {{t "general.incompleteSessions"}}
-            ({{this.unPublishableSessions.length}})
-            <FaIcon @icon={{if @expandIncompleteSessions faCaretDown faCaretRight}} />
-          </button>
-        </div>
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded={{if @expandIncompleteSessions "true" "false"}}
+          data-test-expand-collapse
+          data-test-title
+          {{on "click" (fn @setExpandIncompleteSessions (not @expandIncompleteSessions))}}
+        >
+          {{t "general.incompleteSessions"}}
+          ({{this.unPublishableSessions.length}})
+          <FaIcon @icon={{if @expandIncompleteSessions faCaretDown faCaretRight}} />
+        </button>
+
         {{#if @expandIncompleteSessions}}
           <div class="content" data-test-content>
             <table class="ilios-table ilios-table-colors sticky-header">
               <thead>
                 <tr>
-                  <th>
+                  <SortableTh
+                    @colspan={{2}}
+                    @sortedAscending={{this.sortedUnPublishableAscending}}
+                    @onClick={{fn this.setSortIncompleteBy "title"}}
+                    @sortedBy={{or
+                      (eq @sortIncompleteBy "title")
+                      (eq @sortIncompleteBy "title:desc")
+                    }}
+                  >
                     {{t "general.sessionTitle"}}
-                  </th>
-                  <th>
+                  </SortableTh>
+                  <SortableTh
+                    @sortedAscending={{this.sortedUnPublishableAscending}}
+                    @sortType="numeric"
+                    @onClick={{fn this.setSortIncompleteBy "offerings"}}
+                    @sortedBy={{or
+                      (eq @sortIncompleteBy "offerings")
+                      (eq @sortIncompleteBy "offerings:desc")
+                    }}
+                  >
                     {{t "general.offerings"}}
-                  </th>
-                  <th>
+                  </SortableTh>
+                  <SortableTh
+                    @sortedAscending={{this.sortedUnPublishableAscending}}
+                    @sortType="numeric"
+                    @onClick={{fn this.setSortIncompleteBy "terms"}}
+                    @sortedBy={{or
+                      (eq @sortIncompleteBy "terms")
+                      (eq @sortIncompleteBy "terms:desc")
+                    }}
+                  >
                     {{t "general.terms"}}
-                  </th>
-                  <th>
+                  </SortableTh>
+                  <SortableTh
+                    @sortedAscending={{this.sortedUnPublishableAscending}}
+                    @sortType="numeric"
+                    @onClick={{fn this.setSortIncompleteBy "objectives"}}
+                    @sortedBy={{or
+                      (eq @sortIncompleteBy "objectives")
+                      (eq @sortIncompleteBy "objectives:desc")
+                    }}
+                  >
                     {{t "general.objectives"}}
-                  </th>
+                  </SortableTh>
                 </tr>
               </thead>
               <tbody>
-                {{#each this.unPublishableSessions as |session|}}
+                {{#each this.orderedUnPublishableSessions as |session|}}
                   <tr>
-                    <td data-test-title>
+                    <td colspan="2" data-test-title>
                       <LinkTo @route="session" @model={{session}}>
                         {{session.title}}
                       </LinkTo>
@@ -297,43 +440,68 @@ export default class PublishAllSessionsComponent extends Component {
         {{/if}}
       </section>
       <section class="publish-all-sessions-publishable" data-test-publishable>
-        <div>
-          <button
-            class="title link-button"
-            type="button"
-            aria-expanded={{if @expandCompleteSessions "true" "false"}}
-            data-test-expand-collapse
-            data-test-title
-            {{on "click" (fn @setExpandCompleteSessions (not @expandCompleteSessions))}}
-          >
-            {{t "general.completeSessions"}}
-            ({{this.publishableSessions.length}})
-            <FaIcon @icon={{if @expandCompleteSessions faCaretDown faCaretRight}} />
-          </button>
-        </div>
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded={{if @expandCompleteSessions "true" "false"}}
+          data-test-expand-collapse
+          data-test-title
+          {{on "click" (fn @setExpandCompleteSessions (not @expandCompleteSessions))}}
+        >
+          {{t "general.publishedSessions"}}
+          ({{this.publishableSessions.length}})
+          <FaIcon @icon={{if @expandCompleteSessions faCaretDown faCaretRight}} />
+        </button>
+
         {{#if @expandCompleteSessions}}
           <div class="content" data-test-content>
             <table class="ilios-table ilios-table-colors sticky-header">
               <thead>
                 <tr>
-                  <th>
+                  <SortableTh
+                    @colspan={{2}}
+                    @sortedAscending={{this.sortedPublishableAscending}}
+                    @onClick={{fn this.setSortCompleteBy "title"}}
+                    @sortedBy={{or (eq @sortCompleteBy "title") (eq @sortCompleteBy "title:desc")}}
+                  >
                     {{t "general.sessionTitle"}}
-                  </th>
-                  <th>
+                  </SortableTh>
+                  <SortableTh
+                    @sortedAscending={{this.sortedPublishableAscending}}
+                    @sortType="numeric"
+                    @onClick={{fn this.setSortCompleteBy "offerings"}}
+                    @sortedBy={{or
+                      (eq @sortCompleteBy "offerings")
+                      (eq @sortCompleteBy "offerings:desc")
+                    }}
+                  >
                     {{t "general.offerings"}}
-                  </th>
-                  <th>
+                  </SortableTh>
+                  <SortableTh
+                    @sortedAscending={{this.sortedPublishableAscending}}
+                    @sortType="numeric"
+                    @onClick={{fn this.setSortCompleteBy "terms"}}
+                    @sortedBy={{or (eq @sortCompleteBy "terms") (eq @sortCompleteBy "terms:desc")}}
+                  >
                     {{t "general.terms"}}
-                  </th>
-                  <th>
+                  </SortableTh>
+                  <SortableTh
+                    @sortedAscending={{this.sortedPublishableAscending}}
+                    @sortType="numeric"
+                    @onClick={{fn this.setSortCompleteBy "objectives"}}
+                    @sortedBy={{or
+                      (eq @sortCompleteBy "objectives")
+                      (eq @sortCompleteBy "objectives:desc")
+                    }}
+                  >
                     {{t "general.objectives"}}
-                  </th>
+                  </SortableTh>
                 </tr>
               </thead>
               <tbody>
-                {{#each this.publishableSessions as |session|}}
+                {{#each this.orderedPublishableSessions as |session|}}
                   <tr>
-                    <td data-test-title>
+                    <td colspan="2" data-test-title>
                       <LinkTo @route="session" @model={{session}}>
                         {{session.title}}
                       </LinkTo>
@@ -388,7 +556,7 @@ export default class PublishAllSessionsComponent extends Component {
       </section>
       <section class="publish-all-sessions-overridable" data-test-overridable>
         <div class="title" data-test-title>
-          {{t "general.reviewSessions"}}
+          {{t "general.unPublishedSessions"}}
           ({{this.overridableSessions.length}})
         </div>
         <div class="content">
@@ -415,22 +583,54 @@ export default class PublishAllSessionsComponent extends Component {
                   <th>
                     {{t "general.actions"}}
                   </th>
-                  <th>
+                  <SortableTh
+                    @colspan={{2}}
+                    @sortedAscending={{this.sortedOverridableAscending}}
+                    @onClick={{fn this.setSortUnpublishedBy "title"}}
+                    @sortedBy={{or
+                      (eq @sortUnpublishedBy "title")
+                      (eq @sortUnpublishedBy "title:desc")
+                    }}
+                  >
                     {{t "general.sessionTitle"}}
-                  </th>
-                  <th>
+                  </SortableTh>
+                  <SortableTh
+                    @sortedAscending={{this.sortedOverridableAscending}}
+                    @sortType="numeric"
+                    @onClick={{fn this.setSortUnpublishedBy "offerings"}}
+                    @sortedBy={{or
+                      (eq @sortUnpublishedBy "offerings")
+                      (eq @sortUnpublishedBy "offerings:desc")
+                    }}
+                  >
                     {{t "general.offerings"}}
-                  </th>
-                  <th>
+                  </SortableTh>
+                  <SortableTh
+                    @sortedAscending={{this.sortedOverridableAscending}}
+                    @sortType="numeric"
+                    @onClick={{fn this.setSortUnpublishedBy "terms"}}
+                    @sortedBy={{or
+                      (eq @sortUnpublishedBy "terms")
+                      (eq @sortUnpublishedBy "terms:desc")
+                    }}
+                  >
                     {{t "general.terms"}}
-                  </th>
-                  <th>
+                  </SortableTh>
+                  <SortableTh
+                    @sortedAscending={{this.sortedOverridableAscending}}
+                    @sortType="numeric"
+                    @onClick={{fn this.setSortUnpublishedBy "objectives"}}
+                    @sortedBy={{or
+                      (eq @sortUnpublishedBy "objectives")
+                      (eq @sortUnpublishedBy "objectives:desc")
+                    }}
+                  >
                     {{t "general.objectives"}}
-                  </th>
+                  </SortableTh>
                 </tr>
               </thead>
               <tbody>
-                {{#each this.overridableSessions as |session|}}
+                {{#each this.orderedOverridableSessions as |session|}}
                   <tr>
                     <td>
                       <ul>
@@ -458,7 +658,7 @@ export default class PublishAllSessionsComponent extends Component {
                         </li>
                       </ul>
                     </td>
-                    <td data-test-title>
+                    <td colspan="2" data-test-title>
                       <LinkTo @route="session" @model={{session}}>
                         {{session.title}}
                       </LinkTo>
