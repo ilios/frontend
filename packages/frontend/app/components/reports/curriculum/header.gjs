@@ -64,6 +64,14 @@ export default class ReportsCurriculumHeaderComponent extends Component {
     if (this.hasMultipleSchools) {
       return [
         {
+          value: 'courseCompetencies',
+          label: this.intl.t('general.courseCompetencies'),
+          summary: this.intl.t('general.courseCompetenciesReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.countSelectedSchools,
+          }),
+        },
+        {
           value: 'sessionObjectives',
           label: this.intl.t('general.sessionObjectives'),
           summary: this.intl.t('general.sessionObjectivesReportSummaryMultiSchool', {
@@ -106,6 +114,13 @@ export default class ReportsCurriculumHeaderComponent extends Component {
       ];
     } else {
       return [
+        {
+          value: 'courseCompetencies',
+          label: this.intl.t('general.courseCompetencies'),
+          summary: this.intl.t('general.courseCompetenciesReportSummary', {
+            courseCount: this.args.countSelectedCourses,
+          }),
+        },
         {
           value: 'sessionObjectives',
           label: this.intl.t('general.sessionObjectives'),

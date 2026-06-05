@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
 import { eq } from 'ember-truth-helpers';
+import CourseCompetencies from './curriculum/course-competencies';
 import SessionObjectives from './curriculum/session-objectives';
 import SessionOfferings from './curriculum/session-offerings';
 import LearnerGroups from './curriculum/learner-groups';
@@ -81,6 +82,8 @@ export default class ReportsCurriculumComponent extends Component {
 
   get reportResultsComponent() {
     switch (this.selectedReportValue) {
+      case 'courseCompetencies':
+        return ensureSafeComponent(CourseCompetencies, this);
       case 'sessionObjectives':
         return ensureSafeComponent(SessionObjectives, this);
       case 'sessionOfferings':

@@ -103,6 +103,9 @@ general:
   countTotal: "{total} au total"
   country: Pays
   countryCode: Code du pays
+  courseCompetencies: Compétences du cours
+  courseCompetenciesReportSummary: "Rapport de {courseCount, plural, one {un cours} other {# cours}}. Chaque compétence est listée avec les objectifs du cours et de l'année de diplôme."
+  courseCompetenciesReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {un cours} other {# cours}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque compétence est listée avec les objectifs du cours et de l'année de diplôme."
   coursesAndSessions: Des Cours et Séances
   courseTerm: Terme de Cours
   courseTerms: Termes de Cours
@@ -320,6 +323,7 @@ general:
   programTitlePlaceholder: Ajoutez un titre pour ce Diplôme
   programTitleShort: Titre (bref)
   programYear: Année de Diplôme
+  programYearObjectives: "Objectifs de l'année de Diplôme"
   programYears: Années des Diplôme
   programYearVisualizations: Tableau de Matière de Curriculum par Année de Diplôme
   promoteToPrimaryCohort: Promouvoir à Cohorte Primaire

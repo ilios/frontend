@@ -103,6 +103,9 @@ general:
   countTotal: "{total} en total"
   country: País
   countryCode: Código del país
+  courseCompetencies: Competencias de Curso
+  courseCompetenciesReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera cada competencia junto con los objetivos curso y de ańo de programa."
+  courseCompetenciesReportSummaryMultiSchool: "informe para {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Se enumera cada competencia junto con los objetivos curso y de ańo de programa."
   coursesAndSessions: Cursos y Sesiones
   courseTerm: Término del Curso
   courseTerms: Términos del Curso
@@ -320,6 +323,7 @@ general:
   programTitlePlaceholder: Meter un titulo para este programa
   programTitleShort: Titulo (corto)
   programYear: Año de Programa
+  programYearObjectives: Objetivos de Años de Programa
   programYears: Años de Programa
   programYearVisualizations: Visualizaciones de Año de Programa
   promoteToPrimaryCohort: Ascender al Principal Cohorte

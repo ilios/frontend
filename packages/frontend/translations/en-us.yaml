@@ -103,6 +103,9 @@ general:
   countTotal: "{total} total"
   country: Country
   countryCode: Country Code
+  courseCompetencies: Course Competencies
+  courseCompetenciesReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each competency is listed along with course and program year objectives."
+  courseCompetenciesReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each competency is listed along with course and program year objectives."
   coursesAndSessions: Courses and Sessions
   courseTerm: Course Term
   courseTerms: Course Terms
@@ -320,6 +323,7 @@ general:
   programTitlePlaceholder: Enter a title for this program
   programTitleShort: Title (short)
   programYear: Program Year
+  programYearObjectives: Program Year Objectives
   programYears: Program Years
   programYearVisualizations: Program Year Visualizations
   promoteToPrimaryCohort: Promote to primary cohort
