@@ -8,7 +8,7 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
+    this.user = await setupAuthentication({ administeredSchools: [school] });
     await this.server.create('academic-year', { id: 2013 });
     const program = await this.server.create('program', { school });
     const programYear = await this.server.create('program-year', { program });

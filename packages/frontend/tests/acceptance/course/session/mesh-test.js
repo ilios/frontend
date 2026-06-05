@@ -8,7 +8,7 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
+    this.user = await setupAuthentication({ school, administeredSchools: [school] });
     await this.server.create('academic-year');
     const trees = await this.server.createList('meshTree', 3);
     const concepts = await this.server.createList('meshConcept', 3);

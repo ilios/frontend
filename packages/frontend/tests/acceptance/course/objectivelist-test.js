@@ -7,7 +7,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
+    this.user = await setupAuthentication({ administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2013 });
   });
 

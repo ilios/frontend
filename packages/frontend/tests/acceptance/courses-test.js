@@ -14,14 +14,14 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('visiting /courses', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await page.visit();
     await takeScreenshot(assert);
     assert.strictEqual(currentURL(), '/courses');
   });
 
   test('visiting /courses with title filter', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       title: 'specialfirstcourse',
@@ -50,7 +50,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('filters by title', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       title: 'specialfirstcourse',
@@ -139,7 +139,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('filters by year', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2013 });
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
@@ -162,7 +162,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('initial filter by year', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2013 });
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
@@ -183,10 +183,10 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('filters by mycourses', async function (assert) {
-    const user = await setupAuthentication(
-      { school: this.school, administeredSchools: [this.school] },
-      true,
-    );
+    const user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
@@ -209,7 +209,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('year filter options', async function (assert) {
-    await setupAuthentication({ school: this.school2, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school2, administeredSchools: [this.school] });
     await this.server.createList('school', 2);
     await this.server.create('academic-year', { id: 2013, title: '2013 - 2014' });
     await this.server.create('academic-year', { id: 2014, title: '2014 - 2015' });
@@ -233,7 +233,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('unprivileged users can not delete courses', async function (assert) {
-    await setupAuthentication({ school: this.school }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school2] });
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
@@ -258,7 +258,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('privileged users can only delete unpublished courses', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
@@ -283,7 +283,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year });
     await page.visit({ year });
@@ -298,10 +298,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('new course link hides after changing school', async function (assert) {
     const school3 = await this.server.create('school');
-    await setupAuthentication(
-      { school: this.school, administeredSchools: [this.school, school3] },
-      true,
-    );
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school, school3] });
     const year1 = DateTime.now().year;
     const year2 = DateTime.now().year + 1;
     await this.server.create('academic-year', { id: year1 });
@@ -326,7 +323,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course link hides after changing year', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const year1 = DateTime.now().year;
     const year2 = DateTime.now().year + 1;
     await this.server.create('academic-year', { id: year1 });
@@ -351,7 +348,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course toggle does not show up for unprivileged users', async function (assert) {
-    await setupAuthentication({ school: this.school }, true);
+    await setupAuthentication({ school: this.school });
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year });
     await page.visit({ year });
@@ -359,7 +356,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course in another year does not display in list', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2012 });
     await this.server.create('academic-year', { id: 2013 });
 
@@ -375,7 +372,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course does not appear twice when navigating back', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year });
 
@@ -396,7 +393,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course can be deleted', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year });
 
@@ -423,7 +420,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('locked courses', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
@@ -455,7 +452,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('no academic years exist', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await page.visit();
     await page.root.toggleNewCourseForm();
 
@@ -473,7 +470,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('sort by title', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
@@ -495,7 +492,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('sort by level', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
@@ -521,7 +518,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('sort by startDate', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
@@ -547,7 +544,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('sort by endDate', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
@@ -573,7 +570,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('sort by status', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       year: 2014,
@@ -609,7 +606,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('privileged users can lock and unlock course', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
@@ -640,7 +637,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('non-privileged users cannot lock and unlock course but can see the icon', async function (assert) {
-    await setupAuthentication({ school: this.school }, true);
+    await setupAuthentication({ school: this.school, root: true });
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
@@ -667,7 +664,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('title filter escapes regex', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     const firstCourse = await this.server.create('course', {
       title: 'yes\\no',
@@ -686,7 +683,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('can not delete course with descendants #3620', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year });
     const course1 = await this.server.create('course', {
@@ -712,7 +709,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('academic year pre-selects last year with calendar-year-boundary-crossing config turned on', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
 
     freezeDateAt(new Date('1/1/2021'));
@@ -736,7 +733,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('academic year pre-selects this year with calendar-year-boundary-crossing config turned on', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
 
     freezeDateAt(new Date('10/10/2021'));
@@ -760,7 +757,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('academic year always pre-selects this year with calendar-year-boundary-crossing config turned off', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
 
     freezeDateAt(new Date('1/1/2021'));
@@ -784,7 +781,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('academic STILL always year pre-selects this year with calendar-year-boundary-crossing config turned off', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
 
     freezeDateAt(new Date('10/10/2021'));
@@ -808,7 +805,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('title filter does not lose focus #6417', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,
@@ -823,7 +820,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('course actions have proper labels and titles during deletion confirmation and non-confirmation', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const year = DateTime.now().year;
     await this.server.create('academic-year', { id: year });
     await this.server.create('course', {

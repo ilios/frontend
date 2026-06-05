@@ -48,10 +48,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
       primaryCohort: this.cohort1,
       cohorts: [this.cohort1, this.cohort2],
     });
-    await setupAuthentication({
-      school: school1,
-      administeredSchools: [school1, school2],
-    });
+    await setupAuthentication({ school: school1, administeredSchools: [school1, school2] });
 
     this.user = await this.owner.lookup('service:store').findRecord('user', user.id);
   });

@@ -17,7 +17,7 @@ module('Acceptance | School - Session Types', function (hooks) {
     this.summative = await this.server.create('assessment-option', {
       name: 'summative',
     });
-    await setupAuthentication({ school, administeredSchools: [school] }, true);
+    await setupAuthentication({ school, administeredSchools: [school] });
   });
 
   test('update session type', async function (assert) {

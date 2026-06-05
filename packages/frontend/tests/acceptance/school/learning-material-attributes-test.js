@@ -8,7 +8,7 @@ module('Acceptance | School - Learning Material Attributes', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    await setupAuthentication({ school: this.school }, true);
+    await setupAuthentication({ school: this.school, root: true });
   });
 
   test('check fields collapsed', async function (assert) {

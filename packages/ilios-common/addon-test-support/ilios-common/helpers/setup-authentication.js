@@ -7,13 +7,9 @@ const defaultUserId = 100;
  * Creates an authenticated user session.
  *
  * @param {object} userObject Carries the id and model relationships of a given user.
- * @param {boolean} performsNonLearnerFunction Overrides the value calculated based on given user relationships, if provided.
  * @returns {Promise<object>} A promise resolving to the mock user model that was created for the given user in the process.
  */
-export default async function (
-  userObject = { id: defaultUserId },
-  performsNonLearnerFunction = false,
-) {
+export default async function (userObject = { id: defaultUserId }) {
   // establish user identity.
   const userId = userObject && 'id' in userObject ? userObject.id : defaultUserId;
 
@@ -27,6 +23,11 @@ export default async function (
   const jwtObject = {
     user_id: userId,
   };
+
+  // figure out if the given user performs non-learner functions in the application.
+  // check the user's "root" flag and any relevant relationships that were passed in.
+  // this mirrors the `App\Classes\SessionUser::performsNonLearnerFunction()` in the Ilios backend,
+  // please check there for further reference.
   const nonLearnerFunctions = [
     'directedCourses',
     'administeredCourses',
@@ -41,14 +42,12 @@ export default async function (
     'directedSchools',
     'administeredSchools',
   ];
-  const hasNonLearnerFunctionInPassedData =
+  jwtObject['performs_non_learner_function'] =
     userObject.root ||
     nonLearnerFunctions.some((key) => {
       return key in userObject && Array.isArray(userObject[key]) && userObject[key].length > 0;
     });
-  if (performsNonLearnerFunction || hasNonLearnerFunctionInPassedData) {
-    jwtObject['performs_non_learner_function'] = true;
-  }
+
   const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
   const token = {
     jwt: encodedData,

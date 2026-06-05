@@ -8,13 +8,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    this.user = await setupAuthentication(
-      {
-        school,
-        administeredSchools: [school],
-      },
-      true,
-    );
+    this.user = await setupAuthentication({ school, administeredSchools: [school] });
     const currentYear = new Date().getFullYear();
     await this.server.create('academic-year', { id: currentYear });
     const program = await this.server.create('program', { school, duration: 4 });

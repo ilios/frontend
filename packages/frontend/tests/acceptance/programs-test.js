@@ -11,10 +11,10 @@ module('Acceptance | Programs', function (hooks) {
   module('User in single school with no special permissions', function (hooks) {
     hooks.beforeEach(async function () {
       this.school = await this.server.create('school');
-      this.user = await setupAuthentication(
-        { school: this.school, administeredSchools: [this.school] },
-        true,
-      );
+      this.user = await setupAuthentication({
+        school: this.school,
+        administeredSchools: [this.school],
+      });
     });
 
     test('visiting /programs', async function (assert) {
@@ -88,7 +88,7 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('remember non-default school filter choice', async function (assert) {
-      await setupAuthentication({}, true);
+      await setupAuthentication({ root: true });
       await page.visit();
 
       assert.strictEqual(currentURL(), '/programs');
@@ -112,7 +112,7 @@ module('Acceptance | Programs', function (hooks) {
 
   test('filters options', async function (assert) {
     const schools = await this.server.createList('school', 2);
-    await setupAuthentication({ school: schools[1] }, true);
+    await setupAuthentication({ school: schools[1], root: true });
     await page.visit();
     assert.strictEqual(page.root.schoolFilter.schools.length, 2);
     assert.strictEqual(page.root.schoolFilter.schools[0].text, 'school 0');

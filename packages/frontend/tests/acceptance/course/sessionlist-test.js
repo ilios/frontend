@@ -18,7 +18,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     this.intl = this.owner.lookup('service:intl');
     this.today = DateTime.fromObject({ hour: 8 });
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication({ school: this.school, root: true });
     this.sessionType = await this.server.create('session-type', {
       school: this.school,
     });

@@ -8,7 +8,7 @@ module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
+    this.user = await setupAuthentication({ administeredSchools: [this.school] });
   });
 
   test('inactive program year objectives are hidden unless they are selected', async function (assert) {

@@ -11,7 +11,7 @@ module('Acceptance | search', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    await setupAuthentication({ school }, true);
+    await setupAuthentication({ school, root: true });
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('/application/config', function () {
       return {

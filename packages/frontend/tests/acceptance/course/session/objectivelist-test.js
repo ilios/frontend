@@ -8,10 +8,10 @@ module('Acceptance | Session - Objective List', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication(
-      { school: this.school, administeredSchools: [this.school] },
-      true,
-    );
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
 
     await this.server.create('academic-year', { id: 2013 });
     await this.server.createList('program', 2);

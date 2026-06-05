@@ -8,13 +8,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    await setupAuthentication(
-      {
-        school: this.school,
-        administeredSchools: [this.school],
-      },
-      true,
-    );
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     this.sessionType = await this.server.create('session-type', { school: this.school });
   });
 

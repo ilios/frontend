@@ -7,7 +7,7 @@ module('Acceptance | Course - Publish', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
+    this.user = await setupAuthentication({ administeredSchools: [this.school] });
     this.cohort = await this.server.create('cohort');
   });
 

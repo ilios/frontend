@@ -27,10 +27,7 @@ module('Integration | Component | session/overview', function (hooks) {
       sessionType: this.sessionTypes[0],
       description: '',
     });
-    await setupAuthentication({
-      school: this.school,
-      administeredSchools: [this.school],
-    });
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><Overview @session={{this.session}} @editable={{true}} /></template>);
@@ -54,10 +51,7 @@ module('Integration | Component | session/overview', function (hooks) {
       sessionType: this.sessionTypes[0],
       instructionalNotes: '',
     });
-    await setupAuthentication({
-      school: this.school,
-      administeredSchools: [this.school],
-    });
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><Overview @session={{this.session}} @editable={{true}} /></template>);
@@ -82,10 +76,7 @@ module('Integration | Component | session/overview', function (hooks) {
       description: '',
       instructionalNotes: '',
     });
-    await setupAuthentication({
-      school: this.school,
-      administeredSchools: [this.school],
-    });
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><Overview @session={{this.session}} @editable={{true}} /></template>);
@@ -110,10 +101,7 @@ module('Integration | Component | session/overview', function (hooks) {
       description: 'not empty',
       instructionalNotes: '',
     });
-    await setupAuthentication({
-      school: this.school,
-      administeredSchools: [this.school],
-    });
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><Overview @session={{this.session}} @editable={{true}} /></template>);
@@ -133,10 +121,7 @@ module('Integration | Component | session/overview', function (hooks) {
       description: '',
       instructionalNotes: 'not empty',
     });
-    await setupAuthentication({
-      school: this.school,
-      administeredSchools: [this.school],
-    });
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><Overview @session={{this.session}} @editable={{true}} /></template>);

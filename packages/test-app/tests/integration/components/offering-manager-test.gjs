@@ -14,7 +14,7 @@ module('Integration | Component | offering-manager', function (hooks) {
 
   test('it renders with individual learners and learner groups', async function (assert) {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication({ school: this.school });
     const users = await this.server.createList('user', 4);
     const today = DateTime.fromObject({ hour: 8 });
     const course = await this.server.create('course');
@@ -81,7 +81,7 @@ module('Integration | Component | offering-manager', function (hooks) {
 
   test('it renders with only learner groups', async function (assert) {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication({ school: this.school });
     const users = await this.server.createList('user', 2);
     const today = DateTime.fromObject({ hour: 8 });
     const course = await this.server.create('course');
@@ -142,7 +142,7 @@ module('Integration | Component | offering-manager', function (hooks) {
 
   test('it renders with only individual learners', async function (assert) {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication({ school: this.school });
     const users = await this.server.createList('user', 4);
     const today = DateTime.fromObject({ hour: 8 });
     const course = await this.server.create('course');
@@ -200,7 +200,7 @@ module('Integration | Component | offering-manager', function (hooks) {
 
   test('it renders with no individual learners or learner groups', async function (assert) {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication({ school: this.school });
     const users = await this.server.createList('user', 2);
     const today = DateTime.fromObject({ hour: 8 });
     const course = await this.server.create('course');
