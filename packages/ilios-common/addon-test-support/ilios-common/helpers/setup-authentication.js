@@ -8,13 +8,22 @@ const defaultUserId = 100;
  *
  * @param {object} userObject Carries the id and model relationships of a given user.
  * @param {boolean} performsNonLearnerFunction Overrides the value calculated based on given user relationships, if provided.
- * @returns {Promise<object|null>} A promise resolving to the mock user model that was created for the given user in the process.
+ * @returns {Promise<object>} A promise resolving to the mock user model that was created for the given user in the process.
  */
 export default async function (
   userObject = { id: defaultUserId },
   performsNonLearnerFunction = false,
 ) {
+  // establish user identity.
   const userId = userObject && 'id' in userObject ? userObject.id : defaultUserId;
+
+  // this will fire if user identity cannot be established.
+  // which can only be achieved by the given user object carries a falsy 'id' value.
+  // so don't do dumb stuff like passing `{ id: 0 }` as the first arg.
+  if (!userId) {
+    throw new Error('Invalid or missing user id');
+  }
+
   const jwtObject = {
     user_id: userId,
   };
@@ -45,12 +54,8 @@ export default async function (
   const { server } = getContext();
   await authenticateSession(token);
 
-  if (userObject) {
-    const properties = Object.assign({ id: userId }, userObject);
-    const user = await server.create('user', properties);
-    await server.create('authentication', { id: user.id, user });
-    return user;
-  }
-
-  return null;
+  const properties = Object.assign({ id: userId }, userObject);
+  const user = await server.create('user', properties);
+  await server.create('authentication', { id: user.id, user });
+  return user;
 }
