@@ -311,4 +311,28 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     assert.ok(page.programYears.items[0].canBeRemoved);
     assert.notOk(page.programYears.items[1].canBeRemoved);
   });
+
+  test('save button disabled if no available academic years #7168', async function (assert) {
+    const currentYear = DateTime.now().year;
+    const programYear = await this.server.create('program-year', {
+      program: this.program,
+      startYear: currentYear,
+    });
+    await this.server.create('cohort', { programYear });
+    await this.server.createList('program-year-objective', 2, { programYear });
+    const ancestor = await this.server.create('program-year-objective');
+    await this.server.create('program-year-objective', { programYear, ancestor });
+    await page.visit({ programId: this.program.id });
+
+    await page.programYears.expandCollapse.toggle();
+    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 10);
+
+    for (let i = 0; i < page.programYears.newProgramYear.years.options.length - 1; i++) {
+      assert.notOk(page.programYears.newProgramYear.done.isDisabled);
+      await page.programYears.newProgramYear.done.click();
+      await page.programYears.expandCollapse.toggle();
+    }
+
+    assert.ok(page.programYears.newProgramYear.done.isDisabled);
+  });
 });

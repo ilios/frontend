@@ -44,6 +44,7 @@ general:
   bad: Bad
   badCredentials: Incorrect username or password
   campusId: Campus ID
+  canNotCreateProgramYear: "Program year cannot be created because there are no more available academic years."
   canNotContinueWithInvalidRecords: "Cannot continue with these invalid records, please fix and re-upload the file."
   canNotDeleteCourse: This course cannot be deleted because it is published, scheduled, has been rolled over, or you do not have permission.
   canNotDeleteCurriculumInventoryReport: This curriculum inventory report cannot be deleted because you do not have permission.
