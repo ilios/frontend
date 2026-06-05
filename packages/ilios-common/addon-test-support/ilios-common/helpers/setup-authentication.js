@@ -3,6 +3,13 @@ import { getContext } from '@ember/test-helpers';
 
 const defaultUserId = 100;
 
+/**
+ * Creates an authenticated user session.
+ *
+ * @param {object} userObject Carries the id and model relationships of a given user.
+ * @param {boolean} performsNonLearnerFunction Overrides the value calculated based on given user relationships, if provided.
+ * @returns {Promise<object|null>} A promise resolving to the mock user model that was created for the given user in the process.
+ */
 export default async function (
   userObject = { id: defaultUserId },
   performsNonLearnerFunction = false,
