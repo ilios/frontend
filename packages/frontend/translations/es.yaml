@@ -318,12 +318,13 @@ general:
   primarySchool: Escuela Primaria
   programExpectations: Expectativas del programa
   programExpectationsId: ID de expectativas del programa
+  programObjective: Objetivo de Programa
+  programObjectives: Objetivos de Programa
   programs: Programas
   programTitle: Titulo de Programa
   programTitlePlaceholder: Meter un titulo para este programa
   programTitleShort: Titulo (corto)
   programYear: Año de Programa
-  programYearObjectives: Objetivos de Años de Programa
   programYears: Años de Programa
   programYearVisualizations: Visualizaciones de Año de Programa
   promoteToPrimaryCohort: Ascender al Principal Cohorte

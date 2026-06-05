@@ -318,12 +318,13 @@ general:
   primarySchool: Primary School
   programExpectations: Program Expectations
   programExpectationsId: Program Expectations ID
+  programObjective: Program Objective
+  programObjectives: Program Objectives
   programs: Programs
   programTitle: Program Title
   programTitlePlaceholder: Enter a title for this program
   programTitleShort: Title (short)
   programYear: Program Year
-  programYearObjectives: Program Year Objectives
   programYears: Program Years
   programYearVisualizations: Program Year Visualizations
   promoteToPrimaryCohort: Promote to primary cohort

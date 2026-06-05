@@ -318,12 +318,13 @@ general:
   primarySchool: École Première
   programExpectations: Attentes du programme
   programExpectationsId: Identifiant des attentes du programme
+  programObjective: "Objectif du Programme"
+  programObjectives: "Objectifs du Programme"
   programs: Diplômes
   programTitle: Titre de Diplôme
   programTitlePlaceholder: Ajoutez un titre pour ce Diplôme
   programTitleShort: Titre (bref)
   programYear: Année de Diplôme
-  programYearObjectives: "Objectifs de l'année de Diplôme"
   programYears: Années des Diplôme
   programYearVisualizations: Tableau de Matière de Curriculum par Année de Diplôme
   promoteToPrimaryCohort: Promouvoir à Cohorte Primaire

@@ -71,6 +71,7 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
         schoolTitle: c.school.title,
         courseId: c.id,
         courseTitle: c.title,
+        courseYear: c.year,
         courseObjectiveCount: c.courseObjectives.length,
         programYearObjectiveCount: c.courseObjectives.reduce(
           (acc, co) => acc + co.programYearObjectives.length,
@@ -91,8 +92,9 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
               const courseCompetencyRow = {
                 courseId: c.id,
                 courseTitle: c.title,
-                courseObjectives: striptags(co.title),
-                programYearObjectives: striptags(pyo.title),
+                courseYear: c.year,
+                courseObjective: striptags(co.title),
+                programYearObjective: striptags(pyo.title),
                 competency: pyo.competency.title,
                 link: `${origin}${path}`,
               };
@@ -107,8 +109,9 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
             const courseObjectivesRow = {
               courseId: c.id,
               courseTitle: c.title,
+              courseYear: c.year,
               courseObjective: striptags(co.title),
-              programYearObjectives: '',
+              programYearObjective: '',
               competency: '',
               link: `${origin}${path}`,
             };
@@ -124,8 +127,9 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
         const courseResultRow = {
           courseId: c.id,
           courseTitle: c.title,
-          courseObjectives: '',
-          programYearObjectives: '',
+          courseYear: c.year,
+          courseObjective: '',
+          programYearObjective: '',
           competency: '',
           link: `${origin}${path}`,
         };
@@ -199,8 +203,9 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
         rhett[this.intl.t('general.school')] = o.schoolTitle;
       }
       rhett[this.intl.t('general.course')] = o.courseTitle;
-      rhett[this.intl.t('general.courseObjectives')] = o.courseObjectives;
-      rhett[this.intl.t('general.programYearObjectives')] = o.programYearObjectives;
+      rhett[this.intl.t('general.year')] = o.courseYear;
+      rhett[this.intl.t('general.courseObjective')] = o.courseObjective;
+      rhett[this.intl.t('general.programObjective')] = o.programYearObjective;
       rhett[this.intl.t('general.competency')] = o.competency;
       rhett[this.intl.t('general.link')] = o.link;
 
@@ -244,8 +249,9 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
               <th>{{t "general.school"}}</th>
             {{/if}}
             <th>{{t "general.course"}}</th>
+            <th>{{t "general.year"}}</th>
             <th>{{t "general.courseObjectives"}}</th>
-            <th>{{t "general.programYearObjectives"}}</th>
+            <th>{{t "general.programObjectives"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -260,6 +266,7 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
                     {{c.title}}
                   </LinkTo>
                 </td>
+                <td>{{this.courseYearPlaceholder}}</td>
                 <td>{{this.courseObjectiveCountPlaceholder}}</td>
                 <td>{{this.programYearObjectiveCountPlaceholder}}</td>
               </tr>
@@ -275,6 +282,7 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
                     {{o.courseTitle}}
                   </LinkTo>
                 </td>
+                <td>{{o.courseYear}}</td>
                 <td>{{o.courseObjectiveCount}}</td>
                 <td>{{o.programYearObjectiveCount}}</td>
               </tr>
