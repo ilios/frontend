@@ -372,6 +372,12 @@ module('Integration | Component | publish all sessions', function (hooks) {
           @course={{this.course}}
           @setExpandCompleteSessions={{(noop)}}
           @setExpandIncompleteSessions={{(noop)}}
+          @sortIncompleteBy={{this.sortColumn}}
+          @setSortIncompleteBy={{(noop)}}
+          @sortCompleteBy={{this.sortColumn}}
+          @setSortCompleteBy={{(noop)}}
+          @sortUnpublishedBy={{this.sortColumn}}
+          @setSortUnpublishedBy={{(noop)}}
         />
       </template>,
     );
@@ -379,7 +385,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
       component.review.confirmation,
       'Publish 2, schedule 1, and ignore 1 sessions',
     );
-    assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
+    assert.strictEqual(component.overridableSessions.title, 'Unpublished Sessions: for review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
     assert.ok(component.overridableSessions.publishAllAsIs.isVisible);
     const { sessions: list } = component.overridableSessions;
