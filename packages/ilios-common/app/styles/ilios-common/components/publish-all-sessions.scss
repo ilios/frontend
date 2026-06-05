@@ -46,8 +46,14 @@
         td {
           vertical-align: top;
 
-          @include m.for-tablet-and-up {
-            padding-right: 0.5em;
+          fieldset {
+            border: none;
+            padding: 0;
+
+            label {
+              display: block;
+              padding-bottom: 0.5em;
+            }
           }
         }
       }
@@ -65,10 +71,13 @@
     border-bottom: none;
     padding-bottom: 0;
 
-    ul {
-      list-style-type: none;
-      margin: 0;
+    fieldset {
+      border: none;
       padding: 0;
+
+      label {
+        padding-right: 0.5em;
+      }
     }
   }
 

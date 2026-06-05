@@ -218,6 +218,7 @@ general:
   makeRecurring: Make Recurring
   manageLeadership: Manage Leadership
   manageLearners: Manage Learners
+  markAllAsScheduled: Mark All as Scheduled
   markAsScheduled: Mark as Scheduled
   markedAccessible: Accessible
   materials: Materials
@@ -286,6 +287,7 @@ general:
   publicationReview: Publication Review
   publicationStatus: Publication Status
   publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, and ignore {ignoreCount} sessions"
+  publishAllAsIs: Publish All As-is
   publishAsIs: Publish As-is
   publishCourse: Publish Course
   published: Published

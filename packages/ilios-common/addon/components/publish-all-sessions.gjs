@@ -27,6 +27,7 @@ export default class PublishAllSessionsComponent extends Component {
 
   @tracked totalSessionsToSave;
   @tracked currentSessionsSaved;
+  @tracked bulkSelectedAction = '';
 
   @tracked userSelectedSessionsToPublish = [];
   @tracked userSelectedSessionsToSchedule = [];
@@ -73,6 +74,14 @@ export default class PublishAllSessionsComponent extends Component {
     return uniqueValues(
       sessionsToPublish.filter((s) => !this.userSelectedSessionsToPublish.includes(s)),
     );
+  }
+
+  get sessionsToAllBePublished() {
+    return !this.sessionsToSchedule?.length;
+  }
+
+  get sessionsToAllBeScheduled() {
+    return !this.sessionsToPublish?.length;
   }
 
   get allSessionsScheduled() {
@@ -239,18 +248,22 @@ export default class PublishAllSessionsComponent extends Component {
       );
       this.userSelectedSessionsToPublish = [...this.userSelectedSessionsToPublish, session];
     }
+
+    this.bulkSelectedAction = '';
   }
 
   @action
   publishAllAsIs() {
     this.userSelectedSessionsToSchedule = [];
     this.userSelectedSessionsToPublish = [...this.overridableSessions];
+    this.bulkSelectedAction = 'publishAllAsIs';
   }
 
   @action
   scheduleAll() {
     this.userSelectedSessionsToPublish = [];
     this.userSelectedSessionsToSchedule = [...this.overridableSessions];
+    this.bulkSelectedAction = 'scheduleAll';
   }
 
   @action
@@ -561,22 +574,35 @@ export default class PublishAllSessionsComponent extends Component {
         </div>
         <div class="content">
           {{#if this.overridableSessions.length}}
-            <button
-              type="button"
-              disabled={{this.allSessionsPublished}}
-              {{on "click" this.publishAllAsIs}}
-              data-test-publish-all-as-is
-            >
-              {{t "general.publishAsIs"}}
-            </button>
-            <button
-              type="button"
-              disabled={{this.allSessionsScheduled}}
-              {{on "click" this.scheduleAll}}
-              data-test-mark-all-as-scheduled
-            >
-              {{t "general.markAsScheduled"}}
-            </button>
+            <fieldset data-test-bulk-selection-actions>
+              <label class="publish-all-as-is">
+                <input
+                  type="radio"
+                  name="bulk-selection-action"
+                  checked={{or
+                    (eq this.bulkSelectedAction "publishAllAsIs")
+                    this.sessionsToAllBePublished
+                  }}
+                  {{on "click" this.publishAllAsIs}}
+                  data-test-publish-all-as-is
+                />
+                {{t "general.publishAllAsIs"}}
+              </label>
+              <label class="mark-all-as-scheduled">
+                <input
+                  type="radio"
+                  name="bulk-selection-action"
+                  checked={{or
+                    (eq this.bulkSelectedAction "scheduleAll")
+                    this.sessionsToAllBeScheduled
+                  }}
+                  {{on "click" this.scheduleAll}}
+                  data-test-mark-all-as-scheduled
+                />
+                {{t "general.markAllAsScheduled"}}
+              </label>
+            </fieldset>
+
             <table class="ilios-table ilios-table-colors sticky-header">
               <thead>
                 <tr>
@@ -633,30 +659,28 @@ export default class PublishAllSessionsComponent extends Component {
                 {{#each this.orderedOverridableSessions as |session|}}
                   <tr>
                     <td>
-                      <ul>
-                        <li>
-                          <label>
-                            <input
-                              type="checkbox"
-                              checked={{includes session.id (mapBy "id" this.sessionsToPublish)}}
-                              {{on "click" (fn this.toggleSession session)}}
-                              data-test-publish-as-is
-                            />
-                            {{t "general.publishAsIs"}}
-                          </label>
-                        </li>
-                        <li>
-                          <label>
-                            <input
-                              type="checkbox"
-                              checked={{includes session.id (mapBy "id" this.sessionsToSchedule)}}
-                              {{on "click" (fn this.toggleSession session)}}
-                              data-test-mark-as-scheduled
-                            />
-                            {{t "general.markAsScheduled"}}
-                          </label>
-                        </li>
-                      </ul>
+                      <fieldset data-test-session-action>
+                        <label>
+                          <input
+                            type="radio"
+                            name="session-action{{session.id}}"
+                            checked={{includes session.id (mapBy "id" this.sessionsToPublish)}}
+                            {{on "click" (fn this.toggleSession session)}}
+                            data-test-publish-as-is
+                          />
+                          {{t "general.publishAsIs"}}
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="session-action{{session.id}}"
+                            checked={{includes session.id (mapBy "id" this.sessionsToSchedule)}}
+                            {{on "click" (fn this.toggleSession session)}}
+                            data-test-mark-as-scheduled
+                          />
+                          {{t "general.markAsScheduled"}}
+                        </label>
+                      </fieldset>
                     </td>
                     <td colspan="2" data-test-title>
                       <LinkTo @route="session" @model={{session}}>
