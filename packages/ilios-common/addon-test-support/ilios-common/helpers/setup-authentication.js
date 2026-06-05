@@ -41,9 +41,11 @@ export default async function (
     'directedSchools',
     'administeredSchools',
   ];
-  const hasNonLearnerFunctionInPassedData = nonLearnerFunctions.some((key) => {
-    return key in userObject && Array.isArray(userObject[key]) && userObject[key].length > 0;
-  });
+  const hasNonLearnerFunctionInPassedData =
+    userObject.root ||
+    nonLearnerFunctions.some((key) => {
+      return key in userObject && Array.isArray(userObject[key]) && userObject[key].length > 0;
+    });
   if (performsNonLearnerFunction || hasNonLearnerFunctionInPassedData) {
     jwtObject['performs_non_learner_function'] = true;
   }
