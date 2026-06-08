@@ -10,7 +10,7 @@ module('Acceptance | Admin', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] }, true);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
   });
 
   test('can transition to `users` route', async function (assert) {

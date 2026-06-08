@@ -8,7 +8,7 @@ module('Acceptance | Course - Multiple Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
+    this.user = await setupAuthentication({ administeredSchools: [school] });
     await this.server.create('schoolConfig', {
       school,
       name: 'allowMultipleCourseObjectiveParents',

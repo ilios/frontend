@@ -8,7 +8,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    await setupAuthentication({ school: this.school }, true);
+    await setupAuthentication({ school: this.school, root: true });
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     await this.server.create('academic-year');

@@ -25,7 +25,7 @@ module('Acceptance | header', function (hooks) {
         },
       };
     });
-    await setupAuthentication({}, true);
+    await setupAuthentication({ root: true });
     await visit('/');
     await takeScreenshot(assert);
     assert.dom('.global-search-box').exists();
@@ -43,7 +43,7 @@ module('Acceptance | header', function (hooks) {
         },
       };
     });
-    await setupAuthentication({}, true);
+    await setupAuthentication();
     await visit('/');
     await takeScreenshot(assert);
     assert.dom('.global-search-box').doesNotExist();

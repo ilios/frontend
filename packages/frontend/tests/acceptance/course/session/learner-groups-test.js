@@ -9,10 +9,10 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication(
-      { school: this.school, administeredSchools: [this.school] },
-      true,
-    );
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
   });
 
   module('With Fixtures', function (hooks2) {

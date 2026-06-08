@@ -20,9 +20,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
       id: 2,
       title: 'school 1',
     });
-    await setupAuthentication({
-      school,
-    });
+    await setupAuthentication({ school });
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
 
     const studentRole = await this.server.create('user-role', {
@@ -68,9 +66,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
       id: 1,
       title: 'school 0',
     });
-    await setupAuthentication({
-      school,
-    });
+    await setupAuthentication({ school });
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schoolModels);
     await render(<template><UnassignedStudentsSummary @schools={{this.schools}} /></template>);

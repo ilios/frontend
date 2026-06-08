@@ -7,7 +7,7 @@ module('Acceptance | FourOhFour', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    await setupAuthentication({}, true);
+    await setupAuthentication({ root: true });
   });
 
   test('visiting /four-oh-four', async function (assert) {

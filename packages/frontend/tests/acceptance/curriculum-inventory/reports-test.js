@@ -12,7 +12,7 @@ module('Acceptance | curriculum inventory reports', function (hooks) {
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
     this.program = await this.server.create('program', { school });
-    this.user = await setupAuthentication({ school, directedSchools: [school] }, true);
+    this.user = await setupAuthentication({ school, directedSchools: [school] });
   });
 
   test('report title is correctly linked to report details page', async function (assert) {

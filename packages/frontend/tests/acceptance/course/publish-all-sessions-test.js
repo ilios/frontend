@@ -9,7 +9,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
+    this.user = await setupAuthentication({ administeredSchools: [this.school] });
     this.cohort = await this.server.create('cohort');
     this.course = await this.server.create('course', {
       year: 2013,

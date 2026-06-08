@@ -7,7 +7,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
+    this.user = await setupAuthentication({ school, administeredSchools: [school] });
     const course = await this.server.create('course', {
       year: 2013,
       school,

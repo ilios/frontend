@@ -7,7 +7,7 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
+    this.user = await setupAuthentication({ administeredSchools: [school] });
     const program = await this.server.create('program', { school });
 
     const programYears = await this.server.createList('programYear', 2, {

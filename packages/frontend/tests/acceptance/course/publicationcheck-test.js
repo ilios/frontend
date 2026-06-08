@@ -7,7 +7,7 @@ import page from 'ilios-common/page-objects/course-publication-check';
 module('Acceptance | Course - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    await setupAuthentication({}, true);
+    await setupAuthentication({ root: true });
     const school = await this.server.create('school');
     const vocabulary = await this.server.create('vocabulary', {
       school,

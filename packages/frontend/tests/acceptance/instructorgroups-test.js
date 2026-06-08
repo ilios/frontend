@@ -11,10 +11,10 @@ module('Acceptance | Instructor Groups', function (hooks) {
   module('User in single school', function (hooks) {
     hooks.beforeEach(async function () {
       this.school = await this.server.create('school');
-      this.user = await setupAuthentication(
-        { school: this.school, administeredSchools: [this.school] },
-        true,
-      );
+      this.user = await setupAuthentication({
+        school: this.school,
+        administeredSchools: [this.school],
+      });
     });
 
     test('visiting /instructorgroups', async function (assert) {
@@ -241,7 +241,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
   test('filters options', async function (assert) {
     const schools = await this.server.createList('school', 2);
-    await setupAuthentication({ school: schools[1] }, true);
+    await setupAuthentication({ school: schools[1], root: true });
 
     await page.visit();
     await takeScreenshot(assert);

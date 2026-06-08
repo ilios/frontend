@@ -8,7 +8,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
+    this.user = await setupAuthentication({ school, administeredSchools: [school] });
     const program = await this.server.create('program', {
       school,
     });

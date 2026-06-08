@@ -20,7 +20,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   };
 
   test('it renders for user with permissions', async function (assert) {
-    await setupAuthentication({}, true);
+    await setupAuthentication({ root: true });
     this.server.post('/api/graphql', async ({ request }) => {
       const { query } = await request.json();
       assert.step('API called');
@@ -86,7 +86,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    await setupAuthentication({}, true);
+    await setupAuthentication({ root: true });
 
     this.server.post('/api/graphql', async ({ request }) => {
       const { query } = await request.json();
@@ -114,7 +114,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
   });
 
   test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
-    await setupAuthentication({}, true);
+    await setupAuthentication({ root: true });
 
     const alphabet = [...Array(26).keys()].map((i) => String.fromCharCode(i + 65));
     const responseDataLarge = {

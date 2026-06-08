@@ -65,10 +65,7 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     this.school1 = await await this.owner.lookup('service:store').findRecord('school', school1.id);
     this.school2 = await await this.owner.lookup('service:store').findRecord('school', school2.id);
 
-    await setupAuthentication({
-      school: school1,
-      administeredSchools: [school1, school2],
-    });
+    await setupAuthentication({ school: school1, administeredSchools: [school1, school2] });
   });
 
   test('it renders', async function (assert) {

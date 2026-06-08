@@ -8,7 +8,7 @@ module('Acceptance | user menu', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    await setupAuthentication({}, true);
+    await setupAuthentication();
   });
 
   test('my-profile link is active on my-profile page', async function (assert) {

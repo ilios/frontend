@@ -8,7 +8,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    this.user = await setupAuthentication({ administeredSchools: [school] }, true);
+    this.user = await setupAuthentication({ administeredSchools: [school] });
     const program = await this.server.create('program', { school });
 
     const year = new Date().getFullYear();

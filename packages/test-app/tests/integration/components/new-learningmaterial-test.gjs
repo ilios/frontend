@@ -23,10 +23,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       school: this.school,
     });
     this.courseModel = await this.store.findRecord('course', this.course.id);
-    await setupAuthentication({
-      school: this.school,
-      displayName: 'Clem Chowder',
-    });
+    await setupAuthentication({ school: this.school, displayName: 'Clem Chowder' });
   });
 
   test('owning user has additional info', async function (assert) {
