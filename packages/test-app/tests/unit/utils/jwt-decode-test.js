@@ -1,10 +1,10 @@
 import jwtDecode from 'test-app/utils/jwt-decode';
 import { module, test } from 'qunit';
+import { jwtEncode } from 'ilios-common';
 
 module('Unit | Utility | jwt decode', function () {
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ';
   test('it decodes a token', function (assert) {
+    const token = jwtEncode({ sub: '1234567890', name: 'John Doe', admin: true });
     const obj = jwtDecode(token);
     assert.strictEqual(obj.sub, '1234567890');
     assert.strictEqual(obj.name, 'John Doe');
