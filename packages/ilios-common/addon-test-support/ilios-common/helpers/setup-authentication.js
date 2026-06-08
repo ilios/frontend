@@ -9,19 +9,15 @@ const defaultUserId = 100;
  * That new mock user will be "logged in" and returned.
  *
  * @param {object} userObject The user attributes, such as id and relationships, for the user to be created/authenticated.
+ * @param {object} jwtOptions Attributes to encode in the user session's JWT, for example audience ("aud") values.
  * @returns {Promise<object>} A promise resolving to the mock user model that was created and authenticated in the process.
  */
-export default async function (userObject = { id: defaultUserId }) {
+export default async function (userObject = { id: defaultUserId }, jwtOptions = {}) {
   // Establish user identity, throw an error if that fails.
   const userId = userObject && 'id' in userObject ? userObject.id : defaultUserId;
   if (!userId) {
     throw new Error('Invalid or missing user id');
   }
-
-  // Create a JWT object for the given user. It will be encoded later on.
-  const jwtObject = {
-    user_id: userId,
-  };
 
   // Figure out if the given user performs non-learner functions in the application.
   // This information will be encoded in the JWT and later referenced during permission checks
@@ -43,7 +39,7 @@ export default async function (userObject = { id: defaultUserId }) {
     'directedSchools',
     'administeredSchools',
   ];
-  jwtObject['performs_non_learner_function'] =
+  const performsNonLearnerFunction =
     userObject.root ||
     nonLearnerFunctions.some((key) => {
       return key in userObject && Array.isArray(userObject[key]) && userObject[key].length > 0;
@@ -55,6 +51,11 @@ export default async function (userObject = { id: defaultUserId }) {
   const user = await server.create('user', properties);
   await server.create('authentication', { id: user.id, user });
 
+  // Merge given JWT options with the given user's identity and calculated permissions flag.
+  const jwtObject = {
+    ...jwtOptions,
+    ...{ user_id: userId, performs_non_learner_function: performsNonLearnerFunction },
+  };
   // Encode the JWT and create an authenticated user session with it.
   const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
   const token = {
