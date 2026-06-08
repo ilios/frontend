@@ -84,11 +84,10 @@ module('Acceptance | Programs', function (hooks) {
       this.school2 = await this.server.create('school');
       this.program1 = await this.server.create('program', { school: this.school1 });
       this.program2 = await this.server.create('program', { school: this.school2 });
-      this.user = await setupAuthentication();
     });
 
     test('remember non-default school filter choice', async function (assert) {
-      await setupAuthentication({ root: true });
+      await setupAuthentication({ school: this.school1, directedSchools: [this.school1] });
       await page.visit();
 
       assert.strictEqual(currentURL(), '/programs');
@@ -112,7 +111,7 @@ module('Acceptance | Programs', function (hooks) {
 
   test('filters options', async function (assert) {
     const schools = await this.server.createList('school', 2);
-    await setupAuthentication({ school: schools[1], root: true });
+    await setupAuthentication({ school: schools[1], directedSchools: schools });
     await page.visit();
     assert.strictEqual(page.root.schoolFilter.schools.length, 2);
     assert.strictEqual(page.root.schoolFilter.schools[0].text, 'school 0');

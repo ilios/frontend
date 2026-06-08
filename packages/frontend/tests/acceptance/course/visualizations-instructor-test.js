@@ -6,9 +6,6 @@ import { setupAuthentication } from 'ilios-common';
 
 module('Acceptance | course visualizations - instructor', function (hooks) {
   setupApplicationTest(hooks);
-  hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({ root: true });
-  });
 
   test('it renders', async function (assert) {
     const instructor = await this.server.create('user');
@@ -58,10 +55,13 @@ module('Acceptance | course visualizations - instructor', function (hooks) {
       sessions: [session1, session2, session3],
       year: 2022,
     });
+
+    await setupAuthentication({ directedCourses: [course] });
+
     await page.visit({ courseId: course.id, userId: instructor.id });
-    assert.strictEqual(currentURL(), '/data/courses/1/instructors/2');
+    assert.strictEqual(currentURL(), '/data/courses/1/instructors/1');
     assert.strictEqual(page.root.title, 'course 0 2022');
-    assert.strictEqual(page.root.instructorName, '1 guy M. Mc1son');
+    assert.strictEqual(page.root.instructorName, '0 guy M. Mc0son');
     assert.strictEqual(page.root.totalOfferingsTime, 'Total Instructional Time 90 Minutes');
     assert.strictEqual(page.root.totalIlmTime, 'Total ILM Time 120 Minutes');
     assert.strictEqual(page.root.breadcrumbs.crumbs.length, 4);
@@ -71,7 +71,7 @@ module('Acceptance | course visualizations - instructor', function (hooks) {
     assert.strictEqual(page.root.breadcrumbs.crumbs[1].link, '/data/courses/1');
     assert.strictEqual(page.root.breadcrumbs.crumbs[2].text, 'Instructors');
     assert.strictEqual(page.root.breadcrumbs.crumbs[2].link, '/data/courses/1/instructors');
-    assert.strictEqual(page.root.breadcrumbs.crumbs[3].text, '1 guy M. Mc1son');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[3].text, '0 guy M. Mc0son');
     // wait for charts to load
     await waitFor('.loaded', { count: 2 });
     await waitFor('svg .bars');

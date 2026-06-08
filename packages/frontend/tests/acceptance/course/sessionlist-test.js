@@ -18,7 +18,6 @@ module('Acceptance | Course - Session List', function (hooks) {
     this.intl = this.owner.lookup('service:intl');
     this.today = DateTime.fromObject({ hour: 8 });
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school, root: true });
     this.sessionType = await this.server.create('session-type', {
       school: this.school,
     });
@@ -37,7 +36,6 @@ module('Acceptance | Course - Session List', function (hooks) {
     });
     this.course = await this.server.create('course', {
       school: this.school,
-      directors: [this.user],
     });
     this.session1 = await this.server.create('session', {
       course: this.course,
@@ -78,6 +76,7 @@ module('Acceptance | Course - Session List', function (hooks) {
       startDate: this.today.plus({ day: 2 }).toISO(),
       endDate: this.today.plus({ day: 3 }).toISO(),
     });
+    this.user = await setupAuthentication({ school: this.school, directedCourses: [this.course] });
   });
 
   hooks.afterEach(() => {
@@ -165,9 +164,9 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(offerings.offerings.length, 3);
     assert.strictEqual(offerings.offerings[0].startTime, offering1StartDate.toFormat('hh:mm a'));
     assert.strictEqual(offerings.offerings[0].location, 'room 0');
-    assert.strictEqual(offerings.offerings[0].learners, '(2) 1 guy M. Mc1son, 2 guy...');
+    assert.strictEqual(offerings.offerings[0].learners, '(2) 0 guy M. Mc0son, 1 guy...');
     assert.strictEqual(offerings.offerings[0].learnerGroups, '(2) learner group 0, learn...');
-    assert.strictEqual(offerings.offerings[0].instructors, '(3) 3 guy M. Mc3son, 4 guy...');
+    assert.strictEqual(offerings.offerings[0].instructors, '(3) 2 guy M. Mc2son, 3 guy...');
 
     assert.strictEqual(offerings.offerings[1].startTime, offering2StartDate.toFormat('hh:mm a'));
     assert.strictEqual(offerings.offerings[1].location, 'room 1');

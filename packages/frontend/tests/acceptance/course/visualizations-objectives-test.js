@@ -6,9 +6,6 @@ import { setupAuthentication } from 'ilios-common';
 
 module('Acceptance | course visualizations - objectives', function (hooks) {
   setupApplicationTest(hooks);
-  hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({ root: true });
-  });
 
   test('it renders', async function (assert) {
     const school = await this.server.create('school');
@@ -56,6 +53,7 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
       startDate: '2019-12-05T18:00:00',
       endDate: '2019-12-05T21:00:00',
     });
+    await setupAuthentication({ directedCourses: [course] });
     await page.visit({ courseId: course.id });
     assert.strictEqual(currentURL(), '/data/courses/1/objectives');
     assert.strictEqual(page.root.title, 'course 0 2021');

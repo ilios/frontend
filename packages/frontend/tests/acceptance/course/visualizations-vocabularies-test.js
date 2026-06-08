@@ -6,9 +6,6 @@ import { setupAuthentication } from 'ilios-common';
 
 module('Acceptance | course visualizations - vocabularies', function (hooks) {
   setupApplicationTest(hooks);
-  hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({ root: true });
-  });
 
   test('it renders', async function (assert) {
     const sessionType = await this.server.create('session-type');
@@ -52,6 +49,7 @@ module('Acceptance | course visualizations - vocabularies', function (hooks) {
       sessions: [session1, session2, session3],
       year: 2022,
     });
+    await setupAuthentication({ directedCourses: [course] });
     await page.visit({ courseId: course.id });
     assert.strictEqual(currentURL(), '/data/courses/1/vocabularies');
     assert.strictEqual(page.root.courseTitle.text, 'course 0 2022');

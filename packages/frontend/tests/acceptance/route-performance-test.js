@@ -11,7 +11,7 @@ module('Acceptance | performance', function (hooks) {
     this.set('maxDuration', 10000);
 
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school, root: true });
+    this.user = await setupAuthentication({ school: this.school, directedSchools: [this.school] });
   });
 
   test('/dashboard/week', async function (assert) {

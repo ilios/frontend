@@ -7,7 +7,6 @@ import { setupAuthentication } from 'ilios-common';
 module('Acceptance | course visualizations - instructors', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({ root: true });
     const instructor1 = await this.server.create('user');
     const instructor2 = await this.server.create('user');
     const vocabulary1 = await this.server.create('vocabulary');
@@ -60,6 +59,7 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
       sessions: [session1, session2, session3],
       year: 2022,
     });
+    this.user = await setupAuthentication({ directedCourses: [this.course] });
   });
 
   test('it renders', async function (assert) {
@@ -79,15 +79,15 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
     assert.strictEqual(page.root.instructorsChart.chart.bars.length, 2);
     assert.strictEqual(
       page.root.instructorsChart.chart.bars[0].description,
-      '1 guy M. Mc1son - 75 Minutes',
+      '0 guy M. Mc0son - 75 Minutes',
     );
     assert.strictEqual(
       page.root.instructorsChart.chart.bars[1].description,
-      '2 guy M. Mc2son - 90 Minutes',
+      '1 guy M. Mc1son - 90 Minutes',
     );
     assert.strictEqual(page.root.instructorsChart.chart.labels.length, 2);
-    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '1 guy M. Mc1son\u200b');
-    assert.strictEqual(page.root.instructorsChart.chart.labels[1].text, '2 guy M. Mc2son\u200b');
+    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '0 guy M. Mc0son\u200b');
+    assert.strictEqual(page.root.instructorsChart.chart.labels[1].text, '1 guy M. Mc1son\u200b');
     assert.strictEqual(page.root.instructorsChart.dataTable.rows.length, 2);
   });
 
@@ -96,8 +96,8 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
-    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '1 guy M. Mc1son\u200b');
+    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '0 guy M. Mc0son\u200b');
     await page.root.instructorsChart.chart.bars[0].click();
-    assert.strictEqual(currentURL(), '/data/courses/1/instructors/2');
+    assert.strictEqual(currentURL(), '/data/courses/1/instructors/1');
   });
 });

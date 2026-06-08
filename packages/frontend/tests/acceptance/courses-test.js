@@ -637,7 +637,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('non-privileged users cannot lock and unlock course but can see the icon', async function (assert) {
-    await setupAuthentication({ school: this.school, root: true });
+    await setupAuthentication({ school: this.school, directedSchools: [this.school2] });
     await this.server.create('academic-year', { id: 2014 });
     await this.server.create('course', {
       year: 2014,

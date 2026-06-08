@@ -241,7 +241,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
   test('filters options', async function (assert) {
     const schools = await this.server.createList('school', 2);
-    await setupAuthentication({ school: schools[1], root: true });
+    await setupAuthentication({ school: schools[1], directedSchools: schools });
 
     await page.visit();
     await takeScreenshot(assert);

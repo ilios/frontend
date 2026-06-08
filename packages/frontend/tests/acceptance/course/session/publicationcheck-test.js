@@ -7,7 +7,6 @@ import page from 'ilios-common/page-objects/session-publication-check';
 module('Acceptance | Session - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    await setupAuthentication({ root: true });
     const school = await this.server.create('school');
     const vocabulary = await this.server.create('vocabulary', {
       school,
@@ -17,6 +16,7 @@ module('Acceptance | Session - Publication Check', function (hooks) {
       school,
     });
     this.term = await this.server.create('term', { vocabulary });
+    await setupAuthentication({ directedCourses: [this.course] });
   });
 
   test('full session count', async function (assert) {
@@ -48,7 +48,10 @@ module('Acceptance | Session - Publication Check', function (hooks) {
   });
 
   test('unlink icon transitions properly', async function (assert) {
-    const session = await this.server.create('session', { course: this.course });
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
     await this.server.create('session-objective', { session });
     await page.visit({ courseId: this.course.id, sessionId: session.id });
     await page.unlink.click();

@@ -9,7 +9,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    const user = await setupAuthentication({ school, root: true });
+    const user = await setupAuthentication({ school, directedSchools: [school] });
     const vocabulary = await this.server.create('vocabulary', {
       school,
     });

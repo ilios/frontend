@@ -7,7 +7,6 @@ import page from 'ilios-common/page-objects/course-publication-check';
 module('Acceptance | Course - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    await setupAuthentication({ root: true });
     const school = await this.server.create('school');
     const vocabulary = await this.server.create('vocabulary', {
       school,
@@ -35,6 +34,7 @@ module('Acceptance | Course - Publication Check', function (hooks) {
       year: 2013,
       school,
     });
+    await setupAuthentication({ directedCourses: [this.fullCourse, this.emptyCourse] });
   });
 
   test('full course count', async function (assert) {

@@ -7,13 +7,13 @@ import { setupAuthentication } from 'ilios-common';
 module('Acceptance | course visualizations', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({ root: true });
     this.school = await this.server.create('school');
 
-    await this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2021,
       school: this.school,
     });
+    this.user = await setupAuthentication({ directedCourses: [course] });
   });
 
   test('visiting /data/courses/1', async function (assert) {

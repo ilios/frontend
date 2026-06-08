@@ -9,8 +9,8 @@ module('Acceptance | Program Year - Course associations', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
-    await setupAuthentication({ school, root: true });
     const program = await this.server.create('program', { school });
+    await setupAuthentication({ school, directedPrograms: [program] });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
     await this.server.create('course', { school, cohorts: [cohort] });
