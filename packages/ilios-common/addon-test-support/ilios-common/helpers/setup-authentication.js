@@ -1,5 +1,6 @@
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { getContext } from '@ember/test-helpers';
+import jwtEncode from './jwt-encode';
 
 const defaultUserId = 100;
 
@@ -57,9 +58,8 @@ export default async function (userObject = { id: defaultUserId }, jwtOptions = 
     ...{ user_id: userId, performs_non_learner_function: performsNonLearnerFunction },
   };
   // Encode the JWT and create an authenticated user session with it.
-  const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
   const token = {
-    jwt: encodedData,
+    jwt: jwtEncode(jwtObject),
   };
   await authenticateSession(token);
 

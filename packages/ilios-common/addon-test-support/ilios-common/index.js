@@ -11,3 +11,4 @@ export {
 } from './helpers/quill-editor';
 export { getText, getElementText } from './helpers/custom-helpers';
 export { hasFocus } from './helpers/has-focus';
+export { default as jwtEncode } from './helpers/jwt-encode';
