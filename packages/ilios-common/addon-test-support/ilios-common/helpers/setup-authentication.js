@@ -48,7 +48,8 @@ export default async function (userObject = { id: defaultUserId }, jwtOptions = 
 
   // Create a user record with companion authn record in the mock backend.
   const { server } = getContext();
-  const properties = Object.assign({ id: userId }, userObject);
+  // Ensure that the user id is always set.
+  const properties = { ...userObject, ...{ id: userId } };
   const user = await server.create('user', properties);
   await server.create('authentication', { id: user.id, user });
 
