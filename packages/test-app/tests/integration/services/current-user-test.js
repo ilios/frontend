@@ -12,7 +12,6 @@ module('Integration | Service | Current User', function (hooks) {
 
   hooks.beforeEach(async function () {
     await authenticateSession({
-      // this token de-serializes to object with "user_id:100" property/value
       jwt: jwtEncode({ user_id: 100 }),
     });
   });
