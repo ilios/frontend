@@ -106,6 +106,33 @@ export default class CurrentUserService extends Service {
     return this.decodedJwt ? !!get(this.decodedJwt, attribute) : false;
   }
 
+  /**
+   * Return the application scopes for the current user.
+   * These are mapped to the audience claim attribute of the JWT
+   * that is used to authenticate the current user.
+   * @returns {string[]} A list of application scopes given for the current user.
+   */
+  get applicationScopes() {
+    if (!this.decodedJwt) {
+      return [];
+    }
+
+    const scopes = this.decodedJwt['aud'];
+    if (isEmpty(scopes)) {
+      return [];
+    }
+
+    if (Array.isArray(scopes)) {
+      return scopes;
+    }
+
+    if ('string' === typeof scopes) {
+      return [scopes];
+    }
+
+    return [];
+  }
+
   get isRoot() {
     return this.getBooleanAttributeFromToken('is_root');
   }

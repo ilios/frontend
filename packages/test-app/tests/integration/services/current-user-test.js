@@ -294,6 +294,33 @@ module('Integration | Service | Current User', function (hooks) {
     assert.notOk(isTeachingSession2);
   });
 
+  test.each(
+    'applicationScopes',
+    [
+      [undefined, []],
+      [null, []],
+      [{ not: 'an array or string' }, []],
+      [[], []],
+      [
+        ['foo', 'bar'],
+        ['foo', 'bar'],
+      ],
+      ['foo', ['foo']],
+    ],
+    async function (assert, [aud, expectedApplicationScopes]) {
+      await invalidateSession();
+      await authenticateSession({
+        jwt: jwtEncode({ user_id: 100, aud }),
+      });
+      const currentUser = this.owner.lookup('service:current-user');
+      const applicationScopes = currentUser.applicationScopes;
+      assert.strictEqual(applicationScopes.length, expectedApplicationScopes.length);
+      for (let i = 0, n = length; i < n; i++) {
+        assert.strictEqual(applicationScopes[i], expectedApplicationScopes[i]);
+      }
+    },
+  );
+
   skip('requireNonLearner', function (/* assert */) {
     // TODO: implement.
   });
