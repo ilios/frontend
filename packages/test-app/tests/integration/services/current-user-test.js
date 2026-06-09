@@ -4,6 +4,7 @@ import { setupMSW } from 'ilios-common/msw';
 import { authenticateSession, invalidateSession } from 'ember-simple-auth/test-support';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
+import { jwtEncode } from 'ilios-common';
 
 module('Integration | Service | Current User', function (hooks) {
   setupTest(hooks);
@@ -11,8 +12,7 @@ module('Integration | Service | Current User', function (hooks) {
 
   hooks.beforeEach(async function () {
     await authenticateSession({
-      // this token de-serializes to object with "user_id:100" property/value
-      jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MTA5Njg4NDEsImV4cCI6MTUxMDk3MjQ3NiwidXNlcl9pZCI6MTAwLCJqdGkiOiI5YzYxZDdjZS1jZjliLTQxZDgtYjQ5YS0zMWFmNWQ4Y2MzY2UifQ.P1QY8zDSi8IAVaJ0YHX_KzYsIfZP_bvBdocZ9V9JUb0',
+      jwt: jwtEncode({ user_id: 100 }),
     });
   });
 
