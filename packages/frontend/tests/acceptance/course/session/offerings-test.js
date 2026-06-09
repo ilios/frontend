@@ -16,14 +16,12 @@ module('Acceptance | Session - Offerings', function (hooks) {
     );
     this.intl = this.owner.lookup('service:intl');
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school, root: true });
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
     this.course = await this.server.create('course', {
       cohorts: [cohort],
       school: this.school,
-      directors: [this.user],
     });
     const sessionType = await this.server.create('session-type', {
       school: this.school,
@@ -40,6 +38,9 @@ module('Acceptance | Session - Offerings', function (hooks) {
       users: [users[2], users[3]],
       school: this.school,
     });
+
+    this.user = await setupAuthentication({ school: this.school, directedCourses: [this.course] });
+
     const learnerGroup1 = await this.server.create('learner-group', {
       users: [users[0], users[1]],
       cohort,
@@ -198,7 +199,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(blocks[0].timeBlockOfferings.offerings[0].instructors.length, 8);
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son',
+      '0 guy M. Mc0son',
     );
     assert.notOk(
       blocks[0].timeBlockOfferings.offerings[0].instructors[0].userStatus.accountIsDisabled,
@@ -206,7 +207,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son',
+      '1 guy M. Mc1son',
     );
     assert.notOk(
       blocks[0].timeBlockOfferings.offerings[0].instructors[1].userStatus.accountIsDisabled,
@@ -214,7 +215,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son',
+      '2 guy M. Mc2son',
     );
     assert.notOk(
       blocks[0].timeBlockOfferings.offerings[0].instructors[2].userStatus.accountIsDisabled,
@@ -222,7 +223,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[3].userNameInfo.fullName,
-      '4 guy M. Mc4son',
+      '3 guy M. Mc3son',
     );
     assert.notOk(
       blocks[0].timeBlockOfferings.offerings[0].instructors[3].userStatus.accountIsDisabled,
@@ -230,28 +231,28 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[4].userNameInfo.fullName,
-      '5 guy M. Mc5son',
+      '4 guy M. Mc4son',
     );
     assert.notOk(
       blocks[0].timeBlockOfferings.offerings[0].instructors[4].userStatus.accountIsDisabled,
     );
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[5].userNameInfo.fullName,
-      '6 guy M. Mc6son',
+      '5 guy M. Mc5son',
     );
     assert.notOk(
       blocks[0].timeBlockOfferings.offerings[0].instructors[5].userStatus.accountIsDisabled,
     );
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[6].userNameInfo.fullName,
-      '7 guy M. Mc7son',
+      '6 guy M. Mc6son',
     );
     assert.notOk(
       blocks[0].timeBlockOfferings.offerings[0].instructors[6].userStatus.accountIsDisabled,
     );
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[7].userNameInfo.fullName,
-      '8 guy M. Mc8son',
+      '7 guy M. Mc7son',
     );
     assert.ok(
       blocks[0].timeBlockOfferings.offerings[0].instructors[7].userStatus.accountIsDisabled,
@@ -266,19 +267,19 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(blocks[1].timeBlockOfferings.offerings[0].instructors.length, 4);
     assert.strictEqual(
       blocks[1].timeBlockOfferings.offerings[0].instructors[0].userNameInfo.fullName,
-      '3 guy M. Mc3son',
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       blocks[1].timeBlockOfferings.offerings[0].instructors[1].userNameInfo.fullName,
-      '4 guy M. Mc4son',
+      '3 guy M. Mc3son',
     );
     assert.strictEqual(
       blocks[1].timeBlockOfferings.offerings[0].instructors[2].userNameInfo.fullName,
-      '7 guy M. Mc7son',
+      '6 guy M. Mc6son',
     );
     assert.strictEqual(
       blocks[1].timeBlockOfferings.offerings[0].instructors[3].userNameInfo.fullName,
-      '8 guy M. Mc8son',
+      '7 guy M. Mc7son',
     );
 
     assert.strictEqual(blocks[2].timeBlockOfferings.offerings[0].learnerGroups.length, 1);
@@ -291,11 +292,11 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(blocks[2].timeBlockOfferings.offerings[0].instructors.length, 2);
     assert.strictEqual(
       blocks[2].timeBlockOfferings.offerings[0].instructors[0].userNameInfo.fullName,
-      '3 guy M. Mc3son',
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       blocks[2].timeBlockOfferings.offerings[0].instructors[1].userNameInfo.fullName,
-      '4 guy M. Mc4son',
+      '3 guy M. Mc3son',
     );
   });
 
@@ -476,7 +477,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(block.timeBlockOfferings.offerings[0].instructors.length, 1);
     assert.strictEqual(
       block.timeBlockOfferings.offerings[0].instructors[0].userNameInfo.fullName,
-      '0 guy M. Mc0son',
+      '8 guy M. Mc8son',
     );
     assert.strictEqual(block.timeBlockOfferings.offerings[0].url, 'https://iliosproject.org/');
 
@@ -488,19 +489,19 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(block.timeBlockOfferings.offerings[1].instructors.length, 4);
     assert.strictEqual(
       block.timeBlockOfferings.offerings[1].instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son',
+      '0 guy M. Mc0son',
     );
     assert.strictEqual(
       block.timeBlockOfferings.offerings[1].instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son',
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       block.timeBlockOfferings.offerings[1].instructors[2].userNameInfo.fullName,
-      '5 guy M. Mc5son',
+      '4 guy M. Mc4son',
     );
     assert.strictEqual(
       block.timeBlockOfferings.offerings[1].instructors[3].userNameInfo.fullName,
-      '6 guy M. Mc6son',
+      '5 guy M. Mc5son',
     );
     assert.notOk(block.timeBlockOfferings.offerings[1].hasUrl);
   });
@@ -546,11 +547,11 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(offering.learnerGroups.length, 1);
     assert.strictEqual(offering.learnerGroups[0].title, 'learner group 1');
     assert.strictEqual(offering.instructors.length, 5);
-    assert.strictEqual(offering.instructors[0].userNameInfo.fullName, '3 guy M. Mc3son');
-    assert.strictEqual(offering.instructors[1].userNameInfo.fullName, '4 guy M. Mc4son');
-    assert.strictEqual(offering.instructors[2].userNameInfo.fullName, '6 guy M. Mc6son');
-    assert.strictEqual(offering.instructors[3].userNameInfo.fullName, '7 guy M. Mc7son');
-    assert.strictEqual(offering.instructors[4].userNameInfo.fullName, '8 guy M. Mc8son');
+    assert.strictEqual(offering.instructors[0].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.strictEqual(offering.instructors[1].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.strictEqual(offering.instructors[2].userNameInfo.fullName, '5 guy M. Mc5son');
+    assert.strictEqual(offering.instructors[3].userNameInfo.fullName, '6 guy M. Mc6son');
+    assert.strictEqual(offering.instructors[4].userNameInfo.fullName, '7 guy M. Mc7son');
     assert.strictEqual(offering.location, 'Rm. 111');
     assert.strictEqual(offering.url, 'https://example.org/');
   });
@@ -574,14 +575,14 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(offering.learnerGroups.length, 2);
     assert.strictEqual(offering.learnerGroups[0].title, 'learner group 0');
     assert.strictEqual(offering.instructors.length, 8);
-    assert.strictEqual(offering.instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
-    assert.strictEqual(offering.instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
-    assert.strictEqual(offering.instructors[2].userNameInfo.fullName, '3 guy M. Mc3son');
-    assert.strictEqual(offering.instructors[3].userNameInfo.fullName, '4 guy M. Mc4son');
-    assert.strictEqual(offering.instructors[4].userNameInfo.fullName, '5 guy M. Mc5son');
-    assert.strictEqual(offering.instructors[5].userNameInfo.fullName, '6 guy M. Mc6son');
-    assert.strictEqual(offering.instructors[6].userNameInfo.fullName, '7 guy M. Mc7son');
-    assert.strictEqual(offering.instructors[7].userNameInfo.fullName, '8 guy M. Mc8son');
+    assert.strictEqual(offering.instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(offering.instructors[1].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(offering.instructors[2].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.strictEqual(offering.instructors[3].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.strictEqual(offering.instructors[4].userNameInfo.fullName, '4 guy M. Mc4son');
+    assert.strictEqual(offering.instructors[5].userNameInfo.fullName, '5 guy M. Mc5son');
+    assert.strictEqual(offering.instructors[6].userNameInfo.fullName, '6 guy M. Mc6son');
+    assert.strictEqual(offering.instructors[7].userNameInfo.fullName, '7 guy M. Mc7son');
     assert.strictEqual(offering.location, 'room 0');
     assert.strictEqual(offering.url, 'https://ucsf.edu/');
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].edit();
@@ -622,14 +623,14 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(offering.learnerGroups.length, 2);
     assert.strictEqual(offering.learnerGroups[0].title, 'learner group 0');
     assert.strictEqual(offering.instructors.length, 8);
-    assert.strictEqual(offering.instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
-    assert.strictEqual(offering.instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
-    assert.strictEqual(offering.instructors[2].userNameInfo.fullName, '3 guy M. Mc3son');
-    assert.strictEqual(offering.instructors[3].userNameInfo.fullName, '4 guy M. Mc4son');
-    assert.strictEqual(offering.instructors[4].userNameInfo.fullName, '5 guy M. Mc5son');
-    assert.strictEqual(offering.instructors[5].userNameInfo.fullName, '6 guy M. Mc6son');
-    assert.strictEqual(offering.instructors[6].userNameInfo.fullName, '7 guy M. Mc7son');
-    assert.strictEqual(offering.instructors[7].userNameInfo.fullName, '8 guy M. Mc8son');
+    assert.strictEqual(offering.instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(offering.instructors[1].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(offering.instructors[2].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.strictEqual(offering.instructors[3].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.strictEqual(offering.instructors[4].userNameInfo.fullName, '4 guy M. Mc4son');
+    assert.strictEqual(offering.instructors[5].userNameInfo.fullName, '5 guy M. Mc5son');
+    assert.strictEqual(offering.instructors[6].userNameInfo.fullName, '6 guy M. Mc6son');
+    assert.strictEqual(offering.instructors[7].userNameInfo.fullName, '7 guy M. Mc7son');
     assert.strictEqual(offering.location, 'room 0');
     assert.strictEqual(offering.url, 'https://ucsf.edu/');
   });
@@ -678,7 +679,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       assert.strictEqual(block.timeBlockOfferings.offerings[0].instructors.length, 1);
       assert.strictEqual(
         block.timeBlockOfferings.offerings[0].instructors[0].userNameInfo.fullName,
-        '0 guy M. Mc0son',
+        '8 guy M. Mc8son',
       );
 
       assert.strictEqual(block.timeBlockOfferings.offerings[1].learnerGroups.length, 1);
@@ -689,19 +690,19 @@ module('Acceptance | Session - Offerings', function (hooks) {
       assert.strictEqual(block.timeBlockOfferings.offerings[1].instructors.length, 4);
       assert.strictEqual(
         block.timeBlockOfferings.offerings[1].instructors[0].userNameInfo.fullName,
-        '1 guy M. Mc1son',
+        '0 guy M. Mc0son',
       );
       assert.strictEqual(
         block.timeBlockOfferings.offerings[1].instructors[1].userNameInfo.fullName,
-        '2 guy M. Mc2son',
+        '1 guy M. Mc1son',
       );
       assert.strictEqual(
         block.timeBlockOfferings.offerings[1].instructors[2].userNameInfo.fullName,
-        '5 guy M. Mc5son',
+        '4 guy M. Mc4son',
       );
       assert.strictEqual(
         block.timeBlockOfferings.offerings[1].instructors[3].userNameInfo.fullName,
-        '6 guy M. Mc6son',
+        '5 guy M. Mc5son',
       );
     }
   });

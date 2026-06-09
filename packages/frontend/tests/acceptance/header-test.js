@@ -25,6 +25,9 @@ module('Acceptance | header', function (hooks) {
         },
       };
     });
+    // Global search requires the current user to perform a non-learner function.
+    // Creating the current user as root gives us the necessary permissions.
+    // Please see the `ilios-header` component for details.
     await setupAuthentication({ root: true });
     await visit('/');
     await takeScreenshot(assert);
@@ -43,7 +46,10 @@ module('Acceptance | header', function (hooks) {
         },
       };
     });
-    await setupAuthentication();
+    // Global search requires the current user to perform a non-learner function.
+    // Creating the current user as root gives us the necessary permissions.
+    // Please see the `ilios-header` component for details.
+    await setupAuthentication({ root: true });
     await visit('/');
     await takeScreenshot(assert);
     assert.dom('.global-search-box').doesNotExist();

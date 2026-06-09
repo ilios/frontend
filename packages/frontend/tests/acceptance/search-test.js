@@ -11,6 +11,9 @@ module('Acceptance | search', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
+    // Global search requires the current user to perform a non-learner function.
+    // Creating the current user as root gives us the necessary permissions.
+    // Please see the `ilios-header` component for details.
     await setupAuthentication({ school, root: true });
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('/application/config', function () {

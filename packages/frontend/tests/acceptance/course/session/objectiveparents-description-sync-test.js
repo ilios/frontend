@@ -14,7 +14,6 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
     this.fadedSelector = '.faded';
 
     this.school = await this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school, root: true });
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     const cohort = await this.server.create('cohort', { programYear });
@@ -79,6 +78,7 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
       courseObjectives: [courseObjective3],
       title: this.longObjDescription,
     });
+    this.user = await setupAuthentication({ school: this.school, directedCourses: [course] });
   });
 
   test('objective description and parent objectives faded statuses are synced', async function (assert) {

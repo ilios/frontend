@@ -7,7 +7,6 @@ import { setupAuthentication } from 'ilios-common';
 module('Acceptance | course visualizations - vocabulary', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({ root: true });
     this.vocabulary = await this.server.create('vocabulary');
     const term1 = await this.server.create('term', {
       vocabulary: this.vocabulary,
@@ -49,6 +48,7 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
       sessions: [session1, session2, session3],
       year: 2022,
     });
+    this.user = await setupAuthentication({ directedCourses: [this.course] });
   });
 
   test('it renders', async function (assert) {

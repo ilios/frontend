@@ -6,9 +6,6 @@ import { setupAuthentication } from 'ilios-common';
 
 module('Acceptance | course visualizations - session-type', function (hooks) {
   setupApplicationTest(hooks);
-  hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({ root: true });
-  });
 
   test('it renders', async function (assert) {
     const sessionType = await this.server.create('session-type');
@@ -51,6 +48,7 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
       endDate: '2022-07-20T09:30:00',
       session: session2,
     });
+    await setupAuthentication({ directedCourses: [course] });
     await page.visit({ courseId: course.id, sessionTypeId: sessionType.id });
     assert.strictEqual(currentURL(), '/data/courses/1/session-types/1');
     assert.strictEqual(page.root.title, 'course 0 2022');

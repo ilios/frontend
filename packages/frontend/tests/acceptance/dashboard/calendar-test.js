@@ -550,14 +550,16 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('user context filters are present on user calendar for privileged users', async function (assert) {
-    await setupAuthentication({ school: this.school, root: true });
+    // Any user relationship that results in the current user 'performing non-learner function' will do here,
+    // including making the user a school director.
+    await setupAuthentication({ school: this.school, directedSchools: [this.school] });
     await page.visit({ show: 'calendar' });
     await takeScreenshot(assert);
     assert.ok(page.calendar.controls.userContextFilter.isPresent);
   });
 
   test('user context filters are not present on school calendar', async function (assert) {
-    await setupAuthentication({ school: this.school, root: true });
+    await setupAuthentication({ school: this.school, directedSchools: [this.school] });
     await page.visit({ show: 'calendar' });
     assert.ok(page.calendar.controls.userContextFilter.isPresent);
     await page.calendar.controls.mySchedule.toggle.secondLabel.click();
@@ -566,7 +568,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('user context filters do not apply to school calendar', async function (assert) {
-    this.user = await setupAuthentication({ school: this.school, root: true });
+    this.user = await setupAuthentication({ school: this.school, directedSchools: [this.school] });
     const day = DateTime.fromObject({
       month: 7,
       day: 7,
@@ -601,7 +603,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('test user context filters', async function (assert) {
-    this.user = await setupAuthentication({ school: this.school, root: true });
+    this.user = await setupAuthentication({ school: this.school, directedSchools: [this.school] });
     const day = DateTime.fromObject({
       month: 4,
       day: 4,
@@ -651,7 +653,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('user context filter selections persist across page reloads', async function (assert) {
-    this.user = await setupAuthentication({ school: this.school, root: true });
+    this.user = await setupAuthentication({ school: this.school, directedSchools: [this.school] });
     const day = DateTime.fromObject({
       month: 4,
       day: 4,
@@ -729,7 +731,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('filter toggle not present on my-schedule', async function (assert) {
-    await setupAuthentication({ school: this.school, root: true });
+    await setupAuthentication({ school: this.school, directedSchools: [this.school] });
     await page.visit({ show: 'calendar' });
     assert.notOk(page.calendar.controls.showFilters.isPresent);
     await page.calendar.controls.mySchedule.toggle.secondLabel.click();

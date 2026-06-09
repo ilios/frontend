@@ -26,6 +26,9 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   };
 
   test('it renders for user with permissions', async function (assert) {
+    // The component checks permissions against the "performs non-learner function" of the current user,
+    // and not against user relationships in the curriculum.
+    // Making the current user a root user makes that perms check pass.
     await setupAuthentication({ root: true });
     this.server.post('/api/graphql', async ({ request }) => {
       const { query } = await request.json();
@@ -87,7 +90,6 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('it renders for user with no permissions', async function (assert) {
-    await setupAuthentication();
     this.server.post('/api/graphql', async ({ request }) => {
       const { query } = await request.json();
       assert.step('API called');
@@ -122,8 +124,6 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    await setupAuthentication({ root: true });
-
     this.server.post('/api/graphql', async ({ request }) => {
       const { query } = await request.json();
       assert.step('API called');
@@ -153,8 +153,6 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
-    await setupAuthentication({ root: true });
-
     const years = [2020, 2021, 2022, 2023, 2024, 2025];
     const responseDataLarge = {
       data: {
@@ -203,7 +201,6 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('it renders school link if all schools is chosen', async function (assert) {
-    await setupAuthentication({ root: true });
     this.server.post('/api/graphql', async ({ request }) => {
       const { query } = await request.json();
       assert.step('API called');
@@ -504,7 +501,6 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('download', async function (assert) {
-    await setupAuthentication({ root: true });
     this.server.post('/api/graphql', () => {
       assert.step('API called');
       return responseData;
