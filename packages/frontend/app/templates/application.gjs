@@ -15,7 +15,7 @@ import FlashMessages from 'frontend/components/flash-messages';
     <ApiVersionNotice />
     <UpdateNotification />
     <div class="application-wrapper{{if @controller.hasNavigation ' show-navigation'}}">
-      {{#unless @controller.hasLtiApplicationScope}}
+      {{#if @controller.useFullLayout}}
         <IliosHeader />
         <div class="ilios-logo">
           <LinkTo @route="dashboard" title={{t "general.dashboard"}}>
@@ -33,7 +33,7 @@ import FlashMessages from 'frontend/components/flash-messages';
         {{#if @controller.session.isAuthenticated}}
           <IliosNavigation />
         {{/if}}
-      {{/unless}}
+      {{/if}}
       <main id="main">
         {{#if @controller.showErrorDisplay}}
           <ErrorDisplay @errors={{@controller.errors}} @clearErrors={{@controller.clearErrors}} />
@@ -41,7 +41,7 @@ import FlashMessages from 'frontend/components/flash-messages';
           {{outlet}}
         {{/if}}
       </main>
-      {{#unless @controller.hasLtiApplicationScope}}
+      {{#if @controller.useFullLayout}}
         <footer class="ilios-footer">
           <div class="version">
             {{@controller.iliosVersionTag}}
@@ -49,7 +49,7 @@ import FlashMessages from 'frontend/components/flash-messages';
             {{@controller.frontendVersionTag}}
           </div>
         </footer>
-      {{/unless}}
+      {{/if}}
     </div>
     <FlashMessages />
   </div>

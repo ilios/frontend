@@ -46,14 +46,15 @@ export default class ApplicationController extends Controller {
     return '';
   }
 
-  get hasLtiApplicationScope() {
-    return this.currentUser.applicationScopes.some((scope) =>
+  get useFullLayout() {
+    // user authorized for LTI usage do not get to see the full layout.
+    return !this.currentUser.applicationScopes.some((scope) =>
       this.ltiApplicationScopes.includes(scope),
     );
   }
 
   get hasNavigation() {
-    return this.currentUser.performsNonLearnerFunction && !this.hasLtiApplicationScope;
+    return this.currentUser.performsNonLearnerFunction && this.useFullLayout;
   }
 
   @action
