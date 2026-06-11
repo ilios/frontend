@@ -18,6 +18,8 @@ export default class ApplicationController extends Controller {
 
   appVersion = new TrackedAsyncData(this.iliosConfig.getAppVersion());
 
+  ltiApplicationScopes = ['lti-dashboard', 'lti-course-manager'];
+
   @cached
   get iliosVersionTag() {
     if (this.appVersion.isResolved) {
@@ -45,7 +47,9 @@ export default class ApplicationController extends Controller {
   }
 
   get hasLtiApplicationScope() {
-    return this.currentUser.applicationScopes.some((scope) => scope.startsWith('lti-'));
+    return this.currentUser.applicationScopes.some((scope) =>
+      this.ltiApplicationScopes.includes(scope),
+    );
   }
 
   get hasNavigation() {
