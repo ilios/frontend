@@ -18,10 +18,6 @@
   .school-learning-material-attributes-expanded-content {
     @include m.detail-container-content;
 
-    .form {
-      @include m.ilios-form;
-    }
-
     .validation-error-message {
       color: var(--red);
       display: block;
