@@ -72,17 +72,9 @@ export default class ReportsCurriculumHeaderComponent extends Component {
           }),
         },
         {
-          value: 'sessionObjectives',
-          label: this.intl.t('general.sessionObjectives'),
-          summary: this.intl.t('general.sessionObjectivesReportSummaryMultiSchool', {
-            courseCount: this.args.countSelectedCourses,
-            schoolCount: this.countSelectedSchools,
-          }),
-        },
-        {
-          value: 'sessionOfferings',
-          label: this.intl.t('general.sessionOfferings'),
-          summary: this.intl.t('general.sessionOfferingsReportSummaryMultiSchool', {
+          value: 'instructionalTime',
+          label: this.intl.t('general.instructionalTime'),
+          summary: this.intl.t('general.instructionalTimeReportSummaryMultiSchool', {
             courseCount: this.args.countSelectedCourses,
             schoolCount: this.countSelectedSchools,
           }),
@@ -96,9 +88,17 @@ export default class ReportsCurriculumHeaderComponent extends Component {
           }),
         },
         {
-          value: 'instructionalTime',
-          label: this.intl.t('general.instructionalTime'),
-          summary: this.intl.t('general.instructionalTimeReportSummaryMultiSchool', {
+          value: 'sessionObjectives',
+          label: this.intl.t('general.sessionObjectives'),
+          summary: this.intl.t('general.sessionObjectivesReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.countSelectedSchools,
+          }),
+        },
+        {
+          value: 'sessionOfferings',
+          label: this.intl.t('general.sessionOfferings'),
+          summary: this.intl.t('general.sessionOfferingsReportSummaryMultiSchool', {
             courseCount: this.args.countSelectedCourses,
             schoolCount: this.countSelectedSchools,
           }),
@@ -122,16 +122,9 @@ export default class ReportsCurriculumHeaderComponent extends Component {
           }),
         },
         {
-          value: 'sessionObjectives',
-          label: this.intl.t('general.sessionObjectives'),
-          summary: this.intl.t('general.sessionObjectivesReportSummary', {
-            courseCount: this.args.countSelectedCourses,
-          }),
-        },
-        {
-          value: 'sessionOfferings',
-          label: this.intl.t('general.sessionOfferings'),
-          summary: this.intl.t('general.sessionOfferingsReportSummary', {
+          value: 'instructionalTime',
+          label: this.intl.t('general.instructionalTime'),
+          summary: this.intl.t('general.instructionalTimeReportSummary', {
             courseCount: this.args.countSelectedCourses,
           }),
         },
@@ -143,9 +136,16 @@ export default class ReportsCurriculumHeaderComponent extends Component {
           }),
         },
         {
-          value: 'instructionalTime',
-          label: this.intl.t('general.instructionalTime'),
-          summary: this.intl.t('general.instructionalTimeReportSummary', {
+          value: 'sessionObjectives',
+          label: this.intl.t('general.sessionObjectives'),
+          summary: this.intl.t('general.sessionObjectivesReportSummary', {
+            courseCount: this.args.countSelectedCourses,
+          }),
+        },
+        {
+          value: 'sessionOfferings',
+          label: this.intl.t('general.sessionOfferings'),
+          summary: this.intl.t('general.sessionOfferingsReportSummary', {
             courseCount: this.args.countSelectedCourses,
           }),
         },

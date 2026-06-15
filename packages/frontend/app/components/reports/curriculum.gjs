@@ -4,10 +4,10 @@ import { cached, tracked } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
 import { eq } from 'ember-truth-helpers';
 import CourseCompetencies from './curriculum/course-competencies';
+import InstructionalTime from './curriculum/instructional-time';
+import LearnerGroups from './curriculum/learner-groups';
 import SessionObjectives from './curriculum/session-objectives';
 import SessionOfferings from './curriculum/session-offerings';
-import LearnerGroups from './curriculum/learner-groups';
-import InstructionalTime from './curriculum/instructional-time';
 import TaggedTerms from './curriculum/tagged-terms';
 import Header from './curriculum/header';
 import ChooseCourse from './curriculum/choose-course';
@@ -39,7 +39,7 @@ export default class ReportsCurriculumComponent extends Component {
   }
 
   get selectedReportValue() {
-    return this.args.report ?? 'sessionObjectives';
+    return this.args.report ?? 'courseCompetencies';
   }
 
   @cached
@@ -84,14 +84,14 @@ export default class ReportsCurriculumComponent extends Component {
     switch (this.selectedReportValue) {
       case 'courseCompetencies':
         return ensureSafeComponent(CourseCompetencies, this);
+      case 'instructionalTime':
+        return ensureSafeComponent(InstructionalTime, this);
+      case 'learnerGroups':
+        return ensureSafeComponent(LearnerGroups, this);
       case 'sessionObjectives':
         return ensureSafeComponent(SessionObjectives, this);
       case 'sessionOfferings':
         return ensureSafeComponent(SessionOfferings, this);
-      case 'learnerGroups':
-        return ensureSafeComponent(LearnerGroups, this);
-      case 'instructionalTime':
-        return ensureSafeComponent(InstructionalTime, this);
       case 'taggedTerms':
         return ensureSafeComponent(TaggedTerms, this);
     }
