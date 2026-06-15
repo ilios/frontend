@@ -52,7 +52,7 @@ export default class SchoolLearningMaterialAttributesManager extends Component {
 
   <template>
     {{#let (uniqueId) as |templateId|}}
-      <div class="form" data-test-school-learning-material-attributes-manager ...attributes>
+      <div data-test-school-learning-material-attributes-manager ...attributes>
         <table class="ilios-table ilios-table-colors condensed">
           <thead>
             <tr>
