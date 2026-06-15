@@ -18,8 +18,8 @@
   .school-learning-material-attributes-expanded-content {
     @include m.detail-container-content;
 
-    .form {
-      @include m.ilios-form;
+    input[inputmode="url"] {
+      width: 100%;
     }
 
     .validation-error-message {
