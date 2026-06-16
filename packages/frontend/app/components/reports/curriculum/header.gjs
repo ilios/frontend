@@ -5,6 +5,7 @@ import { guidFor } from '@ember/object/internals';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { eq, not } from 'ember-truth-helpers';
+import sortBy from 'ilios-common/helpers/sort-by';
 import CopyButton from 'ilios-common/components/copy-button';
 import perform from 'ember-concurrency/helpers/perform';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
@@ -182,7 +183,7 @@ export default class ReportsCurriculumHeaderComponent extends Component {
               <label data-test-report-selector>
                 {{t "general.run"}}
                 <select {{on "change" this.changeSelectedReport}}>
-                  {{#each this.reportList as |report|}}
+                  {{#each (sortBy "value" this.reportList) as |report|}}
                     <option
                       value={{report.value}}
                       selected={{eq report.value this.selectedReport.value}}
