@@ -75,6 +75,15 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
         return { data: { courses } };
       };
     };
+
+    this.getCourseCompetenciesResponse = (assert) => {
+      return () => {
+        assert.step('API called');
+        //use all the courses, getting the id filter from graphQL is a bit tricky
+        const courses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+        return { data: { courses } };
+      };
+    };
   });
 
   test('visiting reports with one school', async function (assert) {
@@ -500,6 +509,190 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     assert.strictEqual(
       currentURL(),
       '/reports/curriculum?courses=1-4&report=learnerGroups&run=true',
+      'current URL is correct',
+    );
+    assert.verifySteps(['API called', 'API called']);
+  });
+
+  test('run course competencies report, single school', async function (assert) {
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('programYear', {
+      program,
+    });
+    const cohort = await this.server.create('cohort', {
+      programYear,
+    });
+    const competency = await this.server.create('competency', {
+      school: this.school,
+      programYears: [programYear],
+    });
+
+    const programYearObjective = await this.server.create('programYearObjective', {
+      competency,
+      programYear,
+    });
+
+    const course = await this.server.create('course', {
+      year: 2013,
+      school: this.school,
+      cohorts: [cohort],
+    });
+    await this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [programYearObjective],
+    });
+    await this.server.create('courseObjective', {
+      course,
+    });
+
+    //handle both requests so we have two
+    this.server.post('/api/graphql', this.getCourseCompetenciesResponse(assert));
+    this.server.post('/api/graphql', this.getCourseCompetenciesResponse(assert));
+    const cc = page.curriculum.courseCompetenciesResult;
+
+    await page.visitCurriculumReports();
+    await page.curriculum.chooseCourse.years[0].toggleAll.click();
+    await page.curriculum.header.reportSelector.set('courseCompetencies');
+    assert.ok(
+      cc.header.runSummaryText.includes(
+        'Each competency is listed along with course and program year objectives.',
+      ),
+      'Course competency summary text is correct',
+    );
+    await takeScreenshot(assert, 'selected courses');
+
+    await page.curriculum.header.runReport.click();
+    await takeScreenshot(assert, 'course competencies report results');
+
+    assert.strictEqual(cc.results.length, 1, 'Test has 1 report result');
+    assert.strictEqual(cc.results.objectAt(0).courseTitle, 'course 0', 'Test title is correct');
+    assert.strictEqual(
+      cc.results.objectAt(0).courseObjectivesCount,
+      '2',
+      'Course objectives count is correct',
+    );
+    assert.strictEqual(
+      cc.results.objectAt(0).programYearObjectivesCount,
+      '1',
+      'Program year objectives count is correct',
+    );
+
+    assert.strictEqual(
+      currentURL(),
+      '/reports/curriculum?courses=1&report=courseCompetencies&run=true',
+      'current URL is correct',
+    );
+    assert.verifySteps(['API called', 'API called']);
+  });
+
+  test('run course competencies report, multiple schools', async function (assert) {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('programYear', {
+      program,
+    });
+    const cohort = await this.server.create('cohort', {
+      programYear,
+    });
+    const competency = await this.server.create('competency', {
+      school: this.school,
+      programYears: [programYear],
+    });
+
+    const programYearObjective = await this.server.create('programYearObjective', {
+      competency,
+      programYear,
+    });
+
+    const course = await this.server.create('course', {
+      year: currentAcademicYear(),
+      school: this.school,
+      cohorts: [cohort],
+    });
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear() - 1,
+    });
+    await this.server.createList('course', 2, {
+      school: school,
+      year: currentAcademicYear(),
+    });
+    await this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [programYearObjective],
+    });
+    await this.server.create('courseObjective', {
+      course,
+    });
+
+    //handle both requests so we have two
+    this.server.post('/api/graphql', this.getCourseCompetenciesResponse(assert));
+    this.server.post('/api/graphql', this.getCourseCompetenciesResponse(assert));
+    const cc = page.curriculum.courseCompetenciesResult;
+
+    await page.visitCurriculumReports();
+
+    await page.curriculum.chooseCourse.years[0].courses[0].pick();
+    await page.curriculum.chooseCourse.schoolSelector.set(school.id);
+    await page.curriculum.chooseCourse.years[0].courses[0].pick();
+    await page.curriculum.header.reportSelector.set('courseCompetencies');
+    assert.ok(
+      cc.header.runSummaryText.includes(
+        'Each competency is listed along with course and program year objectives.',
+      ),
+      'Session objective summary text is correct',
+    );
+    await takeScreenshot(assert, 'selected courses');
+
+    await page.curriculum.header.runReport.click();
+    await takeScreenshot(assert, 'course competencies report results');
+
+    assert.strictEqual(cc.resultsMultiSchool.length, 5, 'There are 5 report results');
+    assert.strictEqual(
+      cc.resultsMultiSchool.objectAt(0).schoolTitle,
+      'school 0',
+      'Result 1 school title is correct',
+    );
+    assert.strictEqual(
+      cc.resultsMultiSchool.objectAt(0).courseTitle,
+      'course 0',
+      'Result 1 course title is correct',
+    );
+    assert.strictEqual(
+      cc.resultsMultiSchool.objectAt(0).courseObjectivesCount,
+      '2',
+      'Result 1 course objectives count is correct',
+    );
+    assert.strictEqual(
+      cc.resultsMultiSchool.objectAt(0).programYearObjectivesCount,
+      '1',
+      'Result 1 program year objectives count is correct',
+    );
+
+    assert.strictEqual(
+      cc.resultsMultiSchool.objectAt(4).schoolTitle,
+      'school 1',
+      'Result 2 school title is correct',
+    );
+    assert.strictEqual(
+      cc.resultsMultiSchool.objectAt(4).courseTitle,
+      'course 4',
+      'Result 2 course title is correct',
+    );
+    assert.strictEqual(
+      cc.resultsMultiSchool.objectAt(4).courseObjectivesCount,
+      '0',
+      'Result 2 course objectives count is correct',
+    );
+    assert.strictEqual(
+      cc.resultsMultiSchool.objectAt(4).programYearObjectivesCount,
+      '0',
+      'Result 2 program year objectives count is correct',
+    );
+
+    assert.strictEqual(
+      currentURL(),
+      '/reports/curriculum?courses=1-4&report=courseCompetencies&run=true',
       'current URL is correct',
     );
     assert.verifySteps(['API called', 'API called']);
