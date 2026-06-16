@@ -24,12 +24,12 @@ const definition = {
     scope: '[data-test-filter]',
     set: fillable(),
   },
-  availableTerms: collection('.selectable-terms-list li.top-level', {
+  availableTerms: collection('.taxonomy-manager-terms-list li.top-level', {
     name: text('[data-test-title]', { at: 0 }),
     notSelected: notHasClass('selected', 'button', { at: 0 }),
     isSelected: hasClass('selected', 'button', { at: 0 }),
     toggle: clickable('button', { at: 0 }),
-    children: collection('.selectable-terms-list li.nested', {
+    children: collection('.taxonomy-manager-terms-list li.nested', {
       name: text('[data-test-title]'),
       notSelected: notHasClass('selected', 'button'),
       isSelected: hasClass('selected', 'button'),

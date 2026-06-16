@@ -68,7 +68,6 @@
 @forward "components/selected-instructor-groups";
 @forward "components/selected-instructors";
 @forward "components/selected-learners";
-@forward "components/selectable-terms-list-item";
 @forward "components/selected-term-tree";
 @forward "components/session-copy";
 @forward "components/session-details";
@@ -91,6 +90,7 @@
 @forward "components/sortable-heading";
 @forward "components/sortable-th";
 @forward "components/taxonomy-manager";
+@forward "components/taxonomy-manager-terms-list-item";
 @forward "components/time-picker";
 @forward "components/timed-release-schedule";
 @forward "components/toggle-yesno";

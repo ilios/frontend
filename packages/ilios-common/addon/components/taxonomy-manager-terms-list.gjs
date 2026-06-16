@@ -3,11 +3,11 @@ import { cached } from '@glimmer/tracking';
 import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import sortBy from 'ilios-common/helpers/sort-by';
-import SelectableTermsListItem from 'ilios-common/components/selectable-terms-list-item';
-import SelectableTermsList0 from 'ilios-common/components/selectable-terms-list';
+import ListItem from 'ilios-common/components/taxonomy-manager-terms-list-item';
+import List from 'ilios-common/components/taxonomy-manager-terms-list';
 import add from 'ember-math-helpers/helpers/add';
 
-export default class SelectableTermsListComponent extends Component {
+export default class TaxonomyManagerTermsList extends Component {
   @cached
   get termsData() {
     return new TrackedAsyncData(this.getFilteredTerms(this.args.parent, this.args.termFilter));
@@ -34,14 +34,14 @@ export default class SelectableTermsListComponent extends Component {
   }
   <template>
     <ul
-      class="selectable-terms-list"
-      data-test-selectable-terms-list
-      data-test-selectable-terms-list-level={{this.level}}
+      class="taxonomy-manager-terms-list"
+      data-test-taxonomy-manager-terms-list
+      data-test-taxonomy-manager-terms-list-level={{this.level}}
     >
       {{#each (sortBy "title" this.terms) as |term|}}
         {{#if term.active}}
           <li class="nested">
-            <SelectableTermsListItem
+            <ListItem
               @selectedTerms={{@selectedTerms}}
               @term={{term}}
               @add={{@add}}
@@ -49,7 +49,7 @@ export default class SelectableTermsListComponent extends Component {
               @level={{this.level}}
             />
             {{#if term.hasChildren}}
-              <SelectableTermsList0
+              <List
                 @selectedTerms={{@selectedTerms}}
                 @parent={{term}}
                 @add={{@add}}

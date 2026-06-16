@@ -2,10 +2,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/selectable-terms-list-item';
-import SelectableTermsListItem from 'ilios-common/components/selectable-terms-list-item';
+import { component } from 'ilios-common/page-objects/components/taxonomy-manager-terms-list-item';
+import ListItem from 'ilios-common/components/taxonomy-manager-terms-list-item';
 
-module('Integration | Component | selectable terms list item', function (hooks) {
+module('Integration | Component | taxonomy manager terms list item', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
@@ -19,9 +19,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     this.set('term', this.termModel);
 
     await render(
-      <template>
-        <SelectableTermsListItem @selectedTerms={{this.selectedTerms}} @term={{this.term}} />
-      </template>,
+      <template><ListItem @selectedTerms={{this.selectedTerms}} @term={{this.term}} /></template>,
     );
 
     assert.strictEqual(component.text, this.termModel.get('title'));
@@ -41,7 +39,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
 
     await render(
       <template>
-        <SelectableTermsListItem
+        <ListItem
           @selectedTerms={{this.selectedTerms}}
           @term={{this.term}}
           @remove={{this.remove}}
@@ -66,11 +64,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
 
     await render(
       <template>
-        <SelectableTermsListItem
-          @selectedTerms={{this.selectedTerms}}
-          @term={{this.term}}
-          @add={{this.add}}
-        />
+        <ListItem @selectedTerms={{this.selectedTerms}} @term={{this.term}} @add={{this.add}} />
       </template>,
     );
 

@@ -12,12 +12,12 @@ import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 export default class SelectableTermsListItemComponent extends Component {
   @tracked isHovering;
 
-  get selectableTermsListItemButtonId() {
-    return `selectable-terms-list-item-button-${guidFor(this)}`;
+  get termsListItemButtonId() {
+    return `taxonomy-manager-terms-list-item-button-${guidFor(this)}`;
   }
 
-  get selectableTermsListItemButtonElement() {
-    return document.getElementById(this.selectableTermsListItemButtonId);
+  get termsListItemButtonElement() {
+    return document.getElementById(this.termsListItemButtonId);
   }
 
   get isSelected() {
@@ -44,16 +44,16 @@ export default class SelectableTermsListItemComponent extends Component {
   }
   <template>
     <button
-      class="selectable-terms-list-item {{if this.isSelected 'selected'}}"
+      class="taxonomy-manager-terms-list-item {{if this.isSelected 'selected'}}"
       type="button"
-      data-test-selectable-terms-list-item
-      data-test-selectable-terms-list-item-level={{this.level}}
+      data-test-taxonomy-manager-terms-list-item
+      data-test-taxonomy-manager-terms-list-item-level={{this.level}}
       {{on "click" this.click}}
       {{mouseHoverToggle (set this "isHovering")}}
-      id={{this.selectableTermsListItemButtonId}}
+      id={{this.termsListItemButtonId}}
     >
       {{#if this.showTooltip}}
-        <IliosTooltip @target={{this.selectableTermsListItemButtonElement}}>
+        <IliosTooltip @target={{this.termsListItemButtonElement}}>
           {{@term.description}}
         </IliosTooltip>
       {{/if}}

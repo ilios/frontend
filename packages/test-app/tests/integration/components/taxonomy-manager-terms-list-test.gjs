@@ -2,11 +2,11 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/selectable-terms-list';
-import SelectableTermsList from 'ilios-common/components/selectable-terms-list';
+import { component } from 'ilios-common/page-objects/components/taxonomy-manager-terms-list';
+import List from 'ilios-common/components/taxonomy-manager-terms-list';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | selectable terms list', function (hooks) {
+module('Integration | Component | taxonomy manager terms list', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
@@ -59,7 +59,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('term', this.rootTerm);
     await render(
       <template>
-        <SelectableTermsList
+        <List
           @selectedTerms={{this.selectedTerms}}
           @parent={{this.term}}
           @add={{(noop)}}
@@ -87,7 +87,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('term', this.rootTerm);
     await render(
       <template>
-        <SelectableTermsList
+        <List
           @selectedTerms={{this.selectedTerms}}
           @parent={{this.term}}
           @add={{(noop)}}
@@ -119,7 +119,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     });
     await render(
       <template>
-        <SelectableTermsList
+        <List
           @selectedTerms={{this.selectedTerms}}
           @parent={{this.term}}
           @add={{this.add}}
@@ -141,7 +141,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('termFilter', 'Gamma');
     await render(
       <template>
-        <SelectableTermsList
+        <List
           @selectedTerms={{this.selectedTerms}}
           @parent={{this.term}}
           @add={{(noop)}}
@@ -162,7 +162,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('termFilter', 'amma');
     await render(
       <template>
-        <SelectableTermsList
+        <List
           @selectedTerms={{this.selectedTerms}}
           @parent={{this.term}}
           @add={{(noop)}}
