@@ -46,8 +46,8 @@ module('Integration | Component | reports/curriculum/course-competencies', funct
     });
 
     this.getCourseCompetencyResponse = (assert) => {
+      assert.step('API called');
       return () => {
-        assert.step('API called');
         //use all the courses, getting the id filter from graphQL is a bit tricky
         const courses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
         return { data: { courses } };

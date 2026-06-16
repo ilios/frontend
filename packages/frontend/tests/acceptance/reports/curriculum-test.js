@@ -29,8 +29,8 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     });
 
     this.getSessionObjectiveResponse = (assert) => {
+      assert.step('API called');
       return () => {
-        assert.step('API called');
         //use all the courses, getting the id filter from graphQL is a bit tricky
         const rawCourses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
         const courses = rawCourses.map((course) => {
@@ -47,8 +47,8 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     };
 
     this.getLearnerGroupsResponse = (assert) => {
+      assert.step('API called');
       return () => {
-        assert.step('API called');
         //use all the courses, getting the id filter from graphQL is a bit tricky
         const rawCourses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
         const allLearnerGroups = this.server.db.learnerGroup.all();
@@ -77,8 +77,8 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     };
 
     this.getCourseCompetenciesResponse = (assert) => {
+      assert.step('API called');
       return () => {
-        assert.step('API called');
         //use all the courses, getting the id filter from graphQL is a bit tricky
         const courses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
         return { data: { courses } };
