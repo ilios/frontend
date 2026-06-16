@@ -29,10 +29,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     });
 
     this.getSessionObjectiveResponse = (assert) => {
-      assert.step('API called');
       return () => {
         //use all the courses, getting the id filter from graphQL is a bit tricky
         const rawCourses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+        assert.step('API called');
         const courses = rawCourses.map((course) => {
           course.sessions.forEach((session) => {
             session.sessionObjectives = this.server.db.sessionObjective
@@ -47,10 +47,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     };
 
     this.getLearnerGroupsResponse = (assert) => {
-      assert.step('API called');
       return () => {
         //use all the courses, getting the id filter from graphQL is a bit tricky
         const rawCourses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+        assert.step('API called');
         const allLearnerGroups = this.server.db.learnerGroup.all();
         const courses = rawCourses.map((course) => {
           course.sessions.forEach((session) => {
@@ -77,10 +77,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     };
 
     this.getCourseCompetenciesResponse = (assert) => {
-      assert.step('API called');
       return () => {
         //use all the courses, getting the id filter from graphQL is a bit tricky
         const courses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+        assert.step('API called');
         return { data: { courses } };
       };
     };
