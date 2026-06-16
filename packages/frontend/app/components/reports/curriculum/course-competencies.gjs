@@ -67,16 +67,30 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
 
   get summary() {
     return this.reportResults.map((c) => {
+      const courseObjectiveCount = c.courseObjectives.length;
+      const programYearObjectiveCount = c.courseObjectives.reduce(
+        (acc, co) => acc + co.programYearObjectives.length,
+        0,
+      );
+      const competencies = [];
+      c.courseObjectives.forEach((co) => {
+        co.programYearObjectives.forEach((pyo) => {
+          if (pyo.competency) {
+            competencies.push(pyo.competency.title);
+          }
+        });
+      });
+      // only want unique competencies
+      const competencyCount = new Set(competencies).size;
+
       return {
         schoolTitle: c.school.title,
         courseId: c.id,
         courseTitle: c.title,
         courseYear: c.year,
-        courseObjectiveCount: c.courseObjectives.length,
-        programYearObjectiveCount: c.courseObjectives.reduce(
-          (acc, co) => acc + co.programYearObjectives.length,
-          0,
-        ),
+        courseObjectiveCount,
+        programYearObjectiveCount,
+        competencyCount,
       };
     });
   }
@@ -95,7 +109,7 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
                 courseYear: c.year,
                 courseObjective: striptags(co.title),
                 programYearObjective: striptags(pyo.title),
-                competency: pyo.competency.title,
+                competency: pyo.competency?.title,
                 link: `${origin}${path}`,
               };
 
@@ -252,6 +266,7 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
             <th>{{t "general.year"}}</th>
             <th>{{t "general.courseObjectives"}}</th>
             <th>{{t "general.programObjectives"}}</th>
+            <th>{{t "general.competencies"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -269,6 +284,7 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
                 <td>{{this.courseYearPlaceholder}}</td>
                 <td>{{this.courseObjectiveCountPlaceholder}}</td>
                 <td>{{this.programYearObjectiveCountPlaceholder}}</td>
+                <td>{{this.competencyCountPlaceholder}}</td>
               </tr>
             {{/each}}
           {{else}}
@@ -285,6 +301,7 @@ export default class ReportsCurriculumCourseCompetenciesComponent extends Compon
                 <td>{{o.courseYear}}</td>
                 <td>{{o.courseObjectiveCount}}</td>
                 <td>{{o.programYearObjectiveCount}}</td>
+                <td>{{o.competencyCount}}</td>
               </tr>
             {{/each}}
           {{/if}}
