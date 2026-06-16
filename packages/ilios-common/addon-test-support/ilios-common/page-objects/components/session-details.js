@@ -41,6 +41,7 @@ export default create({
     dateBlocks: collection('[data-test-session-offerings-list] .offering-block', {
       dayOfWeek: text('.offering-block-date-dayofweek'),
       dayOfMonth: text('.offering-block-date-dayofmonth'),
+      year: text('.offering-block-date-year'),
       startTime: text('.offering-block-time-time-starttime'),
       hasStartTime: isVisible('.offering-block-time-time-starttime'),
       endTime: text('.offering-block-time-time-endtime'),

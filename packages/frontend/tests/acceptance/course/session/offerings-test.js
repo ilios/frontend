@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 import page from 'ilios-common/page-objects/session';
 
 module('Acceptance | Session - Offerings', function (hooks) {
@@ -103,11 +104,13 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
   test('offering dates', async function (assert) {
     await page.visit({ courseId: this.course.id, sessionId: this.session.id });
+    await takeScreenshot(assert);
 
     const blocks = page.details.offerings.dateBlocks;
     assert.ok(blocks[0].hasStartTime);
     assert.ok(blocks[0].hasEndTime);
     assert.notOk(blocks[0].hasMultiDay);
+
     assert.strictEqual(
       blocks[0].dayOfWeek,
       DateTime.fromISO(this.offering1.startDate).toFormat('cccc'),
@@ -116,6 +119,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       blocks[0].dayOfMonth,
       DateTime.fromISO(this.offering1.startDate).toFormat('MMMM d'),
     );
+    assert.strictEqual(blocks[0].year, DateTime.fromISO(this.offering1.startDate).toFormat('y'));
     assert.strictEqual(
       blocks[0].startTime,
       'Starts: ' + DateTime.fromISO(this.offering1.startDate).toFormat('hh:mm a'),
@@ -136,6 +140,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       blocks[1].dayOfMonth,
       DateTime.fromISO(this.offering2.startDate).toFormat('MMMM d'),
     );
+    assert.strictEqual(blocks[1].year, DateTime.fromISO(this.offering2.startDate).toFormat('y'));
     assert.strictEqual(
       blocks[1].startTime,
       'Starts: ' + DateTime.fromISO(this.offering2.startDate).toFormat('hh:mm a'),
@@ -156,6 +161,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       blocks[2].dayOfMonth,
       DateTime.fromISO(this.offering3.startDate).toFormat('MMMM d'),
     );
+    assert.strictEqual(blocks[2].year, DateTime.fromISO(this.offering3.startDate).toFormat('y'));
     assert.strictEqual(blocks[2].timeBlockOfferings.offerings.length, 1);
     assert.strictEqual(
       blocks[2].multiDayStart,
@@ -354,6 +360,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasMultiDay);
     assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'September 11');
+    assert.strictEqual(block.year, '2011');
     assert.strictEqual(block.startTime, 'Starts: 02:15 AM');
     assert.strictEqual(block.endTime, 'Ends: 05:30 PM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
@@ -401,6 +408,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasEndTime);
     assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'September 11');
+    assert.strictEqual(block.year, '2011');
     assert.strictEqual(
       block.multiDayStart,
       'Starts: ' +
@@ -465,6 +473,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasMultiDay);
     assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'September 11');
+    assert.strictEqual(block.year, '2011');
     assert.strictEqual(block.startTime, 'Starts: 02:15 AM');
     assert.strictEqual(block.endTime, 'Ends: 05:30 PM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 2);
@@ -538,6 +547,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasMultiDay);
     assert.strictEqual(block.dayOfWeek, 'Wednesday');
     assert.strictEqual(block.dayOfMonth, 'October 5');
+    assert.strictEqual(block.year, '2011');
     assert.strictEqual(block.startTime, 'Starts: 11:45 AM');
     assert.strictEqual(block.endTime, 'Ends: 05:55 PM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
@@ -566,6 +576,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasMultiDay);
     assert.strictEqual(block.dayOfWeek, 'Friday');
     assert.strictEqual(block.dayOfMonth, 'December 11');
+    assert.strictEqual(block.year, `${currentAcademicYear()}`);
     assert.strictEqual(block.startTime, 'Starts: 09:00 AM');
     assert.strictEqual(block.endTime, 'Ends: 10:00 AM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
@@ -614,6 +625,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasMultiDay);
     assert.strictEqual(block.dayOfWeek, 'Friday');
     assert.strictEqual(block.dayOfMonth, 'December 11');
+    assert.strictEqual(block.year, `${currentAcademicYear()}`);
     assert.strictEqual(block.startTime, 'Starts: 09:00 AM');
     assert.strictEqual(block.endTime, 'Ends: 10:00 AM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);

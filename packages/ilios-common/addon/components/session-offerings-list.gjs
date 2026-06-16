@@ -57,6 +57,9 @@ export default class SessionOfferingsListComponent extends Component {
               <span class="offering-block-date-dayofmonth">
                 {{formatDate block.date month="long" day="numeric"}}
               </span>
+              <span class="offering-block-date-year">
+                {{formatDate block.date year="numeric"}}
+              </span>
             </div>
             {{#each block.offeringTimeBlocks as |offeringTimeBlock|}}
               <div class="offering-block-time">
