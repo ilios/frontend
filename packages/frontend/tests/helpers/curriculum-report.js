@@ -27,9 +27,39 @@ export function buildSchoolsFromData(db) {
 const buildCourse = (course) => {
   const { id, title, year } = course;
   const school = { id: `${course.school.id}`, title: course.school.title };
+  const courseObjectives = course.courseObjectives.map((courseObjective) =>
+    buildCourseObjective(courseObjective),
+  );
   const sessions = course.sessions.map((session) => buildSession(session));
 
-  return { id: `${id}`, title, year, school, sessions };
+  return { id: `${id}`, title, year, school, courseObjectives, sessions };
+};
+
+const buildCourseObjective = (courseObjective) => {
+  if (!courseObjective) {
+    return null;
+  }
+  const { id, title } = courseObjective;
+  const programYearObjectives = courseObjective.programYearObjectives.map((pyObjective) =>
+    buildProgramYearObjective(pyObjective),
+  );
+
+  return { id: `${id}`, title, programYearObjectives };
+};
+
+const buildProgramYearObjective = (programYearObjective) => {
+  if (!programYearObjective) {
+    return null;
+  }
+  const { id, title } = programYearObjective;
+  return {
+    id: `${id}`,
+    title,
+    competency: {
+      id: `${programYearObjective.competency.id}`,
+      title: programYearObjective.competency.title,
+    },
+  };
 };
 
 const buildSession = (session) => {
