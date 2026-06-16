@@ -100,6 +100,11 @@ module('Integration | Component | reports/curriculum/course-competencies', funct
       '1',
       'result program year objectives count is correct',
     );
+    assert.strictEqual(
+      component.results.objectAt(0).competenciesCount,
+      '1',
+      'Competencies count is correct',
+    );
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

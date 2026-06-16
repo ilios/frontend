@@ -9,6 +9,7 @@ const definition = {
     courseYear: text('td', { at: 1 }),
     courseObjectivesCount: text('td', { at: 2 }),
     programYearObjectivesCount: text('td', { at: 3 }),
+    competenciesCount: text('td', { at: 4 }),
   }),
   resultsMultiSchool: collection('[data-test-report-results] [data-test-result]', {
     schoolTitle: text('td', { at: 0 }),
@@ -16,6 +17,7 @@ const definition = {
     courseYear: text('td', { at: 2 }),
     courseObjectivesCount: text('td', { at: 3 }),
     programYearObjectivesCount: text('td', { at: 4 }),
+    competenciesCount: text('td', { at: 5 }),
   }),
 };
 

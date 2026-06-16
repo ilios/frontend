@@ -522,27 +522,59 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     const cohort = await this.server.create('cohort', {
       programYear,
     });
-    const competency = await this.server.create('competency', {
+    const competency1 = await this.server.create('competency', {
+      school: this.school,
+      programYears: [programYear],
+    });
+    const competency2 = await this.server.create('competency', {
       school: this.school,
       programYears: [programYear],
     });
 
-    const programYearObjective = await this.server.create('programYearObjective', {
-      competency,
+    const programYearObjective1 = await this.server.create('programYearObjective', {
+      competency: competency1,
+      programYear,
+    });
+    const programYearObjective2 = await this.server.create('programYearObjective', {
+      competency: competency1,
+      programYear,
+    });
+    const programYearObjective3 = await this.server.create('programYearObjective', {
+      competency: competency2,
+      programYear,
+    });
+    const programYearObjective4 = await this.server.create('programYearObjective', {
       programYear,
     });
 
-    const course = await this.server.create('course', {
+    const course1 = await this.server.create('course', {
+      year: 2013,
+      school: this.school,
+      cohorts: [cohort],
+    });
+    const course2 = await this.server.create('course', {
       year: 2013,
       school: this.school,
       cohorts: [cohort],
     });
     await this.server.create('courseObjective', {
-      course,
-      programYearObjectives: [programYearObjective],
+      course: course1,
+      programYearObjectives: [programYearObjective1],
     });
     await this.server.create('courseObjective', {
-      course,
+      course: course1,
+      programYearObjectives: [programYearObjective1, programYearObjective2],
+    });
+    await this.server.create('courseObjective', {
+      course: course1,
+      programYearObjectives: [programYearObjective3],
+    });
+    await this.server.create('courseObjective', {
+      course: course1,
+      programYearObjectives: [programYearObjective4],
+    });
+    await this.server.create('courseObjective', {
+      course: course2,
     });
 
     //handle both requests so we have two
@@ -552,6 +584,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     await page.visitCurriculumReports();
     await page.curriculum.chooseCourse.years[0].toggleAll.click();
+
     await page.curriculum.header.reportSelector.set('courseCompetencies');
     assert.ok(
       cc.header.runSummaryText.includes(
@@ -564,22 +597,44 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     await page.curriculum.header.runReport.click();
     await takeScreenshot(assert, 'course competencies report results');
 
-    assert.strictEqual(cc.results.length, 1, 'Test has 1 report result');
-    assert.strictEqual(cc.results.objectAt(0).courseTitle, 'course 0', 'Test title is correct');
+    assert.strictEqual(cc.results.length, 2, 'Test has 2 report results');
+    assert.strictEqual(cc.results.objectAt(0).courseTitle, 'course 0', 'Result 1 title is correct');
     assert.strictEqual(
       cc.results.objectAt(0).courseObjectivesCount,
-      '2',
-      'Course objectives count is correct',
+      '4',
+      'Result 1 course objectives count is correct',
     );
     assert.strictEqual(
       cc.results.objectAt(0).programYearObjectivesCount,
+      '5',
+      'Result 1 program year objectives count is correct',
+    );
+    assert.strictEqual(
+      cc.results.objectAt(0).competenciesCount,
+      '2',
+      'Result 1 competencies count is correct',
+    );
+
+    assert.strictEqual(cc.results.objectAt(1).courseTitle, 'course 1', 'Result 2 title is correct');
+    assert.strictEqual(
+      cc.results.objectAt(1).courseObjectivesCount,
       '1',
-      'Program year objectives count is correct',
+      'Result 2 course objectives count is correct',
+    );
+    assert.strictEqual(
+      cc.results.objectAt(1).programYearObjectivesCount,
+      '0',
+      'Result 2 program year objectives count is correct',
+    );
+    assert.strictEqual(
+      cc.results.objectAt(1).competenciesCount,
+      '0',
+      'Result 2 competencies count is correct',
     );
 
     assert.strictEqual(
       currentURL(),
-      '/reports/curriculum?courses=1&report=courseCompetencies&run=true',
+      '/reports/curriculum?courses=1-2&report=courseCompetencies&run=true',
       'current URL is correct',
     );
     assert.verifySteps(['API called', 'API called']);
@@ -668,6 +723,11 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '1',
       'Result 1 program year objectives count is correct',
     );
+    assert.strictEqual(
+      cc.results.objectAt(0).competenciesCount,
+      '1',
+      'Result 1 competencies count is correct',
+    );
 
     assert.strictEqual(
       cc.resultsMultiSchool.objectAt(4).schoolTitle,
@@ -688,6 +748,11 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       cc.resultsMultiSchool.objectAt(4).programYearObjectivesCount,
       '0',
       'Result 2 program year objectives count is correct',
+    );
+    assert.strictEqual(
+      cc.results.objectAt(4).competenciesCount,
+      '0',
+      'Result 2 competencies count is correct',
     );
 
     assert.strictEqual(

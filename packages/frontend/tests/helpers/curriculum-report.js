@@ -52,13 +52,14 @@ const buildProgramYearObjective = (programYearObjective) => {
     return null;
   }
   const { id, title } = programYearObjective;
+  const competency = programYearObjective.competency
+    ? { id: `${programYearObjective.competency.id}`, title: programYearObjective.competency.title }
+    : null;
+
   return {
     id: `${id}`,
     title,
-    competency: {
-      id: `${programYearObjective.competency.id}`,
-      title: programYearObjective.competency.title,
-    },
+    competency,
   };
 };
 
