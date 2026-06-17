@@ -28,6 +28,10 @@
   vertical-align: middle;
   width: 100%;
 
+  &:not(.taxonomy-manager-terms-list-item-button) {
+    color: var(--grey);
+  }
+
   .inactive {
     color: var(--red);
   }
