@@ -6,6 +6,7 @@ import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/taxonomy-manager-terms-list';
 import List from 'ilios-common/components/taxonomy-manager-terms-list';
 import noop from 'ilios-common/helpers/noop';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | taxonomy manager terms list', function (hooks) {
   setupRenderingTest(hooks);
@@ -87,6 +88,8 @@ module('Integration | Component | taxonomy manager terms list', function (hooks)
     assert.strictEqual(component.lists[1].items[0].title, 'Gamma');
     assert.notOk(component.lists[1].items[0].isButton);
     assert.notOk(component.lists[1].items[0].isInactive);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders list with inactive parent', async function (assert) {
@@ -121,6 +124,8 @@ module('Integration | Component | taxonomy manager terms list', function (hooks)
     assert.strictEqual(component.lists[1].items[0].title, 'Gamma');
     assert.notOk(component.lists[1].items[0].isButton);
     assert.notOk(component.lists[1].items[0].isInactive);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('select/deselect term', async function (assert) {

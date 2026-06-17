@@ -5,6 +5,7 @@ import { array } from '@ember/helper';
 import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/taxonomy-manager-terms-list-item';
 import ListItem from 'ilios-common/components/taxonomy-manager-terms-list-item';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | taxonomy manager terms list item', function (hooks) {
   setupRenderingTest(hooks);
@@ -29,6 +30,8 @@ module('Integration | Component | taxonomy manager terms list item', function (h
     assert.strictEqual(component.text, this.term.title);
     assert.strictEqual(component.title, this.term.title);
     assert.notOk(component.isInactive);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders an inactive term', async function (assert) {
@@ -43,6 +46,8 @@ module('Integration | Component | taxonomy manager terms list item', function (h
     assert.strictEqual(component.text, `${this.term2.title} (inactive)`);
     assert.strictEqual(component.title, this.term2.title);
     assert.ok(component.isInactive);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders as active term with an inactive parent', async function (assert) {
@@ -57,6 +62,8 @@ module('Integration | Component | taxonomy manager terms list item', function (h
     assert.strictEqual(component.text, `${this.term.title}`);
     assert.strictEqual(component.title, this.term.title);
     assert.notOk(component.isInactive);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('selected term', async function (assert) {
