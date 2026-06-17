@@ -6,6 +6,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import ListItem from 'ilios-common/components/taxonomy-manager-terms-list-item';
 import List from 'ilios-common/components/taxonomy-manager-terms-list';
 import add from 'ember-math-helpers/helpers/add';
+import { and } from 'ember-truth-helpers';
 
 export default class TaxonomyManagerTermsList extends Component {
   @cached
@@ -39,27 +40,27 @@ export default class TaxonomyManagerTermsList extends Component {
       data-test-taxonomy-manager-terms-list-level={{this.level}}
     >
       {{#each (sortBy "title" this.terms) as |term|}}
-        {{#if term.active}}
-          <li class="nested">
-            <ListItem
+        <li class="nested">
+          <ListItem
+            @hasActiveParent={{and term.active @hasActiveParent}}
+            @selectedTerms={{@selectedTerms}}
+            @term={{term}}
+            @add={{@add}}
+            @remove={{@remove}}
+            @level={{this.level}}
+          />
+          {{#if term.hasChildren}}
+            <List
+              @hasActiveParent={{and term.active @hasActiveParent}}
               @selectedTerms={{@selectedTerms}}
-              @term={{term}}
+              @parent={{term}}
               @add={{@add}}
               @remove={{@remove}}
-              @level={{this.level}}
+              @termFilter={{@termFilter}}
+              @level={{add this.level 1}}
             />
-            {{#if term.hasChildren}}
-              <List
-                @selectedTerms={{@selectedTerms}}
-                @parent={{term}}
-                @add={{@add}}
-                @remove={{@remove}}
-                @termFilter={{@termFilter}}
-                @level={{add this.level 1}}
-              />
-            {{/if}}
-          </li>
-        {{/if}}
+          {{/if}}
+        </li>
       {{/each}}
     </ul>
   </template>

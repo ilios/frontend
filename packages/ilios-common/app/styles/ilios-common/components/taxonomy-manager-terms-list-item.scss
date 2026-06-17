@@ -1,15 +1,7 @@
 @use "../mixins" as m;
 
-.taxonomy-manager-terms-list-item {
+.taxonomy-manager-terms-list-item-button {
   @include m.ilios-button-reset;
-  border: 1px var(--lightest-grey) solid;
-  border-radius: 4px;
-  display: block;
-  margin-top: 5px;
-  padding: 0.2em 0.4em 0.2em 0.6em;
-  text-align: left;
-  vertical-align: middle;
-  width: 100%;
 
   &:focus,
   &:hover {
@@ -23,6 +15,21 @@
 
   .actions {
     float: right;
+  }
+}
+
+.taxonomy-manager-terms-list-item {
+  border: 1px var(--lightest-grey) solid;
+  border-radius: 4px;
+  display: block;
+  margin-top: 5px;
+  padding: 0.2em 0.4em 0.2em 0.6em;
+  text-align: left;
+  vertical-align: middle;
+  width: 100%;
+
+  .inactive {
+    color: var(--red);
   }
 
   &.top-level {

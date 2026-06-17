@@ -168,25 +168,25 @@ export default class TaxonomyManagerComponent extends Component {
           <div class="terms-picker tag-tree">
             <ul class="taxonomy-manager-terms-list">
               {{#each (sortBy "title" this.terms) as |term|}}
-                {{#if term.active}}
-                  <li class="top-level">
-                    <ListItem
+                <li class="top-level">
+                  <ListItem
+                    @hasActiveParent={{true}}
+                    @selectedTerms={{@selectedTerms}}
+                    @term={{term}}
+                    @add={{@add}}
+                    @remove={{@remove}}
+                  />
+                  {{#if term.hasChildren}}
+                    <List
+                      @hasActiveParent={{term.active}}
                       @selectedTerms={{@selectedTerms}}
-                      @term={{term}}
+                      @parent={{term}}
                       @add={{@add}}
                       @remove={{@remove}}
+                      @termFilter={{this.termFilter}}
                     />
-                    {{#if term.hasChildren}}
-                      <List
-                        @selectedTerms={{@selectedTerms}}
-                        @parent={{term}}
-                        @add={{@add}}
-                        @remove={{@remove}}
-                        @termFilter={{this.termFilter}}
-                      />
-                    {{/if}}
-                  </li>
-                {{/if}}
+                  {{/if}}
+                </li>
               {{/each}}
             </ul>
           </div>
