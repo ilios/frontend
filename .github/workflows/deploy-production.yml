@@ -1,5 +1,8 @@
 name: Deploy Production Build
 
+permissions:
+  contents: read
+
 on:
   push:
     tags:

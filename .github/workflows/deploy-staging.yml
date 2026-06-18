@@ -1,5 +1,8 @@
 name: Deploy Staging Build
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
