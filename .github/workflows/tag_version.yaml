@@ -50,7 +50,7 @@ jobs:
       - name: Push Changes Tag Commit
         run: |
           git push
-          git push v${{env.new_tag}}
+          git push origin v${{env.new_tag}}
       - uses: act10ns/slack@v2
         if: failure()
         env:
