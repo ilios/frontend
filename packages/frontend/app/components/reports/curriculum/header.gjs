@@ -183,7 +183,7 @@ export default class ReportsCurriculumHeaderComponent extends Component {
               <label data-test-report-selector>
                 {{t "general.run"}}
                 <select {{on "change" this.changeSelectedReport}}>
-                  {{#each (sortBy "value" this.reportList) as |report|}}
+                  {{#each (sortBy "label" this.reportList) as |report|}}
                     <option
                       value={{report.value}}
                       selected={{eq report.value this.selectedReport.value}}
