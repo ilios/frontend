@@ -1,4 +1,5 @@
 import { service } from '@ember/service';
+import { action } from '@ember/object';
 import Route from '@ember/routing/route';
 
 export default class SessionTypeVisualizeVocabulariesRoute extends Route {
@@ -7,6 +8,11 @@ export default class SessionTypeVisualizeVocabulariesRoute extends Route {
   @service session;
 
   _dataLoadingPromise = null;
+
+  setupController(controller, model) {
+    super.setupController(controller, model);
+    controller.set('dataLoaded', this._dataLoadingPromise);
+  }
 
   beforeModel(transition) {
     this.currentUser.requireNonLearner(transition);
@@ -29,5 +35,10 @@ export default class SessionTypeVisualizeVocabulariesRoute extends Route {
     }
 
     return await this._dataLoadingPromise;
+  }
+
+  @action
+  loading() {
+    return true;
   }
 }
