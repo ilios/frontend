@@ -18,6 +18,8 @@ export default class ApplicationController extends Controller {
 
   appVersion = new TrackedAsyncData(this.iliosConfig.getAppVersion());
 
+  ltiApplicationScopes = ['lti-dashboard', 'lti-course-manager'];
+
   @cached
   get iliosVersionTag() {
     if (this.appVersion.isResolved) {
@@ -42,6 +44,17 @@ export default class ApplicationController extends Controller {
     }
 
     return '';
+  }
+
+  get useFullLayout() {
+    // user authorized for LTI usage do not get to see the full layout.
+    return !this.currentUser.applicationScopes.some((scope) =>
+      this.ltiApplicationScopes.includes(scope),
+    );
+  }
+
+  get hasNavigation() {
+    return this.currentUser.performsNonLearnerFunction && this.useFullLayout;
   }
 
   @action

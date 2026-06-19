@@ -85,21 +85,54 @@ export default class CurrentUserService extends Service {
     });
   }
 
-  getBooleanAttributeFromToken(attribute) {
-    const session = this.session;
-    if (isEmpty(session)) {
-      return false;
+  /**
+   * Returns the decoded JWT from the current user session.
+   * @returns {object|null}
+   */
+  get decodedJwt() {
+    if (isEmpty(this.session)) {
+      return null;
     }
 
-    const jwt = session.get('data.authenticated.jwt');
-
+    const jwt = this.session.get('data.authenticated.jwt');
     if (isEmpty(jwt)) {
-      return false;
+      return null;
     }
-    const obj = jwtDecode(jwt);
 
-    return !!get(obj, attribute);
+    return jwtDecode(jwt);
   }
+
+  getBooleanAttributeFromToken(attribute) {
+    return this.decodedJwt ? !!get(this.decodedJwt, attribute) : false;
+  }
+
+  /**
+   * Return the application scopes for the current user.
+   * These are mapped to the audience claim attribute of the JWT
+   * that is used to authenticate the current user.
+   * @returns {string[]} A list of application scopes given for the current user.
+   */
+  get applicationScopes() {
+    if (!this.decodedJwt) {
+      return [];
+    }
+
+    const scopes = this.decodedJwt['aud'];
+    if (isEmpty(scopes)) {
+      return [];
+    }
+
+    if (Array.isArray(scopes)) {
+      return scopes;
+    }
+
+    if ('string' === typeof scopes) {
+      return [scopes];
+    }
+
+    return [];
+  }
+
   get isRoot() {
     return this.getBooleanAttributeFromToken('is_root');
   }

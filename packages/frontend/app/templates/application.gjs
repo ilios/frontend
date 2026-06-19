@@ -14,28 +14,25 @@ import FlashMessages from 'frontend/components/flash-messages';
     <ConnectionStatus />
     <ApiVersionNotice />
     <UpdateNotification />
-    <div
-      class="application-wrapper{{if
-          @controller.currentUser.performsNonLearnerFunction
-          ' show-navigation'
-        }}"
-    >
-      <IliosHeader />
-      <div class="ilios-logo">
-        <LinkTo @route="dashboard" title={{t "general.dashboard"}}>
-          <picture>
-            <source
-              srcset="/assets/images/ilios-logo.svg"
-              media="(min-width: 400px)"
-              alt={{t "general.logo"}}
-            />
-            <img src="/assets/images/sunburst.svg" alt={{t "general.logo"}} />
-          </picture>
+    <div class="application-wrapper{{if @controller.hasNavigation ' show-navigation'}}">
+      {{#if @controller.useFullLayout}}
+        <IliosHeader />
+        <div class="ilios-logo">
+          <LinkTo @route="dashboard" title={{t "general.dashboard"}}>
+            <picture>
+              <source
+                srcset="/assets/images/ilios-logo.svg"
+                media="(min-width: 400px)"
+                alt={{t "general.logo"}}
+              />
+              <img src="/assets/images/sunburst.svg" alt={{t "general.logo"}} />
+            </picture>
 
-        </LinkTo>
-      </div>
-      {{#if @controller.session.isAuthenticated}}
-        <IliosNavigation />
+          </LinkTo>
+        </div>
+        {{#if @controller.session.isAuthenticated}}
+          <IliosNavigation />
+        {{/if}}
       {{/if}}
       <main id="main">
         {{#if @controller.showErrorDisplay}}
@@ -44,13 +41,15 @@ import FlashMessages from 'frontend/components/flash-messages';
           {{outlet}}
         {{/if}}
       </main>
-      <footer class="ilios-footer">
-        <div class="version">
-          {{@controller.iliosVersionTag}}
-          {{@controller.apiVersionTag}}
-          {{@controller.frontendVersionTag}}
-        </div>
-      </footer>
+      {{#if @controller.useFullLayout}}
+        <footer class="ilios-footer">
+          <div class="version">
+            {{@controller.iliosVersionTag}}
+            {{@controller.apiVersionTag}}
+            {{@controller.frontendVersionTag}}
+          </div>
+        </footer>
+      {{/if}}
     </div>
     <FlashMessages />
   </div>
