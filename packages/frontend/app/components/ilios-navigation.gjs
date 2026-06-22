@@ -13,7 +13,6 @@ import {
   faBars,
   faBook,
   faBuildingColumns,
-  faChartColumn,
   faChevronRight,
   faFileLines,
   faGears,
@@ -167,29 +166,6 @@ export default class IliosNavigationComponent extends Component {
                 <FaIcon @icon={{faGears}} @fixedWidth={{true}} />
                 <span class="text">
                   {{t "general.admin"}}
-                </span>
-                <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
-              </LinkTo>
-            </li>
-          {{/if}}
-          {{#if this.currentUser.performsNonLearnerFunction}}
-            <li>
-              <LinkTo
-                @route="curriculum-inventory-reports"
-                title={{t "general.curriculumInventory"}}
-                @current-when={{join
-                  " "
-                  (array
-                    "curriculum-inventory-report"
-                    "curriculum-inventory-reports"
-                    "curriculum-inventory-sequence-block"
-                    "verification-preview"
-                  )
-                }}
-              >
-                <FaIcon @icon={{faChartColumn}} @fixedWidth={{true}} />
-                <span class="text">
-                  {{t "general.curriculumInventory"}}
                 </span>
                 <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
               </LinkTo>
