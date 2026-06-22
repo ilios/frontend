@@ -1,5 +1,8 @@
 name: Deploy Pull Request
 
+permissions:
+  contents: read
+
 on:
   pull_request_target:
     types: [labeled]
@@ -36,6 +39,8 @@ jobs:
           message: PR ${{ github.event.number }} Deploy Failed {{ env.GITHUB_SERVER_URL }}/{{ env.GITHUB_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}
 
   comment:
+    permissions:
+      issues: write
     runs-on: ubuntu-latest
     needs: deploy
     steps:

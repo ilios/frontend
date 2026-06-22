@@ -1,5 +1,8 @@
 name: Visual Diff Results
 
+permissions:
+  contents: read
+
 on:
   workflow_run:
     workflows: [Visual Diff]

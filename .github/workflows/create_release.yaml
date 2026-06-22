@@ -1,5 +1,8 @@
 name: Release Notes
 
+permissions:
+  contents: read
+
 on:
   push:
     tags:
@@ -7,6 +10,8 @@ on:
 
 jobs:
   notes:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6

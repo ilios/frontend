@@ -1,4 +1,8 @@
 name: Update pnpm Version
+
+permissions:
+  contents: read
+
 on:
   schedule:
     - cron: "0 13 * * 2" # Weekly on Tuesday morning (UTC)
@@ -6,6 +10,9 @@ on:
 
 jobs:
   update-pnpm:
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

@@ -1,5 +1,8 @@
 name: Update Transitive Dependencies
 
+permissions:
+  contents: read
+
 on:
   schedule:
     - cron: "15 15 * * 1" # weekly, on Monday morning (UTC)
@@ -9,6 +12,7 @@ jobs:
   update:
     runs-on: macos-latest
     permissions:
+      contents: write
       pull-requests: write
     steps:
       - uses: actions/checkout@v6
