@@ -15,12 +15,12 @@ export default class DetailTermsListItem extends Component {
   @tracked isHovering;
 
   @cached
-  get allParentsTitlesData() {
-    return new TrackedAsyncData(this.args.term.getAllParentTitles(this.args.term));
+  get allParentsData() {
+    return new TrackedAsyncData(this.args.term.getAllParents());
   }
 
-  get allParentTitles() {
-    return this.allParentsTitlesData.isResolved ? this.allParentsTitlesData.value : [];
+  get allParents() {
+    return this.allParentsData.isResolved ? this.allParentsData.value : [];
   }
 
   @cached
@@ -55,6 +55,7 @@ export default class DetailTermsListItem extends Component {
       class="detail-terms-list-item"
       id={{this.detailTermsListItemId}}
       {{mouseHoverToggle (set this "isHovering")}}
+      data-test-detail-terms-list-item
     >
       {{#if @canEdit}}
         {{#if this.showTooltip}}
@@ -66,12 +67,17 @@ export default class DetailTermsListItem extends Component {
           {{#if @term.isTopLevel}}
             {{@term.title}}
           {{else}}
-            {{#each this.allParentTitles as |title|}}
+            {{#each this.allParents as |parent|}}
               {{! template-lint-disable no-bare-strings}}
               <span class="muted">
-                {{title}}
-                &raquo;&nbsp;
+                {{parent.title}}
               </span>
+              {{#unless parent.active}}
+                <span class="inactive">
+                  ({{t "general.inactive"}})
+                </span>
+              {{/unless}}
+              &raquo;&nbsp;
             {{/each}}
             {{@term.title}}
           {{/if}}
@@ -86,12 +92,17 @@ export default class DetailTermsListItem extends Component {
         {{#if @term.isTopLevel}}
           {{@term.title}}
         {{else}}
-          {{#each this.allParentTitles as |title|}}
+          {{#each this.allParents as |parent|}}
             {{! template-lint-disable no-bare-strings}}
             <span class="muted">
-              {{title}}
-              &raquo;&nbsp;
+              {{parent.title}}
             </span>
+            {{#unless parent.active}}
+              <span class="inactive">
+                ({{t "general.inactive"}})
+              </span>
+            {{/unless}}
+            &raquo;&nbsp;
           {{/each}}
           {{@term.title}}
         {{/if}}
