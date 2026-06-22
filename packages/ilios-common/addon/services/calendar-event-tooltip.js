@@ -76,7 +76,7 @@ export default class CalendarEventTooltip extends Service {
         contents = addInstructorsToContents(contents, instructors);
       }
 
-      contents = addCourseTitleToContents(contents, courseTitle, this.intl.t('general.course'));
+      contents = addCourseTitleToContents(contents, courseTitle);
       contents = addSessionTypeTitleToContents(contents, sessionTypeTitle);
       if (isMulti) {
         contents = contents + `,<br /> ${this.intl.t('general.multiple')}`;
