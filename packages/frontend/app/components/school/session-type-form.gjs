@@ -189,6 +189,22 @@ export default class SchoolSessionTypeFormComponent extends Component {
               </span>
             {{/if}}
           </div>
+          <div class="item" data-test-active>
+            <label>
+              {{t "general.active"}}:
+            </label>
+            {{#if @canEditActive}}
+              <ToggleYesno @yes={{this.isActive}} @toggle={{set this "isActive"}} />
+            {{else}}
+              <span class="value {{if this.isActive 'yes' 'no'}}">
+                {{#if this.isActive}}
+                  {{t "general.yes"}}
+                {{else}}
+                  {{t "general.no"}}
+                {{/if}}
+              </span>
+            {{/if}}
+          </div>
           <div class="item" data-test-assessment>
             <label>
               {{t "general.assessment"}}:
@@ -228,22 +244,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
               {{/if}}
             </div>
           {{/if}}
-          <div class="item" data-test-active>
-            <label>
-              {{t "general.active"}}:
-            </label>
-            {{#if @canEditActive}}
-              <ToggleYesno @yes={{this.isActive}} @toggle={{set this "isActive"}} />
-            {{else}}
-              <span class="value {{if this.isActive 'yes' 'no'}}">
-                {{#if this.isActive}}
-                  {{t "general.yes"}}
-                {{else}}
-                  {{t "general.no"}}
-                {{/if}}
-              </span>
-            {{/if}}
-          </div>
+
           <div class="buttons">
             {{#if @canUpdate}}
               <button
