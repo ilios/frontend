@@ -56,13 +56,17 @@
         &:hover {
           background-color: var(--light-blue);
         }
+
+        svg {
+          width: 100%;
+        }
       }
     }
   }
 
   &.expanded {
     @include m.for-smaller-than-laptop {
-      ul {
+      ul.navigation-links {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
 
