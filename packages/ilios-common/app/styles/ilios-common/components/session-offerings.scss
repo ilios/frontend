@@ -28,6 +28,8 @@
     display: grid;
     font-weight: 600;
     grid-template-columns: 3fr repeat(3, 4fr) 2fr;
+    position: sticky;
+    top: 0;
 
     div {
       background-color: var(--blue);
