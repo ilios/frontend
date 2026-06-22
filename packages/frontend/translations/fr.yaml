@@ -103,6 +103,9 @@ general:
   countTotal: "{total} au total"
   country: Pays
   countryCode: Code du pays
+  courseCompetencies: Compétences du cours
+  courseCompetenciesReportSummary: "Rapport de {courseCount, plural, one {un cours} other {# cours}}. Chaque compétence est listée avec les objectifs du cours et de l'année de diplôme."
+  courseCompetenciesReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {un cours} other {# cours}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque compétence est listée avec les objectifs du cours et de l'année de diplôme."
   coursesAndSessions: Des Cours et Séances
   courseTerm: Terme de Cours
   courseTerms: Termes de Cours
@@ -315,6 +318,8 @@ general:
   primarySchool: École Première
   programExpectations: Attentes du programme
   programExpectationsId: Identifiant des attentes du programme
+  programObjective: "Objectif du Programme"
+  programObjectives: "Objectifs du Programme"
   programs: Diplômes
   programTitle: Titre de Diplôme
   programTitlePlaceholder: Ajoutez un titre pour ce Diplôme

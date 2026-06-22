@@ -78,7 +78,7 @@ general:
   color: Color
   competenciesManageTitle: Maneje Competencias
   competency: Competencia
-  competencyDomain: Dominio de Dompetencia
+  competencyDomain: Dominio de Competencia
   confirmRemoveCourse: " ¿Estás seguro que quieres borrar este curso, con {publishedOfferingCount} ofrecimientos publicados? Esta acción borrará todas las sesiones y ofrecimientos para este curso y no se puede deshacer."
   confirmRemoveInstructorGroup: "¿Estás seguro que quieres remover este grupo de instructores, con {instructorCount} instructores? Esta acción no se puede deshacer."
   confirmRemoveLearnerGroup: "¿Estás seguro que quieres borrar este grupo de aprendedores, con {subgroupCount} grupos subordinados? Esta acción no se puede deshacer."
@@ -103,6 +103,9 @@ general:
   countTotal: "{total} en total"
   country: País
   countryCode: Código del país
+  courseCompetencies: Competencias de Curso
+  courseCompetenciesReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera cada competencia junto con los objetivos curso y de ańo de programa."
+  courseCompetenciesReportSummaryMultiSchool: "informe para {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Se enumera cada competencia junto con los objetivos curso y de ańo de programa."
   coursesAndSessions: Cursos y Sesiones
   courseTerm: Término del Curso
   courseTerms: Términos del Curso
@@ -315,6 +318,8 @@ general:
   primarySchool: Escuela Primaria
   programExpectations: Expectativas del programa
   programExpectationsId: ID de expectativas del programa
+  programObjective: Objetivo de Programa
+  programObjectives: Objetivos de Programa
   programs: Programas
   programTitle: Titulo de Programa
   programTitlePlaceholder: Meter un titulo para este programa

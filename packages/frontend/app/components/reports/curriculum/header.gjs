@@ -5,6 +5,7 @@ import { guidFor } from '@ember/object/internals';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { eq, not } from 'ember-truth-helpers';
+import sortBy from 'ilios-common/helpers/sort-by';
 import CopyButton from 'ilios-common/components/copy-button';
 import perform from 'ember-concurrency/helpers/perform';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
@@ -64,6 +65,30 @@ export default class ReportsCurriculumHeaderComponent extends Component {
     if (this.hasMultipleSchools) {
       return [
         {
+          value: 'courseCompetencies',
+          label: this.intl.t('general.courseCompetencies'),
+          summary: this.intl.t('general.courseCompetenciesReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.countSelectedSchools,
+          }),
+        },
+        {
+          value: 'instructionalTime',
+          label: this.intl.t('general.instructionalTime'),
+          summary: this.intl.t('general.instructionalTimeReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.countSelectedSchools,
+          }),
+        },
+        {
+          value: 'learnerGroups',
+          label: this.intl.t('general.learnerGroups'),
+          summary: this.intl.t('general.learnerGroupsReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.countSelectedSchools,
+          }),
+        },
+        {
           value: 'sessionObjectives',
           label: this.intl.t('general.sessionObjectives'),
           summary: this.intl.t('general.sessionObjectivesReportSummaryMultiSchool', {
@@ -80,22 +105,6 @@ export default class ReportsCurriculumHeaderComponent extends Component {
           }),
         },
         {
-          value: 'learnerGroups',
-          label: this.intl.t('general.learnerGroups'),
-          summary: this.intl.t('general.learnerGroupsReportSummaryMultiSchool', {
-            courseCount: this.args.countSelectedCourses,
-            schoolCount: this.countSelectedSchools,
-          }),
-        },
-        {
-          value: 'instructionalTime',
-          label: this.intl.t('general.instructionalTime'),
-          summary: this.intl.t('general.instructionalTimeReportSummaryMultiSchool', {
-            courseCount: this.args.countSelectedCourses,
-            schoolCount: this.countSelectedSchools,
-          }),
-        },
-        {
           value: 'taggedTerms',
           label: this.intl.t('general.taggedTerms'),
           summary: this.intl.t('general.taggedTermsReportSummaryMultiSchool', {
@@ -107,16 +116,16 @@ export default class ReportsCurriculumHeaderComponent extends Component {
     } else {
       return [
         {
-          value: 'sessionObjectives',
-          label: this.intl.t('general.sessionObjectives'),
-          summary: this.intl.t('general.sessionObjectivesReportSummary', {
+          value: 'courseCompetencies',
+          label: this.intl.t('general.courseCompetencies'),
+          summary: this.intl.t('general.courseCompetenciesReportSummary', {
             courseCount: this.args.countSelectedCourses,
           }),
         },
         {
-          value: 'sessionOfferings',
-          label: this.intl.t('general.sessionOfferings'),
-          summary: this.intl.t('general.sessionOfferingsReportSummary', {
+          value: 'instructionalTime',
+          label: this.intl.t('general.instructionalTime'),
+          summary: this.intl.t('general.instructionalTimeReportSummary', {
             courseCount: this.args.countSelectedCourses,
           }),
         },
@@ -128,9 +137,16 @@ export default class ReportsCurriculumHeaderComponent extends Component {
           }),
         },
         {
-          value: 'instructionalTime',
-          label: this.intl.t('general.instructionalTime'),
-          summary: this.intl.t('general.instructionalTimeReportSummary', {
+          value: 'sessionObjectives',
+          label: this.intl.t('general.sessionObjectives'),
+          summary: this.intl.t('general.sessionObjectivesReportSummary', {
+            courseCount: this.args.countSelectedCourses,
+          }),
+        },
+        {
+          value: 'sessionOfferings',
+          label: this.intl.t('general.sessionOfferings'),
+          summary: this.intl.t('general.sessionOfferingsReportSummary', {
             courseCount: this.args.countSelectedCourses,
           }),
         },
@@ -167,7 +183,7 @@ export default class ReportsCurriculumHeaderComponent extends Component {
               <label data-test-report-selector>
                 {{t "general.run"}}
                 <select {{on "change" this.changeSelectedReport}}>
-                  {{#each this.reportList as |report|}}
+                  {{#each (sortBy "label" this.reportList) as |report|}}
                     <option
                       value={{report.value}}
                       selected={{eq report.value this.selectedReport.value}}
