@@ -70,12 +70,12 @@ module('Integration | Component | taxonomy manager terms list item', function (h
     this.set('selectedTerms', [this.term]);
     this.set('term', this.term);
     this.set('remove', (term) => {
-      assert.step('remove called');
       assert.strictEqual(term, this.term);
       this.set(
         'selectedTerms',
         this.selectedTerms.filter((t) => t !== term),
       );
+      assert.step('remove called');
     });
 
     await render(
@@ -103,12 +103,12 @@ module('Integration | Component | taxonomy manager terms list item', function (h
     this.set('selectedTerms', [this.term2]);
     this.set('term', this.term2);
     this.set('remove', (term) => {
-      assert.step('remove called');
       assert.strictEqual(term, this.term2);
       this.set(
         'selectedTerms',
         this.selectedTerms.filter((t) => t !== term),
       );
+      assert.step('remove called');
     });
 
     await render(
@@ -136,9 +136,9 @@ module('Integration | Component | taxonomy manager terms list item', function (h
     this.set('selectedTerms', []);
     this.set('term', this.term);
     this.set('add', (term) => {
-      assert.step('add called');
       assert.strictEqual(term, this.term);
       this.set('selectedTerms', [...this.selectedTerms, term]);
+      assert.step('add called');
     });
 
     await render(
