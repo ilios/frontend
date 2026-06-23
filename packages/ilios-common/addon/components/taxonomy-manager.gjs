@@ -14,8 +14,8 @@ import { on } from '@ember/modifier';
 import { eq } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import sortBy from 'ilios-common/helpers/sort-by';
-import SelectableTermsListItem from 'ilios-common/components/selectable-terms-list-item';
-import SelectableTermsList from 'ilios-common/components/selectable-terms-list';
+import ListItem from 'ilios-common/components/taxonomy-manager-terms-list-item';
+import List from 'ilios-common/components/taxonomy-manager-terms-list';
 
 export default class TaxonomyManagerComponent extends Component {
   @service store;
@@ -166,27 +166,27 @@ export default class TaxonomyManagerComponent extends Component {
             />
           </div>
           <div class="terms-picker tag-tree">
-            <ul class="selectable-terms-list">
+            <ul class="taxonomy-manager-terms-list">
               {{#each (sortBy "title" this.terms) as |term|}}
-                {{#if term.active}}
-                  <li class="top-level">
-                    <SelectableTermsListItem
+                <li class="top-level">
+                  <ListItem
+                    @hasActiveParent={{true}}
+                    @selectedTerms={{@selectedTerms}}
+                    @term={{term}}
+                    @add={{@add}}
+                    @remove={{@remove}}
+                  />
+                  {{#if term.hasChildren}}
+                    <List
+                      @hasActiveParent={{term.active}}
                       @selectedTerms={{@selectedTerms}}
-                      @term={{term}}
+                      @parent={{term}}
                       @add={{@add}}
                       @remove={{@remove}}
+                      @termFilter={{this.termFilter}}
                     />
-                    {{#if term.hasChildren}}
-                      <SelectableTermsList
-                        @selectedTerms={{@selectedTerms}}
-                        @parent={{term}}
-                        @add={{@add}}
-                        @remove={{@remove}}
-                        @termFilter={{this.termFilter}}
-                      />
-                    {{/if}}
-                  </li>
-                {{/if}}
+                  {{/if}}
+                </li>
               {{/each}}
             </ul>
           </div>

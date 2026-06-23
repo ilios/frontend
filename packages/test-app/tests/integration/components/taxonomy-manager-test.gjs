@@ -6,6 +6,7 @@ import { component } from 'ilios-common/page-objects/components/taxonomy-manager
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
 import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | taxonomy manager', function (hooks) {
   setupRenderingTest(hooks);
@@ -114,6 +115,8 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     assert.strictEqual(component.availableTerms[1].children.length, 2);
     assert.strictEqual(component.availableTerms[1].children[0].name, 'Palo Alto');
     assert.strictEqual(component.availableTerms[1].children[1].name, 'Rainjacket');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('select/deselect term', async function (assert) {

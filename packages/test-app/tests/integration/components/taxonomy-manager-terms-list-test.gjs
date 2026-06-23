@@ -1,12 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
+import { array } from '@ember/helper';
 import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/selectable-terms-list';
-import SelectableTermsList from 'ilios-common/components/selectable-terms-list';
+import { component } from 'ilios-common/page-objects/components/taxonomy-manager-terms-list';
+import List from 'ilios-common/components/taxonomy-manager-terms-list';
 import noop from 'ilios-common/helpers/noop';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | selectable terms list', function (hooks) {
+module('Integration | Component | taxonomy manager terms list', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
@@ -19,7 +21,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     });
     const term2 = await this.server.create('term', {
       title: 'Beta',
-      active: true,
+      active: false,
       vocabulary,
     });
     const term3 = await this.server.create('term', {
@@ -28,22 +30,27 @@ module('Integration | Component | selectable terms list', function (hooks) {
       vocabulary,
     });
     const term4 = await this.server.create('term', {
+      title: 'Delta',
+      active: false,
+      vocabulary,
+    });
+    const term5 = await this.server.create('term', {
       title: 'First',
       active: true,
       vocabulary,
       children: [term1, term2],
     });
-    const term5 = await this.server.create('term', {
+    const term6 = await this.server.create('term', {
       title: 'Second',
-      active: true,
+      active: false,
       vocabulary,
-      children: [term3],
+      children: [term3, term4],
     });
     const root = await this.server.create('term', {
       title: 'root',
       active: true,
       vocabulary,
-      children: [term4, term5],
+      children: [term5, term6],
     });
 
     this.rootTerm = await this.owner.lookup('service:store').findRecord('term', root.id);
@@ -55,12 +62,12 @@ module('Integration | Component | selectable terms list', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     await render(
       <template>
-        <SelectableTermsList
-          @selectedTerms={{this.selectedTerms}}
+        <List
+          @hasActiveParent={{true}}
+          @selectedTerms={{(array)}}
           @parent={{this.term}}
           @add={{(noop)}}
           @remove={{(noop)}}
@@ -69,57 +76,89 @@ module('Integration | Component | selectable terms list', function (hooks) {
     );
     assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].title, 'First');
+    assert.ok(component.items[0].isButton);
+    assert.notOk(component.items[0].isLabeledAsInactive);
     assert.strictEqual(component.items[1].title, 'Second');
+    assert.notOk(component.items[1].isButton);
+    assert.ok(component.items[1].isLabeledAsInactive);
     assert.strictEqual(component.lists.length, 2);
     assert.strictEqual(component.lists[0].items.length, 2);
     assert.strictEqual(component.lists[0].items[0].title, 'Alpha');
+    assert.ok(component.lists[0].items[0].isButton);
+    assert.notOk(component.lists[0].items[0].isLabeledAsInactive);
     assert.strictEqual(component.lists[0].items[1].title, 'Beta');
-    assert.strictEqual(component.lists[1].items.length, 1);
-    assert.strictEqual(component.lists[1].items[0].title, 'Gamma');
+    assert.notOk(component.lists[0].items[1].isButton);
+    assert.ok(component.lists[0].items[1].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items.length, 2);
+    assert.strictEqual(component.lists[1].items[0].title, 'Delta');
+    assert.notOk(component.lists[1].items[0].isButton);
+    assert.notOk(component.lists[1].items[0].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items[1].title, 'Gamma');
+    assert.notOk(component.lists[1].items[1].isButton);
+    assert.notOk(component.lists[1].items[1].isLabeledAsInactive);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
-  test('inactive terms are not rendered', async function (assert) {
-    this.term2.set('active', false);
-    this.term3.set('active', false);
-    this.term5.set('active', false);
-
-    this.set('selectedTerms', []);
+  test('it renders list with inactive parent', async function (assert) {
     this.set('term', this.rootTerm);
     await render(
       <template>
-        <SelectableTermsList
-          @selectedTerms={{this.selectedTerms}}
+        <List
+          @hasActiveParent={{false}}
+          @selectedTerms={{(array)}}
           @parent={{this.term}}
           @add={{(noop)}}
           @remove={{(noop)}}
         />
       </template>,
     );
-    assert.strictEqual(component.items.length, 1);
+    assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].title, 'First');
-    assert.strictEqual(component.lists.length, 1);
-    assert.strictEqual(component.lists[0].items.length, 1);
+    assert.notOk(component.items[0].isButton);
+    assert.notOk(component.items[0].isLabeledAsInactive);
+    assert.strictEqual(component.items[1].title, 'Second');
+    assert.notOk(component.items[1].isButton);
+    assert.notOk(component.items[1].isLabeledAsInactive);
+    assert.strictEqual(component.lists.length, 2);
+    assert.strictEqual(component.lists[0].items.length, 2);
     assert.strictEqual(component.lists[0].items[0].title, 'Alpha');
+    assert.notOk(component.lists[0].items[0].isButton);
+    assert.notOk(component.lists[0].items[0].isLabeledAsInactive);
+    assert.strictEqual(component.lists[0].items[1].title, 'Beta');
+    assert.notOk(component.lists[0].items[1].isButton);
+    assert.notOk(component.lists[0].items[1].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items.length, 2);
+    assert.strictEqual(component.lists[1].items[0].title, 'Delta');
+    assert.notOk(component.lists[1].items[0].isButton);
+    assert.notOk(component.lists[1].items[0].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items[1].title, 'Gamma');
+    assert.notOk(component.lists[1].items[1].isButton);
+    assert.notOk(component.lists[1].items[1].isLabeledAsInactive);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('select/deselect term', async function (assert) {
     this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     this.set('add', (term) => {
-      assert.step('add called');
-      assert.strictEqual(term, this.term4);
+      assert.strictEqual(term, this.term5);
       this.set('selectedTerms', [...this.selectedTerms, term]);
+      assert.step('add called');
     });
     this.set('remove', (term) => {
-      assert.strictEqual(term, this.term4);
+      assert.strictEqual(term, this.term5);
       this.set(
         'selectedTerms',
         this.selectedTerms.filter((t) => t !== term),
       );
+      assert.step('remove called');
     });
     await render(
       <template>
-        <SelectableTermsList
+        <List
+          @hasActiveParent={{true}}
           @selectedTerms={{this.selectedTerms}}
           @parent={{this.term}}
           @add={{this.add}}
@@ -132,17 +171,16 @@ module('Integration | Component | selectable terms list', function (hooks) {
     assert.ok(component.items[0].isSelected);
     await component.items[0].click();
     assert.notOk(component.items[0].isSelected);
-    assert.verifySteps(['add called']);
+    assert.verifySteps(['add called', 'remove called']);
   });
 
   test('filter terms', async function (assert) {
-    this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     this.set('termFilter', 'Gamma');
     await render(
       <template>
-        <SelectableTermsList
-          @selectedTerms={{this.selectedTerms}}
+        <List
+          @selectedTerms={{(array)}}
           @parent={{this.term}}
           @add={{(noop)}}
           @remove={{(noop)}}
@@ -157,13 +195,12 @@ module('Integration | Component | selectable terms list', function (hooks) {
   });
 
   test('filter terms - partial match', async function (assert) {
-    this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     this.set('termFilter', 'amma');
     await render(
       <template>
-        <SelectableTermsList
-          @selectedTerms={{this.selectedTerms}}
+        <List
+          @selectedTerms={{(array)}}
           @parent={{this.term}}
           @add={{(noop)}}
           @remove={{(noop)}}

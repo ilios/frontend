@@ -1,0 +1,42 @@
+@use "../mixins" as m;
+
+.taxonomy-manager-terms-list-item-button {
+  @include m.ilios-button-reset;
+
+  &:focus,
+  &:hover {
+    background-color: var(--lightest-grey);
+    border: 1px var(--black) solid;
+  }
+
+  &.selected {
+    background-color: var(--lightest-grey);
+  }
+
+  .actions {
+    float: right;
+  }
+}
+
+.taxonomy-manager-terms-list-item {
+  border: 1px var(--lightest-grey) solid;
+  border-radius: 4px;
+  display: block;
+  margin-top: 5px;
+  padding: 0.2em 0.4em 0.2em 0.6em;
+  text-align: left;
+  vertical-align: middle;
+  width: 100%;
+
+  &:not(.taxonomy-manager-terms-list-item-button) {
+    color: var(--grey);
+  }
+
+  .inactive {
+    color: var(--red);
+  }
+
+  &.top-level {
+    margin-left: 0;
+  }
+}
