@@ -33,11 +33,11 @@ export default class SelectableTermsListItemComponent extends Component {
   }
 
   get showTooltip() {
-    return this.args?.term.description?.length && this.isHovering;
+    return this.args.term.description?.length && this.isHovering;
   }
 
   get labelAsInactive() {
-    return this.args.hasActiveParent && !this.args?.term.active;
+    return this.args.hasActiveParent && !this.args.term.active;
   }
 
   @action
