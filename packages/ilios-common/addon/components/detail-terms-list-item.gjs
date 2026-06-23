@@ -10,6 +10,7 @@ import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { eq, not, or } from 'ember-truth-helpers';
 
 export default class DetailTermsListItem extends Component {
   @tracked isHovering;
@@ -30,6 +31,10 @@ export default class DetailTermsListItem extends Component {
 
   get parent() {
     return this.parentData.isResolved ? this.parentData.value : null;
+  }
+
+  get oldestInactiveParent() {
+    return this.allParents.find((p) => !p.active);
   }
 
   get detailTermsListItemId() {
@@ -72,20 +77,22 @@ export default class DetailTermsListItem extends Component {
               <span class="muted">
                 {{parent.title}}
               </span>
-              {{#unless parent.active}}
+              {{! only show the inactive label on the oldest inactive ancestor in the hierarchy }}
+              {{#if (eq parent this.oldestInactiveParent)}}
                 <span class="inactive">
                   ({{t "general.inactive"}})
                 </span>
-              {{/unless}}
+              {{/if}}
               &raquo;&nbsp;
             {{/each}}
             {{@term.title}}
           {{/if}}
-          {{#unless @term.active}}
+          {{! only show the inactive label if the given term is inactive and all of its ancestors are active }}
+          {{#if (not (or @term.active this.oldestInactiveParent))}}
             <span class="inactive">
               ({{t "general.inactive"}})
             </span>
-          {{/unless}}
+          {{/if}}
           <FaIcon @icon={{faXmark}} class="remove" />
         </button>
       {{else}}
@@ -97,20 +104,20 @@ export default class DetailTermsListItem extends Component {
             <span class="muted">
               {{parent.title}}
             </span>
-            {{#unless parent.active}}
+            {{#if (eq parent this.oldestInactiveParent)}}
               <span class="inactive">
                 ({{t "general.inactive"}})
               </span>
-            {{/unless}}
+            {{/if}}
             &raquo;&nbsp;
           {{/each}}
           {{@term.title}}
         {{/if}}
-        {{#unless @term.active}}
+        {{#if (not (or @term.active this.oldestInactiveParent))}}
           <span class="inactive">
             ({{t "general.inactive"}})
           </span>
-        {{/unless}}
+        {{/if}}
       {{/if}}
     </li>
   </template>

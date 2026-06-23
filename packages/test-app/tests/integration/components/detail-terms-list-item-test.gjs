@@ -107,10 +107,39 @@ module('Integration | Component | detail terms list item', function (hooks) {
     assert.notOk(component.hasDeleteIcon);
   });
 
-  test('inactive ancestors are labeled as such', async function (assert) {
+  test('inactive ancestor is labeled as such', async function (assert) {
     const term = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',
+      active: true,
+    });
+    const term2 = await this.server.create('term', {
+      parent: term,
+      title: 'Bar',
+    });
+    const term3 = await this.server.create('term', {
+      parent: term2,
+      title: 'Brat',
+    });
+    const term4 = await this.server.create('term', {
+      parent: term3,
+      title: 'Wurst',
+    });
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term4.id);
+    this.set('term', termModel);
+    await render(
+      <template>
+        <DetailTermsListItem @term={{this.term}} @canEdit={{true}} @remove={{(noop)}} />
+      </template>,
+    );
+    assert.strictEqual(component.name, 'Foo » Bar (inactive) » Brat » Wurst');
+  });
+
+  test('only apply inactive label to nested term if all its ancestors are active', async function (assert) {
+    const term = await this.server.create('term', {
+      vocabulary: this.vocabulary,
+      title: 'Foo',
+      active: true,
     });
     const term2 = await this.server.create('term', {
       parent: term,
@@ -120,11 +149,11 @@ module('Integration | Component | detail terms list item', function (hooks) {
     const term3 = await this.server.create('term', {
       parent: term2,
       title: 'Brat',
+      active: true,
     });
     const term4 = await this.server.create('term', {
       parent: term3,
       title: 'Wurst',
-      active: true,
     });
     const termModel = await this.owner.lookup('service:store').findRecord('term', term4.id);
     this.set('term', termModel);
@@ -133,6 +162,6 @@ module('Integration | Component | detail terms list item', function (hooks) {
         <DetailTermsListItem @term={{this.term}} @canEdit={{true}} @remove={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(component.name, 'Foo (inactive) » Bar » Brat (inactive) » Wurst');
+    assert.strictEqual(component.name, 'Foo » Bar » Brat » Wurst (inactive)');
   });
 });
