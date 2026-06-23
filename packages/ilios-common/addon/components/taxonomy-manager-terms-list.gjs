@@ -42,7 +42,7 @@ export default class TaxonomyManagerTermsList extends Component {
       {{#each (sortBy "title" this.terms) as |term|}}
         <li class="nested">
           <ListItem
-            @hasActiveParent={{and term.active @hasActiveParent}}
+            @hasActiveParent={{@hasActiveParent}}
             @selectedTerms={{@selectedTerms}}
             @term={{term}}
             @add={{@add}}
