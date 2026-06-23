@@ -51,15 +51,17 @@ export default class SessionOfferingsListComponent extends Component {
         {{#each this.offeringBlocks as |block|}}
           <div class="offering-block">
             <div class="offering-block-date">
-              <span class="offering-block-date-dayofweek">
+              <span class="offering-block-date-dayofweek" data-test-session-offering-dayofweek>
                 {{formatDate block.date weekday="long"}}
               </span>
-              <span class="offering-block-date-dayofmonth">
+              <span class="offering-block-date-dayofmonth" data-test-session-offering-dayofmonth>
                 {{formatDate block.date month="long" day="numeric"}}
               </span>
-              <span class="offering-block-date-year">
-                {{formatDate block.date year="numeric"}}
-              </span>
+              {{#if @session.offeringsSpanYears}}
+                <span class="offering-block-date-year" data-test-session-offering-year>
+                  {{formatDate block.date year="numeric"}}
+                </span>
+              {{/if}}
             </div>
             {{#each block.offeringTimeBlocks as |offeringTimeBlock|}}
               <div class="offering-block-time">

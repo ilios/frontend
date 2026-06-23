@@ -2,7 +2,6 @@ import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 import page from 'ilios-common/page-objects/session';
 
 module('Acceptance | Session - Offerings', function (hooks) {
@@ -119,7 +118,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       blocks[0].dayOfMonth,
       DateTime.fromISO(this.offering1.startDate).toFormat('MMMM d'),
     );
-    assert.strictEqual(blocks[0].year, DateTime.fromISO(this.offering1.startDate).toFormat('y'));
+    assert.notOk(blocks[0].year.isVisible);
     assert.strictEqual(
       blocks[0].startTime,
       'Starts: ' + DateTime.fromISO(this.offering1.startDate).toFormat('hh:mm a'),
@@ -140,7 +139,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       blocks[1].dayOfMonth,
       DateTime.fromISO(this.offering2.startDate).toFormat('MMMM d'),
     );
-    assert.strictEqual(blocks[1].year, DateTime.fromISO(this.offering2.startDate).toFormat('y'));
+    assert.notOk(blocks[1].year.isVisible);
     assert.strictEqual(
       blocks[1].startTime,
       'Starts: ' + DateTime.fromISO(this.offering2.startDate).toFormat('hh:mm a'),
@@ -153,6 +152,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     assert.notOk(blocks[2].hasStartTime);
     assert.notOk(blocks[2].hasEndTime);
+    assert.notOk(blocks[2].year.isVisible);
     assert.strictEqual(
       blocks[2].dayOfWeek,
       DateTime.fromISO(this.offering3.startDate).toFormat('cccc'),
@@ -161,7 +161,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
       blocks[2].dayOfMonth,
       DateTime.fromISO(this.offering3.startDate).toFormat('MMMM d'),
     );
-    assert.strictEqual(blocks[2].year, DateTime.fromISO(this.offering3.startDate).toFormat('y'));
     assert.strictEqual(blocks[2].timeBlockOfferings.offerings.length, 1);
     assert.strictEqual(
       blocks[2].multiDayStart,
@@ -186,6 +185,128 @@ module('Acceptance | Session - Offerings', function (hooks) {
           minute: 'numeric',
         }),
     );
+  });
+
+  test('offering dates that span years', async function (assert) {
+    this.offering4 = await this.server.create('offering', {
+      session: this.session,
+      instructorGroups: [],
+      learnerGroups: [],
+      instructors: [],
+      startDate: this.today.plus({ years: 1 }).toISO(),
+      endDate: this.today.plus({ days: 3, hours: 1 }).toISO(),
+      url: 'https://example.edu/',
+    });
+
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
+    await takeScreenshot(assert);
+
+    const blocks = page.details.offerings.dateBlocks;
+    assert.ok(blocks[0].hasStartTime);
+    assert.ok(blocks[0].hasEndTime);
+    assert.notOk(blocks[0].hasMultiDay);
+
+    assert.strictEqual(
+      blocks[0].dayOfWeek,
+      DateTime.fromISO(this.offering1.startDate).toFormat('cccc'),
+    );
+    assert.strictEqual(
+      blocks[0].dayOfMonth,
+      DateTime.fromISO(this.offering1.startDate).toFormat('MMMM d'),
+    );
+    assert.ok(blocks[0].year.isVisible);
+    assert.strictEqual(blocks[0].year, DateTime.fromISO(this.offering1.startDate).toFormat('y'));
+    assert.strictEqual(
+      blocks[0].startTime,
+      'Starts: ' + DateTime.fromISO(this.offering1.startDate).toFormat('hh:mm a'),
+    );
+    assert.strictEqual(
+      blocks[0].endTime,
+      'Ends: ' + DateTime.fromISO(this.offering1.endDate).toFormat('h:mm a'),
+    );
+    assert.strictEqual(blocks[0].timeBlockOfferings.offerings.length, 1);
+
+    assert.ok(blocks[1].hasStartTime);
+    assert.ok(blocks[1].hasEndTime);
+    assert.strictEqual(
+      blocks[1].dayOfWeek,
+      DateTime.fromISO(this.offering2.startDate).toFormat('cccc'),
+    );
+    assert.strictEqual(
+      blocks[1].dayOfMonth,
+      DateTime.fromISO(this.offering2.startDate).toFormat('MMMM d'),
+    );
+    assert.ok(blocks[1].year.isVisible);
+    assert.strictEqual(blocks[1].year, DateTime.fromISO(this.offering2.startDate).toFormat('y'));
+    assert.strictEqual(
+      blocks[1].startTime,
+      'Starts: ' + DateTime.fromISO(this.offering2.startDate).toFormat('hh:mm a'),
+    );
+    assert.strictEqual(
+      blocks[1].endTime,
+      'Ends: ' + DateTime.fromISO(this.offering2.endDate).toFormat('h:mm a'),
+    );
+    assert.strictEqual(blocks[1].timeBlockOfferings.offerings.length, 1);
+
+    assert.notOk(blocks[2].hasStartTime);
+    assert.notOk(blocks[2].hasEndTime);
+    assert.notOk(blocks[2].year.isVisible);
+    assert.strictEqual(
+      blocks[2].dayOfWeek,
+      DateTime.fromISO(this.offering3.startDate).toFormat('cccc'),
+    );
+    assert.strictEqual(
+      blocks[2].dayOfMonth,
+      DateTime.fromISO(this.offering3.startDate).toFormat('MMMM d'),
+    );
+    assert.strictEqual(blocks[2].timeBlockOfferings.offerings.length, 1);
+    assert.strictEqual(
+      blocks[2].multiDayStart,
+      'Starts: ' +
+        this.intl.formatDate(this.offering3.startDate, {
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long',
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+    );
+
+    assert.strictEqual(
+      blocks[2].multiDayEnd,
+      'Ends: ' +
+        this.intl.formatDate(this.offering3.endDate, {
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long',
+          hour: 'numeric',
+          minute: 'numeric',
+        }),
+    );
+
+    assert.ok(blocks[3].hasStartTime);
+    assert.ok(blocks[3].hasEndTime);
+    assert.notOk(blocks[3].hasMultiDay);
+
+    assert.strictEqual(
+      blocks[3].dayOfWeek,
+      DateTime.fromISO(this.offering4.startDate).toFormat('cccc'),
+    );
+    assert.strictEqual(
+      blocks[3].dayOfMonth,
+      DateTime.fromISO(this.offering4.startDate).toFormat('MMMM d'),
+    );
+    assert.ok(blocks[3].year.isVisible);
+    assert.strictEqual(blocks[3].year, DateTime.fromISO(this.offering4.startDate).toFormat('y'));
+    assert.strictEqual(
+      blocks[3].startTime,
+      'Starts: ' + DateTime.fromISO(this.offering4.startDate).toFormat('hh:mm a'),
+    );
+    assert.strictEqual(
+      blocks[3].endTime,
+      'Ends: ' + DateTime.fromISO(this.offering4.endDate).toFormat('h:mm a'),
+    );
+    assert.strictEqual(blocks[3].timeBlockOfferings.offerings.length, 1);
   });
 
   test('offering details', async function (assert) {
@@ -576,7 +697,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasMultiDay);
     assert.strictEqual(block.dayOfWeek, 'Friday');
     assert.strictEqual(block.dayOfMonth, 'December 11');
-    assert.strictEqual(block.year, `${currentAcademicYear()}`);
     assert.strictEqual(block.startTime, 'Starts: 09:00 AM');
     assert.strictEqual(block.endTime, 'Ends: 10:00 AM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
@@ -625,7 +745,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasMultiDay);
     assert.strictEqual(block.dayOfWeek, 'Friday');
     assert.strictEqual(block.dayOfMonth, 'December 11');
-    assert.strictEqual(block.year, `${currentAcademicYear()}`);
     assert.strictEqual(block.startTime, 'Starts: 09:00 AM');
     assert.strictEqual(block.endTime, 'Ends: 10:00 AM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
