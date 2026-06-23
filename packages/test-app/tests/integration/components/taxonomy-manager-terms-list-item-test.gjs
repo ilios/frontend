@@ -29,7 +29,7 @@ module('Integration | Component | taxonomy manager terms list item', function (h
     assert.ok(component.isButton);
     assert.strictEqual(component.text, this.term.title);
     assert.strictEqual(component.title, this.term.title);
-    assert.notOk(component.isInactive);
+    assert.notOk(component.isLabeledAsInactive);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -45,7 +45,7 @@ module('Integration | Component | taxonomy manager terms list item', function (h
     assert.notOk(component.isButton);
     assert.strictEqual(component.text, `${this.term2.title} (inactive)`);
     assert.strictEqual(component.title, this.term2.title);
-    assert.ok(component.isInactive);
+    assert.ok(component.isLabeledAsInactive);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -61,7 +61,7 @@ module('Integration | Component | taxonomy manager terms list item', function (h
     assert.notOk(component.isButton);
     assert.strictEqual(component.text, `${this.term.title}`);
     assert.strictEqual(component.title, this.term.title);
-    assert.notOk(component.isInactive);
+    assert.notOk(component.isLabeledAsInactive);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

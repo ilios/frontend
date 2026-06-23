@@ -36,6 +36,10 @@ export default class SelectableTermsListItemComponent extends Component {
     return this.args?.term.description?.length && this.isHovering;
   }
 
+  get labelAsInactive() {
+    return this.args.hasActiveParent && !this.args?.term.active;
+  }
+
   @action
   click() {
     if (this.isSelected) {
@@ -62,11 +66,11 @@ export default class SelectableTermsListItemComponent extends Component {
           </IliosTooltip>
         {{/if}}
         <span data-test-title>{{@term.title}}</span>
-        {{#unless @term.active}}
+        {{#if this.labelAsInactive}}
           <span class="inactive" data-test-inactive>
             ({{t "general.inactive"}})
           </span>
-        {{/unless}}
+        {{/if}}
         <span class="actions">
           {{#if this.isSelected}}
             <FaIcon @icon={{faXmark}} data-test-remove />
@@ -91,11 +95,11 @@ export default class SelectableTermsListItemComponent extends Component {
         <span data-test-title>
           {{@term.title}}
         </span>
-        {{#unless @term.active}}
+        {{#if this.labelAsInactive}}
           <span class="inactive" data-test-inactive>
             ({{t "general.inactive"}})
           </span>
-        {{/unless}}
+        {{/if}}
       </div>
     {{/if}}
   </template>

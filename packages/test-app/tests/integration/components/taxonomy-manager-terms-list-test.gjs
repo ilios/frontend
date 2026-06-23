@@ -30,22 +30,27 @@ module('Integration | Component | taxonomy manager terms list', function (hooks)
       vocabulary,
     });
     const term4 = await this.server.create('term', {
+      title: 'Delta',
+      active: false,
+      vocabulary,
+    });
+    const term5 = await this.server.create('term', {
       title: 'First',
       active: true,
       vocabulary,
       children: [term1, term2],
     });
-    const term5 = await this.server.create('term', {
+    const term6 = await this.server.create('term', {
       title: 'Second',
       active: false,
       vocabulary,
-      children: [term3],
+      children: [term3, term4],
     });
     const root = await this.server.create('term', {
       title: 'root',
       active: true,
       vocabulary,
-      children: [term4, term5],
+      children: [term5, term6],
     });
 
     this.rootTerm = await this.owner.lookup('service:store').findRecord('term', root.id);
@@ -72,22 +77,25 @@ module('Integration | Component | taxonomy manager terms list', function (hooks)
     assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].title, 'First');
     assert.ok(component.items[0].isButton);
-    assert.notOk(component.items[0].isInactive);
+    assert.notOk(component.items[0].isLabeledAsInactive);
     assert.strictEqual(component.items[1].title, 'Second');
     assert.notOk(component.items[1].isButton);
-    assert.ok(component.items[1].isInactive);
+    assert.ok(component.items[1].isLabeledAsInactive);
     assert.strictEqual(component.lists.length, 2);
     assert.strictEqual(component.lists[0].items.length, 2);
     assert.strictEqual(component.lists[0].items[0].title, 'Alpha');
     assert.ok(component.lists[0].items[0].isButton);
-    assert.notOk(component.lists[0].items[0].isInactive);
+    assert.notOk(component.lists[0].items[0].isLabeledAsInactive);
     assert.strictEqual(component.lists[0].items[1].title, 'Beta');
     assert.notOk(component.lists[0].items[1].isButton);
-    assert.ok(component.lists[0].items[1].isInactive);
-    assert.strictEqual(component.lists[1].items.length, 1);
-    assert.strictEqual(component.lists[1].items[0].title, 'Gamma');
+    assert.ok(component.lists[0].items[1].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items.length, 2);
+    assert.strictEqual(component.lists[1].items[0].title, 'Delta');
     assert.notOk(component.lists[1].items[0].isButton);
-    assert.notOk(component.lists[1].items[0].isInactive);
+    assert.notOk(component.lists[1].items[0].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items[1].title, 'Gamma');
+    assert.notOk(component.lists[1].items[1].isButton);
+    assert.notOk(component.lists[1].items[1].isLabeledAsInactive);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -108,22 +116,25 @@ module('Integration | Component | taxonomy manager terms list', function (hooks)
     assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].title, 'First');
     assert.notOk(component.items[0].isButton);
-    assert.notOk(component.items[0].isInactive);
+    assert.notOk(component.items[0].isLabeledAsInactive);
     assert.strictEqual(component.items[1].title, 'Second');
     assert.notOk(component.items[1].isButton);
-    assert.ok(component.items[1].isInactive);
+    assert.notOk(component.items[1].isLabeledAsInactive);
     assert.strictEqual(component.lists.length, 2);
     assert.strictEqual(component.lists[0].items.length, 2);
     assert.strictEqual(component.lists[0].items[0].title, 'Alpha');
     assert.notOk(component.lists[0].items[0].isButton);
-    assert.notOk(component.lists[0].items[0].isInactive);
+    assert.notOk(component.lists[0].items[0].isLabeledAsInactive);
     assert.strictEqual(component.lists[0].items[1].title, 'Beta');
     assert.notOk(component.lists[0].items[1].isButton);
-    assert.ok(component.lists[0].items[1].isInactive);
-    assert.strictEqual(component.lists[1].items.length, 1);
-    assert.strictEqual(component.lists[1].items[0].title, 'Gamma');
+    assert.notOk(component.lists[0].items[1].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items.length, 2);
+    assert.strictEqual(component.lists[1].items[0].title, 'Delta');
     assert.notOk(component.lists[1].items[0].isButton);
-    assert.notOk(component.lists[1].items[0].isInactive);
+    assert.notOk(component.lists[1].items[0].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items[1].title, 'Gamma');
+    assert.notOk(component.lists[1].items[1].isButton);
+    assert.notOk(component.lists[1].items[1].isLabeledAsInactive);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -132,16 +143,17 @@ module('Integration | Component | taxonomy manager terms list', function (hooks)
     this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     this.set('add', (term) => {
-      assert.step('add called');
-      assert.strictEqual(term, this.term4);
+      assert.strictEqual(term, this.term5);
       this.set('selectedTerms', [...this.selectedTerms, term]);
+      assert.step('add called');
     });
     this.set('remove', (term) => {
-      assert.strictEqual(term, this.term4);
+      assert.strictEqual(term, this.term5);
       this.set(
         'selectedTerms',
         this.selectedTerms.filter((t) => t !== term),
       );
+      assert.step('remove called');
     });
     await render(
       <template>
@@ -159,7 +171,7 @@ module('Integration | Component | taxonomy manager terms list', function (hooks)
     assert.ok(component.items[0].isSelected);
     await component.items[0].click();
     assert.notOk(component.items[0].isSelected);
-    assert.verifySteps(['add called']);
+    assert.verifySteps(['add called', 'remove called']);
   });
 
   test('filter terms', async function (assert) {
