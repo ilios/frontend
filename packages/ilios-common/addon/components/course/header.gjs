@@ -93,7 +93,11 @@ export default class CourseHeaderComponent extends Component {
       </span>
       <div class="course-publication">
         {{#if @editable}}
-          <PublicationMenu @course={{@course}} />
+          <PublicationMenu
+            @course={{@course}}
+            @showDetails={{@showDetails}}
+            @setShowDetails={{@setShowDetails}}
+          />
         {{else}}
           <PublicationStatus @item={{@course}} @showText={{true}} />
         {{/if}}

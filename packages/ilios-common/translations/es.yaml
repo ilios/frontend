@@ -290,6 +290,7 @@ general:
   publishAllAsIs: Publique Todo Como Es
   publishAsIs: Publique Como Es
   publishCourse: Publique Curso
+  publishCourseWithMissingItems: Publique Curso, con {missingItemCount, plural, =1 {1 artículo faltante} other {# artículos faltantes}}
   published: Publicado
   publishedSessions: Sesiones Publicadas
   publishedSuccessfully: Publicado con éxito

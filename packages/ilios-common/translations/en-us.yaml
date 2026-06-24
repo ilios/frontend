@@ -290,6 +290,7 @@ general:
   publishAllAsIs: Publish All As-is
   publishAsIs: Publish As-is
   publishCourse: Publish Course
+  publishCourseWithMissingItems: Publish Course, with {missingItemCount, plural, =1 {1 item missing} other {# items missing}}
   published: Published
   publishedSessions: Published Sessions
   publishedSuccessfully: Published successfully
