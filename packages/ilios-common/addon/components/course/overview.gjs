@@ -342,6 +342,36 @@ export default class CourseOverview extends Component {
               {{/if}}
             </span>
           </div>
+          <div class="overview-block courselevel">
+            <label for="level-{{templateId}}">{{t "general.level"}}:</label>
+            <span>
+              {{#if @editable}}
+                <EditableField
+                  @value={{this.level}}
+                  @save={{this.changeLevel}}
+                  @close={{this.revertLevelChanges}}
+                >
+                  <select id="level-{{templateId}}" {{on "change" this.setLevel}} {{focus}}>
+                    {{#each this.levelOptions as |levelOption|}}
+                      <option value={{levelOption}} selected={{eq levelOption this.level}}>
+                        {{levelOption}}
+                      </option>
+                    {{/each}}
+                  </select>
+                </EditableField>
+              {{else}}
+                {{this.level}}&nbsp;
+              {{/if}}
+            </span>
+          </div>
+          <div class="overview-block">
+            <label>{{t "general.universalLocator"}}:</label>
+            <span class="universallocator">
+              <strong>
+                {{concat this.universalLocator @course.id}}
+              </strong>
+            </span>
+          </div>
           <div class="overview-block coursestartdate">
             <label>{{t "general.startDate"}}:</label>
             <span>
@@ -399,36 +429,6 @@ export default class CourseOverview extends Component {
               {{else}}
                 {{formatDate @course.endDate day="2-digit" month="2-digit" year="numeric"}}&nbsp;
               {{/if}}
-            </span>
-          </div>
-          <div class="overview-block courselevel">
-            <label for="level-{{templateId}}">{{t "general.level"}}:</label>
-            <span>
-              {{#if @editable}}
-                <EditableField
-                  @value={{this.level}}
-                  @save={{this.changeLevel}}
-                  @close={{this.revertLevelChanges}}
-                >
-                  <select id="level-{{templateId}}" {{on "change" this.setLevel}} {{focus}}>
-                    {{#each this.levelOptions as |levelOption|}}
-                      <option value={{levelOption}} selected={{eq levelOption this.level}}>
-                        {{levelOption}}
-                      </option>
-                    {{/each}}
-                  </select>
-                </EditableField>
-              {{else}}
-                {{this.level}}&nbsp;
-              {{/if}}
-            </span>
-          </div>
-          <div class="overview-block">
-            <label>{{t "general.universalLocator"}}:</label>
-            <span class="universallocator">
-              <strong>
-                {{concat this.universalLocator @course.id}}
-              </strong>
             </span>
           </div>
         </div>
