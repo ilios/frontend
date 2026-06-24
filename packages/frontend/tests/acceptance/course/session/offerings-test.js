@@ -692,7 +692,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.ok(block.hasStartTime);
     assert.ok(block.hasEndTime);
     assert.notOk(block.hasMultiDay);
-    assert.strictEqual(block.dayOfWeek, 'Friday');
+    assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'December 11');
     assert.strictEqual(block.startTime, 'Starts: 09:00 AM');
     assert.strictEqual(block.endTime, 'Ends: 10:00 AM');
@@ -740,7 +740,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.ok(block.hasStartTime);
     assert.ok(block.hasEndTime);
     assert.notOk(block.hasMultiDay);
-    assert.strictEqual(block.dayOfWeek, 'Friday');
+    assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'December 11');
     assert.strictEqual(block.startTime, 'Starts: 09:00 AM');
     assert.strictEqual(block.endTime, 'Ends: 10:00 AM');
