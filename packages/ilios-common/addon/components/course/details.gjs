@@ -68,6 +68,8 @@ export default class CourseDetailsComponent extends Component {
           @academicYear={{this.academicYearDisplay}}
           @showDetails={{@showDetails}}
           @setShowDetails={{@setShowDetails}}
+          @showDetailsCollapseControl={{@showDetailsCollapseControl}}
+          @setShowDetailsCollapseControl={{@setShowDetailsCollapseControl}}
         />
         <Overview @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
         {{#if @showDetails}}
@@ -85,23 +87,27 @@ export default class CourseDetailsComponent extends Component {
             @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
             @setCourseManageLeadership={{@setCourseManageLeadership}}
           />
-          <div class="detail-collapsed-control">
-            <button type="button" data-test-expand-course-details {{on "click" this.collapse}}>
-              {{t "general.collapseDetail"}}
-              <FaIcon @icon={{faSquareMinus}} class="expand-collapse-icon" />
-            </button>
-          </div>
+          {{#if @showDetailsCollapseControl}}
+            <div class="detail-collapsed-control">
+              <button type="button" data-test-expand-course-details {{on "click" this.collapse}}>
+                {{t "general.collapseDetail"}}
+                <FaIcon @icon={{faSquareMinus}} class="expand-collapse-icon" />
+              </button>
+            </div>
+          {{/if}}
         {{else}}
-          <div class="detail-collapsed-control">
-            <button
-              type="button"
-              data-test-expand-course-details
-              {{on "click" (fn @setShowDetails true)}}
-            >
-              {{t "general.expandDetail"}}
-              <FaIcon @icon={{faSquarePlus}} class="expand-collapse-icon" />
-            </button>
-          </div>
+          {{#if @showDetailsCollapseControl}}
+            <div class="detail-collapsed-control">
+              <button
+                type="button"
+                data-test-expand-course-details
+                {{on "click" (fn @setShowDetails true)}}
+              >
+                {{t "general.expandDetail"}}
+                <FaIcon @icon={{faSquarePlus}} class="expand-collapse-icon" />
+              </button>
+            </div>
+          {{/if}}
         {{/if}}
       </section>
     {{/if}}

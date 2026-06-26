@@ -49,7 +49,12 @@ export default class CoursePublicationCheckComponent extends Component {
       data-test-course-publicationcheck
       {{scrollIntoView}}
     >
-      <LinkTo @route="course" @model={{@course}} data-test-back-to-course>
+      <LinkTo
+        @route="course"
+        @model={{@course}}
+        @query={{hash detailsCollapseControl=true}}
+        data-test-back-to-course
+      >
         {{t "general.backToTitle" title=@course.title}}
       </LinkTo>
 

@@ -14,6 +14,9 @@ export default class CourseRoute extends Route {
     details: {
       replace: true,
     },
+    detailsCollapseControl: {
+      replace: true,
+    },
     courseLeadershipDetails: {
       replace: true,
     },

@@ -23,6 +23,8 @@ export default class CourseLoaderComponent extends Component {
           @editable={{@editable}}
           @showDetails={{@showDetails}}
           @setShowDetails={{@setShowDetails}}
+          @showDetailsCollapseControl={{@showDetailsCollapseControl}}
+          @setShowDetailsCollapseControl={{@setShowDetailsCollapseControl}}
           @courseLeadershipDetails={{@courseLeadershipDetails}}
           @courseObjectiveDetails={{@courseObjectiveDetails}}
           @courseTaxonomyDetails={{@courseTaxonomyDetails}}
