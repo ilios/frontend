@@ -43,7 +43,7 @@ jobs:
           echo "ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Cache Screenshots
         id: screenshot-cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: build
           key: screenshots-${{ steps.ref.outputs.ref }}-${{ matrix.name }}
@@ -97,7 +97,7 @@ jobs:
           echo "ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Cache Screenshots
         id: screenshot-cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: build
           key: screenshots-${{ steps.ref.outputs.ref }}-${{ matrix.name }}
@@ -136,7 +136,7 @@ jobs:
     steps:
       - name: Restore Comparison Cache
         id: comparison-cache
-        uses: actions/cache/restore@v5
+        uses: actions/cache/restore@v6
         with:
           path: |
             ${{ env.OUTPUT_DIR }}
@@ -180,7 +180,7 @@ jobs:
           echo ${{ contains(github.event.pull_request.labels.*.name, 'approve visual diff') }} > ./results/approved
       - name: Save Comparison Cache
         if: steps.comparison-cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@v6
         with:
           path: |
             ${{ env.OUTPUT_DIR }}
