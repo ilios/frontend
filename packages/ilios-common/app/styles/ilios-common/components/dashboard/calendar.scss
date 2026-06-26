@@ -107,6 +107,8 @@
 
     .filters-list {
       clear: both;
+      display: flex;
+      flex-direction: column;
       margin-bottom: 1em;
       padding: 5px;
 
@@ -117,6 +119,11 @@
       }
 
       .filter-tags {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+
         .filter-tag {
           @include m.ilios-button-reset;
           @include m.font-size("small");
