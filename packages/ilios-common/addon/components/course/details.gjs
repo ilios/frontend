@@ -88,22 +88,22 @@ export default class CourseDetailsComponent extends Component {
             @setCourseManageLeadership={{@setCourseManageLeadership}}
           />
           {{#if @showDetailsCollapseControl}}
-            <div class="detail-collapsed-control">
+            <div class="details-collapse-control">
               <button type="button" data-test-expand-course-details {{on "click" this.collapse}}>
-                {{t "general.collapseDetail"}}
+                {{t "general.collapseDetails"}}
                 <FaIcon @icon={{faSquareMinus}} class="expand-collapse-icon" />
               </button>
             </div>
           {{/if}}
         {{else}}
           {{#if @showDetailsCollapseControl}}
-            <div class="detail-collapsed-control">
+            <div class="details-collapse-control">
               <button
                 type="button"
                 data-test-expand-course-details
                 {{on "click" (fn @setShowDetails true)}}
               >
-                {{t "general.expandDetail"}}
+                {{t "general.expandDetails"}}
                 <FaIcon @icon={{faSquarePlus}} class="expand-collapse-icon" />
               </button>
             </div>

@@ -49,7 +49,7 @@ export default class CourseLoaderComponent extends Component {
 
           <div class="mock-detail-box">
             <span>
-              {{t "general.expandDetail"}}
+              {{t "general.expandDetails"}}
               <FaIcon @icon={{faSquarePlus}} class="expand-collapse-icon" />
             </span>
           </div>

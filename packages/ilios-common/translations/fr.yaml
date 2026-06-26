@@ -54,7 +54,7 @@ general:
   cohorts: Cohortes
   cohortsManageTitle: Manager des Cohortes
   collapse: Réduire
-  collapseDetail: Masquer Détails
+  collapseDetails: Masquer Détails
   competencies: Compétences
   complete: Accompli
   confirmRemoveLearningMaterial: "Êtes-vous sûr vous voulez supprimer cette matériel d'étude? Ça action ne peut pas être défait."
@@ -129,7 +129,7 @@ general:
   eventNotFoundExplanation: "L'événement que vous avez essayé d'atteindre n'est plus disponible ou vous avez suivi un lien utilisateur personnalisé qui n'est pas partageable. Si vous continuez à rencontrer des problèmes, veuillez contacter votre service d'assistance Ilios."
   eventNotFoundTitle: Evénement introuvable
   expand: Étendre
-  expandDetail: Afficher Détails
+  expandDetails: Afficher Détails
   externalId: ID de Cours
   file: Fichier
   file-audio: Fichier audio

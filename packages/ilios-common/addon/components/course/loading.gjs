@@ -41,7 +41,7 @@ import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
       </div>
       <div class="mock-detail-box">
         <span>
-          {{t "general.expandDetail"}}
+          {{t "general.expandDetails"}}
           <FaIcon @icon={{faSquarePlus}} class="expand-collapse-icon" />
         </span>
       </div>

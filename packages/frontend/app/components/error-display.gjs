@@ -51,7 +51,7 @@ export default class ErrorDisplayComponent extends Component {
               class="error-detail-action"
               {{on "click" (set this "showDetails" (not this.showDetails))}}
             >
-              {{t (if this.showDetails "general.collapseDetail" "general.expandDetail")}}
+              {{t (if this.showDetails "general.collapseDetails" "general.expandDetails")}}
             </button>
           </p>
 
