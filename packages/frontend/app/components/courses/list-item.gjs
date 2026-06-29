@@ -69,7 +69,7 @@ export default class CoursesListItemComponent extends Component {
       <td class="text-center hide-from-small-screen" colspan="2" data-test-end-date>
         {{formatDate @course.endDate day="2-digit" month="2-digit" year="numeric"}}
       </td>
-      <td class="text-right" colspan="3" data-test-status>
+      <td class="text-right actions" colspan="3" data-test-status>
         {{#if (includes @course.id @savingCourseIds)}}
           <LoadingSpinner />
         {{else}}

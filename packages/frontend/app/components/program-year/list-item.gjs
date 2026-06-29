@@ -154,7 +154,7 @@ export default class ProgramYearListItemComponent extends Component {
         <td class="text-left hide-from-small-screen" data-test-terms>
           {{@programYear.terms.length}}
         </td>
-        <td class="text-right" data-test-actions>
+        <td class="text-right actions" data-test-actions>
           {{#if (or this.lock.isRunning this.unlock.isRunning)}}
             <LoadingSpinner />
           {{else}}

@@ -13,6 +13,10 @@
 
   td {
     border: 0;
+
+    &.actions svg {
+      min-width: 1.2rem;
+    }
   }
 
   tr,
