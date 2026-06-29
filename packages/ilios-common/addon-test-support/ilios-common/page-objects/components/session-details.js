@@ -39,8 +39,11 @@ export default create({
       scope: '[data-test-session-offerings-header]',
     },
     dateBlocks: collection('[data-test-session-offerings-list] .offering-block', {
-      dayOfWeek: text('.offering-block-date-dayofweek'),
-      dayOfMonth: text('.offering-block-date-dayofmonth'),
+      dayOfWeek: text('[data-test-session-offering-dayofweek]'),
+      dayOfMonth: text('[data-test-session-offering-dayofmonth]'),
+      hasDayMonth: isVisible('[data-test-session-offering-dayofmonth]'),
+      dayMonthYear: text('[data-test-session-offering-daymonthyear]'),
+      hasDayMonthYear: isVisible('[data-test-session-offering-daymonthyear]'),
       startTime: text('.offering-block-time-time-starttime'),
       hasStartTime: isVisible('.offering-block-time-time-starttime'),
       endTime: text('.offering-block-time-time-endtime'),

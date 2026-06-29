@@ -287,6 +287,34 @@ export default class SessionModel extends Model {
   }
 
   /**
+   * The latest start date of all offerings in this session, or, if this is an ILM session, the ILM's due date.
+   */
+  get lastOfferingDate() {
+    if (this.isIndependentLearning) {
+      return this._ilmSessionData.isResolved ? this._ilmSessionData.value.dueDate : undefined;
+    }
+
+    if (!this.hasMany('offerings').ids().length) {
+      return null;
+    }
+
+    return this.sortedOfferingsByDate.length
+      ? this.sortedOfferingsByDate[this.sortedOfferingsByDate.length - 1]?.startDate
+      : null;
+  }
+
+  get offeringsSpanYears() {
+    if (!this.firstOfferingDate || !this.lastOfferingDate || this.isIndependentLearning) {
+      return false;
+    }
+
+    return (
+      DateTime.fromJSDate(this.firstOfferingDate).year !==
+      DateTime.fromJSDate(this.lastOfferingDate).year
+    );
+  }
+
+  /**
    * The maximum duration in hours (incl. fractions) of any session offerings.
    */
   get maxSingleOfferingDuration() {

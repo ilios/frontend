@@ -12,6 +12,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       DateTime.fromObject({
         month: 12,
         day: 11,
+        year: 2011,
       }).toJSDate(),
     );
     this.intl = this.owner.lookup('service:intl');
@@ -103,11 +104,13 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
   test('offering dates', async function (assert) {
     await page.visit({ courseId: this.course.id, sessionId: this.session.id });
+    await takeScreenshot(assert);
 
     const blocks = page.details.offerings.dateBlocks;
     assert.ok(blocks[0].hasStartTime);
     assert.ok(blocks[0].hasEndTime);
     assert.notOk(blocks[0].hasMultiDay);
+
     assert.strictEqual(
       blocks[0].dayOfWeek,
       DateTime.fromISO(this.offering1.startDate).toFormat('cccc'),
@@ -116,6 +119,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       blocks[0].dayOfMonth,
       DateTime.fromISO(this.offering1.startDate).toFormat('MMMM d'),
     );
+    assert.notOk(blocks[0].hasDayMonthYear);
     assert.strictEqual(
       blocks[0].startTime,
       'Starts: ' + DateTime.fromISO(this.offering1.startDate).toFormat('hh:mm a'),
@@ -136,6 +140,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       blocks[1].dayOfMonth,
       DateTime.fromISO(this.offering2.startDate).toFormat('MMMM d'),
     );
+    assert.notOk(blocks[1].hasDayMonthYear);
     assert.strictEqual(
       blocks[1].startTime,
       'Starts: ' + DateTime.fromISO(this.offering2.startDate).toFormat('hh:mm a'),
@@ -148,6 +153,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     assert.notOk(blocks[2].hasStartTime);
     assert.notOk(blocks[2].hasEndTime);
+    assert.notOk(blocks[2].hasDayMonthYear);
     assert.strictEqual(
       blocks[2].dayOfWeek,
       DateTime.fromISO(this.offering3.startDate).toFormat('cccc'),
@@ -180,6 +186,128 @@ module('Acceptance | Session - Offerings', function (hooks) {
           minute: 'numeric',
         }),
     );
+  });
+
+  test('offering dates that span years', async function (assert) {
+    this.offering4 = await this.server.create('offering', {
+      session: this.session,
+      instructorGroups: [],
+      learnerGroups: [],
+      instructors: [],
+      startDate: this.today.plus({ years: 1 }).toISO(),
+      endDate: this.today.plus({ years: 1, hours: 1 }).toISO(),
+    });
+
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
+    await takeScreenshot(assert);
+
+    const blocks = page.details.offerings.dateBlocks;
+    assert.ok(blocks[0].hasStartTime);
+    assert.ok(blocks[0].hasEndTime);
+    assert.notOk(blocks[0].hasMultiDay);
+
+    assert.strictEqual(
+      blocks[0].dayOfWeek,
+      DateTime.fromISO(this.offering1.startDate).toFormat('cccc'),
+    );
+    assert.notOk(blocks[0].hasDayOfMonth, '1st block does not have a dayOfMonth');
+    assert.ok(blocks[0].hasDayMonthYear, '1st block has a dayMonthYear');
+    assert.strictEqual(
+      blocks[0].dayMonthYear,
+      DateTime.fromISO(this.offering1.startDate).toFormat('MMMM dd, y'),
+    );
+    assert.strictEqual(
+      blocks[0].startTime,
+      'Starts: ' + DateTime.fromISO(this.offering1.startDate).toFormat('hh:mm a'),
+    );
+    assert.strictEqual(
+      blocks[0].endTime,
+      'Ends: ' + DateTime.fromISO(this.offering1.endDate).toFormat('h:mm a'),
+    );
+    assert.strictEqual(blocks[0].timeBlockOfferings.offerings.length, 1);
+
+    assert.ok(blocks[1].hasStartTime);
+    assert.ok(blocks[1].hasEndTime);
+    assert.strictEqual(
+      blocks[1].dayOfWeek,
+      DateTime.fromISO(this.offering2.startDate).toFormat('cccc'),
+    );
+    assert.notOk(blocks[1].hasDayOfMonth, '2nd block does not have a dayOfMonth');
+    assert.ok(blocks[1].hasDayMonthYear, '2nd block has a dayMonthYear');
+    assert.strictEqual(
+      blocks[1].dayMonthYear,
+      DateTime.fromISO(this.offering2.startDate).toFormat('MMMM dd, y'),
+    );
+    assert.strictEqual(
+      blocks[1].startTime,
+      'Starts: ' + DateTime.fromISO(this.offering2.startDate).toFormat('hh:mm a'),
+    );
+    assert.strictEqual(
+      blocks[1].endTime,
+      'Ends: ' + DateTime.fromISO(this.offering2.endDate).toFormat('h:mm a'),
+    );
+    assert.strictEqual(blocks[1].timeBlockOfferings.offerings.length, 1);
+
+    assert.notOk(blocks[2].hasStartTime);
+    assert.notOk(blocks[2].hasEndTime);
+    assert.strictEqual(
+      blocks[2].dayOfWeek,
+      DateTime.fromISO(this.offering3.startDate).toFormat('cccc'),
+    );
+    assert.notOk(blocks[2].hasDayOfMonth, '3rd block does not have a dayOfMonth');
+    assert.ok(blocks[2].hasDayMonthYear, '3rd block has a dayMonthYear');
+    assert.strictEqual(
+      blocks[2].dayMonthYear,
+      DateTime.fromISO(this.offering3.startDate).toFormat('MMMM dd, y'),
+    );
+    assert.strictEqual(blocks[2].timeBlockOfferings.offerings.length, 1);
+    assert.strictEqual(
+      blocks[2].multiDayStart,
+      'Starts: ' +
+        this.intl.formatDate(this.offering3.startDate, {
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long',
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+    );
+
+    assert.strictEqual(
+      blocks[2].multiDayEnd,
+      'Ends: ' +
+        this.intl.formatDate(this.offering3.endDate, {
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long',
+          hour: 'numeric',
+          minute: 'numeric',
+        }),
+    );
+
+    assert.ok(blocks[3].hasStartTime);
+    assert.ok(blocks[3].hasEndTime);
+    assert.notOk(blocks[3].hasMultiDay);
+
+    assert.strictEqual(
+      blocks[3].dayOfWeek,
+      DateTime.fromISO(this.offering4.startDate).toFormat('cccc'),
+    );
+    assert.notOk(blocks[3].hasDayOfMonth, '4th block does not have a dayOfMonth');
+    assert.ok(blocks[3].hasDayMonthYear, '4th block has a dayMonthYear');
+    assert.strictEqual(
+      blocks[3].dayMonthYear,
+      DateTime.fromISO(this.offering4.startDate).toFormat('MMMM dd, y'),
+    );
+    assert.strictEqual(
+      blocks[3].startTime,
+      'Starts: ' + DateTime.fromISO(this.offering4.startDate).toFormat('hh:mm a'),
+    );
+    assert.strictEqual(
+      blocks[3].endTime,
+      'Ends: ' + DateTime.fromISO(this.offering4.endDate).toFormat('h:mm a'),
+    );
+    assert.strictEqual(blocks[3].timeBlockOfferings.offerings.length, 1);
   });
 
   test('offering details', async function (assert) {
@@ -564,7 +692,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.ok(block.hasStartTime);
     assert.ok(block.hasEndTime);
     assert.notOk(block.hasMultiDay);
-    assert.strictEqual(block.dayOfWeek, 'Friday');
+    assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'December 11');
     assert.strictEqual(block.startTime, 'Starts: 09:00 AM');
     assert.strictEqual(block.endTime, 'Ends: 10:00 AM');
@@ -612,7 +740,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.ok(block.hasStartTime);
     assert.ok(block.hasEndTime);
     assert.notOk(block.hasMultiDay);
-    assert.strictEqual(block.dayOfWeek, 'Friday');
+    assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'December 11');
     assert.strictEqual(block.startTime, 'Starts: 09:00 AM');
     assert.strictEqual(block.endTime, 'Ends: 10:00 AM');
@@ -640,7 +768,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.smallGroup();
-    await form.startDate.datePicker.set(new Date(2015, 4, 22));
+    await form.startDate.datePicker.set(new Date(2011, 4, 22));
     await form.startTime.timePicker.hour.select('02');
     await form.startTime.timePicker.minute.select('15');
     await form.startTime.timePicker.ampm.select('AM');
@@ -666,7 +794,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       assert.ok(block.hasStartTime);
       assert.ok(block.hasEndTime);
       assert.notOk(block.hasMultiDay);
-      assert.strictEqual(block.dayOfWeek, 'Friday');
+      assert.strictEqual(block.dayOfWeek, 'Sunday');
       assert.strictEqual(block.startTime, 'Starts: 02:15 AM');
       assert.strictEqual(block.endTime, 'Ends: 03:23 PM');
       assert.strictEqual(block.timeBlockOfferings.offerings.length, 2);
@@ -712,7 +840,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.singleOffering();
-    await form.startDate.datePicker.set(new Date(2015, 4, 22));
+    await form.startDate.datePicker.set(new Date(2011, 4, 22));
     await form.startTime.timePicker.hour.select('02');
     await form.startTime.timePicker.minute.select('15');
     await form.startTime.timePicker.ampm.select('AM');
@@ -740,7 +868,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       assert.ok(block.hasStartTime);
       assert.ok(block.hasEndTime);
       assert.notOk(block.hasMultiDay);
-      assert.strictEqual(block.dayOfWeek, 'Friday');
+      assert.strictEqual(block.dayOfWeek, 'Sunday');
       assert.strictEqual(block.startTime, 'Starts: 02:15 AM');
       assert.strictEqual(block.endTime, 'Ends: 03:23 PM');
       assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
