@@ -47,7 +47,7 @@ export default class CoursePublicationCheckComponent extends Component {
     <div
       class="course-publicationcheck main-section"
       data-test-course-publicationcheck
-      {{scrollIntoView}}
+      {{scrollIntoView delay=10}}
     >
       <LinkTo
         @route="course"
