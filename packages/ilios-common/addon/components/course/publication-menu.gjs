@@ -52,6 +52,7 @@ export default class CoursePublicationMenuComponent extends Component {
     }
     return (
       (!this.args.course.published || this.args.course.publishedAsTbd) &&
+      this.args.course.requiredPublicationIssues.length === 0 &&
       this.args.course.allPublicationIssuesLength !== 0
     );
   }
