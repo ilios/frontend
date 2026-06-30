@@ -172,7 +172,7 @@ export default class ProgramYearListItemComponent extends Component {
                   {{on "click" (perform this.unlock)}}
                   data-test-unlock
                 >
-                  <FaIcon @icon={{faLock}} />
+                  <FaIcon @icon={{faLock}} @fixedWidth={{true}} />
                 </button>
               {{else}}
                 <button
@@ -182,7 +182,7 @@ export default class ProgramYearListItemComponent extends Component {
                   disabled
                   data-test-unlock
                 >
-                  <FaIcon @icon={{faLock}} />
+                  <FaIcon @icon={{faLock}} @fixedWidth={{true}} />
                 </button>
               {{/if}}
             {{else if this.canLock}}
@@ -198,7 +198,11 @@ export default class ProgramYearListItemComponent extends Component {
                 {{on "click" (perform this.lock)}}
                 data-test-lock
               >
-                <FaIcon @icon={{faLockOpen}} class={{if this.showRemoveConfirmation "disabled"}} />
+                <FaIcon
+                  @icon={{faLockOpen}}
+                  @fixedWidth={{true}}
+                  class={{if this.showRemoveConfirmation "disabled"}}
+                />
               </button>
             {{else}}
               <button
@@ -208,7 +212,7 @@ export default class ProgramYearListItemComponent extends Component {
                 disabled
                 data-test-lock
               >
-                <FaIcon @icon={{faLockOpen}} class="disabled" />
+                <FaIcon @icon={{faLockOpen}} @fixedWidth={{true}} class="disabled" />
               </button>
             {{/if}}
             {{#if this.canDelete}}
@@ -226,6 +230,7 @@ export default class ProgramYearListItemComponent extends Component {
               >
                 <FaIcon
                   @icon={{faTrash}}
+                  @fixedWidth={{true}}
                   class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
                 />
               </button>
@@ -237,7 +242,7 @@ export default class ProgramYearListItemComponent extends Component {
                 disabled
                 data-test-remove
               >
-                <FaIcon @icon={{faTrash}} class="disabled" />
+                <FaIcon @icon={{faTrash}} @fixedWidth={{true}} class="disabled" />
               </button>
             {{/if}}
           {{/if}}

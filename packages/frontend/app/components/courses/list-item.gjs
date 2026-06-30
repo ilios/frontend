@@ -88,7 +88,7 @@ export default class CoursesListItemComponent extends Component {
                 {{on "click" (fn @unlockCourse @course)}}
                 data-test-unlock
               >
-                <FaIcon @icon={{faLock}} />
+                <FaIcon @icon={{faLock}} @fixedWidth={{true}} />
               </button>
             {{else}}
               <button
@@ -98,7 +98,7 @@ export default class CoursesListItemComponent extends Component {
                 disabled
                 data-test-unlock
               >
-                <FaIcon @icon={{faLock}} class="disabled" />
+                <FaIcon @icon={{faLock}} @fixedWidth={{true}} class="disabled" />
               </button>
             {{/if}}
           {{else if this.canLock}}
@@ -114,7 +114,11 @@ export default class CoursesListItemComponent extends Component {
               {{on "click" (fn @lockCourse @course)}}
               data-test-lock
             >
-              <FaIcon @icon={{faLockOpen}} class={{if @showRemoveConfirmation "disabled"}} />
+              <FaIcon
+                @icon={{faLockOpen}}
+                class={{if @showRemoveConfirmation "disabled"}}
+                @fixedWidth={{true}}
+              />
             </button>
           {{else}}
             <button
@@ -124,7 +128,7 @@ export default class CoursesListItemComponent extends Component {
               disabled
               data-test-lock
             >
-              <FaIcon @icon={{faLockOpen}} class="disabled" />
+              <FaIcon @icon={{faLockOpen}} @fixedWidth={{true}} class="disabled" />
             </button>
           {{/if}}
           {{#if this.canDelete}}
@@ -142,6 +146,7 @@ export default class CoursesListItemComponent extends Component {
             >
               <FaIcon
                 @icon={{faTrash}}
+                @fixedWidth={{true}}
                 class={{if @showRemoveConfirmation "disabled" "remove enabled"}}
               />
             </button>
@@ -153,7 +158,7 @@ export default class CoursesListItemComponent extends Component {
               disabled
               data-test-remove
             >
-              <FaIcon @icon={{faTrash}} class="disabled" />
+              <FaIcon @icon={{faTrash}} @fixedWidth={{true}} class="disabled" />
             </button>
           {{/if}}
         {{/if}}
