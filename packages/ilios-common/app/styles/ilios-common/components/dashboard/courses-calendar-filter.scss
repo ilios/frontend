@@ -9,7 +9,12 @@
       @include m.ilios-heading-h6;
     }
 
-    button {
+    /*
+     * kludge-o-rama: fixes bug where
+     * 'Clear Filters' button lost styling
+     * [MC 2026/06/29]
+    */
+    button:not(.filters-clear-filters) {
       @include m.ilios-button-reset;
     }
 
