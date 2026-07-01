@@ -658,7 +658,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     >
       {{#let (uniqueId) as |templateId|}}
         <div class="curriculum-inventory-sequence-block-overview-wrapper" data-test-overview>
-          <div class="title" data-test-title>{{t "general.overview"}}</div>
           <div class="curriculum-inventory-sequence-block-overview-content">
             <div class="block course" data-test-course>
               <span>

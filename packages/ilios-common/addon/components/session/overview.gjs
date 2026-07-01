@@ -393,11 +393,6 @@ export default class SessionOverviewComponent extends Component {
             </div>
 
             <div class="overview-header">
-
-              <div class="overview-title">
-                {{t "general.overview"}}
-              </div>
-
               <div class="overview-actions">
                 {{#if this.showCopy}}
                   <LinkTo

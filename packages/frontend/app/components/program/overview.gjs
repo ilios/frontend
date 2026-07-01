@@ -64,11 +64,6 @@ export default class ProgramOverviewComponent extends Component {
   }
   <template>
     <div class="ilios-overview program-overview" data-test-program-overview ...attributes>
-      <div class="overview-header">
-        <h2 class="overview-title">
-          {{t "general.overview"}}
-        </h2>
-      </div>
       <div class="overview-content">
         <div class="overview-block" data-test-short-title>
           <label for={{concat this.id "short-title"}}>

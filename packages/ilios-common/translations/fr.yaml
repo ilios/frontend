@@ -265,7 +265,6 @@ general:
   objectives: Objectifs
   offering: Offre
   offerings: Offres
-  overview: Conception Général
   ownedBy: "Possédé par {owner}"
   owner: Propriétaire
   pagedResultsCount: "Montrant {start} - {end} de {total}"

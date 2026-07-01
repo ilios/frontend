@@ -231,9 +231,6 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     >
       {{#let (uniqueId) as |templateId|}}
         <div class="report-overview-header">
-          <div class="title" data-test-title>
-            {{t "general.overview"}}
-          </div>
           <div class="report-overview-actions">
             <LinkTo
               @route="verification-preview"

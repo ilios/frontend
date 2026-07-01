@@ -237,9 +237,6 @@ export default class CourseOverview extends Component {
     <section class="ilios-overview" data-test-course-overview>
       {{#let (uniqueId) as |templateId|}}
         <div class="overview-header">
-          <div class="overview-title" data-test-title>
-            {{t "general.overview"}}
-          </div>
           <div class="overview-actions">
             <LinkTo
               @route="course-materials"

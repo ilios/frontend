@@ -24,7 +24,7 @@
 @mixin ilios-overview-header() {
   align-items: baseline;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 1rem;
   height: 1.5em;
 }
@@ -38,7 +38,7 @@
 @mixin ilios-overview-actions() {
   align-items: baseline;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
   text-align: right;
   vertical-align: middle;
 }

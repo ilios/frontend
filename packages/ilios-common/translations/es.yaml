@@ -265,7 +265,6 @@ general:
   objectives: Objetivos
   offering: Ofrecimiento
   offerings: Ofrecimientos
-  overview: Visión Amplia
   ownedBy: "propiedad de {owner}"
   owner: Dueño
   pagedResultsCount: "Mostrando {start} - {end} de {total}"
