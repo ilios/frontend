@@ -59,7 +59,7 @@ export default class CoursePublicationCheckComponent extends Component {
       </LinkTo>
 
       <section class="course-publicationcheck-details">
-        <div class="title">
+        <div class="title" data-test-title>
           {{t "general.missingItems"}}
           ({{@course.allPublicationIssuesLength}})
         </div>
@@ -132,11 +132,7 @@ export default class CoursePublicationCheckComponent extends Component {
           </table>
         </div>
         <div data-test-course-publicationcheck-actions>
-          <button
-            type="button"
-            {{on "click" this.publish}}
-            data-test-publish-course-with-missing-items
-          >
+          <button type="button" {{on "click" this.publish}} data-test-publish-with-missing-items>
             {{t
               "general.publishCourseWithMissingItems"
               missingItemCount=@course.allPublicationIssuesLength
