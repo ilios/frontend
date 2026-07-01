@@ -84,7 +84,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     await render(<template><PublicationMenu @course={{this.course}} /></template>);
     await component.toggle.click();
     assert.ok(component.menuOpen);
-    assert.ok(component.hasPublishAsIs);
+    assert.notOk(component.hasPublishAsIs);
     assert.notOk(component.hasPublish);
     assert.ok(component.hasTbd);
     assert.notOk(component.hasUnPublish);
@@ -116,7 +116,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     await render(<template><PublicationMenu @course={{this.course}} /></template>);
     await component.toggle.click();
     assert.ok(component.menuOpen);
-    assert.ok(component.hasPublishAsIs);
+    assert.notOk(component.hasPublishAsIs);
     assert.notOk(component.hasPublish);
     assert.notOk(component.hasTbd);
     assert.ok(component.hasUnPublish);
@@ -196,12 +196,12 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     assert.ok(component.hasTbd);
     assert.notOk(component.hasUnPublish);
 
-    assert.strictEqual(component.selectedMenuItem, 'Publish As-is');
+    assert.strictEqual(component.selectedMenuItem, 'Mark as Scheduled');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
 
     await component.menu.up();
-    assert.strictEqual(component.selectedMenuItem, 'Mark as Scheduled');
+    assert.strictEqual(component.selectedMenuItem, 'Publish As-is');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
