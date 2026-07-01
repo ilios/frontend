@@ -132,9 +132,6 @@ export default class PrintCourseComponent extends Component {
         <PublicationStatus @item={{@course}} @showText={{true}} />
       </div>
       <section class="overview block" data-test-course-overview>
-        <div class="title">
-          {{t "general.overview"}}
-        </div>
         <div class="content">
           <div class="inline-label-data-block">
             <label>

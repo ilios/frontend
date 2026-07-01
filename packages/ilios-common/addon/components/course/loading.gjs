@@ -13,9 +13,6 @@ import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
       </div>
       <div class="ilios-overview">
         <div class="overview-header">
-          <div class="overview-title loading-text">
-            {{t "general.overview"}}
-          </div>
           <div class="overview-actions"></div>
         </div>
         <div class="overview-content">

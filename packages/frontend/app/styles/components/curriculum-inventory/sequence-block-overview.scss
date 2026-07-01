@@ -58,6 +58,7 @@
 
     .curriculum-inventory-sequence-block-overview-content {
       @include m.ilios-overview-content;
+      padding-top: 0;
     }
   }
 

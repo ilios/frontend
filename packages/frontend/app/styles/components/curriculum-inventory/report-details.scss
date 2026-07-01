@@ -2,6 +2,7 @@
 
 .curriculum-inventory-report-details {
   @include m.detail-container(var(--orange));
+  border-bottom: none;
   margin: 0 0.5rem;
 
   .title {

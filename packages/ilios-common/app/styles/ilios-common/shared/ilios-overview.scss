@@ -13,13 +13,13 @@
   }
 
   .overview-header {
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-top: 1rem;
     height: 1.5em;
   }
 
   .overview-actions {
-    justify-content: space-around;
+    justify-content: flex-end;
     text-align: right;
     vertical-align: middle;
 

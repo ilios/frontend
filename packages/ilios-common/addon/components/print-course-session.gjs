@@ -152,9 +152,6 @@ export default class PrintCourseSessionComponent extends Component {
         <PublicationStatus @item={{@session}} @showText={{true}} />
       </div>
       <section class="overview block">
-        <div class="title">
-          {{t "general.overview"}}
-        </div>
         <div class="last-update" data-test-last-update>
           {{t "general.lastUpdate"}}:
           {{formatDate

@@ -265,7 +265,6 @@ general:
   objectives: Objectives
   offering: Offering
   offerings: Offerings
-  overview: Overview
   ownedBy: "owned by {owner}"
   owner: Owner
   pagedResultsCount: "Showing {start} - {end} of {total}"
