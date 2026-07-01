@@ -8,7 +8,7 @@ export default class ReportsIndexRoute extends Route {
 
   beforeModel(transition) {
     if (this.currentUser.requireNonLearner(transition)) {
-      this.router.replaceWith('reports.subjects');
+      this.router.replaceWith('reports.curriculum');
     }
   }
 }
