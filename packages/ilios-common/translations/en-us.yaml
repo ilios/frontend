@@ -54,7 +54,7 @@ general:
   cohorts: Cohorts
   cohortsManageTitle: Manage Cohorts
   collapse: Collapse
-  collapseDetail: Hide Details
+  collapseDetails: Hide Details
   competencies: Competencies
   complete: Complete
   confirmRemoveLearningMaterial: Are you sure you want to remove this learning material? This action cannot be undone.
@@ -129,7 +129,7 @@ general:
   eventNotFoundTitle: Event Not Found
   eventNotFoundExplanation: "The event you have tried to reach is either no longer available, or you have followed a personalized user link which is not shareable. If you continue to encounter issues, please contact your Ilios help desk."
   expand: Expand
-  expandDetail: Show Details
+  expandDetails: Show Details
   externalId: Course ID
   file: File
   file-audio: Audio file
@@ -290,6 +290,7 @@ general:
   publishAllAsIs: Publish All As-is
   publishAsIs: Publish As-is
   publishCourse: Publish Course
+  publishCourseWithMissingItems: Publish Course, with {missingItemCount, plural, =1 {1 item missing} other {# items missing}}
   published: Published
   publishedSessions: Published Sessions
   publishedSuccessfully: Published successfully

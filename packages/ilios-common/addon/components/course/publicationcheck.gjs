@@ -2,8 +2,10 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import { LinkTo } from '@ember/routing';
+import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import hasManyLength from 'ilios-common/helpers/has-many-length';
 import { hash } from '@ember/helper';
@@ -12,6 +14,8 @@ import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default class CoursePublicationCheckComponent extends Component {
   @service router;
+  @service intl;
+  @service flashMessages;
 
   @cached
   get courseObjectives() {
@@ -29,18 +33,33 @@ export default class CoursePublicationCheckComponent extends Component {
 
     return objectivesWithoutParents.length > 0;
   }
+
+  @action
+  async publish() {
+    this.args.course.set('publishedAsTbd', false);
+    this.args.course.set('published', true);
+    await this.args.course.save();
+    this.router.transitionTo('course', this.args.course);
+    this.flashMessages.success(this.intl.t('general.publishedSuccessfully'));
+  }
+
   <template>
     <div
       class="course-publicationcheck main-section"
       data-test-course-publicationcheck
-      {{scrollIntoView}}
+      {{scrollIntoView delay=10}}
     >
-      <LinkTo @route="course" @model={{@course}} data-test-back-to-course>
+      <LinkTo
+        @route="course"
+        @model={{@course}}
+        @query={{hash detailsCollapseControl=true}}
+        data-test-back-to-course
+      >
         {{t "general.backToTitle" title=@course.title}}
       </LinkTo>
 
       <section class="course-publicationcheck-details">
-        <div class="title">
+        <div class="title" data-test-title>
           {{t "general.missingItems"}}
           ({{@course.allPublicationIssuesLength}})
         </div>
@@ -111,6 +130,14 @@ export default class CoursePublicationCheckComponent extends Component {
               </tr>
             </tbody>
           </table>
+        </div>
+        <div data-test-course-publicationcheck-actions>
+          <button type="button" {{on "click" this.publish}} data-test-publish-with-missing-items>
+            {{t
+              "general.publishCourseWithMissingItems"
+              missingItemCount=@course.allPublicationIssuesLength
+            }}
+          </button>
         </div>
       </section>
     </div>

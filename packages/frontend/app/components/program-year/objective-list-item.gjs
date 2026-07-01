@@ -282,7 +282,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             class="collapse-row"
             type="button"
             {{on "click" (perform this.collapseObjective)}}
-            title={{t "general.collapseDetail"}}
+            title={{t "general.collapseDetails"}}
             data-test-toggle-collapse
           >
             <FaIcon @icon={{faCaretDown}} />

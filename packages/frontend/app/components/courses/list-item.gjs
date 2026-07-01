@@ -9,7 +9,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import PublicationStatus from 'ilios-common/components/publication-status';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
+import { fn, hash } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faLock, faLockOpen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -53,7 +53,7 @@ export default class CoursesListItemComponent extends Component {
       data-test-courses-list-item
     >
       <td class="text-left" colspan="8" data-test-course-title>
-        <LinkTo @route="course" @model={{@course}}>
+        <LinkTo @route="course" @model={{@course}} @query={{hash detailsCollapseControl=true}}>
           {{@course.title}}
           {{#if @course.externalId}}
             ({{@course.externalId}})

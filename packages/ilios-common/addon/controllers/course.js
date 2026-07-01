@@ -3,6 +3,7 @@ import Controller from '@ember/controller';
 export default class CourseController extends Controller {
   queryParams = [
     'details',
+    'detailsCollapseControl',
     'courseLeadershipDetails',
     'courseObjectiveDetails',
     'courseTaxonomyDetails',
@@ -11,6 +12,7 @@ export default class CourseController extends Controller {
   ];
 
   details = false;
+  detailsCollapseControl = true;
   editable = false;
   courseLeadershipDetails = false;
   courseObjectiveDetails = false;

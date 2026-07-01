@@ -54,7 +54,7 @@ general:
   cohorts: Clases de la Graduación
   cohortsManageTitle: Administrar Clases de La Graduación
   collapse: Colapsar
-  collapseDetail: Esconder Detalles
+  collapseDetails: Esconder Detalles
   competencies: Competencias
   complete: Completo
   confirmRemoveLearningMaterial: ¿Está seguro que desea eliminar este material de aprendizaje? Esta acción no se puede deshacer.
@@ -129,7 +129,7 @@ general:
   eventNotFoundTitle: Evento no encontrado
   eventNotFoundExplanation: "El evento al que ha intentado acceder ya no está disponible o ha seguido un enlace de usuario personalizado que no se puede compartir. Si sigue teniendo problemas, póngase en contacto con el servicio de asistencia de Ilios."
   expand: Expandir
-  expandDetail: Enseñar Detalles
+  expandDetails: Enseñar Detalles
   externalId: Identificación del Curso
   file: Archivo
   file-audio: Archivo de audio
@@ -290,6 +290,7 @@ general:
   publishAllAsIs: Publique Todo Como Es
   publishAsIs: Publique Como Es
   publishCourse: Publique Curso
+  publishCourseWithMissingItems: Publique Curso, con {missingItemCount, plural, =1 {1 artículo faltante} other {# artículos faltantes}}
   published: Publicado
   publishedSessions: Sesiones Publicadas
   publishedSuccessfully: Publicado con éxito

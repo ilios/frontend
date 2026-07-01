@@ -1,7 +1,9 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
+import { currentURL } from '@ember/test-helpers';
 import page from 'ilios-common/page-objects/course';
+import pubcheckPage from 'ilios-common/page-objects/course-publication-check';
 
 module('Acceptance | Course - Publish', function (hooks) {
   setupApplicationTest(hooks);
@@ -18,9 +20,38 @@ module('Acceptance | Course - Publish', function (hooks) {
       cohorts: [this.cohort],
     });
     await page.visit({ courseId: course.id });
-    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Not Published');
+
+    assert.strictEqual(currentURL(), '/courses/1', 'course page url is correct');
+    assert.strictEqual(
+      page.details.header.publicationMenu.toggle.text,
+      'Not Published',
+      'course published status is correct',
+    );
+    assert.ok(page.details.hasCollapseControl);
+
     await page.details.header.publicationMenu.toggle.click();
     await page.details.header.publicationMenu.publishAsIs();
+
+    assert.strictEqual(
+      currentURL(),
+      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      'course publicationcheck url is correct',
+    );
+    assert.notOk(page.details.hasCollapseControl);
+
+    const pubcheck = pubcheckPage.publicationcheck;
+
+    assert.strictEqual(pubcheck.title, 'Missing Items (2)');
+    assert.strictEqual(pubcheck.courseTitle, 'course 0');
+    assert.strictEqual(pubcheck.cohorts, 'Yes (1)');
+    assert.strictEqual(pubcheck.terms, 'No');
+    assert.strictEqual(pubcheck.objectives, 'No');
+    assert.strictEqual(
+      pubcheck.publishWithMissingItems.text,
+      'Publish Course, with 2 items missing',
+    );
+
+    await pubcheckPage.publicationcheck.publishWithMissingItems.click();
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
   });
 
@@ -47,8 +78,32 @@ module('Acceptance | Course - Publish', function (hooks) {
     });
     await page.visit({ courseId: course.id });
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Scheduled');
+    assert.ok(page.details.hasCollapseControl);
+
     await page.details.header.publicationMenu.toggle.click();
     await page.details.header.publicationMenu.publishAsIs();
+
+    assert.strictEqual(
+      currentURL(),
+      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      'course publicationcheck url is correct',
+    );
+    assert.notOk(page.details.hasCollapseControl);
+
+    const pubcheck = pubcheckPage.publicationcheck;
+
+    assert.strictEqual(pubcheck.title, 'Missing Items (2)');
+    assert.strictEqual(pubcheck.courseTitle, 'course 0');
+    assert.strictEqual(pubcheck.cohorts, 'Yes (1)');
+    assert.strictEqual(pubcheck.terms, 'No');
+    assert.strictEqual(pubcheck.objectives, 'No');
+    assert.strictEqual(
+      pubcheck.publishWithMissingItems.text,
+      'Publish Course, with 2 items missing',
+    );
+
+    await pubcheckPage.publicationcheck.publishWithMissingItems.click();
+
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
   });
 

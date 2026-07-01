@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
-import { uniqueId, get } from '@ember/helper';
+import { uniqueId } from '@ember/helper';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import set from 'ember-set-helper/helpers/set';
 import { on } from '@ember/modifier';
@@ -46,18 +46,15 @@ export default class CoursePublicationMenuComponent extends Component {
   get showTbd() {
     return !this.args.course.publishedAsTbd;
   }
-  get showAsIs() {
+  get showReviewAsIs() {
+    if (this.router.currentRouteName === 'course.publication-check') {
+      return false;
+    }
     return (
       (!this.args.course.published || this.args.course.publishedAsTbd) &&
       this.args.course.requiredPublicationIssues.length === 0 &&
       this.args.course.allPublicationIssuesLength !== 0
     );
-  }
-  get showReview() {
-    if (this.router.currentRouteName === 'course.publication-check') {
-      return false;
-    }
-    return this.args.course.allPublicationIssuesLength > 0;
   }
   get showPublish() {
     return (
@@ -147,7 +144,9 @@ export default class CoursePublicationMenuComponent extends Component {
   @action
   scrollToCoursePublication() {
     this.isOpen = false;
-    this.router.transitionTo('course.publication-check', this.args.course);
+    this.router.transitionTo('course.publication-check', this.args.course, {
+      queryParams: { details: true, detailsCollapseControl: false },
+    });
   }
   @action
   async publish() {
@@ -201,13 +200,13 @@ export default class CoursePublicationMenuComponent extends Component {
         </button>
         {{#if this.isOpen}}
           <div class="menu" role="menu" data-test-menu {{focus}}>
-            {{#if this.showAsIs}}
+            {{#if this.showReviewAsIs}}
               <button
                 class="alert"
                 role="menuitem"
                 tabindex="-1"
                 type="button"
-                {{on "click" this.publish}}
+                {{on "click" this.scrollToCoursePublication}}
                 {{on "keydown" this.keyDown}}
                 {{on "mouseenter" this.clearFocus}}
                 data-test-publish-as-is
@@ -227,20 +226,6 @@ export default class CoursePublicationMenuComponent extends Component {
                 data-test-publish
               >
                 {{t "general.publishCourse"}}
-              </button>
-            {{/if}}
-            {{#if this.showReview}}
-              <button
-                class="good"
-                role="menuitem"
-                tabindex="-1"
-                type="button"
-                {{on "click" this.scrollToCoursePublication}}
-                {{on "keydown" this.keyDown}}
-                {{on "mouseenter" this.clearFocus}}
-                data-test-review
-              >
-                {{t "general.reviewMissingItems" count=(get @course "allPublicationIssuesLength")}}
               </button>
             {{/if}}
             {{#if this.showTbd}}

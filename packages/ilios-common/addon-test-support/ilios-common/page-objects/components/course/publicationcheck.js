@@ -1,4 +1,4 @@
-import { attribute, create, text } from 'ember-cli-page-object';
+import { attribute, clickable, create, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-course-publicationcheck]',
@@ -13,6 +13,11 @@ const definition = {
   objectives: text('[data-test-objectives]'),
   unlink: {
     scope: '[data-test-unlink]',
+  },
+  publishWithMissingItems: {
+    scope: '[data-test-publish-with-missing-items]',
+    text: text(),
+    click: clickable(),
   },
 };
 
