@@ -27,6 +27,7 @@ module('Acceptance | Course - Publish', function (hooks) {
       'Not Published',
       'course published status is correct',
     );
+    assert.ok(page.details.hasCollapseControl);
 
     await page.details.header.publicationMenu.toggle.click();
     await page.details.header.publicationMenu.publishAsIs();
@@ -36,6 +37,7 @@ module('Acceptance | Course - Publish', function (hooks) {
       '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
       'course publicationcheck url is correct',
     );
+    assert.notOk(page.details.hasCollapseControl);
 
     const pubcheck = pubcheckPage.publicationcheck;
 
@@ -76,6 +78,8 @@ module('Acceptance | Course - Publish', function (hooks) {
     });
     await page.visit({ courseId: course.id });
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Scheduled');
+    assert.ok(page.details.hasCollapseControl);
+
     await page.details.header.publicationMenu.toggle.click();
     await page.details.header.publicationMenu.publishAsIs();
 
@@ -84,6 +88,7 @@ module('Acceptance | Course - Publish', function (hooks) {
       '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
       'course publicationcheck url is correct',
     );
+    assert.notOk(page.details.hasCollapseControl);
 
     const pubcheck = pubcheckPage.publicationcheck;
 
