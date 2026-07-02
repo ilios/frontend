@@ -65,9 +65,9 @@ export default class MyProfileComponent extends Component {
       second: 59,
     });
     const twoWeeksFromNow = midnightToday.plus({ weeks: 2 });
-    const oneYearFromNow = midnightToday.plus({ years: 1 });
+    const nintyDaysFromNow = midnightToday.plus({ days: 90 });
     this.minDate = midnightToday.toJSDate();
-    this.maxDate = oneYearFromNow.toJSDate();
+    this.maxDate = nintyDaysFromNow.toJSDate();
     this.expiresAt = twoWeeksFromNow.toJSDate();
     this.generatedJwt = null;
   }
