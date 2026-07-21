@@ -34,7 +34,7 @@ export default class TruncateTextComponent extends Component {
     return this.length + this.slippage;
   }
   get displayText() {
-    if (this.expanded || this.cleanText.length < this.totalLength) {
+    if (this.expanded || (this.cleanText.length < this.totalLength && this.lineBreakCount < 5)) {
       if (this.args.renderHtml) {
         return new htmlSafe(this.text);
       } else {
@@ -50,6 +50,16 @@ export default class TruncateTextComponent extends Component {
     } else {
       return this.displayText.toString() !== this.cleanText;
     }
+  }
+  get lineBreakCount() {
+    const regex = /(<p>|<br>|<br\/>|<br \/>|<li>)/gi;
+    const matches = this.text.match(regex);
+
+    if (matches) {
+      return matches.length;
+    }
+
+    return 0;
   }
 
   @action
