@@ -16,6 +16,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class LoginFormComponent extends Component {
   @service session;
+  @service fetch;
   @tracked error;
   @tracked username;
   @tracked password;
@@ -35,12 +36,11 @@ export default class LoginFormComponent extends Component {
 
     try {
       this.error = null;
-      const session = this.session;
-      const authenticator = 'authenticator:ilios-jwt';
-      await session.authenticate(authenticator, {
+      const jwt = await this.loginWithCredentials({
         username: this.username,
         password: this.password,
       });
+      this.session.authenticate('authenticator:ilios-jwt', { jwt });
     } catch (response) {
       const keys = response.json.errors.map((key) => {
         return 'general.' + key;
@@ -58,6 +58,33 @@ export default class LoginFormComponent extends Component {
       await this.authenticate.perform();
     }
   }
+
+  async loginWithCredentials(data) {
+    const response = await this.fetch.fetchFromApiHost('/auth/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    const { statusText, status, headers } = response;
+    const text = await response.text();
+    const json = JSON.parse(text);
+    if (!response.ok) {
+      throw {
+        statusText,
+        status,
+        headers,
+        text,
+        json,
+      };
+    }
+
+    return json.jwt;
+  }
+
   <template>
     <div class="login-form" data-test-login-form ...attributes>
       {{#let (uniqueId) as |templateId|}}

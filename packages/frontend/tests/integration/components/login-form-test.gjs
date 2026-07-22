@@ -5,9 +5,11 @@ import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/login-form';
 import LoginForm from 'frontend/components/login-form';
+import { setupMSW } from 'ilios-common/msw';
 
 module('Integration | Component | login-form', function (hooks) {
   setupRenderingTest(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     await render(<template><LoginForm /></template>);
@@ -43,11 +45,7 @@ module('Integration | Component | login-form', function (hooks) {
     const password = 'Bar';
     const sessionMock = class extends Service {
       authenticate() {
-        const err = new Error();
-        err.json = {
-          errors: ['badCredentials'],
-        };
-        throw err;
+        assert.ok(false, 'authenticate should not be called');
       }
     };
     this.owner.register('service:session', sessionMock);
@@ -61,13 +59,13 @@ module('Integration | Component | login-form', function (hooks) {
   });
 
   test('submit and succeed', async function (assert) {
-    const username = 'Foo';
-    const password = 'Bar';
+    const username = 'demo';
+    const password = 'demo';
     const sessionMock = class extends Service {
       authenticate() {
         assert.step('session.authenticate called');
-        assert.strictEqual(arguments[1].username, username);
-        assert.strictEqual(arguments[1].password, password);
+        assert.strictEqual(arguments[0], 'authenticator:ilios-jwt');
+        assert.ok(arguments[1]?.jwt);
       }
     };
     this.owner.register('service:session', sessionMock);
@@ -81,13 +79,13 @@ module('Integration | Component | login-form', function (hooks) {
   });
 
   test('submit by pressing enter in username field', async function (assert) {
-    const username = 'Foo';
-    const password = 'Bar';
+    const username = 'demo';
+    const password = 'demo';
     const sessionMock = class extends Service {
       authenticate() {
         assert.step('session.authenticate called');
-        assert.strictEqual(arguments[1].username, username);
-        assert.strictEqual(arguments[1].password, password);
+        assert.strictEqual(arguments[0], 'authenticator:ilios-jwt');
+        assert.ok(arguments[1]?.jwt);
       }
     };
     this.owner.register('service:session', sessionMock);
@@ -99,13 +97,13 @@ module('Integration | Component | login-form', function (hooks) {
   });
 
   test('submit by pressing enter in password field', async function (assert) {
-    const username = 'Foo';
-    const password = 'Bar';
+    const username = 'demo';
+    const password = 'demo';
     const sessionMock = class extends Service {
       authenticate() {
         assert.step('session.authenticate called');
-        assert.strictEqual(arguments[1].username, username);
-        assert.strictEqual(arguments[1].password, password);
+        assert.strictEqual(arguments[0], 'authenticator:ilios-jwt');
+        assert.ok(arguments[1]?.jwt);
       }
     };
     this.owner.register('service:session', sessionMock);
@@ -117,13 +115,13 @@ module('Integration | Component | login-form', function (hooks) {
   });
 
   test('input validation', async function (assert) {
-    const username = 'Foo';
-    const password = 'Bar';
+    const username = 'demo';
+    const password = 'demo';
     const sessionMock = class extends Service {
       authenticate() {
         assert.step('session.authenticate called');
-        assert.strictEqual(arguments[1].username, username);
-        assert.strictEqual(arguments[1].password, password);
+        assert.strictEqual(arguments[0], 'authenticator:ilios-jwt');
+        assert.ok(arguments[1]?.jwt);
       }
     };
     this.owner.register('service:session', sessionMock);
