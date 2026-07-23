@@ -8,15 +8,12 @@ export default class IliosJWT extends Base {
   @service fetch;
   #tokenExpirationTimeout = null;
 
-  async authenticate(credentials, headers) {
-    let jwt;
-    if ('jwt' in credentials) {
-      jwt = credentials.jwt;
-    } else {
-      jwt = (await this.loginWithCredentials(credentials, headers)).jwt;
+  async authenticate(credentials) {
+    if (!credentials.jwt) {
+      throw new Error('JWT missing from credentials');
     }
 
-    return this.#extractTokenAndSetupExpiration(jwt);
+    return this.#extractTokenAndSetupExpiration(credentials.jwt);
   }
 
   async invalidate() {
@@ -59,34 +56,6 @@ export default class IliosJWT extends Base {
       },
       wait,
     );
-  }
-
-  async loginWithCredentials(data, loginHeaders) {
-    const response = await this.fetch.fetchFromApiHost('/auth/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        ...loginHeaders,
-      },
-      body: JSON.stringify(data),
-    });
-
-    const { statusText, status, headers } = response;
-    const text = await response.text();
-    const json = JSON.parse(text);
-    if (!response.ok) {
-      throw {
-        statusText,
-        status,
-        headers,
-        text,
-        json,
-      };
-    }
-
-    const { exp } = jwtDecode(json.jwt);
-    return { jwt: json.jwt, exp };
   }
 
   #extractTokenAndSetupExpiration(jwt) {
