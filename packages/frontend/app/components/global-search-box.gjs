@@ -49,7 +49,9 @@ export default class GlobalSearchBoxComponent extends Component {
     this.internalQuery = q;
     if (this.router.currentRouteName === 'search') {
       if (q === '') {
-        this.args.search('');
+        const url = new URL(window.location.href);
+        url.searchParams.set('q', '');
+        window.history.replaceState(null, '', url.pathname + '?' + url.searchParams.toString());
       }
     }
   });
