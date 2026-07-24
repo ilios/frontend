@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -40,6 +40,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       <template><NewDirectoryUser @close={{(noop)}} @setSearchTerms={{(noop)}} /></template>,
     );
     await a11yAudit(this.element);
+    await takeComponentScreenshot(assert);
     assert.ok(true, 'no a11y errors found.');
   });
 
@@ -212,6 +213,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       </template>,
     );
 
+    await takeComponentScreenshot(assert, 'search');
     assert.strictEqual(component.searchResults.length, 3);
     assert.ok(component.searchResults[0].userCanBeAdded);
     assert.strictEqual(component.searchResults[0].name, `${searchResult1.displayName}`);
@@ -245,6 +247,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
     assert.strictEqual(component.form.username.text, `Username: ${searchResult1.username}`);
     assert.strictEqual(component.form.school.value, '1');
 
+    await takeComponentScreenshot(assert, 'add user');
     await component.form.submit();
 
     const userModel = await this.owner.lookup('service:store').findRecord('user', 5);
@@ -319,6 +322,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
     await component.searchResults[0].addUser();
     assert.strictEqual(component.form.school.value, '1');
     await component.form.school.select('2');
+    await takeComponentScreenshot(assert);
     await component.form.submit();
 
     const userModel = await this.owner.lookup('service:store').findRecord('user', 2);
@@ -388,6 +392,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
     assert.ok(component.searchResults[0].userCanBeAdded);
     await component.searchResults[0].addUser();
     assert.strictEqual(component.form.school.value, '2');
+    await takeComponentScreenshot(assert);
     await component.form.submit();
 
     const userModel = await this.owner.lookup('service:store').findRecord('user', 2);
@@ -594,5 +599,84 @@ module('Integration | Component | new-directory-user', function (hooks) {
     );
     assert.strictEqual(component.form.username.error, 'Username can not be blank');
     assert.strictEqual(component.form.password.error, 'Password can not be blank');
+  });
+
+  test('official email variations', async function (assert) {
+    this.server.get('/application/config', () => {
+      assert.step('application/config API called');
+      return {
+        config: {
+          locale: 'en',
+          type: 'ldap',
+          userSearchType: 'ldap',
+        },
+      };
+    });
+    this.server.get('/application/directory/search', () => {
+      assert.step('application/directory/search API called');
+      return {
+        results: [
+          {
+            firstName: 'fname1',
+            lastName: 'lname1',
+            displayName: '',
+            campusId: '1',
+            email: 'first@example.edu',
+            officialEmail: 'official-first@example.edu',
+          },
+          {
+            firstName: 'fname2',
+            lastName: 'lname2',
+            displayName: '',
+            campusId: '2',
+            email: 'second@example.edu',
+            officialEmail: 'second@example.edu',
+          },
+          {
+            firstName: 'fname3',
+            lastName: 'lname3',
+            displayName: '',
+            campusId: '3',
+            email: 'third@example.edu',
+            officialEmail: '',
+          },
+          {
+            firstName: 'fname4',
+            lastName: 'lname4',
+            displayName: '',
+            campusId: '4',
+            email: 'fourth@example.edu',
+          },
+        ],
+      };
+    });
+    await render(
+      <template>
+        <NewDirectoryUser
+          @close={{(noop)}}
+          @setSearchTerms={{(noop)}}
+          @transitionToUser={{noop}}
+          @searchTerms="searchterm"
+        />
+      </template>,
+    );
+
+    await takeComponentScreenshot(assert);
+    assert.strictEqual(component.searchResults.length, 4);
+    assert.strictEqual(component.searchResults[0].name, 'fname1 lname1');
+    assert.strictEqual(
+      component.searchResults[0].email,
+      'first@example.edu official-first@example.edu',
+    );
+    assert.strictEqual(component.searchResults[1].name, 'fname2 lname2');
+    assert.strictEqual(component.searchResults[1].email, 'second@example.edu');
+    assert.strictEqual(component.searchResults[2].name, 'fname3 lname3');
+    assert.strictEqual(component.searchResults[2].email, 'third@example.edu');
+    assert.strictEqual(component.searchResults[3].name, 'fname4 lname4');
+    assert.strictEqual(component.searchResults[3].email, 'fourth@example.edu');
+    assert.verifySteps([
+      'application/config API called',
+      'application/directory/search API called',
+    ]);
   });
 });
