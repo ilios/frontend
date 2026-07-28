@@ -1,4 +1,8 @@
 button {
+  &:hover {
+    background-color: var(--light-blue);
+  }
+
   &.link-button {
     padding: 0;
     border: 0;
