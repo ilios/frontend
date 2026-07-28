@@ -9,5 +9,9 @@
       border: 1px inset var(--blue);
       color: light-dark(var(--white), var(--black));
     }
+
+    &:not(.active):hover {
+      background-color: var(--super-light-grey);
+    }
   }
 }
