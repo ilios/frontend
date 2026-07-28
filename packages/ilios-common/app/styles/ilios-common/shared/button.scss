@@ -19,4 +19,32 @@ button {
       cursor: default;
     }
   }
+
+  &.bigadd {
+    background-color: var(--green);
+    color: var(--white);
+    margin-right: 0.25em;
+
+    &:hover {
+      background-color: var(--light-green);
+    }
+
+    &:disabled {
+      background-color: var(--grey);
+      cursor: default;
+
+      &:hover {
+        background-color: var(--grey);
+      }
+    }
+  }
+
+  &.bigcancel {
+    background-color: var(--red);
+    color: var(--white);
+
+    &:hover {
+      background-color: var(--light-red);
+    }
+  }
 }
