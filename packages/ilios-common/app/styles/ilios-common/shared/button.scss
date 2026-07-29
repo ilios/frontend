@@ -14,7 +14,24 @@ button {
     text-align: left;
     white-space: normal;
 
-    &:disabled {
+    &.lock-button:hover svg,
+    &.manage-button:hover svg,
+    &.visualization-button:hover svg {
+      color: var(--light-blue);
+    }
+    &.delete-button:hover svg {
+      color: var(--light-red);
+    }
+
+    &.lock-button:disabled:hover svg,
+    &.manage-button:disabled:hover svg,
+    &.delete-button:disabled:hover svg,
+    &.delete-button.disabled:hover svg {
+      color: var(--grey);
+    }
+
+    &:disabled,
+    &.disabled {
       color: light-dark(var(--black), var(--white));
       cursor: default;
     }

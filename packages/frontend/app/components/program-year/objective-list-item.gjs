@@ -407,7 +407,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
         {{/if}}
         {{#if (and this.canDelete @editable (not this.isManaging))}}
           <button
-            class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+            class="link-button delete-button{{if this.showRemoveConfirmation ' disabled'}}"
             type="button"
             title={{if
               this.showRemoveConfirmation
@@ -426,7 +426,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
         {{else}}
           <button
             type="button"
-            class="link-button disabled"
+            class="link-button delete-button disabled"
             title={{t "general.canNotDeleteProgramYearObjective"}}
             disabled
             data-test-remove

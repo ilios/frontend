@@ -188,7 +188,7 @@ export default class ProgramYearListItemComponent extends Component {
             {{else if this.canLock}}
               <button
                 type="button"
-                class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+                class="link-button lock-button{{if this.showRemoveConfirmation ' disabled'}}"
                 title={{if
                   this.showRemoveConfirmation
                   (t "general.disabledByConfirmation")
@@ -207,7 +207,7 @@ export default class ProgramYearListItemComponent extends Component {
             {{else}}
               <button
                 type="button"
-                class="link-button disabled"
+                class="link-button lock-button disabled"
                 title={{t "general.canNotLockProgramYear"}}
                 disabled
                 data-test-lock
@@ -218,7 +218,7 @@ export default class ProgramYearListItemComponent extends Component {
             {{#if this.canDelete}}
               <button
                 type="button"
-                class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+                class="link-button delete-button{{if this.showRemoveConfirmation ' disabled'}}"
                 title={{if
                   this.showRemoveConfirmation
                   (t "general.disabledByConfirmation")
@@ -237,7 +237,7 @@ export default class ProgramYearListItemComponent extends Component {
             {{else}}
               <button
                 type="button"
-                class="link-button disabled"
+                class="link-button delete-button disabled"
                 title={{t "general.canNotDeleteProgramYear"}}
                 disabled
                 data-test-remove

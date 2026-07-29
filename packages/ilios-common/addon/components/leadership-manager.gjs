@@ -61,7 +61,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
                 {{#each (sortBy "fullName" @directors) as |user|}}
                   <li data-test-director>
                     <button
-                      class="link-button"
+                      class="link-button delete-button"
                       type="button"
                       aria-label={{t "general.remove"}}
                       {{on "click" (fn @removeDirector user)}}
@@ -85,7 +85,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
                 {{#each (sortBy "fullName" @administrators) as |user|}}
                   <li data-test-administrator>
                     <button
-                      class="link-button"
+                      class="link-button delete-button"
                       type="button"
                       aria-label={{t "general.remove"}}
                       {{on "click" (fn @removeAdministrator user)}}
@@ -109,7 +109,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
                 {{#each (sortBy "fullName" @studentAdvisors) as |user|}}
                   <li data-test-student-advisor>
                     <button
-                      class="link-button"
+                      class="link-button delete-button"
                       type="button"
                       aria-label={{t "general.remove"}}
                       {{on "click" (fn @removeStudentAdvisor user)}}

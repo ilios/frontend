@@ -11,5 +11,9 @@
   &.disabled {
     color: light-dark(var(--grey), var(--light-grey));
     cursor: default;
+
+    &:hover {
+      color: var(--grey);
+    }
   }
 }

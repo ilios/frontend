@@ -149,7 +149,11 @@ export default class DetailLearningMaterialsItemComponent extends Component {
           </button>
           <button
             type="button"
-            class="icon-button{{if this.showRemoveConfirmation ' disabled' ' remove'}}"
+            class="icon-button delete-button{{if
+                this.showRemoveConfirmation
+                ' disabled'
+                ' remove'
+              }}"
             title={{if
               this.showRemoveConfirmation
               (t "general.disabledByConfirmation")
@@ -167,7 +171,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
         {{else}}
           <button
             type="button"
-            class="icon-button disabled"
+            class="icon-button delete-button disabled"
             title={{t "general.canNotDeleteLearningMaterial"}}
             disabled
             data-test-remove
