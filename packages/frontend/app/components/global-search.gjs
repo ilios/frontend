@@ -136,7 +136,7 @@ export default class GlobalSearchComponent extends Component {
       />
       {{#if @query.length}}
         <ul
-          class="results {{if (and this.resultsData.isPending (not this.hasResults)) 'hidden'}}"
+          class="results{{if (and this.resultsData.isPending (not this.hasResults)) ' hidden'}}"
           data-test-results
         >
           {{#if this.resultsData.isPending}}

@@ -1099,7 +1099,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
               {{/if}}
             </div>
             <div
-              class="block is-selective {{unless this.isSelective 'hidden'}}"
+              class="block is-selective{{unless this.isSelective ' hidden'}}"
               data-test-is-selective
             >
               <label>{{t "general.sequenceBlockIsSelective"}}</label>

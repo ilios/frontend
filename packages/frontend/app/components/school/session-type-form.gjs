@@ -196,7 +196,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
             {{#if @canEditActive}}
               <ToggleYesno @yes={{this.isActive}} @toggle={{set this "isActive"}} />
             {{else}}
-              <span class="value {{if this.isActive 'yes' 'no'}}">
+              <span class="value{{if this.isActive ' yes' ' no'}}">
                 {{#if this.isActive}}
                   {{t "general.yes"}}
                 {{else}}
@@ -212,7 +212,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
             {{#if @canEditAssessment}}
               <ToggleYesno @yes={{this.assessment}} @toggle={{this.updateAssessment}} />
             {{else}}
-              <span class="value {{if this.assessment 'yes' 'no'}}">
+              <span class="value{{if this.assessment ' yes' ' no'}}">
                 {{#if this.assessment}}
                   {{t "general.yes"}}
                 {{else}}

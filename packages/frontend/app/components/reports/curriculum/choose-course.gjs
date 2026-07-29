@@ -131,7 +131,7 @@ export default class ReportsCurriculumChooseCourseComponent extends Component {
         {{/if}}
       </div>
       {{#each this.selectedSchoolYears as |y|}}
-        <ul class="year {{if y.isExpanded 'expanded' 'collapsed'}}" data-test-year>
+        <ul class="year{{if y.isExpanded ' expanded' ' collapsed'}}" data-test-year>
           <li>
             <input
               type="checkbox"

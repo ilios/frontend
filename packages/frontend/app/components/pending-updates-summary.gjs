@@ -89,7 +89,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
   }
   <template>
     <div
-      class="pending-updates-summary small-component {{if this.haveUpdates 'alert'}}"
+      class="pending-updates-summary small-component{{if this.haveUpdates ' alert'}}"
       data-test-pending-updates-summary
       ...attributes
     >

@@ -60,8 +60,10 @@ export default class SortableHeadingComponent extends Component {
   <template>
     <button
       type="button"
-      class="sortable-heading sortable text-{{this.align}}
-        {{if this.hideFromSmallScreen 'hide-from-small-screen'}}"
+      class="sortable-heading sortable text-{{this.align}}{{if
+          this.hideFromSmallScreen
+          ' hide-from-small-screen'
+        }}"
       colspan={{this.colspan}}
       title={{this.title}}
       {{on "click" this.click}}

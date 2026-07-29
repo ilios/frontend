@@ -164,7 +164,7 @@ export default class LearnerGroupCalendarComponent extends Component {
           @areDaysSelectable={{false}}
         />
       </div>
-      <span class="loading-indicator {{unless this.load.isRunning 'loaded'}}">
+      <span class="loading-indicator{{unless this.load.isRunning ' loaded'}}">
         <LoadingSpinner />
         {{t "general.loadingEvents"}}
         ...

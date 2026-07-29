@@ -51,8 +51,10 @@ export default class SelectableTermsListItemComponent extends Component {
   <template>
     {{#if (or this.isSelected (and @hasActiveParent @term.active))}}
       <button
-        class="taxonomy-manager-terms-list-item taxonomy-manager-terms-list-item-button
-          {{if this.isSelected 'selected'}}"
+        class="taxonomy-manager-terms-list-item taxonomy-manager-terms-list-item-button{{if
+            this.isSelected
+            ' selected'
+          }}"
         type="button"
         data-test-taxonomy-manager-terms-list-item
         data-test-taxonomy-manager-terms-list-item-level={{this.level}}
@@ -81,7 +83,7 @@ export default class SelectableTermsListItemComponent extends Component {
       </button>
     {{else}}
       <div
-        class="taxonomy-manager-terms-list-item {{if this.isSelected 'selected'}}"
+        class="taxonomy-manager-terms-list-item{{if this.isSelected ' selected'}}"
         data-test-taxonomy-manager-terms-list-item
         data-test-taxonomy-manager-terms-list-item-level={{this.level}}
         {{mouseHoverToggle (set this "isHovering")}}

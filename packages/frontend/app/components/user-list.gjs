@@ -50,8 +50,10 @@ export default class UserListComponent extends Component {
   }
   <template>
     <table
-      class="ilios-table ilios-table-colors ilios-zebra-table user-list
-        {{if @headerIsLocked ' sticky-header'}}"
+      class="ilios-table ilios-table-colors ilios-zebra-table user-list{{if
+          @headerIsLocked
+          ' sticky-header'
+        }}"
       data-test-user-list
       ...attributes
     >

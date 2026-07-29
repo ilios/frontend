@@ -14,13 +14,12 @@ import t from 'ember-intl/helpers/t';
       <ul class="parent-picker" data-test-parent-picker>
         {{#each (sortBy "title" @domainTrees) as |domain|}}
           <li
-            class="domain
-              {{if
+            class="domain{{if
                 (or
                   (eq @selected.id domain.id)
                   (includes @selected.id (mapBy 'id' domain.competencies))
                 )
-                'selected'
+                ' selected'
               }}"
             data-test-domain
           >

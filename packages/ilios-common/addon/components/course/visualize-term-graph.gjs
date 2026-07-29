@@ -158,7 +158,7 @@ export default class CourseVisualizeTermGraphComponent extends Component {
   });
   <template>
     <div
-      class="graph-with-data-table {{unless @isIcon 'not-icon'}}"
+      class="graph-with-data-table{{unless @isIcon ' not-icon'}}"
       data-test-course-visualize-term-graph
       ...attributes
     >

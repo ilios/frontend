@@ -147,7 +147,7 @@ export default class LoginFormComponent extends Component {
             <div class="buttons">
               <button
                 type="button"
-                class="done {{if this.authenticate.isRunning 'active'}}"
+                class="done{{if this.authenticate.isRunning ' active'}}"
                 disabled={{if this.authenticate.isRunning "disabled"}}
                 {{on "click" (perform this.authenticate)}}
                 data-test-login

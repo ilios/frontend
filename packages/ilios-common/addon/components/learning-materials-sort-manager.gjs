@@ -117,11 +117,10 @@ export default class LearningMaterialsSortManagerComponent extends Component {
           <ul class="sortable-items">
             {{#each this.items as |item|}}
               <li
-                class="item
-                  {{if (eq this.draggingItem item) 'dragging-item'}}
-                  {{if (eq this.draggedAboveItem item) 'dragged-above'}}
-                  {{if (eq this.draggedBelowItem item) 'dragged-below'}}
-                  "
+                class="item{{if (eq this.draggingItem item) ' dragging-item'}}{{if
+                    (eq this.draggedAboveItem item)
+                    ' dragged-above'
+                  }}{{if (eq this.draggedBelowItem item) ' dragged-below'}}"
                 draggable="true"
                 {{on "drag" (fn this.drag item)}}
                 {{on "dragend" this.dragEnd}}

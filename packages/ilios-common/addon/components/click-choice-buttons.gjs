@@ -4,7 +4,7 @@ import { fn } from '@ember/helper';
 <template>
   <div class="click-choice-buttons" data-test-click-choice-buttons>
     <button
-      class="first-button {{if @firstChoicePicked 'active'}}"
+      class="first-button{{if @firstChoicePicked ' active'}}"
       type="button"
       data-test-first-button
       {{on "click" (if @firstChoicePicked (noop) (fn @toggle true))}}
@@ -12,7 +12,7 @@ import { fn } from '@ember/helper';
       {{@buttonContent1}}
     </button>
     <button
-      class="second-button {{unless @firstChoicePicked 'active'}}"
+      class="second-button{{unless @firstChoicePicked ' active'}}"
       type="button"
       data-test-second-button
       {{on "click" (if @firstChoicePicked (fn @toggle false) (noop))}}

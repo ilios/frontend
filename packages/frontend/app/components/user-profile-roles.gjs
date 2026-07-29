@@ -153,7 +153,7 @@ export default class UserProfileRolesComponent extends Component {
           <label>
             {{t "general.student"}}:
           </label>
-          <span class="value {{if this.isStudent 'yes' 'no'}}">
+          <span class="value{{if this.isStudent ' yes' ' no'}}">
             {{#if this.isStudent}}
               {{t "general.yes"}}
             {{else}}
@@ -173,7 +173,7 @@ export default class UserProfileRolesComponent extends Component {
               {{on "click" (set this "isFormerStudentFlipped" (not this.isFormerStudentFlipped))}}
             />
           {{else}}
-            <span class="value {{if this.isFormerStudent 'yes' 'no'}}">
+            <span class="value{{if this.isFormerStudent ' yes' ' no'}}">
               {{#if this.isFormerStudent}}
                 {{t "general.yes"}}
               {{else}}
@@ -196,7 +196,7 @@ export default class UserProfileRolesComponent extends Component {
               disabled={{if (eq @user.id this.currentUser.currentUserId) true}}
             />
           {{else}}
-            <span class="value {{if this.isEnabled 'yes' 'no'}}">
+            <span class="value{{if this.isEnabled ' yes' ' no'}}">
               {{#if this.isEnabled}}
                 {{t "general.yes"}}
               {{else}}
@@ -220,7 +220,7 @@ export default class UserProfileRolesComponent extends Component {
               }}
             />
           {{else}}
-            <span class="value {{if this.isUserSyncIgnored 'yes' 'no'}}">
+            <span class="value{{if this.isUserSyncIgnored ' yes' ' no'}}">
               {{#if this.isUserSyncIgnored}}
                 {{t "general.yes"}}
               {{else}}
