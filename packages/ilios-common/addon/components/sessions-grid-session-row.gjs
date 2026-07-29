@@ -192,7 +192,7 @@ export default class SessionsGridSessionRowComponent extends Component {
       <span class="session-grid-actions" data-test-actions>
         {{#if (and this.canUpdate (not @session.prerequisiteCount))}}
           <button
-            class="link-button{{if @showConfirmDelete ' disabled'}}"
+            class="link-button delete-button{{if @showConfirmDelete ' disabled'}}"
             type="button"
             {{on "click" (fn @confirmDelete @session.id)}}
             title={{if

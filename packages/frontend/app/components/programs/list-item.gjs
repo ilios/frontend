@@ -57,7 +57,7 @@ export default class ProgramListItemComponent extends Component {
         {{#if this.canDelete}}
           <button
             type="button"
-            class={{if this.showRemoveConfirmation "disabled"}}
+            class="link-button delete-button{{if this.showRemoveConfirmation ' disabled'}}"
             title={{if
               this.showRemoveConfirmation
               (t "general.disabledByConfirmation")
@@ -72,7 +72,7 @@ export default class ProgramListItemComponent extends Component {
         {{else}}
           <button
             type="button"
-            class={{if this.showRemoveConfirmation "disabled"}}
+            class="link-button delete-button{{if this.showRemoveConfirmation ' disabled'}}"
             title={{t "general.canNotDeleteProgram"}}
             disabled
             data-test-remove

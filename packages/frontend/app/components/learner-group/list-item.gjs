@@ -203,7 +203,7 @@ export default class LearnerGroupListItemComponent extends Component {
         {{else}}
           {{#if this.canDelete}}
             <button
-              class="link-button{{if @showRemoveConfirmation ' disabled'}}"
+              class="link-button delete-button{{if @showRemoveConfirmation ' disabled'}}"
               type="button"
               title={{if
                 this.showRemoveConfirmation
@@ -222,7 +222,7 @@ export default class LearnerGroupListItemComponent extends Component {
           {{else}}
             <button
               type="button"
-              class="link-button disabled"
+              class="link-button delete-button disabled"
               title={{t "general.canNotDeleteLearnerGroup"}}
             >
               <FaIcon @icon={{faTrash}} class="disabled" />
