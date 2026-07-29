@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
-import { uniqueId, fn } from '@ember/helper';
+import { uniqueId, fn, array } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
@@ -12,6 +12,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { and, lte } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
+import join from 'ilios-common/helpers/join';
 import mapBy0 from 'ilios-common/helpers/map-by';
 import perform from 'ember-concurrency/helpers/perform';
 import focus from 'ilios-common/modifiers/focus';
@@ -214,8 +215,13 @@ export default class MeshManagerComponent extends Component {
                       {{#each term.concepts as |concept|}}
                         {{#if concept.scopeNote}}
                           <li
-                            class="{{if (includes term.id (mapBy0 'id' this.terms)) 'disabled'}}
-                              {{if concept.hasTruncatedScopeNote 'truncated'}}"
+                            class={{join
+                              " "
+                              (array
+                                (if (includes term.id (mapBy0 "id" this.terms)) "disabled")
+                                (if concept.hasTruncatedScopeNote "truncated")
+                              )
+                            }}
                           >
                             {{concept.truncatedScopeNote}}
                           </li>
