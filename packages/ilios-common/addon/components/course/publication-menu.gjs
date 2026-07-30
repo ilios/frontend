@@ -46,21 +46,11 @@ export default class CoursePublicationMenuComponent extends Component {
   get showTbd() {
     return !this.args.course.publishedAsTbd;
   }
-  get showReviewAsIs() {
+  get showPublish() {
     if (this.router.currentRouteName === 'course.publication-check') {
       return false;
     }
-    return (
-      (!this.args.course.published || this.args.course.publishedAsTbd) &&
-      this.args.course.requiredPublicationIssues.length === 0 &&
-      this.args.course.allPublicationIssuesLength !== 0
-    );
-  }
-  get showPublish() {
-    return (
-      (!this.args.course.published || this.args.course.publishedAsTbd) &&
-      this.args.course.allPublicationIssuesLength === 0
-    );
+    return !this.args.course.published || this.args.course.publishedAsTbd;
   }
   get showUnPublish() {
     return this.args.course.published || this.args.course.publishedAsTbd;
@@ -200,7 +190,7 @@ export default class CoursePublicationMenuComponent extends Component {
         </button>
         {{#if this.isOpen}}
           <div class="menu" role="menu" data-test-menu {{focus}}>
-            {{#if this.showReviewAsIs}}
+            {{#if this.showPublish}}
               <button
                 class="alert"
                 role="menuitem"
@@ -209,23 +199,9 @@ export default class CoursePublicationMenuComponent extends Component {
                 {{on "click" this.scrollToCoursePublication}}
                 {{on "keydown" this.keyDown}}
                 {{on "mouseenter" this.clearFocus}}
-                data-test-publish-as-is
-              >
-                {{t "general.publishAsIs"}}
-              </button>
-            {{/if}}
-            {{#if this.showPublish}}
-              <button
-                class="good"
-                role="menuitem"
-                tabindex="-1"
-                type="button"
-                {{on "click" this.publish}}
-                {{on "keydown" this.keyDown}}
-                {{on "mouseenter" this.clearFocus}}
                 data-test-publish
               >
-                {{t "general.publishCourse"}}
+                {{t "general.publish"}}
               </button>
             {{/if}}
             {{#if this.showTbd}}

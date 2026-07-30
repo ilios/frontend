@@ -42,6 +42,8 @@ general:
   canNotDeleteSession: "Esta sesión no se puede eliminar porque tiene prerrequisitos o no tiene permiso."
   canNotDeleteSessionObjective: "Este objetivo de sesión no se puede eliminar porque no tiene permiso."
   canNotDeleteSessionOffering: "Esta sesión no se puede eliminar porque no tiene permiso."
+  canNotPublishCourse: "Este curso no se puede publicarse sin al menos una clase de la graduación."
+  canNotPublishSession: "Esta sesión no se puede publicarse sin al menos un ofrecimiento."
   chooseCohortTitle: Seleccione Matriz Para
   chooseFile: Seleccione Archivo
   citation: Citación
@@ -286,16 +288,17 @@ general:
   programDetail: Detalle del programa
   publicationReview: Revisión de Publicación
   publicationStatus: Estado de Publicación
+  publish: Publique
   publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
   publishAllAsIs: Publique Todo Como Es
   publishAsIs: Publique Como Es
   publishCourse: Publique Curso
   publishCourseWithMissingItems: Publique Curso, con {missingItemCount, plural, =1 {1 artículo faltante} other {# artículos faltantes}}
+  publishSession: Publique La Sesión
   publishSessionWithMissingItems: Publique Sesión, con {missingItemCount, plural, =1 {1 artículo faltante} other {# artículos faltantes}}
   published: Publicado
   publishedSessions: Sesiones Publicadas
   publishedSuccessfully: Publicado con éxito
-  publishSession: Publique La Sesión
   remove: Remover
   required: Requerido
   results: Resultados

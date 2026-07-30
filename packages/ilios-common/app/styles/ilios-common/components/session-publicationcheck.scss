@@ -23,11 +23,10 @@
     .title {
       @include m.detail-container-title;
       @include m.ilios-heading-h5;
-      padding-bottom: 1rem;
     }
 
     .sub-title {
-      @include m.ilios-heading-h5;
+      @include m.ilios-heading-h6;
     }
 
     .session-publicationcheck-content {
@@ -40,6 +39,12 @@
 
     button {
       margin-bottom: 0.5em;
+
+      &:disabled {
+        background-color: var(--grey);
+        border-color: var(--grey);
+        cursor: default;
+      }
     }
   }
 

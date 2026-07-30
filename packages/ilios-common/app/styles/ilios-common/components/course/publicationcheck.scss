@@ -8,6 +8,10 @@
       @include m.detail-container-title;
     }
 
+    .sub-title {
+      @include m.ilios-heading-h6;
+    }
+
     .course-publicationcheck-content {
       @include m.detail-container-content;
     }
@@ -15,6 +19,12 @@
     .fa-link-slash {
       color: var(--black);
       @include m.font-size("small");
+    }
+
+    button:disabled {
+      background-color: var(--grey);
+      border-color: var(--grey);
+      cursor: default;
     }
   }
 }

@@ -10,7 +10,7 @@ import t from 'ember-intl/helpers/t';
 import hasManyLength from 'ilios-common/helpers/has-many-length';
 import { hash } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRotateLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default class CoursePublicationCheckComponent extends Component {
   @service router;
@@ -34,6 +34,14 @@ export default class CoursePublicationCheckComponent extends Component {
     return objectivesWithoutParents.length > 0;
   }
 
+  get hasMissingRequirements() {
+    return this.args.course.requiredPublicationIssues.length !== 0;
+  }
+
+  get hasMissingItems() {
+    return this.args.course.allPublicationIssuesLength !== 0;
+  }
+
   @action
   async publish() {
     this.args.course.set('publishedAsTbd', false);
@@ -49,17 +57,21 @@ export default class CoursePublicationCheckComponent extends Component {
       data-test-course-publicationcheck
       {{scrollIntoView delay=10}}
     >
-      <LinkTo
-        @route="course"
-        @model={{@course}}
-        @query={{hash detailsCollapseControl=true}}
-        data-test-back-to-course
-      >
-        {{t "general.backToTitle" title=@course.title}}
-      </LinkTo>
+      <div class="back-to-course">
+        <LinkTo
+          @route="course"
+          @model={{@course}}
+          @query={{hash detailsCollapseControl=true}}
+          data-test-back-to-course
+        >
+          <FaIcon @icon={{faArrowRotateLeft}} />
+          {{t "general.backToTitle" title=@course.title}}
+        </LinkTo>
+      </div>
 
       <section class="course-publicationcheck-details">
-        <div class="title" data-test-title>
+        <h3 class="title" data-test-title>{{t "general.publicationReview"}}</h3>
+        <div class="sub-title" data-test-missing-items>
           {{t "general.missingItems"}}
           ({{@course.allPublicationIssuesLength}})
         </div>
@@ -132,12 +144,27 @@ export default class CoursePublicationCheckComponent extends Component {
           </table>
         </div>
         <div data-test-course-publicationcheck-actions>
-          <button type="button" {{on "click" this.publish}} data-test-publish-with-missing-items>
-            {{t
-              "general.publishCourseWithMissingItems"
-              missingItemCount=@course.allPublicationIssuesLength
-            }}
-          </button>
+          {{#if this.hasMissingRequirements}}
+            <button
+              type="button"
+              disabled
+              title="{{t 'general.canNotPublishCourse'}}"
+              data-test-publish-missing-requirements
+            >
+              {{t "general.publishCourse"}}
+            </button>
+          {{else if this.hasMissingItems}}
+            <button type="button" {{on "click" this.publish}} data-test-publish-with-missing-items>
+              {{t
+                "general.publishCourseWithMissingItems"
+                missingItemCount=@course.allPublicationIssuesLength
+              }}
+            </button>
+          {{else}}
+            <button type="button" {{on "click" this.publish}} data-test-publish>
+              {{t "general.publishCourse"}}
+            </button>
+          {{/if}}
         </div>
       </section>
     </div>

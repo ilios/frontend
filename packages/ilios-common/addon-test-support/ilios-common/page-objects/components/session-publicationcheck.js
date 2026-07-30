@@ -1,9 +1,10 @@
-import { clickable, create, text } from 'ember-cli-page-object';
+import { attribute, clickable, create, property, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-session-publicationcheck]',
   backToSession: {
     scope: '[data-test-back-to-session]',
+    url: attribute('href'),
   },
   title: text('.results [data-test-title]'),
   missingItemsTitle: text('[data-test-missing-items]'),
@@ -13,6 +14,17 @@ const definition = {
   objectives: text('[data-test-objectives]'),
   unlink: {
     scope: '[data-test-unlink]',
+  },
+  publish: {
+    scope: '[data-test-publish]',
+    text: text(),
+    click: clickable(),
+  },
+  publishMissingRequirements: {
+    scope: '[data-test-publish-missing-requirements]',
+    text: text(),
+    isDisabled: property('disabled'),
+    click: clickable(),
   },
   publishWithMissingItems: {
     scope: '[data-test-publish-with-missing-items]',

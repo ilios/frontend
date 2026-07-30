@@ -42,6 +42,8 @@ general:
   canNotDeleteSession: This session cannot be deleted because it either has prerequisites or you do not have permission.
   canNotDeleteSessionObjective: This session objective cannot be deleted because you do not have permission.
   canNotDeleteSessionOffering: This session offering cannot be deleted because you do not have permission.
+  canNotPublishCourse: This course cannot be published without at least one cohort.
+  canNotPublishSession: This session cannot be published without at least one offering.
   chooseCohortTitle: Select Parent For
   chooseFile: Choose File
   citation: Citation
@@ -286,16 +288,17 @@ general:
   programDetail: Program Detail
   publicationReview: Publication Review
   publicationStatus: Publication Status
+  publish: Publish
   publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, and ignore {ignoreCount} sessions"
   publishAllAsIs: Publish All As-is
   publishAsIs: Publish As-is
   publishCourse: Publish Course
   publishCourseWithMissingItems: Publish Course, with {missingItemCount, plural, =1 {1 item missing} other {# items missing}}
+  publishSession: Publish Session
   publishSessionWithMissingItems: Publish Session, with {missingItemCount, plural, =1 {1 item missing} other {# items missing}}
   published: Published
   publishedSessions: Published Sessions
   publishedSuccessfully: Published successfully
-  publishSession: Publish Session
   remove: Remove
   required: Required
   results: Results

@@ -16,9 +16,9 @@ module('Acceptance | Session - Publish', function (hooks) {
         day: 15,
       }).toJSDate(),
     );
-    const school = await this.server.create('school');
-    await setupAuthentication({ school, administeredSchools: [school] });
-    this.course = await this.server.create('course', { school });
+    this.school = await this.server.create('school');
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
+    this.course = await this.server.create('course', { school: this.school });
     const sessionType = await this.server.create('session-type');
     this.publishedSession = await this.server.create('session', {
       published: true,
@@ -79,7 +79,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Scheduled');
     await page.details.overview.publicationMenu.toggle.click();
     assert.strictEqual(page.details.overview.publicationMenu.buttons.length, 2);
-    assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish As-is');
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish');
     assert.strictEqual(page.details.overview.publicationMenu.buttons[1].text, 'UnPublish Session');
   });
 
@@ -88,14 +88,22 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Not Published');
     await page.details.overview.publicationMenu.toggle.click();
     assert.strictEqual(page.details.overview.publicationMenu.buttons.length, 2);
-    assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish As-is');
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish');
     assert.strictEqual(page.details.overview.publicationMenu.buttons[1].text, 'Mark as Scheduled');
   });
 
-  test('check publish draft session', async function (assert) {
-    await page.visit({ courseId: this.course.id, sessionId: this.draftSession.id });
+  test('check publish draft session, missing requirements', async function (assert) {
+    const course = await this.server.create('course', {
+      school: this.school,
+    });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
+      course,
+      sessionType,
+    });
+    await page.visit({ courseId: course.id, sessionId: session.id });
 
-    assert.strictEqual(currentURL(), '/courses/1/sessions/3', 'session page url is correct');
+    assert.strictEqual(currentURL(), '/courses/2/sessions/5', 'session page url is correct');
     assert.strictEqual(
       page.details.overview.publicationMenu.toggle.text,
       'Not Published',
@@ -103,11 +111,57 @@ module('Acceptance | Session - Publish', function (hooks) {
     );
 
     await page.details.overview.publicationMenu.toggle.click();
-    await page.details.overview.publicationMenu.publishAsIs();
+    await page.details.overview.publicationMenu.publish();
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/sessions/3/publicationcheck',
+      '/courses/2/sessions/5/publicationcheck',
+      'session publicationcheck url is correct',
+    );
+
+    const pubcheck = pubcheckPage.publicationcheck;
+
+    assert.strictEqual(pubcheck.title, 'Publication Review');
+    assert.strictEqual(pubcheck.missingItemsTitle, 'Missing Items (3)');
+    assert.strictEqual(pubcheck.sessionTitle, 'session 4');
+    assert.strictEqual(pubcheck.offerings, 'No');
+    assert.strictEqual(pubcheck.terms, 'No');
+    assert.strictEqual(pubcheck.objectives, 'No');
+
+    assert.ok(pubcheck.publishMissingRequirements);
+    assert.ok(pubcheck.publishMissingRequirements.isDisabled);
+    assert.strictEqual(pubcheck.publishMissingRequirements.text, 'Publish Session');
+  });
+
+  test('check publish draft session, missing items', async function (assert) {
+    const course = await this.server.create('course', {
+      school: this.school,
+    });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
+      course,
+      sessionType,
+    });
+    await this.server.create('offering', {
+      session,
+      startDate: DateTime.now().toISO(),
+      endDate: DateTime.now().plus({ hours: 1 }).toISO(),
+    });
+    await page.visit({ courseId: course.id, sessionId: session.id });
+
+    assert.strictEqual(currentURL(), '/courses/2/sessions/5', 'session page url is correct');
+    assert.strictEqual(
+      page.details.overview.publicationMenu.toggle.text,
+      'Not Published',
+      'session published status is correct',
+    );
+
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.publish();
+
+    assert.strictEqual(
+      currentURL(),
+      '/courses/2/sessions/5/publicationcheck',
       'session publicationcheck url is correct',
     );
 
@@ -115,18 +169,67 @@ module('Acceptance | Session - Publish', function (hooks) {
 
     assert.strictEqual(pubcheck.title, 'Publication Review');
     assert.strictEqual(pubcheck.missingItemsTitle, 'Missing Items (2)');
-    assert.strictEqual(pubcheck.sessionTitle, 'session 2');
+    assert.strictEqual(pubcheck.sessionTitle, 'session 4');
     assert.strictEqual(pubcheck.offerings, 'Yes (1)');
     assert.strictEqual(pubcheck.terms, 'No');
     assert.strictEqual(pubcheck.objectives, 'No');
+
+    assert.ok(pubcheck.publishWithMissingItems);
     assert.strictEqual(
       pubcheck.publishWithMissingItems.text,
       'Publish Session, with 2 items missing',
     );
+  });
 
-    await pubcheckPage.publicationcheck.publishWithMissingItems.click();
+  test('check publish draft session, all items set', async function (assert) {
+    const course = await this.server.create('course', {
+      school: this.school,
+    });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
+      course,
+      sessionType,
+      terms: [await this.server.create('term')],
+      sessionObjectives: [await this.server.create('session-objective')],
+    });
+    await this.server.create('offering', {
+      session,
+      startDate: DateTime.now().toISO(),
+      endDate: DateTime.now().plus({ hours: 1 }).toISO(),
+    });
+    await page.visit({ courseId: course.id, sessionId: session.id });
 
-    assert.strictEqual(currentURL(), '/courses/1/sessions/3', 'session page url is correct');
+    assert.strictEqual(currentURL(), '/courses/2/sessions/5', 'session page url is correct');
+    assert.strictEqual(
+      page.details.overview.publicationMenu.toggle.text,
+      'Not Published',
+      'session published status is correct',
+    );
+
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.publish();
+
+    assert.strictEqual(
+      currentURL(),
+      '/courses/2/sessions/5/publicationcheck',
+      'session publicationcheck url is correct',
+    );
+
+    const pubcheck = pubcheckPage.publicationcheck;
+
+    assert.strictEqual(pubcheck.title, 'Publication Review');
+    assert.strictEqual(pubcheck.missingItemsTitle, 'Missing Items (0)');
+    assert.strictEqual(pubcheck.sessionTitle, 'session 4');
+    assert.strictEqual(pubcheck.offerings, 'Yes (1)');
+    assert.strictEqual(pubcheck.terms, 'Yes (1)');
+    assert.strictEqual(pubcheck.objectives, 'Yes (1)');
+
+    assert.ok(pubcheck.publish);
+    assert.strictEqual(pubcheck.publish.text, 'Publish Session');
+
+    await pubcheck.publish.click();
+
+    assert.strictEqual(currentURL(), '/courses/2/sessions/5', 'session page url is correct');
     assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Published');
   });
 
@@ -138,11 +241,48 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Scheduled');
   });
 
-  test('check publish scheduled session', async function (assert) {
+  test('check publish scheduled session, missing requirements', async function (assert) {
+    const course = await this.server.create('course', {
+      school: this.school,
+    });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
+      course,
+      sessionType,
+      published: true,
+      publishedAsTbd: true,
+    });
+    await page.visit({ courseId: course.id, sessionId: session.id });
+
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Scheduled');
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.publish();
+
+    assert.strictEqual(
+      currentURL(),
+      '/courses/2/sessions/5/publicationcheck',
+      'session publicationcheck url is correct',
+    );
+
+    const pubcheck = pubcheckPage.publicationcheck;
+
+    assert.strictEqual(pubcheck.title, 'Publication Review');
+    assert.strictEqual(pubcheck.missingItemsTitle, 'Missing Items (3)');
+    assert.strictEqual(pubcheck.sessionTitle, 'session 4');
+    assert.strictEqual(pubcheck.offerings, 'No');
+    assert.strictEqual(pubcheck.terms, 'No');
+    assert.strictEqual(pubcheck.objectives, 'No');
+
+    assert.ok(pubcheck.publishMissingRequirements);
+    assert.ok(pubcheck.publishMissingRequirements.isDisabled);
+    assert.strictEqual(pubcheck.publishMissingRequirements.text, 'Publish Session');
+  });
+
+  test('check publish scheduled session, missing items', async function (assert) {
     await page.visit({ courseId: this.course.id, sessionId: this.scheduledSession.id });
     assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Scheduled');
     await page.details.overview.publicationMenu.toggle.click();
-    await page.details.overview.publicationMenu.publishAsIs();
+    await page.details.overview.publicationMenu.publish();
 
     assert.strictEqual(
       currentURL(),
@@ -158,13 +298,60 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.strictEqual(pubcheck.offerings, 'Yes (1)');
     assert.strictEqual(pubcheck.terms, 'No');
     assert.strictEqual(pubcheck.objectives, 'No');
+
+    assert.ok(pubcheck.publishWithMissingItems);
     assert.strictEqual(
       pubcheck.publishWithMissingItems.text,
       'Publish Session, with 2 items missing',
     );
 
-    await pubcheckPage.publicationcheck.publishWithMissingItems.click();
+    await pubcheck.publishWithMissingItems.click();
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Published');
+  });
 
+  test('check publish scheduled session, all items set', async function (assert) {
+    const course = await this.server.create('course', {
+      school: this.school,
+    });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
+      course,
+      sessionType,
+      published: true,
+      publishedAsTbd: true,
+      terms: [await this.server.create('term')],
+      sessionObjectives: [await this.server.create('session-objective')],
+    });
+    await this.server.create('offering', {
+      session,
+      startDate: DateTime.now().toISO(),
+      endDate: DateTime.now().plus({ hours: 1 }).toISO(),
+    });
+
+    await page.visit({ courseId: course.id, sessionId: session.id });
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Scheduled');
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.publish();
+
+    assert.strictEqual(
+      currentURL(),
+      '/courses/2/sessions/5/publicationcheck',
+      'session publicationcheck url is correct',
+    );
+
+    const pubcheck = pubcheckPage.publicationcheck;
+
+    assert.strictEqual(pubcheck.title, 'Publication Review');
+    assert.strictEqual(pubcheck.missingItemsTitle, 'Missing Items (0)');
+    assert.strictEqual(pubcheck.sessionTitle, 'session 4');
+    assert.strictEqual(pubcheck.offerings, 'Yes (1)');
+    assert.strictEqual(pubcheck.terms, 'Yes (1)');
+    assert.strictEqual(pubcheck.objectives, 'Yes (1)');
+
+    assert.ok(pubcheck.publishWithMissingItems);
+    assert.strictEqual(pubcheck.publish.text, 'Publish Session');
+
+    await pubcheck.publish.click();
     assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Published');
   });
 
@@ -197,7 +384,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Not Published');
     await page.details.overview.publicationMenu.toggle.click();
     assert.strictEqual(page.details.overview.publicationMenu.buttons.length, 2);
-    assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish As-is');
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish');
     assert.strictEqual(page.details.overview.publicationMenu.buttons[1].text, 'Mark as Scheduled');
   });
 });
