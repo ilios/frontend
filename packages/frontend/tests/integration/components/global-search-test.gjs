@@ -55,39 +55,6 @@ module('Integration | Component | global-search', function (hooks) {
     assert.verifySteps(['API called']);
   });
 
-  test('handles query clearing', async function (assert) {
-    this.server.get('/api/search/v2/curriculum', ({ request }) => {
-      assert.step('API called');
-      const { searchParams } = new URL(request.url);
-      assert.strictEqual(searchParams.get('q'), 'hello world');
-      assert.notOk(searchParams.get('onlySuggest'));
-      return {
-        results: {
-          courses: [],
-        },
-      };
-    });
-
-    this.set('query', 'hello world');
-    await render(
-      <template>
-        <GlobalSearch
-          @query={{this.query}}
-          @page="1"
-          @setQuery={{(noop)}}
-          @setPage={{(noop)}}
-          @setSelectedYear={{(noop)}}
-        />
-      </template>,
-    );
-    await takeComponentScreenshot(assert, 'query');
-    assert.ok(component.noResultsIsVisible);
-    await component.searchBox.input('');
-    await takeComponentScreenshot(assert, 'query');
-    assert.ok(component.noResultsIsVisible);
-    assert.verifySteps(['API called']);
-  });
-
   test('bubbles action properly', async function (assert) {
     this.set('query', (value) => {
       assert.step('query called');

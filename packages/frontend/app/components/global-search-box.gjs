@@ -47,13 +47,6 @@ export default class GlobalSearchBoxComponent extends Component {
 
   setInternalQuery = task({ restartable: true }, async (q) => {
     this.internalQuery = q;
-    if (this.router.currentRouteName === 'search') {
-      if (q === '') {
-        const url = new URL(window.location.href);
-        url.searchParams.set('q', '');
-        window.history.replaceState(null, '', url.pathname + '?' + url.searchParams.toString());
-      }
-    }
   });
 
   /**

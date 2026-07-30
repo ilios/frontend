@@ -74,33 +74,6 @@ module('Acceptance | search', function (hooks) {
     assert.verifySteps(['API called']);
   });
 
-  test('search query clear updates query string', async function (assert) {
-    const input = 'hello';
-    this.server.get('/api/search/v2/curriculum', ({ request }) => {
-      assert.step('API called');
-      const { searchParams } = new URL(request.url);
-      assert.strictEqual(searchParams.get('q'), input);
-
-      return {
-        results: {
-          courses: [],
-          totalCourses: 0,
-          didYouMean: [],
-        },
-      };
-    });
-
-    await page.visit({ q: input });
-    assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
-    assert.strictEqual(currentURL(), '/search?q=hello');
-    assert.verifySteps(['API called']);
-
-    await page.globalSearch.searchBox.input('');
-    await page.globalSearch.searchBox.keyDown.enter();
-
-    assert.strictEqual(currentURL(), '/search');
-  });
-
   test('search with special chars #4752', async function (assert) {
     const input = 'H&L+foo=bar';
 
