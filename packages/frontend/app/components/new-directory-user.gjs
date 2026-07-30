@@ -14,7 +14,7 @@ import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
 import set from 'ember-set-helper/helpers/set';
-import { eq, not } from 'ember-truth-helpers';
+import { eq, not, notEq, and } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
@@ -587,6 +587,9 @@ export default class NewDirectoryUserComponent extends Component {
                           </td>
                           <td class="text-left" colspan="5" data-test-email>
                             {{user.email}}
+                            {{#if (and user.officialEmail (notEq user.email user.officialEmail))}}
+                              <br />{{user.officialEmail}}
+                            {{/if}}
                           </td>
                         </tr>
                       {{/each}}
