@@ -41,7 +41,7 @@ export default class ProgramListItemComponent extends Component {
   });
   <template>
     <tr
-      class="list-item {{if this.showRemoveConfirmation 'confirm-removal'}}"
+      class="list-item{{if this.showRemoveConfirmation ' confirm-removal'}}"
       data-test-active-row
       data-test-program-list-item
     >

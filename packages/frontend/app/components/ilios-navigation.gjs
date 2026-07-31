@@ -28,7 +28,7 @@ export default class IliosNavigationComponent extends Component {
   <template>
     <nav
       aria-label={{t "general.primary"}}
-      class="ilios-navigation {{if this.expanded 'expanded'}}"
+      class="ilios-navigation{{if this.expanded ' expanded'}}"
       data-test-ilios-navigation
       ...attributes
     >

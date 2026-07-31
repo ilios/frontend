@@ -169,7 +169,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
         {{#if this.coursesRelationshipData.isResolved}}
           {{#each this.courseYears as |year|}}
             <div
-              class="year {{if (includes year.year this.expandedYears) 'expanded' 'collapsed'}}"
+              class="year{{if (includes year.year this.expandedYears) ' expanded' ' collapsed'}}"
               {{this.scrollToDefaultExpandedYear year.year}}
               {{inViewport
                 onEnter=(fn this.addYearInView year.year)

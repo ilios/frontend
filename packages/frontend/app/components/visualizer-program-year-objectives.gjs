@@ -154,7 +154,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
     this.tooltipSessions = uniqueValues(allSessionTitles);
   });
   <template>
-    <div class="{{unless @isIcon 'not-icon'}} visualizer-program-year-objectives" ...attributes>
+    <div class="visualizer-program-year-objectives{{unless @isIcon ' not-icon'}}" ...attributes>
       {{#if this.chartOutputData.isResolved}}
         {{#if (or @isIcon this.chartOutput)}}
           <SimpleChart

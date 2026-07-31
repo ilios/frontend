@@ -80,7 +80,7 @@ export default class SessionsGridSessionRowComponent extends Component {
           </button>
         {{else}}
           <button
-            class="link-button {{if (eq @session.offeringCount 0) 'disabled'}}"
+            class="link-button{{if (eq @session.offeringCount 0) ' disabled'}}"
             disabled={{if (eq @session.offeringCount 0) "disabled"}}
             type="button"
             aria-label={{t "general.close"}}
@@ -206,7 +206,7 @@ export default class SessionsGridSessionRowComponent extends Component {
             <FaIcon
               @icon={{faTrash}}
               @ariaHidden={{false}}
-              class={{if @showConfirmDelete " disabled" "remove enabled"}}
+              class={{if @showConfirmDelete "disabled" "remove enabled"}}
             />
           </button>
         {{else}}

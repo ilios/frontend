@@ -77,8 +77,10 @@ export default class UnassignedStudentsSummaryComponent extends Component {
   <template>
     {{#let (uniqueId) as |templateId|}}
       <div
-        class="unassigned-students-summary small-component
-          {{if this.hasUnassignedStudents 'alert'}}"
+        class="unassigned-students-summary small-component{{if
+            this.hasUnassignedStudents
+            ' alert'
+          }}"
         data-test-unassigned-students-summary
       >
         <h3 data-test-title>
