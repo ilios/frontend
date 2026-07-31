@@ -14,27 +14,27 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7
-      with:
-        fetch-depth: 0
-    - name: Generate Release Name
-      run: |
-        NAME=$(npx dartajax-music random-song)
-        echo ${NAME}
-        echo "RELEASE_NAME=${NAME}" >> $GITHUB_ENV
-    - uses: pnpm/action-setup@v6
-    - uses: actions/setup-node@v7
-      with:
-        node-version: 24
-    - uses: ncipollo/release-action@v1
-      with:
-        name: ${{env.RELEASE_NAME}}
-        token: ${{ secrets.ZORGBORT_TOKEN }}
-        generateReleaseNotes: true
-    - uses: act10ns/slack@v2
-      if: failure()
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ILIOS_DEPLOYMENT_WEBHOOK_URL }}
-      with:
-        status: ${{ job.status }}
-        message: Release Failed {{ env.GITHUB_SERVER_URL }}/{{ env.GITHUB_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Generate Release Name
+        run: |
+          NAME=$(pnpx dartajax-music random-song)
+          echo ${NAME}
+          echo "RELEASE_NAME=${NAME}" >> $GITHUB_ENV
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - uses: ncipollo/release-action@v1
+        with:
+          name: ${{env.RELEASE_NAME}}
+          token: ${{ secrets.ZORGBORT_TOKEN }}
+          generateReleaseNotes: true
+      - uses: act10ns/slack@v2
+        if: failure()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ILIOS_DEPLOYMENT_WEBHOOK_URL }}
+        with:
+          status: ${{ job.status }}
+          message: Release Failed {{ env.GITHUB_SERVER_URL }}/{{ env.GITHUB_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}
