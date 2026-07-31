@@ -2,11 +2,10 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import set from 'ember-set-helper/helpers/set';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
-import perform from 'ember-concurrency/helpers/perform';
-import { task } from 'ember-concurrency';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -45,21 +44,6 @@ export default class GlobalSearchBoxComponent extends Component {
     }
   }
 
-  setInternalQuery = task({ restartable: true }, async (q) => {
-    this.internalQuery = q;
-    if (this.router.currentRouteName === 'search') {
-      if (q === '') {
-        this.args.search('');
-      }
-    }
-  });
-
-  /**
-   * Clear all the caches and query local copies
-   * This component is complicated by the many types of user interaction
-   * it accepts and it's need to go back into a default state so there are
-   * several things to clear
-   */
   clear() {
     this.internalQuery = null;
   }
@@ -72,7 +56,7 @@ export default class GlobalSearchBoxComponent extends Component {
         data-test-input
         type="search"
         value={{this.computedQuery}}
-        {{on "input" (pick "target.value" (perform this.setInternalQuery))}}
+        {{on "input" (pick "target.value" (set this "internalQuery"))}}
         {{onKey "Escape" this.onEscapeKey}}
         {{onKey "Enter" this.search}}
         {{onKey "ArrowUp" this.onArrowKey}}
