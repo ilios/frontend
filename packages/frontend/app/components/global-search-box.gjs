@@ -44,12 +44,6 @@ export default class GlobalSearchBoxComponent extends Component {
     }
   }
 
-  /**
-   * Clear all the caches and query local copies
-   * This component is complicated by the many types of user interaction
-   * it accepts and it's need to go back into a default state so there are
-   * several things to clear
-   */
   clear() {
     this.internalQuery = null;
   }
