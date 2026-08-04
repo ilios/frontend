@@ -41,22 +41,6 @@ Router.map(function () {
   this.route('assign-students', { path: '/admin/assignstudents' });
   this.route('myprofile');
   this.route('mymaterials');
-  this.route('verification-preview', {
-    path: 'curriculum-inventory-reports/:curriculum_inventory_report_id/verification-preview',
-  });
-  this.route('curriculum-inventory-reports');
-  this.route(
-    'curriculum-inventory-report',
-    {
-      path: 'curriculum-inventory-reports/:curriculum_inventory_report_id',
-    },
-    function () {
-      this.route('rollover');
-    },
-  );
-  this.route('curriculum-inventory-sequence-block', {
-    path: 'curriculum-inventory-sequence-block/:curriculum_inventory_sequence_block_id',
-  });
   this.route('session-type-visualize-vocabularies', {
     path: 'data/sessiontype/:session_type_id/vocabularies',
   });

@@ -180,17 +180,6 @@ export default class CurrentUserService extends Service {
 
     return matches.length > 0;
   }
-  async isAdministeringCurriculumInventoryReportInSchool(school) {
-    const user = await this.getModel();
-    const schoolProgramIds = school.hasMany('programs').ids();
-
-    const reports = await user.get('administeredCurriculumInventoryReports');
-    const matches = reports.filter((report) =>
-      schoolProgramIds.includes(report.belongsTo('program').id()),
-    );
-
-    return matches.length > 0;
-  }
   async isDirectingCourse(course) {
     const user = await this.getModel();
 
@@ -257,13 +246,6 @@ export default class CurrentUserService extends Service {
 
     return ids.includes(programYear.get('id'));
   }
-  async isAdministeringCurriculumInventoryReport(report) {
-    const user = await this.getModel();
-
-    const ids = user.hasMany('administeredCurriculumInventoryReports').ids();
-
-    return ids.includes(report.get('id'));
-  }
   async getRolesInSchool(school, rolesToCheck = []) {
     const roles = [];
     if (rolesToCheck.includes('SCHOOL_DIRECTOR') && (await this.isDirectingSchool(school))) {
@@ -305,13 +287,6 @@ export default class CurrentUserService extends Service {
     ) {
       roles.push('COURSE_INSTRUCTOR');
     }
-    if (
-      rolesToCheck.includes('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR') &&
-      (await this.isAdministeringCurriculumInventoryReportInSchool(school))
-    ) {
-      roles.push('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
-    }
-
     return roles;
   }
   async getRolesInCourse(course, rolesToCheck = []) {
@@ -372,17 +347,6 @@ export default class CurrentUserService extends Service {
       (await this.isDirectingProgramYear(programYear))
     ) {
       roles.push('PROGRAM_YEAR_DIRECTOR');
-    }
-
-    return roles;
-  }
-  async getRolesInCurriculumInventoryReport(report, rolesToCheck = []) {
-    const roles = [];
-    if (
-      rolesToCheck.includes('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR') &&
-      (await this.isAdministeringCurriculumInventoryReport(report))
-    ) {
-      roles.push('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
     }
 
     return roles;

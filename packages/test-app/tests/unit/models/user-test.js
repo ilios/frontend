@@ -503,15 +503,6 @@ module('Unit | Model | User', function (hooks) {
     assert.ok(performsNonLearnerFunction);
   });
 
-  test('performsNonLearnerFunction - administeredCurriculumInventoryReports', async function (assert) {
-    const model = this.store.createRecord('user');
-    this.store.createRecord('curriculum-inventory-report', {
-      administrators: [model],
-    });
-    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
-    assert.ok(performsNonLearnerFunction);
-  });
-
   test('performsNonLearnerFunction - directedSchools', async function (assert) {
     const model = this.store.createRecord('user');
     this.store.createRecord('school', { directors: [model] });
