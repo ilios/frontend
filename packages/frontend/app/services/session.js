@@ -2,12 +2,24 @@ import ESASessionService from 'ember-simple-auth/services/session';
 import config from 'frontend/config/environment';
 import * as Sentry from '@sentry/ember';
 import { service } from '@ember/service';
+import { isTesting } from '@embroider/macros';
 
 export default class SessionService extends ESASessionService {
   @service fetch;
   @service currentUser;
   @service store;
   @service router;
+
+  setup(useTheEphemeralStore) {
+    if (!isTesting()) {
+      if (useTheEphemeralStore) {
+        this.session.store.useTheEphemeralStore();
+      } else {
+        this.session.store.useTheCookieStore();
+      }
+    }
+    return super.setup();
+  }
 
   async handleAuthentication() {
     super.handleAuthentication(...arguments);
