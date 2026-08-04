@@ -2,7 +2,6 @@ import { currentURL, currentRouteName } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
-import { t } from 'ember-intl/test-support';
 import page from 'ilios-common/page-objects/course';
 
 module('Acceptance | Course - Overview', function (hooks) {
@@ -141,10 +140,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    assert.strictEqual(
-      page.details.overview.clerkshipType.text,
-      'Clerkship Type: ' + t('general.notAClerkship'),
-    );
+    assert.strictEqual(page.details.overview.clerkshipType.text, 'Clerkship Type: Not a Clerkship');
     await page.details.overview.clerkshipType.edit();
     assert.strictEqual(page.details.overview.clerkshipType.value, 'null');
     await page.details.overview.clerkshipType.set(2);
@@ -173,10 +169,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     assert.strictEqual(page.details.overview.clerkshipType.value, '3');
     await page.details.overview.clerkshipType.set(0);
     await page.details.overview.clerkshipType.save();
-    assert.strictEqual(
-      page.details.overview.clerkshipType.text,
-      'Clerkship Type: ' + t('general.notAClerkship'),
-    );
+    assert.strictEqual(page.details.overview.clerkshipType.text, 'Clerkship Type: Not a Clerkship');
   });
 
   test('change title', async function (assert) {
@@ -304,10 +297,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     await page.details.overview.externalId.edit();
     await page.details.overview.externalId.set('');
     await page.details.overview.externalId.save();
-    assert.strictEqual(
-      page.details.overview.externalId.text,
-      'Course ID: ' + t('general.clickToEdit'),
-    );
+    assert.strictEqual(page.details.overview.externalId.text, 'Course ID: Click to edit');
   });
 
   test('renders with empty externalId', async function (assert) {
@@ -318,10 +308,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    assert.strictEqual(
-      page.details.overview.externalId.text,
-      'Course ID: ' + t('general.clickToEdit'),
-    );
+    assert.strictEqual(page.details.overview.externalId.text, 'Course ID: Click to edit');
   });
 
   test('change level', async function (assert) {
