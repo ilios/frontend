@@ -327,48 +327,6 @@ export default class PermissionCheckerService extends Service {
   async canDeleteInstructorGroupInSchool(school) {
     return this.canChangeInSchool(school, 'CAN_DELETE_INSTRUCTOR_GROUPS');
   }
-  async canUpdateCurriculumInventoryReport(curriculumInventoryReport) {
-    if (curriculumInventoryReport.belongsTo('export')?.id()) {
-      return false;
-    }
-
-    const program = await curriculumInventoryReport.get('program');
-    const school = await program.get('school');
-    if (await this.canChangeInSchool(school, 'CAN_UPDATE_ALL_CURRICULUM_INVENTORY_REPORTS')) {
-      return true;
-    }
-
-    const capability = 'CAN_UPDATE_THEIR_CURRICULUM_INVENTORY_REPORTS';
-    const rolesToCheck = await this.permissionMatrix.getPermittedRoles(school, capability);
-    const rolesInReport = await this.currentUser.getRolesInCurriculumInventoryReport(
-      curriculumInventoryReport,
-      rolesToCheck,
-    );
-
-    return this.permissionMatrix.hasPermission(school, capability, rolesInReport);
-  }
-  async canDeleteCurriculumInventoryReport(curriculumInventoryReport) {
-    if (curriculumInventoryReport.belongsTo('export')?.id()) {
-      return false;
-    }
-
-    const program = await curriculumInventoryReport.program;
-    const school = await program.school;
-    if (await this.canChangeInSchool(school, 'CAN_DELETE_ALL_CURRICULUM_INVENTORY_REPORTS')) {
-      return true;
-    }
-
-    const capability = 'CAN_DELETE_THEIR_CURRICULUM_INVENTORY_REPORTS';
-    const rolesToCheck = await this.permissionMatrix.getPermittedRoles(school, capability);
-    const rolesInReport = await this.currentUser.getRolesInCurriculumInventoryReport(
-      curriculumInventoryReport,
-      rolesToCheck,
-    );
-    return this.permissionMatrix.hasPermission(school, capability, rolesInReport);
-  }
-  async canCreateCurriculumInventoryReport(school) {
-    return this.canChangeInSchool(school, 'CAN_CREATE_CURRICULUM_INVENTORY_REPORTS');
-  }
   async canUpdateLearnerGroup(learnerGroup) {
     const cohort = await learnerGroup.cohort;
     const programYear = await cohort.programYear;
