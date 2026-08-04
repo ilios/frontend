@@ -30,7 +30,7 @@ export default class SessionService extends ESASessionService {
       const logoutUrl = '/auth/logout';
       return this.fetch.getJsonFromApiHost(logoutUrl).then((response) => {
         if (response.status === 'redirect') {
-          this.router.replaceWith(response.logoutUrl);
+          window.location.replace(response.logoutUrl);
         } else {
           this.router.replaceWith(config.rootURL);
         }
