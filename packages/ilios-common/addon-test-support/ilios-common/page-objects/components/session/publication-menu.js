@@ -5,21 +5,21 @@ import {
   triggerable,
   isVisible,
   isHidden,
-  text,
 } from 'ember-cli-page-object';
+import { focusedText, keyOnFocus } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-session-publication-menu]',
   toggle: {
     scope: '[data-test-toggle]',
     enter: triggerable('keydown', '', { eventProperties: { key: 'Enter' } }),
-    down: triggerable('keydown', '', { eventProperties: { key: 'ArrowDown' } }),
+    down: keyOnFocus('ArrowDown'),
     esc: triggerable('keydown', '', { eventProperties: { key: 'Escape' } }),
   },
   menu: {
     scope: '[data-test-menu]',
-    down: triggerable('keydown', 'button:focus', { eventProperties: { key: 'ArrowDown' } }),
-    up: triggerable('keydown', 'button:focus', { eventProperties: { key: 'ArrowUp' } }),
+    down: keyOnFocus('ArrowDown'),
+    up: keyOnFocus('ArrowUp'),
   },
   buttons: collection('[data-test-menu] button'),
   menuClosed: isHidden('[data-test-menu]'),
@@ -32,7 +32,7 @@ const definition = {
   reviewMisingItems: clickable('[data-test-review]'),
   markAsScheduled: clickable('[data-test-tbd]'),
   unpublishSession: clickable('[data-test-un-publish]'),
-  selectedMenuItem: text('[data-test-menu] button:focus'),
+  selectedMenuItem: focusedText('[data-test-menu]'),
 };
 
 export default definition;
