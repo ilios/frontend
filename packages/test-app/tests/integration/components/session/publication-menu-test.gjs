@@ -126,9 +126,9 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     this.set('session', sessionModel);
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
 
-    assert.ok(component.menuClosed);
+    assert.ok(component.menuClosed, 'menu is closed');
     await component.toggle.down();
-    assert.ok(component.menuOpen);
+    assert.ok(component.menuOpen, 'hitting ArrowDown made menu open');
   });
 
   test('escape closes menu', async function (assert) {
@@ -138,9 +138,9 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     await render(<template><PublicationMenu @session={{this.session}} /></template>);
 
     await component.toggle.down();
-    assert.ok(component.menuOpen);
+    assert.ok(component.menuOpen, 'hitting ArrowDown made menu open');
     await component.toggle.esc();
-    assert.ok(component.menuClosed);
+    assert.ok(component.menuClosed, 'hitting Escape made menu close');
   });
 
   test('dropdown options are accessible for unpublished session', async function (assert) {
