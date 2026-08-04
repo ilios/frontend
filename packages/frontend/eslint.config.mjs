@@ -19,7 +19,7 @@ import ember from 'eslint-plugin-ember/recommended';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import qunit from 'eslint-plugin-qunit';
 import n from 'eslint-plugin-n';
-
+import html from '@html-eslint/eslint-plugin';
 import babelParser from '@babel/eslint-parser';
 
 const esmParserOptions = {
@@ -124,6 +124,19 @@ export default [
       globals: {
         ...globals.node,
       },
+    },
+  },
+  /**
+   * Lint HTML in and Glimmer components and templates.
+   */
+  {
+    files: ['**/*.gjs'],
+    ...html.configs['flat/recommended'],
+    plugins: {
+      '@html-eslint': html,
+    },
+    rules: {
+      '@html-eslint/class-spacing': 'error',
     },
   },
 ];

@@ -52,6 +52,8 @@
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
+    "@html-eslint/eslint-plugin": "^0.64.0",
+    "@html-eslint/parser": "^0.64.0",
     "@sentry/ember": "^10.56.0",
     "@warp-drive/build-config": "~5.8.1",
     "@warp-drive/core-types": "~5.8.1",
