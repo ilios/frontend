@@ -47,7 +47,7 @@ export default class ObjectiveSortManagerComponent extends Component {
 
   async saveSomeObjectives(arr) {
     const chunk = arr.splice(0, 5);
-    await await all(chunk.map((o) => o.save()));
+    await all(chunk.map((o) => o.save()));
     if (arr.length) {
       this.currentObjectivesSaved += chunk.length;
       await this.saveSomeObjectives(arr);

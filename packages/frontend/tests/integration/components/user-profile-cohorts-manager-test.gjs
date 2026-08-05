@@ -55,15 +55,15 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     const cohort6 = await this.server.create('cohort', { programYear: programYear6 });
     const cohort7 = await this.server.create('cohort', { programYear: programYear7 });
 
-    this.cohort1 = await await this.owner.lookup('service:store').findRecord('cohort', cohort1.id);
-    this.cohort2 = await await this.owner.lookup('service:store').findRecord('cohort', cohort2.id);
-    this.cohort3 = await await this.owner.lookup('service:store').findRecord('cohort', cohort3.id);
-    this.cohort4 = await await this.owner.lookup('service:store').findRecord('cohort', cohort4.id);
-    this.cohort5 = await await this.owner.lookup('service:store').findRecord('cohort', cohort5.id);
-    this.cohort6 = await await this.owner.lookup('service:store').findRecord('cohort', cohort6.id);
-    this.cohort7 = await await this.owner.lookup('service:store').findRecord('cohort', cohort7.id);
-    this.school1 = await await this.owner.lookup('service:store').findRecord('school', school1.id);
-    this.school2 = await await this.owner.lookup('service:store').findRecord('school', school2.id);
+    this.cohort1 = await this.owner.lookup('service:store').findRecord('cohort', cohort1.id);
+    this.cohort2 = await this.owner.lookup('service:store').findRecord('cohort', cohort2.id);
+    this.cohort3 = await this.owner.lookup('service:store').findRecord('cohort', cohort3.id);
+    this.cohort4 = await this.owner.lookup('service:store').findRecord('cohort', cohort4.id);
+    this.cohort5 = await this.owner.lookup('service:store').findRecord('cohort', cohort5.id);
+    this.cohort6 = await this.owner.lookup('service:store').findRecord('cohort', cohort6.id);
+    this.cohort7 = await this.owner.lookup('service:store').findRecord('cohort', cohort7.id);
+    this.school1 = await this.owner.lookup('service:store').findRecord('school', school1.id);
+    this.school2 = await this.owner.lookup('service:store').findRecord('school', school2.id);
 
     await setupAuthentication({ school: school1, administeredSchools: [school1, school2] });
   });

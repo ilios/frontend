@@ -25,10 +25,10 @@ module('Integration | Component | user-profile-cohorts-details', function (hooks
     const cohort3 = await this.server.create('cohort', { programYear: programYear3 });
     const cohort4 = await this.server.create('cohort', { programYear: programYear4 });
 
-    this.cohort1 = await await this.owner.lookup('service:store').findRecord('cohort', cohort1.id);
-    this.cohort2 = await await this.owner.lookup('service:store').findRecord('cohort', cohort2.id);
-    this.cohort3 = await await this.owner.lookup('service:store').findRecord('cohort', cohort3.id);
-    this.cohort4 = await await this.owner.lookup('service:store').findRecord('cohort', cohort4.id);
+    this.cohort1 = await this.owner.lookup('service:store').findRecord('cohort', cohort1.id);
+    this.cohort2 = await this.owner.lookup('service:store').findRecord('cohort', cohort2.id);
+    this.cohort3 = await this.owner.lookup('service:store').findRecord('cohort', cohort3.id);
+    this.cohort4 = await this.owner.lookup('service:store').findRecord('cohort', cohort4.id);
   });
 
   test('it renders', async function (assert) {
