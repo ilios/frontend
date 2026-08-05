@@ -176,7 +176,7 @@ export default class WeeklyGlanceComponent extends Component {
                     date.startDate
                     weekday="narrow"
                   }}</h3>
-                <ul>
+                <ul class="events">
                   {{#each date.events as |event|}}
                     <WeekGlanceEvent @event={{event}} />
                   {{/each}}
