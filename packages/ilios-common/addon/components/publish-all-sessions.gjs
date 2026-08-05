@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { all } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
@@ -293,7 +292,7 @@ export default class PublishAllSessionsComponent extends Component {
   async saveSomeSessions(sessions) {
     const chunk = sessions.splice(0, 6);
 
-    await all(chunk.map((o) => o.save()));
+    await Promise.all(chunk.map((o) => o.save()));
     this.currentSessionsSaved += chunk.length;
     if (sessions.length) {
       await this.saveSomeSessions(sessions);

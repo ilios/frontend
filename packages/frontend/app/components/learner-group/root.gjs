@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { service } from '@ember/service';
-import { all, map } from 'rsvp';
+import { map } from 'rsvp';
 import { task } from 'ember-concurrency';
 import pad from 'pad';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -238,7 +238,7 @@ export default class LearnerGroupRootComponent extends Component {
     }
     const saveSomeGroups = async (groupsToSave) => {
       const chunk = groupsToSave.splice(0, 6);
-      await all(chunk.map((group) => group.save()));
+      await Promise.all(chunk.map((group) => group.save()));
 
       if (groupsToSave.length) {
         this.currentGroupsSaved = this.currentGroupsSaved + chunk.length;
@@ -396,7 +396,7 @@ export default class LearnerGroupRootComponent extends Component {
   removeUserToCohort = task({ enqueue: true }, async (user) => {
     const topLevelGroup = await this.args.learnerGroup.topLevelGroup;
     const groups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-    await all(groups.map((group) => group.save()));
+    await Promise.all(groups.map((group) => group.save()));
 
     if (!this.usersForMembersList.length) {
       this.args.setIsEditing(false);
@@ -429,7 +429,7 @@ export default class LearnerGroupRootComponent extends Component {
       const removeGroups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
       groupsToSave = [...groupsToSave, ...removeGroups];
     }
-    await all(uniqueValues(groupsToSave).map((group) => group.save()));
+    await Promise.all(uniqueValues(groupsToSave).map((group) => group.save()));
 
     if (!this.usersForMembersList.length) {
       this.args.setIsEditing(false);

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { task, timeout } from 'ember-concurrency';
-import { all, map } from 'rsvp';
+import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { findBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
@@ -39,7 +39,7 @@ export default class LearnerGroupBulkFinalizeUsersComponent extends Component {
       return [...flattened, ...arr];
     }, []);
 
-    await all(uniqueValues(flat).map((o) => o.save()));
+    await Promise.all(uniqueValues(flat).map((o) => o.save()));
     this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
       capitalize: true,
     });

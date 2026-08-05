@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { filter, map, all } from 'rsvp';
+import { filter, map } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -72,7 +72,7 @@ export default class DetailCohortsComponent extends Component {
       });
 
       // save all given course objectives that need updating.
-      await all(courseObjectivesToUnlink.map((courseObjective) => courseObjective.save()));
+      await Promise.all(courseObjectivesToUnlink.map((courseObjective) => courseObjective.save()));
     }
 
     course.set('cohorts', this.bufferedCohorts);

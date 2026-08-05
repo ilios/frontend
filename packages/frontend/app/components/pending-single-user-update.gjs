@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { all } from 'rsvp';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -52,7 +51,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     const updates = await this.args.user.pendingUserUpdates;
     this.args.user.set('enabled', false);
     await this.args.user.save();
-    await all(updates.map((update) => update.destroyRecord()));
+    await Promise.all(updates.map((update) => update.destroyRecord()));
     this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
       capitalize: true,
     });
@@ -62,7 +61,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     const updates = await this.args.user.pendingUserUpdates;
     this.args.user.set('userSyncIgnore', true);
     await this.args.user.save();
-    await all(updates.map((update) => update.destroyRecord()));
+    await Promise.all(updates.map((update) => update.destroyRecord()));
     this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
       capitalize: true,
     });

@@ -4,7 +4,6 @@ import { cached, tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { all } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import scrollIntoView from 'ilios-common/utils/scroll-into-view';
@@ -180,7 +179,7 @@ export default class DetailLearningMaterialsComponent extends Component {
 
   async saveSomeMaterials(arr) {
     const chunk = arr.splice(0, 5);
-    const savedMaterials = await all(chunk.map((o) => o.save()));
+    const savedMaterials = await Promise.all(chunk.map((o) => o.save()));
     let moreMaterials = [];
     if (arr.length) {
       moreMaterials = await this.saveSomeMaterials(arr);

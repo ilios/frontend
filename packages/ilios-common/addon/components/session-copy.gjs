@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { all, filter } from 'rsvp';
+import { filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { cached, tracked } from '@glimmer/tracking';
@@ -176,7 +176,7 @@ export default class SessionCopyComponent extends Component {
 
     // save the session first to fill out relationships with the session id
     await session.save();
-    await all(toSave.map((o) => o.save()));
+    await Promise.all(toSave.map((o) => o.save()));
 
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon

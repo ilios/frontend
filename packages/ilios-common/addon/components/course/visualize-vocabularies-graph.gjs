@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { all, map } from 'rsvp';
+import { map } from 'rsvp';
 import { htmlSafe } from '@ember/template';
 import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
@@ -98,7 +98,7 @@ export default class CourseVisualizeVocabulariesGraphComponent extends Component
       sessionsWithMinutes,
       async ({ session, minutes }) => {
         const terms = await session.terms;
-        const vocabularies = await all(mapBy(terms, 'vocabulary'));
+        const vocabularies = await Promise.all(mapBy(terms, 'vocabulary'));
         return {
           session,
           vocabularies: uniqueById(vocabularies),

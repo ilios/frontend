@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { all, filter, map } from 'rsvp';
+import { filter, map } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { service } from '@ember/service';
 import { LinkTo } from '@ember/routing';
@@ -136,7 +136,7 @@ export default class LearnerGroupListItemComponent extends Component {
 
   remove = task({ drop: true }, async () => {
     const descendants = await this.args.learnerGroup.allDescendants;
-    await all([
+    await Promise.all([
       ...descendants.map((descendant) => descendant.destroyRecord()),
       this.args.learnerGroup.destroyRecord(),
     ]);

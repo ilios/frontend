@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
-import { all } from 'rsvp';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
@@ -47,7 +46,7 @@ export default class ObjectiveSortManagerComponent extends Component {
 
   async saveSomeObjectives(arr) {
     const chunk = arr.splice(0, 5);
-    await all(chunk.map((o) => o.save()));
+    await Promise.all(chunk.map((o) => o.save()));
     if (arr.length) {
       this.currentObjectivesSaved += chunk.length;
       await this.saveSomeObjectives(arr);

@@ -4,7 +4,6 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
-import { all } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById } from 'ilios-common/utils/array-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
@@ -452,7 +451,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.args.sequenceBlock.set('childSequenceOrder', parseInt(this.childSequenceOrder, 10));
     const savedBlock = await this.args.sequenceBlock.save();
     const children = await savedBlock.get('children');
-    await all(children.map((child) => child.reload()));
+    await Promise.all(children.map((child) => child.reload()));
   });
 
   @action
@@ -540,7 +539,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     const savedBlock = await this.args.sequenceBlock.save();
     const parent = await savedBlock.parent;
     const children = await parent.children;
-    await all(children.map((child) => child.reload()));
+    await Promise.all(children.map((child) => child.reload()));
   });
 
   @action
