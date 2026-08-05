@@ -1,4 +1,4 @@
-import colorChange from 'test-app/utils/color-change';
+import colorChange from 'ilios-common/utils/color-change';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | color change', function () {
