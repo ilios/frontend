@@ -1,4 +1,14 @@
 .normalize-external-editor {
+  ul,
+  ol {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+
+    li {
+      margin-bottom: 0.5em;
+    }
+  }
+
   ul {
     list-style-position: inside;
     list-style-type: disc;
@@ -13,6 +23,8 @@
   ol ul {
     list-style-position: inside;
     list-style-type: circle;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
     margin-left: 15px;
   }
 
@@ -20,6 +32,8 @@
   ul ol {
     list-style-position: inside;
     list-style-type: lower-latin;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
     margin-left: 15px;
   }
 

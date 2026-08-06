@@ -449,7 +449,7 @@ export default class SingleEventComponent extends Component {
             </div>
           {{/if}}
           {{#if @event.sessionDescription}}
-            <div class="single-event-session-description text-wrap">
+            <div class="single-event-session-description text-wrap normalize-external-editor">
               <TruncateText
                 @text={{this.sessionDescription}}
                 @length={{50}}
