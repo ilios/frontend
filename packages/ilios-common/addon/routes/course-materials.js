@@ -1,6 +1,5 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
-import { all } from 'rsvp';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseMaterialsRoute extends Route {
@@ -13,7 +12,7 @@ export default class CourseMaterialsRoute extends Route {
   }
 
   afterModel(course) {
-    return all([
+    return Promise.all([
       this.loadCourseLearningMaterials(course),
       this.loadSessionLearningMaterials(course),
     ]);
@@ -25,11 +24,14 @@ export default class CourseMaterialsRoute extends Route {
 
   async loadCourseLearningMaterials(course) {
     const courseLearningMaterials = await course.learningMaterials;
-    return all(mapBy(courseLearningMaterials, 'learningMaterial'));
+    return Promise.all(mapBy(courseLearningMaterials, 'learningMaterial'));
   }
 
   async loadSessionLearningMaterials(course) {
     const sessions = await course.sessions;
-    return all([mapBy(sessions, 'learningMaterials'), mapBy(sessions, 'firstOfferingDate')]);
+    return Promise.all([
+      mapBy(sessions, 'learningMaterials'),
+      mapBy(sessions, 'firstOfferingDate'),
+    ]);
   }
 }

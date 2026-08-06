@@ -5,7 +5,6 @@ import { action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import { findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { service } from '@ember/service';
-import { all } from 'rsvp';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -92,7 +91,7 @@ export default class AssignStudentsRootComponent extends Component {
     studentsToModify.forEach((student) => student.set('primaryCohort', cohort.model));
     while (studentsToModify.length > 0) {
       const parts = studentsToModify.splice(0, 3);
-      await all(parts.map((part) => part.save()));
+      await Promise.all(parts.map((part) => part.save()));
       this.savedUserIds = [...this.savedUserIds, ...mapBy(parts, 'id')];
     }
     this.unassignedStudents = this.unassignedStudents.filter(

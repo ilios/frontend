@@ -3,7 +3,6 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import { all } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -245,7 +244,7 @@ export default class UserProfileBioManagerComponent extends Component {
     await auth.save();
     await user.save();
     const pendingUpdates = await user.pendingUserUpdates;
-    await all(pendingUpdates.map((update) => update.destroyRecord()));
+    await Promise.all(pendingUpdates.map((update) => update.destroyRecord()));
     await timeout(500);
     this.cancel();
   });

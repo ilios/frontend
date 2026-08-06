@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { all } from 'rsvp';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
@@ -103,11 +102,11 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     });
 
     // delete all removed competencies first, then all removed domains
-    await all(competenciesToRemove.map((competency) => competency.destroyRecord()));
-    await all(domainsToRemove.map((domain) => domain.destroyRecord()));
+    await Promise.all(competenciesToRemove.map((competency) => competency.destroyRecord()));
+    await Promise.all(domainsToRemove.map((domain) => domain.destroyRecord()));
 
     // set the school on new competencies and save them.
-    await all(
+    await Promise.all(
       filterBy(this.competencies, 'isNew').map((competency) => {
         competency.set('school', this.args.school);
         competency.save();
@@ -115,7 +114,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     );
 
     // then update all modified competencies.
-    await all(
+    await Promise.all(
       filterBy(this.competencies, 'hasDirtyAttributes').map((competency) => competency.save()),
     );
 

@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
-import { all, map } from 'rsvp';
+import { map } from 'rsvp';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
@@ -64,7 +64,7 @@ export default class LearnerGroupCalendarComponent extends Component {
   }
 
   async getEventsFromLearnerGroups(learnerGroups, showAsBlockedTime) {
-    const offerings = await all(mapBy(learnerGroups, 'offerings'));
+    const offerings = await Promise.all(mapBy(learnerGroups, 'offerings'));
     const flat = offerings.reduce((flattened, obj) => {
       return [...flattened, ...obj];
     }, []);

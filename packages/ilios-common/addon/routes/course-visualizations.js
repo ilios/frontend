@@ -1,6 +1,5 @@
 import { service } from '@ember/service';
 import Route from '@ember/routing/route';
-import { all } from 'rsvp';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizationsRoute extends Route {
@@ -52,7 +51,7 @@ export default class CourseVisualizationsRoute extends Route {
       }
     }
 
-    return all(promises);
+    return Promise.all(promises);
   }
 
   beforeModel(transition) {

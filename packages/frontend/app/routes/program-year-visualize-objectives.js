@@ -1,6 +1,5 @@
 import { service } from '@ember/service';
 import Route from '@ember/routing/route';
-import { all } from 'rsvp';
 
 export default class ProgramYearVisualizeObjectivesRoute extends Route {
   @service currentUser;
@@ -32,6 +31,6 @@ export default class ProgramYearVisualizeObjectivesRoute extends Route {
       promises.push(store.query('session-objective', { filters: { courses } }));
     }
 
-    return all(promises);
+    return Promise.all(promises);
   }
 }
