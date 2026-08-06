@@ -131,7 +131,7 @@ module('Acceptance | FourOhFour', function (hooks) {
       );
   });
 
-  test('visiting missing curriculum inventory report #6324', async function (assert) {
+  test('visiting missing subject report #6324', async function (assert) {
     const school = await this.server.create('school');
     await setupAuthentication({ directedSchools: [school] });
     await visit('/reports/subjects/2525');
