@@ -1,4 +1,4 @@
-import sortableByPosition from 'test-app/utils/sortable-by-position';
+import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | sortable-by-position', function () {

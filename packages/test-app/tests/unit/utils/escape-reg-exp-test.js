@@ -1,4 +1,4 @@
-import escapeRegExp from '../../../utils/escape-reg-exp';
+import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | escape Regular Expressions special characters', function () {
