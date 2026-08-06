@@ -78,7 +78,7 @@ export default class CoursesListItemComponent extends Component {
             {{#if this.canUnlock}}
               <button
                 type="button"
-                class="link-button{{if @showRemoveConfirmation ' disabled'}}"
+                class="link-button lock-button{{if @showRemoveConfirmation ' disabled'}}"
                 title={{if
                   @showRemoveConfirmation
                   (t "general.disabledByConfirmation")
@@ -93,7 +93,7 @@ export default class CoursesListItemComponent extends Component {
             {{else}}
               <button
                 type="button"
-                class="link-button disabled"
+                class="link-button lock-button disabled"
                 title={{t "general.canNotUnlockCourse"}}
                 disabled
                 data-test-unlock
@@ -104,7 +104,7 @@ export default class CoursesListItemComponent extends Component {
           {{else if this.canLock}}
             <button
               type="button"
-              class="link-button{{if @showRemoveConfirmation ' disabled'}}"
+              class="link-button lock-button{{if @showRemoveConfirmation ' disabled'}}"
               title={{if
                 @showRemoveConfirmation
                 (t "general.disabledByConfirmation")
@@ -123,7 +123,7 @@ export default class CoursesListItemComponent extends Component {
           {{else}}
             <button
               type="button"
-              class="link-button disabled"
+              class="link-button lock-button disabled"
               title={{t "general.canNotLockCourse"}}
               disabled
               data-test-lock
@@ -134,7 +134,7 @@ export default class CoursesListItemComponent extends Component {
           {{#if this.canDelete}}
             <button
               type="button"
-              class="link-button{{if @showRemoveConfirmation ' disabled'}}"
+              class="link-button delete-button{{if @showRemoveConfirmation ' disabled'}}"
               title={{if
                 @showRemoveConfirmation
                 (t "general.disabledByConfirmation")
@@ -153,7 +153,7 @@ export default class CoursesListItemComponent extends Component {
           {{else}}
             <button
               type="button"
-              class="link-button disabled"
+              class="link-button delete-button disabled"
               title={{t "general.canNotDeleteCourse"}}
               disabled
               data-test-remove

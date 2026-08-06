@@ -5,6 +5,7 @@
     @include m.ilios-button;
 
     &:hover {
+      background-color: var(--light-blue);
       text-decoration: none;
     }
   }

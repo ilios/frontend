@@ -82,7 +82,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
       <td>
         <button
           type="button"
-          class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+          class="link-button manage-button{{if this.showRemoveConfirmation ' disabled'}}"
           aria-label={{t "general.manage"}}
           title={{if
             this.showRemoveConfirmation
@@ -102,7 +102,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
           {{#if @canDelete}}
             <button
               type="button"
-              class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+              class="link-button delete-button{{if this.showRemoveConfirmation ' disabled'}}"
               title={{if
                 this.showRemoveConfirmation
                 (t "general.disabledByConfirmation")
@@ -120,7 +120,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
           {{else}}
             <button
               type="button"
-              class="link-button disabled"
+              class="link-button delete-button disabled"
               title={{t "general.canNotDeleteSchoolSessionType"}}
               disabled
               data-test-delete
@@ -143,16 +143,14 @@ export default class SchoolSessionTypesListItemComponent extends Component {
           @route="session-type-visualize-vocabularies"
           @model={{@sessionType}}
           @disabled={{this.showRemoveConfirmation}}
+          class="visualization-button"
           title={{if
             this.showRemoveConfirmation
             (t "general.disabledByConfirmation")
             (t "general.vocabularies")
           }}
         >
-          <FaIcon
-            @icon={{faChartColumn}}
-            class={{if this.showRemoveConfirmation "disabled" "enabled"}}
-          />
+          <FaIcon @icon={{faChartColumn}} class={{if this.showRemoveConfirmation "disabled"}} />
         </LinkTo>
       </td>
     </tr>

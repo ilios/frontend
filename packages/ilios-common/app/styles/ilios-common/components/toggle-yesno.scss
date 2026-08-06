@@ -15,6 +15,14 @@
 
   &.yes {
     background-color: var(--green);
+
+    &:hover {
+      background-color: var(--light-green);
+    }
+  }
+
+  &.no:hover {
+    background-color: var(--light-red);
   }
 
   .switch-handle {
