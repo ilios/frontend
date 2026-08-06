@@ -78,13 +78,14 @@
       margin-top: 0;
     }
 
-    .description ul,
-    .description ol {
-      /* stylelint-disable-next-line property-disallowed-list */
-      line-height: 0.7; // match Session description view
-      list-style-position: inside;
-      margin-block-start: 1em;
-      margin-block-end: 1em;
+    .description {
+      ul,
+      ol {
+        /* stylelint-disable-next-line property-disallowed-list */
+        line-height: 0.7; // match Session description view
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+      }
     }
 
     p {
