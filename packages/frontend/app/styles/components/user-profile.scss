@@ -21,7 +21,8 @@
   }
 }
 
-.user-profile-learnergroups {
+.user-profile-learnergroups,
+.user-profile-preferences {
   h2.title {
     @include cm.ilios-heading-h3;
   }
