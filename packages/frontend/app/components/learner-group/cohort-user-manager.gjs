@@ -123,7 +123,7 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
           <div class="learner-group-cohort-user-manager-content">
             <div
               class="list"
-              {{on "scroll" (pick "target.scrollTop" (set this "cohortScroll"))}}
+              {{on "scrollend" (pick "target.scrollTop" (set this "cohortScroll"))}}
               {{preserveScroll this.filteredUsers this.cohortScroll}}
             >
               <table class="ilios-table ilios-table-colors ilios-zebra-table sticky-header">
