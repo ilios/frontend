@@ -1,13 +1,20 @@
-import { collection, clickable, create, isVisible, isHidden } from 'ember-cli-page-object';
+import {
+  collection,
+  clickable,
+  create,
+  isVisible,
+  isHidden,
+  triggerable,
+} from 'ember-cli-page-object';
 import { focusedText, keyOnFocus } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-session-publication-menu]',
   toggle: {
     scope: '[data-test-toggle]',
-    enter: keyOnFocus('Enter'),
-    down: keyOnFocus('ArrowDown'),
-    esc: keyOnFocus('Escape'),
+    enter: triggerable('keydown', '', { eventProperties: { key: 'Enter' } }),
+    down: triggerable('keydown', '', { eventProperties: { key: 'ArrowDown' } }),
+    esc: triggerable('keydown', '', { eventProperties: { key: 'Escape' } }),
   },
   menu: {
     scope: '[data-test-menu]',
