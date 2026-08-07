@@ -203,6 +203,7 @@ general:
     en-us: English (en)
     es: Español (es)
     fr: Français (fr)
+  languagePreference: Idioma Preferido
   lastName: Apellido
   learner: Aprendedor
   learnerGroupsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Cada grupo de alumnos adjunto se enumera junto con los instructores y los datos del curso."
@@ -309,6 +310,7 @@ general:
   physicianCompetencyReferenceSet: Conjunto de referencia de competencias médicas
   physicianCompetencyReferenceSetAbbr: PCRS
   populateGroup: ¿Quieres auto-llenar este grupo?
+  preferences: Preferencias
   preferredEmail: Email preferido
   prev: Anterior
   primary: Principal
