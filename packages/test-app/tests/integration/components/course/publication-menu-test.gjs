@@ -158,9 +158,9 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     this.set('course', courseModel);
     await render(<template><PublicationMenu @course={{this.course}} /></template>);
 
-    assert.ok(component.menuClosed);
+    assert.ok(component.menuClosed, 'menu is closed');
     await component.toggle.down();
-    assert.ok(component.menuOpen);
+    assert.ok(component.menuOpen, 'hitting ArrowDown made menu open');
   });
 
   test('escape closes menu', async function (assert) {
@@ -170,9 +170,9 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     await render(<template><PublicationMenu @course={{this.course}} /></template>);
 
     await component.toggle.down();
-    assert.ok(component.menuOpen);
+    assert.ok(component.menuOpen, 'hitting ArrowDown made menu open');
     await component.toggle.esc();
-    assert.ok(component.menuClosed);
+    assert.ok(component.menuClosed, 'hitting Escape made menu close');
   });
 
   test('dropdown options are accessible for unpublished course', async function (assert) {
