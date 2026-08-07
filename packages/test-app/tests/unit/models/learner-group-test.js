@@ -351,65 +351,94 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check removeUserFromGroupAndAllDescendants', async function (assert) {
-    const learnerGroup = this.store.createRecord('learner-group');
+    const user1 = this.store.createRecord('user');
+
+    const learnerGroup = this.store.createRecord('learner-group', {
+      id: '1',
+      users: [user1],
+    });
 
     const groups = await waitForResource(learnerGroup, 'allParents');
     assert.strictEqual(groups.length, 0);
 
-    const user1 = this.store.createRecord('user');
     const subGroup1 = this.store.createRecord('learner-group', {
+      id: '2',
       parent: learnerGroup,
       users: [user1],
     });
     const subGroup2 = this.store.createRecord('learner-group', {
+      id: '3',
       parent: subGroup1,
       users: [user1],
     });
     const subGroup3 = this.store.createRecord('learner-group', {
+      id: '4',
       parent: subGroup2,
       users: [user1],
     });
     const subGroup4 = this.store.createRecord('learner-group', {
+      id: '5',
       parent: subGroup1,
     });
+
+    assert.ok((await learnerGroup.users).includes(user1));
+    assert.ok((await subGroup1.users).includes(user1));
+    assert.ok((await subGroup2.users).includes(user1));
+    assert.ok((await subGroup3.users).includes(user1));
+    assert.notOk((await subGroup4.users).includes(user1));
 
     const groupsToRemove = await subGroup1.removeUserFromGroupAndAllDescendants(user1);
     assert.strictEqual(groupsToRemove.length, 4);
-    assert.notOk(groupsToRemove.includes(learnerGroup));
-    assert.ok(groupsToRemove.includes(subGroup1));
-    assert.ok(groupsToRemove.includes(subGroup2));
-    assert.ok(groupsToRemove.includes(subGroup3));
-    assert.ok(groupsToRemove.includes(subGroup4));
+    assert.deepEqual(
+      groupsToRemove.map(({ id }) => id),
+      ['4', '5', '3', '2'],
+      'groups are removed in the correct order',
+    );
+    assert.ok((await learnerGroup.users).includes(user1));
+    assert.notOk((await subGroup1.users).includes(user1));
+    assert.notOk((await subGroup2.users).includes(user1));
+    assert.notOk((await subGroup3.users).includes(user1));
+    assert.notOk((await subGroup4.users).includes(user1));
   });
 
   test('check addUserToGroupAndAllParents', async function (assert) {
-    const learnerGroup = this.store.createRecord('learner-group');
+    const learnerGroup = this.store.createRecord('learner-group', { id: '1' });
     const groups = await waitForResource(learnerGroup, 'allParents');
     assert.strictEqual(groups.length, 0);
 
     const user1 = this.store.createRecord('user');
     const subGroup1 = this.store.createRecord('learner-group', {
+      id: '2',
       parent: learnerGroup,
       users: [user1],
     });
     const subGroup2 = this.store.createRecord('learner-group', {
+      id: '3',
       parent: subGroup1,
     });
     const subGroup3 = this.store.createRecord('learner-group', {
+      id: '4',
       parent: subGroup2,
     });
-    const subGroup4 = this.store.createRecord('learner-group', {
+    const subgGroup4 = this.store.createRecord('learner-group', {
+      id: '5',
       parent: subGroup1,
     });
 
     const groupsToAdd = await subGroup3.addUserToGroupAndAllParents(user1);
 
     assert.strictEqual(groupsToAdd.length, 3);
-    assert.ok(groupsToAdd.includes(learnerGroup));
-    assert.notOk(groupsToAdd.includes(subGroup1));
-    assert.ok(groupsToAdd.includes(subGroup2));
-    assert.ok(groupsToAdd.includes(subGroup3));
-    assert.notOk(groupsToAdd.includes(subGroup4));
+    assert.deepEqual(
+      groupsToAdd.map(({ id }) => id),
+      ['1', '3', '4'],
+      'groups are added in the correct order',
+    );
+
+    assert.ok((await learnerGroup.users).includes(user1));
+    assert.ok((await subGroup1.users).includes(user1));
+    assert.ok((await subGroup2.users).includes(user1));
+    assert.ok((await subGroup3.users).includes(user1));
+    assert.notOk((await subgGroup4.users).includes(user1));
   });
 
   test('has no learners in group without learners and without subgroups', async function (assert) {

@@ -388,9 +388,13 @@ export default class LearnerGroupRootComponent extends Component {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = await learnerGroup.topLevelGroup;
     const removeGroups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
+    for (const group of removeGroups) {
+      await group.save();
+    }
     const addGroups = await learnerGroup.addUserToGroupAndAllParents(user);
-    await Promise.all(removeGroups.map((g) => g.save()));
-    await Promise.all(addGroups.map((g) => g.save()));
+    for (const group of addGroups) {
+      await group.save();
+    }
   });
 
   removeUserToCohort = task({ enqueue: true }, async (user) => {
@@ -406,7 +410,6 @@ export default class LearnerGroupRootComponent extends Component {
   addUsersToGroup = task({ enqueue: true }, async (users) => {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = await learnerGroup.topLevelGroup;
-    let addGroups = [];
     let removeGroups = [];
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
@@ -414,11 +417,18 @@ export default class LearnerGroupRootComponent extends Component {
         ...removeGroups,
         ...(await topLevelGroup.removeUserFromGroupAndAllDescendants(user)),
       ];
+    }
+    for (const group of uniqueValues(removeGroups)) {
+      await group.save();
+    }
+    let addGroups = [];
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
       addGroups = [...addGroups, ...(await learnerGroup.addUserToGroupAndAllParents(user))];
     }
-
-    await Promise.all(uniqueValues(removeGroups).map((g) => g.save()));
-    await Promise.all(uniqueValues(addGroups).map((g) => g.save()));
+    for (const group of uniqueValues(addGroups)) {
+      await group.save();
+    }
   });
 
   removeUsersToCohort = task({ enqueue: true }, async (users) => {

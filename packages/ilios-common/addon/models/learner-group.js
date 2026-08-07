@@ -447,7 +447,8 @@ export default class LearnerGroup extends Model {
    */
   async removeUserFromGroupAndAllDescendants({ id: userId }) {
     const allDescendants = await this.getAllDescendants();
-    return await map([this, ...allDescendants], async (group) => {
+    const groups = [this, ...allDescendants].reverse();
+    return await map(groups, async (group) => {
       if (group.hasMany('users').ids().includes(userId)) {
         group.users = (await group.users).filter(({ id }) => id !== userId);
       }
@@ -493,23 +494,21 @@ export default class LearnerGroup extends Model {
   }
 
   /**
-   * Adds a user to a group and then traverses parent groups recursively
-   * to add the user to them as well.  Will only modify groups where the
-   * user currently does not exist.
+   * Starting with the root add user to each group all
+   * the way down to our group and return the entire tree to be saved.
    */
   async addUserToGroupAndAllParents(user) {
-    const modifiedGroups = [];
-    const userId = user.id;
     const allParents = await this.getAllParents();
-    const groups = [this, ...allParents];
-    for (let i = 0; i < groups.length; i++) {
-      const users = await groups[i].users;
-      const ids = mapBy(users, 'id');
-      if (!ids.includes(userId)) {
-        users.push(user);
-        modifiedGroups.push(groups[i]);
+    const groups = [...allParents, this];
+
+    const groupMap = await map(groups, async (group) => {
+      if (!group.hasMany('users').ids().includes(user.id)) {
+        (await group.users).push(user);
+        return group;
       }
-    }
-    return uniqueValues(modifiedGroups);
+    });
+
+    //remove groups that weren't updated (they're undefined in this array)
+    return groupMap.filter(Boolean);
   }
 }

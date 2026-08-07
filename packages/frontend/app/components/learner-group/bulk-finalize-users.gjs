@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { task, timeout } from 'ember-concurrency';
-import { map } from 'rsvp';
 import { service } from '@ember/service';
-import { findBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findBy } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import { on } from '@ember/modifier';
@@ -31,15 +30,14 @@ export default class LearnerGroupBulkFinalizeUsersComponent extends Component {
 
   save = task({ drop: true }, async () => {
     await timeout(10);
-    const treeGroups = await map(this.finalData, async ({ learnerGroup, user }) => {
-      return learnerGroup.addUserToGroupAndAllParents(user);
-    });
 
-    const flat = treeGroups.reduce((flattened, arr) => {
-      return [...flattened, ...arr];
-    }, []);
+    for (const { learnerGroup, user } of this.finalData) {
+      const groups = await learnerGroup.addUserToGroupAndAllParents(user);
+      for (const group of groups) {
+        await group.save();
+      }
+    }
 
-    await Promise.all(uniqueValues(flat).map((o) => o.save()));
     this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
       capitalize: true,
     });
