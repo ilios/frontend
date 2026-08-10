@@ -48,7 +48,11 @@ export default class CoursePublicationCheckComponent extends Component {
     this.args.course.set('published', true);
     await this.args.course.save();
     this.flashMessages.success(this.intl.t('general.publishedSuccessfully'));
-    this.router.transitionTo('course', this.args.course);
+    this.router.transitionTo('course', this.args.course, {
+      queryParams: {
+        detailsCollapseControl: true,
+      },
+    });
   }
 
   <template>
