@@ -52,6 +52,17 @@ export default [
     },
     rules: {
       'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'rsvp',
+              importNames: ['all', 'map'],
+            },
+          ],
+        },
+      ],
     },
   },
   {
