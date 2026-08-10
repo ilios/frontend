@@ -59,14 +59,6 @@ module('Acceptance | Course - Publish', function (hooks) {
     assert.strictEqual(pubcheck.terms, 'No', 'course terms count correct');
     assert.strictEqual(pubcheck.objectives, 'No', 'course objectives count correct');
 
-    // await this.pauseTest();
-
-    // assert.notOk(
-    //   pubcheck.publishWithMissingItems,
-    //   'publish with misssing items button not visible',
-    // );
-    // assert.notOk(pubcheck.publish, 'publish button not visible');
-
     assert.ok(pubcheck.publishMissingRequirements, 'publish missing requirements button visible');
     assert.ok(pubcheck.publishMissingRequirements.isDisabled, 'publish course button disabled');
     assert.strictEqual(
@@ -118,9 +110,6 @@ module('Acceptance | Course - Publish', function (hooks) {
     assert.strictEqual(pubcheck.cohorts, 'Yes (1)', 'course cohort count correct');
     assert.strictEqual(pubcheck.terms, 'No', 'course terms count correct');
     assert.strictEqual(pubcheck.objectives, 'No', 'course objectives count correct');
-
-    // assert.notOk(pubcheck.publishMissingRequirements);
-    // assert.notOk(pubcheck.publish);
 
     assert.ok(pubcheck.publishWithMissingItems, 'publish with missing items button visible');
     assert.strictEqual(
@@ -179,9 +168,6 @@ module('Acceptance | Course - Publish', function (hooks) {
     assert.strictEqual(pubcheck.cohorts, 'Yes (1)', 'course cohort count correct');
     assert.strictEqual(pubcheck.terms, 'Yes (1)', 'course terms count correct');
     assert.strictEqual(pubcheck.objectives, 'Yes (1)', 'course objectives count correct');
-
-    // assert.notOk(pubcheck.publishMissingRequirements);
-    // assert.notOk(pubcheck.publishWithMissingItems);
 
     assert.ok(pubcheck.publish);
     assert.strictEqual(
