@@ -58,7 +58,7 @@ jobs:
       - name: Capture Screenshots
         continue-on-error: true
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
-        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem.screenshots.js
+        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-config.js
       - name: Rename screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
@@ -112,7 +112,7 @@ jobs:
       - name: Capture Screenshots
         continue-on-error: true
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
-        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem.screenshots.js
+        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-config.js
       - name: Rename screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
