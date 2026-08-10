@@ -1,6 +1,5 @@
 import { service } from '@ember/service';
 import Route from '@ember/routing/route';
-import { map } from 'rsvp';
 
 export default class CourseVisualizeSessionTypeRoute extends Route {
   @service store;
@@ -16,9 +15,9 @@ export default class CourseVisualizeSessionTypeRoute extends Route {
   async afterModel({ course }) {
     const sessions = await course.sessions;
     return await Promise.all([
-      map(sessions, (s) => s.sessionType),
-      map(sessions, (s) => s.terms),
-      map(sessions, (s) => s.totalSumDuration),
+      ...sessions.map((s) => s.sessionType),
+      ...sessions.map((s) => s.terms),
+      ...sessions.map((s) => s.totalSumDuration),
     ]);
   }
 

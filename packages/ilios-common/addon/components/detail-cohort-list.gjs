@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
-import { map } from 'rsvp';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
@@ -26,24 +25,26 @@ export default class DetailCohortListComponent extends Component {
   }
 
   async getCohortProxies(cohorts) {
-    return await map(cohorts, async (cohort) => {
-      const programYear = await cohort.programYear;
-      const program = await programYear.program;
-      const school = await program.school;
-      const schoolTitle = school.title;
-      let displayTitle = cohort.title;
-      if (!displayTitle) {
+    return await Promise.all(
+      cohorts.map(async (cohort) => {
         const programYear = await cohort.programYear;
-        const year = await programYear.getClassOfYear();
-        displayTitle = this.intl.t('general.classOf', { year });
-      }
+        const program = await programYear.program;
+        const school = await program.school;
+        const schoolTitle = school.title;
+        let displayTitle = cohort.title;
+        if (!displayTitle) {
+          const programYear = await cohort.programYear;
+          const year = await programYear.getClassOfYear();
+          displayTitle = this.intl.t('general.classOf', { year });
+        }
 
-      return {
-        cohort,
-        schoolTitle,
-        displayTitle,
-      };
-    });
+        return {
+          cohort,
+          schoolTitle,
+          displayTitle,
+        };
+      }),
+    );
   }
   <template>
     <div class="detail-cohort-list" data-test-detail-cohort-list>

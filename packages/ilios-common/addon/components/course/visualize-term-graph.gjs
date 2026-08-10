@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { map } from 'rsvp';
 import { htmlSafe } from '@ember/template';
 import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
@@ -84,15 +83,17 @@ export default class CourseVisualizeTermGraphComponent extends Component {
     const sessionIds = term.hasMany('sessions').ids();
     const filteredSessions = sessions.filter((session) => sessionIds.includes(session.id));
     const sessionTypes = await Promise.all(filteredSessions.map((s) => s.sessionType));
-    const sessionTypeData = await map(filteredSessions, async (session) => {
-      const hours = await session.getTotalSumDuration();
-      const sessionType = findById(sessionTypes, session.belongsTo('sessionType').id());
-      return {
-        session,
-        sessionType,
-        minutes: Math.round(hours * 60),
-      };
-    });
+    const sessionTypeData = await Promise.all(
+      filteredSessions.map(async (session) => {
+        const hours = await session.getTotalSumDuration();
+        const sessionType = findById(sessionTypes, session.belongsTo('sessionType').id());
+        return {
+          session,
+          sessionType,
+          minutes: Math.round(hours * 60),
+        };
+      }),
+    );
 
     return sessionTypeData
       .reduce((set, { sessionType, session, minutes }) => {

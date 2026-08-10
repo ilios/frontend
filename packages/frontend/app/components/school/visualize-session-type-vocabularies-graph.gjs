@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
-import { map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -83,23 +82,24 @@ export default class SchoolVisualizeSessionTypeVocabulariesGraphComponent extend
       return [];
     }
 
-    const sessionsWithTerms = await map(sessions, async (session) => {
-      const terms = await session.terms;
-      return terms.map((term) => {
-        return { session, term };
-      });
-    });
+    const sessionsWithTerms = await Promise.all(
+      sessions.map(async (session) => {
+        const terms = await session.terms;
+        return terms.map((term) => {
+          return { session, term };
+        });
+      }),
+    );
 
-    const termsWithSessionAndVocabulary = await map(
-      sessionsWithTerms.flat(),
-      async ({ session, term }) => {
+    const termsWithSessionAndVocabulary = await Promise.all(
+      sessionsWithTerms.flat().map(async ({ session, term }) => {
         const vocabulary = await term.vocabulary;
         return {
           term,
           session,
           vocabulary,
         };
-      },
+      }),
     );
 
     const vocabularyObjects = termsWithSessionAndVocabulary.reduce(

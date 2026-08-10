@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
-import { filter, map } from 'rsvp';
+import { filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import striptags from 'striptags';
@@ -100,16 +100,17 @@ export default class CourseVisualizeObjectivesGraphComponent extends Component {
   }
 
   async getDataObjects(sessions) {
-    const sessionsWithMinutes = sessions.map(async (session) => {
-      const hours = await session.getTotalSumDuration();
-      return {
-        session,
-        minutes: Math.round(hours * 60),
-      };
-    });
-    const sessionCourseObjectiveMap = await map(
-      sessionsWithMinutes,
-      async ({ session, minutes }) => {
+    const sessionsWithMinutes = await Promise.all(
+      sessions.map(async (session) => {
+        const hours = await session.getTotalSumDuration();
+        return {
+          session,
+          minutes: Math.round(hours * 60),
+        };
+      }),
+    );
+    const sessionCourseObjectiveMap = await Promise.all(
+      sessionsWithMinutes.map(async ({ session, minutes }) => {
         const sessionObjectives = await session.sessionObjectives;
         const sessionObjectivesWithParents = await filter(
           sessionObjectives,
@@ -118,12 +119,11 @@ export default class CourseVisualizeObjectivesGraphComponent extends Component {
             return parents.length;
           },
         );
-        const courseSessionObjectives = await map(
-          sessionObjectivesWithParents,
-          async (sessionObjective) => {
+        const courseSessionObjectives = await Promise.all(
+          sessionObjectivesWithParents.map(async (sessionObjective) => {
             const parents = await sessionObjective.courseObjectives;
             return mapBy(parents, 'id');
-          },
+          }),
         );
         const flatObjectives = courseSessionObjectives.reduce((flattened, arr) => {
           return [...flattened, ...arr];
@@ -135,43 +135,50 @@ export default class CourseVisualizeObjectivesGraphComponent extends Component {
           objectives: flatObjectives,
           minutes,
         };
-      },
+      }),
     );
 
     // condensed objectives map
     const courseObjectives = await this.args.course.courseObjectives;
-    const mappedObjectives = await map(courseObjectives, async (courseObjective) => {
-      const programYearObjectives = await courseObjective.programYearObjectives;
-      const competencyTitles = (
-        await map(programYearObjectives, async (pyObjective) => {
-          const competency = await pyObjective.competency;
-          return competency ? competency.title : null;
-        })
-      )
-        .filter((title) => !!title)
-        .sort();
-      const minutes = sessionCourseObjectiveMap.map((obj) => {
-        if (obj.objectives.includes(courseObjective.id)) {
-          return obj.minutes;
-        } else {
-          return 0;
-        }
-      });
-      const sessionObjectives = sessionCourseObjectiveMap.filter((obj) =>
-        obj.objectives.includes(courseObjective.id),
-      );
-      const meta = {
-        competencies: uniqueValues(competencyTitles).join(', '),
-        courseObjective,
-        sessionObjectives,
-      };
-      const data = minutes.reduce((accumulator, current) => accumulator + parseInt(current, 10), 0);
+    const mappedObjectives = await Promise.all(
+      courseObjectives.map(async (courseObjective) => {
+        const programYearObjectives = await courseObjective.programYearObjectives;
+        const competencyTitles = (
+          await Promise.all(
+            programYearObjectives.map(async (pyObjective) => {
+              const competency = await pyObjective.competency;
+              return competency ? competency.title : null;
+            }),
+          )
+        )
+          .filter((title) => !!title)
+          .sort();
+        const minutes = sessionCourseObjectiveMap.map((obj) => {
+          if (obj.objectives.includes(courseObjective.id)) {
+            return obj.minutes;
+          } else {
+            return 0;
+          }
+        });
+        const sessionObjectives = sessionCourseObjectiveMap.filter((obj) =>
+          obj.objectives.includes(courseObjective.id),
+        );
+        const meta = {
+          competencies: uniqueValues(competencyTitles).join(', '),
+          courseObjective,
+          sessionObjectives,
+        };
+        const data = minutes.reduce(
+          (accumulator, current) => accumulator + parseInt(current, 10),
+          0,
+        );
 
-      return {
-        data,
-        meta,
-      };
-    });
+        return {
+          data,
+          meta,
+        };
+      }),
+    );
 
     const totalMinutes = mapBy(mappedObjectives, 'data').reduce(
       (total, minutes) => total + minutes,

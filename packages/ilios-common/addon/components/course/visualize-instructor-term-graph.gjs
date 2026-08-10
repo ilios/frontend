@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { filter, map } from 'rsvp';
+import { filter } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { task, timeout } from 'ember-concurrency';
@@ -90,33 +90,39 @@ export default class CourseVisualizeInstructorTermGraphComponent extends Compone
       return mapBy(allInstructors, 'id').includes(user.id);
     });
 
-    const sessionsWithTerms = await map(sessionsWithUser, async (session) => {
-      const sessionTerms = await session.terms;
-      const terms = await map(sessionTerms, async (term) => {
-        const vocabulary = await term.vocabulary;
-        return {
-          term,
-          vocabulary,
-        };
-      });
+    const sessionsWithTerms = await Promise.all(
+      sessionsWithUser.map(async (session) => {
+        const sessionTerms = await session.terms;
+        const terms = await Promise.all(
+          sessionTerms.map(async (term) => {
+            const vocabulary = await term.vocabulary;
+            return {
+              term,
+              vocabulary,
+            };
+          }),
+        );
 
-      return {
-        session,
-        terms,
-      };
-    });
-
-    const dataMap = await map(sessionsWithTerms, async ({ session, terms }) => {
-      const minutes = await session.getTotalSumDurationByInstructor(this.args.user);
-      return terms.map(({ term, vocabulary }) => {
         return {
           session,
-          term,
-          vocabulary,
-          minutes,
+          terms,
         };
-      });
-    });
+      }),
+    );
+
+    const dataMap = await Promise.all(
+      sessionsWithTerms.map(async ({ session, terms }) => {
+        const minutes = await session.getTotalSumDurationByInstructor(this.args.user);
+        return terms.map(({ term, vocabulary }) => {
+          return {
+            session,
+            term,
+            vocabulary,
+            minutes,
+          };
+        });
+      }),
+    );
 
     return dataMap
       .reduce((flattened, arr) => {

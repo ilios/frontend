@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { htmlSafe } from '@ember/template';
 import { TrackedAsyncData } from 'ember-async-data';
-import { map } from 'rsvp';
 import { findById } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
@@ -24,15 +23,17 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
 
   async getCourseObjects(programYearObjective) {
     const courseObjectives = await programYearObjective.courseObjectives;
-    const objectiveObjects = await map(courseObjectives, async (courseObjective) => {
-      const course = await courseObjective.course;
-      return {
-        title: courseObjective.title,
-        courseId: course.id,
-        courseTitle: course.title,
-        courseExternalId: course.externalId,
-      };
-    });
+    const objectiveObjects = await Promise.all(
+      courseObjectives.map(async (courseObjective) => {
+        const course = await courseObjective.course;
+        return {
+          title: courseObjective.title,
+          courseId: course.id,
+          courseTitle: course.title,
+          courseExternalId: course.externalId,
+        };
+      }),
+    );
     return objectiveObjects.reduce((set, obj) => {
       let existing = findById(set, obj.courseId);
       if (!existing) {

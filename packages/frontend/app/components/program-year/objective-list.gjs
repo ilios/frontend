@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
-import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
@@ -72,19 +71,21 @@ export default class ProgramYearObjectiveListComponent extends Component {
     });
     const parents = await Promise.all(mapBy(programYearCompetencies, 'parent'));
     const allDomains = uniqueValues([...domains, ...parents]).filter(Boolean);
-    return await map(allDomains, async (domain) => {
-      const competencies = (await domain.children).map((competency) => {
+    return await Promise.all(
+      allDomains.map(async (domain) => {
+        const competencies = (await domain.children).map((competency) => {
+          return {
+            id: competency.id,
+            title: competency.title,
+          };
+        });
         return {
-          id: competency.id,
-          title: competency.title,
+          id: domain.id,
+          title: domain.title,
+          competencies,
         };
-      });
-      return {
-        id: domain.id,
-        title: domain.title,
-        competencies,
-      };
-    });
+      }),
+    );
   }
 
   downloadReport = task({ drop: true }, async () => {

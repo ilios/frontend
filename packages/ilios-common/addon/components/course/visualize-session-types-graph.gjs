@@ -4,7 +4,6 @@ import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { map } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import PapaParse from 'papaparse';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
@@ -105,16 +104,18 @@ export default class CourseVisualizeSessionTypesGraphComponent extends Component
       return [];
     }
 
-    const dataMap = await map(sessions, async (session) => {
-      const hours = await session.getTotalSumDuration();
-      const minutes = Math.round(hours * 60);
-      const sessionType = await session.sessionType;
-      return {
-        session,
-        sessionType,
-        minutes,
-      };
-    });
+    const dataMap = await Promise.all(
+      sessions.map(async (session) => {
+        const hours = await session.getTotalSumDuration();
+        const minutes = Math.round(hours * 60);
+        const sessionType = await session.sessionType;
+        return {
+          session,
+          sessionType,
+          minutes,
+        };
+      }),
+    );
 
     return dataMap
       .reduce((set, { sessionType, session, minutes }) => {

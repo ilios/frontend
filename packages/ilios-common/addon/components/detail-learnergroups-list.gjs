@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { filter, map } from 'rsvp';
+import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import DetailLearnergroupsListItem from 'ilios-common/components/detail-learnergroups-list-item';
@@ -29,32 +29,36 @@ export default class DetailLearnerGroupsListComponent extends Component {
       return [];
     }
     const cohorts = uniqueValues(
-      await map(this.args.learnerGroups, async (learnerGroup) => {
-        return learnerGroup.cohort;
+      await Promise.all(
+        this.args.learnerGroups.map(async (learnerGroup) => {
+          return learnerGroup.cohort;
+        }),
+      ),
+    );
+    return Promise.all(
+      cohorts.map(async (cohort) => {
+        const groups = await filter(this.args.learnerGroups, async (group) => {
+          const groupCohort = await group.cohort;
+          return groupCohort === cohort;
+        });
+        const proxies = await Promise.all(
+          groups.map(async (group) => {
+            const title = await group.getTitleWithParentTitles();
+            return { group, title };
+          }),
+        );
+        const sortedProxies = proxies.sort((a, b) => {
+          const titleA = a.title.toLowerCase();
+          const titleB = b.title.toLowerCase();
+          return titleA > titleB ? 1 : titleA < titleB ? -1 : 0;
+        });
+
+        return {
+          cohort,
+          groups: mapBy(sortedProxies, 'group'),
+        };
       }),
     );
-    return map(cohorts, async (cohort) => {
-      const groups = await filter(this.args.learnerGroups, async (group) => {
-        const groupCohort = await group.cohort;
-        return groupCohort === cohort;
-      });
-      const proxies = await Promise.all(
-        groups.map(async (group) => {
-          const title = await group.getTitleWithParentTitles();
-          return { group, title };
-        }),
-      );
-      const sortedProxies = proxies.sort((a, b) => {
-        const titleA = a.title.toLowerCase();
-        const titleB = b.title.toLowerCase();
-        return titleA > titleB ? 1 : titleA < titleB ? -1 : 0;
-      });
-
-      return {
-        cohort,
-        groups: mapBy(sortedProxies, 'group'),
-      };
-    });
   }
   <template>
     <div class="detail-learnergroups-list" data-test-detail-learnergroups-list>

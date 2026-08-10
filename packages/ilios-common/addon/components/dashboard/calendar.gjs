@@ -3,7 +3,6 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { DateTime } from 'luxon';
-import { map } from 'rsvp';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import ToggleButtons from 'ilios-common/components/toggle-buttons';
@@ -139,24 +138,26 @@ export default class DashboardCalendarComponent extends Component {
       return;
     }
     const cohorts = await this.getSchoolCohorts(school);
-    const cohortProxies = await map(cohorts, async (cohort) => {
-      let displayTitle = cohort.title;
-      const programYear = await cohort.programYear;
-      const classOfYear = await programYear.getClassOfYear();
-      if (!displayTitle) {
-        const intl = this.intl;
-        displayTitle = intl.t('general.classOf', { year: classOfYear });
-      }
-      const program = await programYear.program;
+    const cohortProxies = await Promise.all(
+      cohorts.map(async (cohort) => {
+        let displayTitle = cohort.title;
+        const programYear = await cohort.programYear;
+        const classOfYear = await programYear.getClassOfYear();
+        if (!displayTitle) {
+          const intl = this.intl;
+          displayTitle = intl.t('general.classOf', { year: classOfYear });
+        }
+        const program = await programYear.program;
 
-      return {
-        id: cohort.id,
-        programTitle: program.title,
-        cohort,
-        displayTitle,
-        classOfYear,
-      };
-    });
+        return {
+          id: cohort.id,
+          programTitle: program.title,
+          cohort,
+          displayTitle,
+          classOfYear,
+        };
+      }),
+    );
 
     return sortBy(cohortProxies, 'displayTitle');
   }
@@ -164,10 +165,12 @@ export default class DashboardCalendarComponent extends Component {
   async getSchoolCohorts(school) {
     await this.dataLoader.loadSchoolForCalendar(school.id);
     const programs = await school.programs;
-    const programYears = await map(programs, async (program) => {
-      const programYears = await program.programYears;
-      return programYears;
-    });
+    const programYears = await Promise.all(
+      programs.map(async (program) => {
+        const programYears = await program.programYears;
+        return programYears;
+      }),
+    );
     const cohorts = await Promise.all(mapBy(programYears.flat(), 'cohort'));
     return cohorts.filter(Boolean);
   }

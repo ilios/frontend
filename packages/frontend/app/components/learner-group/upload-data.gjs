@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import { cached, tracked } from '@glimmer/tracking';
@@ -92,9 +91,8 @@ export default class LearnerGroupUploadDataComponent extends Component {
 
   async parseFile(proposedUsers) {
     const cohort = await this.args.learnerGroup.cohort;
-    const data = await map(
-      proposedUsers,
-      async ({ firstName, lastName, campusId, subGroupName }) => {
+    const data = await Promise.all(
+      proposedUsers.map(async ({ firstName, lastName, campusId, subGroupName }) => {
         const errors = [];
         const warnings = [];
         if (!firstName) {
@@ -175,7 +173,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
           hasWarning: warnings.length > 0,
           isValid: errors.length === 0,
         };
-      },
+      }),
     );
 
     // flag duplicate users as such

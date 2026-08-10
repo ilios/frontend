@@ -3,7 +3,6 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { service } from '@ember/service';
-import { map } from 'rsvp';
 import { task } from 'ember-concurrency';
 import pad from 'pad';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -322,15 +321,17 @@ export default class LearnerGroupRootComponent extends Component {
     const allDescendants = await topLevelGroup.getAllDescendants();
     const treeGroups = [topLevelGroup, ...allDescendants];
     const users = await learnerGroup.getUsersOnlyAtThisLevel();
-    return await map(users, async (user) => {
-      const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
-      return ObjectProxy.create({
-        content: user,
-        lowestGroupInTree,
-        //special sorting property
-        lowestGroupInTreeTitle: lowestGroupInTree.title,
-      });
-    });
+    return await Promise.all(
+      users.map(async (user) => {
+        const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
+        return ObjectProxy.create({
+          content: user,
+          lowestGroupInTree,
+          //special sorting property
+          lowestGroupInTreeTitle: lowestGroupInTree.title,
+        });
+      }),
+    );
   }
 
   @cached
@@ -353,15 +354,17 @@ export default class LearnerGroupRootComponent extends Component {
     const allDescendants = await topLevelGroup.getAllDescendants();
     const treeGroups = [topLevelGroup, ...allDescendants];
     const users = await topLevelGroup.getAllDescendantUsers();
-    return await map(users, async (user) => {
-      const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
-      return ObjectProxy.create({
-        content: user,
-        lowestGroupInTree,
-        //special sorting property
-        lowestGroupInTreeTitle: lowestGroupInTree.title,
-      });
-    });
+    return await Promise.all(
+      users.map(async (user) => {
+        const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
+        return ObjectProxy.create({
+          content: user,
+          lowestGroupInTree,
+          //special sorting property
+          lowestGroupInTreeTitle: lowestGroupInTree.title,
+        });
+      }),
+    );
   }
 
   @cached

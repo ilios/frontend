@@ -6,7 +6,6 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { findById, findBy, sortBy } from 'ilios-common/utils/array-helpers';
 import cloneLearnerGroup from '../../utils/clone-learner-group';
 import { task } from 'ember-concurrency';
-import { map } from 'rsvp';
 import { action } from '@ember/object';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { eq, gt, not } from 'ember-truth-helpers';
@@ -243,32 +242,36 @@ export default class LearnerGroupsRootComponent extends Component {
     if (!programs) {
       return null;
     }
-    const sortingPrograms = await map(programs, async (program) => {
-      const thisYear = new Date().getFullYear();
-      const programYears = await program.programYears;
-      const sorters = await map(programYears, async (programYear) => {
-        const groupCount = (await programYear.cohort).hasMany('learnerGroups').ids().length;
-        return {
-          distanceFromThisYear: thisYear - Number(programYear.startYear),
-          groupCount,
-        };
-      });
-      return sorters.reduce(
-        (obj, sorter) => {
-          if (sorter.distanceFromThisYear < obj.distance) {
-            obj.distance = sorter.distanceFromThisYear;
-          }
-          obj.totalGroups += sorter.groupCount;
-          return obj;
-        },
-        {
-          title: program.title,
-          program,
-          totalGroups: 0,
-          distance: 100,
-        },
-      );
-    });
+    const sortingPrograms = await Promise.all(
+      programs.map(async (program) => {
+        const thisYear = new Date().getFullYear();
+        const programYears = await program.programYears;
+        const sorters = await Promise.all(
+          programYears.map(async (programYear) => {
+            const groupCount = (await programYear.cohort).hasMany('learnerGroups').ids().length;
+            return {
+              distanceFromThisYear: thisYear - Number(programYear.startYear),
+              groupCount,
+            };
+          }),
+        );
+        return sorters.reduce(
+          (obj, sorter) => {
+            if (sorter.distanceFromThisYear < obj.distance) {
+              obj.distance = sorter.distanceFromThisYear;
+            }
+            obj.totalGroups += sorter.groupCount;
+            return obj;
+          },
+          {
+            title: program.title,
+            program,
+            totalGroups: 0,
+            distance: 100,
+          },
+        );
+      }),
+    );
     const sorted = sortingPrograms.sort((a, b) => {
       if (a.distance !== b.distance) {
         return a.distance - b.distance;

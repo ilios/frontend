@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { filter, map } from 'rsvp';
+import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -42,13 +42,14 @@ export default class DetailCohortsComponent extends Component {
       const courseObjectives = await course.courseObjectives;
 
       // get a hold of all program years linked to the cohorts that are about to be unlinked from the given course.
-      const programYearsToRemove = await map(removedCohorts, async (cohort) => cohort.programYear);
+      const programYearsToRemove = await Promise.all(
+        removedCohorts.map(async (cohort) => cohort.programYear),
+      );
 
       // get all the program year objectives linked to the given program years.
       const programYearObjectivesToUnlink = (
-        await map(
-          programYearsToRemove,
-          async (programYear) => await programYear.programYearObjectives,
+        await Promise.all(
+          programYearsToRemove.map(async (programYear) => await programYear.programYearObjectives),
         )
       ).flat();
 
@@ -63,13 +64,15 @@ export default class DetailCohortsComponent extends Component {
       });
 
       // now, break linkage between the given course objectives and the given program year objectives.
-      await map(courseObjectivesToUnlink, async (courseObjective) => {
-        // @see https://guides.emberjs.com/release/models/relationships/#toc_removing-relationships
-        const programYearObjectives = await courseObjective.programYearObjectives;
-        courseObjective.programYearObjectives = programYearObjectives.filter(
-          (programYearObjective) => !programYearObjectivesToUnlink.includes(programYearObjective),
-        );
-      });
+      await Promise.all(
+        courseObjectivesToUnlink.map(async (courseObjective) => {
+          // @see https://guides.emberjs.com/release/models/relationships/#toc_removing-relationships
+          const programYearObjectives = await courseObjective.programYearObjectives;
+          courseObjective.programYearObjectives = programYearObjectives.filter(
+            (programYearObjective) => !programYearObjectivesToUnlink.includes(programYearObjective),
+          );
+        }),
+      );
 
       // save all given course objectives that need updating.
       await Promise.all(courseObjectivesToUnlink.map((courseObjective) => courseObjective.save()));

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
-import { map, filter } from 'rsvp';
+import { filter } from 'rsvp';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import sortBy from 'ilios-common/helpers/sort-by';
@@ -84,13 +84,15 @@ export default class DetailCohortManagerComponent extends Component {
   async loadCohorts(course) {
     const school = await course.school;
     const allCohorts = await this.store.findAll('cohort');
-    const cohortProxies = await map(allCohorts, async (cohort) => {
-      const programYear = await cohort.programYear;
-      const program = await programYear.program;
-      const school = await program.school;
+    const cohortProxies = await Promise.all(
+      allCohorts.map(async (cohort) => {
+        const programYear = await cohort.programYear;
+        const program = await programYear.program;
+        const school = await program.school;
 
-      return { school, program, programYear, cohort };
-    });
+        return { school, program, programYear, cohort };
+      }),
+    );
 
     return filter(cohortProxies, async (obj) => {
       if (obj.school === school) {

@@ -2,7 +2,6 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import { map } from 'rsvp';
 import { DateTime } from 'luxon';
 import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
@@ -163,19 +162,21 @@ export default class Course extends Model {
     }
 
     return new TrackedAsyncData(
-      map(uniqueValues(this._competencyDomains.value), async (domain) => {
-        let subCompetencies = (await domain.children).filter((competency) => {
-          return this.competencies.includes(competency);
-        });
+      Promise.all(
+        uniqueValues(this._competencyDomains.value).map(async (domain) => {
+          let subCompetencies = (await domain.children).filter((competency) => {
+            return this.competencies.includes(competency);
+          });
 
-        subCompetencies = sortBy(subCompetencies, 'title');
+          subCompetencies = sortBy(subCompetencies, 'title');
 
-        return {
-          title: domain.title,
-          id: domain.id,
-          subCompetencies,
-        };
-      }),
+          return {
+            title: domain.title,
+            id: domain.id,
+            subCompetencies,
+          };
+        }),
+      ),
     );
   }
 
@@ -225,11 +226,13 @@ export default class Course extends Model {
     }
 
     return new TrackedAsyncData(
-      map(this._cohortsData.value, async (cohort) => {
-        const programYear = await cohort.programYear;
-        const program = await programYear.program;
-        return program.school;
-      }),
+      Promise.all(
+        this._cohortsData.value.map(async (cohort) => {
+          const programYear = await cohort.programYear;
+          const program = await programYear.program;
+          return program.school;
+        }),
+      ),
     );
   }
 

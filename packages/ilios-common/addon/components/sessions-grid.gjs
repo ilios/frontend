@@ -6,7 +6,7 @@ import { service } from '@ember/service';
 import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
 import { DateTime } from 'luxon';
-import { filter, map } from 'rsvp';
+import { filter } from 'rsvp';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -90,41 +90,49 @@ export default class SessionsGridComponent extends Component {
   }
 
   async sortBySessionTypeTitle(sessions, sortInfo) {
-    const sortProxies = await map(sessions, async (session) => {
-      const sessionType = await session.sessionType;
-      const sessionTypeTitle = sessionType?.title;
-      return {
-        session,
-        title: sessionTypeTitle,
-      };
-    });
+    const sortProxies = await Promise.all(
+      sessions.map(async (session) => {
+        const sessionType = await session.sessionType;
+        const sessionTypeTitle = sessionType?.title;
+        return {
+          session,
+          title: sessionTypeTitle,
+        };
+      }),
+    );
     const sortedSessions = sortBy(sortProxies, 'title').map((proxy) => proxy.session);
     return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
   }
 
   async sortByLearnerGroupCount(sessions, sortInfo) {
-    const sortProxies = await map(sessions, async (session) => {
-      const offerings = await session.offerings;
-      const learnerGroups = await map(offerings, async (offering) => {
-        return await offering.learnerGroups;
-      });
-      return {
-        session,
-        learnerGroupCount: learnerGroups.flat().length,
-      };
-    });
+    const sortProxies = await Promise.all(
+      sessions.map(async (session) => {
+        const offerings = await session.offerings;
+        const learnerGroups = await Promise.all(
+          offerings.map(async (offering) => {
+            return await offering.learnerGroups;
+          }),
+        );
+        return {
+          session,
+          learnerGroupCount: learnerGroups.flat().length,
+        };
+      }),
+    );
     const sortedSessions = sortBy(sortProxies, 'learnerGroupCount').map((proxy) => proxy.session);
     return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
   }
 
   async sortByFirstOfferingDate(sessions, sortInfo) {
-    const sortProxies = await map(sessions, async (session) => {
-      const firstOfferingDate = await this.getFirstOfferingDate(session);
-      return {
-        session,
-        firstOfferingDate,
-      };
-    });
+    const sortProxies = await Promise.all(
+      sessions.map(async (session) => {
+        const firstOfferingDate = await this.getFirstOfferingDate(session);
+        return {
+          session,
+          firstOfferingDate,
+        };
+      }),
+    );
     const sortedSessions = sortBy(sortProxies, 'firstOfferingDate').map((proxy) => proxy.session);
     return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
   }

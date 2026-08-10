@@ -3,7 +3,6 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
-import { map } from 'rsvp';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
@@ -68,36 +67,38 @@ export default class LearnerGroupCalendarComponent extends Component {
     const flat = offerings.reduce((flattened, obj) => {
       return [...flattened, ...obj];
     }, []);
-    return await map(flat, async (offering) => {
-      const session = await offering.session;
-      const sessionType = await session.sessionType;
-      const course = await session.course;
-      const school = await course.school;
-      const instructors = await offering.getAllInstructors();
-      const instructorNames = instructors.map((instructor) => instructor.fullName);
+    return await Promise.all(
+      flat.map(async (offering) => {
+        const session = await offering.session;
+        const sessionType = await session.sessionType;
+        const course = await session.course;
+        const school = await course.school;
+        const instructors = await offering.getAllInstructors();
+        const instructorNames = instructors.map((instructor) => instructor.fullName);
 
-      return new Event(
-        {
-          startDate: offering.startDate.toISOString(),
-          endDate: offering.endDate.toISOString(),
-          lastModified: offering.updatedAt.toISOString(),
-          courseTitle: course.title,
-          name: session.title,
-          offering: offering.id,
-          location: offering.room,
-          school: school.id,
-          color: sessionType.calendarColor,
-          prerequisites: [],
-          postrequisites: [],
-          isScheduled: session.isScheduled || course.isScheduled,
-          isPublished: session.isPublished && course.isPublished,
-          sessionTypeTitle: sessionType.title,
-          instructors: instructorNames,
-        },
-        false,
-        showAsBlockedTime,
-      );
-    });
+        return new Event(
+          {
+            startDate: offering.startDate.toISOString(),
+            endDate: offering.endDate.toISOString(),
+            lastModified: offering.updatedAt.toISOString(),
+            courseTitle: course.title,
+            name: session.title,
+            offering: offering.id,
+            location: offering.room,
+            school: school.id,
+            color: sessionType.calendarColor,
+            prerequisites: [],
+            postrequisites: [],
+            isScheduled: session.isScheduled || course.isScheduled,
+            isPublished: session.isPublished && course.isPublished,
+            sessionTypeTitle: sessionType.title,
+            instructors: instructorNames,
+          },
+          false,
+          showAsBlockedTime,
+        );
+      }),
+    );
   }
 
   @action

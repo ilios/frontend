@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { map } from 'rsvp';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import CompetenciesListItem from './competencies-list-item';
@@ -17,13 +16,15 @@ export default class SchoolCompetenciesListComponent extends Component {
   }
 
   async loadData(domains) {
-    return map(sortBy(domains, 'title'), async (domain) => {
-      const competencies = await domain.children;
-      return {
-        domain,
-        competencies: sortBy(competencies, 'title'),
-      };
-    });
+    return Promise.all(
+      sortBy(domains, 'title').map(async (domain) => {
+        const competencies = await domain.children;
+        return {
+          domain,
+          competencies: sortBy(competencies, 'title'),
+        };
+      }),
+    );
   }
   <template>
     <div class="school-competencies-list" data-test-school-competencies-list ...attributes>
