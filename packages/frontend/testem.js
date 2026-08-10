@@ -1,7 +1,6 @@
-/* eslint camelcase: 0 */
 'use strict';
 
-const base = require('./testem/base');
+const base = require('ilios-common/testem/base');
 
 module.exports = {
   ...base,

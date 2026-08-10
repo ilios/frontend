@@ -1,9 +1,9 @@
 /* eslint camelcase: 0 */
 'use strict';
 
-const base = require('./base');
-const createDownloadDirectory = require('./create-download-directory');
-const storeFirefoxPreferences = require('./firefox-preferences');
+const base = require('ilios-common/testem/base');
+const createDownloadDirectory = require('ilios-common/testem/create-download-directory');
+const storeFirefoxPreferences = require('ilios-common/testem/firefox-preferences');
 
 const downloadDir = createDownloadDirectory();
 

@@ -87,7 +87,7 @@ export default [
       'config/**/*.js',
       'index.js',
       'testem.js',
-      'testem*.js',
+      'testem/*.js',
       'index.js',
       '.prettierrc.js',
       '.stylelintrc.js',
