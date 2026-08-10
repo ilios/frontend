@@ -1,4 +1,5 @@
-import { clickable, create, triggerable, isVisible, isHidden, text } from 'ember-cli-page-object';
+import { clickable, create, isVisible, isHidden, triggerable } from 'ember-cli-page-object';
+import { focusedText, keyOnFocus } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-course-publication-menu]',
@@ -10,8 +11,8 @@ const definition = {
   },
   menu: {
     scope: '[data-test-menu]',
-    down: triggerable('keydown', 'button:focus', { eventProperties: { key: 'ArrowDown' } }),
-    up: triggerable('keydown', 'button:focus', { eventProperties: { key: 'ArrowUp' } }),
+    down: keyOnFocus('ArrowDown'),
+    up: keyOnFocus('ArrowUp'),
   },
   menuClosed: isHidden('[data-test-menu]'),
   menuOpen: isVisible('[data-test-menu]'),
@@ -23,7 +24,7 @@ const definition = {
   reviewMisingItems: clickable('[data-test-review]'),
   markAsScheduled: clickable('[data-test-tbd]'),
   unpublishCourse: clickable('[data-test-un-publish]'),
-  selectedMenuItem: text('[data-test-menu] button:focus'),
+  selectedMenuItem: focusedText('[data-test-menu]'),
 };
 
 export default definition;
