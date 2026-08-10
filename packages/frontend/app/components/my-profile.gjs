@@ -20,6 +20,7 @@ import pipe from 'ilios-common/helpers/pipe';
 import DatePicker from 'ilios-common/components/date-picker';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LocaleChooser from './locale-chooser';
 import { faCheck, faCopy, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class MyProfileComponent extends Component {
@@ -208,7 +209,7 @@ export default class MyProfileComponent extends Component {
                 {{t "general.languagePreference"}}:
               </label>
               <span data-test-language-preference>
-                {{this.currentLocaleLabel}}
+                <LocaleChooser />
               </span>
             </div>
           </div>

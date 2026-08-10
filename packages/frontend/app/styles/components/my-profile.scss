@@ -39,7 +39,10 @@
     width: 100%;
 
     .preferences {
-      padding: 1em;
+      align-items: center;
+      display: flex;
+      gap: 0.5em;
+      padding: 1em 0 0;
     }
   }
 
