@@ -68,8 +68,6 @@ export default class CourseDetailsComponent extends Component {
           @academicYear={{this.academicYearDisplay}}
           @showDetails={{@showDetails}}
           @setShowDetails={{@setShowDetails}}
-          @showDetailsCollapseControl={{@showDetailsCollapseControl}}
-          @setShowDetailsCollapseControl={{@setShowDetailsCollapseControl}}
         />
         <Overview @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
         {{#if @showDetails}}

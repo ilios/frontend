@@ -97,8 +97,6 @@ export default class CourseHeaderComponent extends Component {
             @course={{@course}}
             @showDetails={{@showDetails}}
             @setShowDetails={{@setShowDetails}}
-            @showDetailsCollapseControl={{@showDetailsCollapseControl}}
-            @setShowDetailsCollapseControl={{@setShowDetailsCollapseControl}}
           />
         {{else}}
           <PublicationStatus @item={{@course}} @showText={{true}} />

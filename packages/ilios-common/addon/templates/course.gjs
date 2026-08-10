@@ -6,8 +6,7 @@ import set from 'ember-set-helper/helpers/set';
     @editable={{@controller.editable}}
     @showDetails={{@controller.details}}
     @setShowDetails={{set @controller "details"}}
-    @showDetailsCollapseControl={{@controller.detailsCollapseControl}}
-    @setShowDetailsCollapseControl={{set @controller "detailsCollapseControl"}}
+    @showDetailsCollapseControl={{@controller.showDetailsCollapseControl}}
     @courseLeadershipDetails={{@controller.courseLeadershipDetails}}
     @courseObjectiveDetails={{@controller.courseObjectiveDetails}}
     @courseTaxonomyDetails={{@controller.courseTaxonomyDetails}}

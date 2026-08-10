@@ -1,9 +1,11 @@
 import Controller from '@ember/controller';
+import { service } from '@ember/service';
 
 export default class CourseController extends Controller {
+  @service router;
+
   queryParams = [
     'details',
-    'detailsCollapseControl',
     'courseLeadershipDetails',
     'courseObjectiveDetails',
     'courseTaxonomyDetails',
@@ -12,11 +14,14 @@ export default class CourseController extends Controller {
   ];
 
   details = false;
-  detailsCollapseControl = true;
   editable = false;
   courseLeadershipDetails = false;
   courseObjectiveDetails = false;
   courseTaxonomyDetails = false;
   courseCompetencyDetails = false;
   courseManageLeadership = false;
+
+  get showDetailsCollapseControl() {
+    return this.router.currentRouteName !== 'course.publication-check';
+  }
 }
