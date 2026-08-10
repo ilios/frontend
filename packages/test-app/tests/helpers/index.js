@@ -35,13 +35,18 @@ function setupRenderingTest(hooks, options) {
   setupIntl(hooks, 'en-us'); // ember-intl
 
   // Additional setup for rendering tests can be done here.
-  setRunOptions({
-    rules: {
-      //disable color-contrast check on integration tests as we don't have a full background or styles
-      'color-contrast': { enabled: false },
-      listitem: { enabled: false },
-      'heading-order': { enabled: false },
-    },
+  /**
+   * These tests are run in issolation without a full application shell, so many items
+   * will appear out of source order and with no styles (such as background color)
+   */
+  hooks.before(() => {
+    setRunOptions({
+      rules: {
+        'color-contrast': { enabled: false },
+        listitem: { enabled: false },
+        'heading-order': { enabled: false },
+      },
+    });
   });
 }
 
