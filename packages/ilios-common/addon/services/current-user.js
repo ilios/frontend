@@ -27,17 +27,16 @@ export default class CurrentUserService extends Service {
   }
 
   async getModel() {
-    const currentUserId = this.currentUserId;
-    if (!currentUserId) {
+    if (!this.currentUserId) {
       return null;
     }
-    const user = this.store.peekRecord('user', currentUserId);
+    const user = this.store.peekRecord('user', this.currentUserId);
     if (user) {
       return user;
     }
 
     if (!this._userPromise) {
-      this._userPromise = this.store.findRecord('user', currentUserId, {
+      this._userPromise = this.store.findRecord('user', this.currentUserId, {
         include: 'sessionMaterialStatuses',
       });
     }
