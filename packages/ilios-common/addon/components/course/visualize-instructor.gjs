@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { map, filter } from 'rsvp';
+import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { mapBy } from 'ilios-common/utils/array-helpers';
@@ -71,16 +71,18 @@ export default class CourseVisualizeInstructorComponent extends Component {
       return mapBy(instructors, 'id').includes(this.args.user.id);
     });
 
-    return map(sessionsWithUser, async (session) => {
-      const offeringMinutes = await session.getTotalSumOfferingsDurationByInstructor(
-        this.args.user,
-      );
-      const ilmMinutes = await session.getTotalSumIlmDurationByInstructor(this.args.user);
-      return {
-        offeringMinutes,
-        ilmMinutes,
-      };
-    });
+    return Promise.all(
+      sessionsWithUser.map(async (session) => {
+        const offeringMinutes = await session.getTotalSumOfferingsDurationByInstructor(
+          this.args.user,
+        );
+        const ilmMinutes = await session.getTotalSumIlmDurationByInstructor(this.args.user);
+        return {
+          offeringMinutes,
+          ilmMinutes,
+        };
+      }),
+    );
   }
   <template>
     <section

@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { map } from 'rsvp';
 import { DateTime } from 'luxon';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
@@ -41,13 +40,51 @@ export default class OfferingCalendarComponent extends Component {
     if (!learnerGroups) {
       this.learnerGroupEvents = [];
     } else {
-      const data = await map(learnerGroups, async (learnerGroup) => {
-        const offerings = await learnerGroup.offerings;
-        return await map(offerings, async (offering) => {
-          const session = await offering.session;
-          const sessionType = await session.sessionType;
-          const course = await session.course;
-          const school = await course.school;
+      const data = await Promise.all(
+        learnerGroups.map(async (learnerGroup) => {
+          const offerings = await learnerGroup.offerings;
+          return await Promise.all(
+            offerings.map(async (offering) => {
+              const session = await offering.session;
+              const sessionType = await session.sessionType;
+              const course = await session.course;
+              const school = await course.school;
+              return new Event(
+                {
+                  startDate: DateTime.fromJSDate(offering.startDate).toISO(),
+                  endDate: DateTime.fromJSDate(offering.endDate).toISO(),
+                  courseTitle: course.title,
+                  school: school.id,
+                  name: session.title,
+                  offering: offering.id,
+                  location: offering.location,
+                  color: sessionType.calendarColor,
+                  postrequisites: [],
+                  prerequisites: [],
+                },
+                false,
+                true,
+              );
+            }),
+          );
+        }),
+      );
+
+      this.learnerGroupEvents = data.reduce((flattened, obj) => {
+        return [...flattened, ...obj];
+      }, []);
+    }
+
+    if (!session) {
+      this.sessionEvents = [];
+      this.currentEvent = null;
+    } else {
+      const offerings = await session.offerings;
+      const sessionType = await session.sessionType;
+      const course = await session.course;
+      const school = await course.school;
+      this.sessionEvents = await Promise.all(
+        offerings.map(async (offering) => {
           return new Event(
             {
               startDate: DateTime.fromJSDate(offering.startDate).toISO(),
@@ -64,40 +101,8 @@ export default class OfferingCalendarComponent extends Component {
             false,
             true,
           );
-        });
-      });
-
-      this.learnerGroupEvents = data.reduce((flattened, obj) => {
-        return [...flattened, ...obj];
-      }, []);
-    }
-
-    if (!session) {
-      this.sessionEvents = [];
-      this.currentEvent = null;
-    } else {
-      const offerings = await session.offerings;
-      const sessionType = await session.sessionType;
-      const course = await session.course;
-      const school = await course.school;
-      this.sessionEvents = await map(offerings, async (offering) => {
-        return new Event(
-          {
-            startDate: DateTime.fromJSDate(offering.startDate).toISO(),
-            endDate: DateTime.fromJSDate(offering.endDate).toISO(),
-            courseTitle: course.title,
-            school: school.id,
-            name: session.title,
-            offering: offering.id,
-            location: offering.location,
-            color: sessionType.calendarColor,
-            postrequisites: [],
-            prerequisites: [],
-          },
-          false,
-          true,
-        );
-      });
+        }),
+      );
 
       this.currentEvent = new Event(
         {

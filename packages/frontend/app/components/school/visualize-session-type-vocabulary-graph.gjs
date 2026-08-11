@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
-import { filter, map } from 'rsvp';
+import { filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -79,21 +79,23 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
       return [];
     }
 
-    const termsWithSession = await map(sessions, async (session) => {
-      const sessionTerms = await session.terms;
+    const termsWithSession = await Promise.all(
+      sessions.map(async (session) => {
+        const sessionTerms = await session.terms;
 
-      const terms = await filter(sessionTerms, async (term) => {
-        const termVocab = await term.vocabulary;
-        return termVocab.id === vocabulary.id;
-      });
+        const terms = await filter(sessionTerms, async (term) => {
+          const termVocab = await term.vocabulary;
+          return termVocab.id === vocabulary.id;
+        });
 
-      return terms.map((term) => {
-        return {
-          term,
-          session,
-        };
-      });
-    });
+        return terms.map((term) => {
+          return {
+            term,
+            session,
+          };
+        });
+      }),
+    );
 
     const termObjects = termsWithSession
       .filter((termsWithSession) => termsWithSession.length)
@@ -112,19 +114,21 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
 
     const termData = Object.values(termObjects);
 
-    const rhett = await map(termData, async (obj) => {
-      const termTitle = await obj.term.getTitleWithParentTitles();
-      return {
-        data: obj.sessionIds.size,
-        label: termTitle,
-        description: this.intl.t('general.termXappliedToYSessionsWithSessionTypeZ', {
-          term: termTitle,
-          vocabulary: vocabulary.title,
-          sessionsCount: obj.sessionIds.size,
-          sessionType: sessionType.title,
-        }),
-      };
-    });
+    const rhett = await Promise.all(
+      termData.map(async (obj) => {
+        const termTitle = await obj.term.getTitleWithParentTitles();
+        return {
+          data: obj.sessionIds.size,
+          label: termTitle,
+          description: this.intl.t('general.termXappliedToYSessionsWithSessionTypeZ', {
+            term: termTitle,
+            vocabulary: vocabulary.title,
+            sessionsCount: obj.sessionIds.size,
+            sessionType: sessionType.title,
+          }),
+        };
+      }),
+    );
     return rhett.sort((first, second) => {
       return first.data - second.data;
     });

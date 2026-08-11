@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
-import { hash, map } from 'rsvp';
+import { hash } from 'rsvp';
 import { DateTime } from 'luxon';
 import { mixed, number, string } from 'yup';
 import { task, timeout } from 'ember-concurrency';
@@ -241,14 +241,18 @@ export default class OfferingFormComponent extends Component {
     if (isEmpty(cohorts)) {
       associatedSchools = [];
     } else {
-      const cohortSchools = await map(cohorts, async (cohort) => {
-        const programYear = await cohort.programYear;
-        const program = await programYear.program;
-        return program.school;
-      });
+      const cohortSchools = await Promise.all(
+        cohorts.map(async (cohort) => {
+          const programYear = await cohort.programYear;
+          const program = await programYear.program;
+          return program.school;
+        }),
+      );
       associatedSchools = uniqueValues(cohortSchools);
     }
-    const allInstructorGroups = await map(associatedSchools, (school) => school.instructorGroups);
+    const allInstructorGroups = await Promise.all(
+      associatedSchools.map((school) => school.instructorGroups),
+    );
     return allInstructorGroups.reduce((flattened, arr) => {
       return [...flattened, ...arr];
     }, []);
@@ -457,19 +461,9 @@ export default class OfferingFormComponent extends Component {
     let parts;
     while (offerings.length > 0) {
       parts = offerings.splice(0, 5);
-      await map(
-        parts,
-        ({
-          startDate,
-          endDate,
-          room,
-          url,
-          learnerGroups,
-          learners,
-          instructorGroups,
-          instructors,
-        }) => {
-          return this.args.save(
+      await Promise.all(
+        parts.map(
+          ({
             startDate,
             endDate,
             room,
@@ -478,8 +472,19 @@ export default class OfferingFormComponent extends Component {
             learners,
             instructorGroups,
             instructors,
-          );
-        },
+          }) => {
+            return this.args.save(
+              startDate,
+              endDate,
+              room,
+              url,
+              learnerGroups,
+              learners,
+              instructorGroups,
+              instructors,
+            );
+          },
+        ),
       );
       savedOfferings = savedOfferings + parts.length;
       this.saveProgressPercent = Math.floor((savedOfferings / totalOfferings) * 100);

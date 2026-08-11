@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { task, timeout } from 'ember-concurrency';
-import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -101,20 +100,24 @@ export default class CourseVisualizeInstructorsGraphComponent extends Component 
 
   async getData(course) {
     const sessions = await course.sessions;
-    const sessionsWithInstructors = await map(sessions, async (session) => {
-      const instructors = await session.getAllInstructors();
-      const instructorsWithInstructionalTime = await map(instructors, async (instructor) => {
-        const minutes = await session.getTotalSumOfferingsDurationByInstructor(instructor);
+    const sessionsWithInstructors = await Promise.all(
+      sessions.map(async (session) => {
+        const instructors = await session.getAllInstructors();
+        const instructorsWithInstructionalTime = await Promise.all(
+          instructors.map(async (instructor) => {
+            const minutes = await session.getTotalSumOfferingsDurationByInstructor(instructor);
+            return {
+              instructor,
+              minutes,
+            };
+          }),
+        );
         return {
-          instructor,
-          minutes,
+          session,
+          instructorsWithInstructionalTime,
         };
-      });
-      return {
-        session,
-        instructorsWithInstructionalTime,
-      };
-    });
+      }),
+    );
 
     return sessionsWithInstructors
       .reduce((set, { session, instructorsWithInstructionalTime }) => {

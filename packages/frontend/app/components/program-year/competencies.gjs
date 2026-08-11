@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { filter, map } from 'rsvp';
+import { filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -84,7 +84,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
     const program = await programYear.program;
     const school = await program.school;
     const competencies = await school.competencies;
-    const domains = await map(competencies, async (c) => c.getDomain());
+    const domains = await Promise.all(competencies.map(async (c) => c.getDomain()));
     const programYearCompetencies = await programYear.competencies;
 
     return { program, school, competencies, domains, programYearCompetencies };

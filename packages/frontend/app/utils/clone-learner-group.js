@@ -1,5 +1,3 @@
-import { map } from 'rsvp';
-
 /**
  * Clones a group and all children returning all the groups in the order they were created
  * so the first group is the top most group in the tree. If they are saved in order then each parent
@@ -20,16 +18,20 @@ export default async function cloneLearnerGroup(store, group, cohort, withLearne
   }
   if (withLearners) {
     const users = await group.users;
-    await map(users, async (user) => {
-      await newGroup.addUserToGroupAndAllParents(user);
-    });
+    await Promise.all(
+      users.map(async (user) => {
+        await newGroup.addUserToGroupAndAllParents(user);
+      }),
+    );
   }
   const instructors = await group.instructors;
   newGroup.set('instructors', instructors);
   const children = await group.children;
-  const newChildren = await map(children, async (child) => {
-    return await cloneLearnerGroup(store, child, cohort, withLearners, newGroup);
-  });
+  const newChildren = await Promise.all(
+    children.map(async (child) => {
+      return await cloneLearnerGroup(store, child, cohort, withLearners, newGroup);
+    }),
+  );
   const flat = newChildren.reduce((flattened, children) => {
     return [...flattened, ...children];
   }, []);

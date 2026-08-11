@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { filter, map } from 'rsvp';
+import { filter } from 'rsvp';
 import { htmlSafe } from '@ember/template';
 import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
@@ -85,16 +85,17 @@ export default class CourseVisualizeVocabularyGraphComponent extends Component {
     if (!sessions.length) {
       return [];
     }
-    const sessionsWithMinutes = await map(sessions, async (session) => {
-      const hours = await session.getTotalSumDuration();
-      return {
-        session,
-        minutes: Math.round(hours * 60),
-      };
-    });
-    const termsWithSessionAndMinutes = await map(
-      sessionsWithMinutes,
-      async ({ session, minutes }) => {
+    const sessionsWithMinutes = await Promise.all(
+      sessions.map(async (session) => {
+        const hours = await session.getTotalSumDuration();
+        return {
+          session,
+          minutes: Math.round(hours * 60),
+        };
+      }),
+    );
+    const termsWithSessionAndMinutes = await Promise.all(
+      sessionsWithMinutes.map(async ({ session, minutes }) => {
         const sessionTerms = await session.terms;
         const sessionTermsInThisVocabulary = await filter(sessionTerms, async (term) => {
           const termVocab = await term.vocabulary;
@@ -107,7 +108,7 @@ export default class CourseVisualizeVocabularyGraphComponent extends Component {
             minutes,
           };
         });
-      },
+      }),
     );
 
     return termsWithSessionAndMinutes

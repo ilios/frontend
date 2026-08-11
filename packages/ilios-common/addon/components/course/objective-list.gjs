@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
@@ -75,56 +74,60 @@ export default class CourseObjectiveListComponent extends Component {
   }
 
   async getCohortObjectives(cohorts, intl) {
-    return await map(cohorts, async (cohort) => {
-      const programYear = await cohort.programYear;
-      const program = await programYear.program;
-      const school = await program.school;
-      const allowMultipleCourseObjectiveParents = await school.getConfigValue(
-        'allowMultipleCourseObjectiveParents',
-      );
-      const objectives = await programYear.programYearObjectives;
-      const objectiveObjects = await map(objectives, async (objective) => {
-        let competencyId = 0;
-        let competencyTitle = intl.t('general.noAssociatedCompetency');
-        let competencyParent = null;
-        const competency = await objective.competency;
-        if (competency) {
-          competencyId = competency.id;
-          competencyTitle = competency.title;
-          competencyParent = await competency.parent;
-        }
-        return {
-          id: objective.id,
-          title: objective.title,
-          active: objective.active,
-          competencyId,
-          competencyTitle,
-          competencyParent,
-          cohortId: cohort.id,
-        };
-      });
-      const competencies = objectiveObjects.reduce((set, obj) => {
-        let existing = findById(set, obj.competencyId);
-        if (!existing) {
-          existing = {
-            id: obj.competencyId,
-            title: obj.competencyTitle,
-            objectives: [],
-            parent: obj.competencyParent,
-          };
-          set.push(existing);
-        }
-        existing.objectives.push(obj);
-        return set;
-      }, []);
+    return await Promise.all(
+      cohorts.map(async (cohort) => {
+        const programYear = await cohort.programYear;
+        const program = await programYear.program;
+        const school = await program.school;
+        const allowMultipleCourseObjectiveParents = await school.getConfigValue(
+          'allowMultipleCourseObjectiveParents',
+        );
+        const objectives = await programYear.programYearObjectives;
+        const objectiveObjects = await Promise.all(
+          objectives.map(async (objective) => {
+            let competencyId = 0;
+            let competencyTitle = intl.t('general.noAssociatedCompetency');
+            let competencyParent = null;
+            const competency = await objective.competency;
+            if (competency) {
+              competencyId = competency.id;
+              competencyTitle = competency.title;
+              competencyParent = await competency.parent;
+            }
+            return {
+              id: objective.id,
+              title: objective.title,
+              active: objective.active,
+              competencyId,
+              competencyTitle,
+              competencyParent,
+              cohortId: cohort.id,
+            };
+          }),
+        );
+        const competencies = objectiveObjects.reduce((set, obj) => {
+          let existing = findById(set, obj.competencyId);
+          if (!existing) {
+            existing = {
+              id: obj.competencyId,
+              title: obj.competencyTitle,
+              objectives: [],
+              parent: obj.competencyParent,
+            };
+            set.push(existing);
+          }
+          existing.objectives.push(obj);
+          return set;
+        }, []);
 
-      return {
-        title: `${program.title} ${cohort.title}`,
-        id: cohort.id,
-        allowMultipleParents: allowMultipleCourseObjectiveParents,
-        competencies,
-      };
-    });
+        return {
+          title: `${program.title} ${cohort.title}`,
+          id: cohort.id,
+          allowMultipleParents: allowMultipleCourseObjectiveParents,
+          competencies,
+        };
+      }),
+    );
   }
   <template>
     <div class="course-objective-list" data-test-course-objective-list>

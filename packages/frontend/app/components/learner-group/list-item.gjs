@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { filter, map } from 'rsvp';
+import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { service } from '@ember/service';
 import { LinkTo } from '@ember/routing';
@@ -107,7 +107,7 @@ export default class LearnerGroupListItemComponent extends Component {
   }
 
   async getSortedTitlesOfSubgroupsInNeedOfAccommodation(groups) {
-    const titles = await map(groups, (group) => group.getTitleWithParentTitles());
+    const titles = await Promise.all(groups.map((group) => group.getTitleWithParentTitles()));
     return titles.sort().join(', ');
   }
 

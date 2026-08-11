@@ -1,6 +1,5 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
-import { map } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
@@ -190,9 +189,11 @@ export default class LearnerGroup extends Model {
 
   async getAllDescendants() {
     const children = await this.children;
-    const childDescendants = await map(children, (child) => {
-      return child.getAllDescendants();
-    });
+    const childDescendants = await Promise.all(
+      children.map((child) => {
+        return child.getAllDescendants();
+      }),
+    );
 
     return [...children, ...childDescendants.flat()];
   }
@@ -448,13 +449,15 @@ export default class LearnerGroup extends Model {
   async removeUserFromGroupAndAllDescendants({ id: userId }) {
     const allDescendants = await this.getAllDescendants();
     const groups = [this, ...allDescendants].reverse();
-    return await map(groups, async (group) => {
-      if (group.hasMany('users').ids().includes(userId)) {
-        group.users = (await group.users).filter(({ id }) => id !== userId);
-      }
+    return await Promise.all(
+      groups.map(async (group) => {
+        if (group.hasMany('users').ids().includes(userId)) {
+          group.users = (await group.users).filter(({ id }) => id !== userId);
+        }
 
-      return group;
-    });
+        return group;
+      }),
+    );
   }
 
   async getAllParents() {
@@ -501,12 +504,14 @@ export default class LearnerGroup extends Model {
     const allParents = await this.getAllParents();
     const groups = [...allParents, this];
 
-    const groupMap = await map(groups, async (group) => {
-      if (!group.hasMany('users').ids().includes(user.id)) {
-        (await group.users).push(user);
-        return group;
-      }
-    });
+    const groupMap = await Promise.all(
+      groups.map(async (group) => {
+        if (!group.hasMany('users').ids().includes(user.id)) {
+          (await group.users).push(user);
+          return group;
+        }
+      }),
+    );
 
     //remove groups that weren't updated (they're undefined in this array)
     return groupMap.filter(Boolean);

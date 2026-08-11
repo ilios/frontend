@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { filter, map } from 'rsvp';
+import { filter } from 'rsvp';
 import { htmlSafe } from '@ember/template';
 import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
@@ -90,22 +90,26 @@ export default class CourseVisualizeInstructorSessionTypeGraphComponent extends 
       return mapBy(allInstructors, 'id').includes(user.id);
     });
 
-    const sessionsWithSessionType = await map(sessionsWithUser, async (session) => {
-      const sessionType = await session.sessionType;
-      return {
-        session,
-        sessionType,
-      };
-    });
+    const sessionsWithSessionType = await Promise.all(
+      sessionsWithUser.map(async (session) => {
+        const sessionType = await session.sessionType;
+        return {
+          session,
+          sessionType,
+        };
+      }),
+    );
 
-    const dataMap = await map(sessionsWithSessionType, async ({ session, sessionType }) => {
-      const minutes = await session.getTotalSumDurationByInstructor(this.args.user);
-      return {
-        session,
-        sessionType,
-        minutes,
-      };
-    });
+    const dataMap = await Promise.all(
+      sessionsWithSessionType.map(async ({ session, sessionType }) => {
+        const minutes = await session.getTotalSumDurationByInstructor(this.args.user);
+        return {
+          session,
+          sessionType,
+          minutes,
+        };
+      }),
+    );
 
     return dataMap
       .reduce((set, obj) => {
