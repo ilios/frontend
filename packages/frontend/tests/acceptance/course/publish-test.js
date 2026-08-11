@@ -37,7 +37,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl, 'course does not have collapse control anymore');
@@ -89,7 +89,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl, 'course does not have collapse control anymore');
@@ -147,7 +147,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl, 'course does not have collapse control anymore');
@@ -212,7 +212,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl);
@@ -252,7 +252,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl);
@@ -295,7 +295,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl);
