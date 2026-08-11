@@ -135,7 +135,7 @@ export default class CoursePublicationMenuComponent extends Component {
   scrollToCoursePublication() {
     this.isOpen = false;
     this.router.transitionTo('course.publication-check', this.args.course, {
-      queryParams: { details: true, detailsCollapseControl: false },
+      queryParams: { details: true },
     });
   }
   @action

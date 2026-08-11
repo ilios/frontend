@@ -58,12 +58,7 @@ export default class CoursePublicationCheckComponent extends Component {
       {{scrollIntoView delay=10}}
     >
       <div class="back-to-course">
-        <LinkTo
-          @route="course"
-          @model={{@course}}
-          @query={{hash detailsCollapseControl=true}}
-          data-test-back-to-course
-        >
+        <LinkTo @route="course" @model={{@course}} data-test-back-to-course>
           <FaIcon @icon={{faArrowRotateLeft}} />
           {{t "general.backToTitle" title=@course.title}}
         </LinkTo>

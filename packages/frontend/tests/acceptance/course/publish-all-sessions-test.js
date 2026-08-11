@@ -521,8 +521,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
 
     // test 3/3 section: Unpublished/Overridable Sessions
 
-    // await this.pauseTest();
-
     assert.ok(pubReview.overridableSessions.table.headers.title.isSortedOn);
     assert.ok(pubReview.overridableSessions.table.headers.title.isSortedAscending);
     assert.notOk(pubReview.overridableSessions.table.headers.offerings.isSortedOn);

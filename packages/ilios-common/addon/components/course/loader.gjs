@@ -24,7 +24,6 @@ export default class CourseLoaderComponent extends Component {
           @showDetails={{@showDetails}}
           @setShowDetails={{@setShowDetails}}
           @showDetailsCollapseControl={{@showDetailsCollapseControl}}
-          @setShowDetailsCollapseControl={{@setShowDetailsCollapseControl}}
           @courseLeadershipDetails={{@courseLeadershipDetails}}
           @courseObjectiveDetails={{@courseObjectiveDetails}}
           @courseTaxonomyDetails={{@courseTaxonomyDetails}}

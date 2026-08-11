@@ -37,7 +37,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl, 'course does not have collapse control anymore');
@@ -58,14 +58,6 @@ module('Acceptance | Course - Publish', function (hooks) {
     assert.strictEqual(pubcheck.cohorts, 'No', 'course cohort count correct');
     assert.strictEqual(pubcheck.terms, 'No', 'course terms count correct');
     assert.strictEqual(pubcheck.objectives, 'No', 'course objectives count correct');
-
-    // await this.pauseTest();
-
-    // assert.notOk(
-    //   pubcheck.publishWithMissingItems,
-    //   'publish with misssing items button not visible',
-    // );
-    // assert.notOk(pubcheck.publish, 'publish button not visible');
 
     assert.ok(pubcheck.publishMissingRequirements, 'publish missing requirements button visible');
     assert.ok(pubcheck.publishMissingRequirements.isDisabled, 'publish course button disabled');
@@ -97,7 +89,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl, 'course does not have collapse control anymore');
@@ -119,9 +111,6 @@ module('Acceptance | Course - Publish', function (hooks) {
     assert.strictEqual(pubcheck.terms, 'No', 'course terms count correct');
     assert.strictEqual(pubcheck.objectives, 'No', 'course objectives count correct');
 
-    // assert.notOk(pubcheck.publishMissingRequirements);
-    // assert.notOk(pubcheck.publish);
-
     assert.ok(pubcheck.publishWithMissingItems, 'publish with missing items button visible');
     assert.strictEqual(
       pubcheck.publishWithMissingItems.text,
@@ -131,6 +120,8 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     await pubcheck.publishWithMissingItems.click();
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
+    assert.strictEqual(currentURL(), '/courses/1?details=true', 'course published url is correct');
+    assert.ok(page.details.hasCollapseControl, 'course has collapse control again');
   });
 
   test('check publish draft course, all items set', async function (assert) {
@@ -156,7 +147,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl, 'course does not have collapse control anymore');
@@ -178,9 +169,6 @@ module('Acceptance | Course - Publish', function (hooks) {
     assert.strictEqual(pubcheck.terms, 'Yes (1)', 'course terms count correct');
     assert.strictEqual(pubcheck.objectives, 'Yes (1)', 'course objectives count correct');
 
-    // assert.notOk(pubcheck.publishMissingRequirements);
-    // assert.notOk(pubcheck.publishWithMissingItems);
-
     assert.ok(pubcheck.publish);
     assert.strictEqual(
       pubcheck.publish.text,
@@ -190,6 +178,8 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     await pubcheck.publish.click();
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
+    assert.strictEqual(currentURL(), '/courses/1?details=true', 'course published url is correct');
+    assert.ok(page.details.hasCollapseControl, 'course has collapse control again');
   });
 
   test('check schedule draft course', async function (assert) {
@@ -222,7 +212,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl);
@@ -262,7 +252,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl);
@@ -282,6 +272,8 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     await pubcheck.publishWithMissingItems.click();
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
+    assert.strictEqual(currentURL(), '/courses/1?details=true', 'course published url is correct');
+    assert.ok(page.details.hasCollapseControl, 'course has collapse control again');
   });
 
   test('check publish scheduled course, all items set', async function (assert) {
@@ -303,7 +295,7 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/courses/1/publicationcheck?details=true&detailsCollapseControl=false',
+      '/courses/1/publicationcheck?details=true',
       'course publicationcheck url is correct',
     );
     assert.notOk(page.details.hasCollapseControl);
@@ -320,6 +312,8 @@ module('Acceptance | Course - Publish', function (hooks) {
 
     await pubcheck.publish.click();
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
+    assert.strictEqual(currentURL(), '/courses/1?details=true', 'course published url is correct');
+    assert.ok(page.details.hasCollapseControl, 'course has collapse control again');
   });
 
   test('check unpublish scheduled course', async function (assert) {
