@@ -62,10 +62,28 @@ jobs:
       - name: Rename screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
+          mkdir -p build/storage
           cd build/screenshots
           for file in *; do
-            mv "$file" "${{ matrix.name }}-$file"
+            mv "$file" "../storage/${{ matrix.name }}-$file"
           done
+      - name: Capture Screenshots in Darkmode
+        continue-on-error: true
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-darkmode-config.js
+      - name: Rename Darkmode screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p build/storage
+          cd build/screenshots
+          for file in *; do
+            mv "$file" "../storage/${{ matrix.name }}-$file"
+          done
+      - name: Consolidate Screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
+        run: |
+          rm -rf build/screenshots
+          mv build/storage build/screenshots
       - uses: actions/upload-artifact@v7
         with:
           name: baseline-frontend-${{ matrix.name }}
@@ -116,10 +134,28 @@ jobs:
       - name: Rename screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
+          mkdir -p build/storage
           cd build/screenshots
           for file in *; do
-            mv "$file" "${{ matrix.name }}-$file"
+            mv "$file" "../storage/${{ matrix.name }}-$file"
           done
+      - name: Capture Screenshots in Darkmode
+        continue-on-error: true
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-darkmode-config.js
+      - name: Rename Darkmode screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p build/storage
+          cd build/screenshots
+          for file in *; do
+            mv "$file" "../storage/${{ matrix.name }}-$file"
+          done
+      - name: Consolidate Screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
+        run: |
+          rm -rf build/screenshots
+          mv build/storage build/screenshots
       - uses: actions/upload-artifact@v7
         with:
           name: candidate-frontend-${{ matrix.name }}

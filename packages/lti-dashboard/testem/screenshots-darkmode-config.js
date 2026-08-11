@@ -15,7 +15,7 @@ const firefoxUserJsPath = storeFirefoxPreferences([
   ['browser.download.manager.showWhenStarting', false],
   ['pdfjs.disabled', true],
   ['ui.prefersReducedMotion', 1],
-  ['layout.css.prefers-color-scheme.content-override', 1],
+  ['layout.css.prefers-color-scheme.content-override', 0],
 ]);
 
 module.exports = {
