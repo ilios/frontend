@@ -44,7 +44,7 @@ export default class SessionService extends ESASessionService {
         if (response.status === 'redirect') {
           window.location.replace(response.logoutUrl);
         } else {
-          this.router.replaceWith(config.rootURL);
+          window.location.replace(config.rootURL);
         }
       });
     }
