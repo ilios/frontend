@@ -17,6 +17,7 @@ import SaveButton from 'ilios-common/components/save-button';
 import perform from 'ember-concurrency/helpers/perform';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import SortableTh from 'ilios-common/components/sortable-th';
+import PublicationStatus from 'ilios-common/components/publication-status';
 import { faLinkSlash, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class PublishAllSessionsComponent extends Component {
@@ -36,13 +37,13 @@ export default class PublishAllSessionsComponent extends Component {
     return new TrackedAsyncData(this.args.course.courseObjectives);
   }
 
+  get courseObjectives() {
+    return this.courseObjectivesData.isResolved ? this.courseObjectivesData.value : null;
+  }
+
   @cached
   get sessionsData() {
     return new TrackedAsyncData(this.args.course.sessions);
-  }
-
-  get courseObjectives() {
-    return this.courseObjectivesData.isResolved ? this.courseObjectivesData.value : null;
   }
 
   get sessions() {
@@ -50,9 +51,38 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get publishedSessions() {
-    return this.overridableSessions.filter((s) => {
+    return this.sessions.filter((s) => {
       return s.published && !s.publishedAsTbd;
     });
+  }
+
+  get sortedPublishedSessions() {
+    if (this.args.sortCompleteBy.includes('offerings')) {
+      return this.publishedSessions.sort((a, b) => a.offerings.length - b.offerings.length);
+    }
+
+    if (this.args.sortCompleteBy.includes('terms')) {
+      return this.publishedSessions.sort((a, b) => a.terms.length - b.terms.length);
+    }
+
+    if (this.args.sortCompleteBy.includes('objectives')) {
+      return this.publishedSessions.sort(
+        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
+      );
+    }
+
+    const locale = this.intl.get('primaryLocale');
+    return this.publishedSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
+  }
+
+  get sortedPublishedAscending() {
+    return this.args.sortCompleteBy.search(/desc/) === -1;
+  }
+
+  get orderedPublishedSessions() {
+    return this.sortedPublishedAscending
+      ? this.sortedPublishedSessions
+      : this.sortedPublishedSessions.reverse();
   }
 
   get unpublishedSessions() {
@@ -60,11 +90,7 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get sessionsToPublish() {
-    const sessionsToPublish = [...this.publishedSessions, ...this.userSelectedSessionsToPublish];
-
-    return uniqueValues(
-      sessionsToPublish.filter((s) => !this.userSelectedSessionsToSchedule.includes(s)),
-    );
+    return this.userSelectedSessionsToPublish;
   }
 
   get sessionsToSchedule() {
@@ -186,10 +212,7 @@ export default class PublishAllSessionsComponent extends Component {
 
   get overridableSessions() {
     return this.sessions.filter((session) => {
-      return (
-        session.requiredPublicationIssues.length === 0 &&
-        session.optionalPublicationIssues.length > 0
-      );
+      return !session.published && session.requiredPublicationIssues.length === 0;
     });
   }
 
@@ -223,7 +246,7 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get publishCount() {
-    return this.publishableSessions.length + this.sessionsToPublish.length;
+    return this.sessionsToPublish.length;
   }
 
   get scheduleCount() {
@@ -231,7 +254,7 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get ignoreCount() {
-    return this.unPublishableSessions.length;
+    return this.publishedSessions.length + this.unPublishableSessions.length;
   }
 
   @action
@@ -402,6 +425,7 @@ export default class PublishAllSessionsComponent extends Component {
                       <LinkTo @route="session" @model={{session}}>
                         {{session.title}}
                       </LinkTo>
+                      <PublicationStatus @item={{session}} />
                     </td>
                     {{#if session.offerings.length}}
                       <td class="yes" data-test-offerings>
@@ -461,7 +485,7 @@ export default class PublishAllSessionsComponent extends Component {
           {{on "click" (fn @setExpandCompleteSessions (not @expandCompleteSessions))}}
         >
           {{t "general.publishedSessions"}}
-          ({{this.publishableSessions.length}})
+          ({{this.publishedSessions.length}})
           <FaIcon @icon={{if @expandCompleteSessions faCaretDown faCaretRight}} />
         </button>
 
@@ -511,12 +535,13 @@ export default class PublishAllSessionsComponent extends Component {
                 </tr>
               </thead>
               <tbody>
-                {{#each this.orderedPublishableSessions as |session|}}
+                {{#each this.orderedPublishedSessions as |session|}}
                   <tr>
                     <td colspan="2" data-test-title>
                       <LinkTo @route="session" @model={{session}}>
                         {{session.title}}
                       </LinkTo>
+                      <PublicationStatus @item={{session}} />
                     </td>
                     {{#if session.offerings.length}}
                       <td class="yes" data-test-offerings>
@@ -685,6 +710,7 @@ export default class PublishAllSessionsComponent extends Component {
                       <LinkTo @route="session" @model={{session}}>
                         {{session.title}}
                       </LinkTo>
+                      <PublicationStatus @item={{session}} />
                     </td>
                     {{#if session.offerings.length}}
                       <td class="yes" data-test-offerings>
