@@ -8,7 +8,6 @@ import { findById } from 'ilios-common/utils/array-helpers';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
 import { TrackedAsyncData } from 'ember-async-data';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import TruncateText from 'ilios-common/components/truncate-text';
 import t from 'ember-intl/helpers/t';
 import { and, eq, gt, not } from 'ember-truth-helpers';
 import { LinkTo } from '@ember/routing';
@@ -450,12 +449,7 @@ export default class SingleEventComponent extends Component {
           {{/if}}
           {{#if @event.sessionDescription}}
             <div class="single-event-session-description text-wrap normalize-external-editor">
-              <TruncateText
-                @text={{this.sessionDescription}}
-                @length={{50}}
-                @slippage={{200}}
-                @renderHtml={{true}}
-              />
+              {{this.sessionDescription}}
             </div>
           {{/if}}
         </div>
