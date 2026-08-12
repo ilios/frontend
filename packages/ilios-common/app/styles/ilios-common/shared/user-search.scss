@@ -2,11 +2,11 @@
 @use "../mixins/media";
 
 .user-search-results {
-  background: var(--white);
-  border: 1px solid var(--white);
+  background-color: light-dark(var(--white), var(--dark-grey));
+  border: 1px solid light-dark(var(--white), var(--dark-grey));
   border-radius: 3px;
   box-shadow: 0 2px 2px var(--very-transparent-black);
-  color: var(--black);
+  color: light-dark(var(--black), var(--white));
   max-height: 23rem;
   overflow-y: scroll;
   position: absolute;
@@ -19,26 +19,29 @@
   }
 
   li {
-    border-bottom: 1px solid var(--lightest-grey);
-    color: var(--light-blue);
+    border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
+    color: light-dark(var(--light-blue), var(--bright-blue));
     display: block;
     margin: 0.1rem 0;
     padding: 0.2rem;
     width: 100%;
 
     &.inactive {
-      color: var(--light-grey);
+      color: light-dark(var(--light-grey), var(--grey));
       font-style: italic;
     }
 
     &.summary {
-      color: var(--green);
+      color: light-dark(var(--green), var(--light-green));
     }
 
     a,
     &.clickable {
       &:hover {
-        background-color: var(--lightest-blue);
+        background-color: light-dark(
+          var(--lightest-blue),
+          var(--lightest-blue)
+        );
       }
     }
 
@@ -57,7 +60,7 @@
     }
 
     .email {
-      color: var(--grey);
+      color: light-dark(var(--grey), var(--white));
       font-style: italic;
     }
   }

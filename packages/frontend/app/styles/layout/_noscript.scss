@@ -2,9 +2,9 @@
 
 noscript {
   p {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--black));
     border: 2px dashed var(--orange);
-    color: var(--black);
+    color: light-dark(var(--black), var(--white));
     @include m.font-size("xxl");
     font-weight: 600;
     margin: 2rem;

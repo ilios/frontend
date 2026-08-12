@@ -2,8 +2,8 @@
 @use "../mixins" as m;
 
 .session-header {
-  border-top: 1px solid var(--lightest-grey);
-  border-bottom: 1px solid var(--blue);
+  border-top: 1px solid light-dark(var(--lightest-grey), var(--grey));
+  border-bottom: 1px solid light-dark(var(--blue), var(--bright-blue));
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -34,7 +34,7 @@
   padding: 0.5rem 0;
 
   .last-update {
-    color: var(--grey);
+    color: light-dark(var(--grey), var(--lighter-grey));
     margin-right: 1rem;
     text-align: right;
   }
@@ -111,7 +111,7 @@
   }
 
   .fa-copy {
-    color: var(--green);
+    color: light-dark(var(--green), var(--light-green));
   }
 
   @include m.for-desktop-and-up {

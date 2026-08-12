@@ -7,12 +7,12 @@
   }
 
   .is-student {
-    color: var(--green);
     display: block;
     text-align: center;
     width: 100%;
 
     h2 {
+      color: light-dark(var(--green), var(--lighter-green));
       font-weight: 600;
       margin: 0;
     }

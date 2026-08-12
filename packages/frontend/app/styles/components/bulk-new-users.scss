@@ -1,8 +1,8 @@
 @use "../ilios-common/mixins" as m;
 
 .bulk-new-users {
-  background-color: var(--white);
-  border: 1px solid var(--lightest-grey);
+  background-color: light-dark(var(--white), var(--dark-grey));
+  border: 1px solid light-dark(var(--lightest-grey), var(--grey));
   margin: 0.5rem 0;
   padding: 1rem;
 
@@ -54,8 +54,8 @@
       overflow-y: scroll;
 
       .error {
-        border: 1px solid var(--light-red);
-        color: var(--light-red);
+        border: 1px solid light-dark(var(--light-red), var(--light-red));
+        color: light-dark(var(--light-red), var(--lighter-red));
       }
     }
   }
@@ -69,13 +69,13 @@
 
   .saving-user-errors,
   .saving-authentication-errors {
-    border: 1px solid var(--light-red);
-    border-top: 10px solid var(--light-red);
+    border: 1px solid light-dark(var(--light-red), var(--light-red));
+    border-top: 10px solid light-dark(var(--light-red), var(--red));
     margin: 1rem 4rem;
     padding: 0 1rem 1rem;
 
     p {
-      color: var(--light-red);
+      color: light-dark(var(--light-red), var(--lighter-red));
     }
 
     li {

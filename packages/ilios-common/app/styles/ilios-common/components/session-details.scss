@@ -3,8 +3,8 @@
 }
 
 .session-details {
-  background-color: var(--lightest-blue);
-  border-color: var(--lightest-grey);
+  background-color: light-dark(var(--lightest-blue), var(--dark-grey));
+  border-color: light-dark(var(--lightest-grey), var(--grey));
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
@@ -12,8 +12,8 @@
   table {
     thead,
     th {
-      background-color: var(--blue);
-      color: var(--white);
+      background-color: light-dark(var(--blue), var(--bright-blue));
+      color: light-dark(var(--white), var(--black));
     }
   }
 

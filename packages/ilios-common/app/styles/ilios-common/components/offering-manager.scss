@@ -36,17 +36,17 @@
   }
 
   &.show-remove-confirmation {
-    background-color: var(--lightest-red);
-    border: 1px solid var(--light-red);
+    background-color: light-dark(var(--lightest-red), var(--dark-red));
+    border: 1px solid light-dark(var(--light-red), var(--lightest-red));
   }
 
   .confirm-removal {
-    background-color: var(--lightest-red);
+    background-color: light-dark(var(--lightest-red), var(--dark-red));
     grid-column: 1 / -1;
 
     .confirm-message {
-      background-color: var(--lightest-red);
-      color: var(--red);
+      background-color: light-dark(var(--lightest-red), var(--dark-red));
+      color: light-dark(var(--red), var(--lightest-red));
       font-weight: 600;
       margin: 0;
       padding: 1rem 4rem;
@@ -63,12 +63,12 @@
     }
 
     .remove {
-      background-color: var(--white);
-      color: var(--red);
+      background-color: light-dark(var(--white), var(--light-red));
+      color: light-dark(var(--red), var(--white));
 
       &:hover {
-        background-color: var(--light-red);
-        color: white;
+        background-color: light-dark(var(--light-red), var(--white));
+        color: light-dark(var(--white), var(--light-red));
       }
     }
   }

@@ -8,7 +8,8 @@ module.exports = {
       return `
         <style type="text/css">
           #ilios-loading-indicator {
-            background: #eee;
+            color-scheme: light;
+            background: light-dark(#eee, hsl(345, 6%, 13%));
             height: 100vh;
             left: 0;
             position: fixed;
@@ -26,10 +27,10 @@ module.exports = {
           }
 
           #ilios-loading-indicator svg {
-            fill: #c60;
+            fill: light-dark(#c60, hsl(30, 100%, 20%));
             height: 50vh;
             overflow: visible;
-            stroke: #c60;
+            stroke: light-dark(#c60, hsl(30, 100%, 20%));
             width: 50vw;
           }
 

@@ -5,13 +5,16 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--slightly-transparent-black);
+  background-color: light-dark(
+    var(--slightly-transparent-black),
+    var(--slightly-transparent-black)
+  );
   display: grid;
   justify-content: center;
   align-content: center;
 
   .content {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--black));
     padding: 2em;
     border-radius: 1em;
 

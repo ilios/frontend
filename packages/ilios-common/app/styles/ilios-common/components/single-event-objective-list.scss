@@ -7,11 +7,13 @@
 
   .display-mode-toggle-btn {
     &.active {
-      background-color: var(--green);
+      background-color: light-dark(var(--green), var(--green));
+      color: light-dark(var(--black), var(--white));
     }
     &.disabled {
       cursor: default;
-      background-color: var(--grey);
+      background-color: light-dark(var(--grey), var(--grey));
+      color: light-dark(var(--black), var(--white));
     }
   }
 

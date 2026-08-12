@@ -63,7 +63,7 @@
         button {
           &:disabled {
             cursor: default;
-            background-color: var(--grey);
+            background-color: light-dark(var(--grey), var(--grey));
           }
         }
       }
@@ -97,8 +97,8 @@
       .confirm-copy,
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd) {
-        background-color: var(--lightest-blue);
-        border: 2px solid var(--light-blue);
+        background-color: light-dark(var(--lightest-blue), var(--dark-grey));
+        border: 2px solid light-dark(var(--light-blue), var(--light-blue));
 
         &.actions-row {
           border-top: 0;

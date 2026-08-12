@@ -7,8 +7,8 @@
   flex-direction: column;
 
   &.critical-notice {
-    background-color: var(--dark-yellow);
-    color: var(--black);
+    background-color: light-dark(var(--dark-yellow), var(--dark-yellow));
+    color: light-dark(var(--black), var(--black));
     min-height: 2.5rem;
   }
 
@@ -41,10 +41,10 @@
     }
 
     button {
-      background-color: var(--black);
+      background-color: light-dark(var(--black), var(--black));
       border: 0;
       border-radius: 0;
-      color: var(--white);
+      color: light-dark(var(--white), var(--white));
       display: inline-block;
       padding: 0.25rem;
 

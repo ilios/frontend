@@ -11,15 +11,15 @@
       padding-left: 1.5rem;
 
       &.error {
-        border: 1px solid var(--light-red);
-        outline-color: var(--light-red);
+        border: 1px solid light-dark(var(--light-red), var(--light-red));
+        outline-color: light-dark(var(--light-red), var(--red));
       }
     }
   }
 
   .search-icon {
     align-items: center;
-    color: var(--light-blue);
+    color: light-dark(var(--light-blue), var(--lighter-blue));
     display: flex;
     height: 100%;
     left: 0;

@@ -39,7 +39,7 @@
       }
 
       .calendar-filter-list {
-        border: 1px solid var(--light-blue);
+        border: 1px solid light-dark(var(--light-blue), var(--blue));
         float: left;
         @include m.font-size("small");
         margin-bottom: 1em;
@@ -49,8 +49,8 @@
           @include m.ilios-heading;
           @include m.font-size("base");
           display: block;
-          background-color: var(--lightest-grey);
-          border-bottom: 0.5px solid var(--grey);
+          background-color: light-dark(var(--lightest-grey), var(--dark-grey));
+          border-bottom: 0.5px solid light-dark(var(--grey), var(--grey));
           height: 7vh;
           padding: 0.25em;
           width: 100%;
@@ -73,7 +73,7 @@
           @include m.ilios-list-reset;
 
           li {
-            color: var(--blue);
+            color: light-dark(var(--blue), var(--bright-blue));
             cursor: pointer;
           }
         }
@@ -113,8 +113,8 @@
       padding: 5px;
 
       .filters-header {
-        background: var(--lightest-grey);
-        border-bottom: 1px solid var(--grey);
+        background-color: light-dark(var(--lightest-grey), var(--dark-grey));
+        border-bottom: 1px solid light-dark(var(--grey), var(--grey));
         @include m.font-size("small");
       }
 
@@ -127,13 +127,14 @@
         .filter-tag {
           @include m.ilios-button-reset;
           @include m.font-size("small");
+          color: var(--black);
           border-radius: 3px;
           display: inline-block;
           padding: 2px 5px;
         }
 
         .fa-close {
-          color: var(--lightest-grey);
+          color: light-dark(var(--lightest-grey), var(--grey));
         }
 
         .tag-session-type {
@@ -182,7 +183,7 @@
         .filters-clear-filters {
           @include m.ilios-button-reset;
           @include m.font-size("small");
-          color: var(--blue);
+          color: light-dark(var(--blue), var(--bright-blue));
         }
       }
     }

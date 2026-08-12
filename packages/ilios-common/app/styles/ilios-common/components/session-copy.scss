@@ -7,7 +7,7 @@
   }
 
   .copy-form {
-    border: 1px solid var(--light-blue);
+    border: 1px solid light-dark(var(--light-blue), var(--blue));
     margin-top: 1rem;
 
     @include m.ilios-form {
@@ -23,9 +23,9 @@
       @include m.ilios-form-buttons;
 
       button:disabled {
-        background-color: var(--grey);
-        border-color: var(--grey);
-        color: var(--white);
+        background-color: light-dark(var(--grey), var(--light-grey));
+        border-color: light-dark(var(--grey), var(--light-grey));
+        color: light-dark(var(--white), var(--black));
         cursor: default;
       }
     }

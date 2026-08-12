@@ -3,6 +3,6 @@
 .reports-curriculum-loading {
   .reports-curriculum-header .input-buttons button.done {
     cursor: default;
-    background-color: var(--lightest-grey);
+    background-color: light-dark(var(--lightest-grey), var(--grey));
   }
 }

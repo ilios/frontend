@@ -1,7 +1,7 @@
 @use "font-size";
 
 @mixin ilios-heading() {
-  color: var(--black);
+  color: light-dark(var(--black), var(--lightest-grey));
   font-family: "Nunito Variable", sans-serif;
   font-weight: 600;
   margin: 0;

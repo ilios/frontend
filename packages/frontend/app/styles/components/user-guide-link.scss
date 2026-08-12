@@ -8,10 +8,10 @@
   }
 
   a {
-    background-color: var(--super-light-grey);
-    border: 1px solid var(--super-light-grey);
+    background-color: light-dark(var(--super-light-grey), var(--dark-grey));
+    border: 1px solid light-dark(var(--super-light-grey), var(--grey));
     border-radius: 0.2rem;
-    color: var(--black);
+    color: light-dark(var(--black), var(--white));
     @include cm.font-size("small");
     font-weight: 400;
     margin-left: 0.8rem;
@@ -19,7 +19,8 @@
 
     &:hover,
     &:focus {
-      background-color: var(--white);
+      background-color: light-dark(var(--white), var(--grey));
+      color: light-dark(var(--black), var(--white));
     }
 
     @include cm.for-tablet-and-up {

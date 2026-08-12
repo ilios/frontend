@@ -7,10 +7,10 @@
     display: flex;
 
     #{m.$form-input-text-types} {
-      background: var(--bright-white);
-      border: 1px solid var(--lightest-grey);
+      background-color: light-dark(var(--bright-white), var(--dark-grey));
+      border: 1px solid light-dark(var(--lightest-grey), var(--grey));
       border-radius: 3px;
-      color: var(--black);
+      color: light-dark(var(--black), var(--white));
       cursor: pointer;
       display: inline;
       outline: none;
@@ -35,22 +35,22 @@
         padding: 0 0.2rem;
 
         &:enabled:hover {
-          color: var(--white);
+          color: light-dark(var(--white), var(--white));
         }
 
         &.done {
-          color: var(--green);
+          color: light-dark(var(--green), var(--green));
 
           &:enabled:hover {
-            background-color: var(--green);
+            background-color: light-dark(var(--green), var(--green));
           }
         }
 
         &.cancel {
-          color: var(--red);
+          color: light-dark(var(--red), var(--red));
 
           &:enabled:hover {
-            background-color: var(--red);
+            background-color: light-dark(var(--red), var(--red));
           }
         }
       }

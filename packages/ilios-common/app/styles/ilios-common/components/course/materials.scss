@@ -28,6 +28,6 @@
   }
 
   .fa-spinner.orange {
-    color: var(--orange);
+    color: light-dark(var(--orange), var(--dark-orange));
   }
 }

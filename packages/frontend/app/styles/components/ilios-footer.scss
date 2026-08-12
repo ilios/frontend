@@ -1,7 +1,7 @@
 @use "../ilios-common/mixins" as cm;
 
 .ilios-footer {
-  background-color: var(--orange);
+  background-color: light-dark(var(--orange), var(--dark-orange));
   display: flex;
   height: 100%;
   justify-content: flex-end;
@@ -9,10 +9,10 @@
 
   .version {
     align-items: center;
-    background-color: var(--super-light-grey);
-    border: 1px solid var(--super-light-grey);
+    background-color: light-dark(var(--super-light-grey), var(--dark-grey));
+    border: 1px solid light-dark(var(--super-light-grey), var(--dark-grey));
     border-radius: 0.2rem;
-    color: var(--black);
+    color: light-dark(var(--black), var(--white));
     display: flex;
     @include cm.font-size("smallest");
     font-weight: 200;

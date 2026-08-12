@@ -1,5 +1,5 @@
 .ilios-zebra-table {
   tbody tr:nth-child(even) {
-    background-color: var(--super-light-grey);
+    background-color: light-dark(var(--super-light-grey), var(--dark-grey));
   }
 }

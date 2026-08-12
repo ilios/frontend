@@ -36,14 +36,14 @@
       }
 
       .recently-updated-icon {
-        color: var(--red);
+        color: light-dark(var(--red), var(--lighter-red));
         position: absolute;
         right: 2px;
         top: 2px;
       }
 
       .recently-updated-icon-event {
-        color: var(--red);
+        color: light-dark(var(--red), var(--lighter-red));
       }
     }
 

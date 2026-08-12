@@ -21,7 +21,7 @@
     grid-area: search;
     margin: 0.75rem 0 0.5rem 10%;
     width: 80%;
-    border: 1px solid var(--light-grey);
+    border: 1px solid light-dark(var(--light-grey), var(--grey));
 
     &:focus-within {
       border-color: transparent;
@@ -64,7 +64,7 @@
   }
 
   .results {
-    border-right: 1px solid var(--black);
+    border-right: 1px solid light-dark(var(--black), var(--grey));
     grid-area: results;
     list-style-type: none;
     padding: 0 2rem;
@@ -75,7 +75,7 @@
       text-transform: capitalize;
 
       .fa-spinner.orange {
-        color: var(--orange);
+        color: light-dark(var(--orange), var(--dark-orange));
       }
     }
   }

@@ -1,15 +1,15 @@
 // font awesome icons
 .svg-inline--fa {
   &.enabled {
-    color: var(--light-blue);
+    color: light-dark(var(--light-blue), var(--bright-blue));
 
     &.remove {
-      color: var(--red);
+      color: light-dark(var(--red), var(--light-red));
     }
   }
 
   &.disabled {
-    color: var(--grey);
+    color: light-dark(var(--grey), var(--light-grey));
     cursor: default;
   }
 }

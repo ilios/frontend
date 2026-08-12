@@ -78,31 +78,32 @@
     }
 
     &:enabled:hover {
-      color: var(--white);
+      color: light-dark(var(--white), var(--black));
     }
 
     &.done {
-      background-color: var(--white);
-      border-color: var(--green);
-      color: var(--black);
+      background-color: light-dark(var(--white), var(--dark-grey));
+      border-color: light-dark(var(--green), var(--green));
+      color: light-dark(var(--black), var(--white));
 
       &:enabled {
         &:hover,
         &:active,
         &.active {
-          background-color: var(--green);
-          color: var(--white);
+          background-color: light-dark(var(--green), var(--green));
+          color: light-dark(var(--white), var(--white));
         }
       }
     }
 
     &.cancel {
-      background-color: var(--white);
-      border-color: var(--light-red);
-      color: var(--light-red);
+      background-color: light-dark(var(--white), var(--dark-grey));
+      border-color: light-dark(var(--light-red), var(--lighter-red));
+      color: light-dark(var(--light-red), var(--lighter-red));
 
       &:enabled:hover {
-        background-color: var(--light-red);
+        background-color: light-dark(var(--light-red), var(--lighter-red));
+        color: light-dark(var(--white), var(--black));
       }
     }
   }
@@ -119,13 +120,13 @@
 
 @mixin ilios-form-error {
   .validation-error-message {
-    color: var(--red);
+    color: light-dark(var(--red), var(--lighter-red));
     @include font-size.font-size("small");
   }
 
   input {
     &.has-error {
-      border-color: var(--light-red);
+      border-color: light-dark(var(--light-red), var(--lighter-red));
     }
   }
 }

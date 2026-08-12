@@ -3,7 +3,7 @@
 .courses-loading {
   .toggle-mycourses .multi-buttons label {
     cursor: default;
-    background-color: var(--lightest-grey);
+    background-color: light-dark(var(--lightest-grey), var(--lightest-grey));
     color: transparent;
     text-shadow: var(--very-transparent-black) 0 0 10px;
   }

@@ -11,7 +11,7 @@
   }
 
   .menu {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--dark-grey));
     border-style: solid;
     border-width: 1px;
     display: flex;
@@ -26,8 +26,8 @@
 
     button {
       border: 0;
-      background-color: var(--white);
-      color: var(--black);
+      background-color: light-dark(var(--white), var(--dark-grey));
+      color: light-dark(var(--black), var(--white));
       display: block;
       outline: none;
       padding: 0.5rem 1rem;
@@ -38,33 +38,34 @@
       &.danger {
         &:hover,
         &:focus {
-          background-color: var(--light-red);
-          color: var(--white);
+          background-color: light-dark(var(--light-red), var(--dark-red));
+          color: light-dark(var(--white), var(--white));
         }
       }
 
       &.alert {
         &:hover,
         &:focus {
-          background-color: var(--dark-yellow);
+          background-color: light-dark(var(--dark-yellow), var(--dark-yellow));
+          color: light-dark(var(--black), var(--black));
         }
       }
 
       &.good {
         &:hover,
         &:focus {
-          background-color: var(--green);
-          color: var(--white);
+          background-color: light-dark(var(--green), var(--green));
+          color: light-dark(var(--white), var(--white));
         }
       }
     }
   }
 
   .toggle {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--dark-grey));
     border-style: solid;
     border-width: 1px;
-    color: var(--white);
+    color: light-dark(var(--white), var(--white));
     position: relative;
 
     &[aria-expanded="true"] {
@@ -79,24 +80,24 @@
   &.published {
     .toggle,
     .menu {
-      border-color: var(--green);
-      color: var(--green);
+      border-color: light-dark(var(--green), var(--lighter-green));
+      color: light-dark(var(--green), var(--lighter-green));
     }
   }
 
   &.notpublished {
     .toggle,
     .menu {
-      border-color: var(--grey);
-      color: var(--grey);
+      border-color: light-dark(var(--grey), var(--lighter-grey));
+      color: light-dark(var(--grey), var(--lighter-grey));
     }
   }
 
   &.scheduled {
     .toggle,
     .menu {
-      border-color: var(--dark-orange);
-      color: var(--dark-orange);
+      border-color: light-dark(var(--dark-orange), var(--light-orange));
+      color: light-dark(var(--dark-orange), var(--light-orange));
     }
   }
 }

@@ -11,7 +11,7 @@
     margin-right: 0.5rem;
 
     .grid-item {
-      border-bottom: 1px solid var(--grey);
+      border-bottom: 1px solid light-dark(var(--grey), var(--grey));
       padding: 0.5rem 0.25rem;
 
       &.competency {
@@ -35,13 +35,13 @@
       }
 
       .bigadd {
-        background-color: var(--green);
-        color: var(--white);
+        background-color: light-dark(var(--green), var(--green));
+        color: light-dark(var(--white), var(--white));
       }
 
       .bigcancel {
-        background-color: var(--red);
-        color: var(--white);
+        background-color: light-dark(var(--red), var(--red));
+        color: light-dark(var(--white), var(--white));
         margin-left: 0.5rem;
       }
     }
@@ -58,26 +58,29 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: var(--transparent-green);
+      background-color: light-dark(
+        var(--transparent-green),
+        var(--transparent-green)
+      );
     }
 
     &.is-managing {
-      border: 2px solid var(--light-blue);
+      border: 2px solid light-dark(var(--light-blue), var(--light-blue));
       .grid-item {
-        background-color: var(--lightest-grey);
+        background-color: light-dark(var(--lightest-grey), var(--grey));
         border: 0;
       }
     }
 
     &.confirm-removal {
-      background-color: var(--lightest-red);
+      background-color: light-dark(var(--lightest-red), var(--dark-red));
 
       .grid-item {
         border: 0;
       }
 
       .confirm-message {
-        color: var(--light-red);
+        color: light-dark(var(--light-red), var(--lightest-red));
         grid-column: 1 / -1;
         font-weight: 600;
         text-align: center;
@@ -85,11 +88,11 @@
       }
 
       .remove {
-        background-color: var(--white);
-        color: var(--light-red);
+        background-color: light-dark(var(--white), var(--dark-red));
+        color: light-dark(var(--light-red), var(--lightest-red));
 
         &:hover {
-          background-color: var(--light-red);
+          background-color: light-dark(var(--light-red), var(--red));
           color: white;
         }
       }

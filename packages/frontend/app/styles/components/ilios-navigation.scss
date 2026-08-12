@@ -4,7 +4,7 @@
 /* stylelint-disable property-disallowed-list */
 
 .ilios-navigation {
-  background-color: var(--grey);
+  background-color: light-dark(var(--grey), var(--dark-grey));
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 2rem auto;
@@ -32,7 +32,7 @@
 
         &:first-of-type {
           padding-top: 2px;
-          border-top: 2px solid var(--grey);
+          border-top: 2px solid light-dark(var(--grey), var(--dark-grey));
         }
       }
     }
@@ -51,10 +51,10 @@
       justify-content: center;
 
       .expander {
-        color: var(--white);
+        color: light-dark(var(--white), var(--white));
 
         &:hover {
-          background-color: var(--light-blue);
+          background-color: light-dark(var(--light-blue), var(--grey));
         }
 
         svg {
@@ -88,14 +88,14 @@
 
   @include m.for-smaller-than-laptop {
     a.active {
-      background-color: var(--light-blue);
+      background-color: light-dark(var(--light-blue), var(--grey));
     }
   }
 
   @include m.for-laptop-and-up {
     display: block;
     border-bottom: calc(20px * constants.$golden-ratio-large) solid
-      var(--orange);
+      light-dark(var(--orange), var(--dark-orange));
 
     ul {
       bottom: 0;
@@ -115,7 +115,7 @@
   }
 
   a {
-    color: hsl(0, 0%, 92%);
+    color: var(--lightest-grey);
     display: block;
     height: 100%;
     text-decoration: none;
@@ -132,11 +132,11 @@
 
       .text {
         margin-left: 0.25rem;
-        color: hsl(0, 0%, 92%);
+        color: var(--lightest-grey);
       }
 
       .if-active {
-        color: var(--light-blue);
+        color: light-dark(var(--light-blue), var(--grey));
         justify-self: end;
         font-weight: 600;
       }
@@ -145,20 +145,20 @@
         .if-active {
           display: inline;
         }
-        color: var(--light-blue);
+        color: light-dark(var(--light-blue), var(--bright-blue));
 
         .text {
-          color: hsl(0, 0%, 92%);
+          color: var(--lightest-grey);
         }
       }
     }
 
     &:hover {
-      background-color: var(--light-blue);
-      color: hsl(0, 0%, 92%);
+      background-color: light-dark(var(--light-blue), var(--grey));
+      color: var(--lightest-grey);
 
       .if-active {
-        color: hsl(0, 0%, 92%);
+        color: var(--lightest-grey);
       }
     }
   }

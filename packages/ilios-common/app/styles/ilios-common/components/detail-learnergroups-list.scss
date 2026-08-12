@@ -13,8 +13,8 @@
       @include m.ilios-removable-list;
 
       .top-level-group {
-        background-color: var(--dark-yellow);
-        color: var(--black);
+        background-color: light-dark(var(--dark-yellow), var(--dark-yellow));
+        color: light-dark(var(--black), var(--black));
       }
     }
 

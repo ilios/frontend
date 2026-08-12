@@ -1,7 +1,7 @@
 @use "../mixins" as m;
 
 .learnergroup-selection-cohort-manager {
-  border: 1px solid var(--light-blue);
+  border: 1px solid light-dark(var(--light-blue), var(--light-grey));
 
   h4 {
     padding: 0.5rem;
@@ -9,7 +9,7 @@
 
   & > ul {
     @include m.ilios-list-tree;
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--grey));
     height: 15rem;
     overflow-y: scroll;
     padding: 0.5rem 0;

@@ -1,5 +1,5 @@
 .breadcrumbs {
-  $border: 1px solid var(--blue);
+  $border: 1px solid light-dark(var(--blue), var(--bright-blue));
   $height: 2rem;
   $h2: calc($height / 2);
   $h4: calc($height / 4);
@@ -11,10 +11,10 @@
 
   /* stylelint-disable property-disallowed-list, scales/font-weights,declaration-property-value-disallowed-list */
   .crumb {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--dark-grey));
     border: $border;
     border-left: 0;
-    color: var(--blue);
+    color: light-dark(var(--blue), var(--bright-blue));
     cursor: pointer;
     display: inline-block;
     font-size: 0.8rem;
@@ -39,14 +39,14 @@
 
     &::before {
       // outer arrow
-      border-left-color: var(--blue);
+      border-left-color: light-dark(var(--blue), var(--bright-blue));
       left: 100%;
       margin-left: 1px;
       z-index: 1;
     }
     &::after {
       // inner arrow
-      border-left-color: var(--white);
+      border-left-color: light-dark(var(--white), var(--dark-grey));
       left: 100%;
       z-index: 2;
     }
@@ -59,10 +59,10 @@
     }
     &:last-child {
       background-color: inherit;
-      border-color: var(--lighter-grey);
+      border-color: light-dark(var(--lighter-grey), var(--grey));
       border-bottom-right-radius: 3px;
       border-top-right-radius: 3px;
-      color: var(--black);
+      color: light-dark(var(--black), var(--white));
       cursor: default;
       font-weight: 700;
       padding-right: $h2;
@@ -80,11 +80,11 @@
 
     &:hover,
     &:focus {
-      background-color: var(--blue);
-      color: var(--white);
+      background-color: light-dark(var(--blue), var(--bright-blue));
+      color: light-dark(var(--white), var(--black));
 
       &::after {
-        border-left-color: var(--blue);
+        border-left-color: light-dark(var(--blue), var(--bright-blue));
       }
     }
   }

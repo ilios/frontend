@@ -1,8 +1,8 @@
 @use "../../ilios-common/mixins" as m;
 
 .reports-new-subject {
-  background-color: var(--white);
-  border: 1px solid var(--lightest-grey);
+  background-color: light-dark(var(--white), var(--dark-grey));
+  border: 1px solid light-dark(var(--lightest-grey), var(--grey));
   margin: 0.5rem 0;
   padding: 1rem 1rem 3rem;
 
@@ -34,8 +34,8 @@
       }
 
       select.error {
-        border: 1px solid var(--light-red);
-        outline-color: var(--light-red);
+        border: 1px solid light-dark(var(--light-red), var(--red));
+        outline-color: light-dark(var(--light-red), var(--red));
       }
 
       .mesh-search {
@@ -47,14 +47,14 @@
 
     button {
       &.disabled {
-        background-color: var(--grey);
+        background-color: light-dark(var(--grey), var(--lighter-grey));
         cursor: default;
       }
 
       &:disabled {
-        background-color: var(--lightest-grey);
-        border-color: var(--grey);
-        color: var(--white);
+        background-color: light-dark(var(--lightest-grey), var(--lighter-grey));
+        border-color: light-dark(var(--grey), var(--grey));
+        color: light-dark(var(--white), var(--black));
         cursor: default;
       }
     }
@@ -67,18 +67,18 @@
       .results {
         @include m.ilios-list-reset;
         grid-column: 2;
-        background: var(--white);
+        background-color: light-dark(var(--white), var(--grey));
         border-width: 0 1px 1px 1px;
         border-style: solid;
-        border-color: var(--white);
+        border-color: light-dark(var(--white), var(--light-grey));
         box-shadow: 0 2px 2px var(--very-transparent-black);
-        color: var(--black);
+        color: light-dark(var(--black), var(--white));
         max-height: 15rem;
         overflow-y: scroll;
         transition: all 0.2s ease-in-out;
 
         li {
-          border-bottom: 1px solid var(--lightest-grey);
+          border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
           width: 100%;
 
           button {
@@ -87,7 +87,7 @@
             padding: 0.6rem 0 0 1rem;
 
             &:hover {
-              background-color: var(--lightest-grey);
+              background-color: light-dark(var(--lightest-grey), var(--grey));
             }
           }
 
@@ -96,7 +96,7 @@
           }
 
           &.results-count {
-            color: var(--green);
+            color: light-dark(var(--green), var(--light-green));
           }
         }
       }

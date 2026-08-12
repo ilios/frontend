@@ -6,7 +6,7 @@
   justify-content: space-around;
 
   .update {
-    border: 1px solid var(--orange);
+    border: 1px solid light-dark(var(--orange), var(--dark-orange));
     border-radius: 1rem;
     display: block;
     margin: 1rem auto;

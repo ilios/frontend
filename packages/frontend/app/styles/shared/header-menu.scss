@@ -7,15 +7,15 @@
 
   button {
     background-color: transparent;
-    border: 1px solid var(--super-light-grey);
+    border: 1px solid light-dark(var(--super-light-grey), var(--grey));
     border-radius: 0;
-    color: var(--black);
+    color: light-dark(var(--black), var(--white));
     font-weight: 400;
     padding: 0.25rem;
   }
 
   .menu {
-    background-color: var(--super-light-grey);
+    background-color: light-dark(var(--super-light-grey), var(--grey));
     box-shadow: 0 2px 2px var(--very-transparent-black);
     display: flex;
     flex-direction: column;
@@ -31,9 +31,9 @@
     }
 
     .header-menu-item {
-      border: 2px solid var(--super-light-grey);
-      background-color: var(--super-light-grey);
-      color: var(--black);
+      border: 2px solid light-dark(var(--super-light-grey), var(--grey));
+      background-color: light-dark(var(--super-light-grey), var(--grey));
+      color: light-dark(var(--black), var(--white));
       display: block;
       outline: none;
       padding: 0.5rem 0.5rem 0.5rem 1.5rem;
@@ -48,40 +48,44 @@
       white-space: nowrap;
 
       &:focus {
-        border-color: var(--grey);
+        border-color: light-dark(var(--grey), var(--dark-grey));
         border-collapse: separate;
       }
 
       &:hover {
-        background-color: var(--blue);
-        border-color: var(--blue);
-        color: var(--white);
+        background-color: light-dark(var(--blue), var(--lighter-grey));
+        border-color: light-dark(var(--blue), var(--lighter-grey));
+        color: light-dark(var(--white), var(--black));
 
         &:focus {
-          border-color: var(--lightest-blue);
+          border-color: light-dark(var(--lightest-blue), var(--lightest-blue));
         }
       }
 
       &[aria-checked="true"],
       &.active {
-        background-color: var(--green);
-        border-color: var(--green);
-        color: var(--white);
+        background-color: light-dark(var(--green), var(--green));
+        border-color: light-dark(var(--green), var(--green));
+        color: light-dark(var(--white), var(--white));
         cursor: default;
 
         &:focus {
-          border-color: var(--lightest-green);
+          border-color: light-dark(
+            var(--lightest-green),
+            var(--lightest-green)
+          );
         }
 
         &:hover {
-          background-color: var(--green);
+          background-color: light-dark(var(--green), var(--green));
         }
       }
     }
   }
 
   .toggle {
-    background-color: var(--super-light-grey);
+    background-color: light-dark(var(--super-light-grey), var(--dark-grey));
+    color: light-dark(var(--black), var(--white));
 
     span {
       display: none;
@@ -94,7 +98,8 @@
 
     &:hover,
     &[aria-expanded="true"] {
-      background-color: var(--white);
+      background-color: light-dark(var(--white), var(--grey));
+      color: light-dark(var(--black), var(--white));
     }
 
     &[aria-expanded="true"] {

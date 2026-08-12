@@ -6,14 +6,14 @@
     justify-content: flex-end;
 
     .bigadd {
-      background-color: var(--green);
-      color: var(--white);
+      background-color: light-dark(var(--green), var(--green));
+      color: light-dark(var(--white), var(--white));
       margin-right: 0.25rem;
     }
 
     .bigcancel {
-      background-color: var(--red);
-      color: var(--white);
+      background-color: light-dark(var(--red), var(--red));
+      color: light-dark(var(--white), var(--white));
     }
   }
 

@@ -16,7 +16,7 @@
       width: 100%;
 
       i {
-        color: var(--light-blue);
+        color: light-dark(var(--light-blue), var(--light-blue));
         @include m.font-size("xxl");
         font-weight: 600;
         margin: 0;
@@ -25,7 +25,7 @@
     }
 
     .issue {
-      color: var(--grey);
+      color: light-dark(var(--grey), var(--light-grey));
       margin-left: 1rem;
     }
 
@@ -50,7 +50,10 @@
       }
 
       &.matched {
-        background-color: var(--transparent-green);
+        background-color: light-dark(
+          var(--transparent-green),
+          var(--transparent-green)
+        );
       }
     }
   }

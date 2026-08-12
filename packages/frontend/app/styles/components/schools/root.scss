@@ -14,8 +14,8 @@
   }
 
   .new {
-    background-color: var(--white);
-    border: 1px solid var(--lightest-grey);
+    background-color: light-dark(var(--white), var(--dark-grey));
+    border: 1px solid light-dark(var(--lightest-grey), var(--grey));
     margin: 0.5rem 0;
     padding: 1rem;
 
