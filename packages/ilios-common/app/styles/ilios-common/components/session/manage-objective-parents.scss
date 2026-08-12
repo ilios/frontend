@@ -15,6 +15,6 @@
   }
 
   .no-group {
-    color: var(--darker-yellow);
+    color: light-dark(var(--darker-yellow), var(--yellow));
   }
 }

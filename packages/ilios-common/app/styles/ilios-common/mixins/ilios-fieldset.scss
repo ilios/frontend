@@ -1,7 +1,7 @@
 @use "ilios-heading";
 
 @mixin ilios-fieldset {
-  border: 1px solid var(--light-blue);
+  border: 1px solid light-dark(var(--light-blue), var(--blue));
   border-radius: 10px;
 
   legend {

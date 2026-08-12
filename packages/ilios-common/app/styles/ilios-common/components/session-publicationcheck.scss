@@ -1,8 +1,8 @@
 @use "../mixins" as m;
 
 .session-publicationcheck {
-  background-color: var(--lightest-blue);
-  border-color: var(--lightest-grey);
+  background-color: light-dark(var(--lightest-blue), var(--dark-grey));
+  border-color: light-dark(var(--lightest-grey), var(--grey));
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
@@ -16,7 +16,7 @@
   }
 
   .results {
-    background-color: var(--lightest-blue);
+    background-color: light-dark(var(--lightest-blue), var(--dark-grey));
     @include m.detail-container(var(--orange));
     padding: 0 0.5rem;
 
@@ -33,7 +33,7 @@
       @include m.detail-container-content;
 
       thead {
-        background-color: var(--lightest-grey);
+        background-color: light-dark(var(--lightest-grey), var(--grey));
       }
     }
 
@@ -41,15 +41,15 @@
       margin-bottom: 0.5em;
 
       &:disabled {
-        background-color: var(--grey);
-        border-color: var(--grey);
+        background-color: light-dark(var(--grey), var(--light-grey));
+        border-color: light-dark(var(--grey), var(--light-grey));
         cursor: default;
       }
     }
   }
 
   .fa-link-slash {
-    color: var(--black);
+    color: light-dark(var(--black), var(--white));
     @include m.font-size("small");
   }
 }

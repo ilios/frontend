@@ -2,7 +2,7 @@
 @use "../../mixins" as m;
 
 .dashboard-navigation {
-  border-bottom: 1px solid var(--lightest-grey);
+  border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
   margin: 0.5rem 0 0 0.5rem;
 
   ul {
@@ -30,7 +30,7 @@
         .highlight {
           align-items: center;
           display: flex;
-          color: var(--orange);
+          color: light-dark(var(--orange), var(--orange));
           @include m.font-size("large");
 
           @include m.for-phone-only {
@@ -66,7 +66,8 @@
     }
 
     &.active {
-      background-color: var(--green);
+      background-color: light-dark(var(--green), var(--green));
+      color: light-dark(var(--white), var(--white));
     }
   }
 }

@@ -3,7 +3,7 @@
 .school-session-types-list-item {
   .calendar-color {
     .box {
-      border: 1px solid var(--black);
+      border: 1px solid light-dark(var(--black), var(--grey));
       display: inline-block;
       height: 1.5rem;
       width: 1.5rem;

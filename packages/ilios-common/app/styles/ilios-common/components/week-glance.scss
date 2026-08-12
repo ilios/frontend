@@ -66,10 +66,10 @@
   .event {
     padding: 0 0.25rem;
     margin: 1rem 0;
-    border-left: 3px solid var(--lightest-blue);
+    border-left: 3px solid light-dark(var(--lightest-blue), var(--blue));
 
     &:nth-of-type(even) {
-      border-left: 3px solid var(--lightest-red);
+      border-left: 3px solid light-dark(var(--lightest-red), var(--light-red));
     }
 
     &:first-of-type {

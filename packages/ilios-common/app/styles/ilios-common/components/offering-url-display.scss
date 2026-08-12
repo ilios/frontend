@@ -5,7 +5,7 @@
     margin-left: 0.25em;
 
     &.copying {
-      color: var(--green);
+      color: light-dark(var(--green), var(--light-green));
     }
   }
 }
@@ -17,7 +17,7 @@
     display: none;
   }
   .content {
-    background-color: var(--green);
-    color: var(--white);
+    background-color: light-dark(var(--green), var(--dark-green));
+    color: light-dark(var(--white), var(--white));
   }
 }

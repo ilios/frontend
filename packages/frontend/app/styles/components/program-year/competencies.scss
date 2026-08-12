@@ -22,7 +22,7 @@
   .competency-list,
   .managed-competency-list {
     @include m.ilios-list-tree;
-    border: 1px solid var(--lightest-grey);
+    border: 1px solid light-dark(var(--lightest-grey), var(--grey));
     border-radius: 3px;
     margin: 2rem;
 

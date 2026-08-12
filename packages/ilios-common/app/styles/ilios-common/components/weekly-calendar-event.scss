@@ -8,7 +8,7 @@
   flex-direction: column;
   justify-content: start;
   @include m.font-size("small");
-  border: 1px solid var(--white);
+  border: 1px solid light-dark(var(--white), var(--grey));
   margin: 1px;
   padding: 0.25rem;
   text-align: left;

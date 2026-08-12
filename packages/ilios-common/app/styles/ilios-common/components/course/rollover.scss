@@ -7,7 +7,7 @@
   }
 
   .rollover-form {
-    border: 1px solid var(--light-blue);
+    border: 1px solid light-dark(var(--light-blue), var(--grey));
     margin-top: 1rem;
 
     @include m.ilios-form {

@@ -1,28 +1,38 @@
 :root {
+  color-scheme: light dark;
+
   --white: hsl(0, 0%, 98%);
   --bright-white: hsl(0, 0%, 100%);
 
+  --dark-grey: hsl(0, 0%, 20%);
   --grey: hsl(0, 0%, 30%);
   --light-grey: hsl(0, 0%, 50%);
   --lighter-grey: hsl(0, 0%, 80%);
   --lightest-grey: hsl(0, 0%, 90%);
   --super-light-grey: hsl(0, 0%, 95%);
 
+  --dark-red: hsl(0, 100%, 20%);
   --red: hsl(0, 100%, 30%);
   --light-red: hsl(0, 100%, 40%);
+  --lighter-red: hsl(0, 100%, 80%);
   --lightest-red: hsl(0, 100%, 97%);
 
-  --orange: hsl(30, 100%, 40%);
   --dark-orange: hsl(30, 100%, 20%);
+  --orange: hsl(30, 100%, 40%);
+  --light-orange: hsl(30, 100%, 50%);
 
   --yellow: hsl(45, 100%, 60%);
   --dark-yellow: hsl(45, 100%, 45%);
   --darker-yellow: hsl(45, 100%, 20%);
 
+  --dark-green: hsl(115, 100%, 10%);
   --green: hsl(115, 100%, 20%);
+  --light-green: hsl(115, 100%, 30%);
+  --lighter-green: hsl(115, 50%, 50%);
   --lightest-green: hsl(115, 100%, 92%);
   --transparent-green: hsl(115, 50%, 50%, 20%);
 
+  --bright-blue: hsl(195, 100%, 45%);
   --blue: hsl(195, 50%, 35%);
   --light-blue: hsl(195, 50%, 45%);
   --lighter-blue: hsl(195, 50%, 80%);

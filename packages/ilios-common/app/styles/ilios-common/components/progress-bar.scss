@@ -1,16 +1,16 @@
 .progress-bar {
-  background-color: var(--super-light-grey);
-  border: 1px solid var(--lightest-grey);
+  background-color: light-dark(var(--super-light-grey), var(--grey));
+  border: 1px solid light-dark(var(--lightest-grey), var(--grey));
   border-radius: 3px;
   box-shadow: inset 0 0 3px 0 var(--very-transparent-black);
   margin: 0 auto;
   width: 100%;
 
   > .meter {
-    background-color: var(--orange);
+    background-color: light-dark(var(--orange), var(--dark-orange));
     background-repeat: repeat-x;
     background-size: 40px 40px;
-    border: 1px solid var(--dark-orange);
+    border: 1px solid light-dark(var(--dark-orange), var(--grey));
     border-radius: 2px;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
@@ -21,7 +21,7 @@
   }
 
   p {
-    color: var(--white);
+    color: light-dark(var(--white), var(--white));
     margin: 0;
     padding: 0.1rem 0.5rem;
     text-shadow: 0 0 1px var(--black);

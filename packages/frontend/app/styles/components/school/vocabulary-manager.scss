@@ -30,8 +30,8 @@
   }
 
   .terms {
-    background-color: var(--white);
-    border: 1px solid var(--light-blue);
+    background-color: light-dark(var(--white), var(--dark-grey));
+    border: 1px solid light-dark(var(--light-blue), var(--blue));
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
@@ -39,7 +39,7 @@
     width: 80%;
 
     .saved-result {
-      border: 1px solid var(--green);
+      border: 1px solid light-dark(var(--green), var(--green));
       display: flex;
       gap: 0.25rem;
       margin: 1rem;
@@ -50,7 +50,7 @@
       @include m.ilios-selectable-list;
 
       em {
-        color: var(--red);
+        color: light-dark(var(--red), var(--lighter-red));
       }
     }
   }

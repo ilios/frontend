@@ -3,11 +3,11 @@
 
 @mixin ilios-button() {
   appearance: none;
-  background-color: var(--blue);
+  background-color: light-dark(var(--blue), var(--bright-blue));
   border: 0;
   border-radius: 3px;
   box-sizing: border-box;
-  color: var(--white);
+  color: light-dark(var(--white), var(--black));
   cursor: pointer;
   display: inline-block;
   padding: 0.3em 1em;

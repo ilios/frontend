@@ -10,7 +10,7 @@
 
   .title {
     @include m.detail-container-title-style;
-    background: var(--white);
+    background-color: light-dark(var(--white), var(--black));
     height: 2.1rem;
     margin: 0 0.5rem;
     position: sticky;

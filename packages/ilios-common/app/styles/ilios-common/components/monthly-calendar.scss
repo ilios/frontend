@@ -43,7 +43,7 @@
     }
 
     .day {
-      border: 1px solid var(--lightest-grey);
+      border: 1px solid light-dark(var(--lightest-grey), var(--grey));
       padding: 5px;
       @for $week from 1 through 6 {
         @for $day from 1 through 7 {
@@ -76,7 +76,7 @@
       }
 
       .month-event {
-        border: 1px solid var(--lightest-grey);
+        border: 1px solid light-dark(var(--lightest-grey), var(--grey));
         border-radius: 3px;
         cursor: default;
         &.clickable {
@@ -102,7 +102,7 @@
       .month-more-events {
         text-align: right;
         margin-top: 1rem;
-        color: var(--blue);
+        color: light-dark(var(--blue), var(--bright-blue));
 
         .fa-ellipsis {
           vertical-align: text-bottom;

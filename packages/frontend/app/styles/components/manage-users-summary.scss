@@ -41,8 +41,8 @@
     width: 90%;
 
     input[type="search"] {
-      background-color: var(--white);
-      border: 1px solid var(--blue);
+      background-color: light-dark(var(--white), var(--dark-grey));
+      border: 1px solid light-dark(var(--blue), var(--bright-blue));
       border-radius: 3px;
       height: 2rem;
       width: 100%;
@@ -55,8 +55,8 @@
       }
 
       button:active {
-        background-color: var(--lightest-grey);
-        border-bottom: 1px solid var(--lightest-grey);
+        background-color: light-dark(var(--lightest-grey), var(--grey));
+        border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
       }
     }
   }

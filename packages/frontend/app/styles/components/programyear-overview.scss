@@ -1,7 +1,7 @@
 @use "../ilios-common/mixins" as m;
 
 .programyear-overview {
-  background: var(--white);
+  background-color: light-dark(var(--white), var(--black));
   border-top: 1px dotted var(--orange);
   border-bottom: 0;
   margin: 0 0.5rem;
@@ -9,7 +9,7 @@
 
   .actions {
     a {
-      color: var(--light-blue);
+      color: light-dark(var(--light-blue), var(--blue));
       @include m.font-size("medium");
     }
   }

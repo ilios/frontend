@@ -19,7 +19,7 @@
   }
 
   .week-glance {
-    border-bottom: 1px solid var(--orange);
+    border-bottom: 1px solid light-dark(var(--orange), var(--dark-orange));
     margin: 0 0 1rem 1rem;
   }
 }

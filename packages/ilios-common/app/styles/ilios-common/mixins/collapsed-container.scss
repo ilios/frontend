@@ -41,16 +41,16 @@
 
   thead,
   th {
-    background-color: var(--lightest-grey);
-    color: var(--black);
+    background-color: light-dark(var(--lightest-grey), var(--dark-grey));
+    color: light-dark(var(--black), var(--white));
   }
 
   td:first-of-type {
-    color: var(--dark-orange);
+    color: light-dark(var(--dark-orange), var(--lightest-grey));
     font-weight: 600;
   }
 
   .maybe {
-    color: var(--dark-yellow);
+    color: light-dark(var(--dark-yellow), var(--dark-yellow));
   }
 }

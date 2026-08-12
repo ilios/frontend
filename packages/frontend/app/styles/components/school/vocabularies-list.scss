@@ -2,7 +2,7 @@
 
 .school-vocabularies-list {
   .school-vocabularies-list-header {
-    background-color: var(--lightest-grey);
+    background-color: light-dark(var(--lightest-grey), var(--grey));
     display: flex;
     justify-content: flex-end;
     padding: 0.5rem 1rem;

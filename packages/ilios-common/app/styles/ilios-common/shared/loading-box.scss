@@ -1,6 +1,6 @@
 .loading-box {
   animation: 2s fadein;
-  background-color: var(--lightest-grey);
+  background-color: light-dark(var(--lightest-grey), var(--dark-grey));
   border: 1px dotted var(--grey);
 }
 

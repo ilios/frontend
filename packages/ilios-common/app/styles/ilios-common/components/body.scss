@@ -12,8 +12,8 @@ html {
 }
 
 body {
-  background-color: var(--white);
-  color: var(--black);
+  background-color: light-dark(var(--white), var(--black));
+  color: light-dark(var(--black), var(--lightest-grey));
   font-family: "Nunito Variable", sans-serif;
   margin: 0;
   padding: 0;
@@ -21,19 +21,19 @@ body {
 
 a,
 .link {
-  color: var(--blue);
+  color: light-dark(var(--blue), var(--bright-blue));
   cursor: pointer;
   font-weight: 600;
   text-decoration: none;
 
   &:visited {
-    color: var(--blue);
+    color: light-dark(var(--blue), var(--bright-blue));
   }
 
   &:hover,
   &:active,
   &:focus {
-    color: var(--light-blue);
+    color: light-dark(var(--light-blue), var(--lighter-blue));
     outline: thin dotted;
     text-decoration: underline;
   }
@@ -52,7 +52,7 @@ button {
 }
 
 input {
-  accent-color: var(--blue);
+  accent-color: light-dark(var(--blue), var(--bright-blue));
 }
 
 h1 {
@@ -80,7 +80,7 @@ h6 {
 }
 
 select {
-  color: var(--black);
+  color: light-dark(var(--black), var(--lightest-grey));
   font-family: "Nunito Variable", sans-serif;
 }
 
@@ -107,22 +107,22 @@ b {
 
 .add,
 .yes {
-  color: var(--green);
+  color: light-dark(var(--green), var(--lighter-green));
 }
 
 .remove,
 .no {
-  color: var(--red);
+  color: light-dark(var(--red), var(--lighter-red));
 }
 
 .error,
 .is-error {
-  color: var(--red);
+  color: light-dark(var(--red), var(--lighter-red));
 }
 
 .warning,
 .is-warning {
-  color: var(--yellow);
+  color: light-dark(var(--yellow), var(--yellow));
 }
 
 .clickable,
@@ -132,19 +132,19 @@ b {
 
 .editable,
 .is-editable {
-  color: var(--blue);
+  color: light-dark(var(--blue), var(--bright-blue));
 }
 
 .published {
-  color: var(--green);
+  color: light-dark(var(--green), var(--lighter-green));
 }
 
 .notpublished {
-  color: var(--grey);
+  color: light-dark(var(--grey), var(--lighter-grey));
 }
 
 .scheduled {
-  color: var(--dark-orange);
+  color: light-dark(var(--dark-orange), var(--light-orange));
 }
 
 .backtolink {

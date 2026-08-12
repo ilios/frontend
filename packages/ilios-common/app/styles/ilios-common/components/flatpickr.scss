@@ -4,8 +4,8 @@
   .flatpickr-month,
   .flatpickr-next-month,
   .flatpickr-prev-month {
-    color: var(--white);
-    background: var(--orange);
+    color: light-dark(var(--white), var(--white));
+    background-color: light-dark(var(--orange), var(--dark-orange));
 
     svg {
       fill: var(--white);
@@ -26,7 +26,7 @@
       text-align-last: right;
 
       option {
-        color: var(--black);
+        color: light-dark(var(--black), var(--black));
       }
     }
 
@@ -42,10 +42,25 @@
 .flatpickr-weekdays,
 span.flatpickr-weekday,
 .flatpickr-day.selected {
-  color: var(--white);
-  background: var(--orange);
+  color: light-dark(var(--white), var(--white));
+  background-color: light-dark(var(--orange), var(--dark-orange));
 }
 
 .flatpickr-day.selected {
-  border-color: var(--orange);
+  border-color: light-dark(var(--orange), var(--dark-orange));
+}
+
+.flatpickr-days,
+.flatpickr-day {
+  background-color: light-dark(var(--white), var(--dark-grey));
+  color: light-dark(var(--black), var(--white));
+
+  &.nextMonthDay,
+  &.prevMonthDay {
+    color: light-dark(var(--light-grey), var(--light-grey));
+  }
+
+  &:hover {
+    color: light-dark(var(--black), var(--black));
+  }
 }

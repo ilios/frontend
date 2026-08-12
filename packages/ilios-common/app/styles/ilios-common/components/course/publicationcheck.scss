@@ -17,13 +17,13 @@
     }
 
     .fa-link-slash {
-      color: var(--black);
+      color: light-dark(var(--black), var(--white));
       @include m.font-size("small");
     }
 
     button:disabled {
-      background-color: var(--grey);
-      border-color: var(--grey);
+      background-color: light-dark(var(--grey), var(--light-grey));
+      border-color: light-dark(var(--grey), var(--light-grey));
       cursor: default;
     }
   }

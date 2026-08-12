@@ -8,16 +8,16 @@
   flex-direction: row-reverse;
 
   &:focus-within {
-    outline: 2px solid var(--light-blue);
+    outline: 2px solid light-dark(var(--light-blue), var(--lightest-blue));
   }
 
   button {
     @include m.ilios-button-reset;
     align-items: center;
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--dark-grey));
     border: 0;
     border-radius: 3px 0 0 3px;
-    color: var(--light-blue);
+    color: light-dark(var(--light-blue), var(--lightest-blue));
     cursor: pointer;
     display: flex;
     height: 100%;
@@ -26,7 +26,7 @@
   }
 
   input[type="search"] {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--dark-grey));
     border: 0;
     border-radius: 0 3px 3px 0;
     flex-grow: 1;

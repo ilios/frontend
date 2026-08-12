@@ -26,7 +26,7 @@
   }
 
   .sessions-grid-header-row {
-    background-color: var(--lighter-grey);
+    background-color: light-dark(var(--lighter-grey), var(--dark-grey));
     height: 2rem;
   }
 }
@@ -39,11 +39,11 @@
     width: 100%;
 
     span {
-      background-color: var(--lighter-grey);
+      background-color: light-dark(var(--lighter-grey), var(--dark-grey));
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       padding: 0.25rem 4rem;
-      color: var(--lighter-grey);
+      color: light-dark(var(--lighter-grey), var(--dark-grey));
 
       .expand-collapse-icon {
         margin-left: 0.5rem;
