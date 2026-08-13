@@ -148,7 +148,6 @@ general:
   firstOffering: First Offering
   forward: Forward
   friday: Friday
-  go: Go
   goToNextYear: Go to next year
   goToPreviousYear: Go to previous year
   groupByCompetencies: Group by Competencies
@@ -292,6 +291,7 @@ general:
   publish: Publish
   publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, and ignore {ignoreCount} sessions"
   publishAllAsIs: Publish All As-is
+  publishAndOrSchedule: Publish/Schedule
   publishAsIs: Publish As-is
   publishCourse: Publish Course
   publishCourseWithMissingItems: Publish Course, with {missingItemCount, plural, =1 {1 item missing} other {# items missing}}
@@ -308,6 +308,7 @@ general:
   saturday: Saturday
   save: Save
   savedSuccessfully: saved successfully
+  schedule: Schedule
   scheduled: Scheduled
   scheduledSuccessfully: Scheduled successfully
   scheduling: Scheduling

@@ -148,7 +148,6 @@ general:
   firstOffering: Ofrecimiento Primero
   forward: Adelante
   friday: Viernes
-  go: Vaya
   goToNextYear: Ir al año que viene
   goToPreviousYear: Ir al año anterior
   groupByCompetencies: Agrupe por Competencias
@@ -292,6 +291,7 @@ general:
   publish: Publique
   publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
   publishAllAsIs: Publique Todo Como Es
+  publishAndOrSchedule: Publique/Programar
   publishAsIs: Publique Como Es
   publishCourse: Publique Curso
   publishCourseWithMissingItems: Publique Curso, con {missingItemCount, plural, =1 {1 artículo faltante} other {# artículos faltantes}}
@@ -308,6 +308,7 @@ general:
   saturday: Sábado
   save: Guardar
   savedSuccessfully: ahorrado con éxito
+  schedule: Programar
   scheduled: Programado
   scheduledSuccessfully: Programdo con éxito
   scheduling: Programación

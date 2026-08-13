@@ -262,6 +262,22 @@ export default class PublishAllSessionsComponent extends Component {
     return this.publishedSessions.length + this.unPublishableSessions.length;
   }
 
+  get saveButtonText() {
+    if (this.publishCount) {
+      if (this.scheduleCount) {
+        return this.intl.t('general.publishAndOrSchedule');
+      } else {
+        return this.intl.t('general.publish');
+      }
+    } else {
+      if (this.scheduleCount) {
+        return this.intl.t('general.schedule');
+      }
+    }
+
+    return this.intl.t('general.publish');
+  }
+
   @action
   toggleSession(session) {
     if (this.sessionsToPublish.includes(session)) {
@@ -809,7 +825,7 @@ export default class PublishAllSessionsComponent extends Component {
           {{on "click" (perform this.save)}}
           data-test-save
         >
-          {{t "general.go"}}
+          {{this.saveButtonText}}
         </SaveButton>
         <button class="done text" type="button" {{on "click" this.returnToCourse}} data-test-cancel>
           {{t "general.cancel"}}
