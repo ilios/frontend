@@ -24,6 +24,7 @@ export default class PublishAllSessionsComponent extends Component {
   @service store;
   @service flashMessages;
   @service intl;
+  @service router;
 
   @tracked totalSessionsToSave;
   @tracked currentSessionsSaved;
@@ -345,6 +346,11 @@ export default class PublishAllSessionsComponent extends Component {
     await timeout(500);
     this.args.saved();
   });
+
+  @action
+  returnToCourse() {
+    this.router.transitionTo('course', this.args.course);
+  }
 
   <template>
     <div class="publish-all-sessions" {{scrollIntoView delay=10}} data-test-publish-all-sessions>
@@ -772,6 +778,7 @@ export default class PublishAllSessionsComponent extends Component {
           {{/if}}
         </div>
       </section>
+
       <div class="publish-all-sessions-review" data-test-review>
         {{#if this.showWarning}}
           <span class="unlinked-warning" data-test-unlinked-warning>
@@ -798,11 +805,15 @@ export default class PublishAllSessionsComponent extends Component {
         <SaveButton
           @isSaving={{this.save.isRunning}}
           @saveProgressPercent={{this.saveProgressPercent}}
+          class="save"
           {{on "click" (perform this.save)}}
           data-test-save
         >
           {{t "general.go"}}
         </SaveButton>
+        <button class="done text" type="button" {{on "click" this.returnToCourse}} data-test-cancel>
+          {{t "general.cancel"}}
+        </button>
       </div>
     </div>
   </template>
