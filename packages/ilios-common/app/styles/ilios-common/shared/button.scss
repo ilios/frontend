@@ -1,4 +1,8 @@
 button {
+  &:hover {
+    background-color: var(--light-blue);
+  }
+
   &.link-button {
     padding: 0;
     border: 0;
@@ -10,9 +14,54 @@ button {
     text-align: left;
     white-space: normal;
 
-    &:disabled {
-      color: var(--black);
+    &.lock-button:hover svg,
+    &.manage-button:hover svg,
+    &.visualization-button:hover svg {
+      color: var(--light-blue);
+    }
+    &.delete-button:hover svg {
+      color: var(--light-red);
+    }
+
+    &.lock-button:disabled:hover svg,
+    &.manage-button:disabled:hover svg,
+    &.delete-button:disabled:hover svg,
+    &.delete-button.disabled:hover svg {
+      color: var(--grey);
+    }
+
+    &:disabled,
+    &.disabled {
+      color: var(--grey);
       cursor: default;
+    }
+  }
+
+  &.bigadd {
+    background-color: var(--green);
+    color: var(--white);
+    margin-right: 0.25em;
+
+    &:hover {
+      background-color: var(--light-green);
+    }
+
+    &:disabled {
+      background-color: var(--grey);
+      cursor: default;
+
+      &:hover {
+        background-color: var(--grey);
+      }
+    }
+  }
+
+  &.bigcancel {
+    background-color: var(--red);
+    color: var(--white);
+
+    &:hover {
+      background-color: var(--light-red);
     }
   }
 }

@@ -117,7 +117,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
         {{#if this.canDelete}}
           <button
             type="button"
-            class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+            class="link-button delete-button{{if this.showRemoveConfirmation ' disabled'}}"
             title={{if
               this.showRemoveConfirmation
               (t "general.disabledByConfirmation")
@@ -135,7 +135,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
         {{else}}
           <button
             type="button"
-            class="link-button disabled"
+            class="link-button delete-button disabled"
             title={{t "general.canNotDeleteCurriculumInventoryReport"}}
             disabled
             data-test-remove

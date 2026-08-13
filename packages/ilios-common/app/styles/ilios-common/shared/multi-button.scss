@@ -31,6 +31,8 @@
     }
 
     &:hover {
+      background-color: var(--light-blue);
+      color: var(--white);
       cursor: pointer;
     }
 

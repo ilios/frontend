@@ -65,8 +65,16 @@
       text-decoration: none;
     }
 
+    &:hover {
+      background-color: var(--light-blue);
+    }
+
     &.active {
       background-color: var(--green);
+
+      &:hover {
+        background-color: var(--light-green);
+      }
     }
   }
 }

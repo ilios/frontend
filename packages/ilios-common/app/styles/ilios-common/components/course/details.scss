@@ -24,6 +24,10 @@
       .expand-collapse-icon {
         margin-left: 0.5rem;
       }
+
+      &:hover {
+        background-color: var(--light-blue);
+      }
     }
   }
 }

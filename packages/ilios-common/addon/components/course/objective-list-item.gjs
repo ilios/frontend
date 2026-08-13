@@ -291,7 +291,7 @@ export default class CourseObjectiveListItemComponent extends Component {
             </button>
           {{else}}
             <button
-              class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+              class="link-button delete-button{{if this.showRemoveConfirmation ' disabled'}}"
               type="button"
               title={{if
                 this.showRemoveConfirmation
