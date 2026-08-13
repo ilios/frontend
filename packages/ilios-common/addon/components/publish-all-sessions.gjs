@@ -50,6 +50,79 @@ export default class PublishAllSessionsComponent extends Component {
     return this.sessionsData.isResolved ? this.sessionsData.value : [];
   }
 
+  get unpublishedSessions() {
+    return this.overridableSessions.filter((s) => !this.publishedSessions.includes(s));
+  }
+
+  get sortedPublishableSessions() {
+    if (this.args.sortCompleteBy.includes('offerings')) {
+      return this.publishableSessions.sort((a, b) => a.offerings.length - b.offerings.length);
+    }
+
+    if (this.args.sortCompleteBy.includes('terms')) {
+      return this.publishableSessions.sort((a, b) => a.terms.length - b.terms.length);
+    }
+
+    if (this.args.sortCompleteBy.includes('objectives')) {
+      return this.publishableSessions.sort(
+        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
+      );
+    }
+
+    const locale = this.intl.get('primaryLocale');
+    return this.publishableSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
+  }
+
+  get sortedPublishableAscending() {
+    return this.args.sortCompleteBy.search(/desc/) === -1;
+  }
+
+  get orderedPublishableSessions() {
+    return this.sortedPublishableAscending
+      ? this.sortedPublishableSessions
+      : this.sortedPublishableSessions.reverse();
+  }
+
+  // Incomplete Sessions: cannot publish
+  // - unpublished with required issues
+  get unPublishableSessions() {
+    return this.sessions.filter((session) => {
+      return session.requiredPublicationIssues.length > 0;
+    });
+  }
+
+  get sortedUnPublishableSessions() {
+    if (this.args.sortIncompleteBy.includes('offerings')) {
+      return this.unPublishableSessions.sort((a, b) => a.offerings.length - b.offerings.length);
+    }
+
+    if (this.args.sortIncompleteBy.includes('terms')) {
+      return this.unPublishableSessions.sort((a, b) => a.terms.length - b.terms.length);
+    }
+
+    if (this.args.sortIncompleteBy.includes('objectives')) {
+      return this.unPublishableSessions.sort(
+        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
+      );
+    }
+
+    const locale = this.intl.get('primaryLocale');
+    return this.unPublishableSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
+  }
+
+  get sortedUnPublishableAscending() {
+    return this.args.sortIncompleteBy.search(/desc/) === -1;
+  }
+
+  get orderedUnPublishableSessions() {
+    return this.sortedUnPublishableAscending
+      ? this.sortedUnPublishableSessions
+      : this.sortedUnPublishableSessions.reverse();
+  }
+
+  // Published Sessions
+  // - may be missing optional requirements
+  // - not scheduled
   get publishedSessions() {
     return this.sessions.filter((s) => {
       return s.published && !s.publishedAsTbd;
@@ -85,8 +158,41 @@ export default class PublishAllSessionsComponent extends Component {
       : this.sortedPublishedSessions.reverse();
   }
 
-  get unpublishedSessions() {
-    return this.overridableSessions.filter((s) => !this.publishedSessions.includes(s));
+  // Unpublished Sessions: for review
+  // - no required issues, can be reviewed for publishing or scheduling
+  get overridableSessions() {
+    return this.sessions.filter((session) => {
+      return !session.published && session.requiredPublicationIssues.length === 0;
+    });
+  }
+
+  get sortedOverridableSessions() {
+    if (this.args.sortUnpublishedBy.includes('offerings')) {
+      return this.overridableSessions.sort((a, b) => a.offerings.length - b.offerings.length);
+    }
+
+    if (this.args.sortUnpublishedBy.includes('terms')) {
+      return this.overridableSessions.sort((a, b) => a.terms.length - b.terms.length);
+    }
+
+    if (this.args.sortUnpublishedBy.includes('objectives')) {
+      return this.overridableSessions.sort(
+        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
+      );
+    }
+
+    const locale = this.intl.get('primaryLocale');
+    return this.overridableSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
+  }
+
+  get sortedOverridableAscending() {
+    return this.args.sortUnpublishedBy.search(/desc/) === -1;
+  }
+
+  get orderedOverridableSessions() {
+    return this.sortedOverridableAscending
+      ? this.sortedOverridableSessions
+      : this.sortedOverridableSessions.reverse();
   }
 
   get sessionsToPublish() {
@@ -94,10 +200,13 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get sessionsToSchedule() {
-    const sessionsToPublish = [...this.unpublishedSessions, ...this.userSelectedSessionsToSchedule];
+    const sessionsToSchedule = [
+      ...this.unpublishedSessions,
+      ...this.userSelectedSessionsToSchedule,
+    ];
 
     return uniqueValues(
-      sessionsToPublish.filter((s) => !this.userSelectedSessionsToPublish.includes(s)),
+      sessionsToSchedule.filter((s) => !this.userSelectedSessionsToPublish.includes(s)),
     );
   }
 
@@ -138,111 +247,6 @@ export default class PublishAllSessionsComponent extends Component {
         return objective.programYearObjectives.length === 0;
       }),
     );
-  }
-
-  get publishableSessions() {
-    return this.sessions.filter((session) => {
-      return session.allPublicationIssuesLength === 0;
-    });
-  }
-
-  get sortedPublishableSessions() {
-    if (this.args.sortCompleteBy.includes('offerings')) {
-      return this.publishableSessions.sort((a, b) => a.offerings.length - b.offerings.length);
-    }
-
-    if (this.args.sortCompleteBy.includes('terms')) {
-      return this.publishableSessions.sort((a, b) => a.terms.length - b.terms.length);
-    }
-
-    if (this.args.sortCompleteBy.includes('objectives')) {
-      return this.publishableSessions.sort(
-        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
-      );
-    }
-
-    const locale = this.intl.get('primaryLocale');
-    return this.publishableSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
-  }
-
-  get sortedPublishableAscending() {
-    return this.args.sortCompleteBy.search(/desc/) === -1;
-  }
-
-  get orderedPublishableSessions() {
-    return this.sortedPublishableAscending
-      ? this.sortedPublishableSessions
-      : this.sortedPublishableSessions.reverse();
-  }
-
-  get unPublishableSessions() {
-    return this.sessions.filter((session) => {
-      return session.requiredPublicationIssues.length > 0;
-    });
-  }
-
-  get sortedUnPublishableSessions() {
-    if (this.args.sortIncompleteBy.includes('offerings')) {
-      return this.unPublishableSessions.sort((a, b) => a.offerings.length - b.offerings.length);
-    }
-
-    if (this.args.sortIncompleteBy.includes('terms')) {
-      return this.unPublishableSessions.sort((a, b) => a.terms.length - b.terms.length);
-    }
-
-    if (this.args.sortIncompleteBy.includes('objectives')) {
-      return this.unPublishableSessions.sort(
-        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
-      );
-    }
-
-    const locale = this.intl.get('primaryLocale');
-    return this.unPublishableSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
-  }
-
-  get sortedUnPublishableAscending() {
-    return this.args.sortIncompleteBy.search(/desc/) === -1;
-  }
-
-  get orderedUnPublishableSessions() {
-    return this.sortedUnPublishableAscending
-      ? this.sortedUnPublishableSessions
-      : this.sortedUnPublishableSessions.reverse();
-  }
-
-  get overridableSessions() {
-    return this.sessions.filter((session) => {
-      return !session.published && session.requiredPublicationIssues.length === 0;
-    });
-  }
-
-  get sortedOverridableSessions() {
-    if (this.args.sortUnpublishedBy.includes('offerings')) {
-      return this.overridableSessions.sort((a, b) => a.offerings.length - b.offerings.length);
-    }
-
-    if (this.args.sortUnpublishedBy.includes('terms')) {
-      return this.overridableSessions.sort((a, b) => a.terms.length - b.terms.length);
-    }
-
-    if (this.args.sortUnpublishedBy.includes('objectives')) {
-      return this.overridableSessions.sort(
-        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
-      );
-    }
-
-    const locale = this.intl.get('primaryLocale');
-    return this.overridableSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
-  }
-
-  get sortedOverridableAscending() {
-    return this.args.sortUnpublishedBy.search(/desc/) === -1;
-  }
-
-  get orderedOverridableSessions() {
-    return this.sortedOverridableAscending
-      ? this.sortedOverridableSessions
-      : this.sortedOverridableSessions.reverse();
   }
 
   get publishCount() {
@@ -331,10 +335,6 @@ export default class PublishAllSessionsComponent extends Component {
       sessionsToSave.push(session);
     });
 
-    this.publishableSessions.forEach((session) => {
-      session.set('published', true);
-      sessionsToSave.push(session);
-    });
     this.totalSessionsToSave = sessionsToSave.length;
     this.currentSessionsSaved = 0;
 
@@ -475,7 +475,7 @@ export default class PublishAllSessionsComponent extends Component {
           </div>
         {{/if}}
       </section>
-      <section class="publish-all-sessions-publishable" data-test-publishable>
+      <section class="publish-all-sessions-published" data-test-published>
         <button
           class="title link-button"
           type="button"
