@@ -54,11 +54,18 @@ import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
           {{t "general.sessions"}}
           (xx)
         </div>
-        <div class="actions"></div>
-      </div>
-      <div class="filter">
-        {{! template-lint-disable require-input-label }}
-        <input disabled />
+        <div class="actions">
+          <div class="filter">
+            {{! template-lint-disable require-input-label }}
+            <input disabled />
+          </div>
+          <button type="button" disabled>
+            {{t "general.newSession"}}
+          </button>
+          <button type="button" disabled>
+            {{t "general.publicationReview"}}
+          </button>
+        </div>
       </div>
       <section>
         <div class="sessions-grid-row sessions-grid-header-row loading-text"></div>
