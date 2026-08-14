@@ -95,14 +95,14 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.unpublishableSessions.sessions[0].terms, 'Yes (1)');
     assert.strictEqual(component.unpublishableSessions.sessions[0].objectives.text, 'No');
     assert.notOk(component.unpublishableSessions.sessions[0].objectives.isLinked);
-    assert.strictEqual(component.publishableSessions.title, 'Published Sessions (1)');
-    assert.ok(component.publishableSessions.canExpandCollapse);
-    assert.strictEqual(component.publishableSessions.sessions.length, 1);
-    assert.strictEqual(component.publishableSessions.sessions[0].title, 'session 2');
-    assert.strictEqual(component.publishableSessions.sessions[0].offerings, 'Yes (1)');
-    assert.strictEqual(component.publishableSessions.sessions[0].terms, 'Yes (1)');
-    assert.strictEqual(component.publishableSessions.sessions[0].objectives.text, 'Yes (2)');
-    assert.ok(component.publishableSessions.sessions[0].objectives.isLinked);
+    assert.strictEqual(component.publishedSessions.title, 'Published Sessions (1)');
+    assert.ok(component.publishedSessions.canExpandCollapse);
+    assert.strictEqual(component.publishedSessions.sessions.length, 1);
+    assert.strictEqual(component.publishedSessions.sessions[0].title, 'session 2');
+    assert.strictEqual(component.publishedSessions.sessions[0].offerings, 'Yes (1)');
+    assert.strictEqual(component.publishedSessions.sessions[0].terms, 'Yes (1)');
+    assert.strictEqual(component.publishedSessions.sessions[0].objectives.text, 'Yes (2)');
+    assert.ok(component.publishedSessions.sessions[0].objectives.isLinked);
     assert.strictEqual(component.overridableSessions.title, 'Unpublished Sessions: for review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
     assert.ok(component.overridableSessions.publishAllAsIs.isVisible);
@@ -151,10 +151,10 @@ module('Integration | Component | publish all sessions', function (hooks) {
     );
 
     assert.strictEqual(component.header.title, 'Publication Review');
-    assert.notOk(component.publishableSessions.isExpanded);
-    assert.strictEqual(component.publishableSessions.sessions.length, 0);
-    assert.strictEqual(component.publishableSessions.title, 'Published Sessions (1)');
-    assert.ok(component.publishableSessions.canExpandCollapse);
+    assert.notOk(component.publishedSessions.isExpanded);
+    assert.strictEqual(component.publishedSessions.sessions.length, 0);
+    assert.strictEqual(component.publishedSessions.title, 'Published Sessions (1)');
+    assert.ok(component.publishedSessions.canExpandCollapse);
 
     assert.notOk(component.unpublishableSessions.isExpanded);
     assert.strictEqual(component.unpublishableSessions.sessions.length, 0);
@@ -187,7 +187,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
         />
       </template>,
     );
-    await component.publishableSessions.toggle();
+    await component.publishedSessions.toggle();
     await component.unpublishableSessions.toggle();
     assert.verifySteps(['true', 'true']);
   });
@@ -214,7 +214,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
         />
       </template>,
     );
-    await component.publishableSessions.toggle();
+    await component.publishedSessions.toggle();
     await component.unpublishableSessions.toggle();
     assert.verifySteps(['false', 'false']);
   });
@@ -240,7 +240,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
       component.unpublishableSessions.text,
       'Incomplete Sessions: cannot publish (0)',
     );
-    assert.strictEqual(component.publishableSessions.text, 'Published Sessions (0)');
+    assert.strictEqual(component.publishedSessions.text, 'Published Sessions (0)');
     assert.strictEqual(component.overridableSessions.title, 'Unpublished Sessions: for review (0)');
     assert.notOk(component.overridableSessions.markAllAsScheduled.isVisible);
     assert.notOk(component.overridableSessions.publishAllAsIs.isVisible);

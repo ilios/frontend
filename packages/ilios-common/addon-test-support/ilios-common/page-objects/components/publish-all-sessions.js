@@ -74,8 +74,8 @@ const definition = {
       },
     }),
   },
-  publishableSessions: {
-    scope: '[data-test-publishable]',
+  publishedSessions: {
+    scope: '[data-test-published]',
     title: text('> [data-test-title]'),
     isExpanded: isVisible('[data-test-content]'),
     canExpandCollapse: isVisible('[data-test-expand-collapse]'),
