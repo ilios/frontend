@@ -160,10 +160,15 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   // Unpublished Sessions: for review
-  // - no required issues, can be reviewed for publishing or scheduling
+  // - no required issues
+  // - may be scheduled
+  // can be reviewed for publishing or scheduling
   get overridableSessions() {
     return this.sessions.filter((session) => {
-      return !session.published && session.requiredPublicationIssues.length === 0;
+      return (
+        (!session.published || session.publishedAsTbd) &&
+        session.requiredPublicationIssues.length === 0
+      );
     });
   }
 
