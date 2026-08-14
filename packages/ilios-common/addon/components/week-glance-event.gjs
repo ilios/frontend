@@ -163,7 +163,7 @@ export default class WeekGlanceEventComponent extends Component {
         </div>
       {{/if}}
       {{#if @event.sessionDescription.length}}
-        <p class="description" data-test-description>
+        <p class="description normalize-external-editor" data-test-description>
           <TruncateText
             @text={{@event.sessionDescription}}
             @length={{50}}
