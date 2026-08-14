@@ -25,6 +25,14 @@
     }
   }
 
+  .actions {
+    cursor: default;
+  }
+  
+  .expand-collapse-button {
+    color: var(--lighter-grey);
+  }
+
   .sessions-grid-header-row {
     background-color: var(--lighter-grey);
     height: 2rem;
