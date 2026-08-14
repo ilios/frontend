@@ -44,7 +44,7 @@ general:
   canNotDeleteCourse: "Este curso no se puede eliminar porque está publicado, programado, tiene elementos dependientes, o no tiene permiso."
   canNotDeleteInstructorGroup: "Este grupo de instructores no se puede eliminar porque está asociado a un curso o no tiene permiso."
   canNotDeleteLearnerGroup: "Este grupo de aprendedores no se puede eliminar porque está asociado a una sesión o no tiene permiso."
-  canNotDeleteProgram: "Este programa no se puede eliminar porque está asociado a un informe de inventario curricular o a un año del programa, o no tiene permiso."
+  canNotDeleteProgram: "Este programa no se puede eliminar porque está vinculado a un año del programa u otros datos, o no tiene permiso."
   canNotDeleteProgramYear: "Este año del programa no se puede eliminar porque está asociado a una cohorte de estudiantes o grupos, o porque no tiene permiso."
   canNotDeleteProgramYearObjective: "Este año del programa no se puede eliminar porque porque está asociado con un curso, o no tiene permiso."
   canNotDeleteReport: "Este informe no se puede eliminar porque aún se está cargando."
