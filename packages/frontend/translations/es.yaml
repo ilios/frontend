@@ -22,7 +22,6 @@ general:
   allVocabularies: Todos los Vocabularios
   anything: Caulquier Cosa
   assessment: Evaluación
-  assessments: Evaluacións
   assessmentMethods: Métodos de Evaluación
   assessmentOption: Opción de Evaluación
   associatedCourses: Cursos Asociados
@@ -31,15 +30,11 @@ general:
   attribute: Atributo
   availableCohorts: Clases de La Graduación Disponibles
   availableInstructors: Instructores Disponibles
-  averageHoursOfInstructionPerWeek: Promedio de horas de instrucción por semana
   backToAdminDashboard: Atrás a Panel de Control
   backToPrograms: Atrás a Programas
   backToProgramYears: Atrás a Años de Programas
-  backToReport: Atrás a Reporte
-  backToReports: Atrás a Reportes
   backToSchool: Atrás a Escuela
   backToSchools: Atrás a Escuelas
-  backToTableOfContents: Atrás a la tabla de contenido
   backToVocabularies: Atrás a Vocabularios
   bad: Malo
   badCredentials: Incorrecta contraseña o nombre de usuario
@@ -47,10 +42,9 @@ general:
   canNotCreateProgramYear: "No se puede crear un año del programa porque no hay más años académicos disponibles."
   canNotContinueWithInvalidRecords: "No se puede continuar con estos registros no válidos, por favor, corrija y vuelva a subir el archivo."
   canNotDeleteCourse: "Este curso no se puede eliminar porque está publicado, programado, tiene elementos dependientes, o no tiene permiso."
-  canNotDeleteCurriculumInventoryReport: "Este informe de inventario de plan de estudios no se puede eliminar porque no tiene permiso."
   canNotDeleteInstructorGroup: "Este grupo de instructores no se puede eliminar porque está asociado a un curso o no tiene permiso."
   canNotDeleteLearnerGroup: "Este grupo de aprendedores no se puede eliminar porque está asociado a una sesión o no tiene permiso."
-  canNotDeleteProgram: "Este programa no se puede eliminar porque está asociado a un informe de inventario curricular o a un año del programa, o no tiene permiso."
+  canNotDeleteProgram: "Este programa no se puede eliminar porque está vinculado a un año del programa u otros datos, o no tiene permiso."
   canNotDeleteProgramYear: "Este año del programa no se puede eliminar porque está asociado a una cohorte de estudiantes o grupos, o porque no tiene permiso."
   canNotDeleteProgramYearObjective: "Este año del programa no se puede eliminar porque porque está asociado con un curso, o no tiene permiso."
   canNotDeleteReport: "Este informe no se puede eliminar porque aún se está cargando."
@@ -59,20 +53,14 @@ general:
   canNotDeleteSchoolSessionType: "Este tipo de sesión escolar no se puede eliminar porque no tiene permiso."
   canNotDeleteSchoolVocabulary: "Este vocabulario escolar no se puede eliminar porque tiene al menos un término o no tiene permiso."
   canNotDeleteSchoolVocabularyTerm: "Este término del vocabulario escolar no se puede eliminar porque tiene al menos un término subordinado, tiene una asociación, o no tiene permiso."
-  canNotDeleteSequenceBlock: "Este bloque de secuencia no se puede eliminar porque no tiene permiso."
   canNotLockCourse: "Este curso no se puede bloquear porque no tiene permiso."
   canNotLockProgramYear: "Este año del programa no se puede bloquear porque no tiene permiso."
   canNotUnlockCourse: "Este curso no se puede desbloquear porque no tiene permiso."
   canNotUnlockProgramYear: "Este año del programa no se puede desbloquear porque no tiene permiso."
   changeAlertRecipients: Destinatarios con alerta de cambio
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
-  childSequenceOrder: Orden de Secuencia de Los Hijos
   city: Ciudad
-  clearDates: Borrar Fechas
   clearErrors: Borrar los Errores y Volver a Ilios
-  clerkship: Rotación
-  clerkshipSequenceBlocks: Bloques de secuencia de rotación
-  clickToAddDescription: Haga clic para añadir una descripción
   clickToAddTermDescription: Haga clic para agregar notas descriptivas
   cohortMembersNotInGroup: "Miembros de la Clase NO Asignados a {groupTitle} "
   color: Color
@@ -85,7 +73,6 @@ general:
   confirmRemoveProgram: ¿Estás seguro que quieres borrar este programa? Esta accion no se puede deshacer.
   confirmRemoveProgramYear: "¿Está seguro de que desea eliminar este año del programa?   Hacer tan también quitará su cohorte estudiantil asociada y grupos y asociaciones con {courseCount} curso(s), y no se puede deshacer."
   confirmRemoveReport: ¿Está seguro que desea eliminar este informe? Esta acción no se puede deshacer.
-  confirmRemoveSequenceBlock: ¿Está seguro que desea eliminar este bloque de secuencia? Esta acción no se puede deshacer.
   confirmRemoveSessionType: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
   confirmRemoveVocabulary: ¿Está seguro que desea eliminar este vocabulario? Esta accion no se puede deshacer.
   connectionLost: Conexión Perdida.
@@ -99,7 +86,6 @@ general:
   copyWithLearners: Copiar Con Alumnos
   copyWithoutLearners: Copiar Sin Alumnos
   couldNotFindUserCampusId: "No se pudo encontrar un usuario con el campusId {campusId}"
-  countAsOneOffering: Cuenta como un Ofrecimiento
   countTotal: "{total} en total"
   country: País
   countryCode: Código del país
@@ -115,12 +101,6 @@ general:
   createNew: Crear Nuevo
   createNewGroup: Crear Este Grupo
   curriculumReports: Informes Curriculares
-  curriculumInventoryReport: Informe de Inventario de Plan de Estudios
-  curriculumInventoryReportRollover: Copiar Inventario de plan de Estudios
-  curriculumInventoryReportRolloverSummary: "Esta acción copiará la estructura de este informe que se utilizará en su año objetivo. No copiará la información del curso, solo la estructura del bloque de secuencia de nivel superior. Deberá agregar la información del curso adecuada y modificar las fechas de inicio y finalización del bloque de secuencia una vez que haya cambiado la estructura del informe existente."
-  curriculumInventoryReportRolloverSuccess: Inventario Copiado con Éxito
-  curriculumInventoryReports: Informes de Inventario de Plan de Estudios
-  curriculumInventoryReportsTitlePlaceholder: Entre en un titulo para este informe
   deactivate: Desactivar
   defaultInstructors: Instructores Predeterminados
   defaultLocation: Ubicación Predeterminada
@@ -137,37 +117,28 @@ general:
   doesNotMatchUserRecord: 'Cargado {description} no coincide con la información en Ilios, cuál es "{record}"'
   downloadCompetencyMap: Descargar el mapa de competencias
   downloadResults: Descargar Resultados
-  draft: Borrador
-  durationInDays: Duración (en Días)
   durationInYears: Duración (en Años)
   email: Correo
   emails: Correos
   enabled: Activa
-  endLevel: nivel final
   equipmentRequired: Equipo Requerido
   errorDisplayMessage: "Lo sentimos! Algo salió mal con su pedido. Por favor, trate de actualizar la página o revise de nuevo más tarde."
   error: Error
   errors: Errores
   errorSavingAuthentication: "Las cuentas fueron creadas para estos usuarios, pero no podrán iniciar sesión.  Esto generalmente sucede cuando el nombre de usuario ya existe, pero pertenece a otro usuario.  Por favor seleccione cada usuario y crear un nombre de usuario y contraseña."
   errorSavingUser: "Estos usuarios fueron incapaces de salvarse. Por favor, compruebe que no existen."
-  exclude: Excluir
   excludeFromSync: Excluir de la sincronización
   existingGroup: Grupo Existente
   fileTypeError: "Archivo mal subido: {fileType} no parece ser válido ficha separado archivo."
   filterByNameOrEmail: Aplicar un Filtro por nombre o email
   filterByTitle: Filtrar por Título
-  filterByProgram: Filtrar por Programa
   filterBySchool: Filtrar por Escuela
   filterByYear: Filtrar por Año
   finalErrorDisplayMessage: "¡Zoinks! Algo es muy incorrecto. Por favor refresque su navegador y avísenos en support@iliosproject.org si sigue viendo este mensaje. "
-  finalize: Finalizar
-  finalized: Finalizado
-  finalizeReportConfirmation: "Finalizando este informe, lo salvará en su estado actual a la base de datos de Ilios como un objeto de la referencia permanente, y ninguna otra edición será posible."
   finalResults: Resultados Finales
   findInstructor: Buscar Instructor
   firstName: Nombre
   for: Para
-  formative: formativa
   formerStudent: Antiguo Estudiante
   fullName: Nombre completo
   good: Bueno
@@ -181,9 +152,7 @@ general:
   ilios: Ilios
   iliosUpdatePending: "¡Huzzah, hemos hecho Ilios mejor! Obtendrá las cosas nuevas en su próximo inicio de sesión, o haga clic para actualizar ahora."
   iliosUserGuide: Ilios Guía de usuario
-  includedInGrade: Incluido en Grado
   institutionalInformation: Información Institucional
-  instructionalMethod: Método de Instrucción
   instructionalMethods: Métodos de Instrucción
   instructionalTime: Tiempo de Instrucción
   instructionalTimeReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Cada instructor se enumara junto con los datos del curso."
@@ -196,9 +165,6 @@ general:
   invalidateTokens: Invalida Todos los Tokens
   invalidateTokensConfirmation: Esto invalidará todas los tokens de API existentes y ustedes tendrán que generar nuevos tokens para cualquier aplicación que tengan. ¿Está seguro que desea hacer esto?
   invalidUsers: Usuarios no Válidos
-  isSelective: Es selectivo
-  itemCode: Código de artículo
-  isTrack: Es la Pista
   language:
     en-us: English (en)
     es: Español (es)
@@ -232,13 +198,11 @@ general:
   manageUsersSummaryTitle: Usuarios de Ilios
   matchGroups: Igualar Grupos
   matriculationYear: Año de Inscripción
-  maximum: Máximo
   members: Miembros
   meshTerm: Término de MeSH
   message: Mensaje
   metaDescription: Gestión Curricular para las Profesiones de la Salud.
   middleName: Segundo Nombre
-  minimum: Mínimo
   missingCompetenciesMessage: Favor de agregar por lo menos una competencia para este año del programa.
   missingRequiredUsername: "'Nombre de Usuario' se requiere para la entrada al sistema; este usuario será incapaz a la entrada al sistema hasta que un username sea entrado"
   modifyUserPassword: Haga clic aquí para restablecer la contraseña.
@@ -248,10 +212,8 @@ general:
   myCourses: Mis Cursos
   myProfile: Mi Perfil
   name: Nombre
-  narrative: narrativa
   navigationCompleteText: La navegación de la página de Ilios está completa. Ahora puede navegar por el contenido de la página como desee.
   newCourse: Curso Nuevo
-  newCurriculumInventoryReport: Nuevo Informe de Inventario de Plan de Estudios
   newDomain: Nuevo Dominio
   newInstructorGroup: Nuevo Grupo de Instructores
   newLearnerGroup: Nuevo Grupo de Aprendedores
@@ -259,7 +221,6 @@ general:
   newProgramYear: Nuevo Año Del Programa
   newReport: Nuevo Reporte
   newSchool: Nueva Escuela
-  newSequenceBlock: Nuevo Bloque de Secuencia
   newSessionType: Nuevo tipo de sesión
   newToken: Nuevo Símbolo (Token)
   newUser: Nuevo Usuario
@@ -270,30 +231,15 @@ general:
   noCohortsAvailableForStudentAssignment: "No hay cohortes disponibles para la asignación de estudiantes en esta escuela."
   noInstitutionalInformation: No se ha configurado información institucional para esta escuela.
   noMembers: No hay miembros de grupo de aprendedores que manejar
-  nonClerkshipSequenceBlocks: Bloques de secuencia que no son de la rotación
   nonStudent: No estudiante
   noPopulateGroup: ¡No! Déjelo vacío. Voy a agregar alumnos yo mismo.
   noProgramYears: No hay años de programa en este programa
-  noSequenceBlocks: No hay bloques de secuencia en este informe.
-  noSubSequenceBlocks: Este bloque de la secuencia no tiene bloques de secuencia anidadas.
-  notApplicableAbbr: n/d
   notFound: No Encontrado
-  numberOfEvents: Numero de eventos
-  numberOfEventsFeaturingThisAsThePrimaryMethod: Número de eventos con esto como método principal
-  numberOfExams: Numero de Exámenes
-  numberOfFormalInstructionalHoursPerCourse: Número de horas formales de instrucción por curso
-  numberOfFormativeAssessments: Número de evaluaciones formativas
   numberOfGroups: Número de grupos
   numberOfGroupsToGenerate: número de grupos para generar.
-  numberOfNonPrimaryOccurrencesOfThisMethod: Número de ocurrencias no primarias de este método
-  numberOfSummativeAssessments: Número de evaluaciones sumativas
   objective: Objetivo
   offeringDate: Fecha de Ofrecimiento
-  optionalElective: Opcional (electiva)
-  ordered: Ordenado
-  orderInSequence: Orden en la Secuencia
   otherId: Otro ID
-  parallel: Paralelo
   password: Contraseña
   pendingUpdatesSummary: "{count, plural, =1 {Hay un usuario que necesita atención.} other {Hay # usuarios que necesitan atención.}}"
   pendingUpdatesSummaryTitle: Actualizaciones del Directorio del Campus
@@ -304,18 +250,13 @@ general:
     updateIlios: Actualice Ilios
   performsNonLearnerFunctions: Performe Funciones de Non-Aprendedor
   permissions: Permisos
-  phasesStartToEnd: Fases (inicio - final)
   phone: Teléfono
-  physicianCompetencyReferenceSet: Conjunto de referencia de competencias médicas
-  physicianCompetencyReferenceSetAbbr: PCRS
   populateGroup: ¿Quieres auto-llenar este grupo?
   preferredEmail: Email preferido
   prev: Anterior
   primary: Principal
   primaryCohort: Clase de la Graduación Principal
   primarySchool: Escuela Primaria
-  programExpectations: Expectativas del programa
-  programExpectationsId: ID de expectativas del programa
   programObjective: Objetivo de Programa
   programObjectives: Objetivos de Programa
   programs: Programas
@@ -334,18 +275,13 @@ general:
   removeCohort: Remover Cohorte
   removeLearnerToCohort: "{count, plural, =1 {Quite estudiante a {cohort}} other {Quite # estudiantes a {cohort}}}"
   removePrimaryCohort: Remover Principal Cohorte
-  reportDescriptionPlaceholder: Por favor entre en una breve descripción sobre este informe.
   reportDisplayDescriptionWithObject: 'Este informe muestra todos los {subject} asociados con {objectType} "{object}" {year} en {school}.'
   reportDisplayDescriptionWithoutObject: "Este informe muestra todos los {subject} en {school}."
   reportDisplayTitleWithObject: "Todos {subject} para {object} en {school}"
   reportDisplayTitleWithoutObject: "Todos {subject} en {school}"
-  reportName: Nombre de Informe
-  reportNamePlaceholder: Por favor Introduzca un Nombre de Informe
   reportResultsExceedMax: Solo se muestran los primeros {resultsLengthMax} resultados. Descargar informe para ver todos los resultados.
   reports: Informes
   reportTitle: Título de Informe
-  requiredInTrack: Requerido en Pista
-  resourceTypes: Tipos de recursos
   resultsSummary: Resumen de Resultados
   root: Root
   run: Ejecutar
@@ -367,12 +303,6 @@ general:
   selectCurriculumReportType: Seleccionar tipo de informe curricular
   selectPolite: (seleccione uno, por favor)
   selectUser: Seleccione usuario
-  sequenceBlock: Bloque de Secuencia
-  sequenceBlockDescriptionPlaceholder: "Introduzca una descripción para este bloque de la secuencia."
-  sequenceBlockIsSelective: Esta bloque de la secuencia ha sido marcada como selectiva.
-  sequenceBlocks: Bloques de la Secuencia
-  sequenceBlockTitlePlaceholder: "Introduzca un título para esta bloque de la secuencia"
-  sequenceNumber: No. de Secuencia
   sessionObjective: Objetivo de Sesión
   sessionObjectives: Objetivos de Sesión
   sessionObjectivesReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera el objetivo de cada sesión junto con los instructores y los datos del curso."
@@ -387,7 +317,6 @@ general:
   showSubgroupEvents: Mostrar eventos para todos los grupos subordinados
   singleGroup: Solo grupo
   skipToMainContent: Saltar al contenido principal
-  startLevel: nivel de inicio
   startOver: Empezar de Nuevo
   stateOrProvince: Estado o Provincia
   statusCode: Código de estado
@@ -401,15 +330,6 @@ general:
   subTerms: Términos subordinados
   successfullyInvalidatedTokens: Todas los tokens existentes fueron con éxito invalidadas
   successfullyRemovedTerm: Término Eliminado Correctamente
-  table1ProgramExpectationsMappedToPcrs: "Tabla 1: Expectativas del programa asignadas a PCRS"
-  table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock: "Tabla 2: Método de instrucción primario por bloque de secuencia de no rotación"
-  table3aNonClerkshipSequenceBlockInstructionalTime: "Tabla 3-A: Tiempo de instrucción del bloque de secuencia de no rotación"
-  table3bClerkshipSequenceBlockInstructionalTime: "Tabla 3-B: Tiempo de instrucción del bloque de secuencia de la rotación"
-  table4InstructionalMethodCounts: "Tabla 4: recuentos de métodos de instrucción"
-  table5NonClerkshipSequenceBlockAssessmentMethods: "Tabla 5: Métodos de evaluación de bloque de secuencia no rotación"
-  table6ClerkshipSequenceBlockAssessmentMethods: "Tabla 6: Métodos de evaluación del bloque de secuencia de la rotación"
-  table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Tabla 7: Todos los eventos con evaluaciones etiquetadas como formativas o sumativas"
-  table8AllResourceTypes: "Tabla 8: Todos los tipos de recursos"
   taggedTerms: Términos Etiquetados
   taggedTermsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera cada conjunto de términos junto los datos del curso."
   taggedTermsReportSummaryMultiSchool: "report for {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Se enumera cada conjunto de términos junto los datos del curso."
@@ -421,10 +341,7 @@ general:
   thisTermHasSubTerms: Este término tiene subtérminos.
   tokenInfo: "Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en {apiDocsLink}."
   tooManyResults: "La búsqueda ha devuelto más de {count} resultados.  Para ver mejores resultados, intente su búsqueda otra vez con condiciones adicionales."
-  total: Total
   totalErrors: "{count, plural, =1 {Hay un error} other {Hay # errores}}"
-  totalTime: Horas Totales
-  totalWeeks: Semanas totales
   tryHarder: Esforzarse Más
   unableToReconnect: ¡No se puede volver a conectar!
   unableToSyncUser: "Incapaz de sincronizar al usuario del directorio, por favor asegure el Campus ID es correcto."
@@ -434,7 +351,6 @@ general:
   unassignedStudentsSummaryTitle: Estudiantes que Requieren Asignación de Cohorte
   unlock: Desbloquea
   unlockCourse: Desbloquea el curso
-  unordered: No Ordenado
   unsupportedBrowserFailure: Su navegador no está soportado oficialmente por Ilios y no puede completar esta acción.  Por favor inténtalo de nuevo utilizando un navegador actualizado.
   update: Actualizar
   updateUserFromDirectory: Actualizar este registro del usuario del directorio del campus.
@@ -451,7 +367,6 @@ general:
   usersSelected: "{count, plural, =1 {1 usuario seleccionado} other {# usuarios seleccionados}}"
   validUntil: ¿Cuándo debe este símbolo (token) deje de funcionar??
   validUsers: Usuarios Válidos
-  verificationPreviewFor: "Vista previa de verificación para {name}"
   viewAll: Ver Todos
   vocabulariesBySessionType: Vocabularios por Tipo de Sesión
   weak: Débil

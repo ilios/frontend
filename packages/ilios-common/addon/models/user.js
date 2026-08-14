@@ -337,12 +337,6 @@ export default class User extends Model {
     if (this._programYearsData.isResolved && this._programYearsData.value.length) {
       return true;
     }
-    if (
-      this._administeredCurriculumInventoryReportsData.isResolved &&
-      this._administeredCurriculumInventoryReportsData.value.length
-    ) {
-      return true;
-    }
     if (this._directedSchoolsData.isResolved && this._directedSchoolsData.value.length) {
       return true;
     }

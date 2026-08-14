@@ -22,7 +22,6 @@ general:
   allVocabularies: All Vocabularies
   anything: Anything
   assessment: Assessment
-  assessments: Assessments
   assessmentMethods: Assessment Methods
   assessmentOption: Assessment Option
   associatedCourses: Associated Courses
@@ -31,15 +30,11 @@ general:
   attribute: Attribute
   availableInstructors: Available Instructors
   availableCohorts: Available Cohorts
-  averageHoursOfInstructionPerWeek: Average Hours of Instruction Per Week
   backToAdminDashboard: Back to Admin Dashboard
   backToPrograms: Back to Programs
   backToProgramYears: Back to Program Years
-  backToReport: Back to Report
-  backToReports: Back to Reports
   backToSchool: Back to School
   backToSchools: Back to Schools
-  backToTableOfContents: Back to Table of Contents
   backToVocabularies: Back to Vocabularies
   bad: Bad
   badCredentials: Incorrect username or password
@@ -47,10 +42,9 @@ general:
   canNotCreateProgramYear: "Program year cannot be created because there are no more available academic years."
   canNotContinueWithInvalidRecords: "Cannot continue with these invalid records, please fix and re-upload the file."
   canNotDeleteCourse: This course cannot be deleted because it is published, scheduled, has been rolled over, or you do not have permission.
-  canNotDeleteCurriculumInventoryReport: This curriculum inventory report cannot be deleted because you do not have permission.
   canNotDeleteInstructorGroup: This instructor group cannot be deleted because it is either attached to a course or you do not have permission.
   canNotDeleteLearnerGroup: This learner group cannot be deleted because it is either attached to a session or you do not have permission.
-  canNotDeleteProgram: This program cannot be deleted because it is attached to a curriculum inventory report or program year, or you do not have permission.
+  canNotDeleteProgram: This program cannot be deleted because it is attached to a program year or other data, or you do not have permission.
   canNotDeleteProgramYear: This program year cannot be deleted because it is associated with a cohort with students or groups, or you do not have permission.
   canNotDeleteProgramYearObjective: This program year objective cannot be deleted because it is associated with a course, or you do not have permission.
   canNotDeleteReport: This report cannot be deleted because it is is still loading.
@@ -59,20 +53,14 @@ general:
   canNotDeleteSchoolSessionType: This school session type cannot be deleted because you do not have permission.
   canNotDeleteSchoolVocabulary: This school vocabulary cannot be deleted because it has at least one term, or you do not have permission.
   canNotDeleteSchoolVocabularyTerm: This school vocabulary term cannot be deleted because it has at least one sub-term, has an association, or you do not have permission.
-  canNotDeleteSequenceBlock: This sequence block cannot be deleted because you do not have permission.
   canNotLockCourse: This course cannot be locked because you do not have permission.
   canNotLockProgramYear: This program year cannot be locked because you do not have permission.
   canNotUnlockCourse: This course cannot be unlocked because you do not have permission.
   canNotUnlockProgramYear: This program year cannot be unlocked because you do not have permission.
   changeAlertRecipients: Change-alert Recipients
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
-  childSequenceOrder: Child Sequence Order
   city: City
-  clearDates: Clear Dates
   clearErrors: Clear Errors and Return to Ilios
-  clerkship: Clerkship
-  clerkshipSequenceBlocks: Clerkship Sequence Blocks
-  clickToAddDescription: Click to add a description.
   clickToAddTermDescription: Click to add descriptive notes
   cohortMembersNotInGroup: "Cohort Members NOT assigned to {groupTitle} "
   color: Color
@@ -85,7 +73,6 @@ general:
   confirmRemoveProgram: Are you sure you want to delete this program? This action cannot be undone.
   confirmRemoveProgramYear: "Are you sure you want to delete this program year? Doing so will also remove its associated student cohort and groups, and associations with {courseCount} course(s), and cannot be undone."
   confirmRemoveReport: Are you sure you want to delete this report? This action cannot be undone.
-  confirmRemoveSequenceBlock: Are you sure you want to delete this sequence block? This action cannot be undone.
   confirmRemoveSessionType: Are you sure you want to delete this session type? This action cannot be undone.
   confirmRemoveVocabulary: Are you sure you want to delete this vocabulary? This action cannot be undone.
   connectionLost: Connection Lost.
@@ -99,7 +86,6 @@ general:
   copyWithLearners: Copy with Learners
   copyWithoutLearners: Copy without Learners
   couldNotFindUserCampusId: "Could not find a user with the campusId {campusId}"
-  countAsOneOffering: Count as one offering
   countTotal: "{total} total"
   country: Country
   countryCode: Country Code
@@ -114,12 +100,6 @@ general:
   createBulk: Upload Multiple Users
   createNew: Create New
   createNewGroup: Create This Group
-  curriculumInventoryReport: Curriculum Inventory Report
-  curriculumInventoryReportRollover: Rollover Report
-  curriculumInventoryReportRolloverSummary: "This action will copy the structure of this report to be used in your target year. It will not copy course information, only the higher level sequence block structure. You will need to add the appropriate course information and modify the sequence block start and end dates once you have rolled over the existing report structure."
-  curriculumInventoryReportRolloverSuccess: Report-Rollover Completed Successfully
-  curriculumInventoryReports: Curriculum Inventory Reports
-  curriculumInventoryReportsTitlePlaceholder: Enter a title for this report
   curriculumReports: Curriculum Reports
   deactivate: Deactivate
   defaultInstructors: Default Instructors
@@ -137,37 +117,28 @@ general:
   doesNotMatchUserRecord: 'Uploaded {description} does not match the information in Ilios, which is "{record}"'
   downloadCompetencyMap: Download Competency Map
   downloadResults: Download Results
-  draft: Draft
-  durationInDays: Duration (in Days)
   durationInYears: Duration (in Years)
   email: Email
   emails: Emails
   enabled: Enabled
-  endLevel: End Level
   equipmentRequired: Equipment Required
   errorDisplayMessage: Sorry! Something went wrong with your request. Please try refreshing or check back later.
   error: Error
   errors: Errors
   errorSavingAuthentication: "Accounts were created for these users, but they will not be able to login.  This usually happens when the username already exists, but belongs to another user.  Please click on each user in the list and create a username and password for them."
   errorSavingUser: These users were unable to be saved.  Please verify that they do not already exist.
-  exclude: Exclude
   excludeFromSync: Exclude From Sync
   existingGroup: Existing Group
   fileTypeError: "Bad file type: {fileType} does not appear to be a properly delimited file."
   filterByNameOrEmail: Filter by name or email
   filterByTitle: Filter by Title
-  filterByProgram: Filter by Program
   filterBySchool: Filter by School
   filterByYear: Filter by Year
   finalErrorDisplayMessage: Zoinks! Something is very wrong. Please refresh your browser and let us know at support@iliosproject.org if you continue to see this message.
-  finalize: Finalize
-  finalized: Finalized
-  finalizeReportConfirmation: "By finalizing this report, you will be saving it in its current state to the Ilios database as a permanent reference object, and no further edits will be possible."
   finalResults: Final Results
   findInstructor: Find Instructor
   firstName: First Name
   for: For
-  formative: Formative
   formerStudent: Former Student
   fullName: Full Name
   good: Good
@@ -181,9 +152,7 @@ general:
   ilios: Ilios
   iliosUpdatePending: "Huzzah! We've made Ilios better. You will get the new stuff on your next login, or click to update now."
   iliosUserGuide: Ilios User Guide
-  includedInGrade: Included in Grade
   institutionalInformation: Institutional Information
-  instructionalMethod: Instructional Method
   instructionalMethods: Instructional Methods
   instructionalTime: Instructional Time
   instructionalTimeReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each attached instructor is listed along with course data."
@@ -196,9 +165,6 @@ general:
   invalidateTokens: Invalidate All Tokens
   invalidateTokensConfirmation: This will invalidate all existing API tokens and you will need to generate new ones for any applications you have. Are you sure you want to do this?
   invalidUsers: Invalid Users
-  isSelective: Is Selective
-  isTrack: Is Track
-  itemCode: Item Code
   language:
     en-us: English (en)
     es: Español (es)
@@ -232,13 +198,11 @@ general:
   manageUsersSummaryTitle: Ilios Users
   matchGroups: Match Groups
   matriculationYear: Matriculation Year
-  maximum: Maximum
   members: Members
   meshTerm: MeSH Term
   message: Message
   metaDescription: Curriculum Management for the Health Professions.
   middleName: Middle Name
-  minimum: Minimum
   missingCompetenciesMessage: Please add at least one competency to this program year.
   missingRequiredUsername: "'Username' is required for login; this user will be unable to login until a username is entered."
   modifyUserPassword: Click here to reset password.
@@ -248,10 +212,8 @@ general:
   myCourses: My Courses
   myProfile: My Profile
   name: Name
-  narrative: Narrative
   navigationCompleteText: Ilios page navigation is complete. You may now navigate the page content as you wish.
   newCourse: New Course
-  newCurriculumInventoryReport: New Curriculum Inventory Report
   newDomain: New Domain
   newInstructorGroup: New Instructor Group
   newLearnerGroup: New Learner Group
@@ -259,7 +221,6 @@ general:
   newProgramYear: New Program Year
   newReport: New Report
   newSchool: New School
-  newSequenceBlock: New Sequence Block
   newSessionType: New Session Type
   newToken: New Token
   newUser: New User
@@ -270,30 +231,15 @@ general:
   noCohortsAvailableForStudentAssignment: There are no cohorts available for student assignment in this school.
   noInstitutionalInformation: No institutional information has been configured for this school.
   noMembers: There are no learner group members to manage
-  nonClerkshipSequenceBlocks: Non-Clerkship Sequence Blocks
   nonStudent: Non-Student
   noPopulateGroup: "No!  Leave it empty, I'll add students myself."
   noProgramYears: There are no program years in this program
-  noSequenceBlocks: There are no sequence blocks in this report.
-  noSubSequenceBlocks: This sequence block has no nested sequence blocks.
-  notApplicableAbbr: n/a
   notFound: Not Found
-  numberOfEvents: Number of Events
-  numberOfEventsFeaturingThisAsThePrimaryMethod: Number of Events Featuring This as the Primary Method
-  numberOfExams: Number of Exams
-  numberOfFormalInstructionalHoursPerCourse: Number of Formal Instructional Hours Per Course
-  numberOfFormativeAssessments: Number of Formative Assessments
   numberOfGroups: Number of Groups
   numberOfGroupsToGenerate: Number of groups to generate.
-  numberOfNonPrimaryOccurrencesOfThisMethod: Number of Non-Primary Occurrences of This Method
-  numberOfSummativeAssessments: Number of Summative Assessments
   objective: Objective
   offeringDate: Offering Date
-  optionalElective: Optional (elective)
-  ordered: Ordered
-  orderInSequence: Order in Sequence
   otherId: Other ID
-  parallel: Parallel
   password: Password
   pendingUpdatesSummary: "{count, plural, =1 {There is one user needing attention.} other {There are # users needing attention.}}"
   pendingUpdatesSummaryTitle: Updates from the Campus Directory
@@ -304,18 +250,13 @@ general:
     updateIlios: Update Ilios
   performsNonLearnerFunctions: Performs Non-Learner Functions
   permissions: Permissions
-  phasesStartToEnd: Phases (Start - End)
   phone: Phone
-  physicianCompetencyReferenceSet: Physician Competency Reference Set
-  physicianCompetencyReferenceSetAbbr: PCRS
   populateGroup: Do you want to auto-populate this group?
   preferredEmail: Preferred Email
   prev: Prev
   primary: Primary
   primaryCohort: Primary Cohort
   primarySchool: Primary School
-  programExpectations: Program Expectations
-  programExpectationsId: Program Expectations ID
   programObjective: Program Objective
   programObjectives: Program Objectives
   programs: Programs
@@ -334,18 +275,13 @@ general:
   removeCohort: Remove Cohort
   removeLearnerToCohort: "{count, plural, =1 {Remove learner to {cohort}} other {Remove # learners to {cohort}}}"
   removePrimaryCohort: Remove Primary Cohort
-  reportDescriptionPlaceholder: Please enter a brief description about this report.
   reportDisplayDescriptionWithObject: 'This report shows all {subject} associated with {objectType} "{object}" {year} in {school}.'
   reportDisplayDescriptionWithoutObject: "This report shows all {subject} in {school}."
   reportDisplayTitleWithObject: "All {subject} for {object} in {school}"
   reportDisplayTitleWithoutObject: "All {subject} in {school}"
-  reportName: Report Name
-  reportNamePlaceholder: Please enter a report name.
   reportResultsExceedMax: Only the first {resultsLengthMax} results shown. Download report to see all results.
   reports: Reports
   reportTitle: Report Title
-  requiredInTrack: Required In Track
-  resourceTypes: Resource Types
   resultsSummary: Results Summary
   root: Root
   run: Run
@@ -367,12 +303,6 @@ general:
   selectCurriculumReportType: Select Curriculum Report Type
   selectPolite: (please select one)
   selectUser: Select User
-  sequenceBlock: Sequence Block
-  sequenceBlockDescriptionPlaceholder: Enter a description for this sequence block.
-  sequenceBlockIsSelective: This sequence block has been marked as a selective.
-  sequenceBlocks: Sequence Blocks
-  sequenceBlockTitlePlaceholder: Enter a title for this sequence block
-  sequenceNumber: "Sequence #"
   sessionObjective: Session Objective
   sessionObjectives: Session Objectives
   sessionObjectivesReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each session objective is listed along with instructors and course data."
@@ -387,7 +317,6 @@ general:
   showSubgroupEvents: Show events for all subgroups
   singleGroup: Single Group
   skipToMainContent: Skip to main content
-  startLevel: Start Level
   startOver: Start Over
   stateOrProvince: State or Province
   statusCode: Status Code
@@ -401,15 +330,6 @@ general:
   subTerms: Sub-terms
   successfullyInvalidatedTokens: All existing tokens were successfully invalidated
   successfullyRemovedTerm: Term Deleted Successfully
-  table1ProgramExpectationsMappedToPcrs: "Table 1: Program Expectations Mapped to PCRS"
-  table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock: "Table 2: Primary Instructional Method by Non-Clerkship Sequence Block"
-  table3aNonClerkshipSequenceBlockInstructionalTime: "Table 3-A: Non-Clerkship Sequence Block Instructional Time"
-  table3bClerkshipSequenceBlockInstructionalTime: "Table 3-B: Clerkship Sequence Block Instructional Time"
-  table4InstructionalMethodCounts: "Table 4: Instructional Method Counts"
-  table5NonClerkshipSequenceBlockAssessmentMethods: "Table 5: Non-Clerkship Sequence Block Assessment Methods"
-  table6ClerkshipSequenceBlockAssessmentMethods: "Table 6: Clerkship Sequence Block Assessment Methods"
-  table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Table 7: All Events with Assessments Tagged as Formative or Summative"
-  table8AllResourceTypes: "Table 8: All Resource Types"
   taggedTerms: Tagged Terms
   taggedTermsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each set of attached terms is listed along with course data."
   taggedTermsReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each set of attached terms is listed along with course data."
@@ -421,10 +341,7 @@ general:
   thisTermHasSubTerms: This term has sub-terms.
   tokenInfo: "API Tokens are used to programmatically access Ilios data.  Your token is like a password - anyone who has it can make changes on your behalf.  Read more in the documentation at {apiDocsLink}."
   tooManyResults: "Search returned more than {count} results.  To see better results try your search again with more terms."
-  total: Total
   totalErrors: "{count, plural, =1 {There is an error} other {There are # errors}}"
-  totalTime: Total time
-  totalWeeks: Total Weeks
   tryHarder: Try Harder
   unableToReconnect: Unable to Reconnect!
   unableToSyncUser: "Unable to sync user from directory, please ensure the Campus ID is correct."
@@ -434,7 +351,6 @@ general:
   unassignedStudentsSummaryTitle: Students Requiring Cohort Assignment
   unlock: Unlock
   unlockCourse: Unlock course
-  unordered: Unordered
   unsupportedBrowserFailure: Your browser is not officially supported by Ilios and cannot complete this action. Please try again using an up-to-date browser.
   update: Update
   updateUserFromDirectory: Update this user record from the campus directory.
@@ -451,7 +367,6 @@ general:
   usersSelected: "{count, plural, =1 {1 user selected} other {# users selected}}"
   validUntil: When should this token stop working?
   validUsers: Valid Users
-  verificationPreviewFor: "Verification Preview for {name}"
   viewAll: View All
   vocabulariesBySessionType: Vocabularies by Session Type
   weak: Weak

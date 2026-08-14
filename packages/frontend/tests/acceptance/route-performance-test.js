@@ -323,28 +323,4 @@ module('Acceptance | performance', function (hooks) {
     assert.strictEqual(currentRouteName(), 'users', 'current route name is correct');
     assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
-
-  test('/curriculum-inventory-reports', async function (assert) {
-    this.program = await this.server.create('program', { school: this.school });
-
-    for (let i = 0; i < 10; i++) {
-      await this.server.create('curriculum-inventory-report', {
-        program: this.program,
-      });
-    }
-
-    let start = performance.now();
-
-    await visit('/curriculum-inventory-reports');
-
-    let end = performance.now();
-    let duration = end - start;
-
-    assert.strictEqual(
-      currentRouteName(),
-      'curriculum-inventory-reports',
-      'current route name is correct',
-    );
-    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
-  });
 });
