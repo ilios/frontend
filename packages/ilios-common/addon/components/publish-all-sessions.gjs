@@ -55,33 +55,11 @@ export default class PublishAllSessionsComponent extends Component {
     return this.overridableSessions.filter((s) => !this.publishedSessions.includes(s));
   }
 
-  get sortedPublishableSessions() {
-    if (this.args.sortCompleteBy.includes('offerings')) {
-      return this.publishableSessions.sort((a, b) => a.offerings.length - b.offerings.length);
-    }
-
-    if (this.args.sortCompleteBy.includes('terms')) {
-      return this.publishableSessions.sort((a, b) => a.terms.length - b.terms.length);
-    }
-
-    if (this.args.sortCompleteBy.includes('objectives')) {
-      return this.publishableSessions.sort(
-        (a, b) => a.sessionObjectives.length - b.sessionObjectives.length,
-      );
-    }
-
-    const locale = this.intl.get('primaryLocale');
-    return this.publishableSessions.sort((a, b) => a.title.localeCompare(b.title, locale));
-  }
-
-  get sortedPublishableAscending() {
-    return this.args.sortCompleteBy.search(/desc/) === -1;
-  }
-
-  get orderedPublishableSessions() {
-    return this.sortedPublishableAscending
-      ? this.sortedPublishableSessions
-      : this.sortedPublishableSessions.reverse();
+  // sessions with no required, but possible optional, publication issues
+  get publishableSessions() {
+    return this.sessions.filter((session) => {
+      return session.requiredPublicationIssues === 0;
+    });
   }
 
   // Incomplete Sessions: cannot publish
@@ -202,7 +180,11 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get sessionsToPublish() {
-    return this.userSelectedSessionsToPublish;
+    const sessionsToPublish = [...this.publishableSessions, ...this.userSelectedSessionsToPublish];
+
+    return uniqueValues(
+      sessionsToPublish.filter((s) => !this.userSelectedSessionsToSchedule.includes(s)),
+    );
   }
 
   get sessionsToSchedule() {
@@ -222,14 +204,6 @@ export default class PublishAllSessionsComponent extends Component {
 
   get sessionsToAllBeScheduled() {
     return !this.sessionsToPublish?.length;
-  }
-
-  get allSessionsScheduled() {
-    return this.sessionsToSchedule.length === this.overridableSessions.length;
-  }
-
-  get allSessionsPublished() {
-    return this.sessionsToPublish.length === this.overridableSessions.length;
   }
 
   get saveProgressPercent() {
@@ -523,14 +497,14 @@ export default class PublishAllSessionsComponent extends Component {
                 <tr>
                   <SortableTh
                     @colspan={{2}}
-                    @sortedAscending={{this.sortedPublishableAscending}}
+                    @sortedAscending={{this.sortedPublishedAscending}}
                     @onClick={{fn this.setSortCompleteBy "title"}}
                     @sortedBy={{or (eq @sortCompleteBy "title") (eq @sortCompleteBy "title:desc")}}
                   >
                     {{t "general.sessionTitle"}}
                   </SortableTh>
                   <SortableTh
-                    @sortedAscending={{this.sortedPublishableAscending}}
+                    @sortedAscending={{this.sortedPublishedAscending}}
                     @sortType="numeric"
                     @onClick={{fn this.setSortCompleteBy "offerings"}}
                     @sortedBy={{or
@@ -541,7 +515,7 @@ export default class PublishAllSessionsComponent extends Component {
                     {{t "general.offerings"}}
                   </SortableTh>
                   <SortableTh
-                    @sortedAscending={{this.sortedPublishableAscending}}
+                    @sortedAscending={{this.sortedPublishedAscending}}
                     @sortType="numeric"
                     @onClick={{fn this.setSortCompleteBy "terms"}}
                     @sortedBy={{or (eq @sortCompleteBy "terms") (eq @sortCompleteBy "terms:desc")}}
@@ -549,7 +523,7 @@ export default class PublishAllSessionsComponent extends Component {
                     {{t "general.terms"}}
                   </SortableTh>
                   <SortableTh
-                    @sortedAscending={{this.sortedPublishableAscending}}
+                    @sortedAscending={{this.sortedPublishedAscending}}
                     @sortType="numeric"
                     @onClick={{fn this.setSortCompleteBy "objectives"}}
                     @sortedBy={{or

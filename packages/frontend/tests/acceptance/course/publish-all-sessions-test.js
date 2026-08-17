@@ -27,7 +27,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     this.meshDescriptor = await this.server.create('mesh-descriptor');
   });
 
-  test('published sessions do not appear in the cannot publish list #1658', async function (assert) {
+  test('published, not scheduled, sessions do not appear in the cannot publish list #1658', async function (assert) {
     const term = await this.server.create('term');
     const course = await this.server.create('course', {
       year: 2013,
@@ -55,11 +55,19 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     const session3 = await this.server.create('session', {
       course,
       published: true,
-      publishedAsTbd: true,
+      publishedAsTbd: false,
       terms: [term],
     });
     await this.server.create('session-objective', { session: session3 });
     await this.server.create('offering', { session: session3 });
+    const session4 = await this.server.create('session', {
+      course,
+      published: true,
+      publishedAsTbd: true,
+      terms: [term],
+    });
+    await this.server.create('session-objective', { session: session4 });
+    await this.server.create('offering', { session: session4 });
 
     await page.visit({
       courseId: course.id,
@@ -78,7 +86,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     );
     assert.ok(
       page.publishAllSessions.unpublishableSessions.canExpandCollapse,
-      'incomplete/unpublished toggle exists',
+      'incomplete/unpublished sessions toggle exists',
     );
 
     assert.strictEqual(
@@ -86,9 +94,19 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       'Published Sessions (3)',
       'published sessions text/count correct',
     );
-    assert.notOk(page.publishAllSessions.publishedSessions.isExpanded);
-    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions.length, 0);
-    assert.ok(page.publishAllSessions.publishedSessions.canExpandCollapse);
+    assert.notOk(
+      page.publishAllSessions.publishedSessions.isExpanded,
+      'published sessions section collapsed',
+    );
+    assert.strictEqual(
+      page.publishAllSessions.publishedSessions.sessions.length,
+      0,
+      'published sessions count correct',
+    );
+    assert.ok(
+      page.publishAllSessions.publishedSessions.canExpandCollapse,
+      'published sessions toggle exists',
+    );
     await page.publishAllSessions.publishedSessions.toggle();
     assert.ok(page.publishAllSessions.publishedSessions.isExpanded);
     assert.strictEqual(page.publishAllSessions.publishedSessions.sessions.length, 3);
@@ -101,9 +119,12 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       'Yes (1)',
     );
     assert.ok(page.publishAllSessions.publishedSessions.sessions[0].objectives.isLinked);
-
     assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[1].title, 'session 1');
-    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[1].offerings, 'Yes (1)');
+    assert.strictEqual(
+      page.publishAllSessions.publishedSessions.sessions[1].offerings,
+      'n/a',
+      '2nd session, an ILM, has correct offerings value',
+    );
     assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[1].terms, 'Yes (1)');
     assert.strictEqual(
       page.publishAllSessions.publishedSessions.sessions[1].objectives.text,
@@ -124,12 +145,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
   test('after publishing user is returned to the courses route #4099', async function (assert) {
     const terms = await this.server.createList('term', 1);
 
-    // const course = await this.server.create('course', {
-    //   year: 2013,
-    //   school: this.school,
-    //   published: true,
-    //   cohorts: [this.cohort],
-    // });
     const session = await this.server.create('session', {
       course: this.course,
       published: false,
@@ -147,6 +162,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     });
 
     assert.ok(page.publishAllSessions.isVisible);
+    await page.publishAllSessions.overridableSessions.sessions[0].publishAsIs.click();
     await page.publishAllSessions.review.save();
     assert.strictEqual(currentURL(), '/courses/1');
     assert.strictEqual(
@@ -252,73 +268,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.notOk(unpublishableSessions.isExpanded);
   });
 
-  test('publish publishable sessions', async function (assert) {
-    await this.server.create('session', {
-      course: this.course,
-      terms: [this.term],
-      meshDescriptors: [this.meshDescriptor],
-      sessionType: this.sessionTypes[0],
-      sessionObjectives: [await this.server.create('session-objective')],
-      offerings: await this.server.createList('offering', 2),
-    });
-    await this.server.create('session', {
-      course: this.course,
-      terms: [this.term],
-      meshDescriptors: [this.meshDescriptor],
-      sessionType: this.sessionTypes[0],
-      sessionObjectives: [await this.server.create('session-objective')],
-      offerings: await this.server.createList('offering', 2),
-    });
-
-    await page.coursePage.visit({
-      courseId: this.course.id,
-    });
-
-    const { sessions } = page.coursePage.courseSessions.sessionsGrid;
-    assert.strictEqual(sessions.length, 2, 'course sessions length correct');
-    assert.strictEqual(sessions[0].row.title, 'session 0', 'first course session title correct');
-    assert.strictEqual(
-      sessions[0].row.publicationStatus.icon.title,
-      'Not Published',
-      'first session is unpublished',
-    );
-    assert.strictEqual(sessions[1].row.title, 'session 1', 'second course session title correct');
-    assert.strictEqual(
-      sessions[1].row.publicationStatus.icon.title,
-      'Not Published',
-      'second course session is unpublished',
-    );
-
-    await page.visit({
-      courseId: this.course.id,
-    });
-
-    const { publishedSessions } = page.publishAllSessions;
-    assert.strictEqual(
-      publishedSessions.title,
-      'Published Sessions (2)',
-      'publishable sessions header correct',
-    );
-    await publishedSessions.toggle();
-    assert.strictEqual(publishedSessions.sessions.length, 2);
-    assert.strictEqual(publishedSessions.sessions[0].title, 'session 0');
-    assert.strictEqual(publishedSessions.sessions[0].url, '/courses/1/sessions/1');
-    assert.strictEqual(publishedSessions.sessions[1].title, 'session 1');
-    assert.strictEqual(publishedSessions.sessions[1].url, '/courses/1/sessions/2');
-
-    assert.strictEqual(
-      page.publishAllSessions.review.confirmation,
-      'Publish 2, schedule 0, and ignore 0 sessions',
-    );
-
-    await page.publishAllSessions.review.save();
-    assert.strictEqual(sessions.length, 2);
-    assert.strictEqual(sessions[0].row.title, 'session 0');
-    assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Published');
-    assert.strictEqual(sessions[1].row.title, 'session 1');
-    assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Published');
-  });
-
   test('publish overridable sessions #2816', async function (assert) {
     await this.server.create('session', {
       course: this.course,
@@ -410,6 +359,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessionType: this.sessionTypes[0],
       sessionObjectives: [await this.server.create('session-objective')],
       offerings: await this.server.createList('offering', 5),
+      published: true,
     });
     await this.server.create('session', {
       course: this.course,
@@ -418,6 +368,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessionType: this.sessionTypes[0],
       sessionObjectives: [await this.server.create('session-objective')],
       offerings: await this.server.createList('offering', 3),
+      published: true,
     });
     await this.server.create('session', {
       course: this.course,
@@ -508,7 +459,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     await pubReview.publishedSessions.table.headers.title.click();
     assert.notOk(pubReview.publishedSessions.table.headers.title.isSortedAscending);
     assert.ok(pubReview.publishedSessions.table.headers.title.isSortedDescending);
-    assert.strictEqual(pubReview.publishedSessions.sessions[0].title, 'session 5');
+    assert.strictEqual(pubReview.publishedSessions.sessions[0].title, 'session 4');
 
     await pubReview.publishedSessions.table.headers.title.click();
     assert.ok(pubReview.publishedSessions.table.headers.title.isSortedAscending);
@@ -528,7 +479,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.notOk(pubReview.overridableSessions.table.headers.offerings.isSortedOn);
     assert.notOk(pubReview.overridableSessions.table.headers.terms.isSortedOn);
     assert.notOk(pubReview.overridableSessions.table.headers.objectives.isSortedOn);
-    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 6');
+    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 5');
 
     await pubReview.overridableSessions.table.headers.title.click();
     assert.notOk(pubReview.overridableSessions.table.headers.title.isSortedAscending);
@@ -538,13 +489,16 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     await pubReview.overridableSessions.table.headers.title.click();
     assert.ok(pubReview.overridableSessions.table.headers.title.isSortedAscending);
     assert.notOk(pubReview.overridableSessions.table.headers.title.isSortedDescending);
-    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 6');
+    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 5');
 
     await pubReview.overridableSessions.table.headers.objectives.click();
     assert.ok(pubReview.overridableSessions.table.headers.objectives.isSortedOn);
     assert.notOk(pubReview.overridableSessions.table.headers.title.isSortedOn);
     assert.ok(pubReview.overridableSessions.table.headers.objectives.isSortedAscending);
     assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 8');
+    await pubReview.overridableSessions.table.headers.objectives.click();
+    assert.notOk(pubReview.overridableSessions.table.headers.objectives.isSortedAscending);
+    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 6');
   });
 
   test('querystring sorts tables', async function (assert) {
@@ -592,6 +546,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessionType: this.sessionTypes[0],
       sessionObjectives: [await this.server.create('session-objective')],
       offerings: await this.server.createList('offering', 2),
+      published: true,
     });
 
     await this.server.create('session', {

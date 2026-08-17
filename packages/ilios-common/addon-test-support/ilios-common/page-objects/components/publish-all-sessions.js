@@ -62,7 +62,7 @@ const definition = {
     },
     sessions: collection('tbody tr', {
       url: attribute('href', '[data-test-title] a'),
-      title: text('[data-test-title]'),
+      title: text('[data-test-title] a'),
       offerings: text('[data-test-offerings]'),
       terms: text('[data-test-terms]'),
       objectives: {
@@ -120,7 +120,7 @@ const definition = {
     },
     sessions: collection('tbody tr', {
       url: attribute('href', '[data-test-title] a'),
-      title: text('[data-test-title]'),
+      title: text('[data-test-title] a'),
       offerings: text('[data-test-offerings]'),
       terms: text('[data-test-terms]'),
       objectives: {
@@ -185,13 +185,15 @@ const definition = {
       publishAsIs: {
         scope: '[data-test-publish-as-is]',
         isChecked: property('checked'),
+        click: clickable(),
       },
       markAsScheduled: {
         scope: '[data-test-mark-as-scheduled]',
         isChecked: property('checked'),
+        click: clickable(),
       },
       url: attribute('href', '[data-test-title] a'),
-      title: text('[data-test-title]'),
+      title: text('[data-test-title] a'),
       offerings: text('[data-test-offerings]'),
       terms: text('[data-test-terms]'),
       objectives: {
