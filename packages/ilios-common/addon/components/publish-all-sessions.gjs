@@ -275,10 +275,10 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   @action
-  publishAllAsIs() {
+  publishAll() {
     this.userSelectedSessionsToSchedule = [];
     this.userSelectedSessionsToPublish = [...this.overridableSessions];
-    this.bulkSelectedAction = 'publishAllAsIs';
+    this.bulkSelectedAction = 'publishAll';
   }
 
   @action
@@ -606,18 +606,18 @@ export default class PublishAllSessionsComponent extends Component {
         <div class="content">
           {{#if this.overridableSessions.length}}
             <fieldset data-test-bulk-selection-actions>
-              <label class="publish-all-as-is">
+              <label class="publish-all">
                 <input
                   type="radio"
                   name="bulk-selection-action"
                   checked={{or
-                    (eq this.bulkSelectedAction "publishAllAsIs")
+                    (eq this.bulkSelectedAction "publishAll")
                     this.sessionsToAllBePublished
                   }}
-                  {{on "click" this.publishAllAsIs}}
-                  data-test-publish-all-as-is
+                  {{on "click" this.publishAll}}
+                  data-test-publish-all
                 />
-                {{t "general.publishAllAsIs"}}
+                {{t "general.publishAll"}}
               </label>
               <label class="mark-all-as-scheduled">
                 <input
@@ -697,9 +697,9 @@ export default class PublishAllSessionsComponent extends Component {
                             name="session-action{{session.id}}"
                             checked={{includes session.id (mapBy "id" this.sessionsToPublish)}}
                             {{on "click" (fn this.toggleSession session)}}
-                            data-test-publish-as-is
+                            data-test-publish
                           />
-                          {{t "general.publishAsIs"}}
+                          {{t "general.publish"}}
                         </label>
                         <label>
                           <input

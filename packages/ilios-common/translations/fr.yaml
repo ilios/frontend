@@ -290,9 +290,8 @@ general:
   publicationStatus: Statut de Publication
   publish: Publier
   publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, et ignorer des {ignoreCount} séances"
-  publishAllAsIs: 'Publier tout "as-is"'
+  publishAll: "Publier tout"
   publishAndOrSchedule: Publier/Prévoir
-  publishAsIs: 'Publier "as-is"'
   publishCourse: Publier Cours
   publishCourseWithMissingItems: Publier Cours, avec {missingItemCount, plural, =1 {1 objet manquant} other {# objets manquants}}
   publishSession: Publier Session

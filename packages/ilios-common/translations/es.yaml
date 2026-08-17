@@ -290,9 +290,8 @@ general:
   publicationStatus: Estado de Publicación
   publish: Publique
   publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
-  publishAllAsIs: Publique Todo Como Es
+  publishAll: Publique Todo
   publishAndOrSchedule: Publique/Programar
-  publishAsIs: Publique Como Es
   publishCourse: Publique Curso
   publishCourseWithMissingItems: Publique Curso, con {missingItemCount, plural, =1 {1 artículo faltante} other {# artículos faltantes}}
   publishSession: Publique La Sesión

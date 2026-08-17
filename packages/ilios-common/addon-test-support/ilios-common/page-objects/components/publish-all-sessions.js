@@ -135,8 +135,8 @@ const definition = {
   overridableSessions: {
     scope: '[data-test-overridable]',
     title: text('> [data-test-title]'),
-    publishAllAsIs: {
-      scope: '[data-test-publish-all-as-is]',
+    publishAll: {
+      scope: '[data-test-publish-all]',
       isChecked: property('checked'),
     },
     markAllAsScheduled: {
@@ -183,7 +183,7 @@ const definition = {
     },
     sessions: collection('tbody tr', {
       publishAsIs: {
-        scope: '[data-test-publish-as-is]',
+        scope: '[data-test-publish]',
         isChecked: property('checked'),
         click: clickable(),
       },

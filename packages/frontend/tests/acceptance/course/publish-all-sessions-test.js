@@ -299,7 +299,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
 
     assert.strictEqual(overridableSessions.title, 'Unpublished Sessions: for review (2)');
     assert.ok(overridableSessions.markAllAsScheduled.isVisible);
-    assert.ok(overridableSessions.publishAllAsIs.isVisible);
+    assert.ok(overridableSessions.publishAll.isVisible);
     const { sessions: list } = overridableSessions;
     assert.strictEqual(list.length, 2);
     assert.strictEqual(list[0].title, 'session 0');
@@ -311,7 +311,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.notOk(list[1].publishAsIs.isChecked);
     assert.ok(list[1].markAsScheduled.isChecked);
 
-    await overridableSessions.publishAllAsIs.click();
+    await overridableSessions.publishAll.click();
     assert.ok(list[0].publishAsIs.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
     assert.ok(list[1].publishAsIs.isChecked);
