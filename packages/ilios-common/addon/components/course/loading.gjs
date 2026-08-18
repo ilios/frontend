@@ -4,7 +4,7 @@ import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
-const noop = () => {};
+import noop from 'ilios-common/helpers/noop';
 <template>
   <BackToCourses />
 
