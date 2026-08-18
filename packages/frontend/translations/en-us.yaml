@@ -169,6 +169,7 @@ general:
     en-us: English (en)
     es: Español (es)
     fr: Français (fr)
+  languagePreference: Preferred Language
   lastName: Last Name
   learner: Learner
   learnerGroupsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each attached learner group is listed along with instructors and course data."
@@ -252,6 +253,7 @@ general:
   permissions: Permissions
   phone: Phone
   populateGroup: Do you want to auto-populate this group?
+  preferences: Preferences
   preferredEmail: Preferred Email
   prev: Prev
   primary: Primary

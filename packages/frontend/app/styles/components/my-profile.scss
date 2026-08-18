@@ -27,9 +27,22 @@
     }
   }
 
-  .my-profile-schools {
+  .my-profile-schools,
+  .user-profile-preferences {
     label {
       @include cm.ilios-label;
+    }
+  }
+
+  .user-profile-preferences {
+    display: block;
+    width: 100%;
+
+    .preferences {
+      align-items: center;
+      display: flex;
+      gap: 0.5em;
+      padding: 1em 0 0;
     }
   }
 

@@ -169,6 +169,7 @@ general:
     en-us: English (en)
     es: Español (es)
     fr: Français (fr)
+  languagePreference: Langue Préférée
   lastName: Nom de famille
   learner: Apprenant
   learnerGroupsReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque groupe d'étudiantes est listée avec des instructeurs et cours données."
@@ -252,6 +253,7 @@ general:
   permissions: Permissions
   phone: Téléphone
   populateGroup: Voulez-vous remplir cette groupe?
+  preferences: Préférences
   preferredEmail: Email préféré
   prev: Précéd.
   primary: Première

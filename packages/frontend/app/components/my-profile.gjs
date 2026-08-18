@@ -6,6 +6,7 @@ import { isPresent } from '@ember/utils';
 import { DateTime } from 'luxon';
 import { task, timeout } from 'ember-concurrency';
 import { uniqueId } from '@ember/helper';
+import { findById, uniqueValues } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import UserProfileRoles from './user-profile-roles';
 import sortBy from 'ilios-common/helpers/sort-by';
@@ -19,6 +20,7 @@ import pipe from 'ilios-common/helpers/pipe';
 import DatePicker from 'ilios-common/components/date-picker';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LocaleChooser from './locale-chooser';
 import { faCheck, faCopy, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class MyProfileComponent extends Component {
@@ -70,6 +72,34 @@ export default class MyProfileComponent extends Component {
     this.maxDate = nintyDaysFromNow.toJSDate();
     this.expiresAt = twoWeeksFromNow.toJSDate();
     this.generatedJwt = null;
+  }
+
+  get locale() {
+    const locale = this.intl.get('primaryLocale');
+    return findById(this.locales, locale);
+  }
+
+  get locales() {
+    return uniqueValues(this.intl.get('locales')).map((locale) => {
+      return { id: locale, text: this.getLocaleLabel(locale) };
+    });
+  }
+
+  getLocaleLabel(locale) {
+    switch (locale) {
+      case 'en-us':
+        return this.intl.t('general.language.en-us');
+      case 'es':
+        return this.intl.t('general.language.es');
+      case 'fr':
+        return this.intl.t('general.language.fr');
+      default:
+        return locale;
+    }
+  }
+
+  get currentLocaleLabel() {
+    return this.getLocaleLabel(this.locale.id);
   }
 
   createNewToken = task(async () => {
@@ -170,6 +200,19 @@ export default class MyProfileComponent extends Component {
             @setYear={{@setPermissionsYear}}
           />
           <LearnerGroups @user={{@user}} />
+          <div class="large-component user-profile-preferences" data-test-user-preferences>
+            <h2 class="title" data-test-title>
+              {{t "general.preferences"}}
+            </h2>
+            <div class="preferences">
+              <label>
+                {{t "general.languagePreference"}}:
+              </label>
+              <span data-test-language-preference>
+                <LocaleChooser />
+              </span>
+            </div>
+          </div>
         </div>
         <section class="token-maintenance" data-test-token-maintenance>
           <h3>

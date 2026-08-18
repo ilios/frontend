@@ -6,7 +6,6 @@ import { defaultValidator } from 'ember-a11y-refocus';
 import NavigationNarrator from 'ember-a11y-refocus/components/navigation-narrator';
 import t from 'ember-intl/helpers/t';
 import GlobalSearchBox from './global-search-box';
-import LocaleChooser from './locale-chooser';
 import UserMenu from './user-menu';
 import UserGuideLink from './user-guide-link';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
@@ -86,7 +85,6 @@ export default class IliosHeaderComponent extends Component {
         {{#if this.showSearch}}
           <GlobalSearchBox @search={{this.search}} />
         {{/if}}
-        <LocaleChooser />
         {{#if this.session.isAuthenticated}}
           <UserMenu />
         {{/if}}
