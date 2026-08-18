@@ -1,5 +1,17 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
+
+  &[data-theme="system"] {
+    color-scheme: light dark;
+  }
+
+  &[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  &[data-theme="dark"] {
+    color-scheme: dark;
+  }
 
   --white: hsl(0, 0%, 98%);
   --bright-white: hsl(0, 0%, 100%);
