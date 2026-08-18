@@ -51,14 +51,22 @@ export default class PublishAllSessionsComponent extends Component {
     return this.sessionsData.isResolved ? this.sessionsData.value : [];
   }
 
-  get unpublishedSessions() {
-    return this.overridableSessions.filter((s) => !this.publishedSessions.includes(s));
+  get unPublishedSessions() {
+    return this.sessions.filter((session) => {
+      return !session.published && !session.publishedAsTbd;
+    });
   }
 
   // sessions with no required, but possible optional, publication issues
   get publishableSessions() {
     return this.sessions.filter((session) => {
-      return session.requiredPublicationIssues === 0;
+      return !session.published && session.requiredPublicationIssues.length === 0;
+    });
+  }
+
+  get schedulableSessions() {
+    return this.overridableSessions.filter((session) => {
+      return !this.sessionsToPublish.includes(session);
     });
   }
 
@@ -103,8 +111,8 @@ export default class PublishAllSessionsComponent extends Component {
   // - may be missing optional requirements
   // - not scheduled
   get publishedSessions() {
-    return this.sessions.filter((s) => {
-      return s.published && !s.publishedAsTbd;
+    return this.sessions.filter((session) => {
+      return session.published && !session.publishedAsTbd;
     });
   }
 
@@ -189,7 +197,7 @@ export default class PublishAllSessionsComponent extends Component {
 
   get sessionsToSchedule() {
     const sessionsToSchedule = [
-      ...this.unpublishedSessions,
+      ...this.schedulableSessions,
       ...this.userSelectedSessionsToSchedule,
     ];
 
