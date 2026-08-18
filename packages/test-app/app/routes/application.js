@@ -7,6 +7,7 @@ export default class ApplicationRoute extends Route {
   @service intl;
 
   async beforeModel(transition) {
+    window.document.documentElement.dataset.theme = 'system';
     await this.session.setup();
     this.session.requireAuthentication(transition, 'login');
     this.intl.setFormats(formats);

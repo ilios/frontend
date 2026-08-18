@@ -54,6 +54,7 @@ module.exports = function (environment) {
       },
       LOCAL_STORAGE_KEY: 'ilios',
       SUPPORTED_LOCALES: ['en-us', 'es', 'fr'],
+      ENABLE_DARK_MODE: process.env.ILIOS_FRONTEND_ENABLE_DARK_MODE ?? false,
     },
   };
 
@@ -67,6 +68,8 @@ module.exports = function (environment) {
 
     //put ember concurrency tasks into debug mode to make errors much easier to spot
     ENV.EmberENV.DEBUG_TASKS = true;
+
+    ENV.APP.ENABLE_DARK_MODE = true;
   }
 
   if (environment === 'test') {
@@ -85,6 +88,7 @@ module.exports = function (environment) {
     ENV.disableServiceWorker = true;
 
     ENV.APP.autoboot = false;
+    ENV.APP.ENABLE_DARK_MODE = true;
   }
 
   return ENV;
