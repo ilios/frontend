@@ -355,200 +355,87 @@ export default class PublishAllSessionsComponent extends Component {
         </span>
       </div>
       <section class="publish-all-sessions-unpublishable" data-test-unpublishable>
-        <button
-          class="title link-button"
-          type="button"
-          aria-expanded={{if @expandIncompleteSessions "true" "false"}}
-          data-test-expand-collapse
-          data-test-title
-          {{on "click" (fn @setExpandIncompleteSessions (not @expandIncompleteSessions))}}
-        >
-          {{t "general.incompleteSessions"}}
-          ({{this.unPublishableSessions.length}})
-          <FaIcon @icon={{if @expandIncompleteSessions faCaretDown faCaretRight}} />
-        </button>
-
-        {{#if @expandIncompleteSessions}}
-          <div class="content" data-test-content>
-            <table class="ilios-table ilios-table-colors sticky-header">
-              <thead>
-                <tr>
-                  <SortableTh
-                    @colspan={{2}}
-                    @sortedAscending={{this.sortedUnPublishableAscending}}
-                    @onClick={{fn this.setSortIncompleteBy "title"}}
-                    @sortedBy={{or
-                      (eq @sortIncompleteBy "title")
-                      (eq @sortIncompleteBy "title:desc")
-                    }}
-                  >
-                    {{t "general.sessionTitle"}}
-                  </SortableTh>
-                  <SortableTh
-                    @sortedAscending={{this.sortedUnPublishableAscending}}
-                    @sortType="numeric"
-                    @onClick={{fn this.setSortIncompleteBy "offerings"}}
-                    @sortedBy={{or
-                      (eq @sortIncompleteBy "offerings")
-                      (eq @sortIncompleteBy "offerings:desc")
-                    }}
-                  >
-                    {{t "general.offerings"}}
-                  </SortableTh>
-                  <SortableTh
-                    @sortedAscending={{this.sortedUnPublishableAscending}}
-                    @sortType="numeric"
-                    @onClick={{fn this.setSortIncompleteBy "terms"}}
-                    @sortedBy={{or
-                      (eq @sortIncompleteBy "terms")
-                      (eq @sortIncompleteBy "terms:desc")
-                    }}
-                  >
-                    {{t "general.terms"}}
-                  </SortableTh>
-                  <SortableTh
-                    @sortedAscending={{this.sortedUnPublishableAscending}}
-                    @sortType="numeric"
-                    @onClick={{fn this.setSortIncompleteBy "objectives"}}
-                    @sortedBy={{or
-                      (eq @sortIncompleteBy "objectives")
-                      (eq @sortIncompleteBy "objectives:desc")
-                    }}
-                  >
-                    {{t "general.objectives"}}
-                  </SortableTh>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each this.orderedUnPublishableSessions as |session|}}
-                  <tr>
-                    <td colspan="2" data-test-title>
-                      <LinkTo @route="session" @model={{session}}>
-                        {{session.title}}
-                      </LinkTo>
-                      <PublicationStatus @item={{session}} />
-                    </td>
-                    {{#if session.offerings.length}}
-                      <td class="yes" data-test-offerings>
-                        {{t "general.yes"}}
-                        ({{session.offerings.length}})
-                      </td>
-                    {{else}}
-                      <td class="no" data-test-offerings>
-                        {{t "general.no"}}
-                      </td>
-                    {{/if}}
-                    {{#if session.terms.length}}
-                      <td class="yes" data-test-terms>
-                        {{t "general.yes"}}
-                        ({{session.terms.length}})
-                      </td>
-                    {{else}}
-                      <td class="no" data-test-terms>
-                        {{t "general.no"}}
-                      </td>
-                    {{/if}}
-                    {{#if session.sessionObjectives.length}}
-                      <td class="yes" data-test-objectives>
-                        {{t "general.yes"}}
-                        ({{session.sessionObjectives.length}})
-                        {{#if session.showUnlinkIcon}}
-                          <LinkTo
-                            @route="session"
-                            @model={{session}}
-                            @query={{hash sessionObjectiveDetails=true}}
-                            title={{t "general.backToTitle" title=session.title}}
-                            data-test-session-link
-                          >
-                            <FaIcon @icon={{faLinkSlash}} />
-                          </LinkTo>
-                        {{/if}}
-                      </td>
-                    {{else}}
-                      <td class="no" data-test-objectives>
-                        {{t "general.no"}}
-                      </td>
-                    {{/if}}
-                  </tr>
-                {{/each}}
-              </tbody>
-            </table>
-          </div>
+        {{#if this.unPublishableSessions.length}}
+          <button
+            class="title link-button"
+            type="button"
+            aria-expanded={{if @expandIncompleteSessions "true" "false"}}
+            data-test-expand-collapse
+            data-test-title
+            {{on "click" (fn @setExpandIncompleteSessions (not @expandIncompleteSessions))}}
+          >
+            {{t "general.incompleteSessions"}}
+            ({{this.unPublishableSessions.length}})
+            <FaIcon @icon={{if @expandIncompleteSessions faCaretDown faCaretRight}} />
+          </button>
+        {{else}}
+          <h3>
+            {{t "general.incompleteSessions"}}
+            ({{this.unPublishableSessions.length}})
+          </h3>
         {{/if}}
-      </section>
-      <section class="publish-all-sessions-published" data-test-published>
-        <button
-          class="title link-button"
-          type="button"
-          aria-expanded={{if @expandCompleteSessions "true" "false"}}
-          data-test-expand-collapse
-          data-test-title
-          {{on "click" (fn @setExpandCompleteSessions (not @expandCompleteSessions))}}
-        >
-          {{t "general.publishedSessions"}}
-          ({{this.publishedSessions.length}})
-          <FaIcon @icon={{if @expandCompleteSessions faCaretDown faCaretRight}} />
-        </button>
 
-        {{#if @expandCompleteSessions}}
-          <div class="content" data-test-content>
-            <table class="ilios-table ilios-table-colors sticky-header">
-              <thead>
-                <tr>
-                  <SortableTh
-                    @colspan={{2}}
-                    @sortedAscending={{this.sortedPublishedAscending}}
-                    @onClick={{fn this.setSortCompleteBy "title"}}
-                    @sortedBy={{or (eq @sortCompleteBy "title") (eq @sortCompleteBy "title:desc")}}
-                  >
-                    {{t "general.sessionTitle"}}
-                  </SortableTh>
-                  <SortableTh
-                    @sortedAscending={{this.sortedPublishedAscending}}
-                    @sortType="numeric"
-                    @onClick={{fn this.setSortCompleteBy "offerings"}}
-                    @sortedBy={{or
-                      (eq @sortCompleteBy "offerings")
-                      (eq @sortCompleteBy "offerings:desc")
-                    }}
-                  >
-                    {{t "general.offerings"}}
-                  </SortableTh>
-                  <SortableTh
-                    @sortedAscending={{this.sortedPublishedAscending}}
-                    @sortType="numeric"
-                    @onClick={{fn this.setSortCompleteBy "terms"}}
-                    @sortedBy={{or (eq @sortCompleteBy "terms") (eq @sortCompleteBy "terms:desc")}}
-                  >
-                    {{t "general.terms"}}
-                  </SortableTh>
-                  <SortableTh
-                    @sortedAscending={{this.sortedPublishedAscending}}
-                    @sortType="numeric"
-                    @onClick={{fn this.setSortCompleteBy "objectives"}}
-                    @sortedBy={{or
-                      (eq @sortCompleteBy "objectives")
-                      (eq @sortCompleteBy "objectives:desc")
-                    }}
-                  >
-                    {{t "general.objectives"}}
-                  </SortableTh>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each this.orderedPublishedSessions as |session|}}
+        {{#if this.unPublishableSessions.length}}
+          {{#if @expandIncompleteSessions}}
+            <div class="content" data-test-content>
+              <table class="ilios-table ilios-table-colors sticky-header">
+                <thead>
                   <tr>
-                    <td colspan="2" data-test-title>
-                      <LinkTo @route="session" @model={{session}}>
-                        {{session.title}}
-                      </LinkTo>
-                      <PublicationStatus @item={{session}} />
-                    </td>
-                    {{#if session.isIndependentLearning}}
-                      <td data-test-offerings>
-                        {{t "general.notApplicableAbbr"}}
+                    <SortableTh
+                      @colspan={{2}}
+                      @sortedAscending={{this.sortedUnPublishableAscending}}
+                      @onClick={{fn this.setSortIncompleteBy "title"}}
+                      @sortedBy={{or
+                        (eq @sortIncompleteBy "title")
+                        (eq @sortIncompleteBy "title:desc")
+                      }}
+                    >
+                      {{t "general.sessionTitle"}}
+                    </SortableTh>
+                    <SortableTh
+                      @sortedAscending={{this.sortedUnPublishableAscending}}
+                      @sortType="numeric"
+                      @onClick={{fn this.setSortIncompleteBy "offerings"}}
+                      @sortedBy={{or
+                        (eq @sortIncompleteBy "offerings")
+                        (eq @sortIncompleteBy "offerings:desc")
+                      }}
+                    >
+                      {{t "general.offerings"}}
+                    </SortableTh>
+                    <SortableTh
+                      @sortedAscending={{this.sortedUnPublishableAscending}}
+                      @sortType="numeric"
+                      @onClick={{fn this.setSortIncompleteBy "terms"}}
+                      @sortedBy={{or
+                        (eq @sortIncompleteBy "terms")
+                        (eq @sortIncompleteBy "terms:desc")
+                      }}
+                    >
+                      {{t "general.terms"}}
+                    </SortableTh>
+                    <SortableTh
+                      @sortedAscending={{this.sortedUnPublishableAscending}}
+                      @sortType="numeric"
+                      @onClick={{fn this.setSortIncompleteBy "objectives"}}
+                      @sortedBy={{or
+                        (eq @sortIncompleteBy "objectives")
+                        (eq @sortIncompleteBy "objectives:desc")
+                      }}
+                    >
+                      {{t "general.objectives"}}
+                    </SortableTh>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each this.orderedUnPublishableSessions as |session|}}
+                    <tr>
+                      <td colspan="2" data-test-title>
+                        <LinkTo @route="session" @model={{session}}>
+                          {{session.title}}
+                        </LinkTo>
+                        <PublicationStatus @item={{session}} />
                       </td>
-                    {{else}}
                       {{#if session.offerings.length}}
                         <td class="yes" data-test-offerings>
                           {{t "general.yes"}}
@@ -559,43 +446,180 @@ export default class PublishAllSessionsComponent extends Component {
                           {{t "general.no"}}
                         </td>
                       {{/if}}
-                    {{/if}}
-                    {{#if session.terms.length}}
-                      <td class="yes" data-test-terms>
-                        {{t "general.yes"}}
-                        ({{session.terms.length}})
-                      </td>
-                    {{else}}
-                      <td class="no" data-test-terms>
-                        {{t "general.no"}}
-                      </td>
-                    {{/if}}
-                    {{#if session.sessionObjectives.length}}
-                      <td class="yes" data-test-objectives>
-                        {{t "general.yes"}}
-                        ({{session.sessionObjectives.length}})
-                        {{#if session.showUnlinkIcon}}
-                          <LinkTo
-                            @route="session"
-                            @model={{session}}
-                            @query={{hash sessionObjectiveDetails=true}}
-                            title={{t "general.backToTitle" title=session.title}}
-                            data-test-session-link
-                          >
-                            <FaIcon @icon={{faLinkSlash}} />
-                          </LinkTo>
-                        {{/if}}
-                      </td>
-                    {{else}}
-                      <td class="no" data-test-objectives>
-                        {{t "general.no"}}
-                      </td>
-                    {{/if}}
+                      {{#if session.terms.length}}
+                        <td class="yes" data-test-terms>
+                          {{t "general.yes"}}
+                          ({{session.terms.length}})
+                        </td>
+                      {{else}}
+                        <td class="no" data-test-terms>
+                          {{t "general.no"}}
+                        </td>
+                      {{/if}}
+                      {{#if session.sessionObjectives.length}}
+                        <td class="yes" data-test-objectives>
+                          {{t "general.yes"}}
+                          ({{session.sessionObjectives.length}})
+                          {{#if session.showUnlinkIcon}}
+                            <LinkTo
+                              @route="session"
+                              @model={{session}}
+                              @query={{hash sessionObjectiveDetails=true}}
+                              title={{t "general.backToTitle" title=session.title}}
+                              data-test-session-link
+                            >
+                              <FaIcon @icon={{faLinkSlash}} />
+                            </LinkTo>
+                          {{/if}}
+                        </td>
+                      {{else}}
+                        <td class="no" data-test-objectives>
+                          {{t "general.no"}}
+                        </td>
+                      {{/if}}
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          {{/if}}
+        {{/if}}
+      </section>
+      <section class="publish-all-sessions-published" data-test-published>
+        {{#if this.publishedSessions.length}}
+          <button
+            class="title link-button"
+            type="button"
+            aria-expanded={{if @expandCompleteSessions "true" "false"}}
+            data-test-expand-collapse
+            data-test-title
+            {{on "click" (fn @setExpandCompleteSessions (not @expandCompleteSessions))}}
+          >
+            {{t "general.publishedSessions"}}
+            ({{this.publishedSessions.length}})
+            <FaIcon @icon={{if @expandCompleteSessions faCaretDown faCaretRight}} />
+          </button>
+        {{else}}
+          <h3>
+            {{t "general.publishedSessions"}}
+            ({{this.publishedSessions.length}})
+          </h3>
+        {{/if}}
+
+        {{#if this.publishedSessions.length}}
+          {{#if @expandCompleteSessions}}
+            <div class="content" data-test-content>
+              <table class="ilios-table ilios-table-colors sticky-header">
+                <thead>
+                  <tr>
+                    <SortableTh
+                      @colspan={{2}}
+                      @sortedAscending={{this.sortedPublishedAscending}}
+                      @onClick={{fn this.setSortCompleteBy "title"}}
+                      @sortedBy={{or
+                        (eq @sortCompleteBy "title")
+                        (eq @sortCompleteBy "title:desc")
+                      }}
+                    >
+                      {{t "general.sessionTitle"}}
+                    </SortableTh>
+                    <SortableTh
+                      @sortedAscending={{this.sortedPublishedAscending}}
+                      @sortType="numeric"
+                      @onClick={{fn this.setSortCompleteBy "offerings"}}
+                      @sortedBy={{or
+                        (eq @sortCompleteBy "offerings")
+                        (eq @sortCompleteBy "offerings:desc")
+                      }}
+                    >
+                      {{t "general.offerings"}}
+                    </SortableTh>
+                    <SortableTh
+                      @sortedAscending={{this.sortedPublishedAscending}}
+                      @sortType="numeric"
+                      @onClick={{fn this.setSortCompleteBy "terms"}}
+                      @sortedBy={{or
+                        (eq @sortCompleteBy "terms")
+                        (eq @sortCompleteBy "terms:desc")
+                      }}
+                    >
+                      {{t "general.terms"}}
+                    </SortableTh>
+                    <SortableTh
+                      @sortedAscending={{this.sortedPublishedAscending}}
+                      @sortType="numeric"
+                      @onClick={{fn this.setSortCompleteBy "objectives"}}
+                      @sortedBy={{or
+                        (eq @sortCompleteBy "objectives")
+                        (eq @sortCompleteBy "objectives:desc")
+                      }}
+                    >
+                      {{t "general.objectives"}}
+                    </SortableTh>
                   </tr>
-                {{/each}}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {{#each this.orderedPublishedSessions as |session|}}
+                    <tr>
+                      <td colspan="2" data-test-title>
+                        <LinkTo @route="session" @model={{session}}>
+                          {{session.title}}
+                        </LinkTo>
+                        <PublicationStatus @item={{session}} />
+                      </td>
+                      {{#if session.isIndependentLearning}}
+                        <td data-test-offerings>
+                          {{t "general.notApplicableAbbr"}}
+                        </td>
+                      {{else}}
+                        {{#if session.offerings.length}}
+                          <td class="yes" data-test-offerings>
+                            {{t "general.yes"}}
+                            ({{session.offerings.length}})
+                          </td>
+                        {{else}}
+                          <td class="no" data-test-offerings>
+                            {{t "general.no"}}
+                          </td>
+                        {{/if}}
+                      {{/if}}
+                      {{#if session.terms.length}}
+                        <td class="yes" data-test-terms>
+                          {{t "general.yes"}}
+                          ({{session.terms.length}})
+                        </td>
+                      {{else}}
+                        <td class="no" data-test-terms>
+                          {{t "general.no"}}
+                        </td>
+                      {{/if}}
+                      {{#if session.sessionObjectives.length}}
+                        <td class="yes" data-test-objectives>
+                          {{t "general.yes"}}
+                          ({{session.sessionObjectives.length}})
+                          {{#if session.showUnlinkIcon}}
+                            <LinkTo
+                              @route="session"
+                              @model={{session}}
+                              @query={{hash sessionObjectiveDetails=true}}
+                              title={{t "general.backToTitle" title=session.title}}
+                              data-test-session-link
+                            >
+                              <FaIcon @icon={{faLinkSlash}} />
+                            </LinkTo>
+                          {{/if}}
+                        </td>
+                      {{else}}
+                        <td class="no" data-test-objectives>
+                          {{t "general.no"}}
+                        </td>
+                      {{/if}}
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          {{/if}}
         {{/if}}
       </section>
       <section class="publish-all-sessions-overridable" data-test-overridable>

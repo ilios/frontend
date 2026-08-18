@@ -61,9 +61,13 @@
   }
 
   .publish-all-sessions-unpublishable,
-  .publish-all-sessions-publishable {
+  .publish-all-sessions-published {
     .title {
       cursor: pointer;
+    }
+
+    h3 {
+      @include m.ilios-heading-h5;
     }
   }
 
