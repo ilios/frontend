@@ -60,7 +60,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Run Tests
-        run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file
+        run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --config-file=testem/light-mode-config.js
+      - name: Run Tests in Darkmode
+        run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --config-file=testem/dark-mode-config.js
 
   build:
     name: Build
@@ -170,7 +172,24 @@ jobs:
       - name: Rename screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
+          mkdir -p build/storage
           cd build/screenshots
           for file in *; do
-            mv "$file" "${{ matrix.name }}-$file"
+            mv "$file" "../storage/${{ matrix.name }}-$file"
           done
+      - name: Capture Screenshots in Darkmode
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-darkmode-config.js
+      - name: Rename Darkmode screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p build/storage
+          cd build/screenshots
+          for file in *; do
+            mv "$file" "../storage/${{ matrix.name }}-$file"
+          done
+      - name: Consolidate Screenshots
+        if: steps.screenshot-cache.outputs.cache-hit != 'true'
+        run: |
+          rm -rf build/screenshots
+          mv build/storage build/screenshots
