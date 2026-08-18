@@ -20,17 +20,21 @@
 
   .course-sessions-header {
     height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     @include m.for-phone-only {
       height: 3rem;
     }
-  }
 
-  .actions {
-    cursor: default;
-  }
-  
-  .expand-collapse-button {
-    color: var(--lighter-grey);
+    .actions {
+      display: flex;
+      cursor: default;
+
+      .loading-text {
+        background-color: var(--grey);
+      }
+    }
   }
 
   .sessions-grid-header-row {

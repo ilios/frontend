@@ -62,6 +62,7 @@ import noop from 'ilios-common/helpers/noop';
             <input disabled />
           </div>
           <ExpandCollapseButton
+            class="loading-text"
             @value={{false}}
             @action={{noop}}
             @expandButtonLabel={{t "general.newSession"}}
