@@ -53,6 +53,17 @@ export default [
     rules: {
       'no-duplicate-imports': 'error',
       'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'rsvp',
+              importNames: ['all', 'map'],
+            },
+          ],
+        },
+      ],
     },
   },
   {
