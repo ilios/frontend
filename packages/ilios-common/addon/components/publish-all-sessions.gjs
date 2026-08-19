@@ -455,7 +455,7 @@ export default class PublishAllSessionsComponent extends Component {
         {{#if this.unPublishableSessions.length}}
           {{#if @expandIncompleteSessions}}
             <div class="content" data-test-content>
-              <table class="ilios-table ilios-table-colors sticky-header">
+              <table class="ilios-table ilios-table-colors ilios-zebra-table sticky-header">
                 <thead>
                   <tr>
                     <SortableTh
@@ -586,7 +586,7 @@ export default class PublishAllSessionsComponent extends Component {
         {{#if this.publishedSessions.length}}
           {{#if @expandCompleteSessions}}
             <div class="content" data-test-content>
-              <table class="ilios-table ilios-table-colors sticky-header">
+              <table class="ilios-table ilios-table-colors ilios-zebra-table sticky-header">
                 <thead>
                   <tr>
                     <SortableTh
@@ -734,7 +734,7 @@ export default class PublishAllSessionsComponent extends Component {
                 {{t "general.markAllAsScheduled"}}
               </label>
             </fieldset>
-            <table class="ilios-table ilios-table-colors sticky-header">
+            <table class="ilios-table ilios-table-colors ilios-zebra-table sticky-header">
               <thead>
                 <tr>
                   <th>
