@@ -212,6 +212,7 @@ general:
   learningMaterialManageTitle: Manage Learning Material
   learningMaterials: Learning Materials
   learningMaterialsSummary: Learning Materials Summary
+  leave: Leave
   leaveAsScheduled: Leave as Scheduled
   leaveAsUnPublished: Leave as Unpublished
   level: Level
@@ -293,7 +294,6 @@ general:
   publish: Publish
   publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, leave {leaveCount}, and ignore {ignoreCount} sessions"
   publishAll: Publish All
-  publishAndOrSchedule: Publish/Schedule
   publishCourse: Publish Course
   publishCourseWithMissingItems: Publish Course, with {missingItemCount, plural, =1 {1 item missing} other {# items missing}}
   publishSession: Publish Session

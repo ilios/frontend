@@ -279,20 +279,37 @@ export default class PublishAllSessionsComponent extends Component {
     return this.sessionsToLeave.length;
   }
 
+  get actionCount() {
+    return this.publishCount + this.scheduleCount;
+  }
+
   get saveButtonText() {
     if (this.publishCount) {
       if (this.scheduleCount) {
-        return this.intl.t('general.publishAndOrSchedule');
+        if (this.leaveCount) {
+          return `${this.intl.t('general.publish')}/${this.intl.t('general.schedule')}/${this.intl.t('general.leave')}`;
+        }
+        return `${this.intl.t('general.publish')}/${this.intl.t('general.schedule')}`;
       } else {
+        if (this.leaveCount) {
+          return `${this.intl.t('general.publish')}/${this.intl.t('general.leave')}`;
+        }
         return this.intl.t('general.publish');
-      }
-    } else {
-      if (this.scheduleCount) {
-        return this.intl.t('general.schedule');
       }
     }
 
-    return this.intl.t('general.publish');
+    if (this.scheduleCount) {
+      if (this.leaveCount) {
+        return `${this.intl.t('general.schedule')}/${this.intl.t('general.leave')}`;
+      }
+      return this.intl.t('general.schedule');
+    }
+
+    if (this.leaveCount) {
+      return this.intl.t('general.leave');
+    }
+
+    return '';
   }
 
   @action
@@ -784,17 +801,18 @@ export default class PublishAllSessionsComponent extends Component {
                           />
                           {{t "general.publish"}}
                         </label>
-                        <label>
-                          <input
-                            type="radio"
-                            name="session-action{{session.id}}"
-                            checked={{includes session.id (mapBy "id" this.sessionsToSchedule)}}
-                            {{on "click" (fn this.selectSessionAction session "schedule")}}
-                            data-test-mark-as-scheduled
-                          />
-                          {{t "general.markAsScheduled"}}
-                        </label>
-                        {{! TODO: Can't toggle this one }}
+                        {{#unless session.isScheduled}}
+                          <label>
+                            <input
+                              type="radio"
+                              name="session-action{{session.id}}"
+                              checked={{includes session.id (mapBy "id" this.sessionsToSchedule)}}
+                              {{on "click" (fn this.selectSessionAction session "schedule")}}
+                              data-test-mark-as-scheduled
+                            />
+                            {{t "general.markAsScheduled"}}
+                          </label>
+                        {{/unless}}
                         <label>
                           <input
                             type="radio"
@@ -896,15 +914,17 @@ export default class PublishAllSessionsComponent extends Component {
             ignoreCount=this.ignoreCount
           }}
         </p>
-        <SaveButton
-          @isSaving={{this.save.isRunning}}
-          @saveProgressPercent={{this.saveProgressPercent}}
-          class="save"
-          {{on "click" (perform this.save)}}
-          data-test-save
-        >
-          {{this.saveButtonText}}
-        </SaveButton>
+        {{#if this.actionCount}}
+          <SaveButton
+            @isSaving={{this.save.isRunning}}
+            @saveProgressPercent={{this.saveProgressPercent}}
+            class="save"
+            {{on "click" (perform this.save)}}
+            data-test-save
+          >
+            {{this.saveButtonText}}
+          </SaveButton>
+        {{/if}}
         <button class="done text" type="button" {{on "click" this.returnToCourse}} data-test-cancel>
           {{t "general.cancel"}}
         </button>

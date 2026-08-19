@@ -212,6 +212,7 @@ general:
   learningMaterialManageTitle: "Manager Matériels d'Étude"
   learningMaterials: "Matériels d'Étude"
   learningMaterialsSummary: "Résumé Matériels d'Étude"
+  leave: Laissér
   leaveAsScheduled: Laisser tel quel prevu
   leaveAsUnPublished: "Laisser tel quel non publié"
   level: Niveau
@@ -293,7 +294,6 @@ general:
   publish: Publier
   publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, laissér {leaveCount}, et ignorer des {ignoreCount} séances"
   publishAll: "Publier tout"
-  publishAndOrSchedule: Publier/Prévoir
   publishCourse: Publier Cours
   publishCourseWithMissingItems: Publier Cours, avec {missingItemCount, plural, =1 {1 objet manquant} other {# objets manquants}}
   publishSession: Publier Session
