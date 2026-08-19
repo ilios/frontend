@@ -61,7 +61,31 @@ jobs:
         run: pnpm install
       - name: Run Tests
         run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --config-file=testem/light-mode-config.js
-      - name: Run Tests in Darkmode
+
+  test-dark:
+    name: Test in Darkmode
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [lint]
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [24]
+        workspace:
+          - frontend
+          - test-app
+          - lti-course-manager
+          - lti-dashboard
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Run Tests
         run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --config-file=testem/dark-mode-config.js
 
   build:
