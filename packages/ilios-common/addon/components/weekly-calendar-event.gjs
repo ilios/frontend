@@ -114,7 +114,7 @@ export default class WeeklyCalendarEventComponent extends Component {
     const minutes = this.minutes.slice(start, end - 1);
     const max = Math.max(...minutes);
 
-    return Math.floor(50 / max);
+    return Math.floor(50 / (max > 0 ? max : 1));
   }
 
   get style() {
