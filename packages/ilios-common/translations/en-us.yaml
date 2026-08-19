@@ -212,6 +212,8 @@ general:
   learningMaterialManageTitle: Manage Learning Material
   learningMaterials: Learning Materials
   learningMaterialsSummary: Learning Materials Summary
+  leaveAsScheduled: Leave as Scheduled
+  leaveAsUnPublished: Leave as Unpublished
   level: Level
   link: Web Link
   listByPriority: List by Priority
@@ -289,7 +291,7 @@ general:
   publicationReview: Publication Review
   publicationStatus: Publication Status
   publish: Publish
-  publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, and ignore {ignoreCount} sessions"
+  publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, leave {leaveCount}, and ignore {ignoreCount} sessions"
   publishAll: Publish All
   publishAndOrSchedule: Publish/Schedule
   publishCourse: Publish Course

@@ -32,6 +32,7 @@ export default class PublishAllSessionsComponent extends Component {
 
   @tracked userSelectedSessionsToPublish = [];
   @tracked userSelectedSessionsToSchedule = [];
+  @tracked userSelectedSessionsToLeave = [];
 
   @cached
   get courseObjectivesData() {
@@ -112,7 +113,7 @@ export default class PublishAllSessionsComponent extends Component {
   // - not scheduled
   get publishedSessions() {
     return this.sessions.filter((session) => {
-      return session.published && !session.publishedAsTbd;
+      return session.isPublished;
     });
   }
 
@@ -191,7 +192,12 @@ export default class PublishAllSessionsComponent extends Component {
     const sessionsToPublish = [...this.publishableSessions, ...this.userSelectedSessionsToPublish];
 
     return uniqueValues(
-      sessionsToPublish.filter((s) => !this.userSelectedSessionsToSchedule.includes(s)),
+      sessionsToPublish.filter(
+        (s) =>
+          ![...this.userSelectedSessionsToSchedule, ...this.userSelectedSessionsToLeave].includes(
+            s,
+          ),
+      ),
     );
   }
 
@@ -202,7 +208,23 @@ export default class PublishAllSessionsComponent extends Component {
     ];
 
     return uniqueValues(
-      sessionsToSchedule.filter((s) => !this.userSelectedSessionsToPublish.includes(s)),
+      sessionsToSchedule.filter(
+        (s) =>
+          ![...this.userSelectedSessionsToPublish, ...this.userSelectedSessionsToLeave].includes(s),
+      ),
+    );
+  }
+
+  get sessionsToLeave() {
+    const sessionsToLeave = [...this.userSelectedSessionsToLeave];
+
+    return uniqueValues(
+      sessionsToLeave.filter(
+        (s) =>
+          ![...this.userSelectedSessionsToPublish, ...this.userSelectedSessionsToSchedule].includes(
+            s,
+          ),
+      ),
     );
   }
 
@@ -212,6 +234,10 @@ export default class PublishAllSessionsComponent extends Component {
 
   get sessionsToAllBeScheduled() {
     return !this.sessionsToPublish?.length;
+  }
+
+  get actionableSessions() {
+    return [...this.sessionsToPublish, ...this.sessionsToSchedule];
   }
 
   get saveProgressPercent() {
@@ -249,6 +275,10 @@ export default class PublishAllSessionsComponent extends Component {
     return this.publishedSessions.length + this.unPublishableSessions.length;
   }
 
+  get leaveCount() {
+    return this.sessionsToLeave.length;
+  }
+
   get saveButtonText() {
     if (this.publishCount) {
       if (this.scheduleCount) {
@@ -266,17 +296,35 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   @action
-  toggleSession(session) {
-    if (this.sessionsToPublish.includes(session)) {
-      this.userSelectedSessionsToPublish = this.userSelectedSessionsToPublish.filter(
-        (s) => s !== session,
-      );
-      this.userSelectedSessionsToSchedule = [...this.userSelectedSessionsToSchedule, session];
-    } else {
-      this.userSelectedSessionsToSchedule = this.userSelectedSessionsToSchedule.filter(
-        (s) => s !== session,
-      );
-      this.userSelectedSessionsToPublish = [...this.userSelectedSessionsToPublish, session];
+  selectSessionAction(session, action) {
+    switch (action) {
+      case 'publish':
+        this.userSelectedSessionsToSchedule = this.userSelectedSessionsToSchedule.filter(
+          (s) => s !== session,
+        );
+        this.userSelectedSessionsToLeave = this.userSelectedSessionsToLeave.filter(
+          (s) => s !== session,
+        );
+        this.userSelectedSessionsToPublish = [...this.userSelectedSessionsToPublish, session];
+        break;
+      case 'schedule':
+        this.userSelectedSessionsToPublish = this.userSelectedSessionsToPublish.filter(
+          (s) => s !== session,
+        );
+        this.userSelectedSessionsToLeave = this.userSelectedSessionsToLeave.filter(
+          (s) => s !== session,
+        );
+        this.userSelectedSessionsToSchedule = [...this.userSelectedSessionsToSchedule, session];
+        break;
+      case 'leave':
+        this.userSelectedSessionsToPublish = this.userSelectedSessionsToPublish.filter(
+          (s) => s !== session,
+        );
+        this.userSelectedSessionsToSchedule = this.userSelectedSessionsToSchedule.filter(
+          (s) => s !== session,
+        );
+        this.userSelectedSessionsToLeave = [...this.userSelectedSessionsToLeave, session];
+        break;
     }
 
     this.bulkSelectedAction = '';
@@ -333,8 +381,12 @@ export default class PublishAllSessionsComponent extends Component {
   save = task({ drop: true }, async () => {
     const sessionsToSave = [];
 
-    this.overridableSessions.forEach((session) => {
-      session.set('publishedAsTbd', !this.sessionsToPublish.includes(session));
+    this.actionableSessions.forEach((session) => {
+      // this schedules a session
+      session.set(
+        'publishedAsTbd',
+        ![...this.sessionsToPublish, ...this.sessionsToLeave].includes(session),
+      );
       session.set('published', true);
       sessionsToSave.push(session);
     });
@@ -665,7 +717,6 @@ export default class PublishAllSessionsComponent extends Component {
                 {{t "general.markAllAsScheduled"}}
               </label>
             </fieldset>
-
             <table class="ilios-table ilios-table-colors sticky-header">
               <thead>
                 <tr>
@@ -728,7 +779,7 @@ export default class PublishAllSessionsComponent extends Component {
                             type="radio"
                             name="session-action{{session.id}}"
                             checked={{includes session.id (mapBy "id" this.sessionsToPublish)}}
-                            {{on "click" (fn this.toggleSession session)}}
+                            {{on "click" (fn this.selectSessionAction session "publish")}}
                             data-test-publish
                           />
                           {{t "general.publish"}}
@@ -738,10 +789,25 @@ export default class PublishAllSessionsComponent extends Component {
                             type="radio"
                             name="session-action{{session.id}}"
                             checked={{includes session.id (mapBy "id" this.sessionsToSchedule)}}
-                            {{on "click" (fn this.toggleSession session)}}
+                            {{on "click" (fn this.selectSessionAction session "schedule")}}
                             data-test-mark-as-scheduled
                           />
                           {{t "general.markAsScheduled"}}
+                        </label>
+                        {{! TODO: Can't toggle this one }}
+                        <label>
+                          <input
+                            type="radio"
+                            name="session-action{{session.id}}"
+                            checked={{includes session.id (mapBy "id" this.sessionsToLeave)}}
+                            {{on "click" (fn this.selectSessionAction session "leave")}}
+                            data-test-leave
+                          />
+                          {{#if session.isScheduled}}
+                            {{t "general.leaveAsScheduled"}}
+                          {{else}}
+                            {{t "general.leaveAsUnPublished"}}
+                          {{/if}}
                         </label>
                       </fieldset>
                     </td>
@@ -826,6 +892,7 @@ export default class PublishAllSessionsComponent extends Component {
             "general.publishAllConfirmation"
             publishCount=this.publishCount
             scheduleCount=this.scheduleCount
+            leaveCount=this.leaveCount
             ignoreCount=this.ignoreCount
           }}
         </p>

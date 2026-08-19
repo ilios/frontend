@@ -212,6 +212,8 @@ general:
   learningMaterialManageTitle: Administrar Materiales de Aprendizaje
   learningMaterials: Materiales de Aprendizaje
   learningMaterialsSummary: Resumen de Materiales de Aprendizaje
+  leaveAsScheduled: Dejar como se Programado
+  leaveAsUnPublished: Dejar como No Publicado
   level: Nivel
   link: Enlace de la Web
   listByPriority: Lista por prioridad
@@ -289,7 +291,7 @@ general:
   publicationReview: Revisión de Publicación
   publicationStatus: Estado de Publicación
   publish: Publique
-  publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
+  publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, deja {leaveCount}, y ignore {ignoreCount} sesiónes"
   publishAll: Publique Todo
   publishAndOrSchedule: Publique/Programar
   publishCourse: Publique Curso
