@@ -68,6 +68,11 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     });
     await this.server.create('session-objective', { session: session4 });
     await this.server.create('offering', { session: session4 });
+    await this.server.create('session', {
+      course,
+      published: false,
+      publishedAsTbd: false,
+    });
 
     await page.visit({
       courseId: course.id,
@@ -77,7 +82,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.notOk(page.publishAllSessions.hasUnlinkedWarning, 'no unlinked warning');
     assert.strictEqual(
       page.publishAllSessions.unpublishableSessions.text,
-      'Incomplete Sessions: cannot publish (0)',
+      'Incomplete Sessions: cannot publish (1)',
       'incomplete/unpublishable text/count correct',
     );
     assert.notOk(
@@ -91,7 +96,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
 
     assert.strictEqual(
       page.publishAllSessions.publishedSessions.text,
-      'Published Sessions (3)',
+      'Published Sessions (4)',
       'published sessions text/count correct',
     );
     assert.notOk(
@@ -109,7 +114,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     );
     await page.publishAllSessions.publishedSessions.toggle();
     assert.ok(page.publishAllSessions.publishedSessions.isExpanded);
-    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions.length, 3);
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions.length, 4);
 
     assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[0].title, 'session 0');
     assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[0].offerings, 'Yes (1)');
@@ -162,7 +167,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     });
 
     assert.ok(page.publishAllSessions.isVisible);
-    await page.publishAllSessions.overridableSessions.sessions[0].publishAsIs.click();
+    await page.publishAllSessions.overridableSessions.sessions[0].publish.click();
     await page.publishAllSessions.review.save();
     assert.strictEqual(currentURL(), '/courses/1');
     assert.strictEqual(
@@ -215,7 +220,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.notOk(page.publishAllSessions.hasUnlinkedWarning);
   });
 
-  test('expand/collapse state of sections are tracked in url', async function (assert) {
+  test('expand/collapse state of sections is tracked in url', async function (assert) {
     const sessionObjectives = await this.server.createList('session-objective', 2);
     const offerings = await this.server.createList('offering', 4);
     await this.server.create('session', {
@@ -236,16 +241,20 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       offerings: [offerings[2], offerings[3]],
     });
 
+    await this.server.create('session', {
+      course: this.course,
+    });
+
     await page.visit({
       courseId: this.course.id,
     });
 
     assert.strictEqual(currentURL(), '/courses/1/publishall');
 
-    const { publishedSessions, unpublishableSessions } = page.publishAllSessions;
+    const { unpublishableSessions, publishedSessions } = page.publishAllSessions;
 
-    assert.notOk(publishedSessions.isExpanded);
     assert.notOk(unpublishableSessions.isExpanded);
+    assert.notOk(publishedSessions.isExpanded);
 
     await publishedSessions.toggle();
     assert.strictEqual(currentURL(), '/courses/1/publishall?expandCompleteSessions=true');
@@ -304,22 +313,22 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.strictEqual(list.length, 2);
     assert.strictEqual(list[0].title, 'session 0');
     assert.strictEqual(list[0].url, '/courses/1/sessions/1');
-    assert.notOk(list[0].publishAsIs.isChecked);
-    assert.ok(list[0].markAsScheduled.isChecked);
+    assert.ok(list[0].publish.isChecked);
+    assert.notOk(list[0].markAsScheduled.isChecked);
     assert.strictEqual(list[1].title, 'session 1');
     assert.strictEqual(list[1].url, '/courses/1/sessions/2');
-    assert.notOk(list[1].publishAsIs.isChecked);
-    assert.ok(list[1].markAsScheduled.isChecked);
+    assert.ok(list[1].publish.isChecked);
+    assert.notOk(list[1].markAsScheduled.isChecked);
 
     await overridableSessions.publishAll.click();
-    assert.ok(list[0].publishAsIs.isChecked);
+    assert.ok(list[0].publish.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
-    assert.ok(list[1].publishAsIs.isChecked);
+    assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
 
     assert.strictEqual(
       page.publishAllSessions.review.confirmation,
-      'Publish 2, schedule 0, and ignore 0 sessions',
+      'Publish 2, schedule 0, leave 0, and ignore 0 sessions',
     );
 
     await page.publishAllSessions.review.save();

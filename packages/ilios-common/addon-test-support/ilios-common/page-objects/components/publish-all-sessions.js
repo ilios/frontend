@@ -182,7 +182,7 @@ const definition = {
       },
     },
     sessions: collection('tbody tr', {
-      publishAsIs: {
+      publish: {
         scope: '[data-test-publish]',
         isChecked: property('checked'),
         click: clickable(),
