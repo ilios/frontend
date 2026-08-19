@@ -192,6 +192,11 @@ const definition = {
         isChecked: property('checked'),
         click: clickable(),
       },
+      leave: {
+        scope: '[data-test-leave]',
+        isChecked: property('checked'),
+        click: clickable(),
+      },
       url: attribute('href', '[data-test-title] a'),
       title: text('[data-test-title] a'),
       offerings: text('[data-test-offerings]'),

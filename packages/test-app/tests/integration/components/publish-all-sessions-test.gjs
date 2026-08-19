@@ -325,13 +325,17 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(list.length, 2, 'list of overridable sessions correct');
     assert.ok(list[0].publish.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
     await component.overridableSessions.publishAll.click();
     assert.ok(list[0].publish.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
 
     assert.strictEqual(
       component.review.confirmation,
@@ -368,8 +372,10 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(list.length, 2);
     assert.ok(list[0].publish.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
 
     assert.strictEqual(
       component.review.confirmation,
@@ -378,8 +384,10 @@ module('Integration | Component | publish all sessions', function (hooks) {
     await component.overridableSessions.markAllAsScheduled.click();
     assert.notOk(list[0].publish.isChecked);
     assert.ok(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.notOk(list[1].publish.isChecked);
     assert.ok(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
 
     assert.strictEqual(
       component.review.confirmation,
@@ -419,36 +427,46 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.notOk(component.overridableSessions.markAllAsScheduled.isChecked);
     assert.ok(list[0].publish.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
     await component.overridableSessions.publishAll.click();
     assert.ok(component.overridableSessions.publishAll.isChecked);
     assert.notOk(component.overridableSessions.markAllAsScheduled.isChecked);
     assert.ok(list[0].publish.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
     await list[0].markAsScheduled.click();
     assert.notOk(component.overridableSessions.publishAll.isChecked);
     assert.notOk(component.overridableSessions.markAllAsScheduled.isChecked);
     assert.notOk(list[0].publish.isChecked);
     assert.ok(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
     await list[1].markAsScheduled.click();
     assert.notOk(component.overridableSessions.publishAll.isChecked);
     assert.ok(component.overridableSessions.markAllAsScheduled.isChecked);
     assert.notOk(list[0].publish.isChecked);
     assert.ok(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.notOk(list[1].publish.isChecked);
     assert.ok(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
     await component.overridableSessions.publishAll.click();
     assert.ok(component.overridableSessions.publishAll.isChecked);
     assert.notOk(component.overridableSessions.markAllAsScheduled.isChecked);
     assert.ok(list[0].publish.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
 
     assert.strictEqual(
       component.review.confirmation,

@@ -315,16 +315,20 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.strictEqual(list[0].url, '/courses/1/sessions/1');
     assert.ok(list[0].publish.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.strictEqual(list[1].title, 'session 1');
     assert.strictEqual(list[1].url, '/courses/1/sessions/2');
     assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
 
     await overridableSessions.publishAll.click();
     assert.ok(list[0].publish.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
 
     assert.strictEqual(
       page.publishAllSessions.review.confirmation,
