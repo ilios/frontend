@@ -271,12 +271,12 @@ export default class PublishAllSessionsComponent extends Component {
     return this.sessionsToSchedule.length;
   }
 
-  get ignoreCount() {
-    return this.publishedSessions.length + this.unPublishableSessions.length;
-  }
-
   get leaveCount() {
     return this.sessionsToLeave.length;
+  }
+
+  get ignoreCount() {
+    return this.publishedSessions.length + this.unPublishableSessions.length;
   }
 
   get actionCount() {
