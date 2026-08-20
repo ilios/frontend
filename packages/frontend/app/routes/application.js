@@ -13,6 +13,7 @@ export default class AuthenticatedRoute extends Route {
   @service router;
   @service session;
   @service localStorage;
+  @service preferences;
 
   @tracked event;
 
@@ -22,6 +23,9 @@ export default class AuthenticatedRoute extends Route {
     }
     await launchWorker();
     await this.session.setup(transition.targetName === 'lti-login');
+    if (this.currentUser.currentUserId) {
+      await this.preferences.setup();
+    }
     this.intl.setFormats(formats);
     // Set the default locale.
     this.intl.setLocale(this.initialLocale());
