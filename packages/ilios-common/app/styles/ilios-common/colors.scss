@@ -51,6 +51,7 @@
   --lightest-blue: hsl(195, 50%, 92%);
 
   --black: hsl(345, 6%, 13%);
+  --editor-icon-black: hsl(0, 0%, 27%);
   --slightly-transparent-black: hsl(from var(--black) h s l / 0.8);
   --very-transparent-black: hsl(from var(--black) h s l / 0.2);
 }

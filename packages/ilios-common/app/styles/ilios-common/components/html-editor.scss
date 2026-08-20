@@ -73,9 +73,16 @@
 
   .ql-stroke,
   .ql-fill {
-    stroke: light-dark(var(--black), var(--white));
-    fill: light-dark(var(--black), var(--dark-grey));
-    transition: stroke 0.5s;
+    transition: light-dark(stroke 0.5s, stroke 0);
+  }
+
+  .ql-stroke {
+    stroke: light-dark(var(--editor-icon-black), var(--white));
+  }
+
+  .ql-fill {
+    stroke: light-dark(var(--editor-icon-black), var(--white));
+    fill: light-dark(var(--editor-icon-black), var(--white));
   }
 
   &:disabled {
