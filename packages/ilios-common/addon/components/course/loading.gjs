@@ -2,9 +2,7 @@ import BackToCourses from 'ilios-common/components/course/back-to-courses';
 import animateLoading from 'ilios-common/modifiers/animate-loading';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
-import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
-import noop from 'ilios-common/helpers/noop';
+import { faSquarePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 <template>
   <BackToCourses />
 
@@ -61,13 +59,9 @@ import noop from 'ilios-common/helpers/noop';
             {{! template-lint-disable require-input-label }}
             <input disabled />
           </div>
-          <ExpandCollapseButton
-            class="loading-text"
-            @value={{false}}
-            @action={{noop}}
-            @expandButtonLabel={{t "general.newSession"}}
-            @collapseButtonLabel={{t "general.close"}}
-          />
+          <button type="button" class="loading-text" disabled>
+            <FaIcon @icon={{faPlus}} />
+          </button>
           <button type="button" class="loading-text" disabled>
             {{t "general.publicationReview"}}
           </button>
