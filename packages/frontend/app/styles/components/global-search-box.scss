@@ -12,7 +12,6 @@
   }
 
   button {
-    @include m.ilios-button-reset;
     align-items: center;
     background-color: light-dark(var(--white), var(--dark-grey));
     border: 0;
