@@ -470,9 +470,6 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.notOk(list[1].leave.isChecked);
 
     await list[0].leave.click();
-
-    // await this.pauseTest();
-
     assert.notOk(component.overridableSessions.publishAll.isChecked);
     assert.notOk(component.overridableSessions.markAllAsScheduled.isChecked);
     assert.notOk(list[0].publish.isChecked);
