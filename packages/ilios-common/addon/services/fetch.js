@@ -71,6 +71,18 @@ export default class Fetch extends Service {
     return this.#postToApiHost(apiPath, body, 'application/vnd.api+json');
   }
 
+  async putToApiHost(relativePath, body) {
+    const headers = this.authHeaders;
+
+    const response = await this.fetchFromApiHost(relativePath, {
+      method: 'PUT',
+      headers,
+      body,
+    });
+
+    return response.json();
+  }
+
   #apiPathFromEndpoint(endpoint) {
     const trimmedPath = endpoint.replace(/^\//, '');
     return `/${this.iliosConfig.apiNameSpace}/${trimmedPath}`;
