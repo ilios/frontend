@@ -83,13 +83,13 @@
 
           button.cancel {
             background: transparent;
-            color: var(--red);
+            color: light-dark(var(--red), var(--lighter-red));
             margin: 0;
             padding: 0 0.2rem;
 
             &:enabled:hover {
-              color: var(--white);
-              background-color: var(--red);
+              color: light-dark(var(--white), var(--white));
+              background-color: light-dark(var(--red), var(--lighter-red));
             }
           }
         }
@@ -149,7 +149,7 @@
     }
 
     .validation-error-message {
-      color: var(--red);
+      color: light-dark(var(--red), var(--lighter-red));
       display: block;
       @include m.font-size("small");
       font-style: italic;

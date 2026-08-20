@@ -2,24 +2,24 @@
 
 .learning-material-uploader {
   .upload-button {
-    background: var(--white);
-    border: 1px solid var(--black);
+    background-color: light-dark(var(--white), var(--dark-grey));
+    border: 1px solid light-dark(var(--black), var(--grey));
     border-radius: 3px;
-    color: var(--black);
+    color: light-dark(var(--black), var(--white));
     cursor: pointer;
     display: inline-block;
     @include m.font-size("base");
     padding: 0.3em 1em;
     &:hover {
-      background-color: var(--grey);
-      color: var(--white);
+      background-color: light-dark(var(--grey), var(--lighter-grey));
+      color: light-dark(var(--white), var(--black));
     }
   }
 
   &.error {
     .upload-button {
-      border: 1px solid var(--red);
-      outline-color: var(--red);
+      border: 1px solid light-dark(var(--red), var(--light-red));
+      outline-color: light-dark(var(--red), var(--light-red));
     }
   }
 

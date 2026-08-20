@@ -4,16 +4,16 @@
   tbody {
     tr:nth-child(even) {
       &.confirm-removal {
-        background-color: var(--lightest-red);
+        background-color: light-dark(var(--lightest-red), var(--dark-red));
       }
     }
 
     .confirm-removal {
-      background-color: var(--lightest-red);
+      background-color: light-dark(var(--lightest-red), var(--dark-red));
 
       .confirm-message {
-        background-color: var(--lightest-red);
-        color: var(--red);
+        background-color: light-dark(var(--lightest-red), var(--dark-red));
+        color: light-dark(var(--red), var(--lightest-red));
         font-weight: 600;
         padding-bottom: 0;
         padding-top: 0.75em;
@@ -34,12 +34,12 @@
       }
 
       .remove:not(.disabled) {
-        background-color: var(--white);
-        color: var(--red);
+        background-color: light-dark(var(--white), var(--dark-grey));
+        color: light-dark(var(--red), var(--lighter-red));
 
         &:hover {
-          background-color: var(--light-red);
-          color: var(--white);
+          background-color: light-dark(var(--light-red), var(--red));
+          color: light-dark(var(--white), var(--lightest-red));
         }
       }
     }

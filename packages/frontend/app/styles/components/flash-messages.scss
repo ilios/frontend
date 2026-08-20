@@ -8,7 +8,7 @@
   z-index: 500;
 
   .flash-message {
-    color: var(--white);
+    color: light-dark(var(--white), var(--white));
     display: block;
     opacity: 1;
     padding: 0.5rem;
@@ -22,7 +22,7 @@
     /* no idea how to order these to avoid the violation */
     /* stylelint-disable no-descending-specificity */
     &.alert-success {
-      background-color: var(--green);
+      background-color: light-dark(var(--green), var(--green));
 
       a {
         color: hsl(from var(--green) h s calc(l + 40));
@@ -35,7 +35,7 @@
     }
 
     &.alert-warning {
-      background-color: var(--dark-yellow);
+      background-color: light-dark(var(--dark-yellow), var(--dark-yellow));
 
       a {
         color: hsl(from var(--dark-yellow) h s calc(l + 40));
@@ -48,7 +48,7 @@
     }
 
     &.alert-info {
-      background-color: var(--light-blue);
+      background-color: light-dark(var(--light-blue), var(--light-blue));
 
       a {
         color: hsl(from var(--light-blue) h s calc(l + 40));
@@ -61,7 +61,7 @@
     }
 
     &.alert-alert {
-      background-color: var(--light-red);
+      background-color: light-dark(var(--light-red), var(--light-red));
 
       a {
         color: hsl(from var(--light-red) h s calc(l + 40));

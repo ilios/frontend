@@ -39,8 +39,8 @@
   input,
   textarea {
     &.error {
-      border: 1px solid var(--red);
-      outline-color: var(--red);
+      border: 1px solid light-dark(var(--red), var(--lighter-red));
+      outline-color: light-dark(var(--red), var(--lighter-red));
     }
   }
 }

@@ -2,7 +2,7 @@
 
 .print-course {
   .header {
-    background-color: var(--lightest-grey);
+    background-color: light-dark(var(--lightest-grey), var(--dark-grey));
     @include m.course-header {
       padding: 0.5rem;
     }
@@ -10,7 +10,7 @@
 
   .block {
     @include m.detail-container(var(--orange));
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--black));
     padding: 0.5rem;
 
     &:last-of-type {

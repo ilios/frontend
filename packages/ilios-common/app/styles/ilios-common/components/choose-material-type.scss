@@ -5,15 +5,15 @@
 
   button {
     background-color: transparent;
-    border: 1px solid var(--white);
+    border: 1px solid light-dark(var(--white), var(--dark-grey));
     border-radius: 0.2rem;
-    color: var(--black);
+    color: light-dark(var(--black), var(--white));
     font-weight: 400;
     padding: 0.25rem 0.5rem;
   }
 
   .menu {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--dark-grey));
     box-shadow: 0 2px 2px var(--slightly-transparent-black);
     display: flex;
     flex-direction: column;
@@ -27,8 +27,8 @@
 
     button {
       border: 0;
-      background-color: var(--white);
-      color: var(--black);
+      background-color: light-dark(var(--white), var(--dark-grey));
+      color: light-dark(var(--black), var(--white));
       display: block;
       outline: none;
       padding: 0.5rem 1rem;
@@ -38,15 +38,15 @@
 
       &:hover,
       &:focus {
-        background-color: var(--blue);
-        color: var(--white);
+        background-color: light-dark(var(--blue), var(--bright-blue));
+        color: light-dark(var(--white), var(--black));
       }
     }
   }
 
   .toggle {
-    background-color: var(--blue);
-    color: var(--white);
+    background-color: light-dark(var(--blue), var(--bright-blue));
+    color: light-dark(var(--white), var(--black));
 
     &[aria-expanded="true"] {
       border-bottom-right-radius: 0;

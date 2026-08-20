@@ -10,16 +10,16 @@
 
   .small-component,
   .large-component {
-    background-color: var(--super-light-grey);
-    border: 1px solid var(--light-blue);
+    background-color: light-dark(var(--super-light-grey), var(--dark-grey));
+    border: 1px solid light-dark(var(--light-blue), var(--blue));
     border-radius: 5px;
     margin-bottom: 1rem;
     min-height: 4rem;
     padding: 0.5rem;
 
     &.alert {
-      background-color: var(--white);
-      border: 3px solid var(--dark-yellow);
+      background-color: light-dark(var(--white), var(--grey));
+      border: 3px solid light-dark(var(--dark-yellow), var(--dark-yellow));
     }
 
     p {
@@ -49,7 +49,10 @@
   }
 
   .has-saved {
-    background-color: var(--transparent-green);
+    background-color: light-dark(
+      var(--transparent-green),
+      var(--transparent-green)
+    );
     transition: background-color 0.5s ease-out;
   }
 

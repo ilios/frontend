@@ -17,6 +17,9 @@ export default class AuthenticatedRoute extends Route {
   @tracked event;
 
   async beforeModel(transition) {
+    if (config.APP.ENABLE_DARK_MODE) {
+      window.document.documentElement.dataset.theme = 'system';
+    }
     await launchWorker();
     await this.session.setup(transition.targetName === 'lti-login');
     this.intl.setFormats(formats);

@@ -11,7 +11,7 @@
   grid-template-columns: 2.5rem 1fr;
   min-height: 100vh;
   width: 100%;
-  background-color: var(--white);
+  background-color: light-dark(var(--white), var(--black));
 
   @include m.for-phone-and-up {
     grid-template-columns: 4rem 1fr;
@@ -30,7 +30,7 @@
   }
 
   & > main {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--black));
     grid-area: main;
   }
 

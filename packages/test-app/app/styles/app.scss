@@ -11,7 +11,7 @@
 
   height: 100vh;
   width: 100%;
-  background-color: var(--white);
+  background-color: light-dark(var(--white), var(--black));
 
   @include m.for-tablet-and-up {
     grid-template-rows: 42px 2rem 1fr 20px;
@@ -29,21 +29,21 @@
 
   & > nav {
     grid-area: nav;
-    background-color: var(--grey);
+    background-color: light-dark(var(--grey), var(--dark-grey));
   }
 
   & > .logo {
     grid-area: logo;
-    background-color: var(--orange);
+    background-color: light-dark(var(--orange), var(--dark-orange));
   }
 
   & > header {
     grid-area: header;
-    background-color: var(--orange);
+    background-color: light-dark(var(--orange), var(--dark-orange));
   }
 
   & > main {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--black));
     grid-area: main;
   }
 

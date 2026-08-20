@@ -2,7 +2,7 @@
 
 .taxonomy-manager {
   .selected-terms {
-    border: 1px solid var(--grey);
+    border: 1px solid light-dark(var(--grey), var(--grey));
     padding: 10px;
   }
 

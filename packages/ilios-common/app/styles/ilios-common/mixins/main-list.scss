@@ -56,7 +56,7 @@
 }
 
 @mixin main-list-box-header() {
-  border-bottom: 1px solid var(--lightest-grey);
+  border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
   display: flex;
   flex-direction: column;
   padding: 0 0 0.5rem;
@@ -81,7 +81,7 @@
 }
 
 @mixin main-list-saved-new() {
-  border: 1px solid var(--green);
+  border: 1px solid light-dark(var(--green), var(--grey));
   margin: 1rem;
   padding: 1rem;
 }
@@ -97,7 +97,7 @@
 
   table {
     thead {
-      background-color: var(--lightest-grey);
+      background-color: light-dark(var(--lightest-grey), var(--dark-grey));
     }
   }
 }

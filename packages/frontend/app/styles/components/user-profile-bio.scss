@@ -29,7 +29,10 @@
       }
 
       &.synced-from-directory input {
-        background-color: var(--transparent-green);
+        background-color: light-dark(
+          var(--transparent-green),
+          var(--transparent-green)
+        );
         transition: background-color 500ms ease;
       }
     }
@@ -39,7 +42,7 @@
     display: flex;
 
     button {
-      background-color: var(--light-blue);
+      background-color: light-dark(var(--light-blue), var(--blue));
       height: 2rem;
       margin-bottom: 0.25rem;
       margin-left: 0.5rem;

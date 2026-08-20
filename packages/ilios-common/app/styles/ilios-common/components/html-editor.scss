@@ -54,7 +54,7 @@
 
   button {
     background-color: transparent;
-    color: var(--blue);
+    color: light-dark(var(--blue), var(--bright-blue));
     display: flex;
     justify-content: flex-end;
     margin-left: auto;
@@ -62,7 +62,7 @@
     width: auto;
 
     &:hover {
-      background-color: var(--lightest-grey);
+      background-color: light-dark(var(--lightest-grey), var(--dark-grey));
     }
   }
 }
@@ -71,9 +71,17 @@
 .ql-snow .ql-toolbar button {
   padding: 3px 5px !important;
 
+  .ql-stroke,
+  .ql-fill {
+    transition: light-dark(stroke 0.5s, stroke 0);
+  }
+
   .ql-stroke {
-    stroke: var(--black);
-    transition: stroke 0.5s;
+    stroke: light-dark(var(--grey), var(--white));
+  }
+
+  .ql-fill {
+    fill: light-dark(var(--grey), var(--white));
   }
 
   &:disabled {
@@ -88,12 +96,12 @@
 // this gets overridden by our editinplace style
 // so need to re-add
 .ql-snow .ql-tooltip input[type="text"] {
-  border: 1px solid var(--lighter-grey);
+  border: 1px solid light-dark(var(--lighter-grey), var(--lighter-grey));
   display: none;
 }
 
 .ql-container {
-  background-color: var(--bright-white);
+  background-color: light-dark(var(--bright-white), var(--dark-grey));
   /* stylelint-disable property-disallowed-list */
   font-size: 14px;
   height: auto;
@@ -103,7 +111,7 @@
   min-height: 100px;
 }
 .ql-toolbar {
-  background-color: var(--super-light-grey);
+  background-color: light-dark(var(--super-light-grey), var(--grey));
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: flex;

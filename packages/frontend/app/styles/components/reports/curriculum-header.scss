@@ -55,7 +55,7 @@
 
       &:disabled {
         cursor: default;
-        background-color: var(--grey);
+        background-color: light-dark(var(--grey), var(--light-grey));
       }
     }
     .loading-results {

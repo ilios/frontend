@@ -1,11 +1,11 @@
 .ilios-table-colors {
   thead {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--grey));
   }
 
   th {
-    border-bottom: 1px solid var(--lighter-grey);
-    background-color: var(--white);
+    border-bottom: 1px solid light-dark(var(--lighter-grey), var(--grey));
+    background-color: light-dark(var(--white), var(--dark-grey));
   }
 
   tbody {

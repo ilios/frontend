@@ -1,7 +1,7 @@
 @use "../ilios-common/mixins" as m;
 
 .pagination-links {
-  color: var(--black);
+  color: light-dark(var(--black), var(--white));
   margin: 2rem 0;
   text-align: center;
 
@@ -9,7 +9,7 @@
     text-transform: uppercase;
 
     &:disabled {
-      color: var(--grey);
+      color: light-dark(var(--grey), var(--light-grey));
       cursor: default;
     }
 
@@ -36,18 +36,18 @@
   }
 
   .page-button {
-    background: var(--white);
-    border: 1px solid var(--grey);
-    color: var(--grey);
+    background-color: light-dark(var(--white), var(--dark-grey));
+    border: 1px solid light-dark(var(--grey), var(--grey));
+    color: light-dark(var(--grey), var(--white));
     display: inline-block;
     min-width: 2rem;
     outline: none;
     padding: 0.125rem 0;
 
     &:hover {
-      background: var(--orange);
-      border: 1px solid var(--orange);
-      color: var(--white);
+      background-color: light-dark(var(--orange), var(--orange));
+      border: 1px solid light-dark(var(--orange), var(--orange));
+      color: light-dark(var(--white), var(--white));
     }
 
     @include m.for-phone-only {
@@ -55,9 +55,9 @@
     }
 
     &:disabled {
-      background: var(--white);
+      background-color: light-dark(var(--white), var(--grey));
       border: none;
-      color: var(--black);
+      color: light-dark(var(--black), var(--white));
       cursor: default;
     }
   }

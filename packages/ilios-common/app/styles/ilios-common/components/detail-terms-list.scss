@@ -5,15 +5,15 @@
   margin-bottom: 1rem;
 
   .inactive {
-    color: var(--red);
+    color: light-dark(var(--red), var(--lightest-red));
   }
 
   .selected-taxonomy-terms {
     @include m.ilios-tag-list;
 
     button {
-      background-color: var(--lightest-grey);
-      color: var(--black);
+      background-color: light-dark(var(--lightest-grey), var(--dark-grey));
+      color: light-dark(var(--black), var(--white));
       padding: calc(constants.$golden-ratio-small * 0.5rem)
         calc(constants.$golden-ratio-large * 0.5rem);
     }
@@ -27,7 +27,7 @@
     }
 
     .muted {
-      color: var(--grey);
+      color: light-dark(var(--grey), var(--lightest-grey));
     }
   }
 }

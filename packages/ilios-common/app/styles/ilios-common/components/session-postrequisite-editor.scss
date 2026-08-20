@@ -9,8 +9,8 @@
       margin: 0;
       position: relative;
       th {
-        background-color: var(--blue);
-        color: var(--white);
+        background-color: light-dark(var(--blue), var(--bright-blue));
+        color: light-dark(var(--white), var(--black));
         position: sticky;
         top: 0;
       }
@@ -21,11 +21,11 @@
 
       tbody tr {
         &.active {
-          background-color: var(--green);
-          color: var(--white);
+          background-color: light-dark(var(--green), var(--lighter-green));
+          color: light-dark(var(--white), var(--black));
         }
         &:hover {
-          outline: 1px solid var(--green);
+          outline: 1px solid light-dark(var(--green), var(--lighter-green));
         }
 
         button {
@@ -37,7 +37,7 @@
     }
   }
   button.remove {
-    color: var(--red);
+    color: light-dark(var(--red), var(--red));
   }
   .info {
     display: flex;

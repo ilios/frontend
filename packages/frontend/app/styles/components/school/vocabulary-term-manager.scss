@@ -37,8 +37,8 @@
   }
 
   .terms {
-    background-color: var(--white);
-    border: 1px solid var(--light-blue);
+    background-color: light-dark(var(--white), var(--dark-grey));
+    border: 1px solid light-dark(var(--light-blue), var(--blue));
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
@@ -70,7 +70,7 @@
       @include m.ilios-selectable-list;
 
       em {
-        color: var(--red);
+        color: light-dark(var(--red), var(--red));
       }
     }
   }

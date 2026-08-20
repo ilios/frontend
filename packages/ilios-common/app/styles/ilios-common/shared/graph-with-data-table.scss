@@ -13,7 +13,7 @@
 
     table {
       thead {
-        background-color: var(--lightest-grey);
+        background-color: light-dark(var(--lightest-grey), var(--dark-grey));
       }
 
       td {

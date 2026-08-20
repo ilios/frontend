@@ -13,8 +13,8 @@
 
 @mixin ilios-static-list() {
   @include ilios-list-reset;
-  background-color: var(--white);
-  border: 1px solid var(--lightest-grey);
+  background-color: light-dark(var(--white), var(--black));
+  border: 1px solid light-dark(var(--lightest-grey), var(--grey));
   border-radius: 3px;
   padding: 1em;
   width: 80%;
@@ -44,7 +44,7 @@
   flex-wrap: wrap;
 
   li {
-    background-color: var(--lightest-grey);
+    background-color: light-dark(var(--lightest-grey), var(--grey));
     border-radius: 4px;
     margin-bottom: 0;
     margin-right: 0.3em;
@@ -62,21 +62,21 @@
   }
 
   li {
-    color: var(--blue);
+    color: light-dark(var(--blue), var(--bright-blue));
     cursor: pointer;
 
     &.active,
     &:hover {
-      background-color: var(--lightest-grey);
+      background-color: light-dark(var(--lightest-grey), var(--grey));
     }
 
     &.static {
-      color: var(--black);
+      color: light-dark(var(--black), var(--white));
       cursor: default;
     }
 
     &.disabled {
-      color: var(--grey);
+      color: light-dark(var(--grey), var(--lightest-grey));
       cursor: default;
     }
   }
@@ -96,7 +96,7 @@
 
   li {
     div {
-      background-color: var(--white);
+      background-color: light-dark(var(--white), var(--black));
       border: 1px var(--lightest-grey) solid;
       border-radius: 4px;
       margin-top: 5px;
@@ -104,7 +104,7 @@
       vertical-align: middle;
 
       &.selected {
-        background-color: var(--lightest-grey);
+        background-color: light-dark(var(--lightest-grey), var(--light-grey));
       }
     }
 
@@ -122,7 +122,7 @@
   @include ilios-list-reset;
 
   li {
-    color: var(--black);
+    color: light-dark(var(--black), var(--white));
     margin-left: 20px;
 
     &.branch {
@@ -142,7 +142,7 @@
     }
 
     &.disabled {
-      color: var(--grey);
+      color: light-dark(var(--grey), var(--lightest-grey));
     }
   }
 }

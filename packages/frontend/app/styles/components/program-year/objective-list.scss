@@ -4,7 +4,7 @@
   @include m.objective-list;
 
   .headers {
-    background-color: var(--white);
+    background-color: light-dark(var(--white), var(--black));
     position: sticky;
     top: 0;
     z-index: 1;
@@ -17,15 +17,17 @@
       @include m.ilios-button-reset;
       display: flex;
       justify-content: flex-start;
-      border-bottom: 1px solid var(--grey);
+      border-bottom: 1px solid light-dark(var(--grey), var(--dark-grey));
       padding: 0.5em 0.25em;
     }
   }
 
   .objective-row {
+    border-right: 1px solid transparent;
     &.is-inactive {
+      border-right: 1px solid light-dark(var(--lightest-red), var(--light-red));
       .grid-item {
-        background-color: var(--lightest-red);
+        background-color: light-dark(var(--lightest-red), var(--dark-grey));
       }
     }
     .actions {
@@ -37,7 +39,7 @@
         width: 1rem;
 
         &.active {
-          color: var(--light-blue);
+          color: light-dark(var(--light-blue), var(--bright-blue));
         }
       }
 

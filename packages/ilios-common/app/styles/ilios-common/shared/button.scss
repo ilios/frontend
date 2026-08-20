@@ -4,14 +4,14 @@ button {
     border: 0;
     border-radius: 0;
     background-color: transparent;
-    color: var(--blue);
+    color: light-dark(var(--blue), var(--bright-blue));
     cursor: pointer;
     font: inherit;
     text-align: left;
     white-space: normal;
 
     &:disabled {
-      color: var(--black);
+      color: light-dark(var(--black), var(--white));
       cursor: default;
     }
   }

@@ -2,7 +2,7 @@
 
 .mesh-manager {
   .deprecated {
-    color: var(--red);
+    color: light-dark(var(--red), var(--lightest-red));
     font-weight: 600;
   }
 
@@ -14,8 +14,8 @@
   .mesh-search-results {
     @include m.ilios-selectable-list;
 
-    background-color: var(--white);
-    border: 1px solid var(--light-blue);
+    background-color: light-dark(var(--white), var(--dark-grey));
+    border: 1px solid light-dark(var(--light-blue), var(--blue));
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
@@ -81,8 +81,8 @@
       @include m.ilios-input;
 
       &.error {
-        border: 1px solid var(--light-red);
-        outline-color: var(--light-red);
+        border: 1px solid light-dark(var(--light-red), var(--dark-red));
+        outline-color: light-dark(var(--light-red), var(--dark-red));
       }
     }
 

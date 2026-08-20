@@ -1,7 +1,7 @@
 @use "../ilios-common/mixins" as m;
 
 .ilios-header {
-  background-color: var(--orange);
+  background-color: light-dark(var(--orange), var(--dark-orange));
   align-content: center;
 
   // Elements on the far right

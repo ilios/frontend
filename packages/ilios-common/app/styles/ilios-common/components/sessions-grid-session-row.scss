@@ -4,7 +4,7 @@
   padding: 0.25rem 0;
 
   &.confirm {
-    background-color: var(--lightest-red);
+    background-color: light-dark(var(--lightest-red), var(--dark-red));
   }
 
   .session-grid-status {
@@ -13,7 +13,7 @@
 
     .instructional-notes,
     .prerequisites {
-      color: var(--green);
+      color: light-dark(var(--green), var(--green));
       margin-right: 0.25rem;
     }
   }

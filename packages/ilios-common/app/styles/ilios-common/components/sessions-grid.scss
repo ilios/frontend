@@ -9,18 +9,18 @@
 
   .session {
     &:nth-of-type(even) {
-      background-color: var(--lightest-blue);
+      background-color: light-dark(var(--lightest-blue), var(--dark-grey));
     }
 
     &.is-expanded {
-      border: 1px solid var(--light-blue);
-      background-color: var(--lightest-blue);
+      border: 1px solid light-dark(var(--light-blue), var(--grey));
+      background-color: light-dark(var(--lightest-blue), var(--dark-grey));
       margin: 0.5rem 0;
     }
 
     .confirm-removal {
-      background-color: var(--lightest-red);
-      color: var(--red);
+      background-color: light-dark(var(--lightest-red), var(--dark-red));
+      color: light-dark(var(--red), var(--lightest-red));
       font-weight: 600;
       margin: 0;
       padding: 1rem 4rem;
@@ -35,12 +35,12 @@
         padding-top: 1rem;
 
         .remove {
-          background-color: var(--white);
-          color: var(--red);
+          background-color: light-dark(var(--white), var(--dark-grey));
+          color: light-dark(var(--red), var(--lighter-red));
 
           &:hover {
-            background-color: var(--light-red);
-            color: var(--white);
+            background-color: light-dark(var(--light-red), var(--red));
+            color: light-dark(var(--white), var(--lightest-red));
           }
         }
       }

@@ -4,7 +4,7 @@
   .actions {
     button {
       @include m.ilios-button-reset;
-      color: var(--red);
+      color: light-dark(var(--red), var(--light-red));
 
       &.disabled {
         cursor: default;

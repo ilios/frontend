@@ -9,17 +9,17 @@
     height: auto;
 
     .domain {
-      border-left: 10px solid var(--white);
+      border-left: 10px solid light-dark(var(--white), var(--grey));
 
       .domain-title {
         margin: 0.5rem 0 0 0.5rem;
         padding: 0;
       }
       &.selected {
-        border-left: 10px solid var(--orange);
+        border-left: 10px solid light-dark(var(--orange), var(--dark-orange));
 
         .domain-title {
-          color: var(--green);
+          color: light-dark(var(--green), var(--lighter-green));
           font-weight: 600;
         }
       }
@@ -40,7 +40,7 @@
   }
 
   .no-cohorts {
-    color: var(--dark-yellow);
+    color: light-dark(var(--dark-yellow), var(--dark-yellow));
     font-weight: 600;
   }
 }

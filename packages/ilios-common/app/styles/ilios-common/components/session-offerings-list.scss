@@ -16,7 +16,7 @@
       grid-column: 1 / -1;
 
       .offering-block-date-dayofweek {
-        color: var(--dark-orange);
+        color: light-dark(var(--dark-orange), var(--white));
         display: block;
         @include m.font-size("medium");
         font-weight: 600;
@@ -25,7 +25,7 @@
 
       .offering-block-date-dayofmonth,
       .offering-block-date-daymonthyear {
-        color: var(--grey);
+        color: light-dark(var(--grey), var(--lightest-grey));
       }
     }
 
@@ -44,7 +44,7 @@
       .offering-block-time-time-starttime,
       .offering-block-time-time-ends,
       .offering-block-time-time-endtime {
-        color: var(--grey);
+        color: light-dark(var(--grey), var(--lighter-grey));
         display: block;
         font-weight: 600;
       }

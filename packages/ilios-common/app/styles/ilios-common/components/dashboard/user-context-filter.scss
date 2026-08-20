@@ -2,7 +2,7 @@
 
 .dashboard-user-context-filter {
   label.active {
-    background-color: var(--blue);
-    color: var(--white);
+    background-color: light-dark(var(--blue), var(--bright-blue));
+    color: light-dark(var(--white), var(--black));
   }
 }

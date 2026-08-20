@@ -49,18 +49,18 @@
   }
 
   .bigadd {
-    background-color: var(--green);
-    color: var(--white);
+    background-color: light-dark(var(--green), var(--green));
+    color: light-dark(var(--white), var(--white));
 
     &:disabled {
-      background-color: var(--grey);
+      background-color: light-dark(var(--grey), var(--grey));
       cursor: default;
     }
   }
 
   .bigcancel {
-    background-color: var(--red);
-    color: var(--white);
+    background-color: light-dark(var(--red), var(--red));
+    color: light-dark(var(--white), var(--white));
   }
 }
 

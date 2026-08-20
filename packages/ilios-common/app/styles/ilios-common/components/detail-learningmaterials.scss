@@ -29,8 +29,8 @@
 
     .lm-search-results {
       @include m.ilios-selectable-list;
-      background-color: var(--white);
-      border: 1px solid var(--light-blue);
+      background-color: light-dark(var(--white), var(--dark-grey));
+      border: 1px solid light-dark(var(--light-blue), var(--light-grey));
       margin: 0;
       max-height: 15rem;
       overflow-y: scroll;
@@ -38,7 +38,7 @@
       z-index: 10;
 
       li {
-        border-bottom: 1px solid var(--lightest-grey);
+        border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
         min-height: 3.25rem;
         position: relative;
 
@@ -66,14 +66,14 @@
       }
 
       .learning-material-description {
-        color: var(--grey);
+        color: light-dark(var(--grey), var(--white));
         display: block;
         @include m.font-size("small");
         margin-left: 1.9em;
       }
 
       .learning-material-status {
-        color: var(--red);
+        color: light-dark(var(--red), var(--lighter-red));
         @include m.font-size("small");
         position: absolute;
         right: 5px;
@@ -85,7 +85,7 @@
 
         li {
           border: 0;
-          color: var(--grey);
+          color: light-dark(var(--grey), var(--white));
           cursor: inherit;
           display: list-item;
           @include m.font-size("small");
@@ -113,7 +113,7 @@
 
     .icon-button {
       @include m.ilios-button-reset;
-      color: var(--light-blue);
+      color: light-dark(var(--light-blue), var(--bright-blue));
 
       &.disabled {
         cursor: default;

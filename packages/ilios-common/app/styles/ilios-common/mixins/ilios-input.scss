@@ -4,10 +4,10 @@ $form-input-text-types: 'input[type="text"], input[type="password"], input[type=
 
 @mixin ilios-input {
   @include ilios-select.ilios-select;
-  background: var(--bright-white);
-  border: 1px solid var(--lightest-grey);
+  background-color: light-dark(var(--bright-white), var(--dark-grey));
+  border: 1px solid light-dark(var(--lightest-grey), var(--grey));
   border-radius: 3px;
-  color: var(--black);
+  color: light-dark(var(--black), var(--white));
   cursor: pointer;
   font-style: italic;
   min-width: 220px;

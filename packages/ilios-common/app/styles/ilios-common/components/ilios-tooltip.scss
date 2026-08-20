@@ -3,9 +3,9 @@
   z-index: 100;
 
   .content {
-    background: var(--white);
+    background-color: light-dark(var(--white), var(--black));
     padding: 0.25rem 0.5rem;
-    border: 1px solid var(--grey);
+    border: 1px solid light-dark(var(--grey), var(--grey));
     border-radius: 4px;
     max-width: 80%;
 
@@ -20,8 +20,8 @@
     .arrow::before {
       content: "";
       transform: rotate(45deg);
-      background: var(--grey);
-      border: 1px solid var(--grey);
+      background-color: light-dark(var(--grey), var(--dark-grey));
+      border: 1px solid light-dark(var(--grey), var(--white));
     }
   }
   &[data-popper-placement^="top"] .arrow {

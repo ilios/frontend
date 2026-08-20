@@ -2,8 +2,8 @@
 
 .school-competencies-manager {
   .domain {
-    background-color: var(--lightest-blue);
-    border: 1px solid var(--black);
+    background-color: light-dark(var(--lightest-blue), var(--dark-grey));
+    border: 1px solid light-dark(var(--black), var(--grey));
     margin: 1rem;
     padding: 1rem;
 

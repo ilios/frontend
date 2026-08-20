@@ -1,8 +1,8 @@
 @use "../mixins" as m;
 
 .publish-all-sessions {
-  background-color: var(--white);
-  border: 1px solid var(--lightest-grey);
+  background-color: light-dark(var(--white), var(--dark-grey));
+  border: 1px solid light-dark(var(--lightest-grey), var(--grey));
   margin-top: 0.5em;
   padding: 0 1rem 1rem 1rem;
 
@@ -21,7 +21,7 @@
 
     .title {
       @include m.detail-container-title;
-      background: var(--white);
+      background-color: light-dark(var(--white), var(--black));
       height: 2.1rem;
       padding: 0.35em 0;
       position: sticky;
@@ -82,37 +82,37 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid var(--green);
+    border: 1px solid light-dark(var(--green), var(--lighter-green));
     clear: both;
     @include m.font-size("large");
     padding: 1rem;
     text-align: center;
 
     .unlinked-warning {
-      color: var(--dark-orange);
+      color: light-dark(var(--dark-orange), var(--dark-orange));
       @include m.font-size("base");
     }
 
     .fa-chart-column {
-      color: var(--light-blue);
+      color: light-dark(var(--light-blue), var(--blue));
       @include m.font-size("small");
     }
 
     p {
-      color: var(--green);
+      color: light-dark(var(--green), var(--lighter-green));
       font-weight: 600;
       margin: 0;
       margin-bottom: 1rem;
     }
 
     button {
-      background: var(--green);
-      color: var(--white);
+      background-color: light-dark(var(--green), var(--lighter-green));
+      color: light-dark(var(--white), var(--black));
     }
   }
 
   .fa-link-slash {
-    color: var(--black);
+    color: light-dark(var(--black), var(--white));
     @include m.font-size("small");
   }
 }

@@ -2,6 +2,9 @@
 
 .simple-chart-tooltip {
   width: 45%;
+  background-color: light-dark(var(--white), var(--dark-grey));
+  border: 1px solid light-dark(var(--light-grey), var(--light-grey));
+  color: light-dark(var(--black), var(--white));
 
   @include m.for-smaller-than-laptop {
     width: 90%;

@@ -23,7 +23,7 @@
     }
 
     .validation-error-message {
-      color: var(--red);
+      color: light-dark(var(--red), var(--lighter-red));
       display: block;
       @include m.font-size("small");
       font-style: italic;

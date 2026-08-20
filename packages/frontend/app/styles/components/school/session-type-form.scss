@@ -2,8 +2,8 @@
 
 .school-session-type-form {
   .form {
-    background-color: var(--white);
-    border: 1px solid var(--lightest-grey);
+    background-color: light-dark(var(--white), var(--dark-grey));
+    border: 1px solid light-dark(var(--lightest-grey), var(--grey));
     margin: 0.5rem 0;
 
     @include m.ilios-form {
@@ -25,7 +25,7 @@
       }
 
       .box {
-        border: 1px solid var(--black);
+        border: 1px solid light-dark(var(--black), var(--light-grey));
         display: inline-block;
         height: 1.5rem;
         width: 1.5rem;

@@ -1,8 +1,8 @@
 @use "../../ilios-common/mixins" as m;
 
 .new-program-year {
-  background-color: var(--white);
-  border: 1px solid var(--lightest-grey);
+  background-color: light-dark(var(--white), var(--dark-grey));
+  border: 1px solid light-dark(var(--lightest-grey), var(--grey));
   margin: 0.5rem 0;
   padding: 1rem;
 
@@ -23,9 +23,9 @@
     @include m.ilios-form-buttons;
 
     button:disabled {
-      background-color: var(--grey);
-      border-color: var(--grey);
-      color: var(--white);
+      background-color: light-dark(var(--grey), var(--grey));
+      border-color: light-dark(var(--grey), var(--grey));
+      color: light-dark(var(--white), var(--white));
       cursor: default;
     }
   }

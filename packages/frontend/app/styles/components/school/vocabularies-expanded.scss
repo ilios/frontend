@@ -19,8 +19,8 @@
     @include m.detail-container-content;
 
     .hierarchical-list {
-      background-color: var(--lightest-grey);
-      border: 1px solid var(--black);
+      background-color: light-dark(var(--lightest-grey), var(--grey));
+      border: 1px solid light-dark(var(--black), var(--dark-grey));
       margin: 1rem;
       padding: 1rem;
 

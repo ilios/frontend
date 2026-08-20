@@ -51,7 +51,7 @@
   }
 
   .copy-btn {
-    background-color: var(--green);
+    background-color: light-dark(var(--green), var(--green));
   }
 
   .loading {
@@ -64,7 +64,7 @@
 
   h2 {
     @include m.ilios-heading;
-    color: var(--black);
+    color: light-dark(var(--black), var(--white));
     @include m.font-size("base");
     font-weight: 600;
   }
@@ -108,13 +108,13 @@
     }
 
     .add-date {
-      border: 1px solid var(--green);
-      color: var(--green);
+      border: 1px solid light-dark(var(--green), var(--lightest-green));
+      color: light-dark(var(--green), var(--lightest-green));
     }
 
     .remove-date {
-      border: 1px solid var(--red);
-      color: var(--red);
+      border: 1px solid light-dark(var(--red), var(--lighter-red));
+      color: light-dark(var(--red), var(--lighter-red));
     }
 
     .time-picker {

@@ -7,7 +7,7 @@
   }
 
   .school-overview {
-    border-bottom: 1px solid var(--lightest-grey);
+    border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
     display: flex;
     flex-direction: column;
     justify-content: space-between;
