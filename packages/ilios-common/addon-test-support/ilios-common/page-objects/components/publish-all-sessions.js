@@ -4,6 +4,7 @@ import {
   create,
   clickable,
   hasClass,
+  isPresent,
   isVisible,
   notHasClass,
   property,
@@ -189,6 +190,7 @@ const definition = {
       },
       markAsScheduled: {
         scope: '[data-test-mark-as-scheduled]',
+        isChoice: isPresent(),
         isChecked: property('checked'),
         click: clickable(),
       },

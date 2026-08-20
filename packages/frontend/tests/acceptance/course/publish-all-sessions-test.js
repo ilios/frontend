@@ -96,7 +96,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
 
     assert.strictEqual(
       page.publishAllSessions.publishedSessions.text,
-      'Published Sessions (4)',
+      'Published Sessions (3)',
       'published sessions text/count correct',
     );
     assert.notOk(
@@ -114,7 +114,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     );
     await page.publishAllSessions.publishedSessions.toggle();
     assert.ok(page.publishAllSessions.publishedSessions.isExpanded);
-    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions.length, 4);
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions.length, 3);
 
     assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[0].title, 'session 0');
     assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[0].offerings, 'Yes (1)');
@@ -231,7 +231,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessionObjectives: [sessionObjectives[0]],
       offerings: [offerings[0], offerings[1]],
     });
-
     await this.server.create('session', {
       course: this.course,
       terms: [this.term],
@@ -239,6 +238,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessionType: this.sessionTypes[0],
       sessionObjectives: [sessionObjectives[1]],
       offerings: [offerings[2], offerings[3]],
+      published: true,
     });
 
     await this.server.create('session', {
@@ -253,28 +253,28 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
 
     const { unpublishableSessions, publishedSessions } = page.publishAllSessions;
 
-    assert.notOk(unpublishableSessions.isExpanded);
-    assert.notOk(publishedSessions.isExpanded);
+    assert.ok(unpublishableSessions.canExpandCollapse);
+    assert.ok(publishedSessions.canExpandCollapse);
 
-    await publishedSessions.toggle();
-    assert.strictEqual(currentURL(), '/courses/1/publishall?expandCompleteSessions=true');
-    assert.ok(publishedSessions.isExpanded);
-    assert.notOk(unpublishableSessions.isExpanded);
     await unpublishableSessions.toggle();
+    assert.strictEqual(currentURL(), '/courses/1/publishall?expandIncompleteSessions=true');
+    assert.ok(unpublishableSessions.isExpanded);
+    assert.notOk(publishedSessions.isExpanded);
+    await publishedSessions.toggle();
     assert.strictEqual(
       currentURL(),
       '/courses/1/publishall?expandCompleteSessions=true&expandIncompleteSessions=true',
     );
+    assert.ok(unpublishableSessions.isExpanded);
     assert.ok(publishedSessions.isExpanded);
-    assert.ok(unpublishableSessions.isExpanded);
-    await publishedSessions.toggle();
-    assert.strictEqual(currentURL(), '/courses/1/publishall?expandIncompleteSessions=true');
-    assert.notOk(publishedSessions.isExpanded);
-    assert.ok(unpublishableSessions.isExpanded);
     await unpublishableSessions.toggle();
-    assert.strictEqual(currentURL(), '/courses/1/publishall');
-    assert.notOk(publishedSessions.isExpanded);
+    assert.strictEqual(currentURL(), '/courses/1/publishall?expandCompleteSessions=true');
     assert.notOk(unpublishableSessions.isExpanded);
+    assert.ok(publishedSessions.isExpanded);
+    await publishedSessions.toggle();
+    assert.strictEqual(currentURL(), '/courses/1/publishall');
+    assert.notOk(unpublishableSessions.isExpanded);
+    assert.notOk(publishedSessions.isExpanded);
   });
 
   test('publish overridable sessions #2816', async function (assert) {
@@ -322,14 +322,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.notOk(list[1].markAsScheduled.isChecked);
     assert.notOk(list[1].leave.isChecked);
 
-    await overridableSessions.publishAll.click();
-    assert.ok(list[0].publish.isChecked);
-    assert.notOk(list[0].markAsScheduled.isChecked);
-    assert.notOk(list[0].leave.isChecked);
-    assert.ok(list[1].publish.isChecked);
-    assert.notOk(list[1].markAsScheduled.isChecked);
-    assert.notOk(list[1].leave.isChecked);
-
     assert.strictEqual(
       page.publishAllSessions.review.confirmation,
       'Publish 2, schedule 0, leave 0, and ignore 0 sessions',
@@ -341,6 +333,140 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Published');
     assert.strictEqual(sessions[1].row.title, 'session 1');
     assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Published');
+  });
+
+  test('publish/schedule/leave mix of sessions', async function (assert) {
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 2),
+      published: true,
+      publishedAsTbd: true,
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 2),
+      published: true,
+      publishedAsTbd: true,
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 2),
+      published: false,
+      publishedAsTbd: false,
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 2),
+      published: false,
+      publishedAsTbd: false,
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 2),
+      published: false,
+      publishedAsTbd: false,
+    });
+
+    await page.coursePage.visit({
+      courseId: this.course.id,
+    });
+
+    const { sessions } = page.coursePage.courseSessions.sessionsGrid;
+    assert.strictEqual(sessions.length, 5);
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Scheduled');
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Scheduled');
+    assert.strictEqual(sessions[2].row.title, 'session 2');
+    assert.strictEqual(sessions[2].row.publicationStatus.icon.title, 'Not Published');
+    assert.strictEqual(sessions[3].row.title, 'session 3');
+    assert.strictEqual(sessions[3].row.publicationStatus.icon.title, 'Not Published');
+    assert.strictEqual(sessions[4].row.title, 'session 4');
+    assert.strictEqual(sessions[4].row.publicationStatus.icon.title, 'Not Published');
+
+    await page.visit({
+      courseId: this.course.id,
+    });
+
+    const { overridableSessions } = page.publishAllSessions;
+
+    assert.strictEqual(overridableSessions.title, 'Unpublished Sessions: for review (5)');
+    assert.ok(overridableSessions.markAllAsScheduled.isVisible);
+    assert.ok(overridableSessions.publishAll.isVisible);
+
+    const { sessions: list } = overridableSessions;
+
+    assert.strictEqual(list.length, 5);
+
+    // scheduled -> leaving as scheduled by default
+    assert.strictEqual(list[0].title, 'session 0');
+    assert.strictEqual(list[0].url, '/courses/1/sessions/1');
+    assert.notOk(list[0].publish.isChecked);
+    assert.notOk(list[0].markAsScheduled.isChoice);
+    assert.ok(list[0].leave.isChecked);
+
+    // scheduled -> choosing to publish instead of default leave as-is
+    assert.strictEqual(list[1].title, 'session 1');
+    assert.strictEqual(list[1].url, '/courses/1/sessions/2');
+    assert.notOk(list[1].publish.isChecked);
+    assert.notOk(list[1].markAsScheduled.isChoice);
+    assert.ok(list[1].leave.isChecked);
+    await list[1].publish.click();
+    assert.ok(list[1].publish.isChecked);
+    assert.notOk(list[1].leave.isChecked);
+
+    // unpublished -> publishing by default
+    assert.strictEqual(list[2].title, 'session 2');
+    assert.strictEqual(list[2].url, '/courses/1/sessions/3');
+    assert.ok(list[2].publish.isChecked);
+    assert.ok(list[2].markAsScheduled.isChoice);
+    assert.notOk(list[2].markAsScheduled.isChecked);
+    assert.notOk(list[2].leave.isChecked);
+
+    // unpublished -> choosing to leave unpublished instead of default publush
+    assert.strictEqual(list[3].title, 'session 3');
+    assert.strictEqual(list[3].url, '/courses/1/sessions/4');
+    assert.ok(list[3].publish.isChecked);
+    assert.ok(list[3].markAsScheduled.isChoice);
+    assert.notOk(list[3].markAsScheduled.isChecked);
+    assert.notOk(list[3].leave.isChecked);
+    await list[3].leave.click();
+    assert.notOk(list[3].publish.isChecked);
+    assert.ok(list[3].leave.isChecked);
+
+    // unpublished -> choosing to schedule instead of default publish
+    assert.strictEqual(list[4].title, 'session 4');
+    assert.strictEqual(list[4].url, '/courses/1/sessions/5');
+    assert.ok(list[4].publish.isChecked);
+    assert.ok(list[4].markAsScheduled.isChoice);
+    assert.notOk(list[4].markAsScheduled.isChecked);
+    assert.notOk(list[4].leave.isChecked);
+    await list[4].markAsScheduled.click();
+    assert.notOk(list[4].publish.isChecked);
+    assert.ok(list[4].markAsScheduled.isChecked);
+
+    assert.strictEqual(
+      page.publishAllSessions.review.confirmation,
+      'Publish 2, schedule 1, leave 2, and ignore 0 sessions',
+    );
+
+    await page.publishAllSessions.review.save();
+    assert.strictEqual(sessions.length, 5);
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Scheduled');
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Published');
+    assert.strictEqual(sessions[2].row.title, 'session 2');
+    assert.strictEqual(sessions[2].row.publicationStatus.icon.title, 'Published');
+    assert.strictEqual(sessions[3].row.title, 'session 3');
+    assert.strictEqual(sessions[3].row.publicationStatus.icon.title, 'Not Published');
+    assert.strictEqual(sessions[4].row.title, 'session 4');
+    assert.strictEqual(sessions[4].row.publicationStatus.icon.title, 'Scheduled');
   });
 
   test('tables are sortable', async function (assert) {

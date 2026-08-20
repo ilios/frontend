@@ -54,20 +54,25 @@ export default class PublishAllSessionsComponent extends Component {
 
   get unPublishedSessions() {
     return this.sessions.filter((session) => {
-      return !session.published && !session.publishedAsTbd;
+      return !session.isPublished && !session.isScheduled;
     });
   }
 
   // sessions with no required, but possible optional, publication issues
+  // - not already scheduled
   get publishableSessions() {
     return this.sessions.filter((session) => {
-      return !session.published && session.requiredPublicationIssues.length === 0;
+      return (
+        !session.isPublished &&
+        !session.isScheduled &&
+        session.requiredPublicationIssues.length === 0
+      );
     });
   }
 
   get schedulableSessions() {
     return this.overridableSessions.filter((session) => {
-      return !this.sessionsToPublish.includes(session);
+      return !session.isPublished && !session.isScheduled;
     });
   }
 
@@ -113,7 +118,7 @@ export default class PublishAllSessionsComponent extends Component {
   // - not scheduled
   get publishedSessions() {
     return this.sessions.filter((session) => {
-      return session.isPublished;
+      return session.isPublished && !session.isScheduled;
     });
   }
 
@@ -188,6 +193,12 @@ export default class PublishAllSessionsComponent extends Component {
       : this.sortedOverridableSessions.reverse();
   }
 
+  get scheduledSessions() {
+    return this.sessions.filter((session) => {
+      return !this.sessionsToPublish.includes(session) && session.isScheduled;
+    });
+  }
+
   get sessionsToPublish() {
     const sessionsToPublish = [...this.publishableSessions, ...this.userSelectedSessionsToPublish];
 
@@ -202,21 +213,17 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get sessionsToSchedule() {
-    const sessionsToSchedule = [
-      ...this.schedulableSessions,
-      ...this.userSelectedSessionsToSchedule,
-    ];
+    const sessionsToSchedule = [...this.scheduledSessions, ...this.userSelectedSessionsToSchedule];
 
     return uniqueValues(
       sessionsToSchedule.filter(
-        (s) =>
-          ![...this.userSelectedSessionsToPublish, ...this.userSelectedSessionsToLeave].includes(s),
+        (s) => ![...this.userSelectedSessionsToPublish, ...this.sessionsToLeave].includes(s),
       ),
     );
   }
 
   get sessionsToLeave() {
-    const sessionsToLeave = [...this.userSelectedSessionsToLeave];
+    const sessionsToLeave = [...this.scheduledSessions, ...this.userSelectedSessionsToLeave];
 
     return uniqueValues(
       sessionsToLeave.filter(
@@ -229,11 +236,11 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get sessionsToAllBePublished() {
-    return !this.sessionsToSchedule?.length;
+    return !this.sessionsToSchedule?.length && !this.sessionsToLeave?.length;
   }
 
   get sessionsToAllBeScheduled() {
-    return !this.sessionsToPublish?.length;
+    return !this.sessionsToPublish?.length && !this.sessionsToLeave?.length;
   }
 
   get actionableSessions() {
@@ -349,15 +356,19 @@ export default class PublishAllSessionsComponent extends Component {
 
   @action
   publishAll() {
-    this.userSelectedSessionsToSchedule = [];
     this.userSelectedSessionsToPublish = [...this.overridableSessions];
+    this.userSelectedSessionsToSchedule = [];
+    this.userSelectedSessionsToLeave = [];
     this.bulkSelectedAction = 'publishAll';
   }
 
   @action
   scheduleAll() {
     this.userSelectedSessionsToPublish = [];
-    this.userSelectedSessionsToSchedule = [...this.overridableSessions];
+    this.userSelectedSessionsToSchedule = [...this.schedulableSessions].filter(
+      (session) => !this.sessionsToLeave.includes(session),
+    );
+    this.userSelectedSessionsToLeave = [];
     this.bulkSelectedAction = 'scheduleAll';
   }
 
