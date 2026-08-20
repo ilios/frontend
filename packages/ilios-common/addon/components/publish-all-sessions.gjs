@@ -936,7 +936,12 @@ export default class PublishAllSessionsComponent extends Component {
             {{this.saveButtonText}}
           </SaveButton>
         {{/if}}
-        <button class="done text" type="button" {{on "click" this.returnToCourse}} data-test-cancel>
+        <button
+          class="cancel text"
+          type="button"
+          {{on "click" this.returnToCourse}}
+          data-test-cancel
+        >
           {{t "general.cancel"}}
         </button>
       </div>
