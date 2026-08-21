@@ -58,8 +58,10 @@ export default class PublishAllSessionsComponent extends Component {
     });
   }
 
-  // sessions with no required, but possible optional, publication issues
-  // - not already scheduled
+  /**
+   * sessions with no required, but possible optional, publication issues
+   * - not already scheduled
+   */
   get publishableSessions() {
     return this.sessions.filter((session) => {
       return (
@@ -76,8 +78,10 @@ export default class PublishAllSessionsComponent extends Component {
     });
   }
 
-  // Incomplete Sessions: cannot publish
-  // - unpublished with required issues
+  /**
+   * Bucket: Incomplete Sessions: cannot publish
+   * - unpublished with required issues
+   */
   get unPublishableSessions() {
     return this.sessions.filter((session) => {
       return session.requiredPublicationIssues.length > 0;
@@ -113,9 +117,11 @@ export default class PublishAllSessionsComponent extends Component {
       : this.sortedUnPublishableSessions.reverse();
   }
 
-  // Published Sessions
-  // - may be missing optional requirements
-  // - not scheduled
+  /**
+   * Bucket: Published Sessions
+   * - may be missing optional requirements
+   * - not scheduled
+   */
   get publishedSessions() {
     return this.sessions.filter((session) => {
       return session.isPublished && !session.isScheduled;
@@ -151,10 +157,12 @@ export default class PublishAllSessionsComponent extends Component {
       : this.sortedPublishedSessions.reverse();
   }
 
-  // Unpublished Sessions: for review
-  // - no required issues
-  // - may be scheduled
-  // can be reviewed for publishing or scheduling
+  /**
+   * Bucket: Unpublished Sessions: for review
+   * - no required issues
+   * - may be scheduled
+   * - can be reviewed for publishing or scheduling
+   */
   get overridableSessions() {
     return this.sessions.filter((session) => {
       return (
