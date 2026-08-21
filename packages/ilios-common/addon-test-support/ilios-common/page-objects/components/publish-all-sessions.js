@@ -220,7 +220,12 @@ const definition = {
       scope: '[data-test-course-link]',
     },
     confirmation: text('[data-test-confirmation]'),
-    save: clickable('[data-test-save]'),
+    save: {
+      scope: '[data-test-save]',
+      isChoice: isPresent(),
+      text: text(),
+      click: clickable(),
+    },
   },
   hasUnlinkedWarning: isVisible('[data-test-unlinked-warning]'),
 };

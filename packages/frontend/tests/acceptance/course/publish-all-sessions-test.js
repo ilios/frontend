@@ -168,7 +168,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
 
     assert.ok(page.publishAllSessions.isVisible);
     await page.publishAllSessions.overridableSessions.sessions[0].publish.click();
-    await page.publishAllSessions.review.save();
+    await page.publishAllSessions.review.save.click();
     assert.strictEqual(currentURL(), '/courses/1');
     assert.strictEqual(
       page.courseSessions.sessionsGrid.sessions[0].row.publicationStatus.icon.title,
@@ -327,7 +327,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       'Publish 2, schedule 0, leave 0, and ignore 0 sessions',
     );
 
-    await page.publishAllSessions.review.save();
+    await page.publishAllSessions.review.save.click();
     assert.strictEqual(sessions.length, 2);
     assert.strictEqual(sessions[0].row.title, 'session 0');
     assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Published');
@@ -455,7 +455,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       'Publish 2, schedule 1, leave 2, and ignore 0 sessions',
     );
 
-    await page.publishAllSessions.review.save();
+    await page.publishAllSessions.review.save.click();
     assert.strictEqual(sessions.length, 5);
     assert.strictEqual(sessions[0].row.title, 'session 0');
     assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Scheduled');
