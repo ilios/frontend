@@ -4,7 +4,6 @@ import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
 import { launchWorker } from '../utils/launch-worker';
 import { formats } from 'ilios-common/app/ember-intl';
-import config from 'frontend/config/environment';
 
 export default class AuthenticatedRoute extends Route {
   @service currentUser;
@@ -17,9 +16,6 @@ export default class AuthenticatedRoute extends Route {
   @tracked event;
 
   async beforeModel(transition) {
-    if (config.APP.ENABLE_DARK_MODE) {
-      window.document.documentElement.dataset.theme = 'system';
-    }
     await launchWorker();
     await this.session.setup(transition.targetName === 'lti-login');
     this.intl.setFormats(formats);
@@ -29,6 +25,7 @@ export default class AuthenticatedRoute extends Route {
       await this.preferences.setup();
       //reset the locale, in case we had saved data that differed from local cache of defaults
       this.intl.setLocale(this.preferences.locale);
+      window.document.documentElement.dataset.theme = this.preferences.theme;
     }
 
     window.document.querySelector('html').setAttribute('lang', this.intl.primaryLocale);

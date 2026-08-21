@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 const URL = '/application/preferences';
 const VERSION = 1;
 const DEFAULT_LOCALE = 'en-us';
+const DEFAULT_THEME = 'system';
 
 export default class Preferences extends Service {
   @service fetch;
@@ -11,6 +12,7 @@ export default class Preferences extends Service {
   @service localStorage;
 
   @tracked _locale;
+  @tracked _theme;
 
   async setup() {
     if (!this.currentUser.currentUserId) {
@@ -47,6 +49,26 @@ export default class Preferences extends Service {
     throw new Error('locale must be set through setLocale()');
   }
 
+  async setTheme(theme) {
+    this._theme = theme;
+    this.localStorage.theme = theme;
+    return this.#save();
+  }
+
+  /**
+   * Always return a value in order of:
+   * 1. Saved in user preferences
+   * 2. Saved in local storage
+   * 3. default value
+   */
+  get theme() {
+    return this._theme ?? this.localStorage.theme ?? DEFAULT_THEME;
+  }
+
+  set theme(v) {
+    throw new Error('theme must be set through setTheme()');
+  }
+
   async #save() {
     if (!this.currentUser.currentUserId) {
       console.warn('User is not authenticated, preferences saved to local storage only');
@@ -56,6 +78,7 @@ export default class Preferences extends Service {
       version: VERSION,
       preferences: {
         locale: this.locale,
+        theme: this.theme,
       },
     };
     const str = JSON.stringify(body);
@@ -65,5 +88,6 @@ export default class Preferences extends Service {
 
   #trackPreferences(obj) {
     this._locale = obj.locale ?? undefined;
+    this._theme = obj.theme ?? undefined;
   }
 }

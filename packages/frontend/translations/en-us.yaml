@@ -101,6 +101,7 @@ general:
   createNew: Create New
   createNewGroup: Create This Group
   curriculumReports: Curriculum Reports
+  dark: Dark
   deactivate: Deactivate
   defaultInstructors: Default Instructors
   defaultLocation: Default Location
@@ -178,6 +179,7 @@ general:
   learnerGroupTitlePlaceholder: Enter a title for this learner group
   learningMaterial: Learning Material
   learningMaterialAttributes: Learning Material Attributes
+  light: Light
   linkedCompetencies: Linked Competencies
   linkedCompetencyCount: "{count, plural, =1 {1 has a linked competency} other {# have linked competencies}}"
   lock: Lock
@@ -330,6 +332,7 @@ general:
   subTerms: Sub-terms
   successfullyInvalidatedTokens: All existing tokens were successfully invalidated
   successfullyRemovedTerm: Term Deleted Successfully
+  system: System
   taggedTerms: Tagged Terms
   taggedTermsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each set of attached terms is listed along with course data."
   taggedTermsReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each set of attached terms is listed along with course data."
@@ -337,6 +340,8 @@ general:
   termXappliedToYSessionsWithSessionTypeZ: 'The term "{term}" from the "{vocabulary}" vocabulary is applied to {sessionsCount, plural, =1 {1 session} other {# sessions}} with session-type "{sessionType}".'
   thereAreXTerms: "{count, plural, =1 {There is 1 term} other {There are # terms}}"
   thereAreXTypes: "{count, plural, =1 {There is 1 type} other {There are # types}}"
+  theme: Theme
+  themePickerExplanation: "Choose how Ilios looks to you. Light uses a bright background, while Dark uses darker colors for a lower-light experience. Select System to automatically match your device’s current light or dark appearance setting."
   thisReportIsNoLongerAvailable: This report is no longer available.
   thisTermHasSubTerms: This term has sub-terms.
   tokenInfo: "API Tokens are used to programmatically access Ilios data.  Your token is like a password - anyone who has it can make changes on your behalf.  Read more in the documentation at {apiDocsLink}."

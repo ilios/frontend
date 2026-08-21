@@ -1,0 +1,104 @@
+@use "../../ilios-common/mixins" as m;
+@use "../../ilios-common/mixins" as media;
+
+:root {
+  --light-clip: polygon(0 0, 100% 0, 100% 100%);
+  --dark-clip: polygon(0 0, 0 100%, 100% 100%);
+
+  &[data-theme="dark"] {
+    --light-clip: polygon(0 0, 0 100%, 100% 100%);
+    --dark-clip: polygon(0 0, 100% 0, 100% 100%);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --light-clip: polygon(0 0, 0 100%, 100% 100%);
+    --dark-clip: polygon(0 0, 100% 0, 100% 100%);
+  }
+}
+
+.user-profile-theme-chooser {
+  ul.chooser {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1rem 1rem 0 1rem;
+
+    @include media.for-tablet-and-up {
+      flex-direction: row;
+    }
+
+    li {
+      width: 100%;
+      height: 50vw;
+      padding: 0.25rem;
+
+      @include media.for-tablet-and-up {
+        height: 100%;
+        width: 30%;
+      }
+
+      @include media.for-laptop-and-up {
+        padding: 1rem;
+      }
+      border: 2px solid light-dark(var(--lightest-grey), var(--grey));
+
+      &.active {
+        border: 2px solid light-dark(var(--lighter-blue), var(--light-grey));
+        background-color: light-dark(var(--lightest-blue), var(--grey));
+
+        label {
+          cursor: default;
+        }
+      }
+
+      label {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr calc(pow(var(--golden-ratio-small), 2) * 1fr);
+        gap: 0.5rem;
+        height: 100%;
+        cursor: pointer;
+
+        svg {
+          justify-self: center;
+          height: 100%;
+          grid-column: 1 / 3;
+          grid-row: 1 / 2;
+          z-index: 1;
+
+          &.mobile {
+            z-index: 2;
+          }
+
+          @include media.for-laptop-and-up {
+            &.desktop {
+              z-index: 3;
+            }
+          }
+        }
+        input {
+          justify-self: end;
+          height: 1.5rem;
+          width: 1.5rem;
+          grid-column: 1;
+          grid-row: 2;
+        }
+        span {
+          justify-self: start;
+          grid-column: 2;
+          grid-row: 2;
+        }
+        &.system {
+          svg.light {
+            clip-path: var(--light-clip);
+          }
+
+          svg.dark {
+            clip-path: var(--dark-clip);
+          }
+        }
+      }
+    }
+  }
+}
