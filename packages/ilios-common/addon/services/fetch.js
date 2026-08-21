@@ -34,10 +34,7 @@ export default class Fetch extends Service {
 
     // if invalid auth, invalidate session
     if (response.status == 401) {
-      // don't need the flash message for the login page
-      if (this.router.currentRouteName !== 'login') {
-        this.flashMessages.alert(this.intl.t('errors.invalidAuthentication'));
-      }
+      this.flashMessages.alert(this.intl.t('errors.invalidAuthentication'));
       this.session.invalidate();
     }
 
