@@ -3,6 +3,7 @@ import getAuthLogout from './get-auth-logout';
 import getAuthWhoami from './get-auth-whoami';
 import getAuthToken from './get-auth-token';
 import getApplicationConfig from './get-application-config';
+import getUserPreferences from './get-user-preferences';
 import getErrors from './get-errors';
 
 import getCohorts from './get-cohorts';
@@ -25,6 +26,7 @@ export function getHandlers(config) {
     getAuthToken,
     getErrors,
     getApplicationConfig(config),
+    getUserPreferences,
     getCohorts,
     getCourses,
     getPendingUserUpdates,
