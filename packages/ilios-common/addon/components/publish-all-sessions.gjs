@@ -299,32 +299,13 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get saveButtonText() {
-    if (this.publishCount) {
-      if (this.scheduleCount) {
-        if (this.leaveCount) {
-          return `${this.intl.t('general.publish')}/${this.intl.t('general.schedule')}/${this.intl.t('general.leave')}`;
-        }
-        return `${this.intl.t('general.publish')}/${this.intl.t('general.schedule')}`;
-      } else {
-        if (this.leaveCount) {
-          return `${this.intl.t('general.publish')}/${this.intl.t('general.leave')}`;
-        }
-        return this.intl.t('general.publish');
-      }
-    }
-
-    if (this.scheduleCount) {
-      if (this.leaveCount) {
-        return `${this.intl.t('general.schedule')}/${this.intl.t('general.leave')}`;
-      }
-      return this.intl.t('general.schedule');
-    }
-
-    if (this.leaveCount) {
-      return this.intl.t('general.leave');
-    }
-
-    return '';
+    return [
+      this.publishCount && this.intl.t('general.publish'),
+      this.scheduleCount && this.intl.t('general.schedule'),
+      this.leaveCount && this.intl.t('general.leave'),
+    ]
+      .filter(Boolean)
+      .join('/');
   }
 
   @action
