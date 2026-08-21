@@ -328,36 +328,40 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   @action
-  selectSessionAction(session, action) {
-    switch (action) {
-      case 'publish':
-        this.userSelectedSessionsToSchedule = this.userSelectedSessionsToSchedule.filter(
-          (s) => s !== session,
-        );
-        this.userSelectedSessionsToLeave = this.userSelectedSessionsToLeave.filter(
-          (s) => s !== session,
-        );
-        this.userSelectedSessionsToPublish = [...this.userSelectedSessionsToPublish, session];
-        break;
-      case 'schedule':
-        this.userSelectedSessionsToPublish = this.userSelectedSessionsToPublish.filter(
-          (s) => s !== session,
-        );
-        this.userSelectedSessionsToLeave = this.userSelectedSessionsToLeave.filter(
-          (s) => s !== session,
-        );
-        this.userSelectedSessionsToSchedule = [...this.userSelectedSessionsToSchedule, session];
-        break;
-      case 'leave':
-        this.userSelectedSessionsToPublish = this.userSelectedSessionsToPublish.filter(
-          (s) => s !== session,
-        );
-        this.userSelectedSessionsToSchedule = this.userSelectedSessionsToSchedule.filter(
-          (s) => s !== session,
-        );
-        this.userSelectedSessionsToLeave = [...this.userSelectedSessionsToLeave, session];
-        break;
-    }
+  selectPublish(session) {
+    this.userSelectedSessionsToSchedule = this.userSelectedSessionsToSchedule.filter(
+      (s) => s !== session,
+    );
+    this.userSelectedSessionsToLeave = this.userSelectedSessionsToLeave.filter(
+      (s) => s !== session,
+    );
+    this.userSelectedSessionsToPublish = [...this.userSelectedSessionsToPublish, session];
+
+    this.bulkSelectedAction = '';
+  }
+
+  @action
+  selectSchedule(session) {
+    this.userSelectedSessionsToPublish = this.userSelectedSessionsToPublish.filter(
+      (s) => s !== session,
+    );
+    this.userSelectedSessionsToLeave = this.userSelectedSessionsToLeave.filter(
+      (s) => s !== session,
+    );
+    this.userSelectedSessionsToSchedule = [...this.userSelectedSessionsToSchedule, session];
+
+    this.bulkSelectedAction = '';
+  }
+
+  @action
+  selectLeave(session) {
+    this.userSelectedSessionsToPublish = this.userSelectedSessionsToPublish.filter(
+      (s) => s !== session,
+    );
+    this.userSelectedSessionsToSchedule = this.userSelectedSessionsToSchedule.filter(
+      (s) => s !== session,
+    );
+    this.userSelectedSessionsToLeave = [...this.userSelectedSessionsToLeave, session];
 
     this.bulkSelectedAction = '';
   }
@@ -815,7 +819,7 @@ export default class PublishAllSessionsComponent extends Component {
                             type="radio"
                             name="session-action{{session.id}}"
                             checked={{includes session.id (mapBy "id" this.sessionsToPublish)}}
-                            {{on "click" (fn this.selectSessionAction session "publish")}}
+                            {{on "click" (fn this.selectPublish session)}}
                             data-test-publish
                           />
                           {{t "general.publish"}}
@@ -826,7 +830,7 @@ export default class PublishAllSessionsComponent extends Component {
                               type="radio"
                               name="session-action{{session.id}}"
                               checked={{includes session.id (mapBy "id" this.sessionsToSchedule)}}
-                              {{on "click" (fn this.selectSessionAction session "schedule")}}
+                              {{on "click" (fn this.selectSchedule session)}}
                               data-test-mark-as-scheduled
                             />
                             {{t "general.markAsScheduled"}}
@@ -837,7 +841,7 @@ export default class PublishAllSessionsComponent extends Component {
                             type="radio"
                             name="session-action{{session.id}}"
                             checked={{includes session.id (mapBy "id" this.sessionsToLeave)}}
-                            {{on "click" (fn this.selectSessionAction session "leave")}}
+                            {{on "click" (fn this.selectLeave session)}}
                             data-test-leave
                           />
                           {{#if session.isScheduled}}
