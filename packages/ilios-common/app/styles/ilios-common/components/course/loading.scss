@@ -20,8 +20,20 @@
 
   .course-sessions-header {
     height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     @include m.for-phone-only {
       height: 3rem;
+    }
+
+    .actions {
+      display: flex;
+      cursor: default;
+
+      .loading-text {
+        background-color: var(--lighter-grey);
+      }
     }
   }
 

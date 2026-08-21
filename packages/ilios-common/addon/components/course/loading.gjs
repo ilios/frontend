@@ -2,7 +2,7 @@ import BackToCourses from 'ilios-common/components/course/back-to-courses';
 import animateLoading from 'ilios-common/modifiers/animate-loading';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { faSquarePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 <template>
   <BackToCourses />
 
@@ -54,11 +54,18 @@ import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
           {{t "general.sessions"}}
           (xx)
         </div>
-        <div class="actions"></div>
-      </div>
-      <div class="filter">
-        {{! template-lint-disable require-input-label }}
-        <input disabled />
+        <div class="actions">
+          <div class="filter">
+            {{! template-lint-disable require-input-label }}
+            <input disabled />
+          </div>
+          <button type="button" class="loading-text" disabled>
+            <FaIcon @icon={{faPlus}} />
+          </button>
+          <button type="button" class="loading-text" disabled>
+            {{t "general.publicationReview"}}
+          </button>
+        </div>
       </div>
       <section>
         <div class="sessions-grid-row sessions-grid-header-row loading-text"></div>
