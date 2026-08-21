@@ -27,7 +27,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     this.meshDescriptor = await this.server.create('mesh-descriptor');
   });
 
-  test('published sessions do not appear in the cannot publish list #1658', async function (assert) {
+  test('published, not scheduled, sessions do not appear in the cannot publish list #1658', async function (assert) {
     const term = await this.server.create('term');
     const course = await this.server.create('course', {
       year: 2013,
@@ -55,79 +55,101 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     const session3 = await this.server.create('session', {
       course,
       published: true,
-      publishedAsTbd: true,
+      publishedAsTbd: false,
       terms: [term],
     });
     await this.server.create('session-objective', { session: session3 });
     await this.server.create('offering', { session: session3 });
+    const session4 = await this.server.create('session', {
+      course,
+      published: true,
+      publishedAsTbd: true,
+      terms: [term],
+    });
+    await this.server.create('session-objective', { session: session4 });
+    await this.server.create('offering', { session: session4 });
+    await this.server.create('session', {
+      course,
+      published: false,
+      publishedAsTbd: false,
+    });
 
     await page.visit({
       courseId: course.id,
     });
 
-    assert.ok(page.publishAllSessions.isVisible);
-    assert.notOk(page.publishAllSessions.hasUnlinkedWarning);
+    assert.ok(page.publishAllSessions.isVisible, 'publish all sessions visible');
+    assert.notOk(page.publishAllSessions.hasUnlinkedWarning, 'no unlinked warning');
     assert.strictEqual(
       page.publishAllSessions.unpublishableSessions.text,
-      'Incomplete Sessions: cannot publish (0)',
+      'Incomplete Sessions: cannot publish (1)',
+      'incomplete/unpublishable text/count correct',
     );
-    assert.notOk(page.publishAllSessions.unpublishableSessions.isExpanded);
-    assert.ok(page.publishAllSessions.unpublishableSessions.canExpandCollapse);
+    assert.notOk(
+      page.publishAllSessions.unpublishableSessions.isExpanded,
+      'incomplete/unpublishable sessions collapsed',
+    );
+    assert.ok(
+      page.publishAllSessions.unpublishableSessions.canExpandCollapse,
+      'incomplete/unpublished sessions toggle exists',
+    );
 
-    assert.strictEqual(page.publishAllSessions.publishableSessions.text, 'Published Sessions (3)');
-    assert.notOk(page.publishAllSessions.publishableSessions.isExpanded);
-    assert.strictEqual(page.publishAllSessions.publishableSessions.sessions.length, 0);
-    assert.ok(page.publishAllSessions.publishableSessions.canExpandCollapse);
-    await page.publishAllSessions.publishableSessions.toggle();
-    assert.ok(page.publishAllSessions.publishableSessions.isExpanded);
-    assert.strictEqual(page.publishAllSessions.publishableSessions.sessions.length, 3);
+    assert.strictEqual(
+      page.publishAllSessions.publishedSessions.text,
+      'Published Sessions (3)',
+      'published sessions text/count correct',
+    );
+    assert.notOk(
+      page.publishAllSessions.publishedSessions.isExpanded,
+      'published sessions section collapsed',
+    );
+    assert.strictEqual(
+      page.publishAllSessions.publishedSessions.sessions.length,
+      0,
+      'published sessions count correct',
+    );
+    assert.ok(
+      page.publishAllSessions.publishedSessions.canExpandCollapse,
+      'published sessions toggle exists',
+    );
+    await page.publishAllSessions.publishedSessions.toggle();
+    assert.ok(page.publishAllSessions.publishedSessions.isExpanded);
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions.length, 3);
 
-    assert.strictEqual(page.publishAllSessions.publishableSessions.sessions[0].title, 'session 0');
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[0].title, 'session 0');
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[0].offerings, 'Yes (1)');
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[0].terms, 'Yes (1)');
     assert.strictEqual(
-      page.publishAllSessions.publishableSessions.sessions[0].offerings,
+      page.publishAllSessions.publishedSessions.sessions[0].objectives.text,
       'Yes (1)',
     );
-    assert.strictEqual(page.publishAllSessions.publishableSessions.sessions[0].terms, 'Yes (1)');
+    assert.ok(page.publishAllSessions.publishedSessions.sessions[0].objectives.isLinked);
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[1].title, 'session 1');
     assert.strictEqual(
-      page.publishAllSessions.publishableSessions.sessions[0].objectives.text,
+      page.publishAllSessions.publishedSessions.sessions[1].offerings,
+      'n/a',
+      '2nd session, an ILM, has correct offerings value',
+    );
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[1].terms, 'Yes (1)');
+    assert.strictEqual(
+      page.publishAllSessions.publishedSessions.sessions[1].objectives.text,
       'Yes (1)',
     );
-    assert.ok(page.publishAllSessions.publishableSessions.sessions[0].objectives.isLinked);
+    assert.ok(page.publishAllSessions.publishedSessions.sessions[1].objectives.isLinked);
 
-    assert.strictEqual(page.publishAllSessions.publishableSessions.sessions[1].title, 'session 1');
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[2].title, 'session 2');
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[2].offerings, 'Yes (1)');
+    assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[2].terms, 'Yes (1)');
     assert.strictEqual(
-      page.publishAllSessions.publishableSessions.sessions[1].offerings,
+      page.publishAllSessions.publishedSessions.sessions[2].objectives.text,
       'Yes (1)',
     );
-    assert.strictEqual(page.publishAllSessions.publishableSessions.sessions[1].terms, 'Yes (1)');
-    assert.strictEqual(
-      page.publishAllSessions.publishableSessions.sessions[1].objectives.text,
-      'Yes (1)',
-    );
-    assert.ok(page.publishAllSessions.publishableSessions.sessions[1].objectives.isLinked);
-
-    assert.strictEqual(page.publishAllSessions.publishableSessions.sessions[2].title, 'session 2');
-    assert.strictEqual(
-      page.publishAllSessions.publishableSessions.sessions[2].offerings,
-      'Yes (1)',
-    );
-    assert.strictEqual(page.publishAllSessions.publishableSessions.sessions[2].terms, 'Yes (1)');
-    assert.strictEqual(
-      page.publishAllSessions.publishableSessions.sessions[2].objectives.text,
-      'Yes (1)',
-    );
-    assert.ok(page.publishAllSessions.publishableSessions.sessions[2].objectives.isLinked);
+    assert.ok(page.publishAllSessions.publishedSessions.sessions[2].objectives.isLinked);
   });
 
   test('after publishing user is returned to the courses route #4099', async function (assert) {
     const terms = await this.server.createList('term', 1);
 
-    // const course = await this.server.create('course', {
-    //   year: 2013,
-    //   school: this.school,
-    //   published: true,
-    //   cohorts: [this.cohort],
-    // });
     const session = await this.server.create('session', {
       course: this.course,
       published: false,
@@ -145,7 +167,8 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     });
 
     assert.ok(page.publishAllSessions.isVisible);
-    await page.publishAllSessions.review.save();
+    await page.publishAllSessions.overridableSessions.sessions[0].publish.click();
+    await page.publishAllSessions.review.save.click();
     assert.strictEqual(currentURL(), '/courses/1');
     assert.strictEqual(
       page.courseSessions.sessionsGrid.sessions[0].row.publicationStatus.icon.title,
@@ -197,7 +220,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.notOk(page.publishAllSessions.hasUnlinkedWarning);
   });
 
-  test('expand/collapse state of sections are tracked in url', async function (assert) {
+  test('expand/collapse state of sections is tracked in url', async function (assert) {
     const sessionObjectives = await this.server.createList('session-objective', 2);
     const offerings = await this.server.createList('offering', 4);
     await this.server.create('session', {
@@ -208,7 +231,6 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessionObjectives: [sessionObjectives[0]],
       offerings: [offerings[0], offerings[1]],
     });
-
     await this.server.create('session', {
       course: this.course,
       terms: [this.term],
@@ -216,6 +238,11 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessionType: this.sessionTypes[0],
       sessionObjectives: [sessionObjectives[1]],
       offerings: [offerings[2], offerings[3]],
+      published: true,
+    });
+
+    await this.server.create('session', {
+      course: this.course,
     });
 
     await page.visit({
@@ -224,97 +251,30 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
 
     assert.strictEqual(currentURL(), '/courses/1/publishall');
 
-    const { publishableSessions, unpublishableSessions } = page.publishAllSessions;
+    const { unpublishableSessions, publishedSessions } = page.publishAllSessions;
 
-    assert.notOk(publishableSessions.isExpanded);
-    assert.notOk(unpublishableSessions.isExpanded);
+    assert.ok(unpublishableSessions.canExpandCollapse);
+    assert.ok(publishedSessions.canExpandCollapse);
 
-    await publishableSessions.toggle();
-    assert.strictEqual(currentURL(), '/courses/1/publishall?expandCompleteSessions=true');
-    assert.ok(publishableSessions.isExpanded);
-    assert.notOk(unpublishableSessions.isExpanded);
     await unpublishableSessions.toggle();
+    assert.strictEqual(currentURL(), '/courses/1/publishall?expandIncompleteSessions=true');
+    assert.ok(unpublishableSessions.isExpanded);
+    assert.notOk(publishedSessions.isExpanded);
+    await publishedSessions.toggle();
     assert.strictEqual(
       currentURL(),
       '/courses/1/publishall?expandCompleteSessions=true&expandIncompleteSessions=true',
     );
-    assert.ok(publishableSessions.isExpanded);
     assert.ok(unpublishableSessions.isExpanded);
-    await publishableSessions.toggle();
-    assert.strictEqual(currentURL(), '/courses/1/publishall?expandIncompleteSessions=true');
-    assert.notOk(publishableSessions.isExpanded);
-    assert.ok(unpublishableSessions.isExpanded);
+    assert.ok(publishedSessions.isExpanded);
     await unpublishableSessions.toggle();
-    assert.strictEqual(currentURL(), '/courses/1/publishall');
-    assert.notOk(publishableSessions.isExpanded);
+    assert.strictEqual(currentURL(), '/courses/1/publishall?expandCompleteSessions=true');
     assert.notOk(unpublishableSessions.isExpanded);
-  });
-
-  test('publish publishable sessions', async function (assert) {
-    await this.server.create('session', {
-      course: this.course,
-      terms: [this.term],
-      meshDescriptors: [this.meshDescriptor],
-      sessionType: this.sessionTypes[0],
-      sessionObjectives: [await this.server.create('session-objective')],
-      offerings: await this.server.createList('offering', 2),
-    });
-    await this.server.create('session', {
-      course: this.course,
-      terms: [this.term],
-      meshDescriptors: [this.meshDescriptor],
-      sessionType: this.sessionTypes[0],
-      sessionObjectives: [await this.server.create('session-objective')],
-      offerings: await this.server.createList('offering', 2),
-    });
-
-    await page.coursePage.visit({
-      courseId: this.course.id,
-    });
-
-    const { sessions } = page.coursePage.courseSessions.sessionsGrid;
-    assert.strictEqual(sessions.length, 2, 'course sessions length correct');
-    assert.strictEqual(sessions[0].row.title, 'session 0', 'first course session title correct');
-    assert.strictEqual(
-      sessions[0].row.publicationStatus.icon.title,
-      'Not Published',
-      'first session is unpublished',
-    );
-    assert.strictEqual(sessions[1].row.title, 'session 1', 'second course session title correct');
-    assert.strictEqual(
-      sessions[1].row.publicationStatus.icon.title,
-      'Not Published',
-      'second course session is unpublished',
-    );
-
-    await page.visit({
-      courseId: this.course.id,
-    });
-
-    const { publishableSessions } = page.publishAllSessions;
-    assert.strictEqual(
-      publishableSessions.title,
-      'Published Sessions (2)',
-      'publishable sessions header correct',
-    );
-    await publishableSessions.toggle();
-    assert.strictEqual(publishableSessions.sessions.length, 2);
-    assert.strictEqual(publishableSessions.sessions[0].title, 'session 0');
-    assert.strictEqual(publishableSessions.sessions[0].url, '/courses/1/sessions/1');
-    assert.strictEqual(publishableSessions.sessions[1].title, 'session 1');
-    assert.strictEqual(publishableSessions.sessions[1].url, '/courses/1/sessions/2');
-
-    assert.strictEqual(
-      page.publishAllSessions.review.confirmation,
-      'Publish 2, schedule 0, and ignore 0 sessions',
-    );
-
-    await page.publishAllSessions.review.save();
-    assert.strictEqual(sessions.length, 2);
-    assert.strictEqual(sessions[0].row.title, 'session 0');
-    assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Published');
-    assert.strictEqual(sessions[1].row.title, 'session 1');
-    assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Published');
+    assert.ok(publishedSessions.isExpanded);
+    await publishedSessions.toggle();
+    assert.strictEqual(currentURL(), '/courses/1/publishall');
+    assert.notOk(unpublishableSessions.isExpanded);
+    assert.notOk(publishedSessions.isExpanded);
   });
 
   test('publish overridable sessions #2816', async function (assert) {
@@ -348,35 +308,165 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
 
     assert.strictEqual(overridableSessions.title, 'Unpublished Sessions: for review (2)');
     assert.ok(overridableSessions.markAllAsScheduled.isVisible);
-    assert.ok(overridableSessions.publishAllAsIs.isVisible);
+    assert.ok(overridableSessions.publishAll.isVisible);
     const { sessions: list } = overridableSessions;
     assert.strictEqual(list.length, 2);
     assert.strictEqual(list[0].title, 'session 0');
     assert.strictEqual(list[0].url, '/courses/1/sessions/1');
-    assert.notOk(list[0].publishAsIs.isChecked);
-    assert.ok(list[0].markAsScheduled.isChecked);
+    assert.ok(list[0].publish.isChecked);
+    assert.notOk(list[0].markAsScheduled.isChecked);
+    assert.notOk(list[0].leave.isChecked);
     assert.strictEqual(list[1].title, 'session 1');
     assert.strictEqual(list[1].url, '/courses/1/sessions/2');
-    assert.notOk(list[1].publishAsIs.isChecked);
-    assert.ok(list[1].markAsScheduled.isChecked);
-
-    await overridableSessions.publishAllAsIs.click();
-    assert.ok(list[0].publishAsIs.isChecked);
-    assert.notOk(list[0].markAsScheduled.isChecked);
-    assert.ok(list[1].publishAsIs.isChecked);
+    assert.ok(list[1].publish.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
+    assert.notOk(list[1].leave.isChecked);
 
     assert.strictEqual(
       page.publishAllSessions.review.confirmation,
-      'Publish 2, schedule 0, and ignore 0 sessions',
+      'Publish 2, schedule 0, leave 0, and ignore 0 sessions',
     );
 
-    await page.publishAllSessions.review.save();
+    await page.publishAllSessions.review.save.click();
     assert.strictEqual(sessions.length, 2);
     assert.strictEqual(sessions[0].row.title, 'session 0');
     assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Published');
     assert.strictEqual(sessions[1].row.title, 'session 1');
     assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Published');
+  });
+
+  test('publish/schedule/leave mix of sessions', async function (assert) {
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 2),
+      published: true,
+      publishedAsTbd: true,
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 2),
+      published: true,
+      publishedAsTbd: true,
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 2),
+      published: false,
+      publishedAsTbd: false,
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 2),
+      published: false,
+      publishedAsTbd: false,
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      offerings: await this.server.createList('offering', 2),
+      published: false,
+      publishedAsTbd: false,
+    });
+
+    await page.coursePage.visit({
+      courseId: this.course.id,
+    });
+
+    const { sessions } = page.coursePage.courseSessions.sessionsGrid;
+    assert.strictEqual(sessions.length, 5);
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Scheduled');
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Scheduled');
+    assert.strictEqual(sessions[2].row.title, 'session 2');
+    assert.strictEqual(sessions[2].row.publicationStatus.icon.title, 'Not Published');
+    assert.strictEqual(sessions[3].row.title, 'session 3');
+    assert.strictEqual(sessions[3].row.publicationStatus.icon.title, 'Not Published');
+    assert.strictEqual(sessions[4].row.title, 'session 4');
+    assert.strictEqual(sessions[4].row.publicationStatus.icon.title, 'Not Published');
+
+    await page.visit({
+      courseId: this.course.id,
+    });
+
+    const { overridableSessions } = page.publishAllSessions;
+
+    assert.strictEqual(overridableSessions.title, 'Unpublished Sessions: for review (5)');
+    assert.ok(overridableSessions.markAllAsScheduled.isVisible);
+    assert.ok(overridableSessions.publishAll.isVisible);
+
+    const { sessions: list } = overridableSessions;
+
+    assert.strictEqual(list.length, 5);
+
+    // scheduled -> leaving as scheduled by default
+    assert.strictEqual(list[0].title, 'session 0');
+    assert.strictEqual(list[0].url, '/courses/1/sessions/1');
+    assert.notOk(list[0].publish.isChecked);
+    assert.notOk(list[0].markAsScheduled.isChoice);
+    assert.ok(list[0].leave.isChecked);
+
+    // scheduled -> choosing to publish instead of default leave as-is
+    assert.strictEqual(list[1].title, 'session 1');
+    assert.strictEqual(list[1].url, '/courses/1/sessions/2');
+    assert.notOk(list[1].publish.isChecked);
+    assert.notOk(list[1].markAsScheduled.isChoice);
+    assert.ok(list[1].leave.isChecked);
+    await list[1].publish.click();
+    assert.ok(list[1].publish.isChecked);
+    assert.notOk(list[1].leave.isChecked);
+
+    // unpublished -> publishing by default
+    assert.strictEqual(list[2].title, 'session 2');
+    assert.strictEqual(list[2].url, '/courses/1/sessions/3');
+    assert.ok(list[2].publish.isChecked);
+    assert.ok(list[2].markAsScheduled.isChoice);
+    assert.notOk(list[2].markAsScheduled.isChecked);
+    assert.notOk(list[2].leave.isChecked);
+
+    // unpublished -> choosing to leave unpublished instead of default publush
+    assert.strictEqual(list[3].title, 'session 3');
+    assert.strictEqual(list[3].url, '/courses/1/sessions/4');
+    assert.ok(list[3].publish.isChecked);
+    assert.ok(list[3].markAsScheduled.isChoice);
+    assert.notOk(list[3].markAsScheduled.isChecked);
+    assert.notOk(list[3].leave.isChecked);
+    await list[3].leave.click();
+    assert.notOk(list[3].publish.isChecked);
+    assert.ok(list[3].leave.isChecked);
+
+    // unpublished -> choosing to schedule instead of default publish
+    assert.strictEqual(list[4].title, 'session 4');
+    assert.strictEqual(list[4].url, '/courses/1/sessions/5');
+    assert.ok(list[4].publish.isChecked);
+    assert.ok(list[4].markAsScheduled.isChoice);
+    assert.notOk(list[4].markAsScheduled.isChecked);
+    assert.notOk(list[4].leave.isChecked);
+    await list[4].markAsScheduled.click();
+    assert.notOk(list[4].publish.isChecked);
+    assert.ok(list[4].markAsScheduled.isChecked);
+
+    assert.strictEqual(
+      page.publishAllSessions.review.confirmation,
+      'Publish 2, schedule 1, leave 2, and ignore 0 sessions',
+    );
+
+    await page.publishAllSessions.review.save.click();
+    assert.strictEqual(sessions.length, 5);
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Scheduled');
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Published');
+    assert.strictEqual(sessions[2].row.title, 'session 2');
+    assert.strictEqual(sessions[2].row.publicationStatus.icon.title, 'Published');
+    assert.strictEqual(sessions[3].row.title, 'session 3');
+    assert.strictEqual(sessions[3].row.publicationStatus.icon.title, 'Not Published');
+    assert.strictEqual(sessions[4].row.title, 'session 4');
+    assert.strictEqual(sessions[4].row.publicationStatus.icon.title, 'Scheduled');
   });
 
   test('tables are sortable', async function (assert) {
@@ -408,6 +498,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessionType: this.sessionTypes[0],
       sessionObjectives: [await this.server.create('session-objective')],
       offerings: await this.server.createList('offering', 5),
+      published: true,
     });
     await this.server.create('session', {
       course: this.course,
@@ -416,6 +507,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessionType: this.sessionTypes[0],
       sessionObjectives: [await this.server.create('session-objective')],
       offerings: await this.server.createList('offering', 3),
+      published: true,
     });
     await this.server.create('session', {
       course: this.course,
@@ -496,28 +588,28 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
 
     // test 2/3 section: Complete/Published Sessions
 
-    assert.ok(pubReview.publishableSessions.table.headers.title.isSortedOn);
-    assert.ok(pubReview.publishableSessions.table.headers.title.isSortedAscending);
-    assert.notOk(pubReview.publishableSessions.table.headers.offerings.isSortedOn);
-    assert.notOk(pubReview.publishableSessions.table.headers.terms.isSortedOn);
-    assert.notOk(pubReview.publishableSessions.table.headers.objectives.isSortedOn);
-    assert.strictEqual(pubReview.publishableSessions.sessions[0].title, 'session 3');
+    assert.ok(pubReview.publishedSessions.table.headers.title.isSortedOn);
+    assert.ok(pubReview.publishedSessions.table.headers.title.isSortedAscending);
+    assert.notOk(pubReview.publishedSessions.table.headers.offerings.isSortedOn);
+    assert.notOk(pubReview.publishedSessions.table.headers.terms.isSortedOn);
+    assert.notOk(pubReview.publishedSessions.table.headers.objectives.isSortedOn);
+    assert.strictEqual(pubReview.publishedSessions.sessions[0].title, 'session 3');
 
-    await pubReview.publishableSessions.table.headers.title.click();
-    assert.notOk(pubReview.publishableSessions.table.headers.title.isSortedAscending);
-    assert.ok(pubReview.publishableSessions.table.headers.title.isSortedDescending);
-    assert.strictEqual(pubReview.publishableSessions.sessions[0].title, 'session 5');
+    await pubReview.publishedSessions.table.headers.title.click();
+    assert.notOk(pubReview.publishedSessions.table.headers.title.isSortedAscending);
+    assert.ok(pubReview.publishedSessions.table.headers.title.isSortedDescending);
+    assert.strictEqual(pubReview.publishedSessions.sessions[0].title, 'session 4');
 
-    await pubReview.publishableSessions.table.headers.title.click();
-    assert.ok(pubReview.publishableSessions.table.headers.title.isSortedAscending);
-    assert.notOk(pubReview.publishableSessions.table.headers.title.isSortedDescending);
-    assert.strictEqual(pubReview.publishableSessions.sessions[0].title, 'session 3');
+    await pubReview.publishedSessions.table.headers.title.click();
+    assert.ok(pubReview.publishedSessions.table.headers.title.isSortedAscending);
+    assert.notOk(pubReview.publishedSessions.table.headers.title.isSortedDescending);
+    assert.strictEqual(pubReview.publishedSessions.sessions[0].title, 'session 3');
 
-    await pubReview.publishableSessions.table.headers.terms.click();
-    assert.ok(pubReview.publishableSessions.table.headers.terms.isSortedOn);
-    assert.notOk(pubReview.publishableSessions.table.headers.title.isSortedOn);
-    assert.ok(pubReview.publishableSessions.table.headers.terms.isSortedAscending);
-    assert.strictEqual(pubReview.publishableSessions.sessions[0].title, 'session 3');
+    await pubReview.publishedSessions.table.headers.terms.click();
+    assert.ok(pubReview.publishedSessions.table.headers.terms.isSortedOn);
+    assert.notOk(pubReview.publishedSessions.table.headers.title.isSortedOn);
+    assert.ok(pubReview.publishedSessions.table.headers.terms.isSortedAscending);
+    assert.strictEqual(pubReview.publishedSessions.sessions[0].title, 'session 3');
 
     // test 3/3 section: Unpublished/Overridable Sessions
 
@@ -526,7 +618,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.notOk(pubReview.overridableSessions.table.headers.offerings.isSortedOn);
     assert.notOk(pubReview.overridableSessions.table.headers.terms.isSortedOn);
     assert.notOk(pubReview.overridableSessions.table.headers.objectives.isSortedOn);
-    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 6');
+    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 5');
 
     await pubReview.overridableSessions.table.headers.title.click();
     assert.notOk(pubReview.overridableSessions.table.headers.title.isSortedAscending);
@@ -536,13 +628,16 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     await pubReview.overridableSessions.table.headers.title.click();
     assert.ok(pubReview.overridableSessions.table.headers.title.isSortedAscending);
     assert.notOk(pubReview.overridableSessions.table.headers.title.isSortedDescending);
-    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 6');
+    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 5');
 
     await pubReview.overridableSessions.table.headers.objectives.click();
     assert.ok(pubReview.overridableSessions.table.headers.objectives.isSortedOn);
     assert.notOk(pubReview.overridableSessions.table.headers.title.isSortedOn);
     assert.ok(pubReview.overridableSessions.table.headers.objectives.isSortedAscending);
     assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 8');
+    await pubReview.overridableSessions.table.headers.objectives.click();
+    assert.notOk(pubReview.overridableSessions.table.headers.objectives.isSortedAscending);
+    assert.strictEqual(pubReview.overridableSessions.sessions[0].title, 'session 6');
   });
 
   test('querystring sorts tables', async function (assert) {
@@ -590,6 +685,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessionType: this.sessionTypes[0],
       sessionObjectives: [await this.server.create('session-objective')],
       offerings: await this.server.createList('offering', 2),
+      published: true,
     });
 
     await this.server.create('session', {
@@ -631,11 +727,11 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.notOk(pubReview.unpublishableSessions.table.headers.offerings.isSortedDescending);
     assert.strictEqual(pubReview.unpublishableSessions.sessions[0].title, 'session 0');
 
-    assert.notOk(pubReview.publishableSessions.table.headers.title.isSortedOn);
-    assert.ok(pubReview.publishableSessions.table.headers.terms.isSortedOn);
-    assert.notOk(pubReview.publishableSessions.table.headers.terms.isSortedAscending);
-    assert.ok(pubReview.publishableSessions.table.headers.terms.isSortedDescending);
-    assert.strictEqual(pubReview.publishableSessions.sessions[0].title, 'session 5');
+    assert.notOk(pubReview.publishedSessions.table.headers.title.isSortedOn);
+    assert.ok(pubReview.publishedSessions.table.headers.terms.isSortedOn);
+    assert.notOk(pubReview.publishedSessions.table.headers.terms.isSortedAscending);
+    assert.ok(pubReview.publishedSessions.table.headers.terms.isSortedDescending);
+    assert.strictEqual(pubReview.publishedSessions.sessions[0].title, 'session 5');
 
     assert.notOk(pubReview.overridableSessions.table.headers.title.isSortedOn);
     assert.ok(pubReview.overridableSessions.table.headers.objectives.isSortedOn);

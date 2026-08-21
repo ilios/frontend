@@ -148,7 +148,6 @@ general:
   firstOffering: Ofrecimiento Primero
   forward: Adelante
   friday: Viernes
-  go: Vaya
   goToNextYear: Ir al año que viene
   goToPreviousYear: Ir al año anterior
   groupByCompetencies: Agrupe por Competencias
@@ -213,6 +212,9 @@ general:
   learningMaterialManageTitle: Administrar Materiales de Aprendizaje
   learningMaterials: Materiales de Aprendizaje
   learningMaterialsSummary: Resumen de Materiales de Aprendizaje
+  leave: Dejar
+  leaveAsScheduled: Dejar como se Programado
+  leaveAsUnPublished: Dejar como No Publicado
   level: Nivel
   link: Enlace de la Web
   listByPriority: Lista por prioridad
@@ -260,6 +262,7 @@ general:
   noSearchResultsPrompt: no resultados
   noSessionLearningMaterialsAvailable: Ningunos Materiales Didácticos de la Sesión Disponibles
   notAClerkship: No una Rotación
+  notApplicableAbbr: n/d
   notes: Notas
   notFoundMessage: "Malditas! Éso no puede encontrar. Favor de verificar la dirección de la página, y trata otra vez."
   notPublished: No Publicado
@@ -289,9 +292,8 @@ general:
   publicationReview: Revisión de Publicación
   publicationStatus: Estado de Publicación
   publish: Publique
-  publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
-  publishAllAsIs: Publique Todo Como Es
-  publishAsIs: Publique Como Es
+  publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, deja {leaveCount}, y ignore {ignoreCount} sesiónes"
+  publishAll: Publique Todo
   publishCourse: Publique Curso
   publishCourseWithMissingItems: Publique Curso, con {missingItemCount, plural, =1 {1 artículo faltante} other {# artículos faltantes}}
   publishSession: Publique La Sesión
@@ -307,6 +309,7 @@ general:
   saturday: Sábado
   save: Guardar
   savedSuccessfully: ahorrado con éxito
+  schedule: Programar
   scheduled: Programado
   scheduledSuccessfully: Programdo con éxito
   scheduling: Programación

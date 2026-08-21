@@ -4,6 +4,7 @@ import {
   create,
   clickable,
   hasClass,
+  isPresent,
   isVisible,
   notHasClass,
   property,
@@ -62,7 +63,7 @@ const definition = {
     },
     sessions: collection('tbody tr', {
       url: attribute('href', '[data-test-title] a'),
-      title: text('[data-test-title]'),
+      title: text('[data-test-title] a'),
       offerings: text('[data-test-offerings]'),
       terms: text('[data-test-terms]'),
       objectives: {
@@ -74,8 +75,8 @@ const definition = {
       },
     }),
   },
-  publishableSessions: {
-    scope: '[data-test-publishable]',
+  publishedSessions: {
+    scope: '[data-test-published]',
     title: text('> [data-test-title]'),
     isExpanded: isVisible('[data-test-content]'),
     canExpandCollapse: isVisible('[data-test-expand-collapse]'),
@@ -120,7 +121,7 @@ const definition = {
     },
     sessions: collection('tbody tr', {
       url: attribute('href', '[data-test-title] a'),
-      title: text('[data-test-title]'),
+      title: text('[data-test-title] a'),
       offerings: text('[data-test-offerings]'),
       terms: text('[data-test-terms]'),
       objectives: {
@@ -135,8 +136,8 @@ const definition = {
   overridableSessions: {
     scope: '[data-test-overridable]',
     title: text('> [data-test-title]'),
-    publishAllAsIs: {
-      scope: '[data-test-publish-all-as-is]',
+    publishAll: {
+      scope: '[data-test-publish-all]',
       isChecked: property('checked'),
     },
     markAllAsScheduled: {
@@ -182,16 +183,24 @@ const definition = {
       },
     },
     sessions: collection('tbody tr', {
-      publishAsIs: {
-        scope: '[data-test-publish-as-is]',
+      publish: {
+        scope: '[data-test-publish]',
         isChecked: property('checked'),
+        click: clickable(),
       },
       markAsScheduled: {
         scope: '[data-test-mark-as-scheduled]',
+        isChoice: isPresent(),
         isChecked: property('checked'),
+        click: clickable(),
+      },
+      leave: {
+        scope: '[data-test-leave]',
+        isChecked: property('checked'),
+        click: clickable(),
       },
       url: attribute('href', '[data-test-title] a'),
-      title: text('[data-test-title]'),
+      title: text('[data-test-title] a'),
       offerings: text('[data-test-offerings]'),
       terms: text('[data-test-terms]'),
       objectives: {
@@ -211,7 +220,12 @@ const definition = {
       scope: '[data-test-course-link]',
     },
     confirmation: text('[data-test-confirmation]'),
-    save: clickable('[data-test-save]'),
+    save: {
+      scope: '[data-test-save]',
+      isChoice: isPresent(),
+      text: text(),
+      click: clickable(),
+    },
   },
   hasUnlinkedWarning: isVisible('[data-test-unlinked-warning]'),
 };

@@ -61,9 +61,13 @@
   }
 
   .publish-all-sessions-unpublishable,
-  .publish-all-sessions-publishable {
+  .publish-all-sessions-published {
     .title {
       cursor: pointer;
+    }
+
+    h3 {
+      @include m.ilios-heading-h5;
     }
   }
 
@@ -106,8 +110,14 @@
     }
 
     button {
-      background-color: light-dark(var(--green), var(--lighter-green));
-      color: light-dark(var(--white), var(--black));
+      &.save {
+        background-color: light-dark(var(--green), var(--lighter-green));
+        color: light-dark(var(--white), var(--black));
+      }
+      &.cancel {
+        background-color: light-dark(var(--light-red), var(--lighter-red));
+        color: light-dark(var(--white), var(--black));
+      }
     }
   }
 
