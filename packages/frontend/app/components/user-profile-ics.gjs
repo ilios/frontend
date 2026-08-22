@@ -46,36 +46,28 @@ export default class UserProfileIcsComponent extends Component {
   }
 
   /**
+   * The crypto API we use to build a new key isn't avaialble outside of
+   * secure contexts, so we make the manager unavailable in those cases.
+   */
+  get isManageable() {
+    return window.isSecureContext && this.args.isManageable;
+  }
+
+  /**
    * Generate a random token from a combination of
    * the user id, a random string and the current time
-   *
-   * We use two different methods for making this work. Because some versions of safari don't allow
-   * usage of the crypto.subtle API in an insecure context we have to fall back on a random string
-   * path when that API isn't available.
-   *
-   * Info on secure context requirement: https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle#browser_compatibility
-   *
-   * Digest implementation lifted from https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
    */
   async randomToken(userId) {
+    if (!window.isSecureContext) {
+      throw new Error('Unable to generate tokens in insecure context');
+    }
+
     const now = Date.now();
-    if (window.isSecureContext) {
-      const randomValue = Math.random().toString(36).substring(2);
-      const msgUint8 = new TextEncoder().encode(userId + randomValue + now); // encode as (utf-8) Uint8Array
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8); // hash the message
-      const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
-      return hashArray.map((b) => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
-    }
-
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    let rhett = `${now}${userId}`; //prefix with the time and userId to avoid the remote change of a collision
-    const needRandomnessOf = 64 - rhett.length;
-    for (let i = 0; i < needRandomnessOf; i++) {
-      rhett += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-
-    return rhett;
+    const randomValue = Math.random().toString(36).substring(2);
+    const msgUint8 = new TextEncoder().encode(userId + randomValue + now); // encode as (utf-8) Uint8Array
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8); // hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+    return hashArray.map((b) => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
   }
 
   refreshKey = task({ drop: true }, async () => {
@@ -135,7 +127,7 @@ export default class UserProfileIcsComponent extends Component {
           >
             <FaIcon @icon={{faArrowRotateLeft}} />
           </button>
-        {{else if @isManageable}}
+        {{else if this.isManageable}}
           <button
             type="button"
             class="manage"
