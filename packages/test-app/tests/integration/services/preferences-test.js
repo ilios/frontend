@@ -11,12 +11,17 @@ class LocalStorageMock extends Service {
   locale = undefined;
 }
 
+class CurrentUserMock extends Service {
+  currentUserId = 24;
+}
+
 module('Unit | Service | preferences', function (hooks) {
   setupTest(hooks);
   setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.owner.register('service:local-storage', LocalStorageMock);
+    this.owner.register('service:current-user', CurrentUserMock);
   });
 
   test('it exists', function (assert) {
@@ -88,6 +93,19 @@ module('Unit | Service | preferences', function (hooks) {
 
     assert.strictEqual(service.locale, 'es');
     assert.verifySteps(['get preferences']);
+  });
+
+  test('setup() does nothing when no user is authenticated', async function (assert) {
+    assert.expect(0);
+    const service = this.owner.lookup('service:preferences');
+    const currentUser = this.owner.lookup('service:current-user');
+    currentUser.currentUserId = undefined;
+
+    this.server.get(URL, function () {
+      assert.step('skip');
+    });
+
+    await service.setup();
   });
 
   test('locale returns the default when no locale preference has been set', async function (assert) {
