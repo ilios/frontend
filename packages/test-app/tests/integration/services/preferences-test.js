@@ -1,16 +1,26 @@
+import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupMSW } from 'ilios-common/msw';
 import { HttpResponse } from 'msw';
 
 const URL = '/application/preferences';
+const DEFAULT_LOCALE = 'en-us';
+
+class LocalStorageMock extends Service {
+  locale = undefined;
+}
 
 module('Unit | Service | preferences', function (hooks) {
   setupTest(hooks);
   setupMSW(hooks);
 
+  hooks.beforeEach(function () {
+    this.owner.register('service:local-storage', LocalStorageMock);
+  });
+
   test('it exists', function (assert) {
-    var service = this.owner.lookup('service:preferences');
+    const service = this.owner.lookup('service:preferences');
     assert.ok(service);
   });
 
@@ -23,13 +33,42 @@ module('Unit | Service | preferences', function (hooks) {
     });
     this.server.put(URL, async ({ request }) => {
       assert.step('put preferences');
-      return await request.json();
+      assert.deepEqual(await request.json(), {
+        version: 1,
+        preferences: {
+          locale: DEFAULT_LOCALE,
+        },
+      });
+      return {
+        preferences: {
+          locale: DEFAULT_LOCALE,
+        },
+      };
     });
 
     await service.setup();
 
-    assert.strictEqual(service.locale, undefined);
+    assert.strictEqual(service.locale, DEFAULT_LOCALE);
     assert.verifySteps(['get preferences', 'put preferences']);
+  });
+
+  test('setup() uses the local storage locale when creating preferences', async function (assert) {
+    const localStorage = this.owner.lookup('service:local-storage');
+    localStorage.locale = 'fr';
+    const service = this.owner.lookup('service:preferences');
+
+    this.server.get(URL, function () {
+      return new HttpResponse(null, { status: 404 });
+    });
+    this.server.put(URL, async ({ request }) => {
+      const body = await request.json();
+      assert.strictEqual(body.preferences.locale, 'fr');
+      return body;
+    });
+
+    await service.setup();
+
+    assert.strictEqual(service.locale, 'fr');
   });
 
   test('setup() loads preferences when they already exist', async function (assert) {
@@ -51,7 +90,7 @@ module('Unit | Service | preferences', function (hooks) {
     assert.verifySteps(['get preferences']);
   });
 
-  test('locale is undefined when no locale preference has been set', async function (assert) {
+  test('locale returns the default when no locale preference has been set', async function (assert) {
     const service = this.owner.lookup('service:preferences');
 
     this.server.get(URL, function () {
@@ -63,7 +102,43 @@ module('Unit | Service | preferences', function (hooks) {
 
     await service.setup();
 
-    assert.strictEqual(service.locale, undefined);
+    assert.strictEqual(service.locale, DEFAULT_LOCALE);
+  });
+
+  test('locale returns the local storage value when no user preference has been set', async function (assert) {
+    const localStorage = this.owner.lookup('service:local-storage');
+    localStorage.locale = 'it';
+    const service = this.owner.lookup('service:preferences');
+
+    this.server.get(URL, function () {
+      return {
+        version: 1,
+        preferences: {},
+      };
+    });
+
+    await service.setup();
+
+    assert.strictEqual(service.locale, 'it');
+  });
+
+  test('locale returns the stored preference before the local storage value', async function (assert) {
+    const localStorage = this.owner.lookup('service:local-storage');
+    localStorage.locale = 'it';
+    const service = this.owner.lookup('service:preferences');
+
+    this.server.get(URL, function () {
+      return {
+        version: 1,
+        preferences: {
+          locale: 'fr',
+        },
+      };
+    });
+
+    await service.setup();
+
+    assert.strictEqual(service.locale, 'fr');
   });
 
   test('locale returns the stored value when one has been set', async function (assert) {
@@ -83,7 +158,8 @@ module('Unit | Service | preferences', function (hooks) {
     assert.strictEqual(service.locale, 'fr');
   });
 
-  test('setLocale() sets the locale and it can then be read back', async function (assert) {
+  test('setLocale() sets the locale, saves it to local storage, and it can then be read back', async function (assert) {
+    const localStorage = this.owner.lookup('service:local-storage');
     const service = this.owner.lookup('service:preferences');
 
     this.server.get(URL, function () {
@@ -102,6 +178,7 @@ module('Unit | Service | preferences', function (hooks) {
     await service.setLocale('de');
 
     assert.strictEqual(service.locale, 'de');
+    assert.strictEqual(localStorage.locale, 'de');
     assert.verifySteps(['put preferences']);
   });
 

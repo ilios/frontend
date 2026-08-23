@@ -1,15 +1,14 @@
 import Service, { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { isTesting } from '@embroider/macros';
 
 const URL = '/application/preferences';
 const VERSION = 1;
-const LOCAL_STORAGE_KEY = 'ilios';
 const DEFAULT_LOCALE = 'en-us';
 
 export default class Preferences extends Service {
   @service fetch;
   @service currentUser;
+  @service localStorage;
 
   @tracked _locale;
 
@@ -30,6 +29,7 @@ export default class Preferences extends Service {
 
   async setLocale(locale) {
     this._locale = locale;
+    this.localStorage.locale = locale;
     return this.#save();
   }
 
@@ -40,7 +40,7 @@ export default class Preferences extends Service {
    * 3. default value
    */
   get locale() {
-    return this._locale ?? this.#loadFromLocalStorage('locale') ?? DEFAULT_LOCALE;
+    return this._locale ?? this.localStorage.locale ?? DEFAULT_LOCALE;
   }
 
   set locale(v) {
@@ -48,6 +48,10 @@ export default class Preferences extends Service {
   }
 
   async #save() {
+    if (!this.currentUser.currentUserId) {
+      console.warn('User is not authenticated, preferences saved to local storage only');
+      return;
+    }
     const body = {
       version: VERSION,
       preferences: {
@@ -55,36 +59,11 @@ export default class Preferences extends Service {
       },
     };
     const str = JSON.stringify(body);
-    if (!isTesting()) {
-      window.localStorage.setItem(LOCAL_STORAGE_KEY, str);
-    }
-    if (this.currentUser.currentUserId) {
-      const { preferences } = await this.fetch.putToApiHost(URL, str);
-      this.#trackPreferences(preferences);
-    }
+    const { preferences } = await this.fetch.putToApiHost(URL, str);
+    this.#trackPreferences(preferences);
   }
 
   #trackPreferences(obj) {
     this._locale = obj.locale ?? undefined;
-  }
-
-  #loadFromLocalStorage(name) {
-    if (isTesting()) {
-      return undefined;
-    }
-    const store = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-
-    if (!store) {
-      return undefined;
-    }
-
-    const obj = JSON.parse(store);
-
-    //check if the key is saved in unversioned local storage
-    if (obj[name]) {
-      return obj[name];
-    }
-
-    return obj?.preferences[name];
   }
 }
