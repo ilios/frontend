@@ -5,10 +5,15 @@ const URL = '/application/preferences';
 const VERSION = 1;
 export default class Preferences extends Service {
   @service fetch;
+  @service currentUser;
 
   @tracked _locale;
 
   async setup() {
+    if (!this.currentUser.currentUserId) {
+      console.warn('Attempted to load preferences for unauthenticated user');
+      return;
+    }
     const response = await this.fetch.getFromApiHost(URL);
     if (response.status === 404) {
       return await this.#save();
@@ -33,6 +38,10 @@ export default class Preferences extends Service {
   }
 
   async #save() {
+    if (!this.currentUser.currentUserId) {
+      console.warn('Attempted to save preferences for unauthenticated user');
+      return;
+    }
     const body = {
       version: VERSION,
       preferences: {
