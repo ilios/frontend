@@ -13,8 +13,10 @@ export default class Preferences extends Service {
     if (response.status === 404) {
       return await this.#save();
     }
-    const { preferences } = await response.json();
-    this.#trackPreferences(preferences);
+    if (response.ok) {
+      const { preferences } = await response.json();
+      this.#trackPreferences(preferences);
+    }
   }
 
   async setLocale(locale) {

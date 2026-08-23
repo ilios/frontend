@@ -23,14 +23,13 @@ export default class AuthenticatedRoute extends Route {
     }
     await launchWorker();
     await this.session.setup(transition.targetName === 'lti-login');
-    if (this.currentUser.currentUserId) {
-      await this.preferences.setup();
-    }
     this.intl.setFormats(formats);
     // Set the default locale.
     this.intl.setLocale(this.initialLocale());
-    const locale = this.intl.primaryLocale;
-    window.document.querySelector('html').setAttribute('lang', locale);
+    if (this.currentUser.currentUserId) {
+      await this.preferences.setup();
+    }
+    window.document.querySelector('html').setAttribute('lang', this.intl.primaryLocale);
   }
 
   async afterModel() {
