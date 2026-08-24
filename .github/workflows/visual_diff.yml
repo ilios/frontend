@@ -41,12 +41,15 @@ jobs:
         run: |
           echo "$(git rev-parse HEAD)"
           echo "ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Get cache date
+        id: cache-date
+        run: echo "date=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
       - name: Cache Screenshots
         id: screenshot-cache
         uses: actions/cache@v6
         with:
           path: build
-          key: screenshots-${{ steps.ref.outputs.ref }}-${{ matrix.name }}
+          key: screenshots-${{ steps.cache-date.outputs.date }}-${{ steps.ref.outputs.ref }}-${{ matrix.name }}
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
@@ -113,12 +116,15 @@ jobs:
         run: |
           echo "$(git rev-parse HEAD)"
           echo "ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Get cache date
+        id: cache-date
+        run: echo "date=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
       - name: Cache Screenshots
         id: screenshot-cache
         uses: actions/cache@v6
         with:
           path: build
-          key: screenshots-${{ steps.ref.outputs.ref }}-${{ matrix.name }}
+          key: screenshots-${{ steps.cache-date.outputs.date }}-${{ steps.ref.outputs.ref }}-${{ matrix.name }}
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:

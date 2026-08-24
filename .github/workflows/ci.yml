@@ -176,12 +176,15 @@ jobs:
       MOZ_HEADLESS_WIDTH: ${{ matrix.width }}
     steps:
       - uses: actions/checkout@v7
+      - name: Get cache date
+        id: cache-date
+        run: echo "date=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
       - name: Cache Screenshots
         id: screenshot-cache
         uses: actions/cache@v6
         with:
           path: build
-          key: screenshots-${{ github.sha }}-${{ matrix.name }}
+          key: screenshots-${{ steps.cache-date.outputs.date }}-${{ github.sha }}-${{ matrix.name }}
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
