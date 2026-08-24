@@ -5,32 +5,13 @@ import { task } from 'ember-concurrency';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import { eq } from 'ember-truth-helpers';
-import { ensureSafeComponent } from '@embroider/util';
 import { isTesting } from '@embroider/macros';
 
-import ThemeImageStudent from './theme-image-student';
-import ThemeImageNonStudent from './theme-image-non-student';
-import ThemeImageNonStudentMobile from './theme-image-non-student-mobile';
+import ThemeImages from './theme-images';
 
 export default class UserProfileThemeChooserComponent extends Component {
   @service preferences;
   @service currentUser;
-
-  get previewComponent() {
-    if (this.currentUser.performsNonLearnerFunction) {
-      return ensureSafeComponent(ThemeImageNonStudent, this);
-    }
-
-    return ensureSafeComponent(ThemeImageStudent, this);
-  }
-
-  get mobilePreviewComponent() {
-    if (this.currentUser.performsNonLearnerFunction) {
-      return ensureSafeComponent(ThemeImageNonStudentMobile, this);
-    }
-
-    return ensureSafeComponent(ThemeImageStudent, this);
-  }
 
   changeTheme = task({ restartable: true }, async (theme) => {
     if (this.preferences.theme !== theme) {
@@ -56,10 +37,10 @@ export default class UserProfileThemeChooserComponent extends Component {
       <ul class="chooser" data-test-chooser>
         <li class={{if (eq this.preferences.theme "system") "active"}} data-test-system>
           <label class="system">
-            <this.previewComponent @colorScheme="light" />
-            <this.previewComponent @colorScheme="dark" />
-            <this.mobilePreviewComponent @colorScheme="light" />
-            <this.mobilePreviewComponent @colorScheme="dark" />
+            <ThemeImages
+              @performsNonLearnerFunction={{this.currentUser.performsNonLearnerFunction}}
+              @mode="system"
+            />
             <input
               type="radio"
               name="theme"
@@ -71,8 +52,10 @@ export default class UserProfileThemeChooserComponent extends Component {
         </li>
         <li class={{if (eq this.preferences.theme "light") "active"}} data-test-light>
           <label>
-            <this.previewComponent @colorScheme="light" />
-            <this.mobilePreviewComponent @colorScheme="light" />
+            <ThemeImages
+              @performsNonLearnerFunction={{this.currentUser.performsNonLearnerFunction}}
+              @mode="light"
+            />
             <input
               type="radio"
               name="theme"
@@ -84,8 +67,10 @@ export default class UserProfileThemeChooserComponent extends Component {
         </li>
         <li class={{if (eq this.preferences.theme "dark") "active"}} data-test-dark>
           <label>
-            <this.previewComponent @colorScheme="dark" />
-            <this.mobilePreviewComponent @colorScheme="dark" />
+            <ThemeImages
+              @performsNonLearnerFunction={{this.currentUser.performsNonLearnerFunction}}
+              @mode="dark"
+            />
             <input
               type="radio"
               name="theme"

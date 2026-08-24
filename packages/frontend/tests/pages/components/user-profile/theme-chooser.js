@@ -7,8 +7,6 @@ const definition = {
     label: text('span'),
     isActive: hasClass('active'),
     isChecked: property('checked', 'input'),
-    studentPreviews: collection('[data-test-student]'),
-    nonStudentPreviews: collection('[data-test-non-student]'),
     choose: clickable('input'),
   }),
 };

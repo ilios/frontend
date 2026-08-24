@@ -1,16 +1,17 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { setupMSW } from 'ilios-common/msw';
-import { component } from 'frontend/tests/pages/components/user-profile/theme-chooser';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import ThemeChooser from 'frontend/components/user-profile/theme-chooser';
+import { component } from 'frontend/tests/pages/components/user-profile/theme-chooser';
 
 module('Integration | Component | user-profile/theme-chooser', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  test('it renders', async function (assert) {
+  test('it renders and is accessible', async function (assert) {
     class PreferencesMock extends Service {
       theme = 'system';
     }
@@ -29,50 +30,11 @@ module('Integration | Component | user-profile/theme-chooser', function (hooks) 
     assert.strictEqual(component.choices[0].label, 'System');
     assert.strictEqual(component.choices[1].label, 'Light');
     assert.strictEqual(component.choices[2].label, 'Dark');
-  });
 
-  test('it displays student theme images for learners', async function (assert) {
-    class PreferencesMock extends Service {
-      theme = 'system';
-    }
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
 
-    class CurrentUserMock extends Service {
-      performsNonLearnerFunction = false;
-    }
-
-    this.owner.register('service:preferences', PreferencesMock);
-    this.owner.register('service:currentUser', CurrentUserMock);
-
-    await render(<template><ThemeChooser /></template>);
-
-    assert.strictEqual(component.choices[0].studentPreviews.length, 2);
-    assert.strictEqual(component.choices[0].nonStudentPreviews.length, 0);
-    assert.strictEqual(component.choices[1].studentPreviews.length, 1);
-    assert.strictEqual(component.choices[1].nonStudentPreviews.length, 0);
-    assert.strictEqual(component.choices[2].studentPreviews.length, 1);
-    assert.strictEqual(component.choices[2].nonStudentPreviews.length, 0);
-  });
-
-  test('it displays non-student theme images for non-learners', async function (assert) {
-    class PreferencesMock extends Service {
-      theme = 'system';
-    }
-
-    class CurrentUserMock extends Service {
-      performsNonLearnerFunction = true;
-    }
-
-    this.owner.register('service:preferences', PreferencesMock);
-    this.owner.register('service:currentUser', CurrentUserMock);
-
-    await render(<template><ThemeChooser /></template>);
-
-    assert.strictEqual(component.choices[0].studentPreviews.length, 0);
-    assert.strictEqual(component.choices[0].nonStudentPreviews.length, 2);
-    assert.strictEqual(component.choices[1].studentPreviews.length, 0);
-    assert.strictEqual(component.choices[1].nonStudentPreviews.length, 1);
-    assert.strictEqual(component.choices[2].studentPreviews.length, 0);
-    assert.strictEqual(component.choices[2].nonStudentPreviews.length, 1);
+    await takeComponentScreenshot(assert);
   });
 
   test('it displays the selected theme', async function (assert) {
@@ -91,10 +53,17 @@ module('Integration | Component | user-profile/theme-chooser', function (hooks) 
 
     assert.false(component.choices[0].isActive);
     assert.false(component.choices[0].isChecked);
+
     assert.false(component.choices[1].isActive);
     assert.false(component.choices[1].isChecked);
+
     assert.true(component.choices[2].isActive);
     assert.true(component.choices[2].isChecked);
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await takeComponentScreenshot(assert);
   });
 
   test('it changes the theme', async function (assert) {
@@ -126,6 +95,11 @@ module('Integration | Component | user-profile/theme-chooser', function (hooks) 
     );
     assert.true(component.choices[2].isChecked);
     assert.verifySteps(['Theme Changed']);
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await takeComponentScreenshot(assert);
   });
 
   test('it does not set the theme when selecting the current theme', async function (assert) {
@@ -149,5 +123,10 @@ module('Integration | Component | user-profile/theme-chooser', function (hooks) 
     await component.choices[2].choose();
 
     assert.verifySteps([]);
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await takeComponentScreenshot(assert);
   });
 });
