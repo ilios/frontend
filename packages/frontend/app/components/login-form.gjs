@@ -67,9 +67,7 @@ export default class LoginFormComponent extends Component {
   }
 
   async loginWithCredentials(data) {
-    const loginUrl = `/auth/login`;
-    const trimmedPath = loginUrl.replace(/^\//, '');
-    const path = `${this.host}/${trimmedPath}`;
+    const path = `${this.host}/auth/login`;
     const options = {
       method: 'POST',
       headers: {
