@@ -1,9 +1,5 @@
 :root {
-  color-scheme: light;
-
-  &[data-theme="system"] {
-    color-scheme: light dark;
-  }
+  color-scheme: light dark;
 
   &[data-theme="light"] {
     color-scheme: light;
