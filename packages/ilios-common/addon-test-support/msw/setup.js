@@ -28,6 +28,7 @@ export function setupMSW(hooks) {
     this.server.get = get.bind(this);
     this.server.post = post.bind(this);
     this.server.patch = patch.bind(this);
+    this.server.put = put.bind(this);
   });
 
   hooks.afterEach(async function () {
@@ -90,6 +91,25 @@ function patch(url, callback) {
   }
   this.server.use(
     http.patch(
+      url,
+      async (request) => {
+        const rhett = await callback(request);
+        if (rhett instanceof HttpResponse) {
+          return rhett;
+        }
+        return HttpResponse.json(rhett);
+      },
+      { once: true },
+    ),
+  );
+}
+
+function put(url, callback) {
+  if (!url.startsWith('/')) {
+    throw new Error(`Handler URL must start with /, you passed: ${url}`);
+  }
+  this.server.use(
+    http.put(
       url,
       async (request) => {
         const rhett = await callback(request);

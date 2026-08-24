@@ -47,13 +47,6 @@ module.exports = function (environment) {
     },
 
     APP: {
-      DEFAULTS: {
-        localStorage: {
-          locale: 'en-us',
-        },
-      },
-      LOCAL_STORAGE_KEY: 'ilios',
-      SUPPORTED_LOCALES: ['en-us', 'es', 'fr'],
       ENABLE_DARK_MODE: process.env.ENABLE_PREVIEW_FEATURES ?? false,
     },
   };

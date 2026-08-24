@@ -377,7 +377,6 @@ general:
 errors:
   duplicateUsername: Este nombre de usuario ya está ocupado por otra cuenta de usuario.
   invalidChangeAlertRecipients: Esta lista de destinatarios de alertas de cambios contiene direcciones de correo electrónico no válidas.
-  localStorageSetItemFail: "Could not set localStorage item {itemName} from key {keyName} with {value}"
   reportMissingAcademicYear: Año Academico es Necesario
   reportMissingCompetency: Competencia es Necesario
   reportMissingCourse: Curso es Necesario

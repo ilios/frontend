@@ -12,19 +12,19 @@ import { fn } from '@ember/helper';
 import { eq } from 'ember-truth-helpers';
 import focus from 'ilios-common/modifiers/focus';
 import { faGlobe, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { task } from 'ember-concurrency';
 
 export default class LocaleChooserComponent extends Component {
   @service intl;
   @tracked isOpen = false;
-  @service localStorage;
+  @service preferences;
 
   get locale() {
-    const locale = this.intl.get('primaryLocale');
-    return findById(this.locales, locale);
+    return findById(this.locales, this.intl.primaryLocale);
   }
 
   get locales() {
-    return uniqueValues(this.intl.get('locales')).map((locale) => {
+    return uniqueValues(this.intl.locales).map((locale) => {
       return { id: locale, text: this.getLocaleLabel(locale) };
     });
   }
@@ -55,17 +55,18 @@ export default class LocaleChooserComponent extends Component {
     }
   }
 
-  @action
-  changeLocale(id, event) {
+  changeLocale = task({ restartable: true }, async (id, event) => {
+    //get a reference to the element before we close everything
+    const toggle = event.target.parentElement.parentElement.firstElementChild;
     this.isOpen = false;
     this.intl.setLocale(id);
-    this.localStorage.set('locale', id);
+    await this.preferences.setLocale(id);
     window.document.querySelector('html').setAttribute('lang', id);
     window.document
       .querySelector('meta[name="description"]')
       .setAttribute('content', this.intl.t('general.metaDescription'));
-    event.target.parentElement.parentElement.firstElementChild.focus();
-  }
+    toggle.focus();
+  });
 
   @action
   moveFocus(event) {
@@ -143,7 +144,7 @@ export default class LocaleChooserComponent extends Component {
               aria-checked={{if (eq this.locale.id loc.id) "true" "false"}}
               data-level="item"
               data-test-item
-              {{on "click" (fn this.changeLocale loc.id)}}
+              {{on "click" (fn this.changeLocale.perform loc.id)}}
               {{on "keydown" this.moveFocus}}
               {{focus (eq index 0)}}
             >

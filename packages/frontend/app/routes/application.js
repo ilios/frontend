@@ -12,7 +12,7 @@ export default class AuthenticatedRoute extends Route {
   @service store;
   @service router;
   @service session;
-  @service localStorage;
+  @service preferences;
 
   @tracked event;
 
@@ -23,10 +23,15 @@ export default class AuthenticatedRoute extends Route {
     await launchWorker();
     await this.session.setup(transition.targetName === 'lti-login');
     this.intl.setFormats(formats);
-    // Set the default locale.
-    this.intl.setLocale(this.initialLocale());
-    const locale = this.intl.primaryLocale;
-    window.document.querySelector('html').setAttribute('lang', locale);
+    // We need a default locale, preferences will always return something
+    this.intl.setLocale(this.preferences.locale);
+    if (this.currentUser.currentUserId) {
+      await this.preferences.setup();
+      //reset the locale, in case we had saved data that differed from local cache of defaults
+      this.intl.setLocale(this.preferences.locale);
+    }
+
+    window.document.querySelector('html').setAttribute('lang', this.intl.primaryLocale);
   }
 
   async afterModel() {
@@ -52,17 +57,5 @@ export default class AuthenticatedRoute extends Route {
     if (this.currentUser.currentUserId) {
       Sentry.setUser({ id: this.currentUser.currentUserId });
     }
-  }
-
-  // check if a saved, valid locale exists
-  initialLocale() {
-    const savedLocale = this.localStorage.get('locale');
-
-    if (savedLocale) {
-      if (config.APP.SUPPORTED_LOCALES.includes(savedLocale)) {
-        return savedLocale;
-      }
-    }
-    return config.APP.DEFAULTS.localStorage['locale'];
   }
 }
