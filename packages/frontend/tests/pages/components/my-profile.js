@@ -1,5 +1,6 @@
 import { clickable, collection, create, isVisible, text, value } from 'ember-cli-page-object';
 import { flatpickrDatePicker } from 'ilios-common';
+import themeChooser from './user-profile/theme-chooser';
 
 const definition = {
   scope: '[data-test-my-profile]',
@@ -8,6 +9,7 @@ const definition = {
   primarySchool: text('[data-test-primary-school]'),
   primaryCohort: text('[data-test-primary-cohort]'),
   secondaryCohorts: collection('[data-test-secondary-cohort]'),
+  themeChooser,
   newTokenForm: {
     scope: '[data-test-new-token-form]',
     dateValue: value('input'),

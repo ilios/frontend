@@ -1,5 +1,5 @@
 import { clickable, collection, create, hasClass, property, text } from 'ember-cli-page-object';
-
+import images from './theme-images';
 const definition = {
   scope: '[data-test-user-profile-theme-chooser]',
   title: text('[data-test-title]'),
@@ -8,6 +8,7 @@ const definition = {
     isActive: hasClass('active'),
     isChecked: property('checked', 'input'),
     choose: clickable('input'),
+    images,
   }),
 };
 
