@@ -8,7 +8,7 @@ module.exports = {
       return `
         <style type="text/css">
           #ilios-loading-indicator {
-            color-scheme: light;
+            color-scheme: light dark;
             background: light-dark(#eee, hsl(345, 6%, 13%));
             height: 100vh;
             left: 0;
