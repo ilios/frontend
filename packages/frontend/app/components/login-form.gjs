@@ -10,13 +10,14 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
+import { waitForFetch } from '@ember/test-waiters';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class LoginFormComponent extends Component {
   @service session;
-  @service fetch;
+  @service iliosConfig;
   @tracked error;
   @tracked username;
   @tracked password;
@@ -51,6 +52,12 @@ export default class LoginFormComponent extends Component {
     }
   });
 
+  get host() {
+    return this.iliosConfig.apiHost
+      ? this.iliosConfig.apiHost
+      : window.location.protocol + '//' + window.location.host;
+  }
+
   @action
   async submitOnEnter(event) {
     const keyCode = event.keyCode;
@@ -60,16 +67,23 @@ export default class LoginFormComponent extends Component {
   }
 
   async loginWithCredentials(data) {
-    const response = await this.fetch.fetchFromApiHost('/auth/login', {
+    const path = `${this.host}/auth/login`;
+    const options = {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    });
+    };
+    const response = await waitForFetch(fetch(path, options));
 
     const { statusText, status, headers } = response;
+
+    if (status == 401) {
+      this.session.invalidate();
+    }
+
     const text = await response.text();
     const json = JSON.parse(text);
     if (!response.ok) {
