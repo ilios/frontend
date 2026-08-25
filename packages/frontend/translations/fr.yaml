@@ -101,6 +101,7 @@ general:
   createNew: Créer Neuf
   createNewGroup: Créez Ce Groupe
   curriculumReports: "Rapports des programmes d'études"
+  dark: Sombre
   deactivate: Désactiver
   defaultInstructors: Instructeurs par Défaut
   defaultLocation: Localisation par Défaut
@@ -178,6 +179,7 @@ general:
   learnerGroupTitlePlaceholder: "Ajoutez une titre pour cette groupe d'apprenants"
   learningMaterial: "Matériel d'Étude"
   learningMaterialAttributes: "Attributs du Matériels d'Étude"
+  light: Clair
   linkedCompetencies: Compétences Liés
   linkedCompetencyCount: "{count, plural, =1 {1 présente un compétence líé} other {# présentes des compétences líés}}"
   lock: Verrouiller
@@ -330,6 +332,7 @@ general:
   subTerms: Sous-termes
   successfullyInvalidatedTokens: Tous les jetons existant ont été invalidés avec succès.
   successfullyRemovedTerm: Le terme soit correctement supprimé
+  system: Système
   taggedTerms: Termes Marqueés
   taggedTermsReportSummary: "rapport de {courseCount, plural, one {un cours} other {# cours}}. Chaque ensemble de termes est listée avec cours données."
   taggedTermsReportSummaryMultiSchool: "rapport de {courseCount, plural, one {un cours} other {# cours}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque ensemble de termes est listée avec cours données."
@@ -337,6 +340,8 @@ general:
   termXappliedToYSessionsWithSessionTypeZ: 'Le terme "{term}" du vocabulaire "{vocabulary}" s''applique à {sessionsCount, plural, =1 {1 session} other {# sessions}} avec le type de session "{sessionType}".'
   thereAreXTerms: "{count, plural, =1 {Il y a 1 terme} other {Il y a # termes}}"
   thereAreXTypes: "{count, plural, =1 {Il y a 1 type} other {Il y a # types}}"
+  themes: Thèmes
+  themePickerExplanation: "Choisissez l’apparence d’Ilios. Le mode Clair utilise un arrière-plan lumineux, tandis que le mode Sombre utilise des couleurs plus sombres pour un meilleur confort dans les environnements peu éclairés. Sélectionnez Système pour adapter automatiquement l’apparence d’Ilios au mode clair ou sombre actuellement utilisé par votre appareil."
   thisReportIsNoLongerAvailable: "Ce rapport n'est plus disponsible."
   thisTermHasSubTerms: Ce terme a des sous-termes.
   tokenInfo: "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à {apiDocsLink}."

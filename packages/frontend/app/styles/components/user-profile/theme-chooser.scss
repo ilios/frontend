@@ -1,0 +1,136 @@
+@use "../../ilios-common/mixins" as m;
+@use "../../ilios-common/mixins" as media;
+
+:root {
+  --top-right-clip: polygon(0 0, 100% 0, 100% 100%);
+  --bottom-left-clip: polygon(0 0, 0 100%, 100% 100%);
+
+  --light-clip: var(--top-right-clip);
+  --dark-clip: var(--bottom-left-clip);
+
+  @media (prefers-color-scheme: dark) {
+    &:not([data-theme="light"]) {
+      --light-clip: var(--bottom-left-clip);
+      --dark-clip: var(--top-right-clip);
+    }
+  }
+
+  &[data-theme="dark"] {
+    --light-clip: var(--bottom-left-clip);
+    --dark-clip: var(--top-right-clip);
+  }
+}
+
+.user-profile-theme-chooser {
+  ul.chooser {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+
+    @include media.for-tablet-and-up {
+      margin: 1rem 10%;
+      flex-direction: row;
+    }
+
+    li {
+      height: 33vw;
+      width: 65%;
+      padding: 0;
+      background-color: light-dark(var(--lightest-grey), var(--black));
+      border: 1px solid light-dark(var(--light-grey), var(--grey));
+
+      @include media.for-tablet-and-up {
+        height: 100%;
+        width: 30%;
+      }
+
+      &.active {
+        border: 2px solid
+          light-dark(var(--lighter-green), var(--lightest-green));
+        background-color: light-dark(var(--lightest-green), var(--black));
+        label {
+          cursor: default;
+        }
+      }
+
+      label {
+        display: grid;
+        height: 100%;
+        cursor: pointer;
+        padding: 0.5rem 1rem 0.25rem 1rem;
+        grid-template-columns: 3rem auto;
+        grid-template-rows: 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        gap: 0.5rem;
+
+        @include media.for-tablet-and-up {
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr calc(pow(var(--golden-ratio-small), 2) * 1fr);
+        }
+
+        svg {
+          height: 100%;
+          justify-self: center;
+          grid-column: 2;
+          grid-row: 1 / 3;
+
+          @include media.for-tablet-and-up {
+            justify-self: center;
+            grid-column: 1 / 3;
+            grid-row: 1 / 2;
+          }
+
+          &.has-full-navigation {
+            display: none;
+          }
+
+          @include media.for-laptop-and-up {
+            &.has-top-navigation {
+              display: none;
+            }
+            &.has-full-navigation {
+              display: block;
+            }
+          }
+        }
+        input {
+          height: 1.5rem;
+          width: 1.5rem;
+
+          grid-column: 1;
+          grid-row: 1;
+          align-self: end;
+          @include media.for-tablet-and-up {
+            align-self: center;
+            justify-self: end;
+            grid-column: 1;
+            grid-row: 2;
+          }
+        }
+        span {
+          grid-column: 1;
+          grid-row: 2;
+          align-self: start;
+          @include media.for-tablet-and-up {
+            align-self: center;
+            justify-self: start;
+            grid-column: 2;
+            grid-row: 2;
+          }
+        }
+        &.system {
+          svg.light {
+            clip-path: var(--light-clip);
+          }
+
+          svg.dark {
+            clip-path: var(--dark-clip);
+          }
+        }
+      }
+    }
+  }
+}

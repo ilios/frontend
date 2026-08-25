@@ -102,6 +102,7 @@ general:
   createNewGroup: Crear Este Grupo
   curriculumReports: Informes Curriculares
   deactivate: Desactivar
+  dark: Oscuro
   defaultInstructors: Instructores Predeterminados
   defaultLocation: Ubicación Predeterminada
   defaultVirtualLearningLink: Enlace de Aprendizaje Virtual Predeterminado
@@ -179,6 +180,7 @@ general:
   learningMaterial: Material de Aprendizaje
   learningMaterialAttributes: Atributos del Materiales de Aprendizaje
   linkedCompetencies: Competencias Vinculadas
+  light: Claro
   linkedCompetencyCount: "{count, plural, =1 {1 tiene una competencia vinculada} other {# tienen competencias vinculadas}}"
   lock: Bloquear
   lockCourse: Bloquear el curso
@@ -330,6 +332,7 @@ general:
   subTerms: Términos subordinados
   successfullyInvalidatedTokens: Todas los tokens existentes fueron con éxito invalidadas
   successfullyRemovedTerm: Término Eliminado Correctamente
+  system: Sistema
   taggedTerms: Términos Etiquetados
   taggedTermsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera cada conjunto de términos junto los datos del curso."
   taggedTermsReportSummaryMultiSchool: "report for {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Se enumera cada conjunto de términos junto los datos del curso."
@@ -337,6 +340,8 @@ general:
   termXappliedToYSessionsWithSessionTypeZ: 'El término "{term}" del vocabulario "{vocabulary}" se aplica a {sessionsCount, plural, =1 {1 sesión} other {# sesiones}} con el tipo de sesión "{sessionType}".'
   thereAreXTerms: "{count, plural, =1 {Hay 1 término} other {Hay # términos}}"
   thereAreXTypes: "{count, plural, =1 {Hay 1 tipo} other {Hay # tipos}}"
+  themes: Temas
+  themePickerExplanation: "Elige cómo quieres que se vea Ilios. El modo Claro utiliza un fondo luminoso, mientras que el modo Oscuro utiliza colores más oscuros para una mejor experiencia en entornos con poca luz. Selecciona Sistema para que la apariencia de Ilios coincida automáticamente con la configuración actual de modo claro u oscuro de tu dispositivo."
   thisReportIsNoLongerAvailable: Este informe ya no está disponible.
   thisTermHasSubTerms: Este término tiene subtérminos.
   tokenInfo: "Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en {apiDocsLink}."

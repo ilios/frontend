@@ -11,6 +11,7 @@ import UserProfileRoles from './user-profile-roles';
 import sortBy from 'ilios-common/helpers/sort-by';
 import UserProfilePermissions from './user-profile-permissions';
 import LearnerGroups from './user-profile/learner-groups';
+import ThemeChooser from './user-profile/theme-chooser';
 import { or } from 'ember-truth-helpers';
 import CopyButton from 'ilios-common/components/copy-button';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -162,6 +163,7 @@ export default class MyProfileComponent extends Component {
               {{/if}}
             </div>
           </div>
+          <ThemeChooser />
           <UserProfilePermissions
             @user={{@user}}
             @selectedSchoolId={{@permissionsSchool}}

@@ -23,6 +23,19 @@ export default class LocalStorage extends Service {
     }
   }
 
+  get theme() {
+    if (isTesting()) {
+      return undefined;
+    }
+    return window.localStorage.getItem(`${LOCAL_STORAGE_PREFIX}-theme`);
+  }
+
+  set theme(theme) {
+    if (!isTesting()) {
+      window.localStorage.setItem(`${LOCAL_STORAGE_PREFIX}-theme`, theme);
+    }
+  }
+
   /**
    * Move locale from our original local storage into its new home
    */
