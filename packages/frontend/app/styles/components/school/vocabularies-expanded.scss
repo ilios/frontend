@@ -17,23 +17,5 @@
 
   .school-vocabularies-expanded-content {
     @include m.detail-container-content;
-
-    .hierarchical-list {
-      background-color: light-dark(var(--lightest-grey), var(--grey));
-      border: 1px solid light-dark(var(--black), var(--dark-grey));
-      margin: 1rem;
-      padding: 1rem;
-
-      h4 {
-        font-weight: 600;
-        margin-bottom: 1rem;
-        width: 100%;
-      }
-
-      ul {
-        @include m.ilios-list-reset;
-        margin-left: 2rem;
-      }
-    }
   }
 }
