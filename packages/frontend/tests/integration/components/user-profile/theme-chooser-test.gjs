@@ -25,7 +25,7 @@ module('Integration | Component | user-profile/theme-chooser', function (hooks) 
 
     await render(<template><ThemeChooser /></template>);
 
-    assert.strictEqual(component.title, 'Theme');
+    assert.strictEqual(component.title, 'Themes');
     assert.strictEqual(component.choices.length, 3);
     assert.strictEqual(component.choices[0].label, 'System');
     assert.strictEqual(component.choices[1].label, 'Light');

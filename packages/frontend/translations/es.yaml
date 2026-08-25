@@ -340,7 +340,7 @@ general:
   termXappliedToYSessionsWithSessionTypeZ: 'El término "{term}" del vocabulario "{vocabulary}" se aplica a {sessionsCount, plural, =1 {1 sesión} other {# sesiones}} con el tipo de sesión "{sessionType}".'
   thereAreXTerms: "{count, plural, =1 {Hay 1 término} other {Hay # términos}}"
   thereAreXTypes: "{count, plural, =1 {Hay 1 tipo} other {Hay # tipos}}"
-  theme: Tema
+  themes: Temas
   themePickerExplanation: "Elige cómo quieres que se vea Ilios. El modo Claro utiliza un fondo luminoso, mientras que el modo Oscuro utiliza colores más oscuros para una mejor experiencia en entornos con poca luz. Selecciona Sistema para que la apariencia de Ilios coincida automáticamente con la configuración actual de modo claro u oscuro de tu dispositivo."
   thisReportIsNoLongerAvailable: Este informe ya no está disponible.
   thisTermHasSubTerms: Este término tiene subtérminos.

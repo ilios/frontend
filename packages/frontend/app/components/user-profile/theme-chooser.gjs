@@ -29,7 +29,7 @@ export default class UserProfileThemeChooserComponent extends Component {
       ...attributes
     >
       <h2 class="title" data-test-title>
-        {{t "general.theme"}}
+        {{t "general.themes"}}
       </h2>
       <p>
         {{t "general.themePickerExplanation"}}
