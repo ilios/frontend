@@ -11,11 +11,6 @@
 
     ul {
       @include m.ilios-removable-list;
-
-      .top-level-group {
-        background-color: light-dark(var(--dark-yellow), var(--dark-yellow));
-        color: light-dark(var(--black), var(--black));
-      }
     }
 
     .remove-all-subgroups {
