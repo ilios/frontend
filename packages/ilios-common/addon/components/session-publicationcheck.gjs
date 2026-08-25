@@ -124,15 +124,21 @@ export default class SessionPublicationCheckComponent extends Component {
                 <td data-test-session-title>
                   {{@session.title}}
                 </td>
-                {{#if @session.offerings.length}}
-                  <td class="yes" data-test-offerings>
-                    {{t "general.yes"}}
-                    ({{@session.offerings.length}})
+                {{#if @session.isIndependentLearning}}
+                  <td data-test-offerings>
+                    {{t "general.notApplicableAbbr"}}
                   </td>
                 {{else}}
-                  <td class="no" data-test-offerings>
-                    {{t "general.no"}}
-                  </td>
+                  {{#if @session.offerings.length}}
+                    <td class="yes" data-test-offerings>
+                      {{t "general.yes"}}
+                      ({{@session.offerings.length}})
+                    </td>
+                  {{else}}
+                    <td class="no" data-test-offerings>
+                      {{t "general.no"}}
+                    </td>
+                  {{/if}}
                 {{/if}}
                 {{#if @session.terms.length}}
                   <td class="yes" data-test-terms>
