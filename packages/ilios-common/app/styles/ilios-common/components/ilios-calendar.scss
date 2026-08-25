@@ -29,11 +29,6 @@
   .calendar-view-picker {
     float: right;
 
-    .highlight {
-      color: light-dark(var(--orange), var(--dark-orange));
-      @include m.font-size("medium");
-    }
-
     .on {
       color: light-dark(var(--green), var(--lighter-green));
     }
