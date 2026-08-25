@@ -90,34 +90,6 @@
   }
 }
 
-@mixin ilios-tag-tree-list {
-  @include ilios-list-reset;
-  margin-bottom: 1rem;
-
-  li {
-    div {
-      background-color: light-dark(var(--white), var(--black));
-      border: 1px var(--lightest-grey) solid;
-      border-radius: 4px;
-      margin-top: 5px;
-      padding: 0.2em 0.4em 0.2em 0.6em;
-      vertical-align: middle;
-
-      &.selected {
-        background-color: light-dark(var(--lightest-grey), var(--light-grey));
-      }
-    }
-
-    .actions {
-      float: right;
-    }
-
-    &.top-level {
-      margin-left: 0;
-    }
-  }
-}
-
 @mixin ilios-list-tree() {
   @include ilios-list-reset;
 
