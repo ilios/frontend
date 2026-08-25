@@ -1,4 +1,4 @@
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
@@ -130,6 +130,7 @@ module('Acceptance | pending user updates', function (hooks) {
     );
     await page.updates[0].updateEmailAddress();
     assert.strictEqual(page.updates.length, 0);
+    await waitUntil(() => userModel.email === 'dev@null.com');
     assert.strictEqual(userModel.email, 'dev@null.com');
   });
 
