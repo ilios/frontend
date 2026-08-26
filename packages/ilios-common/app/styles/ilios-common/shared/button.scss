@@ -1,6 +1,6 @@
 button {
   &:hover {
-    background-color: var(--light-blue);
+    background-color: light-dark(var(--light-blue), var(--brighter-blue));
   }
 
   &.link-button {
@@ -17,17 +17,17 @@ button {
     &.lock-button:hover svg,
     &.manage-button:hover svg,
     &.visualization-button:hover svg {
-      color: var(--light-blue);
+      color: light-dark(var(--bright-blue), var(--brighter-blue));
     }
     &.delete-button:hover svg {
-      color: var(--light-red);
+      color: light-dark(var(--light-red), var(--lighter-red));
     }
 
     &.lock-button:disabled:hover svg,
     &.manage-button:disabled:hover svg,
     &.delete-button:disabled:hover svg,
     &.delete-button.disabled:hover svg {
-      color: var(--grey);
+      color: light-dark(var(--grey), var(--light-grey));
     }
 
     &:disabled,

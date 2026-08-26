@@ -5,6 +5,10 @@
 
     &.remove {
       color: light-dark(var(--red), var(--light-red));
+
+      &:hover {
+        color: light-dark(var(--light-red), var(--lighter-red));
+      }
     }
   }
 
@@ -13,7 +17,7 @@
     cursor: default;
 
     &:hover {
-      color: var(--grey);
+      color: light-dark(var(--grey), var(--light-grey));
     }
   }
 }
