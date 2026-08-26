@@ -54,7 +54,7 @@
     }
 
     &:hover {
-      background-color: var(--light-blue);
+      background-color: light-dark(var(--light-blue), var(--brighter-blue));
     }
   }
 }
