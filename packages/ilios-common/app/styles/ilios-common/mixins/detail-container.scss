@@ -52,6 +52,10 @@
     background-color: light-dark(var(--green), var(--green));
     color: light-dark(var(--white), var(--white));
 
+    &:hover {
+      background-color: light-dark(var(--light-green), var(--light-green));
+    }
+
     &:disabled {
       background-color: light-dark(var(--grey), var(--grey));
       cursor: default;
@@ -61,6 +65,10 @@
   .bigcancel {
     background-color: light-dark(var(--red), var(--red));
     color: light-dark(var(--white), var(--white));
+
+    &:hover {
+      background-color: light-dark(var(--light-red), var(--light-red));
+    }
   }
 }
 
