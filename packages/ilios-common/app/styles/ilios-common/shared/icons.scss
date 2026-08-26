@@ -3,6 +3,10 @@
   &.enabled {
     color: light-dark(var(--light-blue), var(--bright-blue));
 
+    &:hover {
+      color: light-dark(var(--bright-blue), var(--brighter-blue));
+    }
+
     &.remove {
       color: light-dark(var(--red), var(--light-red));
 
