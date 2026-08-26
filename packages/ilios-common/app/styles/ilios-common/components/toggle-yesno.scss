@@ -17,12 +17,12 @@
     background-color: light-dark(var(--green), var(--light-green));
 
     &:hover {
-      background-color: var(--light-green);
+      background-color: light-dark(var(--light-green), var(--lighter-green));
     }
   }
 
   &.no:hover {
-    background-color: var(--light-red);
+    background-color: light-dark(var(--light-red), var(--lighter-red));
   }
 
   .switch-handle {
