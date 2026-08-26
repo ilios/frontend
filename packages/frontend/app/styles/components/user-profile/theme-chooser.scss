@@ -47,9 +47,8 @@
       }
 
       &.active {
-        border: 2px solid
-          light-dark(var(--lighter-green), var(--lightest-green));
-        background-color: light-dark(var(--lightest-green), var(--black));
+        border: 2px solid light-dark(var(--lighter-green), var(--bright-green));
+        background-color: light-dark(var(--bright-green), var(--black));
         label {
           cursor: default;
         }

@@ -5,7 +5,7 @@
   padding: 0.5rem 0;
 
   .course-flag {
-    background-color: light-dark(var(--green), var(--lightest-green));
+    background-color: light-dark(var(--green), var(--bright-green));
     border-radius: 2px;
     bottom: 2px;
     color: light-dark(var(--white), var(--black));
@@ -16,7 +16,7 @@
   }
 
   .school-flag {
-    background-color: light-dark(var(--green), var(--lightest-green));
+    background-color: light-dark(var(--green), var(--bright-green));
     border-radius: 2px;
     bottom: 2px;
     color: light-dark(var(--white), var(--black));

@@ -83,6 +83,11 @@
       border-color: light-dark(var(--green), var(--lighter-green));
       color: light-dark(var(--green), var(--lighter-green));
     }
+
+    .toggle:hover {
+      border-color: light-dark(var(--lighter-green), var(--lightest-green));
+      color: light-dark(var(--lighter-green), var(--lightest-green));
+    }
   }
 
   &.notpublished {
@@ -91,6 +96,11 @@
       border-color: light-dark(var(--grey), var(--lighter-grey));
       color: light-dark(var(--grey), var(--lighter-grey));
     }
+
+    .toggle:hover {
+      border-color: light-dark(var(--lighter-grey), var(--lightest-grey));
+      color: light-dark(var(--lighter-grey), var(--lightest-grey));
+    }
   }
 
   &.scheduled {
@@ -98,6 +108,11 @@
     .menu {
       border-color: light-dark(var(--dark-orange), var(--light-orange));
       color: light-dark(var(--dark-orange), var(--light-orange));
+    }
+
+    .toggle:hover {
+      border-color: light-dark(var(--light-orange), var(--lighter-orange));
+      color: light-dark(var(--light-orange), var(--lighter-orange));
     }
   }
 }
