@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest, takeScreenshot } from 'frontend/tests/helpers';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/session-type-form';
@@ -63,7 +63,7 @@ module('Integration | Component | school/session-type-form', function (hooks) {
       </template>,
     );
 
-    await takeScreenshot(assert, 'default');
+    await takeComponentScreenshot(assert, 'default');
 
     assert.strictEqual(component.title.value, 'one');
     assert.strictEqual(component.aamcMethod.value, '');
@@ -132,9 +132,9 @@ module('Integration | Component | school/session-type-form', function (hooks) {
     assert.strictEqual(component.aamcMethod.options[1].text, 'lorem ipsum');
     assert.notOk(component.aamcMethod.options[1].selected);
 
-    await takeScreenshot(assert, 'session type assessment toggle unchecked');
+    await takeComponentScreenshot(assert, 'session type assessment toggle unchecked');
     await component.assessment.yesNoToggle.click();
-    await takeScreenshot(assert, 'session type assessment toggle checked');
+    await takeComponentScreenshot(assert, 'session type assessment toggle checked');
 
     assert.strictEqual(component.aamcMethod.value, '');
     assert.strictEqual(component.aamcMethod.options.length, 2);
@@ -162,7 +162,7 @@ module('Integration | Component | school/session-type-form', function (hooks) {
       </template>,
     );
 
-    await takeScreenshot(assert, 'no assessment option');
+    await takeComponentScreenshot(assert, 'no assessment option');
 
     assert.notOk(component.assessment.isAssessment);
     assert.notOk(component.assessmentSelector.isVisible);
@@ -286,7 +286,7 @@ module('Integration | Component | school/session-type-form', function (hooks) {
       </template>,
     );
 
-    await takeScreenshot(assert, 'read-only');
+    await takeComponentScreenshot(assert, 'read-only');
 
     assert.notOk(component.title.inputControlIsVisible);
     assert.notOk(component.aamcMethod.inputControlIsVisible);
