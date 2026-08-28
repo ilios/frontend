@@ -1,22 +1,15 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { guidFor } from '@ember/object/internals';
 import { findById, uniqueValues } from 'ilios-common/utils/array-helpers';
-import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
+import { isTesting } from '@embroider/macros';
 import { on } from '@ember/modifier';
-import toggle from 'ilios-common/helpers/toggle';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import { eq } from 'ember-truth-helpers';
-import focus from 'ilios-common/modifiers/focus';
-import { faGlobe, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { task } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
+import { eq } from 'ember-truth-helpers';
 
 export default class LocaleChooserComponent extends Component {
   @service intl;
-  @tracked isOpen = false;
   @service preferences;
 
   get locale() {
@@ -29,17 +22,8 @@ export default class LocaleChooserComponent extends Component {
     });
   }
 
-  get uniqueId() {
-    return guidFor(this);
-  }
-
   get currentLocaleLabel() {
     return this.getLocaleLabel(this.locale.id);
-  }
-
-  @action
-  close() {
-    this.isOpen = false;
   }
 
   getLocaleLabel(locale) {
@@ -55,104 +39,42 @@ export default class LocaleChooserComponent extends Component {
     }
   }
 
-  changeLocale = task({ restartable: true }, async (id, event) => {
-    //get a reference to the element before we close everything
-    const toggle = event.target.parentElement.parentElement.firstElementChild;
-    this.isOpen = false;
-    this.intl.setLocale(id);
-    await this.preferences.setLocale(id);
-    window.document.querySelector('html').setAttribute('lang', id);
-    window.document
-      .querySelector('meta[name="description"]')
-      .setAttribute('content', this.intl.t('general.metaDescription'));
-    toggle.focus();
+  changeLocale = task({ restartable: true }, async (locale) => {
+    if (this.preferences.locale !== locale) {
+      this.intl.setLocale(locale);
+      await this.preferences.setLocale(locale);
+      if (!isTesting()) {
+        window.document.querySelector('html').setAttribute('lang', locale);
+        window.document
+          .querySelector('meta[name="description"]')
+          .setAttribute('content', this.intl.t('general.metaDescription'));
+      }
+    }
   });
 
-  @action
-  moveFocus(event) {
-    const { key, target } = event;
-    switch (key) {
-      case 'ArrowDown':
-        event.preventDefault();
-        if (target.nextElementSibling) {
-          target.nextElementSibling.focus();
-        } else {
-          target.parentElement.firstElementChild.focus();
-        }
-        break;
-      case 'ArrowUp':
-        event.preventDefault();
-        if (target.previousElementSibling) {
-          target.previousElementSibling.focus();
-        } else {
-          target.parentElement.lastElementChild.focus();
-        }
-        break;
-      case 'Escape':
-      case 'Tab':
-      case 'ArrowRight':
-      case 'ArrowLeft':
-        this.isOpen = false;
-        break;
-    }
-  }
-
-  @action
-  toggleMenu(event) {
-    const { key } = event;
-    switch (key) {
-      case 'ArrowDown':
-        event.preventDefault();
-        this.isOpen = true;
-        break;
-      case 'Escape':
-      case 'Tab':
-      case 'ArrowRight':
-      case 'ArrowLeft':
-        this.isOpen = false;
-        break;
-    }
-  }
   <template>
-    <div class="locale-chooser header-menu" data-test-locale-chooser {{onClickOutside this.close}}>
-      <button
-        type="button"
-        class="toggle"
-        aria-haspopup="true"
-        aria-expanded={{if this.isOpen "true" "false"}}
-        aria-labelledby="{{this.uniqueId}}-locale-chooser-title"
-        data-level="toggle"
-        data-test-toggle
-        {{on "click" (toggle "isOpen" this)}}
-        {{on "keydown" this.toggleMenu}}
-      >
-        <FaIcon @icon={{faGlobe}} />
-        <span id="{{this.uniqueId}}-locale-chooser-title">
-          {{this.currentLocaleLabel}}
-        </span>
-        <FaIcon @icon={{if this.isOpen faCaretDown faCaretRight}} @fixedWidth={{true}} />
-      </button>
-      {{#if this.isOpen}}
-        <div class="menu" role="menu">
-          {{#each this.locales as |loc index|}}
-            <button
-              class="header-menu-item"
-              type="button"
-              role="menuitemradio"
-              lang={{loc.id}}
-              tabindex="-1"
-              aria-checked={{if (eq this.locale.id loc.id) "true" "false"}}
-              data-level="item"
-              data-test-item
-              {{on "click" (fn this.changeLocale.perform loc.id)}}
-              {{on "keydown" this.moveFocus}}
-              {{focus (eq index 0)}}
-            >
-              {{loc.text}}
-            </button>
-          {{/each}}
-        </div>
-      {{/if}}
+    <div class="locale-chooser small-component" data-test-locale-chooser>
+      <h2 class="title" data-test-title>
+        {{t "general.languages"}}
+      </h2>
+      <p>
+        {{t "general.languagePickerExplanation"}}
+      </p>
+      <ul class="chooser" data-test-chooser>
+        {{#each this.locales as |loc|}}
+          <li class={{if (eq this.preferences.locale loc.id) "active"}} data-test-item>
+            <label>
+              <input
+                type="radio"
+                name="locale"
+                checked={{eq this.preferences.locale loc.id}}
+                {{on "click" (fn this.changeLocale.perform loc.id)}}
+              />
+              <span>{{loc.text}}</span>
+            </label>
+          </li>
+        {{/each}}
+      </ul>
     </div>
   </template>
 }

@@ -170,6 +170,8 @@ general:
     en-us: English (en)
     es: Español (es)
     fr: Français (fr)
+  languages: Idiomas
+  languagePickerExplanation: "Elija su idioma preferido para la presentación de Ilios. Nota: esto no modifica los materiales ni el contenido subyacentes."
   lastName: Apellido
   learner: Aprendedor
   learnerGroupsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Cada grupo de alumnos adjunto se enumera junto con los instructores y los datos del curso."
