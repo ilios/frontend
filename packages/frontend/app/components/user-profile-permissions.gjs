@@ -694,7 +694,7 @@ export default class UserProfilePermissionsComponent extends Component {
                 {{/each}}
               </ul>
               <h4>
-                {{t "general.studentAdvisors"}}
+                {{t "general.studentAdvisor"}}
               </h4>
               <ul data-test-student-advisors>
                 {{#each this.studentAdvisedCourses as |course|}}
@@ -798,7 +798,7 @@ export default class UserProfilePermissionsComponent extends Component {
                 {{/each}}
               </ul>
               <h4>
-                {{t "general.studentAdvisors"}}
+                {{t "general.studentAdvisor"}}
               </h4>
               <ul data-test-student-advisors>
                 {{#each this.studentAdvisedSessions as |session|}}

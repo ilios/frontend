@@ -327,6 +327,7 @@ general:
   street: Calle
   strong: Fuerte
   student: Estudiante
+  studentAdvisor: Consejero Estudiantil
   subCompetencyCount: "{count, plural, =1 {Hay 1 subcompetencia} other {Hay # subcompetencias}}"
   subgroupName: Nombre del Subgrupo
   subgroups: Grupos Subordinados

@@ -327,6 +327,7 @@ general:
   street: Rue
   strong: Fort
   student: Étudiant
+  studentAdvisor: Camarade-Conseil
   subCompetencyCount: "{count, plural, =1 {Il y a 1 sous-subcompétence} other {Il y a de # sous-subcompétences}}"
   subgroupName: nom de sous-groupe
   subgroups: Sous-groupes
