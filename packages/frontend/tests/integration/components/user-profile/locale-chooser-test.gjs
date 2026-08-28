@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import component from 'frontend/tests/pages/components/locale-chooser';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import LocaleChooser from 'frontend/components/locale-chooser';
+import LocaleChooser from 'frontend/components/user-profile/locale-chooser';
 import { setupIntl, setLocale } from 'ember-intl/test-support';
 
 module('Integration | Component | locale-chooser', function (hooks) {
