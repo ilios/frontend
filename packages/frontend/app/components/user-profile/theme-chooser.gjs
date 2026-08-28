@@ -24,7 +24,7 @@ export default class UserProfileThemeChooserComponent extends Component {
 
   <template>
     <div
-      class="user-profile-theme-chooser large-component"
+      class="user-profile-theme-chooser small-component"
       data-test-user-profile-theme-chooser
       ...attributes
     >
