@@ -1,10 +1,6 @@
 @use "../ilios-common/mixins" as cm;
 
 .user-menu {
-  @include cm.for-tablet-and-up {
-    margin-right: 0.5rem;
-  }
-
   .menu {
     li {
       padding: 0;

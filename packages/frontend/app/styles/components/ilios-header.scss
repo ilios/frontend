@@ -24,17 +24,11 @@
       display: none;
     }
 
-    .locale-chooser,
     .user-menu,
     .user-guide-link {
       button {
         @include m.font-size("base");
       }
-    }
-
-    .locale-chooser {
-      grid-row: 1;
-      grid-column: 2;
     }
     .user-menu {
       grid-row: 1;

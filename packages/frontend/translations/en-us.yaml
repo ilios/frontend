@@ -170,6 +170,8 @@ general:
     en-us: English (en)
     es: Español (es)
     fr: Français (fr)
+  languages: Languages
+  languagePickerExplanation: "Choose your prefered language for Ilios presentation. Note: this doesn't modify the underlying materials and content."
   lastName: Last Name
   learner: Learner
   learnerGroupsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each attached learner group is listed along with instructors and course data."
