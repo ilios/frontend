@@ -23,15 +23,18 @@
       }
 
       .ilios-calendar-ics-feed {
-        padding: 0;
+        background-color: light-dark(transparent, var(--white));
         text-align: center;
         width: 90%;
 
         .highlight {
           align-items: center;
           display: flex;
-          color: light-dark(var(--orange), var(--orange));
+          color: light-dark(var(--orange), var(--dark-orange));
           @include m.font-size("large");
+          // exact height/width needed for dark mode white bg to create inner details
+          height: 14px;
+          width: 16px;
 
           @include m.for-phone-only {
             @include m.font-size("medium");
