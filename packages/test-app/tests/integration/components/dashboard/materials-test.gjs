@@ -415,6 +415,39 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.verifySteps(['API called', 'setFilter called']);
   });
 
+  test('hides table headers when the text filter has no results', async function (assert) {
+    this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
+      return {
+        userMaterials: this.currentMaterials,
+      };
+    });
+
+    await render(
+      <template>
+        <Materials
+          @courseIdFilter={{null}}
+          @filter="no matching material"
+          @sortBy="title"
+          @offset={{0}}
+          @setOffset={{(noop)}}
+          @limit={{25}}
+          @setLimit={{(noop)}}
+          @setCourseIdFilter={{(noop)}}
+          @setFilter={{(noop)}}
+          @setSortBy={{(noop)}}
+          @toggleMaterialsMode={{(noop)}}
+          @showAllMaterials={{false}}
+        />
+      </template>,
+    );
+
+    assert.dom('thead').isNotVisible();
+    assert.dom('[data-test-none]').hasText('No results found. Please try again.');
+    assert.strictEqual(component.table.rows.length, 0);
+    assert.verifySteps(['API called']);
+  });
+
   test('pagination', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
       assert.step('API called');

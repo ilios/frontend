@@ -285,7 +285,7 @@ export default class DashboardMaterialsComponent extends Component {
                 />
               </nav>
               <table class="ilios-table ilios-table-colors ilios-zebra-table">
-                <thead>
+                <thead hidden={{not this.total}}>
                   <tr>
                     <th colspan="2">{{t "general.status"}}</th>
                     <SortableTh
@@ -348,7 +348,7 @@ export default class DashboardMaterialsComponent extends Component {
                   {{else}}
                     <tr>
                       <td colspan="18" class="no-results" data-test-none>
-                        {{t "general.none"}}
+                        {{if @filter (t "general.noResultsFound") (t "general.none")}}
                       </td>
                     </tr>
                   {{/each}}
