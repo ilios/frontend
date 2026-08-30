@@ -415,7 +415,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.verifySteps(['API called', 'setFilter called']);
   });
 
-  test('hides table headers when the text filter has no results', async function (assert) {
+  test('does not render the table when the text filter has no results', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
       assert.step('API called');
       return {
@@ -442,9 +442,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       </template>,
     );
 
-    assert.dom('thead').isNotVisible();
+    assert.dom('table').doesNotExist();
     assert.dom('[data-test-none]').hasText('No results found. Please try again.');
-    assert.strictEqual(component.table.rows.length, 0);
     assert.verifySteps(['API called']);
   });
 

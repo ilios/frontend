@@ -284,76 +284,79 @@ export default class DashboardMaterialsComponent extends Component {
                   @setLimit={{@setLimit}}
                 />
               </nav>
-              <table class="ilios-table ilios-table-colors ilios-zebra-table">
-                <thead hidden={{not this.total}}>
-                  <tr>
-                    <th colspan="2">{{t "general.status"}}</th>
-                    <SortableTh
-                      @colspan={{6}}
-                      @sortedAscending={{this.sortedAscending}}
-                      @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
-                      @onClick={{fn this.sortBy "title"}}
-                    >
-                      {{t "general.title"}}
-                    </SortableTh>
-                    <SortableTh
-                      class="hide-from-small-screen"
-                      @colspan={{6}}
-                      @sortedAscending={{this.sortedAscending}}
-                      @sortedBy={{or (eq @sortBy "sessionTitle") (eq @sortBy "sessionTitle:desc")}}
-                      @onClick={{fn this.sortBy "sessionTitle"}}
-                    >
-                      {{t "general.session"}}
-                    </SortableTh>
-                    <SortableTh
-                      class="hide-from-small-screen"
-                      @colspan={{6}}
-                      @sortedAscending={{this.sortedAscending}}
-                      @sortedBy={{or (eq @sortBy "courseTitle") (eq @sortBy "courseTitle:desc")}}
-                      @onClick={{fn this.sortBy "courseTitle"}}
-                    >
-                      {{t "general.course"}}
-                    </SortableTh>
-                    <SortableTh
-                      class="hide-from-large-screen"
-                      @colspan={{6}}
-                      @sortedAscending={{this.sortedAscending}}
-                      @sortedBy={{or (eq @sortBy "courseTitle") (eq @sortBy "courseTitle:desc")}}
-                      @onClick={{fn this.sortBy "courseTitle"}}
-                    >
-                      {{t "general.course"}}
-                      ::
-                      {{t "general.session"}}
-                    </SortableTh>
-                    <th colspan="3" class="hide-from-small-screen">
-                      {{t "general.instructor"}}
-                    </th>
-                    <SortableTh
-                      @colspan={{4}}
-                      @sortedAscending={{this.sortedAscending}}
-                      @sortedBy={{or
-                        (eq @sortBy "firstOfferingDate")
-                        (eq @sortBy "firstOfferingDate:desc")
-                      }}
-                      @sortType="numeric"
-                      @onClick={{fn this.sortBy "firstOfferingDate"}}
-                    >
-                      {{t "general.date"}}
-                    </SortableTh>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each this.filteredMaterials as |lmObject|}}
-                    <MaterialListItem @lm={{lmObject}} />
-                  {{else}}
+              {{#if this.total}}
+                <table class="ilios-table ilios-table-colors ilios-zebra-table">
+                  <thead>
                     <tr>
-                      <td colspan="18" class="no-results" data-test-none>
-                        {{if @filter (t "general.noResultsFound") (t "general.none")}}
-                      </td>
+                      <th colspan="2">{{t "general.status"}}</th>
+                      <SortableTh
+                        @colspan={{6}}
+                        @sortedAscending={{this.sortedAscending}}
+                        @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+                        @onClick={{fn this.sortBy "title"}}
+                      >
+                        {{t "general.title"}}
+                      </SortableTh>
+                      <SortableTh
+                        class="hide-from-small-screen"
+                        @colspan={{6}}
+                        @sortedAscending={{this.sortedAscending}}
+                        @sortedBy={{or
+                          (eq @sortBy "sessionTitle")
+                          (eq @sortBy "sessionTitle:desc")
+                        }}
+                        @onClick={{fn this.sortBy "sessionTitle"}}
+                      >
+                        {{t "general.session"}}
+                      </SortableTh>
+                      <SortableTh
+                        class="hide-from-small-screen"
+                        @colspan={{6}}
+                        @sortedAscending={{this.sortedAscending}}
+                        @sortedBy={{or (eq @sortBy "courseTitle") (eq @sortBy "courseTitle:desc")}}
+                        @onClick={{fn this.sortBy "courseTitle"}}
+                      >
+                        {{t "general.course"}}
+                      </SortableTh>
+                      <SortableTh
+                        class="hide-from-large-screen"
+                        @colspan={{6}}
+                        @sortedAscending={{this.sortedAscending}}
+                        @sortedBy={{or (eq @sortBy "courseTitle") (eq @sortBy "courseTitle:desc")}}
+                        @onClick={{fn this.sortBy "courseTitle"}}
+                      >
+                        {{t "general.course"}}
+                        ::
+                        {{t "general.session"}}
+                      </SortableTh>
+                      <th colspan="3" class="hide-from-small-screen">
+                        {{t "general.instructor"}}
+                      </th>
+                      <SortableTh
+                        @colspan={{4}}
+                        @sortedAscending={{this.sortedAscending}}
+                        @sortedBy={{or
+                          (eq @sortBy "firstOfferingDate")
+                          (eq @sortBy "firstOfferingDate:desc")
+                        }}
+                        @sortType="numeric"
+                        @onClick={{fn this.sortBy "firstOfferingDate"}}
+                      >
+                        {{t "general.date"}}
+                      </SortableTh>
                     </tr>
-                  {{/each}}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {{#each this.filteredMaterials as |lmObject|}}
+                      <MaterialListItem @lm={{lmObject}} />
+                    {{/each}}
+                  </tbody>
+                </table>
+              {{else}}
+                <div class="no-results" data-test-none>
+                  {{t "general.noResultsFound"}}
+                </div>
+              {{/if}}
               <nav
                 class="paginator"
                 aria-label={{t "general.bottomPagination"}}
