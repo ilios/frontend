@@ -40,9 +40,14 @@ import DetailCohorts from 'ilios-common/components/detail-cohorts';
         @editable={{@editable}}
         @collapse={{fn @setCourseObjectiveDetails false}}
         @expand={{fn @setCourseObjectiveDetails true}}
+        @showMeSH={{@showMeSH}}
       />
     {{else}}
-      <CollapsedObjectives @course={{@course}} @expand={{fn @setCourseObjectiveDetails true}} />
+      <CollapsedObjectives
+        @course={{@course}}
+        @expand={{fn @setCourseObjectiveDetails true}}
+        @showMeSH={{@showMeSH}}
+      />
     {{/if}}
     <DetailLearningMaterials @subject={{@course}} @isCourse={{true}} @editable={{@editable}} />
     {{#if (or (eq (get @course.competencies "length") 0) @courseCompetencyDetails)}}

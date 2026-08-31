@@ -47,11 +47,43 @@ export default class CourseDetailsComponent extends Component {
     this.args.setShowDetails(false);
   }
 
+  @cached
+  get schoolConfigsData() {
+    return new TrackedAsyncData(this.getSchoolConfigs(this.args.course));
+  }
+
+  async getSchoolConfigs(course) {
+    const school = await course.school;
+    return await school.configurations;
+  }
+
+  @cached
+  get schoolConfigs() {
+    const rhett = new Map();
+    if (this.schoolConfigsData.isResolved) {
+      this.schoolConfigsData.value.forEach((config) => {
+        rhett.set(config.name, config.parsedValue);
+      });
+    }
+    return rhett;
+  }
+
+  get showMeSH() {
+    return !!this.schoolConfigs.get('showMeSH');
+  }
+
+  get configLoaded() {
+    return (
+      this.academicYearCrossesCalendarYearBoundariesData.isResolved &&
+      this.schoolConfigsData.isResolved
+    );
+  }
+
   get notRolloverRoute() {
     return this.router.currentRouteName !== 'course.rollover';
   }
   <template>
-    {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
+    {{#if this.configLoaded}}
       {{pageTitle "Courses | " @course.title " " this.academicYearDisplay}}
       <BackToCourses @course={{@course}} />
 
@@ -84,6 +116,7 @@ export default class CourseDetailsComponent extends Component {
             @setCourseTaxonomyDetails={{@setCourseTaxonomyDetails}}
             @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
             @setCourseManageLeadership={{@setCourseManageLeadership}}
+            @showMeSH={{this.showMeSH}}
           />
           {{#if @showDetailsCollapseControl}}
             <div class="details-collapse-control">

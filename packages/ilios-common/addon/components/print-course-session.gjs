@@ -312,7 +312,7 @@ export default class PrintCourseSessionComponent extends Component {
         </div>
         {{#if this.sessionObjectives.length}}
           <div class="content">
-            <ObjectiveList @session={{@session}} @editable={{false}} />
+            <ObjectiveList @session={{@session}} @editable={{false}} @showMeSH={{@showMeSH}} />
           </div>
         {{/if}}
       </section>

@@ -11,6 +11,11 @@ module('Acceptance | Course - Print Course', function (hooks) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     await this.server.create('academic-year');
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     const cohort = await this.server.create('cohort', { programYear });
     const userRole = (this.learningMaterialUserRole = await this.server.create(
       'learning-material-user-role',

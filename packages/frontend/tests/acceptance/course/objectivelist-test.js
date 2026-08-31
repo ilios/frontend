@@ -10,8 +10,12 @@ module('Acceptance | Course - Objective List', function (hooks) {
     this.user = await setupAuthentication({ administeredSchools: [this.school] });
     await this.server.create('academic-year', { id: 2013 });
   });
-
   test('list objectives', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     const competencies = await this.server.createList('competency', 2, {
       school: this.school,
     });
@@ -132,6 +136,114 @@ module('Acceptance | Course - Objective List', function (hooks) {
       );
       assert.ok(page.details.objectives.objectiveList.objectives[i].parents.empty);
       assert.ok(page.details.objectives.objectiveList.objectives[i].meshDescriptors.empty);
+    }
+  });
+
+  test('list objectives without MeSH UI', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'false',
+    });
+    const competencies = await this.server.createList('competency', 2, {
+      school: this.school,
+    });
+    const vocabulary = await this.server.create('vocabulary', {
+      school: this.school,
+    });
+    const programYearObjectiveWithCompetency = await this.server.create('program-year-objective', {
+      competency: competencies[0],
+    });
+    const programYearObjectiveWithoutCompetency =
+      await this.server.create('program-year-objective');
+    const term1 = await this.server.create('term', { vocabulary, active: true });
+    const term2 = await this.server.create('term', { vocabulary });
+    const course = await this.server.create('course', {
+      year: 2013,
+      school: this.school,
+    });
+    await this.server.create('course-objective', {
+      course,
+      programYearObjectives: [programYearObjectiveWithCompetency],
+      terms: [term1],
+    });
+    await this.server.create('course-objective', {
+      course,
+      programYearObjectives: [programYearObjectiveWithoutCompetency],
+      terms: [term2],
+    });
+
+    await this.server.createList('course-objective', 11, { course });
+
+    await page.visit({
+      courseId: course.id,
+      details: true,
+      courseObjectiveDetails: true,
+    });
+    await takeScreenshot(assert);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 13);
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      'course objective 0',
+    );
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'program-year objective 0',
+    );
+    assert.notOk(page.details.objectives.objectiveList.objectives[0].meshDescriptors.isVisible);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
+      1,
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)',
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      1,
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
+      'term 0',
+    );
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].description.text,
+      'course objective 1',
+    );
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[1].parents.list.length, 1);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].parents.list[0].text,
+      'program-year objective 1',
+    );
+    assert.notOk(page.details.objectives.objectiveList.objectives[1].meshDescriptors.isVisible);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list.length,
+      1,
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)',
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms.length,
+      1,
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
+      'term 1 (inactive)',
+    );
+
+    for (let i = 2; i <= 12; i++) {
+      assert.strictEqual(
+        page.details.objectives.objectiveList.objectives[i].description.text,
+        `course objective ${i}`,
+      );
+      assert.ok(page.details.objectives.objectiveList.objectives[i].parents.empty);
+      assert.notOk(page.details.objectives.objectiveList.objectives[i].meshDescriptors.isVisible);
     }
   });
 

@@ -65,9 +65,11 @@ export default class SessionCollapsedObjectivesComponent extends Component {
                 <th class="text-center">
                   {{t "general.vocabularyTerms"}}
                 </th>
-                <th class="text-center">
-                  {{t "general.meshTerms"}}
-                </th>
+                {{#if @showMeSH}}
+                  <th class="text-center">
+                    {{t "general.meshTerms"}}
+                  </th>
+                {{/if}}
               </tr>
             </thead>
             <tbody>
@@ -97,15 +99,19 @@ export default class SessionCollapsedObjectivesComponent extends Component {
                     <FaIcon @icon={{faBan}} class="no" />
                   {{/if}}
                 </td>
-                <td class="text-middle text-center" rowspan="3" data-test-mesh-status>
-                  {{#if (eq (get this.objectivesWithMesh "length") (get this.objectives "length"))}}
-                    <FaIcon @icon={{faCircle}} class="yes" />
-                  {{else if (gte (get this.objectivesWithMesh "length") 1)}}
-                    <FaIcon @icon={{faCircle}} class="maybe" />
-                  {{else}}
-                    <FaIcon @icon={{faBan}} class="no" />
-                  {{/if}}
-                </td>
+                {{#if @showMeSH}}
+                  <td class="text-middle text-center" rowspan="3" data-test-mesh-status>
+                    {{#if
+                      (eq (get this.objectivesWithMesh "length") (get this.objectives "length"))
+                    }}
+                      <FaIcon @icon={{faCircle}} class="yes" />
+                    {{else if (gte (get this.objectivesWithMesh "length") 1)}}
+                      <FaIcon @icon={{faCircle}} class="maybe" />
+                    {{else}}
+                      <FaIcon @icon={{faBan}} class="no" />
+                    {{/if}}
+                  </td>
+                {{/if}}
               </tr>
               <tr>
                 <td data-test-parent-count class="count">
@@ -117,11 +123,13 @@ export default class SessionCollapsedObjectivesComponent extends Component {
                   {{t "general.termCount" count=(get this.objectivesWithTerms "length")}}
                 </td>
               </tr>
-              <tr>
-                <td data-test-mesh-count class="count">
-                  {{t "general.meshCount" count=(get this.objectivesWithMesh "length")}}
-                </td>
-              </tr>
+              {{#if @showMeSH}}
+                <tr>
+                  <td data-test-mesh-count class="count">
+                    {{t "general.meshCount" count=(get this.objectivesWithMesh "length")}}
+                  </td>
+                </tr>
+              {{/if}}
             </tbody>
           </table>
         </div>

@@ -39,17 +39,44 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
 
     this.set('course', courseModel);
     await render(
-      <template><CollapsedObjectives @course={{this.course}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @course={{this.course}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
-
     assert.strictEqual(component.title, 'Objectives (4)');
-    assert.strictEqual(component.objectiveCount, 'There are 4 objectives');
-    assert.strictEqual(component.parentCount, '1 has a parent');
-    assert.strictEqual(component.meshCount, '1 has MeSH');
-    assert.strictEqual(component.termCount, '1 has vocabulary terms');
-
+    assert.strictEqual(component.objectiveCount.text, 'There are 4 objectives');
+    assert.strictEqual(component.parentCount.text, '1 has a parent');
+    assert.strictEqual(component.meshCount.text, '1 has MeSH');
+    assert.strictEqual(component.termCount.text, '1 has vocabulary terms');
     assert.ok(component.parentStatus.partial);
     assert.ok(component.meshStatus.partial);
+    assert.ok(component.termStatus.partial);
+  });
+
+  test('displays summary data without MeSH UI', async function (assert) {
+    const course = await this.server.create('course', {
+      courseObjectives: [
+        this.objective,
+        this.objectiveWithMesh,
+        this.objectiveWithProgramYearObjectives,
+        this.objectiveWithTerms,
+      ],
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+
+    this.set('course', courseModel);
+    await render(
+      <template>
+        <CollapsedObjectives @course={{this.course}} @expand={{(noop)}} @showMeSH={{false}} />
+      </template>,
+    );
+    assert.strictEqual(component.title, 'Objectives (4)');
+    assert.strictEqual(component.objectiveCount.text, 'There are 4 objectives');
+    assert.strictEqual(component.parentCount.text, '1 has a parent');
+    assert.notOk(component.meshCount.isVisible);
+    assert.strictEqual(component.termCount.text, '1 has vocabulary terms');
+    assert.ok(component.parentStatus.partial);
+    assert.notOk(component.meshStatus.isVisible);
     assert.ok(component.termStatus.partial);
   });
 
@@ -62,7 +89,9 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
       assert.step('click called');
     });
     await render(
-      <template><CollapsedObjectives @course={{this.course}} @expand={{this.click}} /></template>,
+      <template>
+        <CollapsedObjectives @course={{this.course}} @expand={{this.click}} @showMeSH={{true}} />
+      </template>,
     );
 
     assert.strictEqual(component.title, 'Objectives (0)');
@@ -78,7 +107,9 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
 
     this.set('course', courseModel);
     await render(
-      <template><CollapsedObjectives @course={{this.course}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @course={{this.course}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.complete);
@@ -92,7 +123,9 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
 
     this.set('course', courseModel);
     await render(
-      <template><CollapsedObjectives @course={{this.course}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @course={{this.course}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.none);
@@ -106,7 +139,9 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
 
     this.set('course', courseModel);
     await render(
-      <template><CollapsedObjectives @course={{this.course}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @course={{this.course}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.complete);
@@ -120,7 +155,9 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
 
     this.set('course', courseModel);
     await render(
-      <template><CollapsedObjectives @course={{this.course}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @course={{this.course}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.none);
@@ -134,7 +171,9 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
 
     this.set('course', courseModel);
     await render(
-      <template><CollapsedObjectives @course={{this.course}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @course={{this.course}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.complete);
@@ -148,7 +187,9 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
 
     this.set('course', courseModel);
     await render(
-      <template><CollapsedObjectives @course={{this.course}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @course={{this.course}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.none);

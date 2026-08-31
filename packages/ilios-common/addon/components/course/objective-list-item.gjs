@@ -204,7 +204,10 @@ export default class CourseObjectiveListItemComponent extends Component {
       class="grid-row objective-row{{if this.showRemoveConfirmation ' confirm-removal'}}{{unless
           @editable
           ' no-actions'
-        }}{{if this.highlightSave.isRunning ' highlight-ok'}}{{if this.isManaging ' is-managing'}}"
+        }}{{unless @showMeSH ' no-mesh'}}{{if this.highlightSave.isRunning ' highlight-ok'}}{{if
+          this.isManaging
+          ' is-managing'
+        }}"
       data-test-course-objective-list-item
     >
       <div class="description grid-item" data-test-description>
@@ -267,16 +270,17 @@ export default class CourseObjectiveListItemComponent extends Component {
         @cancel={{this.cancel}}
       />
 
-      <ObjectiveListItemDescriptors
-        @meshDescriptors={{this.meshDescriptors}}
-        @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
-        @manage={{perform this.manageDescriptors}}
-        @isManaging={{this.isManagingDescriptors}}
-        @save={{perform this.saveDescriptors}}
-        @isSaving={{this.saveDescriptors.isRunning}}
-        @cancel={{this.cancel}}
-      />
-
+      {{#if @showMeSH}}
+        <ObjectiveListItemDescriptors
+          @meshDescriptors={{this.meshDescriptors}}
+          @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+          @manage={{perform this.manageDescriptors}}
+          @isManaging={{this.isManagingDescriptors}}
+          @save={{perform this.saveDescriptors}}
+          @isSaving={{this.saveDescriptors.isRunning}}
+          @cancel={{this.cancel}}
+        />
+      {{/if}}
       {{#if @editable}}
         <div class="actions grid-item" data-test-actions>
           {{#if this.isManaging}}

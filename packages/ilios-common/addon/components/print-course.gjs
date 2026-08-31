@@ -114,223 +114,266 @@ export default class PrintCourseComponent extends Component {
 
     return this.sessionsRelationship;
   }
+  @cached
+  get schoolConfigsData() {
+    return new TrackedAsyncData(this.getSchoolConfigs(this.args.course));
+  }
+
+  async getSchoolConfigs(course) {
+    const school = await course.school;
+    return await school.configurations;
+  }
+
+  @cached
+  get schoolConfigs() {
+    const rhett = new Map();
+    if (this.schoolConfigsData.isResolved) {
+      this.schoolConfigsData.value.forEach((config) => {
+        rhett.set(config.name, config.parsedValue);
+      });
+    }
+    return rhett;
+  }
+
+  get showMeSH() {
+    return !!this.schoolConfigs.get('showMeSH');
+  }
+
+  get schoolConfigsLoaded() {
+    return (
+      this.academicYearCrossesCalendarYearBoundariesData.isResolved &&
+      this.schoolConfigsData.isResolved
+    );
+  }
+
   <template>
-    <section class="print-course" ...attributes>
-      <div class="header" data-test-course-header>
-        <h2 data-test-course-title>
-          {{@course.title}}
-        </h2>
-        <h3 data-test-course-year>
-          {{#if this.academicYearCrossesCalendarYearBoundaries}}
-            {{@course.year}}
-            -
-            {{add @course.year 1}}
-          {{else}}
-            {{@course.year}}
-          {{/if}}
-        </h3>
-        <PublicationStatus @item={{@course}} @showText={{true}} />
-      </div>
-      <section class="overview block" data-test-course-overview>
-        <div class="content">
-          <div class="inline-label-data-block">
-            <label>
-              {{t "general.start"}}:
-            </label>
-            <div>
-              {{formatDate @course.startDate day="2-digit" month="2-digit" year="numeric"}}
+    {{#if this.schoolConfigsLoaded}}
+      <section class="print-course" ...attributes>
+        <div class="header" data-test-course-header>
+          <h2 data-test-course-title>
+            {{@course.title}}
+          </h2>
+          <h3 data-test-course-year>
+            {{#if this.academicYearCrossesCalendarYearBoundaries}}
+              {{@course.year}}
+              -
+              {{add @course.year 1}}
+            {{else}}
+              {{@course.year}}
+            {{/if}}
+          </h3>
+          <PublicationStatus @item={{@course}} @showText={{true}} />
+        </div>
+        <section class="overview block" data-test-course-overview>
+          <div class="content">
+            <div class="inline-label-data-block">
+              <label>
+                {{t "general.start"}}:
+              </label>
+              <div>
+                {{formatDate @course.startDate day="2-digit" month="2-digit" year="numeric"}}
+              </div>
             </div>
-          </div>
-          <div class="inline-label-data-block">
-            <label>
-              {{t "general.externalId"}}:
-            </label>
-            <div>
-              {{@course.externalId}}
+            <div class="inline-label-data-block">
+              <label>
+                {{t "general.externalId"}}:
+              </label>
+              <div>
+                {{@course.externalId}}
+              </div>
             </div>
-          </div>
-          <div class="inline-label-data-block">
-            <label>
-              {{t "general.level"}}:
-            </label>
-            <div>
-              {{@course.level}}
+            <div class="inline-label-data-block">
+              <label>
+                {{t "general.level"}}:
+              </label>
+              <div>
+                {{@course.level}}
+              </div>
             </div>
-          </div>
-          <div class="inline-label-data-block">
-            <label>
-              {{t "general.end"}}:
-            </label>
-            <div>
-              {{formatDate @course.endDate day="2-digit" month="2-digit" year="numeric"}}
+            <div class="inline-label-data-block">
+              <label>
+                {{t "general.end"}}:
+              </label>
+              <div>
+                {{formatDate @course.endDate day="2-digit" month="2-digit" year="numeric"}}
+              </div>
             </div>
-          </div>
-          <div class="inline-label-data-block">
-            <label>
-              {{t "general.clerkshipType"}}:
-            </label>
-            <div>
-              {{#if @course.clerkshipType}}
-                {{@course.clerkshipType.title}}
-              {{else}}
-                {{t "general.notAClerkship"}}
+            <div class="inline-label-data-block">
+              <label>
+                {{t "general.clerkshipType"}}:
+              </label>
+              <div>
+                {{#if @course.clerkshipType}}
+                  {{@course.clerkshipType.title}}
+                {{else}}
+                  {{t "general.notAClerkship"}}
+                {{/if}}
+              </div>
+            </div>
+            <br />
+            <br />
+            <div class="inline-label-data-block">
+              <label>
+                {{t "general.directors"}}:
+              </label>
+              {{#if (and this.directorsData.isResolved this.directorsData.value.length)}}
+                <div>
+                  <span>{{this.directors}}</span>
+                </div>
               {{/if}}
             </div>
           </div>
-          <br />
-          <br />
-          <div class="inline-label-data-block">
-            <label>
-              {{t "general.directors"}}:
-            </label>
-            {{#if (and this.directorsData.isResolved this.directorsData.value.length)}}
-              <div>
-                <span>{{this.directors}}</span>
-              </div>
-            {{/if}}
+        </section>
+        <section class="block" data-test-course-competencies>
+          <div class="title">
+            {{t "general.competencies"}}
+            ({{this.competencies.length}})
           </div>
-        </div>
-      </section>
-      <section class="block" data-test-course-competencies>
-        <div class="title">
-          {{t "general.competencies"}}
-          ({{this.competencies.length}})
-        </div>
-        {{#if this.competencies.length}}
-          <div class="content">
-            <ul class="static-list">
-              {{#each @course.domainsWithSubcompetencies as |domain|}}
-                <li>
-                  {{domain.title}}
-                  {{#if domain.subCompetencies}}
-                    <ul>
-                      {{#each domain.subCompetencies as |competency|}}
-                        <li>
-                          {{competency.title}}
-                        </li>
-                      {{/each}}
-                    </ul>
-                  {{/if}}
-                </li>
-              {{/each}}
-            </ul>
-          </div>
-        {{/if}}
-      </section>
-      <section class="block" data-test-course-terms>
-        <div class="title">
-          {{t "general.terms"}}
-          ({{@course.terms.length}})
-        </div>
-        {{#if @course.associatedVocabularies.length}}
-          <div class="content">
-            {{#each @course.associatedVocabularies as |vocab|}}
-              <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
-            {{/each}}
-          </div>
-        {{/if}}
-      </section>
-      <section class="block" data-test-course-objectives>
-        <div class="title">
-          {{t "general.objectives"}}
-          ({{@course.courseObjectives.length}})
-        </div>
-        {{#if @course.courseObjectives.length}}
-          <div class="content">
-            <ObjectiveList @course={{@course}} @editable={{false}} @printable={{true}} />
-          </div>
-        {{/if}}
-      </section>
-      <section class="block" data-test-course-learningmaterials>
-        <div class="title">
-          {{t "general.learningMaterials"}}
-          ({{this.courseLearningMaterials.length}})
-        </div>
-        {{#if this.courseLearningMaterials}}
-          <div class="content">
-            <table class="ilios-table">
-              <thead>
-                <tr>
-                  <th class="text-left" colspan="2">
-                    {{t "general.displayName"}}
-                  </th>
-                  <th class="text-center">
-                    {{t "general.type"}}
-                  </th>
-                  <th class="text-center">
-                    {{t "general.required"}}
-                  </th>
-                  <th class="text-left">
-                    {{t "general.notes"}}
-                  </th>
-                  <th class="text-left description" colspan="4">
-                    {{t "general.description"}}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each this.courseLearningMaterials as |lm|}}
-                  <tr>
-                    <td class="text-left text-top" colspan="2">
-                      {{lm.learningMaterial.title}}
-                    </td>
-                    <td class="text-center text-top">
-                      {{lm.learningMaterial.type}}
-                    </td>
-                    <td class="text-center text-top">
-                      {{#if lm.required}}
-                        <span class="add">
-                          {{t "general.yes"}}
-                        </span>
-                      {{else}}
-                        <span class="remove">
-                          {{t "general.no"}}
-                        </span>
-                      {{/if}}
-                    </td>
-                    <td class="text-left text-top">
-                      {{#if lm.notes}}
-                        <span class="add">
-                          {{t "general.yes"}}
-                        </span>
-                      {{else}}
-                        <span class="remove">
-                          {{t "general.no"}}
-                        </span>
-                      {{/if}}
-                    </td>
-                    <td class="text-left text-top" colspan="4">
-                      {{removeHtmlTags lm.learningMaterial.description}}
-                      <p></p>
-                      {{lm.learningMaterial.citation}}
-                    </td>
-                  </tr>
+          {{#if this.competencies.length}}
+            <div class="content">
+              <ul class="static-list">
+                {{#each @course.domainsWithSubcompetencies as |domain|}}
+                  <li>
+                    {{domain.title}}
+                    {{#if domain.subCompetencies}}
+                      <ul>
+                        {{#each domain.subCompetencies as |competency|}}
+                          <li>
+                            {{competency.title}}
+                          </li>
+                        {{/each}}
+                      </ul>
+                    {{/if}}
+                  </li>
                 {{/each}}
-              </tbody>
-            </table>
+              </ul>
+            </div>
+          {{/if}}
+        </section>
+        <section class="block" data-test-course-terms>
+          <div class="title">
+            {{t "general.terms"}}
+            ({{@course.terms.length}})
           </div>
-        {{/if}}
-      </section>
-      <section class="block" data-test-course-mesh>
-        <div class="title">
-          {{t "general.mesh"}}
-          ({{@course.meshDescriptors.length}})
-        </div>
-        {{#if @course.meshDescriptors.length}}
-          <div class="content">
-            <ul class="inline-list">
-              {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
-                <li>
-                  {{descriptor.name}}
-                </li>
+          {{#if @course.associatedVocabularies.length}}
+            <div class="content">
+              {{#each @course.associatedVocabularies as |vocab|}}
+                <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
               {{/each}}
-            </ul>
+            </div>
+          {{/if}}
+        </section>
+        <section class="block" data-test-course-objectives>
+          <div class="title">
+            {{t "general.objectives"}}
+            ({{@course.courseObjectives.length}})
           </div>
-        {{/if}}
+          {{#if @course.courseObjectives.length}}
+            <div class="content">
+              <ObjectiveList
+                @course={{@course}}
+                @editable={{false}}
+                @printable={{true}}
+                @showMeSH={{this.showMeSH}}
+              />
+            </div>
+          {{/if}}
+        </section>
+        <section class="block" data-test-course-learningmaterials>
+          <div class="title">
+            {{t "general.learningMaterials"}}
+            ({{this.courseLearningMaterials.length}})
+          </div>
+          {{#if this.courseLearningMaterials}}
+            <div class="content">
+              <table class="ilios-table">
+                <thead>
+                  <tr>
+                    <th class="text-left" colspan="2">
+                      {{t "general.displayName"}}
+                    </th>
+                    <th class="text-center">
+                      {{t "general.type"}}
+                    </th>
+                    <th class="text-center">
+                      {{t "general.required"}}
+                    </th>
+                    <th class="text-left">
+                      {{t "general.notes"}}
+                    </th>
+                    <th class="text-left description" colspan="4">
+                      {{t "general.description"}}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each this.courseLearningMaterials as |lm|}}
+                    <tr>
+                      <td class="text-left text-top" colspan="2">
+                        {{lm.learningMaterial.title}}
+                      </td>
+                      <td class="text-center text-top">
+                        {{lm.learningMaterial.type}}
+                      </td>
+                      <td class="text-center text-top">
+                        {{#if lm.required}}
+                          <span class="add">
+                            {{t "general.yes"}}
+                          </span>
+                        {{else}}
+                          <span class="remove">
+                            {{t "general.no"}}
+                          </span>
+                        {{/if}}
+                      </td>
+                      <td class="text-left text-top">
+                        {{#if lm.notes}}
+                          <span class="add">
+                            {{t "general.yes"}}
+                          </span>
+                        {{else}}
+                          <span class="remove">
+                            {{t "general.no"}}
+                          </span>
+                        {{/if}}
+                      </td>
+                      <td class="text-left text-top" colspan="4">
+                        {{removeHtmlTags lm.learningMaterial.description}}
+                        <p></p>
+                        {{lm.learningMaterial.citation}}
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          {{/if}}
+        </section>
+        <section class="block" data-test-course-mesh>
+          <div class="title">
+            {{t "general.mesh"}}
+            ({{@course.meshDescriptors.length}})
+          </div>
+          {{#if @course.meshDescriptors.length}}
+            <div class="content">
+              <ul class="inline-list">
+                {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
+                  <li>
+                    {{descriptor.name}}
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+        </section>
+        {{#each (sortBy "title" this.sessions) as |session|}}
+          <PrintCourseSession
+            @session={{session}}
+            @editable={{false}}
+            @showMeSH={{this.showMeSH}}
+          />
+        {{/each}}
       </section>
-      {{#each (sortBy "title" this.sessions) as |session|}}
-        <PrintCourseSession @session={{session}} @editable={{false}} />
-      {{/each}}
-    </section>
+    {{/if}}
   </template>
 }

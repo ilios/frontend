@@ -146,11 +146,16 @@ export default class CourseObjectiveListComponent extends Component {
             {{t "general.sortObjectives"}}
           </button>
         {{/if}}
-        <div class="grid-row headers{{unless @editable ' no-actions'}}" data-test-headers>
+        <div
+          class="grid-row headers{{unless @editable ' no-actions'}}{{unless @showMeSH ' no-mesh'}}"
+          data-test-headers
+        >
           <span class="grid-item" data-test-header>{{t "general.description"}}</span>
           <span class="grid-item" data-test-header>{{t "general.parentObjectives"}}</span>
           <span class="grid-item" data-test-header>{{t "general.vocabularyTerms"}}</span>
-          <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
+          {{#if @showMeSH}}
+            <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
+          {{/if}}
           {{#if @editable}}
             <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
           {{/if}}
@@ -163,10 +168,11 @@ export default class CourseObjectiveListComponent extends Component {
               @cohortObjectives={{this.cohortObjectives}}
               @course={{@course}}
               @printable={{@printable}}
+              @showMeSH={{@showMeSH}}
             />
           {{/each}}
         {{else}}
-          <ObjectiveListLoading @count={{this.courseObjectiveCount}} />
+          <ObjectiveListLoading @count={{this.courseObjectiveCount}} @showMeSH={{@showMeSH}} />
         {{/if}}
       {{/if}}
     </div>

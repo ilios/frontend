@@ -13,6 +13,10 @@
   .grid-row {
     grid-template-columns: 1fr 10fr 6fr 6fr 6fr 1fr;
 
+    &.no-mesh {
+      grid-template-columns: 1fr 10fr 6fr 6fr 1fr;
+    }
+
     .expand-row {
       @include m.ilios-button-reset;
       display: flex;
