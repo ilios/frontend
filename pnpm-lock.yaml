@@ -359,8 +359,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0(@babel/core@7.29.7(supports-color@8.1.1))(eslint@9.39.5(supports-color@8.1.1))
       ember-cli-deploy-cloudfront:
-        specifier: ^6.0.0
-        version: 6.0.0
+        specifier: ^7.0.0
+        version: 7.0.0
       ember-cli-deploy-display-revisions:
         specifier: 3.0.0
         version: 3.0.0
@@ -5128,9 +5128,9 @@ packages:
     resolution: {integrity: sha512-lDNyvL8zUD8ooyp9W0B3LVdym+yueqmszQ+AT7J7W5x1dK8BexEr/IPgrFOK46HtCipnGMLdtX352VgWHPv23g==}
     engines: {node: 12.* || 14.* || >= 16}
 
-  ember-cli-deploy-cloudfront@6.0.0:
-    resolution: {integrity: sha512-wJws9FN27kiN3X2MQZe/l5Aq3nyQFw6PY0k73ZlFWTho0Uf+XuNoZt63c5J23BN28KDTVhpSwx29Vyc/XuxILA==}
-    engines: {node: 16.* || 18.* || >= 20}
+  ember-cli-deploy-cloudfront@7.0.0:
+    resolution: {integrity: sha512-VUKbwGdcaf8ZZR9yt+jI7ELRjtOMD4omFzktw82HwePoR8uCqRHnLIYz2vN9yRyqmx2GZxDlmQ4ZKIEOn4Qk4w==}
+    engines: {node: '>= 20.19'}
 
   ember-cli-deploy-display-revisions@3.0.0:
     resolution: {integrity: sha512-4saEjD8XlKOeY5Whx8189RiDIFBUJXUZ5DdQZovE+/gyuptHi+kBYZFVlmvDWPNujEEKWBBjpFbdmFudF2wMjw==}
@@ -9611,10 +9611,6 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
-
-  uuid@11.1.1:
-    resolution: {integrity: sha512-vIYxrBCC/N/K+Js3qSN88go7kIfNPssr/hHCesKCQNAjmgvYS2oqr69kIufEG+O4+PfezOH4EbIeHCfFov8ZgQ==}
-    hasBin: true
 
   uuid@8.0.0:
     resolution: {integrity: sha512-jOXGuXZAWdsTH7eZLtyXMqUb9EcWMGZNbL9YcGBJl4MH4nrxHmZJhEHvyLFrkxo+28uLb/NYRcStH48fnD0Vzw==}
@@ -14792,14 +14788,13 @@ snapshots:
       rsvp: 4.8.5
       uuid: 8.3.2
 
-  ember-cli-deploy-cloudfront@6.0.0:
+  ember-cli-deploy-cloudfront@7.0.0:
     dependencies:
       '@aws-sdk/client-cloudfront': 3.1118.0
       '@aws-sdk/credential-providers': 3.1118.0
       core-object: 3.1.5
       ember-cli-deploy-plugin: 0.2.9
       rsvp: 4.8.5
-      uuid: 11.1.1
 
   ember-cli-deploy-display-revisions@3.0.0:
     dependencies:
@@ -20429,8 +20424,6 @@ snapshots:
       which-typed-array: 1.1.22
 
   utils-merge@1.0.1: {}
-
-  uuid@11.1.1: {}
 
   uuid@8.0.0: {}
 
