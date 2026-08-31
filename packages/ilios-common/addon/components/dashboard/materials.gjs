@@ -271,20 +271,20 @@ export default class DashboardMaterialsComponent extends Component {
                   {{on "input" (perform this.setQuery value="target.value")}}
                 />
               </span>
-              <nav
-                class="paginator"
-                aria-label={{t "general.topPagination"}}
-                data-test-paginator-top
-              >
-                <PagedlistControls
-                  @offset={{@offset}}
-                  @limit={{@limit}}
-                  @total={{this.total}}
-                  @setOffset={{@setOffset}}
-                  @setLimit={{@setLimit}}
-                />
-              </nav>
               {{#if this.total}}
+                <nav
+                  class="paginator"
+                  aria-label={{t "general.topPagination"}}
+                  data-test-paginator-top
+                >
+                  <PagedlistControls
+                    @offset={{@offset}}
+                    @limit={{@limit}}
+                    @total={{this.total}}
+                    @setOffset={{@setOffset}}
+                    @setLimit={{@setLimit}}
+                  />
+                </nav>
                 <table class="ilios-table ilios-table-colors ilios-zebra-table">
                   <thead>
                     <tr>
@@ -352,24 +352,24 @@ export default class DashboardMaterialsComponent extends Component {
                     {{/each}}
                   </tbody>
                 </table>
+                <nav
+                  class="paginator"
+                  aria-label={{t "general.bottomPagination"}}
+                  data-test-paginator-bottom
+                >
+                  <PagedlistControls
+                    @offset={{@offset}}
+                    @limit={{@limit}}
+                    @total={{this.total}}
+                    @setOffset={{@setOffset}}
+                    @setLimit={{@setLimit}}
+                  />
+                </nav>
               {{else}}
                 <div class="no-results" data-test-none>
                   {{t "general.noResultsFound"}}
                 </div>
               {{/if}}
-              <nav
-                class="paginator"
-                aria-label={{t "general.bottomPagination"}}
-                data-test-paginator-bottom
-              >
-                <PagedlistControls
-                  @offset={{@offset}}
-                  @limit={{@limit}}
-                  @total={{this.total}}
-                  @setOffset={{@setOffset}}
-                  @setLimit={{@setLimit}}
-                />
-              </nav>
             </div>
           {{else}}
             <p>{{t "general.none"}}</p>

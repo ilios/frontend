@@ -324,6 +324,9 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     );
 
     assert.strictEqual(component.text, 'My Materials Next 60 days All Materials None');
+    assert.dom('table').doesNotExist();
+    assert.dom('[data-test-paginator-top]').doesNotExist();
+    assert.dom('[data-test-paginator-bottom]').doesNotExist();
     assert.verifySteps(['API called']);
   });
 
@@ -415,26 +418,30 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.verifySteps(['API called', 'setFilter called']);
   });
 
-  test('does not render the table when the text filter has no results', async function (assert) {
+  test('hides the table and pagination for an empty text search', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
       assert.step('API called');
       return {
         userMaterials: this.currentMaterials,
       };
     });
+    this.set('filter', 'no matching material');
+    this.set('setFilter', (text) => {
+      this.set('filter', text);
+    });
 
     await render(
       <template>
         <Materials
           @courseIdFilter={{null}}
-          @filter="no matching material"
+          @filter={{this.filter}}
           @sortBy="title"
           @offset={{0}}
           @setOffset={{(noop)}}
           @limit={{25}}
           @setLimit={{(noop)}}
           @setCourseIdFilter={{(noop)}}
-          @setFilter={{(noop)}}
+          @setFilter={{this.setFilter}}
           @setSortBy={{(noop)}}
           @toggleMaterialsMode={{(noop)}}
           @showAllMaterials={{false}}
@@ -443,7 +450,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     );
 
     assert.dom('table').doesNotExist();
+    assert.dom('[data-test-paginator-top]').doesNotExist();
+    assert.dom('[data-test-paginator-bottom]').doesNotExist();
     assert.dom('[data-test-none]').hasText('No results found. Please try again.');
+
+    await component.textFilter.set('');
+
+    assert.dom('table').exists();
+    assert.dom('[data-test-paginator-top]').exists();
+    assert.dom('[data-test-paginator-bottom]').exists();
+    assert.dom('[data-test-none]').doesNotExist();
+    assert.strictEqual(component.table.rows.length, this.currentMaterials.length);
+    assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 5 of 5');
+    assert.strictEqual(component.bottomPaginator.controls.pagerDetails.text, 'Showing 1 - 5 of 5');
     assert.verifySteps(['API called']);
   });
 

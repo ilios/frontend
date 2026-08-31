@@ -510,10 +510,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       };
     });
     await page.visit({ course: 4 });
-    assert.strictEqual(
-      page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 0 of 0',
-    );
+    assert.dom('[data-test-dashboard-materials] table').doesNotExist();
+    assert.dom('[data-test-dashboard-materials] [data-test-paginator-top]').doesNotExist();
+    assert.dom('[data-test-dashboard-materials] [data-test-paginator-bottom]').doesNotExist();
+    assert
+      .dom('[data-test-dashboard-materials] [data-test-none]')
+      .hasText('No results found. Please try again.');
     assert.strictEqual(page.materials.courseFilter.options.length, 6);
     assert.strictEqual(page.materials.courseFilter.options[0].text, 'All Courses');
     assert.strictEqual(page.materials.courseFilter.options[1].text, '2021 | [ID1234] | course 0');
@@ -534,10 +536,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       };
     });
     await page.visit({ course: 10000 });
-    assert.strictEqual(
-      page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 0 of 0',
-    );
+    assert.dom('[data-test-dashboard-materials] table').doesNotExist();
+    assert.dom('[data-test-dashboard-materials] [data-test-paginator-top]').doesNotExist();
+    assert.dom('[data-test-dashboard-materials] [data-test-paginator-bottom]').doesNotExist();
+    assert
+      .dom('[data-test-dashboard-materials] [data-test-none]')
+      .hasText('No results found. Please try again.');
     assert.strictEqual(page.materials.courseFilter.options.length, 6);
     assert.strictEqual(page.materials.courseFilter.options[0].text, 'All Courses');
     assert.strictEqual(page.materials.courseFilter.options[1].text, '2021 | [ID1234] | course 0');
