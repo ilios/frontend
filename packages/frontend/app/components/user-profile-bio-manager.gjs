@@ -20,8 +20,6 @@ import isEmail from 'validator/lib/isEmail';
 import { faArrowRotateLeft, faCheck, faSpinner, faRotate } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileBioManagerComponent extends Component {
-  @service currentUser;
-  @service iliosConfig;
   @service intl;
   @service fetch;
   @service store;

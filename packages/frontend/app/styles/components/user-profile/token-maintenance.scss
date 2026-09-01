@@ -1,0 +1,35 @@
+@use "../../ilios-common/mixins" as cm;
+
+.token-maintenance {
+  border-top: 1px dotted var(--orange);
+  @include cm.font-size("small");
+  margin-top: 1rem;
+  padding: 1rem 0 0;
+
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+
+  label {
+    @include cm.ilios-label;
+  }
+
+  .new-token-form {
+    input {
+      min-width: 0;
+      width: 7rem;
+    }
+  }
+
+  .new-token-result {
+    label {
+      @include cm.ilios-heading-h5;
+    }
+
+    input {
+      height: 2rem;
+      width: 15rem;
+    }
+  }
+}
