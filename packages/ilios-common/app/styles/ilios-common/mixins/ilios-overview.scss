@@ -29,12 +29,6 @@
   height: 1.5em;
 }
 
-@mixin ilios-overview-title() {
-  color: light-dark(var(--black), var(--white));
-  @include font-size.font-size("base");
-  font-weight: 600;
-}
-
 @mixin ilios-overview-actions() {
   align-items: baseline;
   display: flex;
