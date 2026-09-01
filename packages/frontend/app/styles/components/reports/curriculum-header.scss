@@ -3,54 +3,60 @@
 .reports-curriculum-header {
   margin: 0 0.8rem 0.25rem 0;
   padding-bottom: 0.25rem;
-  min-height: 2rem;
 
   @include cm.for-tablet-and-up {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "selection actions"
+      "summary summary";
     @include cm.font-size("medium");
-    display: flex;
     justify-content: space-between;
+    row-gap: 0.25rem;
   }
 
-  .type-and-summary {
-    margin: 0;
+  &.results {
+    display: block;
 
-    label {
-      display: inline-block;
-      margin-bottom: 0.5em;
+    .selection {
+      display: none;
     }
+
+    .actions {
+      margin-bottom: 1rem;
+
+      @include cm.for-tablet-and-up {
+        float: right;
+        margin-bottom: 0;
+        margin-left: 1rem;
+        width: auto;
+      }
+    }
+  }
+
+  .selection {
+    grid-area: "selection";
+    margin: 0;
+  }
+
+  .actions {
+    // keep buttons from vertically stretching when other column wraps to multiple lines
+    align-items: baseline;
+    margin: 0.5rem 0;
+    width: 100%;
 
     @include cm.for-tablet-and-up {
       display: flex;
-      flex-basis: min-content;
-      flex-direction: column;
-      flex-grow: 1;
-      flex-shrink: 0;
-      min-width: 0;
+      gap: 5px;
+      grid-area: "actions";
+      margin: 0;
     }
-  }
-
-  .input-buttons {
-    margin: 0.5rem 0 0;
-    min-width: 0;
-    width: 100%;
 
     .tagged-terms-mode {
       align-items: center;
       display: flex;
       gap: 0.5em;
       margin-bottom: 0.25rem;
-    }
-
-    @include cm.for-tablet-and-up {
-      align-items: flex-start;
-      display: inline-flex;
-      flex-basis: content;
-      flex-direction: row;
-      flex-grow: 0;
-      flex-shrink: 1;
-      gap: 0.5em;
-      justify-content: flex-end;
-      margin: 0 0 0 0.5em;
     }
 
     button,
@@ -71,10 +77,22 @@
         background-color: light-dark(var(--grey), var(--light-grey));
       }
     }
+
     .loading-results {
       @include cm.ilios-button {
         cursor: default;
       }
+    }
+  }
+
+  .summary {
+    grid-area: "summary";
+    grid-column: 1 / 3;
+    margin: 0.5rem 0;
+
+    label {
+      display: inline-block;
+      margin-bottom: 0.5em;
     }
   }
 }

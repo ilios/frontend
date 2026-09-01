@@ -173,8 +173,11 @@ export default class ReportsCurriculumHeaderComponent extends Component {
     return window.location.href;
   };
   <template>
-    <div class="reports-curriculum-header" data-test-reports-curriculum-header>
-      <div class="type-and-summary">
+    <div
+      class="reports-curriculum-header{{if @showReportResults ' results'}}"
+      data-test-reports-curriculum-header
+    >
+      <div class="selection">
         {{#unless @showReportResults}}
           <label data-test-report-selector>
             <span data-test-report-selector-label>
@@ -195,23 +198,9 @@ export default class ReportsCurriculumHeaderComponent extends Component {
             </select>
           </label>
         {{/unless}}
-        <div data-test-run-summary>
-          {{#if this.selectedReport}}
-            {{#if @countSelectedCourses}}
-              <div data-test-selected-report-label-summary>
-                {{t "general.run"}}
-                {{this.selectedReport.label}}
-                {{this.selectedReport.summary}}
-              </div>
-            {{else}}
-              <div data-test-selected-report-label-summary>
-                {{t "general.selectCoursesToRunReport"}}
-              </div>
-            {{/if}}
-          {{/if}}
-        </div>
       </div>
-      <div class="input-buttons">
+
+      <div class="actions">
         {{#if (and @countSelectedCourses this.selectedReport)}}
           <CopyButton
             @getClipboardText={{this.getReportUrl}}
@@ -276,6 +265,22 @@ export default class ReportsCurriculumHeaderComponent extends Component {
             >
               {{t "general.runReport"}}
             </IliosTooltip>
+          {{/if}}
+        {{/if}}
+      </div>
+
+      <div class="summary" data-test-run-summary>
+        {{#if this.selectedReport}}
+          {{#if @countSelectedCourses}}
+            <div data-test-selected-report-label-summary>
+              {{t "general.run"}}
+              {{this.selectedReport.label}}
+              {{this.selectedReport.summary}}
+            </div>
+          {{else}}
+            <div data-test-selected-report-label-summary>
+              {{t "general.selectCoursesToRunReport"}}
+            </div>
           {{/if}}
         {{/if}}
       </div>
