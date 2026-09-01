@@ -29,8 +29,8 @@ export default class UserProfileApiTokenComponent extends Component {
 
   get apiDocsLink() {
     const apiPath = '/' + this.iliosConfig.apiNameSpace;
-    const host = this.iliosConfig.host
-      ? this.iliosConfig.host
+    const host = this.iliosConfig.apiHost
+      ? this.iliosConfig.apiHost
       : window.location.protocol + '//' + window.location.host;
     const docPath = host + apiPath.replace('v3', 'doc');
     return `<a href="${docPath}">${docPath}</a>`;

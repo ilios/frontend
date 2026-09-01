@@ -18,6 +18,12 @@ module('Integration | Component | user-profile/token-maintenance', function (hoo
   });
 
   test('it renders', async function (assert) {
+    class IliosConfigMock extends Service {
+      apiHost = 'https://example.edu:8765';
+      apiNameSpace = 'api/13';
+    }
+    this.owner.register('service:iliosConfig', IliosConfigMock);
+
     await render(
       <template>
         <TokenMaintenance
@@ -27,7 +33,7 @@ module('Integration | Component | user-profile/token-maintenance', function (hoo
       </template>,
     );
 
-    assert.ok(component.tokenInfoLink.includes('/api'));
+    assert.ok(component.tokenInfoLink.includes('https://example.edu:8765/api/13'));
   });
 
   test('generates token when asked with good expiration date', async function (assert) {
