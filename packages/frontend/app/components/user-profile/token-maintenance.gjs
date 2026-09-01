@@ -96,7 +96,7 @@ export default class UserProfileApiTokenComponent extends Component {
     return this.generatedJwt;
   };
   <template>
-    <div class="small-component api-token" data-test-token-maintenance>
+    <div class="large-component api-token" data-test-token-maintenance>
       <h3>
         {{t "general.manageAPITokens"}}
       </h3>

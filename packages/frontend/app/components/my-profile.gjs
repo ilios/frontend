@@ -66,6 +66,12 @@ import TokenMaintenance from './user-profile/token-maintenance';
       </div>
       <ThemeChooser />
       <LocaleChooser />
+      <TokenMaintenance
+        @showCreateNewToken={{@showCreateNewToken}}
+        @toggleShowCreateNewToken={{@toggleShowCreateNewToken}}
+        @showInvalidateTokens={{@showInvalidateTokens}}
+        @toggleShowInvalidateTokens={{@toggleShowInvalidateTokens}}
+      />
       <UserProfilePermissions
         @user={{@user}}
         @selectedSchoolId={{@permissionsSchool}}
@@ -74,13 +80,6 @@ import TokenMaintenance from './user-profile/token-maintenance';
         @setYear={{@setPermissionsYear}}
       />
       <LearnerGroups @user={{@user}} />
-
-      <TokenMaintenance
-        @showCreateNewToken={{@showCreateNewToken}}
-        @toggleShowCreateNewToken={{@toggleShowCreateNewToken}}
-        @showInvalidateTokens={{@showInvalidateTokens}}
-        @toggleShowInvalidateTokens={{@toggleShowInvalidateTokens}}
-      />
     </div>
   </div>
 </template>
