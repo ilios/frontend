@@ -1,4 +1,4 @@
-import { visit, currentRouteName } from '@ember/test-helpers';
+import { visit, currentRouteName, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { HttpResponse } from 'msw';
@@ -26,6 +26,11 @@ module('Acceptance | Auth Errors', function (hooks) {
     await visit('/');
     assert.verifySteps(['Unauthorized']);
     assert.strictEqual(currentRouteName(), 'login');
+    //focus timing can cause screenshot issues, wait for the input to get focus
+    await waitUntil(() => {
+      const input = document.querySelector('[data-test-username] input');
+      return document.activeElement === input;
+    });
     await takeScreenshot(assert);
   });
 });

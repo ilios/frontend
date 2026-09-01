@@ -8,6 +8,7 @@ import { string } from 'yup';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import focus from 'ilios-common/modifiers/focus';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import { waitForFetch } from '@ember/test-waiters';
@@ -120,11 +121,9 @@ export default class LoginFormComponent extends Component {
               <label for="username-{{templateId}}">
                 {{t "general.username"}}:
               </label>
-              {{! template-lint-disable no-autofocus-attribute }}
               <input
                 autocapitalize="off"
                 autocorrect="off"
-                autofocus
                 autocomplete="username"
                 id="username-{{templateId}}"
                 type="text"
@@ -132,6 +131,7 @@ export default class LoginFormComponent extends Component {
                 value={{this.username}}
                 {{on "input" (pick "target.value" (set this "username"))}}
                 {{on "keyup" this.submitOnEnter}}
+                {{focus}}
                 {{this.validations.attach "username"}}
               />
               <YupValidationMessage
