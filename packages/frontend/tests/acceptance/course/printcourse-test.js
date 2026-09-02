@@ -86,17 +86,24 @@ module('Acceptance | Course - Print Course', function (hooks) {
     assert.verifySteps(['API called']);
   });
 
-  test('print course mesh terms', async function (assert) {
-    await this.server.create('school-config', {
-      school: this.school,
-      name: 'showMeSH',
-      value: 'true',
-    });
+  test.each('print course mesh terms', [true, false], async function (assert, flagExists) {
+    if (flagExists) {
+      await this.server.create('school-config', {
+        school: this.school,
+        name: 'showMeSH',
+        value: 'true',
+      });
+    }
     await visit('/course/1/print');
     assert.dom('[data-test-course-mesh] ul li').hasText('Flux Capacitor');
   });
 
   test('print course without MeSH UI', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'false',
+    });
     await visit('/course/1/print');
     assert.dom('[data-test-course-mesh]').doesNotExist();
   });

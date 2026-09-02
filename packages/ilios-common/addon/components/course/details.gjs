@@ -69,7 +69,7 @@ export default class CourseDetailsComponent extends Component {
   }
 
   get showMeSH() {
-    return !!this.schoolConfigs.get('showMeSH');
+    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
   }
 
   get configLoaded() {

@@ -43,7 +43,7 @@ export default class ProgramYearDetailsComponent extends Component {
   }
 
   get showMeSH() {
-    return !!this.schoolConfigs.get('showMeSH');
+    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
   }
 
   <template>

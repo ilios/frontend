@@ -40,12 +40,14 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     });
   });
 
-  test('list mesh', async function (assert) {
-    await this.server.create('school-config', {
-      school: this.school,
-      name: 'showMeSH',
-      value: 'true',
-    });
+  test.each('list mesh', [true, false], async function (assert, flagExists) {
+    if (flagExists) {
+      await this.server.create('school-config', {
+        school: this.school,
+        name: 'showMeSH',
+        value: 'true',
+      });
+    }
     await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     assert.strictEqual(page.details.meshTerms.current[0].title, 'descriptor 0');
@@ -54,6 +56,11 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('without MeSH UI', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'false',
+    });
     await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     assert.notOk(page.details.meshTerms.isVisible);
   });

@@ -67,7 +67,7 @@ export default class SessionDetailsComponent extends Component {
   }
 
   get showMeSH() {
-    return !!this.schoolConfigs.get('showMeSH');
+    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
   }
 
   <template>

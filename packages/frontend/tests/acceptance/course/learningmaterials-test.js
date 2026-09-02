@@ -107,12 +107,14 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     });
   });
 
-  test('list learning materials', async function (assert) {
-    await this.server.create('school-config', {
-      school: this.school,
-      name: 'showMeSH',
-      value: 'true',
-    });
+  test.each('list learning materials', [true, false], async function (assert, flagExists) {
+    if (flagExists) {
+      await this.server.create('school-config', {
+        school: this.school,
+        name: 'showMeSH',
+        value: 'true',
+      });
+    }
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(currentRouteName(), 'course.index');
 
@@ -191,6 +193,11 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('list learning materials without MeSH UI', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'false',
+    });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(currentRouteName(), 'course.index');
 
