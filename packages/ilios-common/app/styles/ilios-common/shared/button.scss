@@ -14,6 +14,11 @@ button {
     text-align: left;
     white-space: normal;
 
+    &.forward:hover,
+    &.backward:hover {
+      color: light-dark(var(--light-blue), var(--lighter-blue));
+    }
+
     &.lock-button:hover svg,
     &.manage-button:hover svg,
     &.visualization-button:hover svg {
