@@ -8,10 +8,18 @@ const definition = {
   title: text('[data-test-title]'),
   userNameInfo,
   typeIcon,
-  required: text('[data-test-required]'),
-  notes: text('[data-test-notes]'),
-  mesh: text('[data-test-mesh]'),
-  status: text('[data-test-status]'),
+  required: {
+    scope: '[data-test-required]',
+  },
+  notes: {
+    scope: '[data-test-notes]',
+  },
+  mesh: {
+    scope: '[data-test-mesh]',
+  },
+  status: {
+    scope: '[data-test-status]',
+  },
   isNotePublic: isVisible('[data-test-visible-to-students]'),
   isTimedRelease: isVisible('[data-test-timed-release]'),
   details: clickable('button', { at: 0 }),

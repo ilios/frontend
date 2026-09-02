@@ -40,19 +40,83 @@ module('Integration | Component | detail learning materials', function (hooks) {
 
     await render(
       <template>
-        <DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />
+        <DetailLearningMaterials
+          @subject={{this.subject}}
+          @isCourse={{true}}
+          @editable={{true}}
+          @showMeSH={{true}}
+        />
       </template>,
     );
-    assert.strictEqual(component.current.length, 1);
-    assert.ok(component.current[0].typeIcon.isCitation);
-    assert.strictEqual(component.current[0].title, 'test title');
-    assert.strictEqual(component.current[0].userNameInfo.fullName, '0 guy M. Mc0son');
-    assert.strictEqual(component.current[0].required, 'Yes');
-    assert.strictEqual(component.current[0].notes, 'Yes');
-    assert.strictEqual(component.current[0].mesh, 'None');
-    assert.strictEqual(component.current[0].status, 'status 1');
-    assert.ok(component.current[0].isNotePublic);
-    assert.notOk(component.current[0].isTimedRelease);
+    assert.strictEqual(component.materials.items.length, 1);
+    assert.ok(component.materials.items[0].typeIcon.isCitation);
+    assert.strictEqual(component.materials.headers.length, 7);
+    assert.strictEqual(component.materials.headers[0].text, 'Display Name');
+    assert.strictEqual(component.materials.headers[1].text, 'Owner');
+    assert.strictEqual(component.materials.headers[2].text, 'Required');
+    assert.strictEqual(component.materials.headers[3].text, 'Notes');
+    assert.strictEqual(component.materials.headers[4].text, 'MeSH');
+    assert.strictEqual(component.materials.headers[5].text, 'Status');
+    assert.strictEqual(component.materials.headers[6].text, 'Actions');
+    assert.strictEqual(component.materials.items[0].title, 'test title');
+    assert.strictEqual(component.materials.items[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.materials.items[0].required.text, 'Yes');
+    assert.strictEqual(component.materials.items[0].notes.text, 'Yes');
+    assert.strictEqual(component.materials.items[0].mesh.text, 'None');
+    assert.strictEqual(component.materials.items[0].status.text, 'status 1');
+    assert.ok(component.materials.items[0].isNotePublic);
+    assert.notOk(component.materials.items[0].isTimedRelease);
+  });
+
+  test('lm table items without MeSH UI', async function (assert) {
+    const learningMaterial = await this.server.create('learning-material', {
+      title: 'test title',
+      citation: 'some text',
+      owningUser: this.user,
+      status: this.status[1],
+      userRole: this.roles[0],
+    });
+
+    const clm = await this.server.create('course-learning-material', {
+      learningMaterial,
+      required: true,
+      notes: 'notes',
+    });
+
+    const course = await this.server.create('course', {
+      learningMaterials: [clm],
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+
+    this.set('subject', courseModel);
+
+    await render(
+      <template>
+        <DetailLearningMaterials
+          @subject={{this.subject}}
+          @isCourse={{true}}
+          @editable={{true}}
+          @showMeSH={{false}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.materials.items.length, 1);
+    assert.ok(component.materials.items[0].typeIcon.isCitation);
+    assert.strictEqual(component.materials.headers.length, 6);
+    assert.strictEqual(component.materials.headers[0].text, 'Display Name');
+    assert.strictEqual(component.materials.headers[1].text, 'Owner');
+    assert.strictEqual(component.materials.headers[2].text, 'Required');
+    assert.strictEqual(component.materials.headers[3].text, 'Notes');
+    assert.strictEqual(component.materials.headers[4].text, 'Status');
+    assert.strictEqual(component.materials.headers[5].text, 'Actions');
+    assert.strictEqual(component.materials.items[0].title, 'test title');
+    assert.strictEqual(component.materials.items[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.materials.items[0].required.text, 'Yes');
+    assert.strictEqual(component.materials.items[0].notes.text, 'Yes');
+    assert.notOk(component.materials.items[0].mesh.isVisible);
+    assert.strictEqual(component.materials.items[0].status.text, 'status 1');
+    assert.ok(component.materials.items[0].isNotePublic);
+    assert.notOk(component.materials.items[0].isTimedRelease);
   });
 
   test('custom user display name', async function (assert) {
@@ -84,16 +148,16 @@ module('Integration | Component | detail learning materials', function (hooks) {
         <DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />
       </template>,
     );
-    assert.strictEqual(component.current[0].userNameInfo.fullName, 'Clem Chowder');
-    assert.notOk(component.current[0].userNameInfo.isTooltipVisible);
-    await component.current[0].userNameInfo.expandTooltip();
-    assert.ok(component.current[0].userNameInfo.isTooltipVisible);
+    assert.strictEqual(component.materials.items[0].userNameInfo.fullName, 'Clem Chowder');
+    assert.notOk(component.materials.items[0].userNameInfo.isTooltipVisible);
+    await component.materials.items[0].userNameInfo.expandTooltip();
+    assert.ok(component.materials.items[0].userNameInfo.isTooltipVisible);
     assert.strictEqual(
-      component.current[0].userNameInfo.tooltipContents,
+      component.materials.items[0].userNameInfo.tooltipContents,
       'Campus name of record: 1 guy M, Mc1son',
     );
-    await component.current[0].userNameInfo.closeTooltip();
-    assert.notOk(component.current[0].userNameInfo.isTooltipVisible);
+    await component.materials.items[0].userNameInfo.closeTooltip();
+    assert.notOk(component.materials.items[0].userNameInfo.isTooltipVisible);
   });
 
   test('sort button visible when lm list has 2+ items and editing is allowed', async function (assert) {

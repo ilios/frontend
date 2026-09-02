@@ -6,7 +6,7 @@ import { component } from 'ilios-common/page-objects/components/detail-learning-
 import DetailLearningMaterialsItem from 'ilios-common/components/detail-learning-materials-item';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | detail-learning-materials-item', function (hooks) {
+module('Integration | Component | detail learning materials item', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
@@ -41,16 +41,42 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
           @editable={{true}}
           @lm={{this.lm}}
           @setManagedMaterial={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );
     assert.ok(component.typeIcon.isCitation);
     assert.strictEqual(component.title, 'test title');
     assert.strictEqual(component.userNameInfo.fullName, '0 guy M. Mc0son');
-    assert.strictEqual(component.required, 'Yes');
-    assert.strictEqual(component.notes, 'Yes');
-    assert.strictEqual(component.mesh, 'descriptor 0 descriptor 1');
-    assert.strictEqual(component.status, 'status 1');
+    assert.strictEqual(component.required.text, 'Yes');
+    assert.strictEqual(component.notes.text, 'Yes');
+    assert.strictEqual(component.mesh.text, 'descriptor 0 descriptor 1');
+    assert.strictEqual(component.status.text, 'status 1');
+    assert.ok(component.isNotePublic);
+    assert.ok(component.actions.edit.isVisible);
+    assert.ok(component.actions.remove.isVisible);
+    assert.notOk(component.actions.remove.isDisabled);
+  });
+
+  test('it renders without MeSH UI', async function (assert) {
+    this.set('lm', this.lm);
+    await render(
+      <template>
+        <DetailLearningMaterialsItem
+          @editable={{true}}
+          @lm={{this.lm}}
+          @setManagedMaterial={{(noop)}}
+          @showMeSH={{false}}
+        />
+      </template>,
+    );
+    assert.ok(component.typeIcon.isCitation);
+    assert.strictEqual(component.title, 'test title');
+    assert.strictEqual(component.userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.required.text, 'Yes');
+    assert.strictEqual(component.notes.text, 'Yes');
+    assert.notOk(component.mesh.isVisible);
+    assert.strictEqual(component.status.text, 'status 1');
     assert.ok(component.isNotePublic);
     assert.ok(component.actions.edit.isVisible);
     assert.ok(component.actions.remove.isVisible);
@@ -65,16 +91,42 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
           @editable={{false}}
           @lm={{this.lm}}
           @setManagedMaterial={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );
     assert.ok(component.typeIcon.isCitation);
     assert.strictEqual(component.title, 'test title');
     assert.strictEqual(component.userNameInfo.fullName, '0 guy M. Mc0son');
-    assert.strictEqual(component.required, 'Yes');
-    assert.strictEqual(component.notes, 'Yes');
-    assert.strictEqual(component.mesh, 'descriptor 0 descriptor 1');
-    assert.strictEqual(component.status, 'status 1');
+    assert.strictEqual(component.required.text, 'Yes');
+    assert.strictEqual(component.notes.text, 'Yes');
+    assert.strictEqual(component.mesh.text, 'descriptor 0 descriptor 1');
+    assert.strictEqual(component.status.text, 'status 1');
+    assert.ok(component.isNotePublic);
+    assert.notOk(component.actions.edit.isVisible, 'edit icon is not visible');
+    assert.ok(component.actions.remove.isVisible, 'remove icon is visible');
+    assert.ok(component.actions.remove.isDisabled, 'remove icon is disabled');
+  });
+
+  test('read-only without MeSH UI', async function (assert) {
+    this.set('lm', this.lm);
+    await render(
+      <template>
+        <DetailLearningMaterialsItem
+          @editable={{false}}
+          @lm={{this.lm}}
+          @setManagedMaterial={{(noop)}}
+          @showMeSH={{false}}
+        />
+      </template>,
+    );
+    assert.ok(component.typeIcon.isCitation);
+    assert.strictEqual(component.title, 'test title');
+    assert.strictEqual(component.userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.required.text, 'Yes');
+    assert.strictEqual(component.notes.text, 'Yes');
+    assert.notOk(component.mesh.isVisible);
+    assert.strictEqual(component.status.text, 'status 1');
     assert.ok(component.isNotePublic);
     assert.notOk(component.actions.edit.isVisible, 'edit icon is not visible');
     assert.ok(component.actions.remove.isVisible, 'remove icon is visible');

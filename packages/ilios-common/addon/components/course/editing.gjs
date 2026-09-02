@@ -49,7 +49,12 @@ import DetailCohorts from 'ilios-common/components/detail-cohorts';
         @showMeSH={{@showMeSH}}
       />
     {{/if}}
-    <DetailLearningMaterials @subject={{@course}} @isCourse={{true}} @editable={{@editable}} />
+    <DetailLearningMaterials
+      @subject={{@course}}
+      @isCourse={{true}}
+      @editable={{@editable}}
+      @showMeSH={{@showMeSH}}
+    />
     {{#if (or (eq (get @course.competencies "length") 0) @courseCompetencyDetails)}}
       <DetailCompetencies
         @course={{@course}}

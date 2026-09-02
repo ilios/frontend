@@ -128,6 +128,7 @@ export default class SessionDetailsComponent extends Component {
           @subject={{@session}}
           @isCourse={{false}}
           @editable={{@editable}}
+          @showMeSH={{this.showMeSH}}
         />
         {{#if (or (eq @session.terms.length 0) @sessionTaxonomyDetails)}}
           <DetailTaxonomies

@@ -236,6 +236,7 @@ export default class DetailLearningMaterialsComponent extends Component {
             @editable={{@editable}}
             @closeManager={{this.closeLearningmaterialManager}}
             @learningMaterialStatuses={{this.learningMaterialStatuses}}
+            @showMeSH={{@showMeSH}}
           />
         {{else if this.isSorting}}
           <LearningMaterialsSortManager
@@ -269,6 +270,7 @@ export default class DetailLearningMaterialsComponent extends Component {
                 (gt this.materials.length 10)
                 ' sticky-header'
               }}"
+            data-test-materials
           >
             <thead>
               <tr>
@@ -284,9 +286,11 @@ export default class DetailLearningMaterialsComponent extends Component {
                 <th class="text-center" colspan="2">
                   {{t "general.notes"}}
                 </th>
-                <th class="text-center" colspan="2">
-                  {{t "general.mesh"}}
-                </th>
+                {{#if @showMeSH}}
+                  <th class="text-center" colspan="2">
+                    {{t "general.mesh"}}
+                  </th>
+                {{/if}}
                 <th class="text-center" colspan="2">
                   {{t "general.status"}}
                 </th>
@@ -302,6 +306,7 @@ export default class DetailLearningMaterialsComponent extends Component {
                   @lm={{lm}}
                   @setManagedMaterial={{this.setManagedMaterial}}
                   @remove={{this.remove}}
+                  @showMeSH={{@showMeSH}}
                 />
               {{/each}}
             </tbody>

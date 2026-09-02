@@ -106,21 +106,23 @@ export default class DetailLearningMaterialsItemComponent extends Component {
           </span>
         {{/if}}
       </td>
-      <td class="text-center" colspan="2" data-test-mesh>
-        {{#if this.meshDescriptorsLoaded}}
-          {{#if this.meshDescriptors.length}}
-            <ul>
-              {{#each (sortBy "name" this.meshDescriptors) as |descriptor|}}
-                <li>
-                  {{descriptor.name}}
-                </li>
-              {{/each}}
-            </ul>
-          {{else}}
-            <em>{{t "general.none"}}</em>
+      {{#if @showMeSH}}
+        <td class="text-center" colspan="2" data-test-mesh>
+          {{#if this.meshDescriptorsLoaded}}
+            {{#if this.meshDescriptors.length}}
+              <ul>
+                {{#each (sortBy "name" this.meshDescriptors) as |descriptor|}}
+                  <li>
+                    {{descriptor.name}}
+                  </li>
+                {{/each}}
+              </ul>
+            {{else}}
+              <em>{{t "general.none"}}</em>
+            {{/if}}
           {{/if}}
-        {{/if}}
-      </td>
+        </td>
+      {{/if}}
       <td class="text-center" colspan="2">
         <span data-test-status>
           {{@lm.learningMaterial.status.title}}

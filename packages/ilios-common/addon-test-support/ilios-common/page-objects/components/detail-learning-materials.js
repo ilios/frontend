@@ -32,7 +32,11 @@ const definition = {
   canCollapse: isVisible('.detail-learningmaterials-actions .collapse-button'),
   canSort: isVisible('[data-test-sort-button]'),
   sort: clickable('[data-test-sort-button]'),
-  current: collection('[data-test-detail-learning-materials-item]', items),
+  materials: {
+    scope: '[data-test-materials]',
+    headers: collection('th'),
+    items: collection('[data-test-detail-learning-materials-item]', items),
+  },
   newLearningMaterial,
   manager: {
     scope: '.learningmaterial-manager',

@@ -745,14 +745,15 @@ export default class LearningmaterialManagerComponent extends Component {
               </div>
             </div>
           </div>
-
-          <MeshManager
-            @terms={{this.terms}}
-            @editable={{@editable}}
-            @add={{this.addTerm}}
-            @remove={{this.removeTerm}}
-            @targetItemTitle={{this.title}}
-          />
+          {{#if @showMeSH}}
+            <MeshManager
+              @terms={{this.terms}}
+              @editable={{@editable}}
+              @add={{this.addTerm}}
+              @remove={{this.removeTerm}}
+              @targetItemTitle={{this.title}}
+            />
+          {{/if}}
           <div class="buttons">
             {{#if @editable}}
               <button
