@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import Ember from 'ember';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
@@ -235,11 +234,11 @@ export default class ManageUsersSummaryComponent extends Component {
   clickUser = task({ drop: true }, async ({ id }) => {
     await this.router.transitionTo('user', id, {
       queryParams: {
-        isManagingBio: Ember.DEFAULT_VALUE,
-        isManagingRoles: Ember.DEFAULT_VALUE,
-        isManagingCohorts: Ember.DEFAULT_VALUE,
-        isManagingIcs: Ember.DEFAULT_VALUE,
-        isManagingSchools: Ember.DEFAULT_VALUE,
+        isManagingBio: false,
+        isManagingRoles: false,
+        isManagingCohorts: false,
+        isManagingIcs: false,
+        isManagingSchools: false,
       },
     });
     this.clear();
