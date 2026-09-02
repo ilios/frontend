@@ -118,11 +118,19 @@ b {
 .add,
 .yes {
   color: light-dark(var(--green), var(--lighter-green));
+
+  &:hover {
+    color: light-dark(var(--light-green), var(--lightest-green));
+  }
 }
 
 .remove,
 .no {
   color: light-dark(var(--red), var(--lighter-red));
+
+  &:hover {
+    color: light-dark(var(--light-red), var(--lightest-red));
+  }
 }
 
 .error,
