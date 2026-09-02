@@ -11,7 +11,6 @@ import add from 'ember-math-helpers/helpers/add';
 import { fn } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
 import PaginationLinks from './pagination-links';
-import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
@@ -214,10 +213,6 @@ class DidYouMean extends Component {
     return this.args.results?.score > 0.03;
   }
 
-  get highlightedSafe() {
-    return htmlSafe(this.args.results.highlighted);
-  }
-
   get href() {
     return this.router.urlFor('search', {
       queryParams: {
@@ -254,7 +249,7 @@ class DidYouMean extends Component {
   <template>
     {{#if this.shouldDisplay}}
       <div class="did-you-mean" {{this.overrideLink}} data-test-did-you-mean>
-        {{t "general.didYouMean" suggestion=this.highlightedSafe href=this.href htmlSafe=true}}
+        {{t "general.didYouMean" suggestion=@results.highlighted href=this.href htmlSafe=true}}
       </div>
     {{/if}}
   </template>
