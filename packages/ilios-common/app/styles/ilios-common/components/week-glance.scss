@@ -82,7 +82,7 @@
       ul,
       ol {
         /* stylelint-disable-next-line property-disallowed-list */
-        line-height: 0.7; // match Session description view
+        line-height: calc(4px + 1ex); // match Session description view
         margin-block-start: 1em;
         margin-block-end: 1em;
       }
