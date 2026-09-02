@@ -11,11 +11,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
     await this.server.create('academic-year');
-    await this.server.create('school-config', {
-      school: this.school,
-      name: 'showMeSH',
-      value: 'true',
-    });
     const cohort = await this.server.create('cohort', { programYear });
     const userRole = (this.learningMaterialUserRole = await this.server.create(
       'learning-material-user-role',
@@ -92,8 +87,18 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('print course mesh terms', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     await visit('/course/1/print');
     assert.dom('[data-test-course-mesh] ul li').hasText('Flux Capacitor');
+  });
+
+  test('print course without MeSH UI', async function (assert) {
+    await visit('/course/1/print');
+    assert.dom('[data-test-course-mesh]').doesNotExist();
   });
 
   test('print course learning materials', async function (assert) {
@@ -171,6 +176,11 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print session objectives', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     const session = await this.server.create('session', {
       course: this.course,
       published: true,
@@ -219,6 +229,11 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print course objectives', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     const competency = await this.server.create('competency', {
       school: this.school,
       title: 'Competency 1',

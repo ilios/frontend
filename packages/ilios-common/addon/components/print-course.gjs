@@ -349,23 +349,25 @@ export default class PrintCourseComponent extends Component {
             </div>
           {{/if}}
         </section>
-        <section class="block" data-test-course-mesh>
-          <div class="title">
-            {{t "general.mesh"}}
-            ({{@course.meshDescriptors.length}})
-          </div>
-          {{#if @course.meshDescriptors.length}}
-            <div class="content">
-              <ul class="inline-list">
-                {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
-                  <li>
-                    {{descriptor.name}}
-                  </li>
-                {{/each}}
-              </ul>
+        {{#if this.showMeSH}}
+          <section class="block" data-test-course-mesh>
+            <div class="title">
+              {{t "general.mesh"}}
+              ({{@course.meshDescriptors.length}})
             </div>
-          {{/if}}
-        </section>
+            {{#if @course.meshDescriptors.length}}
+              <div class="content">
+                <ul class="inline-list">
+                  {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
+                    <li>
+                      {{descriptor.name}}
+                    </li>
+                  {{/each}}
+                </ul>
+              </div>
+            {{/if}}
+          </section>
+        {{/if}}
         {{#each (sortBy "title" this.sessions) as |session|}}
           <PrintCourseSession
             @session={{session}}
