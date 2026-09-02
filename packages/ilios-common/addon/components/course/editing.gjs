@@ -76,7 +76,9 @@ import DetailCohorts from 'ilios-common/components/detail-cohorts';
     {{else}}
       <CollapsedTaxonomies @subject={{@course}} @expand={{fn @setCourseTaxonomyDetails true}} />
     {{/if}}
-    <DetailMesh @subject={{@course}} @isCourse={{true}} @editable={{@editable}} />
+    {{#if @showMeSH}}
+      <DetailMesh @subject={{@course}} @isCourse={{true}} @editable={{@editable}} />
+    {{/if}}
     <DetailCohorts @course={{@course}} @editable={{@editable}} />
   </div>
 </template>

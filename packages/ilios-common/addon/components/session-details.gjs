@@ -143,7 +143,9 @@ export default class SessionDetailsComponent extends Component {
             @expand={{fn @setSessionTaxonomyDetails true}}
           />
         {{/if}}
-        <DetailMesh @subject={{@session}} @isSession={{true}} @editable={{@editable}} />
+        {{#if this.showMeSH}}
+          <DetailMesh @subject={{@session}} @isSession={{true}} @editable={{@editable}} />
+        {{/if}}
         <SessionOfferings
           @session={{@session}}
           @editable={{@editable}}

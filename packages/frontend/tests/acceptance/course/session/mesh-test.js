@@ -7,8 +7,11 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Mesh Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    const school = await this.server.create('school');
-    this.user = await setupAuthentication({ school, administeredSchools: [school] });
+    this.school = await this.server.create('school');
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     await this.server.create('academic-year');
     const trees = await this.server.createList('meshTree', 3);
     const concepts = await this.server.createList('meshConcept', 3);
@@ -27,9 +30,9 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
 
     this.course = await this.server.create('course', {
       year: 2014,
-      school,
+      school: this.school,
     });
-    const sessionType = await this.server.create('session-type', { school });
+    const sessionType = await this.server.create('session-type', { school: this.school });
     this.session = await this.server.create('session', {
       course: this.course,
       meshDescriptors: [descriptor1, descriptor2, descriptors[0]],
@@ -38,6 +41,11 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('list mesh', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     assert.strictEqual(page.details.meshTerms.current[0].title, 'descriptor 0');
@@ -45,7 +53,17 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     assert.strictEqual(page.details.meshTerms.current[2].title, 'descriptor 2');
   });
 
+  test('without MeSH UI', async function (assert) {
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
+    assert.notOk(page.details.meshTerms.isVisible);
+  });
+
   test('manage terms', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     await page.details.meshTerms.manage();
@@ -77,6 +95,11 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('save terms', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     await page.details.meshTerms.manage();
@@ -98,6 +121,11 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('cancel term changes', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     await page.visit({ courseId: this.course.id, sessionId: this.session.id });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     assert.strictEqual(page.details.meshTerms.current[0].title, 'descriptor 0');
