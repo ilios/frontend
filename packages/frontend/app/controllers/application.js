@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { appVersion } from 'frontend/helpers/app-version';
+import config from 'frontend/config/environment';
 
 export default class ApplicationController extends Controller {
   @service apiVersion;
@@ -36,12 +36,7 @@ export default class ApplicationController extends Controller {
   }
 
   get frontendVersionTag() {
-    const version = appVersion(null, { versionOnly: true });
-    if (version) {
-      return `Frontend: v${version}`;
-    }
-
-    return '';
+    return `Frontend: v${config.APP.VERSION}`;
   }
 
   get useFullLayout() {

@@ -1,5 +1,7 @@
 'use strict';
 
+const { version } = require('../package.json');
+
 module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'frontend',
@@ -46,7 +48,9 @@ module.exports = function (environment) {
       },
     },
 
-    APP: {},
+    APP: {
+      VERSION: version,
+    },
   };
 
   if (environment === 'development') {
