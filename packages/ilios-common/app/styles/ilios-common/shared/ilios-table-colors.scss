@@ -6,6 +6,10 @@
   th {
     border-bottom: 1px solid light-dark(var(--lighter-grey), var(--grey));
     background-color: light-dark(var(--white), var(--dark-grey));
+
+    &.sortable:hover {
+      background-color: light-dark(var(--super-light-grey), var(--grey));
+    }
   }
 
   tbody {
