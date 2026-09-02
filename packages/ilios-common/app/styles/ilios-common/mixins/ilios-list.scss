@@ -51,6 +51,27 @@
     margin-top: 10px;
     padding: 0.2em 0.4em 0.2em 0.6em;
     vertical-align: middle;
+
+    // don't double the padding if there is a button inside with its own padding
+    &:has(button) {
+      padding: 0;
+    }
+
+    button {
+      background-color: light-dark(var(--lightest-grey), var(--grey));
+      border-radius: 4px;
+      // inheriting color avoids the blue link color on grey look
+      color: inherit;
+      margin: 0;
+      padding: 0.2em 0.4em 0.2em 0.6em;
+
+      &:hover {
+        background-color: light-dark(
+          var(--super-light-grey),
+          var(--light-grey)
+        );
+      }
+    }
   }
 }
 
