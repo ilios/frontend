@@ -6,7 +6,7 @@ import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
-import { eq, or, not } from 'ember-truth-helpers';
+import { eq, or, not, and } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { LinkTo } from '@ember/routing';
@@ -648,9 +648,9 @@ export default class PublishAllSessionsComponent extends Component {
                         </LinkTo>
                         <PublicationStatus @item={{session}} />
                       </td>
-                      {{#if session.isIndependentLearning}}
+                      {{#if (and session.isIndependentLearning (not session.offerings.length))}}
                         <td data-test-offerings>
-                          {{t "general.notApplicableAbbr"}}
+                          {{t "general.ilm"}}
                         </td>
                       {{else}}
                         {{#if session.offerings.length}}
@@ -839,9 +839,9 @@ export default class PublishAllSessionsComponent extends Component {
                       </LinkTo>
                       <PublicationStatus @item={{session}} />
                     </td>
-                    {{#if session.isIndependentLearning}}
+                    {{#if (and session.isIndependentLearning (not session.offerings.length))}}
                       <td data-test-offerings>
-                        {{t "general.notApplicableAbbr"}}
+                        {{t "general.ilm"}}
                       </td>
                     {{else}}
                       {{#if session.offerings.length}}

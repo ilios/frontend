@@ -7,6 +7,7 @@ import Overview from 'ilios-common/components/session/overview';
 import { LinkTo } from '@ember/routing';
 import { array, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { and, not } from 'ember-truth-helpers';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
@@ -124,9 +125,9 @@ export default class SessionPublicationCheckComponent extends Component {
                 <td data-test-session-title>
                   {{@session.title}}
                 </td>
-                {{#if @session.isIndependentLearning}}
+                {{#if (and @session.isIndependentLearning (not @session.offerings.length))}}
                   <td data-test-offerings>
-                    {{t "general.notApplicableAbbr"}}
+                    {{t "general.ilm"}}
                   </td>
                 {{else}}
                   {{#if @session.offerings.length}}
