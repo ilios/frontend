@@ -292,7 +292,7 @@ general:
   publicationReview: Revisión de Publicación
   publicationStatus: Estado de Publicación
   publish: Publique
-  publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, deja {leaveCount}, y ignore {ignoreCount} sesiónes"
+  publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, deja {leaveCount}, y ignore {ignoreCount, plural, =1 {1 sesión} other {# sesiónes}}"
   publishAll: Publique Todo
   publishCourse: Publique Curso
   publishCourseWithMissingItems: Publique Curso, con {missingItemCount, plural, =1 {1 artículo faltante} other {# artículos faltantes}}
