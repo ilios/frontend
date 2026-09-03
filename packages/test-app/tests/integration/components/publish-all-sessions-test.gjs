@@ -654,4 +654,39 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.ok(component.review.save.isChoice);
     assert.strictEqual(component.review.save.text, 'Publish');
   });
+
+  test('it renders status message correctly when ignoring only 1 session #7406', async function (assert) {
+    const unpublishableSession = await this.server.create('session', {
+      title: 'session 1',
+      published: false,
+    });
+    const course = await this.server.create('course', {
+      sessions: [unpublishableSession],
+    });
+    const store = this.owner.lookup('service:store');
+    this.course = await store.findRecord('course', course.id);
+
+    await render(
+      <template>
+        <PublishAllSessions
+          @course={{this.course}}
+          @expandCompleteSessions={{true}}
+          @expandIncompleteSessions={{true}}
+          @setExpandCompleteSessions={{(noop)}}
+          @setExpandIncompleteSessions={{(noop)}}
+          @sortIncompleteBy={{this.sortColumn}}
+          @setSortIncompleteBy={{(noop)}}
+          @sortCompleteBy={{this.sortColumn}}
+          @setSortCompleteBy={{(noop)}}
+          @sortUnpublishedBy={{this.sortColumn}}
+          @setSortUnpublishedBy={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(
+      component.review.confirmation,
+      'Publish 0, schedule 0, leave 0, and ignore 1 session',
+    );
+  });
 });
