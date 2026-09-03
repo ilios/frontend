@@ -58,21 +58,11 @@
 @mixin main-list-box-header() {
   border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   padding: 0 0 0.5rem;
-  text-align: center;
-
-  @include media.for-laptop-and-up {
-    flex-direction: row;
-    justify-content: space-between;
-  }
 }
 
 @mixin main-list-box-header-actions {
-  @include media.for-laptop-and-up {
-    text-align: right;
-  }
-
   @include media.for-phone-only {
     & > * {
       margin-top: 0.25em;
