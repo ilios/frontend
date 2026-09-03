@@ -292,7 +292,7 @@ general:
   publicationReview: Publication Review
   publicationStatus: Publication Status
   publish: Publish
-  publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, leave {leaveCount}, and ignore {ignoreCount} sessions"
+  publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, leave {leaveCount}, and ignore {ignoreCount, plural, =1 {1 session} other {# sessions}}"
   publishAll: Publish All
   publishCourse: Publish Course
   publishCourseWithMissingItems: Publish Course, with {missingItemCount, plural, =1 {1 item missing} other {# items missing}}

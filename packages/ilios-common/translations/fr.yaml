@@ -292,7 +292,7 @@ general:
   publicationReview: Revue de Publication
   publicationStatus: Statut de Publication
   publish: Publier
-  publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, laissér {leaveCount}, et ignorer des {ignoreCount} séances"
+  publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, laissér {leaveCount}, et ignorer des {ignoreCount, plural, =1 {1 séance} other {# séances}}"
   publishAll: "Publier tout"
   publishCourse: Publier Cours
   publishCourseWithMissingItems: Publier Cours, avec {missingItemCount, plural, =1 {1 objet manquant} other {# objets manquants}}
