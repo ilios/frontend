@@ -173,8 +173,34 @@ export default class ReportsCurriculumHeaderComponent extends Component {
     return window.location.href;
   };
   <template>
-    <div class="reports-curriculum-header" data-test-reports-curriculum-header>
-      <div class="input-buttons">
+    <div
+      class="reports-curriculum-header{{if @showReportResults ' results'}}"
+      data-test-reports-curriculum-header
+    >
+      <div class="selection">
+        {{#unless @showReportResults}}
+          <label data-test-report-selector>
+            <span data-test-report-selector-label>
+              {{t "general.selectCurriculumReportType"}}:
+            </span>
+            <select {{on "change" this.changeSelectedReport}}>
+              <option selected={{isEmpty this.selectedReport}} value>
+                {{t "general.selectPolite"}}
+              </option>
+              {{#each (sortBy "label" this.reportList) as |report|}}
+                <option
+                  value={{report.value}}
+                  selected={{eq report.value this.selectedReport.value}}
+                >
+                  {{report.label}}
+                </option>
+              {{/each}}
+            </select>
+          </label>
+        {{/unless}}
+      </div>
+
+      <div class="actions">
         {{#if (and @countSelectedCourses this.selectedReport)}}
           <CopyButton
             @getClipboardText={{this.getReportUrl}}
@@ -242,44 +268,21 @@ export default class ReportsCurriculumHeaderComponent extends Component {
           {{/if}}
         {{/if}}
       </div>
-      <div class="run">
-        <p>
-          {{#unless @showReportResults}}
-            <label data-test-report-selector>
-              <span data-test-report-selector-label>
-                {{t "general.selectCurriculumReportType"}}:
-              </span>
-              <select {{on "change" this.changeSelectedReport}}>
-                <option selected={{isEmpty this.selectedReport}} value>
-                  {{t "general.selectPolite"}}
-                </option>
-                {{#each (sortBy "label" this.reportList) as |report|}}
-                  <option
-                    value={{report.value}}
-                    selected={{eq report.value this.selectedReport.value}}
-                  >
-                    {{report.label}}
-                  </option>
-                {{/each}}
-              </select>
-            </label>
-          {{/unless}}
-          <div data-test-run-summary>
-            {{#if this.selectedReport}}
-              {{#if @countSelectedCourses}}
-                <div data-test-selected-report-label-summary>
-                  {{t "general.run"}}
-                  {{this.selectedReport.label}}
-                  {{this.selectedReport.summary}}
-                </div>
-              {{else}}
-                <div data-test-selected-report-label-summary>
-                  {{t "general.selectCoursesToRunReport"}}
-                </div>
-              {{/if}}
-            {{/if}}
-          </div>
-        </p>
+
+      <div class="summary" data-test-run-summary>
+        {{#if this.selectedReport}}
+          {{#if @countSelectedCourses}}
+            <div data-test-selected-report-label-summary>
+              {{t "general.run"}}
+              {{this.selectedReport.label}}
+              {{this.selectedReport.summary}}
+            </div>
+          {{else}}
+            <div data-test-selected-report-label-summary>
+              {{t "general.selectCoursesToRunReport"}}
+            </div>
+          {{/if}}
+        {{/if}}
       </div>
     </div>
   </template>
