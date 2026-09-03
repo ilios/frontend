@@ -9,6 +9,7 @@ import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import WeekGlance from 'ilios-common/components/week-glance';
 import formatDate from 'ember-intl/helpers/format-date';
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Integration | Component | week-glance', function (hooks) {
   setupRenderingTest(hooks);
@@ -117,6 +118,10 @@ module('Integration | Component | week-glance', function (hooks) {
     };
   });
 
+  hooks.afterEach(() => {
+    unfreezeDate();
+  });
+
   test('it renders with events', async function (assert) {
     setupUserEvents(this);
     this.set('today', testDate.toJSDate());
@@ -149,6 +154,30 @@ module('Integration | Component | week-glance', function (hooks) {
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test("it highlights today's day", async function (assert) {
+    setupUserEvents(this);
+    freezeDateAt(testDate.plus({ day: 1 }).toJSDate());
+    this.set('today', testDate.toJSDate());
+    this.set('week', testDate.weekNumber);
+
+    await render(
+      <template>
+        <WeekGlance
+          @collapsible={{false}}
+          @collapsed={{false}}
+          @showFullTitle={{true}}
+          @year={{formatDate this.today year="numeric"}}
+          @week={{this.week}}
+        />
+      </template>,
+    );
+
+    const days = this.element.querySelectorAll('[data-test-events-by-date]');
+    assert.strictEqual(days.length, 2);
+    assert.dom(days[0]).doesNotHaveClass('today');
+    assert.dom(days[1]).hasClass('today');
   });
 
   test('it renders blank', async function (assert) {

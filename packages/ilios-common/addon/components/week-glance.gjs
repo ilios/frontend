@@ -120,12 +120,14 @@ export default class WeeklyGlanceComponent extends Component {
     // This transforms the list of events
     // into a map that groups events by the same start date.
     const eventsByDate = new Map();
+    const today = DateTime.now();
     this.nonIlmPreWorkEvents.forEach((event) => {
       const startDate = DateTime.fromISO(event.startDate);
       const date = startDate.toISODate();
       if (!eventsByDate.has(date)) {
         eventsByDate.set(date, {
           events: [],
+          isToday: startDate.hasSame(today, 'day'),
           startDate,
         });
       }
@@ -166,7 +168,7 @@ export default class WeeklyGlanceComponent extends Component {
         {{#if this.eventsLoaded}}
           {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
             {{#each this.nonPreWorkEventsByDay as |date|}}
-              <div class="events-by-date" data-test-events-by-date>
+              <div class="events-by-date{{if date.isToday ' today'}}" data-test-events-by-date>
                 <h3 class="day long" data-test-day>{{formatDate date.startDate weekday="long"}}</h3>
                 <h3 class="day short" data-test-day>{{formatDate
                     date.startDate
