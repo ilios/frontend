@@ -30,6 +30,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
           @editable={{true}}
           @courseObjectives={{(array)}}
           @session={{this.sessionModel}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -37,6 +38,38 @@ module('Integration | Component | session/objective-list-item', function (hooks)
     assert.strictEqual(component.description.text, 'session objective 0');
     assert.strictEqual(component.parents.text, 'Add New');
     assert.strictEqual(component.meshDescriptors.text, 'Add New');
+    assert.ok(component.hasTrashCan);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders without MeSH UI', async function (assert) {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const session = await this.server.create('session', { course });
+    const sessionObjective = await this.server.create('session-objective', {
+      session,
+    });
+    const store = await this.owner.lookup('service:store');
+    const sessionModel = await store.findRecord('session', session.id);
+    const sessionObjectiveModel = await store.findRecord('session-objective', sessionObjective.id);
+    this.set('sessionObjective', sessionObjectiveModel);
+    this.set('sessionModel', sessionModel);
+    await render(
+      <template>
+        <ObjectiveListItem
+          @sessionObjective={{this.sessionObjective}}
+          @editable={{true}}
+          @courseObjectives={{(array)}}
+          @session={{this.sessionModel}}
+          @showMeSH={{false}}
+        />
+      </template>,
+    );
+    assert.notOk(component.hasRemoveConfirmation);
+    assert.strictEqual(component.description.text, 'session objective 0');
+    assert.strictEqual(component.parents.text, 'Add New');
+    assert.notOk(component.meshDescriptors.isVisible);
     assert.ok(component.hasTrashCan);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -59,6 +92,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
           @editable={{true}}
           @courseObjectives={{(array)}}
           @session={{this.sessionModel}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -89,6 +123,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
           @editable={{true}}
           @courseObjectives={{(array)}}
           @session={{this.sessionModel}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -113,6 +148,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
           @editable={{true}}
           @courseObjectives={{(array)}}
           @session={{this.sessionModel}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -139,6 +175,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
           @editable={{true}}
           @courseObjectives={{(array)}}
           @session={{this.sessionModel}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -164,6 +201,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
           @editable={{true}}
           @courseObjectives={{(array)}}
           @session={{this.sessionModel}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -188,6 +226,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
           @editable={{true}}
           @courseObjectives={{(array)}}
           @session={{this.sessionModel}}
+          @showMeSH={{true}}
         />
       </template>,
     );

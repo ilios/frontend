@@ -129,6 +129,7 @@ export default class ProgramYearObjectivesComponent extends Component {
           @editable={{@editable}}
           @expandedObjectiveIds={{@expandedObjectiveIds}}
           @setExpandedObjectiveIds={{@setExpandedObjectiveIds}}
+          @showMeSH={{@showMeSH}}
         />
       </div>
     </section>

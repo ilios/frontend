@@ -7,8 +7,16 @@ module('Integration | Component | program-year/objective-list-loading', function
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    await render(<template><ObjectiveListLoading @count={{9}} /></template>);
+    await render(<template><ObjectiveListLoading @count={{9}} @showMeSH={{true}} /></template>);
 
     assert.dom('.grid-row').exists({ count: 9 });
+    assert.dom('.grid-item').exists({ count: 9 * 5 });
+  });
+
+  test('it renders without MeSH UI', async function (assert) {
+    await render(<template><ObjectiveListLoading @count={{9}} @showMeSH={{false}} /></template>);
+
+    assert.dom('.grid-row').exists({ count: 9 });
+    assert.dom('.grid-item').exists({ count: 9 * 4 });
   });
 });

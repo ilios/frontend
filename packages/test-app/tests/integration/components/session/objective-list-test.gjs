@@ -17,11 +17,13 @@ module('Integration | Component | session/objective-list', function (hooks) {
     const vocabulary = await this.server.create('vocabulary', { school });
     const term1 = await this.server.create('term', { vocabulary, active: true });
     const term2 = await this.server.create('term', { vocabulary });
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     await this.server.create('session-objective', {
       session,
       title: 'Objective A',
       position: 0,
       terms: [term1],
+      meshDescriptors,
     });
     await this.server.create('session-objective', {
       session,
@@ -33,7 +35,9 @@ module('Integration | Component | session/objective-list', function (hooks) {
     this.set('session', sessionModel);
 
     await render(
-      <template><ObjectiveList @editable={{true}} @session={{this.session}} /></template>,
+      <template>
+        <ObjectiveList @editable={{true}} @session={{this.session}} @showMeSH={{true}} />
+      </template>,
     );
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.headers[0].text, 'Description');
@@ -52,13 +56,74 @@ module('Integration | Component | session/objective-list', function (hooks) {
       component.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 1 (inactive)',
     );
+    assert.strictEqual(component.objectives[0].meshDescriptors.list.length, 1);
+    assert.strictEqual(component.objectives[0].meshDescriptors.list[0].title, 'Add New');
     assert.strictEqual(component.objectives[1].description.text, 'Objective A');
     assert.strictEqual(
       component.objectives[1].selectedTerms.list[0].title,
       'Vocabulary 1 (school 0)',
     );
     assert.strictEqual(component.objectives[1].selectedTerms.list[0].terms[0].name, 'term 0');
+    assert.strictEqual(component.objectives[1].meshDescriptors.list.length, 2);
+    assert.strictEqual(component.objectives[1].meshDescriptors.list[0].title, 'descriptor 0');
+    assert.strictEqual(component.objectives[1].meshDescriptors.list[1].title, 'descriptor 1');
 
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders without MeSH UI', async function (assert) {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term1 = await this.server.create('term', { vocabulary, active: true });
+    const term2 = await this.server.create('term', { vocabulary });
+    await this.server.create('session-objective', {
+      session,
+      title: 'Objective A',
+      position: 0,
+      terms: [term1],
+    });
+    await this.server.create('session-objective', {
+      session,
+      title: 'Objective B',
+      position: 0,
+      terms: [term2],
+    });
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    this.set('session', sessionModel);
+
+    await render(
+      <template>
+        <ObjectiveList @editable={{true}} @session={{this.session}} @showMeSH={{false}} />
+      </template>,
+    );
+    assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
+    assert.strictEqual(component.headers[0].text, 'Description');
+    assert.strictEqual(component.headers[1].text, 'Parent Objectives');
+    assert.strictEqual(component.headers[2].text, 'Vocabulary Terms');
+    assert.strictEqual(component.headers[3].text, 'Actions');
+
+    assert.strictEqual(component.objectives.length, 2);
+    assert.strictEqual(component.objectives[0].description.text, 'Objective B');
+    assert.strictEqual(
+      component.objectives[0].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)',
+    );
+    assert.strictEqual(
+      component.objectives[0].selectedTerms.list[0].terms[0].name,
+      'term 1 (inactive)',
+    );
+
+    assert.notOk(component.objectives[0].meshDescriptors.isVisible);
+    assert.strictEqual(component.objectives[1].description.text, 'Objective A');
+    assert.strictEqual(
+      component.objectives[1].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)',
+    );
+    assert.strictEqual(component.objectives[1].selectedTerms.list[0].terms[0].name, 'term 0');
+    assert.notOk(component.objectives[1].meshDescriptors.isVisible);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -70,7 +135,9 @@ module('Integration | Component | session/objective-list', function (hooks) {
     this.set('session', sessionModel);
 
     await render(
-      <template><ObjectiveList @editable={{true}} @session={{this.session}} /></template>,
+      <template>
+        <ObjectiveList @editable={{true}} @session={{this.session}} @showMeSH={{true}} />
+      </template>,
     );
     assert.notOk(component.sortIsVisible);
     assert.strictEqual(component.text, '');
@@ -84,7 +151,9 @@ module('Integration | Component | session/objective-list', function (hooks) {
     this.set('session', sessionModel);
 
     await render(
-      <template><ObjectiveList @editable={{true}} @session={{this.session}} /></template>,
+      <template>
+        <ObjectiveList @editable={{true}} @session={{this.session}} @showMeSH={{true}} />
+      </template>,
     );
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.objectives.length, 1);

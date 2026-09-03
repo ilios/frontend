@@ -122,7 +122,7 @@ export default class CourseObjectivesComponent extends Component {
             @cancel={{this.toggleNewObjectiveEditor}}
           />
         {{/if}}
-        <ObjectiveList @course={{@course}} @editable={{@editable}} />
+        <ObjectiveList @course={{@course}} @editable={{@editable}} @showMeSH={{@showMeSH}} />
       </div>
     </section>
   </template>

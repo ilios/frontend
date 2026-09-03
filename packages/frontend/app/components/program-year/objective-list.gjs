@@ -126,7 +126,7 @@ export default class ProgramYearObjectiveListComponent extends Component {
           {{t "general.downloadCompetencyMap"}}
         </button>
 
-        <div class="grid-row headers" data-test-headers>
+        <div class="grid-row headers{{unless @showMeSH ' no-mesh'}}" data-test-headers>
           <span class="grid-item">
             <button
               type="button"
@@ -147,7 +147,9 @@ export default class ProgramYearObjectiveListComponent extends Component {
           <span class="grid-item" data-test-header>{{t "general.description"}}</span>
           <span class="grid-item" data-test-header>{{t "general.competency"}}</span>
           <span class="grid-item" data-test-header>{{t "general.vocabularyTerms"}}</span>
-          <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
+          {{#if @showMeSH}}
+            <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
+          {{/if}}
           <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
         </div>
         {{#if (isArray this.domainTrees)}}
@@ -159,10 +161,11 @@ export default class ProgramYearObjectiveListComponent extends Component {
               @programYearCompetencies={{this.programYearCompetencies}}
               @expandedObjectiveIds={{@expandedObjectiveIds}}
               @setExpandedObjectiveIds={{@setExpandedObjectiveIds}}
+              @showMeSH={{@showMeSH}}
             />
           {{/each}}
         {{else}}
-          <ObjectiveListLoading @count={{this.programYearObjectiveCount}} />
+          <ObjectiveListLoading @count={{this.programYearObjectiveCount}} @showMeSH={{@showMeSH}} />
         {{/if}}
       {{/if}}
     </div>

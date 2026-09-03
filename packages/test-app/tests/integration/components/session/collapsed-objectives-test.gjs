@@ -39,17 +39,46 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
 
     this.set('session', sessionModel);
     await render(
-      <template><CollapsedObjectives @session={{this.session}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @session={{this.session}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
 
     assert.strictEqual(component.title, 'Objectives (4)');
-    assert.strictEqual(component.objectiveCount, 'There are 4 objectives');
-    assert.strictEqual(component.parentCount, '1 has a parent');
-    assert.strictEqual(component.meshCount, '1 has MeSH');
-    assert.strictEqual(component.termCount, '1 has vocabulary terms');
-
+    assert.strictEqual(component.objectiveCount.text, 'There are 4 objectives');
+    assert.strictEqual(component.parentCount.text, '1 has a parent');
+    assert.strictEqual(component.meshCount.text, '1 has MeSH');
+    assert.strictEqual(component.termCount.text, '1 has vocabulary terms');
     assert.ok(component.parentStatus.partial);
     assert.ok(component.meshStatus.partial);
+    assert.ok(component.termStatus.partial);
+  });
+
+  test('displays summary data without MeSH', async function (assert) {
+    const session = await this.server.create('session', {
+      sessionObjectives: [
+        this.objective,
+        this.objectiveWithMesh,
+        this.objectiveWithCourseObjectives,
+        this.objectiveWithTerms,
+      ],
+    });
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+
+    this.set('session', sessionModel);
+    await render(
+      <template>
+        <CollapsedObjectives @session={{this.session}} @expand={{(noop)}} @showMeSH={{false}} />
+      </template>,
+    );
+
+    assert.strictEqual(component.title, 'Objectives (4)');
+    assert.strictEqual(component.objectiveCount.text, 'There are 4 objectives');
+    assert.strictEqual(component.parentCount.text, '1 has a parent');
+    assert.notOk(component.meshCount.isVisible);
+    assert.strictEqual(component.termCount.text, '1 has vocabulary terms');
+    assert.ok(component.parentStatus.partial);
+    assert.notOk(component.meshStatus.isVisible);
     assert.ok(component.termStatus.partial);
   });
 
@@ -62,7 +91,9 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
       assert.step('click called');
     });
     await render(
-      <template><CollapsedObjectives @session={{this.session}} @expand={{this.click}} /></template>,
+      <template>
+        <CollapsedObjectives @session={{this.session}} @expand={{this.click}} @showMeSH={{true}} />
+      </template>,
     );
 
     assert.strictEqual(component.title, 'Objectives (0)');
@@ -78,7 +109,9 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
 
     this.set('session', sessionModel);
     await render(
-      <template><CollapsedObjectives @session={{this.session}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @session={{this.session}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.complete);
@@ -92,7 +125,9 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
 
     this.set('session', sessionModel);
     await render(
-      <template><CollapsedObjectives @session={{this.session}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @session={{this.session}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.none);
@@ -106,7 +141,9 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
 
     this.set('session', sessionModel);
     await render(
-      <template><CollapsedObjectives @session={{this.session}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @session={{this.session}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.complete);
@@ -120,7 +157,9 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
 
     this.set('session', sessionModel);
     await render(
-      <template><CollapsedObjectives @session={{this.session}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @session={{this.session}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.none);
@@ -134,7 +173,9 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
 
     this.set('session', sessionModel);
     await render(
-      <template><CollapsedObjectives @session={{this.session}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @session={{this.session}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.complete);
@@ -148,7 +189,9 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
 
     this.set('session', sessionModel);
     await render(
-      <template><CollapsedObjectives @session={{this.session}} @expand={{(noop)}} /></template>,
+      <template>
+        <CollapsedObjectives @session={{this.session}} @expand={{(noop)}} @showMeSH={{true}} />
+      </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.none);

@@ -40,11 +40,21 @@ import DetailCohorts from 'ilios-common/components/detail-cohorts';
         @editable={{@editable}}
         @collapse={{fn @setCourseObjectiveDetails false}}
         @expand={{fn @setCourseObjectiveDetails true}}
+        @showMeSH={{@showMeSH}}
       />
     {{else}}
-      <CollapsedObjectives @course={{@course}} @expand={{fn @setCourseObjectiveDetails true}} />
+      <CollapsedObjectives
+        @course={{@course}}
+        @expand={{fn @setCourseObjectiveDetails true}}
+        @showMeSH={{@showMeSH}}
+      />
     {{/if}}
-    <DetailLearningMaterials @subject={{@course}} @isCourse={{true}} @editable={{@editable}} />
+    <DetailLearningMaterials
+      @subject={{@course}}
+      @isCourse={{true}}
+      @editable={{@editable}}
+      @showMeSH={{@showMeSH}}
+    />
     {{#if (or (eq (get @course.competencies "length") 0) @courseCompetencyDetails)}}
       <DetailCompetencies
         @course={{@course}}
@@ -66,7 +76,9 @@ import DetailCohorts from 'ilios-common/components/detail-cohorts';
     {{else}}
       <CollapsedTaxonomies @subject={{@course}} @expand={{fn @setCourseTaxonomyDetails true}} />
     {{/if}}
-    <DetailMesh @subject={{@course}} @isCourse={{true}} @editable={{@editable}} />
+    {{#if @showMeSH}}
+      <DetailMesh @subject={{@course}} @isCourse={{true}} @editable={{@editable}} />
+    {{/if}}
     <DetailCohorts @course={{@course}} @editable={{@editable}} />
   </div>
 </template>

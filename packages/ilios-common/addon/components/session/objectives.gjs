@@ -106,7 +106,7 @@ export default class SessionObjectivesComponent extends Component {
             @cancel={{this.toggleNewObjectiveEditor}}
           />
         {{/if}}
-        <ObjectiveList @session={{@session}} @editable={{@editable}} />
+        <ObjectiveList @session={{@session}} @editable={{@editable}} @showMeSH={{@showMeSH}} />
       </div>
     </section>
   </template>

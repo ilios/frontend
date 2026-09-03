@@ -35,6 +35,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @programYearCompetencies={{(array)}}
           @expandedObjectiveIds={{(array)}}
           @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -42,6 +43,31 @@ module('Integration | Component | program-year/objective-list-item', function (h
     assert.strictEqual(component.description.text, 'program-year objective 0');
     assert.strictEqual(component.competency.text, 'Add New');
     assert.strictEqual(component.meshDescriptors.text, 'Add New');
+    assert.ok(component.isActive);
+    assert.ok(component.canBeRemoved);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders without MeSH UI', async function (assert) {
+    this.set('programYearObjective', this.model);
+    await render(
+      <template>
+        <ObjectiveListItem
+          @programYearObjective={{this.programYearObjective}}
+          @editable={{true}}
+          @domainTrees={{(array)}}
+          @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{false}}
+        />
+      </template>,
+    );
+    assert.notOk(component.hasRemoveConfirmation);
+    assert.strictEqual(component.description.text, 'program-year objective 0');
+    assert.strictEqual(component.competency.text, 'Add New');
+    assert.notOk(component.meshDescriptors.isVisible);
     assert.ok(component.isActive);
     assert.ok(component.canBeRemoved);
     await a11yAudit(this.element);
@@ -57,6 +83,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @editable={{true}}
           @expandedObjectiveIds={{(array)}}
           @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -79,6 +106,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @programYearCompetencies={{(array)}}
           @expandedObjectiveIds={{(array)}}
           @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -97,6 +125,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @programYearCompetencies={{(array)}}
           @expandedObjectiveIds={{(array)}}
           @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -115,6 +144,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @programYearCompetencies={{(array)}}
           @expandedObjectiveIds={{(array)}}
           @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -134,6 +164,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @programYearCompetencies={{(array)}}
           @expandedObjectiveIds={{(array)}}
           @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -152,6 +183,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @programYearCompetencies={{(array)}}
           @expandedObjectiveIds={{(array)}}
           @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -172,6 +204,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @programYearCompetencies={{(array)}}
           @expandedObjectiveIds={{(array)}}
           @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -195,6 +228,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @programYearCompetencies={{(array)}}
           @expandedObjectiveIds={{this.expandedObjectiveIds}}
           @setExpandedObjectiveIds={{this.setExpandedObjectiveIds}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -216,6 +250,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @programYearCompetencies={{(array)}}
           @expandedObjectiveIds={{this.expandedObjectiveIds}}
           @setExpandedObjectiveIds={{this.setExpandedObjectiveIds}}
+          @showMeSH={{true}}
         />
       </template>,
     );
@@ -231,6 +266,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @editable={{true}}
           @expandedObjectiveIds={{(array)}}
           @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{true}}
         />
       </template>,
     );

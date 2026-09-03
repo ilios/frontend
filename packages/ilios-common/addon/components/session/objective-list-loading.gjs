@@ -7,7 +7,9 @@ import random from 'ember-math-helpers/helpers/random';
     <div class="grid-row loading-text loading-shimmer">
       <span class="grid-item">{{truncate (repeat (random 3 10) "ilios rocks") 100}}</span>
       <span class="grid-item">{{repeat (random 1 3) "loading "}}</span>
-      <span class="grid-item">{{repeat (random 1 3) "loading "}}</span>
+      {{#if @showMeSH}}
+        <span class="grid-item">{{repeat (random 1 3) "loading "}}</span>
+      {{/if}}
       <span class="grid-item"></span>
     </div>
   {{/each}}

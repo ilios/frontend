@@ -8,10 +8,18 @@ const definition = {
   },
   expand: clickable('[data-test-title]'),
   headers: collection('thead th'),
-  objectiveCount: text('[data-test-objective-count]'),
-  parentCount: text('[data-test-parent-count]'),
-  meshCount: text('[data-test-mesh-count]'),
-  termCount: text('[data-test-term-count]'),
+  objectiveCount: {
+    scope: '[data-test-objective-count]',
+  },
+  parentCount: {
+    scope: '[data-test-parent-count]',
+  },
+  meshCount: {
+    scope: '[data-test-mesh-count]',
+  },
+  termCount: {
+    scope: '[data-test-term-count]',
+  },
   parentStatus: {
     scope: '[data-test-parent-status] svg',
     complete: hasClass('yes'),

@@ -63,9 +63,15 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
       course,
       programYearObjectives: [programYearObjective],
     });
+    this.school = school;
   });
 
   test('list editable', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await takeScreenshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
@@ -143,6 +149,11 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('list not editable', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await takeScreenshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
@@ -194,7 +205,128 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.ok(page.details.objectives.objectiveList.objectives[2].meshDescriptors.isEmpty);
   });
 
+  test('list editable without MeSH UI', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'false',
+    });
+    await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
+    await takeScreenshot(assert);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0',
+    );
+    assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].competency.competencyTitle,
+      'competency 1',
+    );
+    assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasDomain);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].competency.domainTitle,
+      '(competency 0)',
+    );
+    assert.notOk(page.details.objectives.objectiveList.objectives[0].meshDescriptors.isVisible);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
+      1,
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)',
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
+      'term 0',
+    );
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].description.text,
+      'program-year objective 1',
+    );
+    assert.ok(page.details.objectives.objectiveList.objectives[1].competency.hasCompetency);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].competency.competencyTitle,
+      'competency 3',
+    );
+    assert.notOk(page.details.objectives.objectiveList.objectives[1].competency.hasDomain);
+    assert.notOk(page.details.objectives.objectiveList.objectives[1].meshDescriptors.isVisible);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list.length,
+      1,
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)',
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
+      'term 1 (inactive)',
+    );
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[2].description.text,
+      'program-year objective 2',
+    );
+    assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasCompetency);
+    assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasDomain);
+    assert.notOk(page.details.objectives.objectiveList.objectives[2].meshDescriptors.isVisible);
+    assert.notOk(page.details.objectives.objectiveList.objectives[2].selectedTerms.list.isPresent);
+  });
+
+  test('list not editable without MeSH UI', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'false',
+    });
+    await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
+    await takeScreenshot(assert);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0',
+    );
+    assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].competency.competencyTitle,
+      'competency 1',
+    );
+    assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasDomain);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].competency.domainTitle,
+      '(competency 0)',
+    );
+    assert.notOk(page.details.objectives.objectiveList.objectives[0].meshDescriptors.isVisible);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].description.text,
+      'program-year objective 1',
+    );
+    assert.ok(page.details.objectives.objectiveList.objectives[1].competency.hasCompetency);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].competency.competencyTitle,
+      'competency 3',
+    );
+    assert.notOk(page.details.objectives.objectiveList.objectives[1].competency.hasDomain);
+    assert.notOk(page.details.objectives.objectiveList.objectives[1].meshDescriptors.isVisible);
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[2].description.text,
+      'program-year objective 2',
+    );
+    assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasCompetency);
+    assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasDomain);
+    assert.notOk(page.details.objectives.objectiveList.objectives[2].meshDescriptors.isVisible);
+  });
+
   test('manage MeSH terms', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
@@ -244,6 +376,11 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('save MeSH terms', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
@@ -284,7 +421,12 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     );
   });
 
-  test('cancel changes', async function (assert) {
+  test('cancel MeSH changes', async function (assert) {
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 

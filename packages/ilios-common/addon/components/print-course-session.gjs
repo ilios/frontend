@@ -312,7 +312,7 @@ export default class PrintCourseSessionComponent extends Component {
         </div>
         {{#if this.sessionObjectives.length}}
           <div class="content">
-            <ObjectiveList @session={{@session}} @editable={{false}} />
+            <ObjectiveList @session={{@session}} @editable={{false}} @showMeSH={{@showMeSH}} />
           </div>
         {{/if}}
       </section>
@@ -391,23 +391,25 @@ export default class PrintCourseSessionComponent extends Component {
           </div>
         {{/if}}
       </section>
-      <section class="block" data-test-session-mesh-terms>
-        <div class="title">
-          {{t "general.mesh"}}
-          ({{this.meshDescriptors.length}})
-        </div>
-        {{#if this.meshDescriptors.length}}
-          <div class="content">
-            <ul class="inline-list">
-              {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
-                <li>
-                  {{descriptor.name}}
-                </li>
-              {{/each}}
-            </ul>
+      {{#if @showMeSH}}
+        <section class="block" data-test-session-mesh-terms>
+          <div class="title">
+            {{t "general.mesh"}}
+            ({{this.meshDescriptors.length}})
           </div>
-        {{/if}}
-      </section>
+          {{#if this.meshDescriptors.length}}
+            <div class="content">
+              <ul class="inline-list">
+                {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
+                  <li>
+                    {{descriptor.name}}
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+        </section>
+      {{/if}}
       <section class="block" data-test-session-offerings>
         <div class="title">
           {{t "general.offerings"}}

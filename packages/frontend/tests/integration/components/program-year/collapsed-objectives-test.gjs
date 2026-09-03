@@ -40,18 +40,57 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     this.set('programYear', programYearModel);
     await render(
       <template>
-        <CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
+        <CollapsedObjectives
+          @programYear={{this.programYear}}
+          @expand={{(noop)}}
+          @showMeSH={{true}}
+        />
       </template>,
     );
 
     assert.strictEqual(component.title, 'Objectives (4)');
     assert.ok(component.hasExpandIcon);
-    assert.strictEqual(component.objectiveCount, 'There are 4 objectives');
-    assert.strictEqual(component.parentCount, '1 has a linked competency');
-    assert.strictEqual(component.meshCount, '1 has MeSH');
-    assert.strictEqual(component.termCount, '1 has vocabulary terms');
+    assert.strictEqual(component.objectiveCount.text, 'There are 4 objectives');
+    assert.strictEqual(component.parentCount.text, '1 has a linked competency');
+    assert.strictEqual(component.meshCount.text, '1 has MeSH');
+    assert.strictEqual(component.termCount.text, '1 has vocabulary terms');
     assert.ok(component.parentStatus.partial);
     assert.ok(component.meshStatus.partial);
+    assert.ok(component.termStatus.partial);
+  });
+
+  test('displays summary data without MeSH UI', async function (assert) {
+    const programYear = await this.server.create('program-year', {
+      programYearObjectives: [
+        this.objective,
+        this.objectiveWithMesh,
+        this.objectiveWithCompetency,
+        this.objectiveWithTerms,
+      ],
+    });
+    const programYearModel = await this.owner
+      .lookup('service:store')
+      .findRecord('program-year', programYear.id);
+
+    this.set('programYear', programYearModel);
+    await render(
+      <template>
+        <CollapsedObjectives
+          @programYear={{this.programYear}}
+          @expand={{(noop)}}
+          @showMeSH={{false}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.title, 'Objectives (4)');
+    assert.ok(component.hasExpandIcon);
+    assert.strictEqual(component.objectiveCount.text, 'There are 4 objectives');
+    assert.strictEqual(component.parentCount.text, '1 has a linked competency');
+    assert.notOk(component.meshCount.isVisible);
+    assert.strictEqual(component.termCount.text, '1 has vocabulary terms');
+    assert.ok(component.parentStatus.partial);
+    assert.notOk(component.meshStatus.isVisible);
     assert.ok(component.termStatus.partial);
   });
 
@@ -67,7 +106,11 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     });
     await render(
       <template>
-        <CollapsedObjectives @programYear={{this.programYear}} @expand={{this.click}} />
+        <CollapsedObjectives
+          @programYear={{this.programYear}}
+          @expand={{this.click}}
+          @showMeSH={{true}}
+        />
       </template>,
     );
 
@@ -87,7 +130,11 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     this.set('programYear', programYearModel);
     await render(
       <template>
-        <CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
+        <CollapsedObjectives
+          @programYear={{this.programYear}}
+          @expand={{(noop)}}
+          @showMeSH={{true}}
+        />
       </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
@@ -105,7 +152,11 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     this.set('programYear', programYearModel);
     await render(
       <template>
-        <CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
+        <CollapsedObjectives
+          @programYear={{this.programYear}}
+          @expand={{(noop)}}
+          @showMeSH={{true}}
+        />
       </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
@@ -123,7 +174,11 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     this.set('programYear', programYearModel);
     await render(
       <template>
-        <CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
+        <CollapsedObjectives
+          @programYear={{this.programYear}}
+          @expand={{(noop)}}
+          @showMeSH={{true}}
+        />
       </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
@@ -141,7 +196,11 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     this.set('programYear', programYearModel);
     await render(
       <template>
-        <CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
+        <CollapsedObjectives
+          @programYear={{this.programYear}}
+          @expand={{(noop)}}
+          @showMeSH={{true}}
+        />
       </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');
@@ -159,7 +218,11 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     this.set('programYear', programYearModel);
     await render(
       <template>
-        <CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
+        <CollapsedObjectives
+          @programYear={{this.programYear}}
+          @expand={{(noop)}}
+          @showMeSH={{true}}
+        />
       </template>,
     );
     assert.strictEqual(component.title, 'Objectives (1)');

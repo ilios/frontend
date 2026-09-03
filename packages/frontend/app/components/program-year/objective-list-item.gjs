@@ -264,6 +264,10 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
       rowClasses.push('is-inactive');
     }
 
+    if (!this.args.showMeSH) {
+      rowClasses.push('no-mesh');
+    }
+
     return rowClasses.join(' ');
   }
 
@@ -356,17 +360,17 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
         @isSaving={{this.saveTerms.isRunning}}
         @cancel={{this.cancel}}
       />
-
-      <ObjectiveListItemDescriptors
-        @meshDescriptors={{this.meshDescriptors}}
-        @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
-        @manage={{perform this.manageDescriptors}}
-        @isManaging={{this.isManagingDescriptors}}
-        @save={{perform this.saveDescriptors}}
-        @isSaving={{this.saveDescriptors.isRunning}}
-        @cancel={{this.cancel}}
-      />
-
+      {{#if @showMeSH}}
+        <ObjectiveListItemDescriptors
+          @meshDescriptors={{this.meshDescriptors}}
+          @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+          @manage={{perform this.manageDescriptors}}
+          @isManaging={{this.isManagingDescriptors}}
+          @save={{perform this.saveDescriptors}}
+          @isSaving={{this.saveDescriptors.isRunning}}
+          @cancel={{this.cancel}}
+        />
+      {{/if}}
       <div class="actions grid-item" data-test-actions>
         {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
           {{#if this.saveIsActive.isRunning}}
