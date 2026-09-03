@@ -3,6 +3,10 @@
 .sessions-grid-session-row {
   padding: 0.25rem 0;
 
+  .expand-collapse-control {
+    justify-content: flex-start;
+  }
+
   &.confirm {
     background-color: light-dark(var(--lightest-red), var(--dark-red));
   }
