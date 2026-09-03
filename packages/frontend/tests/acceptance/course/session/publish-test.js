@@ -217,7 +217,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.strictEqual(pubcheck.title, 'Publication Review');
     assert.strictEqual(pubcheck.missingItemsTitle, 'Missing Items (2)');
     assert.strictEqual(pubcheck.sessionTitle, 'session 4');
-    assert.strictEqual(pubcheck.offerings, 'n/a');
+    assert.strictEqual(pubcheck.offerings, 'ILM');
     assert.strictEqual(pubcheck.terms, 'No');
     assert.strictEqual(pubcheck.objectives, 'No');
 
