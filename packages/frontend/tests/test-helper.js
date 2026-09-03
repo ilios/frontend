@@ -11,7 +11,6 @@ import { setupEmberOnerrorValidation } from 'ember-qunit';
 import DefaultAdapter from 'ember-cli-page-object/adapters/rfc268';
 import { setAdapter } from 'ember-cli-page-object/adapters';
 import {
-  setRunOptions,
   setupGlobalA11yHooks,
   setupQUnitA11yAuditToggle,
   setupConsoleLogger,
@@ -24,9 +23,6 @@ QUnit.done(async () => {
 });
 
 setupConsoleLogger();
-setRunOptions({
-  preload: false,
-});
 setupGlobalA11yHooks(() => true);
 setupQUnitA11yAuditToggle(QUnit);
 
