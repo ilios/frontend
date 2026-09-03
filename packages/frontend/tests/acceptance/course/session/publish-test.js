@@ -181,6 +181,53 @@ module('Acceptance | Session - Publish', function (hooks) {
     );
   });
 
+  test('check publish draft ilm session, missing items #7350', async function (assert) {
+    const course = await this.server.create('course', {
+      school: this.school,
+    });
+    const sessionType = await this.server.create('session-type');
+    const ilmSession = await this.server.create('session', {
+      course,
+      sessionType,
+    });
+    await this.server.create('ilm-session', {
+      session: ilmSession,
+      dueDate: DateTime.now().toISO(),
+    });
+    await page.visit({ courseId: course.id, sessionId: ilmSession.id });
+
+    assert.strictEqual(currentURL(), '/courses/2/sessions/5', 'session page url is correct');
+    assert.strictEqual(
+      page.details.overview.publicationMenu.toggle.text,
+      'Not Published',
+      'ilm session published status is correct',
+    );
+
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.publish();
+
+    assert.strictEqual(
+      currentURL(),
+      '/courses/2/sessions/5/publicationcheck',
+      'ilm session publicationcheck url is correct',
+    );
+
+    const pubcheck = pubcheckPage.publicationcheck;
+
+    assert.strictEqual(pubcheck.title, 'Publication Review');
+    assert.strictEqual(pubcheck.missingItemsTitle, 'Missing Items (2)');
+    assert.strictEqual(pubcheck.sessionTitle, 'session 4');
+    assert.strictEqual(pubcheck.offerings, 'ILM');
+    assert.strictEqual(pubcheck.terms, 'No');
+    assert.strictEqual(pubcheck.objectives, 'No');
+
+    assert.ok(pubcheck.publishWithMissingItems);
+    assert.strictEqual(
+      pubcheck.publishWithMissingItems.text,
+      'Publish Session, with 2 items missing',
+    );
+  });
+
   test('check publish draft session, all items set', async function (assert) {
     const course = await this.server.create('course', {
       school: this.school,

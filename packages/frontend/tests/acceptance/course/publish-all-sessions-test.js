@@ -127,7 +127,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[1].title, 'session 1');
     assert.strictEqual(
       page.publishAllSessions.publishedSessions.sessions[1].offerings,
-      'n/a',
+      'Yes (1)',
       '2nd session, an ILM, has correct offerings value',
     );
     assert.strictEqual(page.publishAllSessions.publishedSessions.sessions[1].terms, 'Yes (1)');
