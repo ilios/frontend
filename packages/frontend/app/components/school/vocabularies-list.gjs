@@ -94,7 +94,7 @@ export default class SchoolVocabulariesListComponent extends Component {
                   </td>
                   <td class="text-left text-top" colspan="1">
                     <button
-                      class="link-button{{if
+                      class="link-button manage-button{{if
                           (eq this.showRemovalConfirmationFor vocabulary)
                           ' disabled'
                         }}"
@@ -110,17 +110,13 @@ export default class SchoolVocabulariesListComponent extends Component {
                     >
                       <FaIcon
                         @icon={{faPenToSquare}}
-                        class={{if
-                          (eq this.showRemovalConfirmationFor vocabulary)
-                          "disabled"
-                          "enabled"
-                        }}
+                        class={{if (eq this.showRemovalConfirmationFor vocabulary) "disabled"}}
                       />
                     </button>
                     {{#if (and @canDelete (eq vocabulary.termCount 0))}}
                       <button
                         type="button"
-                        class="link-button{{if
+                        class="link-button delete-button{{if
                             (eq this.showRemovalConfirmationFor vocabulary)
                             ' disabled'
                           }}"
@@ -138,14 +134,14 @@ export default class SchoolVocabulariesListComponent extends Component {
                           class={{if
                             (eq this.showRemovalConfirmationFor vocabulary)
                             "disabled"
-                            "remove enabled"
+                            "remove"
                           }}
                         />
                       </button>
                     {{else}}
                       <button
                         type="button"
-                        class="link-button disabled"
+                        class="link-button delete-button disabled"
                         title={{t "general.canNotDeleteSchoolVocabulary"}}
                         disabled
                         data-test-delete

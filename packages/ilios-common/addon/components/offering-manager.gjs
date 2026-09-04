@@ -266,7 +266,7 @@ export default class OfferingManagerComponent extends Component {
               </button>
               {{#if @editable}}
                 <button
-                  class="link-button remove"
+                  class="link-button remove delete-button"
                   type="button"
                   title={{if
                     this.showRemoveConfirmation

@@ -45,6 +45,7 @@
       @include cm.ilios-button;
 
       &:hover {
+        background-color: light-dark(var(--light-blue), var(--brighter-blue));
         text-decoration: none;
       }
     }

@@ -112,6 +112,10 @@
 
   .fa-copy {
     color: light-dark(var(--green), var(--light-green));
+
+    &:hover {
+      color: light-dark(var(--light-green), var(--lighter-green));
+    }
   }
 
   @include m.for-desktop-and-up {

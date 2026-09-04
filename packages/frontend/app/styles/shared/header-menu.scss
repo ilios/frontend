@@ -70,10 +70,7 @@
         cursor: default;
 
         &:focus {
-          border-color: light-dark(
-            var(--lightest-green),
-            var(--lightest-green)
-          );
+          border-color: light-dark(var(--bright-green), var(--bright-green));
         }
 
         &:hover {

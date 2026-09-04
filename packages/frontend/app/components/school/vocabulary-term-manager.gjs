@@ -233,22 +233,29 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                     {{this.title}}
                   {{/if}}
                 </div>
-                <span class="term-delete">
-                  {{#if (and @canDelete (not this.children.length) (not @term.hasAssociations))}}
+                {{#if (and @canDelete (not this.children.length) (not @term.hasAssociations))}}
+                  <button
+                    type="button"
+                    class="term-delete link-button delete-button"
+                    title={{t "general.remove"}}
+                  >
                     <FaIcon
                       @icon={{faTrash}}
                       class="clickable remove enabled"
                       {{on "click" (perform this.deleteTerm)}}
                       data-test-delete
                     />
-                  {{else}}
-                    <FaIcon
-                      @icon={{faTrash}}
-                      class="disabled"
-                      @title={{t "general.canNotDeleteSchoolVocabularyTerm"}}
-                    />
-                  {{/if}}
-                </span>
+                  </button>
+                {{else}}
+                  <button
+                    type="button"
+                    class="term-delete link-button delete-button disabled"
+                    title={{t "general.canNotDeleteSchoolVocabularyTerm"}}
+                    disabled
+                  >
+                    <FaIcon @icon={{faTrash}} class="disabled" />
+                  </button>
+                {{/if}}
               </div>
               <div class="block is-active" data-test-is-active>
                 <label>

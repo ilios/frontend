@@ -53,6 +53,16 @@ button {
 
 input {
   accent-color: light-dark(var(--blue), var(--bright-blue));
+
+  &::file-selector-button {
+    background-color: light-dark(var(--blue), var(--bright-blue));
+    color: light-dark(var(--white), var(--black));
+    cursor: pointer;
+
+    &:hover {
+      background-color: light-dark(var(--light-blue), var(--brighter-blue));
+    }
+  }
 }
 
 h1 {
@@ -108,11 +118,19 @@ b {
 .add,
 .yes {
   color: light-dark(var(--green), var(--lighter-green));
+
+  &:hover {
+    color: light-dark(var(--light-green), var(--lightest-green));
+  }
 }
 
 .remove,
 .no {
   color: light-dark(var(--red), var(--lighter-red));
+
+  &:hover {
+    color: light-dark(var(--light-red), var(--lightest-red));
+  }
 }
 
 .error,

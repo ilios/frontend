@@ -31,6 +31,8 @@
     }
 
     &:hover {
+      background-color: var(--light-blue);
+      color: var(--white);
       cursor: pointer;
     }
 
@@ -46,5 +48,9 @@
   input:checked + label {
     background-color: light-dark(var(--blue), var(--bright-blue));
     color: light-dark(var(--white), var(--black));
+
+    &:hover {
+      cursor: default;
+    }
   }
 }

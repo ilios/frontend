@@ -16,6 +16,8 @@
     text-shadow: none;
 
     &:hover {
+      background-color: var(--light-blue);
+      color: var(--white);
       cursor: pointer;
       text-decoration: none;
     }

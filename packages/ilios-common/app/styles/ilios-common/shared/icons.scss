@@ -3,13 +3,25 @@
   &.enabled {
     color: light-dark(var(--light-blue), var(--bright-blue));
 
+    &:hover {
+      color: light-dark(var(--bright-blue), var(--brighter-blue));
+    }
+
     &.remove {
       color: light-dark(var(--red), var(--light-red));
+
+      &:hover {
+        color: light-dark(var(--light-red), var(--lighter-red));
+      }
     }
   }
 
   &.disabled {
     color: light-dark(var(--grey), var(--light-grey));
     cursor: default;
+
+    &:hover {
+      color: light-dark(var(--grey), var(--light-grey));
+    }
   }
 }

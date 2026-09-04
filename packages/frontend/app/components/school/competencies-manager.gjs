@@ -50,7 +50,7 @@ export default class SchoolCompetenciesManagerComponent extends Component {
             {{#if (eq obj.competencies.length 0)}}
               <button
                 type="button"
-                class="link-button"
+                class="link-button delete-button"
                 aria-label={{t "general.remove"}}
                 {{on "click" (fn @remove obj.domain)}}
                 data-test-remove-domain
@@ -72,7 +72,7 @@ export default class SchoolCompetenciesManagerComponent extends Component {
                 {{#if (and @canDelete (eq competency.programYearObjectives.length 0))}}
                   <button
                     type="button"
-                    class="link-button"
+                    class="link-button delete-button"
                     aria-label={{t "general.remove"}}
                     {{on "click" (fn @remove competency)}}
                     data-test-remove-competency
