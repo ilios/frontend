@@ -1,0 +1,21 @@
+name: Reset Visual Diff Approval
+
+on:
+  pull_request_target:
+    types:
+      - synchronize
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  remove-approval:
+    if: contains(github.event.pull_request.labels.*.name, 'approve visual diff')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Remove Label
+        run: gh pr edit ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --remove-label "approve visual diff"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
