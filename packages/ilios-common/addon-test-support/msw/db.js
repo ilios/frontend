@@ -1,5 +1,6 @@
 import { Collection } from '@msw/data';
 import { schemas, relationships } from './models.js';
+import 'zod/compile'; // must come before modules that define schemas
 import { z } from 'zod';
 import { camelize } from '@ember/string';
 
