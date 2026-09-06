@@ -12,6 +12,7 @@ export default class AuthenticatedRoute extends Route {
   @service router;
   @service session;
   @service preferences;
+  @service schoolConfig;
 
   @tracked event;
 
@@ -33,9 +34,9 @@ export default class AuthenticatedRoute extends Route {
 
   async afterModel() {
     if (this.session.isAuthenticated) {
-      //preload all the schools, we need these everywhere
+      //preload all the schools and configs
       //this is also done when a user is first authetnicated in app/services/session.js
-      await this.store.findAll('school');
+      await this.schoolConfig.setup();
     }
   }
 

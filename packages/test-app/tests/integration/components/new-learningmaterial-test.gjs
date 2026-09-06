@@ -1,4 +1,5 @@
 import { module, test } from 'qunit';
+import Service from '@ember/service';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import { render } from '@ember/test-helpers';
@@ -13,6 +14,15 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
+  class SchoolConfigMock extends Service {
+    getLearningMaterialAccessibilityRequired() {
+      return false;
+    }
+    getLearningMaterialAccessibilityRequirementsLink() {
+      return false;
+    }
+  }
+
   hooks.beforeEach(async function () {
     this.store = this.owner.lookup('service:store');
     this.school = await this.server.create('school');
@@ -24,6 +34,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     });
     this.courseModel = await this.store.findRecord('course', this.course.id);
     await setupAuthentication({ school: this.school, displayName: 'Clem Chowder' });
+    this.owner.register('service:school-config', SchoolConfigMock);
   });
 
   test('owning user has additional info', async function (assert) {
@@ -191,11 +202,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   });
 
   test('validate accessibility permission enabled', async function (assert) {
-    this.schoolConfig = this.store.createRecord('school-config', {
-      name: 'learningMaterialAccessibilityRequired',
-      value: true,
-      school: this.schoolModel,
-    });
+    const configMock = this.owner.lookup('service:school-config');
+    configMock.getLearningMaterialAccessibilityRequired = () => true;
 
     this.set('type', 'file');
     await render(
@@ -240,11 +248,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   });
 
   test('validate accessibility permission disabled', async function (assert) {
-    this.schoolConfig = this.store.createRecord('school-config', {
-      name: 'learningMaterialAccessibilityRequired',
-      value: false,
-      school: this.schoolModel,
-    });
+    const configMock = this.owner.lookup('service:school-config');
+    configMock.getLearningMaterialAccessibilityRequired = () => false;
 
     this.set('type', 'file');
     await render(
@@ -272,11 +277,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   });
 
   test('validate accessibility requirements link blank', async function (assert) {
-    this.schoolConfig = this.store.createRecord('school-config', {
-      name: 'learningMaterialAccessibilityRequirementsLink',
-      value: '',
-      school: this.schoolModel,
-    });
+    const configMock = this.owner.lookup('service:school-config');
+    configMock.getLearningMaterialAccessibilityRequirementsLink = () => '';
 
     this.set('type', 'file');
     await render(
@@ -299,11 +301,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   });
 
   test('validate accessibility requirements link', async function (assert) {
-    this.schoolConfig = this.store.createRecord('school-config', {
-      name: 'learningMaterialAccessibilityRequirementsLink',
-      value: 'https://iliosproject.org',
-      school: this.schoolModel,
-    });
+    const configMock = this.owner.lookup('service:school-config');
+    configMock.getLearningMaterialAccessibilityRequirementsLink = () => 'https://iliosproject.org';
 
     this.set('type', 'file');
     await render(
