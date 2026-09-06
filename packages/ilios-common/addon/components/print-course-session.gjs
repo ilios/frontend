@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import PublicationStatus from 'ilios-common/components/publication-status';
@@ -14,6 +15,8 @@ import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 
 export default class PrintCourseSessionComponent extends Component {
+  @service schoolConfig;
+
   @cached
   get sessionObjectivesData() {
     return new TrackedAsyncData(this.args.session.sessionObjectives);
@@ -45,15 +48,6 @@ export default class PrintCourseSessionComponent extends Component {
   }
 
   @cached
-  get showAttendanceRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionAttendanceRequired')
-        : false,
-    );
-  }
-
-  @cached
   get courseData() {
     return new TrackedAsyncData(this.args.session.course);
   }
@@ -61,33 +55,6 @@ export default class PrintCourseSessionComponent extends Component {
   @cached
   get schoolData() {
     return new TrackedAsyncData(this.courseData.isResolved ? this.courseData.value.school : null);
-  }
-
-  @cached
-  get showSupplementalData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSupplemental')
-        : false,
-    );
-  }
-
-  @cached
-  get showSpecialAttireRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSpecialAttireRequired')
-        : false,
-    );
-  }
-
-  @cached
-  get showSpecialEquipmentRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSpecialEquipmentRequired')
-        : false,
-    );
   }
 
   get sessionObjectives() {
@@ -115,25 +82,35 @@ export default class PrintCourseSessionComponent extends Component {
   }
 
   get showAttendanceRequired() {
-    return this.showAttendanceRequiredData.isResolved
-      ? this.showAttendanceRequiredData.value
-      : false;
+    if (this.schoolData.isResolved && this.schoolData.value) {
+      return this.schoolConfig.getShowSessionAttendanceRequired(this.schoolData.value.id);
+    }
+
+    return false;
   }
 
   get showSupplemental() {
-    return this.showSupplementalData.isResolved ? this.showSupplementalData.value : false;
+    if (this.schoolData.isResolved && this.schoolData.value) {
+      return this.schoolConfig.getShowSessionSupplemental(this.schoolData.value.id);
+    }
+
+    return false;
   }
 
   get showSpecialAttireRequired() {
-    return this.showSpecialAttireRequiredData.isResolved
-      ? this.showSpecialAttireRequiredData.value
-      : false;
+    if (this.schoolData.isResolved && this.schoolData.value) {
+      return this.schoolConfig.getShowSessionSpecialAttireRequired(this.schoolData.value.id);
+    }
+
+    return false;
   }
 
   get showSpecialEquipmentRequired() {
-    return this.showSpecialEquipmentRequiredData.isResolved
-      ? this.showSpecialEquipmentRequiredData.value
-      : false;
+    if (this.schoolData.isResolved && this.schoolData.value) {
+      return this.schoolConfig.getShowSessionSpecialEquipmentRequired(this.schoolData.value.id);
+    }
+
+    return false;
   }
 
   get uniqueId() {

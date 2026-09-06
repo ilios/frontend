@@ -1,4 +1,5 @@
 import { module, test } from 'qunit';
+import Service from '@ember/service';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'ilios-common/msw';
@@ -10,13 +11,27 @@ module('Integration | Component | school/session-attributes', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
+  class SchoolConfigMock extends Service {
+    getShowSessionSupplemental() {
+      return true;
+    }
+    getShowSessionAttendanceRequired() {
+      return false;
+    }
+    getShowSessionSpecialAttireRequired() {
+      return false;
+    }
+    getShowSessionSpecialEquipmentRequired() {
+      return false;
+    }
+  }
+
+  hooks.beforeEach(function () {
+    this.owner.register('service:school-config', SchoolConfigMock);
+  });
+
   test('it renders collapsed', async function (assert) {
     const school = await this.server.create('school');
-    await this.server.create('school-config', {
-      name: 'showSessionSupplemental',
-      value: true,
-      school,
-    });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(
@@ -39,11 +54,6 @@ module('Integration | Component | school/session-attributes', function (hooks) {
 
   test('it renders expanded', async function (assert) {
     const school = await this.server.create('school');
-    await this.server.create('school-config', {
-      name: 'showSessionSupplemental',
-      value: true,
-      school,
-    });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(

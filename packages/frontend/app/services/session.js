@@ -10,6 +10,7 @@ export default class SessionService extends ESASessionService {
   @service store;
   @service router;
   @service preferences;
+  @service schoolConfig;
 
   setup(useTheEphemeralStore) {
     if (!isTesting()) {
@@ -31,9 +32,9 @@ export default class SessionService extends ESASessionService {
       }
     }
     const user = await this.currentUser.getModel();
-    //preload all the schools, we need these everywhere
+    //preload all the schools and configs, we need these everywhere
     //this is also done for authenticated users in the Application Route
-    await this.store.findAll('school');
+    await this.schoolConfig.setup();
     await this.preferences.setup();
     Sentry.setUser({ id: user.id });
   }

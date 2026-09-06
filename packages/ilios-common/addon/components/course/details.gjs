@@ -20,6 +20,7 @@ import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 export default class CourseDetailsComponent extends Component {
   @service router;
   @service iliosConfig;
+  @service schoolConfig;
 
   @cached
   get academicYearCrossesCalendarYearBoundariesData() {
@@ -47,43 +48,16 @@ export default class CourseDetailsComponent extends Component {
     this.args.setShowDetails(false);
   }
 
-  @cached
-  get schoolConfigsData() {
-    return new TrackedAsyncData(this.getSchoolConfigs(this.args.course));
-  }
-
-  async getSchoolConfigs(course) {
-    const school = await course.school;
-    return await school.configurations;
-  }
-
-  @cached
-  get schoolConfigs() {
-    const rhett = new Map();
-    if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, config.parsedValue);
-      });
-    }
-    return rhett;
-  }
-
   get showMeSH() {
-    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
-  }
-
-  get configLoaded() {
-    return (
-      this.academicYearCrossesCalendarYearBoundariesData.isResolved &&
-      this.schoolConfigsData.isResolved
-    );
+    const schoolId = this.args.course.belongsTo('school').id();
+    return this.schoolConfig.getShowMeSH(schoolId);
   }
 
   get notRolloverRoute() {
     return this.router.currentRouteName !== 'course.rollover';
   }
   <template>
-    {{#if this.configLoaded}}
+    {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
       {{pageTitle "Courses | " @course.title " " this.academicYearDisplay}}
       <BackToCourses @course={{@course}} />
 

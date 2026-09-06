@@ -36,6 +36,7 @@ export default class SessionOverviewComponent extends Component {
   @service permissionChecker;
   @service intl;
   @service store;
+  @service schoolConfig;
 
   @tracked localInstructionalNotes;
   @tracked localDescription;
@@ -94,62 +95,20 @@ export default class SessionOverviewComponent extends Component {
     return this.sessionTypesData.value;
   }
 
-  @cached
-  get showAttendanceRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionAttendanceRequired')
-        : false,
-    );
-  }
-
-  @cached
-  get showSupplementalData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSupplemental')
-        : false,
-    );
-  }
-
-  @cached
-  get showSpecialAttireRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSpecialAttireRequired')
-        : false,
-    );
-  }
-
-  @cached
-  get showSpecialEquipmentRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSpecialEquipmentRequired')
-        : false,
-    );
-  }
-
   get showAttendanceRequired() {
-    return this.showAttendanceRequiredData.isResolved
-      ? this.showAttendanceRequiredData.value
-      : false;
+    return this.schoolConfig.getShowSessionAttendanceRequired(this.schoolData.value.id);
   }
 
   get showSupplemental() {
-    return this.showSupplementalData.isResolved ? this.showSupplementalData.value : false;
+    return this.schoolConfig.getShowSessionSupplemental(this.schoolData.value.id);
   }
 
   get showSpecialAttireRequired() {
-    return this.showSpecialAttireRequiredData.isResolved
-      ? this.showSpecialAttireRequiredData.value
-      : false;
+    return this.schoolConfig.getShowSessionSpecialAttireRequired(this.schoolData.value.id);
   }
 
   get showSpecialEquipmentRequired() {
-    return this.showSpecialEquipmentRequiredData.isResolved
-      ? this.showSpecialEquipmentRequiredData.value
-      : false;
+    return this.schoolConfig.getShowSessionSpecialEquipmentRequired(this.schoolData.value.id);
   }
 
   @cached
@@ -227,10 +186,8 @@ export default class SessionOverviewComponent extends Component {
     return (
       this.sessionTypesData.isResolved &&
       this.sessionTypeData.isResolved &&
-      this.showAttendanceRequiredData.isResolved &&
-      this.showSupplementalData.isResolved &&
-      this.showSpecialAttireRequiredData.isResolved &&
-      this.showSpecialEquipmentRequiredData.isResolved &&
+      this.schoolData.isResolved &&
+      this.schoolData.value &&
       this.showCopyData.isResolved
     );
   }

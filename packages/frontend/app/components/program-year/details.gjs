@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+import { service } from '@ember/service';
 import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
 import { fn } from '@ember/helper';
 import LeadershipCollapsed from 'ilios-common/components/leadership-collapsed';
@@ -16,38 +17,32 @@ import CourseAssociations from './course-associations';
 import CohortMembers from './cohort-members';
 
 export default class ProgramYearDetailsComponent extends Component {
-  @cached
-  get schoolConfigsData() {
-    return new TrackedAsyncData(this.getSchoolConfigs(this.args.programYear));
-  }
+  @service schoolConfig;
 
-  async getSchoolConfigs(programYear) {
-    const program = await programYear.program;
-    const school = await program.school;
-    return await school.configurations;
+  @cached
+  get programData() {
+    return new TrackedAsyncData(this.args.programYear.program);
   }
 
   @cached
-  get schoolConfigs() {
-    const rhett = new Map();
-    if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, config.parsedValue);
-      });
+  get schoolData() {
+    if (this.programData.isResolved) {
+      return new TrackedAsyncData(this.programData.value.school);
     }
-    return rhett;
+
+    return null;
   }
 
-  get schoolConfigsLoaded() {
-    return this.schoolConfigsData.isResolved;
+  get schoolLoaded() {
+    return this.schoolData?.isResolved;
   }
 
   get showMeSH() {
-    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
+    return this.schoolConfig.getShowMeSH(this.schoolData.value.id);
   }
 
   <template>
-    {{#if this.schoolConfigsLoaded}}
+    {{#if this.schoolLoaded}}
       <div class="programyear-details" data-test-program-year-details ...attributes>
         {{#if @programYearLeadershipDetails}}
           <LeadershipExpanded

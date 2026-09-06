@@ -1,90 +1,71 @@
 import Component from '@glimmer/component';
-import { cached } from '@glimmer/tracking';
+import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { TrackedAsyncData } from 'ember-async-data';
-import { or } from 'ember-truth-helpers';
-import perform from 'ember-concurrency/helpers/perform';
 import SessionAttributesCollapsed from './session-attributes-collapsed';
 import SessionAttributesExpanded from './session-attributes-expanded';
 
 export default class SchoolSessionAttributesComponent extends Component {
-  schoolConfigNames = [
-    'showSessionAttendanceRequired',
-    'showSessionSupplemental',
-    'showSessionSpecialAttireRequired',
-    'showSessionSpecialEquipmentRequired',
-  ];
-
-  @cached
-  get schoolConfigsData() {
-    return new TrackedAsyncData(this.args.school.configurations);
-  }
-
-  @cached
-  get schoolConfigs() {
-    const rhett = new Map();
-    if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, config.parsedValue);
-      });
-    }
-    return rhett;
-  }
+  @service schoolConfig;
 
   get showSessionAttendanceRequired() {
-    return this.schoolConfigs.get('showSessionAttendanceRequired') || null;
+    return this.schoolConfig.getShowSessionAttendanceRequired(this.args.school.id);
   }
   get showSessionSupplemental() {
-    return this.schoolConfigs.get('showSessionSupplemental') || null;
+    return this.schoolConfig.getShowSessionSupplemental(this.args.school.id);
   }
   get showSessionSpecialAttireRequired() {
-    return this.schoolConfigs.get('showSessionSpecialAttireRequired') || null;
+    return this.schoolConfig.getShowSessionSpecialAttireRequired(this.args.school.id);
   }
   get showSessionSpecialEquipmentRequired() {
-    return this.schoolConfigs.get('showSessionSpecialEquipmentRequired') || null;
+    return this.schoolConfig.getShowSessionSpecialEquipmentRequired(this.args.school.id);
   }
 
   save = task({ drop: true }, async (newValues) => {
     try {
-      const needToSave = await Promise.all(
-        this.schoolConfigNames.map((name) => {
-          const value = newValues[name];
-          if (value !== null) {
-            return this.args.school.setConfigValue(name, value);
-          }
-        }),
+      await this.schoolConfig.setShowSessionAttendanceRequired(
+        this.args.school.id,
+        newValues.showSessionAttendanceRequired ?? false,
+      );
+      await this.schoolConfig.setShowSessionSupplemental(
+        this.args.school.id,
+        newValues.showSessionSupplemental ?? false,
+      );
+      await this.schoolConfig.setShowSessionSpecialAttireRequired(
+        this.args.school.id,
+        newValues.showSessionSpecialAttireRequired ?? false,
+      );
+      await this.schoolConfig.setShowSessionSpecialEquipmentRequired(
+        this.args.school.id,
+        newValues.showSessionSpecialEquipmentRequired ?? false,
       );
 
-      const toSave = needToSave.filter(Boolean);
-      await Promise.all(toSave.map((o) => o.save()));
+      await this.schoolConfig.save();
     } finally {
       this.args.manage(false);
     }
   });
   <template>
     <div class="school-session-attributes" data-test-school-session-attributes ...attributes>
-      {{#if (or this.schoolConfigsData.isResolved this.save.isRunning)}}
-        {{#if @details}}
-          <SessionAttributesExpanded
-            @canUpdate={{@canUpdate}}
-            @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-            @showSessionSupplemental={{this.showSessionSupplemental}}
-            @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-            @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-            @collapse={{@collapse}}
-            @isManaging={{@isManaging}}
-            @manage={{@manage}}
-            @saveAll={{perform this.save}}
-          />
-        {{else}}
-          <SessionAttributesCollapsed
-            @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-            @showSessionSupplemental={{this.showSessionSupplemental}}
-            @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-            @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-            @expand={{@expand}}
-          />
-        {{/if}}
+      {{#if @details}}
+        <SessionAttributesExpanded
+          @canUpdate={{@canUpdate}}
+          @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+          @showSessionSupplemental={{this.showSessionSupplemental}}
+          @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+          @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+          @collapse={{@collapse}}
+          @isManaging={{@isManaging}}
+          @manage={{@manage}}
+          @saveAll={{this.save.perform}}
+        />
+      {{else}}
+        <SessionAttributesCollapsed
+          @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+          @showSessionSupplemental={{this.showSessionSupplemental}}
+          @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+          @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+          @expand={{@expand}}
+        />
       {{/if}}
     </div>
   </template>
