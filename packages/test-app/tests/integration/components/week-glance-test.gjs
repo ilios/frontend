@@ -118,10 +118,6 @@ module('Integration | Component | week-glance', function (hooks) {
     };
   });
 
-  hooks.afterEach(() => {
-    unfreezeDate();
-  });
-
   test('it renders with events', async function (assert) {
     setupUserEvents(this);
     this.set('today', testDate.toJSDate());
@@ -178,6 +174,7 @@ module('Integration | Component | week-glance', function (hooks) {
     assert.strictEqual(days.length, 2);
     assert.dom(days[0]).doesNotHaveClass('today');
     assert.dom(days[1]).hasClass('today');
+    unfreezeDate();
   });
 
   test('it renders blank', async function (assert) {
