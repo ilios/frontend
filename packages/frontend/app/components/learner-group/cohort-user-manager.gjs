@@ -99,10 +99,10 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
         ...attributes
       >
         <div class="learner-group-cohort-user-manager-header">
-          <div class="title" data-test-title>
+          <h2 class="title" data-test-title>
             {{t "general.cohortMembersNotInGroup" groupTitle=@learnerGroupTitle}}
             ({{@users.length}})
-          </div>
+          </h2>
           {{#if @users.length}}
             <div class="actions">
               <input

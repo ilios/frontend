@@ -620,7 +620,7 @@ export default class LearnerGroupRootComponent extends Component {
             />
           {{/if}}
           <div class="learner-group-overview-actions" data-test-overview-actions>
-            <div class="title" data-test-title>
+            <h2 class="title" data-test-title>
               {{#if @isEditing}}
                 {{t "general.manageGroupMembership"}}
               {{else if @isBulkAssigning}}
@@ -629,7 +629,7 @@ export default class LearnerGroupRootComponent extends Component {
                 {{t "general.members"}}
                 ({{this.usersForMembersList.length}})
               {{/if}}
-            </div>
+            </h2>
             <div class="actions" data-test-buttons>
               {{#if this.usersForMembersList.length}}
                 <input
