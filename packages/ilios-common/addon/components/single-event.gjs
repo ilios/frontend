@@ -17,7 +17,6 @@ import formatDate from 'ember-intl/helpers/format-date';
 import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
-import add from 'ember-math-helpers/helpers/add';
 import SingleEventLearningmaterialList from 'ilios-common/components/single-event-learningmaterial-list';
 import SingleEventObjectiveList from 'ilios-common/components/single-event-objective-list';
 import NotFound from 'ilios-common/components/not-found';
@@ -229,6 +228,10 @@ export default class SingleEventComponent extends Component {
 
   get sessionDescription() {
     return htmlSafe(this.args.event.sessionDescription);
+  }
+
+  get totalSessionMaterialsCount() {
+    return this.sessionLearningMaterials.length + this.preworkMaterials.length;
   }
 
   @action
@@ -460,8 +463,8 @@ export default class SingleEventComponent extends Component {
               aria-expanded={{if this.isSessionMaterialsListExpanded "true" "false"}}
               aria-label={{if
                 this.isSessionMaterialsListExpanded
-                (t "general.hideSessionMaterials")
-                (t "general.showSessionMaterials")
+                (t "general.hideSessionMaterials" count=this.totalSessionMaterialsCount)
+                (t "general.showSessionMaterials" count=this.totalSessionMaterialsCount)
               }}
               type="button"
               {{on
@@ -473,7 +476,7 @@ export default class SingleEventComponent extends Component {
               data-test-expand-collapse
             >
               {{t "general.materials"}}
-              ({{add this.sessionLearningMaterials.length this.preworkMaterials.length}})
+              ({{this.totalSessionMaterialsCount}})
               <FaIcon @icon={{if this.isSessionMaterialsListExpanded faCaretDown faCaretRight}} />
             </button>
             {{#if (and @event.isUserEvent this.userIsStudent)}}
@@ -501,8 +504,8 @@ export default class SingleEventComponent extends Component {
             @listByPriorityPhrase={{t "general.listByPriority"}}
             @objectives={{this.sessionObjectives}}
             @title={{t "general.objectives"}}
-            @ariaLabelShow={{t "general.showObjectives"}}
-            @ariaLabelHide={{t "general.hideObjectives"}}
+            @ariaLabelShow={{t "general.showObjectives" count=this.sessionObjectives.length}}
+            @ariaLabelHide={{t "general.hideObjectives" count=this.sessionObjectives.length}}
             @isExpandedByDefault={{true}}
           />
         </div>
@@ -513,8 +516,8 @@ export default class SingleEventComponent extends Component {
               aria-expanded={{if this.isCourseMaterialsListExpanded "true" "false"}}
               aria-label={{if
                 this.isCourseMaterialsListExpanded
-                (t "general.hideCourseMaterials")
-                (t "general.showCourseMaterials")
+                (t "general.hideCourseMaterials" count=this.courseLearningMaterials.length)
+                (t "general.showCourseMaterials" count=this.courseLearningMaterials.length)
               }}
               type="button"
               {{on
@@ -538,8 +541,8 @@ export default class SingleEventComponent extends Component {
             @listByPriorityPhrase={{t "general.listByPriority"}}
             @objectives={{this.courseObjectives}}
             @title={{t "general.courseObjectives"}}
-            @ariaLabelShow={{t "general.showCourseObjectives"}}
-            @ariaLabelHide={{t "general.hideCourseObjectives"}}
+            @ariaLabelShow={{t "general.showCourseObjectives" count=this.courseObjectives.length}}
+            @ariaLabelHide={{t "general.hideCourseObjectives" count=this.courseObjectives.length}}
             @isExpandedByDefault={{false}}
           />
         </div>
