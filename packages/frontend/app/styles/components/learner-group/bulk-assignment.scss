@@ -64,4 +64,8 @@
       margin-top: 1rem;
     }
   }
+
+  table caption {
+    @include m.ilios-heading-h5;
+  }
 }
