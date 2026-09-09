@@ -30,8 +30,6 @@ module('Integration | Component | ilios calendar single event objective list', f
           @groupByCompetenciesPhrase={{this.groupByCompetenciesPhrase}}
           @listByPriorityPhrase={{this.listByPriorityPhrase}}
           @title={{this.title}}
-          @ariaLabelShow="Show objectives"
-          @ariaLabelHide="Hide objectives"
           @isExpandedByDefault={{true}}
         />
       </template>,
@@ -39,7 +37,6 @@ module('Integration | Component | ilios calendar single event objective list', f
 
     assert.strictEqual(component.title.expandCollapseSwitcher.text, 'Course Objectives (2)');
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaExpanded, 'true');
-    assert.strictEqual(component.title.expandCollapseSwitcher.ariaLabel, 'Hide objectives');
     assert.strictEqual(component.title.displayModeSwitcher.title, listByPriorityPhrase);
     assert.ok(component.title.displayModeSwitcher.isListMode);
     assert.ok(component.tree.isVisible);
@@ -115,17 +112,11 @@ module('Integration | Component | ilios calendar single event objective list', f
 
     await render(
       <template>
-        <SingleEventObjectiveList
-          @objectives={{this.objectives}}
-          @isExpandedByDefault={{false}}
-          @ariaLabelShow="Show objectives"
-          @ariaLabelHide="Hide objectives"
-        />
+        <SingleEventObjectiveList @objectives={{this.objectives}} @isExpandedByDefault={{false}} />
       </template>,
     );
     await takeComponentScreenshot(assert);
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaExpanded, 'false');
-    assert.strictEqual(component.title.expandCollapseSwitcher.ariaLabel, 'Show objectives');
     assert.ok(component.title.displayModeSwitcher.isDisabled);
     assert.notOk(component.tree.isVisible);
     assert.notOk(component.noContent.isVisible);
