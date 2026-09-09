@@ -154,11 +154,7 @@ general:
   groups: Grupos
   hasPrework: Tiene pre Trabajo
   hideCalendar: Esconda Calendario
-  hideCourseMaterials: Ocultar materiales del curso {count}
-  hideCourseObjectives: Ocultar objetivos del curso {count}
   hideFilters: Esconde Filtros
-  hideObjectives: Ocultar objetivos {count}
-  hideSessionMaterials: Ocultar materiales de sesión {count}
   hour: Hora
   hours: Horas
   htmlEditor:
@@ -338,15 +334,11 @@ general:
   sessionTypesFor: "Tipos de Sesiones para {subject}"
   showAllMyActivities: Mostrar todas mis actividades
   showCalendar: Muestre Calendario
-  showCourseMaterials: Mostrar materiales del curso {count}
-  showCourseObjectives: Mostrar objetivos del curso {count}
   showFilters: Enseñe Filtros
   showLearnerGroupEvents: Mostrar todos los eventos para grupos de alumnos asignados
   showMore: Mostrar más
   showNotesToStudents: Mostrar Notas a Los Estudiantes
-  showObjectives: Mostrar objetivos {count}
   showSessionEvents: "Mostrar todos los '<em>'{sessionTitle}'</em>' eventos"
-  showSessionMaterials: Mostrar materiales de la sesión {count}
   smallGroups: Grupos Pequeños
   sortMaterials: Clasificar los materiales
   showOnlyMyAdminActivities: Mostrar solo mis actividades de administrador

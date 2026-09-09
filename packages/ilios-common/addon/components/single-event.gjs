@@ -461,11 +461,6 @@ export default class SingleEventComponent extends Component {
             <button
               class="expand-collapse-toggle-btn"
               aria-expanded={{if this.isSessionMaterialsListExpanded "true" "false"}}
-              aria-label={{if
-                this.isSessionMaterialsListExpanded
-                (t "general.hideSessionMaterials" count=this.totalSessionMaterialsCount)
-                (t "general.showSessionMaterials" count=this.totalSessionMaterialsCount)
-              }}
               type="button"
               {{on
                 "click"
@@ -504,8 +499,6 @@ export default class SingleEventComponent extends Component {
             @listByPriorityPhrase={{t "general.listByPriority"}}
             @objectives={{this.sessionObjectives}}
             @title={{t "general.objectives"}}
-            @ariaLabelShow={{t "general.showObjectives" count=this.sessionObjectives.length}}
-            @ariaLabelHide={{t "general.hideObjectives" count=this.sessionObjectives.length}}
             @isExpandedByDefault={{true}}
           />
         </div>
@@ -514,11 +507,6 @@ export default class SingleEventComponent extends Component {
             <button
               class="expand-collapse-toggle-btn"
               aria-expanded={{if this.isCourseMaterialsListExpanded "true" "false"}}
-              aria-label={{if
-                this.isCourseMaterialsListExpanded
-                (t "general.hideCourseMaterials" count=this.courseLearningMaterials.length)
-                (t "general.showCourseMaterials" count=this.courseLearningMaterials.length)
-              }}
               type="button"
               {{on
                 "click"
@@ -541,8 +529,6 @@ export default class SingleEventComponent extends Component {
             @listByPriorityPhrase={{t "general.listByPriority"}}
             @objectives={{this.courseObjectives}}
             @title={{t "general.courseObjectives"}}
-            @ariaLabelShow={{t "general.showCourseObjectives" count=this.courseObjectives.length}}
-            @ariaLabelHide={{t "general.hideCourseObjectives" count=this.courseObjectives.length}}
             @isExpandedByDefault={{false}}
           />
         </div>
