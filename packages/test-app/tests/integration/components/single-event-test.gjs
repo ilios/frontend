@@ -131,7 +131,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     );
     assert.strictEqual(
       component.sessionObjectives.objectiveList.title.expandCollapseSwitcher.ariaLabel,
-      'Hide objectives',
+      'Hide objectives 3',
     );
     assert.strictEqual(
       component.sessionLearningMaterials.expandCollapseSwitcher.ariaExpanded,
@@ -139,7 +139,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     );
     assert.strictEqual(
       component.sessionLearningMaterials.expandCollapseSwitcher.ariaLabel,
-      'Hide session materials',
+      'Hide session materials 2',
     );
     assert.strictEqual(
       component.sessionLearningMaterials.expandCollapseSwitcher.text,
@@ -151,7 +151,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     );
     assert.strictEqual(
       component.courseObjectives.objectiveList.title.expandCollapseSwitcher.ariaLabel,
-      'Show course objectives',
+      'Show course objectives 3',
     );
     assert.strictEqual(
       component.courseLearningMaterials.expandCollapseSwitcher.ariaExpanded,
@@ -159,7 +159,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     );
     assert.strictEqual(
       component.courseLearningMaterials.expandCollapseSwitcher.ariaLabel,
-      'Show course materials',
+      'Show course materials 0',
     );
     assert.strictEqual(
       component.courseLearningMaterials.expandCollapseSwitcher.text,
