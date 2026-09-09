@@ -482,8 +482,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.8(prettier@3.9.6)(supports-color@8.1.1)
       query-string:
-        specifier: ^9.1.0
-        version: 9.5.0
+        specifier: ^9.5.1
+        version: 9.5.1
       quill:
         specifier: ^2.0.3
         version: 2.0.3
@@ -692,8 +692,8 @@ importers:
         specifier: ^5.4.1
         version: 5.7.0
       query-string:
-        specifier: '>= 9.1.0'
-        version: 9.5.0
+        specifier: '>= 9.5.1'
+        version: 9.5.1
       quill:
         specifier: ^2.0.3
         version: 2.0.3
@@ -1512,8 +1512,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.8(prettier@3.9.6)(supports-color@8.1.1)
       query-string:
-        specifier: '>= 9.1.0'
-        version: 9.5.0
+        specifier: '>= 9.5.1'
+        version: 9.5.1
       quill:
         specifier: ^2.0.3
         version: 2.0.3
@@ -4203,6 +4203,7 @@ packages:
 
   charm@1.0.2:
     resolution: {integrity: sha512-wqW3VdPnlSWT4eRiYX+hcs+C6ViBPUWk1qTCd+37qw9kEm/a5n2qcyQDMBWvSYKN/ctqZzeXNQaeBjOetJJUkw==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   cheerio@0.22.0:
     resolution: {integrity: sha512-8/MzidM6G/TgRelkzDG13y3Y9LxBjCb+8yOEZ9+wwq5gVF2w2pV0wmHvjfT0RvuxGyR7UEuK36r+yYMbT4uKgA==}
@@ -8278,8 +8279,8 @@ packages:
     resolution: {integrity: sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==}
     engines: {node: '>=0.6'}
 
-  query-string@9.5.0:
-    resolution: {integrity: sha512-YlJmwNyi0RGYjlxYcuDncMsxFU7YyutbuI7gTm8ySxIGBlwx5yiBCOD5ig9ZNoHkawk/1Dey0N5mEfcUybMVAA==}
+  query-string@9.5.1:
+    resolution: {integrity: sha512-/zO3RwuRCMTIcEgq6YMv4OrtEE1XzBG7w5N6zc6ydYnkWYOWsnLI/5894hYEzfESfMOT4cHCsRTIdxsSl1KjGg==}
     engines: {node: '>=18'}
 
   querystring-es3@0.2.1:
@@ -18751,7 +18752,7 @@ snapshots:
       es-define-property: 1.0.1
       side-channel: 1.1.1
 
-  query-string@9.5.0:
+  query-string@9.5.1:
     dependencies:
       decode-uri-component: 0.5.0
       filter-obj: 5.1.0
