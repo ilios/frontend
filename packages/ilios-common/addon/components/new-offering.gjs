@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import t from 'ember-intl/helpers/t';
-import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
+import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import set from 'ember-set-helper/helpers/set';
 import OfferingForm from 'ilios-common/components/offering-form';
 import { not } from 'ember-truth-helpers';
@@ -44,10 +44,10 @@ export default class NewOfferingComponent extends Component {
         {{t "general.newOffering"}}
       </div>
       <div class="choose-offering-type">
-        <ClickChoiceButtons
-          @buttonContent1={{t "general.smallGroups"}}
-          @buttonContent2={{t "general.offering"}}
-          @firstChoicePicked={{this.smallGroupMode}}
+        <ToggleButtons
+          @firstLabel={{t "general.smallGroups"}}
+          @secondLabel={{t "general.offering"}}
+          @firstOptionSelected={{this.smallGroupMode}}
           @toggle={{set this "smallGroupMode"}}
         />
       </div>

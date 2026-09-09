@@ -11,7 +11,7 @@ import {
   value,
 } from 'ember-cli-page-object';
 
-import clickChoiceButtons from 'ilios-common/page-objects/components/click-choice-buttons';
+import toggleButtons from 'ilios-common/page-objects/components/toggle-buttons';
 
 const definition = {
   scope: '[data-test-new-directory-user]',
@@ -39,7 +39,7 @@ const definition = {
   }),
   form: {
     scope: '[data-test-form]',
-    clickChoiceButtons,
+    toggleButtons,
     firstName: text('[data-test-first-name]'),
     middleName: text('[data-test-middle-name]'),
     lastName: text('[data-test-last-name]'),

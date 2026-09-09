@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
-import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
+import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import set from 'ember-set-helper/helpers/set';
 import NewSingle from './new-single';
 import NewMultiple from './new-multiple';
@@ -16,10 +16,10 @@ export default class LearnerGroupNewComponent extends Component {
             <label>
               {{t "general.createNew"}}:
             </label>
-            <ClickChoiceButtons
-              @buttonContent1={{t "general.singleGroup"}}
-              @buttonContent2={{t "general.multipleGroups"}}
-              @firstChoicePicked={{this.singleMode}}
+            <ToggleButtons
+              @firstLabel={{t "general.singleGroup"}}
+              @secondLabel={{t "general.multipleGroups"}}
+              @firstOptionSelected={{this.singleMode}}
               @toggle={{set this "singleMode"}}
             />
           </div>

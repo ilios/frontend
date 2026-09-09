@@ -10,7 +10,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
 import { uniqueId, concat } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
-import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
+import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import set from 'ember-set-helper/helpers/set';
 import { eq, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
@@ -278,10 +278,10 @@ export default class NewUserComponent extends Component {
             <label>
               {{t "general.createNew"}}:
             </label>
-            <ClickChoiceButtons
-              @buttonContent1={{t "general.nonStudent"}}
-              @buttonContent2={{t "general.student"}}
-              @firstChoicePicked={{this.nonStudentMode}}
+            <ToggleButtons
+              @firstLabel={{t "general.nonStudent"}}
+              @secondLabel={{t "general.student"}}
+              @firstOptionSelected={{this.nonStudentMode}}
               @toggle={{set this "nonStudentMode" (not this.nonStudentMode)}}
             />
           </div>

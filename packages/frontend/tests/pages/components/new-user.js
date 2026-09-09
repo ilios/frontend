@@ -10,11 +10,11 @@ import {
   value,
 } from 'ember-cli-page-object';
 
-import clickChoiceButtons from 'ilios-common/page-objects/components/click-choice-buttons';
+import toggleButtons from 'ilios-common/page-objects/components/toggle-buttons';
 
 const definition = {
   scope: '[data-test-new-user]',
-  clickChoiceButtons,
+  toggleButtons,
   firstName: {
     scope: '[data-test-first-name]',
     set: fillable('input'),

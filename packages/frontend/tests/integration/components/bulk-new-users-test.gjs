@@ -101,7 +101,7 @@ module('Integration | Component | bulk new users', function (hooks) {
 
   test('select student mode display cohort', async function (assert) {
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
-    await click('.click-choice-buttons .second-button');
+    await click('[data-test-toggle-buttons] [data-test-second-label]');
     const content = this.element.textContent.trim();
     assert.notEqual(content.search(/Provide file with user data/), -1);
     assert.notEqual(content.search(/Primary School/), -1);
@@ -247,7 +247,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     await this.server.create('user-role', { id: 4 });
 
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
-    await click('.click-choice-buttons .second-button');
+    await click('[data-test-toggle-buttons] [data-test-second-label]');
 
     const users = [
       [

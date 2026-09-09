@@ -16,7 +16,7 @@ import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
 import mapBy0 from 'ilios-common/helpers/map-by';
 import { LinkTo } from '@ember/routing';
-import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
+import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import set from 'ember-set-helper/helpers/set';
 import { eq, gte, lt, not, or } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
@@ -404,10 +404,10 @@ export default class BulkNewUsersComponent extends Component {
               <label>
                 {{t "general.createNew"}}:
               </label>
-              <ClickChoiceButtons
-                @buttonContent1={{t "general.nonStudent"}}
-                @buttonContent2={{t "general.student"}}
-                @firstChoicePicked={{this.nonStudentMode}}
+              <ToggleButtons
+                @firstLabel={{t "general.nonStudent"}}
+                @secondLabel={{t "general.student"}}
+                @firstOptionSelected={{this.nonStudentMode}}
                 @toggle={{set this "nonStudentMode" (not this.nonStudentMode)}}
               />
             </div>

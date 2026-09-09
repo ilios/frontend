@@ -45,7 +45,7 @@ module('Integration | Component | new user', function (hooks) {
   test('it renders', async function (assert) {
     await render(<template><NewUser @close={{(noop)}} /></template>);
 
-    await component.clickChoiceButtons.firstButton.isActive;
+    assert.ok(component.toggleButtons.firstButton.isChecked);
     assert.strictEqual(component.school.options.length, 3);
     assert.strictEqual(component.school.options[0].text, 'school 0');
     assert.strictEqual(component.school.options[1].text, 'school 1');
@@ -151,7 +151,7 @@ module('Integration | Component | new user', function (hooks) {
         <NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />
       </template>,
     );
-    await component.clickChoiceButtons.secondButton.click();
+    await component.toggleButtons.secondButton.click();
     await component.firstName.set('first');
     await component.middleName.set('middle');
     await component.lastName.set('last');
@@ -221,7 +221,7 @@ module('Integration | Component | new user', function (hooks) {
 
     await render(<template><NewUser @close={{(noop)}} /></template>);
     await component.cancel();
-    await component.clickChoiceButtons.secondButton.click();
+    await component.toggleButtons.secondButton.click();
 
     assert.ok(component.school.options[0].selected);
     assert.strictEqual(component.cohort.options.length, 1);
