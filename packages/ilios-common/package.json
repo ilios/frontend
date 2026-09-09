@@ -150,7 +150,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-ember-template-tag": "^2.1.2",
     "qs": "^6.16.0",
-    "sass": "^1.97.2",
+    "sass": "^1.104.0",
     "stylelint": "^16.26.1",
     "stylelint-config-recommended-scss": "^17.0.1",
     "stylelint-config-standard": "^36.0.1",
