@@ -1,6 +1,8 @@
 @use "../mixins/font-size";
 
 .sort-manager {
+  padding-top: 0.5em;
+
   .actions {
     display: flex;
     justify-content: flex-end;
@@ -14,16 +16,18 @@
     .bigcancel {
       background-color: light-dark(var(--red), var(--red));
       color: light-dark(var(--white), var(--white));
-      margin: 0 0.5em;
+      margin: 0 0 0 0.5em;
     }
   }
 
   .content {
-    padding-top: 0.5rem;
+    padding-top: 0;
   }
 
   .sortable-items {
     list-style-type: none;
+    padding-inline-start: 5px;
+
     .item {
       align-items: center;
       background-color: light-dark(var(--lightest-grey), var(--grey));
@@ -32,7 +36,7 @@
       cursor: pointer;
       display: flex;
       gap: 1em;
-      margin: 10px 0.3rem 0 0;
+      margin: 10px 0 0 0;
       opacity: 1;
       padding: 1rem;
       vertical-align: middle;
