@@ -41,6 +41,13 @@
       padding: 1rem;
       vertical-align: middle;
 
+      &:hover {
+        background-color: light-dark(
+          var(--super-light-grey),
+          var(--light-grey)
+        );
+      }
+
       svg {
         min-width: 16px;
       }
