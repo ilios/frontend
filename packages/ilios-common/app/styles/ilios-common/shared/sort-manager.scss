@@ -11,12 +11,20 @@
       background-color: light-dark(var(--green), var(--green));
       color: light-dark(var(--white), var(--white));
       margin-left: 0.5rem;
+
+      &:hover {
+        background-color: light-dark(var(--light-green), var(--light-green));
+      }
     }
 
     .bigcancel {
       background-color: light-dark(var(--red), var(--red));
       color: light-dark(var(--white), var(--white));
       margin: 0 0 0 0.5em;
+
+      &:hover {
+        background-color: light-dark(var(--light-red), var(--light-red));
+      }
     }
   }
 
