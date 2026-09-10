@@ -251,11 +251,11 @@ importers:
         specifier: ~5.8.1
         version: 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-waiters@4.1.2(supports-color@8.1.1))(supports-color@8.1.1)
       '@ember-intl/lint':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       '@ember-intl/v1-compat':
-        specifier: ^2.0.0
-        version: 2.0.0(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))
+        specifier: ^2.0.1
+        version: 2.0.1(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0(supports-color@8.1.1)
@@ -638,8 +638,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
       ember-intl:
-        specifier: ^9.0.0
-        version: 9.0.0(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1)
+        specifier: ^9.0.1
+        version: 9.0.1(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1)
       ember-keyboard:
         specifier: ^9.0.4
         version: 9.0.4(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1)
@@ -747,8 +747,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-waiters@4.1.2(supports-color@8.1.1))(supports-color@8.1.1)
       '@ember-intl/lint':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0(supports-color@8.1.1)
@@ -900,11 +900,11 @@ importers:
         specifier: ~5.8.1
         version: 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-waiters@4.1.2(supports-color@8.1.1))(supports-color@8.1.1)
       '@ember-intl/lint':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       '@ember-intl/v1-compat':
-        specifier: ^2.0.0
-        version: 2.0.0(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))
+        specifier: ^2.0.1
+        version: 2.0.1(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0(supports-color@8.1.1)
@@ -1131,11 +1131,11 @@ importers:
         specifier: ~5.8.1
         version: 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-waiters@4.1.2(supports-color@8.1.1))(supports-color@8.1.1)
       '@ember-intl/lint':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       '@ember-intl/v1-compat':
-        specifier: ^2.0.0
-        version: 2.0.0(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))
+        specifier: ^2.0.1
+        version: 2.0.1(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0(supports-color@8.1.1)
@@ -1359,11 +1359,11 @@ importers:
         specifier: ~5.8.1
         version: 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-waiters@4.1.2(supports-color@8.1.1))(supports-color@8.1.1)
       '@ember-intl/lint':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       '@ember-intl/v1-compat':
-        specifier: ^2.0.0
-        version: 2.0.0(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))
+        specifier: ^2.0.1
+        version: 2.0.1(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))
       '@ember/optional-features':
         specifier: ^2.3.0
         version: 2.3.0(supports-color@8.1.1)
@@ -2363,13 +2363,13 @@ packages:
       '@ember/test-waiters':
         optional: true
 
-  '@ember-intl/lint@2.0.0':
-    resolution: {integrity: sha512-KijGYPLwqlTzZe3wIG26vQ1gPdDPYlzdexFWvOER7xmFpYpUw/lUAuh6HOa3JuoI5oMawTpDCt4e1LSbbn3ocA==}
+  '@ember-intl/lint@2.0.1':
+    resolution: {integrity: sha512-X55x/8/jGaXeRl4KIo6b1IP9eTbZYOBvmvSdf94g8ptw7oAFcD48t+uF1ByKh2ZQ1rtpbafhUUk3GExgcwp7DA==}
     engines: {node: 22.* || >= 24}
     hasBin: true
 
-  '@ember-intl/v1-compat@2.0.0':
-    resolution: {integrity: sha512-i6zjBJmVATE0JZ+EGeARuiMY+ZYhxiu0kk5Hyc5rCi/oBhE7IBuKHFnyfWuf1I7D3Wcr4aooXJ2iRWqhdyP6zw==}
+  '@ember-intl/v1-compat@2.0.1':
+    resolution: {integrity: sha512-wwouo+Z2j/AZ0hpsqf97oVT7unxtLcJZxtquI8xFJ7FIC/EwjwThepjeTGVvULGF/a/yEpjtd9691A5hPeDB4w==}
     engines: {node: 22.* || >= 24}
 
   '@ember-tooling/blueprint-blueprint@0.2.1':
@@ -2571,8 +2571,8 @@ packages:
   '@formatjs/icu-skeleton-parser@2.1.11':
     resolution: {integrity: sha512-j8cUmOJzVgkHuS0QiQ6ga76UIoLOFSAMWhs7aZJztH3aAdCOAE6vpC8KVvFB4cU10ON0y2/5oOVmPJ43s2lTwA==}
 
-  '@formatjs/intl@4.1.19':
-    resolution: {integrity: sha512-bZMROATl+rzfL8wsDZ53i8XWHx5e6rVr8QlGT5GDvHImEUro4WE9pxUd2dobzmI3CtD+zkt/wkEdqcb+3CK8Fg==}
+  '@formatjs/intl@4.1.20':
+    resolution: {integrity: sha512-q3gaFvc1mXrl0fcSY2QKSS+WzJxpbIXs48O+QLA3UsRtIwVhazvxtLrLGKEse5Mq4U8hAYyTB6Y9buU2ZRFz/w==}
 
   '@fortawesome/ember-fontawesome@3.1.0':
     resolution: {integrity: sha512-7kkPZo1no5VWamR3Ms2I4m2htZpUXcA76yC2gc0jviOEQit+urrCPIIWk1XdAudKO2Z8x5RR4l1mmJe110Zd7A==}
@@ -5361,8 +5361,8 @@ packages:
   ember-inflector@5.0.2:
     resolution: {integrity: sha512-aoPaT7B3pbUHSi4ulf02iRaMMvPteuDBO8jA1SLLOl/JwnO2YI5F/MhNPaolxp8DWwAd/P6MNN+wD5bLwmiUIA==}
 
-  ember-intl@9.0.0:
-    resolution: {integrity: sha512-X1YcDMC4VaKcAIxO2jvfzxCca3WR3BOrB3R1gziFh5HKitEGtHBP8h+m726PmmLs9Ie3zeaXw827UW9VjmhHdA==}
+  ember-intl@9.0.1:
+    resolution: {integrity: sha512-NOiATTVGRPJN81wBjJ/lV/BrXBC6YNZ+BlRD5ge0pkGxkEs8IGJJLFGfqAt4hcnt2E8BkwWZ1kJhrvh+PE5tWA==}
     engines: {node: 22.* || >= 24}
     peerDependencies:
       '@ember/test-helpers': ^5.0.0
@@ -7034,8 +7034,8 @@ packages:
     resolution: {integrity: sha512-CY6crGq313MX8GkwvB7tzgp99vjQxY1++5y10/BKN/GUfHqWaOGQMNZkBvqSzsZKWk/ijwHlWzzkLulsGHhjWQ==}
     hasBin: true
 
-  js-yaml@5.4.0:
-    resolution: {integrity: sha512-jE7vUJIebKzYQI5xu4co5CRBDlDEYnHrdzsxs4O2giCz4v2SbVMYKpmt1D9L38OKQAeCWmrOTRiCV93u0UkaJA==}
+  js-yaml@5.4.1:
+    resolution: {integrity: sha512-28R/k+NAjeuf7+CKlTxWZVExJGwVVLwY06DgEnOMz2gEpfNkDcD7QvyiVPT0xy0XXhU8vHsd4Ot42OOPdJG7dQ==}
     hasBin: true
 
   jsdom@25.0.1:
@@ -11118,7 +11118,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@ember-intl/lint@2.0.0':
+  '@ember-intl/lint@2.0.1':
     dependencies:
       '@codemod-utils/ast-javascript': 4.3.2
       '@codemod-utils/ast-template': 4.1.0
@@ -11127,10 +11127,10 @@ snapshots:
       '@codemod-utils/package-json': 4.1.0
       '@codemod-utils/threads': 1.1.0
       '@formatjs/icu-messageformat-parser': 3.5.17
-      js-yaml: 5.4.0
+      js-yaml: 5.4.1
       yargs: 18.1.0
 
-  '@ember-intl/v1-compat@2.0.0(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))':
+  '@ember-intl/v1-compat@2.0.1(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))':
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       broccoli-caching-writer: 3.1.0(supports-color@8.1.1)
@@ -11141,7 +11141,7 @@ snapshots:
       ember-auto-import: 2.13.1(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))
       ember-cli-babel: 8.3.2(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
       extend: 3.0.2
-      js-yaml: 5.4.0
+      js-yaml: 5.4.1
       json-stable-stringify: 1.3.0
     transitivePeerDependencies:
       - '@glint/template'
@@ -11556,7 +11556,7 @@ snapshots:
 
   '@formatjs/icu-skeleton-parser@2.1.11': {}
 
-  '@formatjs/intl@4.1.19':
+  '@formatjs/intl@4.1.20':
     dependencies:
       '@formatjs/fast-memoize': 3.1.7
       '@formatjs/icu-messageformat-parser': 3.5.17
@@ -15398,10 +15398,10 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-intl@9.0.0(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1):
+  ember-intl@9.0.1(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       '@embroider/addon-shim': 1.10.3(supports-color@8.1.1)
-      '@formatjs/intl': 4.1.19
+      '@formatjs/intl': 4.1.20
       decorator-transforms: 2.4.0(@babel/core@7.29.7(supports-color@8.1.1))
     optionalDependencies:
       '@ember/test-helpers': 5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
@@ -17531,7 +17531,7 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  js-yaml@5.4.0:
+  js-yaml@5.4.1:
     dependencies:
       argparse: 2.0.1
 
