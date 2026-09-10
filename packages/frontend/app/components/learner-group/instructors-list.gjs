@@ -11,10 +11,10 @@ import UserStatus from 'ilios-common/components/user-status';
     ...attributes
   >
     <div class="detail-header">
-      <div class="title" data-test-title>
+      <h2 class="title" data-test-title>
         {{t "general.defaultInstructors"}}
         ({{@learnerGroup.allInstructors.length}})
-      </div>
+      </h2>
       {{#if @canUpdate}}
         <button type="button" {{on "click" @manage}} data-test-manage>
           {{t "general.instructorsManageTitle"}}
