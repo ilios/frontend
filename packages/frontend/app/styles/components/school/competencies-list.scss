@@ -33,17 +33,6 @@
       .link-button {
         text-align: left;
       }
-
-      .bigadd {
-        background-color: light-dark(var(--green), var(--green));
-        color: light-dark(var(--white), var(--white));
-      }
-
-      .bigcancel {
-        background-color: light-dark(var(--red), var(--red));
-        color: light-dark(var(--white), var(--white));
-        margin-left: 0.5rem;
-      }
     }
 
     &:last-of-type {
