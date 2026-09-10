@@ -30,7 +30,6 @@ const definition = {
     expandCollapseSwitcher: {
       scope: '[data-test-expand-collapse]',
       ariaExpanded: attribute('aria-expanded'),
-      ariaLabel: attribute('aria-label'),
       toggle: clickable(),
     },
     linksToAllMaterials: isPresent('[data-test-link-to-all-materials]'),
@@ -46,7 +45,6 @@ const definition = {
     expandCollapseSwitcher: {
       scope: '[data-test-expand-collapse]',
       ariaExpanded: attribute('aria-expanded'),
-      ariaLabel: attribute('aria-label'),
       toggle: clickable(),
     },
     linksToAllMaterials: isPresent('[data-test-link-to-all-materials]'),

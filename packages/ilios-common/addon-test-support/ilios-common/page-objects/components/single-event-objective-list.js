@@ -14,7 +14,6 @@ const definition = {
     scope: '[data-test-title]',
     expandCollapseSwitcher: {
       scope: '[data-test-expand-collapse]',
-      ariaLabel: attribute('aria-label'),
       ariaExpanded: attribute('aria-expanded'),
       toggle: clickable(),
     },
