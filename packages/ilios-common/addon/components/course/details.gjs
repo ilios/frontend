@@ -16,6 +16,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import { pageTitle } from 'ember-page-title';
 import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import getSchoolConfigs from 'ilios-common/utils/get-school-config.js';
 
 export default class CourseDetailsComponent extends Component {
   @service router;
@@ -49,39 +50,28 @@ export default class CourseDetailsComponent extends Component {
 
   @cached
   get schoolConfigsData() {
-    return new TrackedAsyncData(this.getSchoolConfigs(this.args.course));
+    return new TrackedAsyncData(
+      getSchoolConfigs(async (course) => course.school, this.args.course),
+    );
   }
 
-  async getSchoolConfigs(course) {
-    const school = await course.school;
-    return await school.configurations;
+  get schoolConfigsLoaded() {
+    return this.schoolConfigsData.isResolved;
   }
 
-  @cached
   get schoolConfigs() {
-    const rhett = new Map();
-    if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, config.parsedValue);
-      });
-    }
-    return rhett;
-  }
-
-  get showMeSH() {
-    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
+    return this.schoolConfigsLoaded ? this.schoolConfigsData.value : {};
   }
 
   get configLoaded() {
     return (
-      this.academicYearCrossesCalendarYearBoundariesData.isResolved &&
-      this.schoolConfigsData.isResolved
+      this.academicYearCrossesCalendarYearBoundariesData.isResolved && this.schoolConfigsLoaded
     );
   }
-
   get notRolloverRoute() {
     return this.router.currentRouteName !== 'course.rollover';
   }
+
   <template>
     {{#if this.configLoaded}}
       {{pageTitle "Courses | " @course.title " " this.academicYearDisplay}}
@@ -116,7 +106,7 @@ export default class CourseDetailsComponent extends Component {
             @setCourseTaxonomyDetails={{@setCourseTaxonomyDetails}}
             @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
             @setCourseManageLeadership={{@setCourseManageLeadership}}
-            @showMeSH={{this.showMeSH}}
+            @showMeSH={{this.schoolConfigs.showMeSH}}
           />
           {{#if @showDetailsCollapseControl}}
             <div class="details-collapse-control">

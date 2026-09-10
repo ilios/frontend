@@ -20,7 +20,7 @@ import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
 import DetailMesh from 'ilios-common/components/detail-mesh';
 import SessionOfferings from 'ilios-common/components/session-offerings';
 import { pageTitle } from 'ember-page-title';
-
+import getSchoolConfigs from 'ilios-common/utils/get-school-config.js';
 export default class SessionDetailsComponent extends Component {
   @cached
   get courseData() {
@@ -42,32 +42,20 @@ export default class SessionDetailsComponent extends Component {
 
   @cached
   get schoolConfigsData() {
-    return new TrackedAsyncData(this.getSchoolConfigs(this.args.session));
-  }
-
-  async getSchoolConfigs(session) {
-    const course = await session.course;
-    const school = await course.school;
-    return await school.configurations;
-  }
-
-  @cached
-  get schoolConfigs() {
-    const rhett = new Map();
-    if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, config.parsedValue);
-      });
-    }
-    return rhett;
+    return new TrackedAsyncData(
+      getSchoolConfigs(async (session) => {
+        const course = await session.course;
+        return course.school;
+      }, this.args.session),
+    );
   }
 
   get schoolConfigsLoaded() {
     return this.schoolConfigsData.isResolved;
   }
 
-  get showMeSH() {
-    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
+  get schoolConfigs() {
+    return this.schoolConfigsLoaded ? this.schoolConfigsData.value : {};
   }
 
   <template>
@@ -114,21 +102,21 @@ export default class SessionDetailsComponent extends Component {
             @editable={{@editable}}
             @collapse={{fn @setSessionObjectiveDetails false}}
             @expand={{fn @setSessionObjectiveDetails true}}
-            @showMeSH={{this.showMeSH}}
+            @showMeSH={{this.schoolConfigs.showMeSH}}
           />
         {{else}}
           <CollapsedObjectives
             @session={{@session}}
             @editable={{@editable}}
             @expand={{fn @setSessionObjectiveDetails true}}
-            @showMeSH={{this.showMeSH}}
+            @showMeSH={{this.schoolConfigs.showMeSH}}
           />
         {{/if}}
         <DetailLearningMaterials
           @subject={{@session}}
           @isCourse={{false}}
           @editable={{@editable}}
-          @showMeSH={{this.showMeSH}}
+          @showMeSH={{this.schoolConfigs.showMeSH}}
         />
         {{#if (or (eq @session.terms.length 0) @sessionTaxonomyDetails)}}
           <DetailTaxonomies
@@ -143,7 +131,7 @@ export default class SessionDetailsComponent extends Component {
             @expand={{fn @setSessionTaxonomyDetails true}}
           />
         {{/if}}
-        {{#if this.showMeSH}}
+        {{#if this.schoolConfigs.showMeSH}}
           <DetailMesh @subject={{@session}} @isSession={{true}} @editable={{@editable}} />
         {{/if}}
         <SessionOfferings

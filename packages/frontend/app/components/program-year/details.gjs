@@ -14,36 +14,25 @@ import DetailTaxonomies from 'ilios-common/components/detail-taxonomies';
 import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
 import CourseAssociations from './course-associations';
 import CohortMembers from './cohort-members';
+import getSchoolConfigs from 'ilios-common/utils/get-school-config.js';
 
 export default class ProgramYearDetailsComponent extends Component {
   @cached
   get schoolConfigsData() {
-    return new TrackedAsyncData(this.getSchoolConfigs(this.args.programYear));
-  }
-
-  async getSchoolConfigs(programYear) {
-    const program = await programYear.program;
-    const school = await program.school;
-    return await school.configurations;
-  }
-
-  @cached
-  get schoolConfigs() {
-    const rhett = new Map();
-    if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, config.parsedValue);
-      });
-    }
-    return rhett;
+    return new TrackedAsyncData(
+      getSchoolConfigs(async (programYear) => {
+        const program = await programYear.program;
+        return program.school;
+      }, this.args.programYear),
+    );
   }
 
   get schoolConfigsLoaded() {
     return this.schoolConfigsData.isResolved;
   }
 
-  get showMeSH() {
-    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
+  get schoolConfigs() {
+    return this.schoolConfigsLoaded ? this.schoolConfigsData.value : {};
   }
 
   <template>
@@ -81,6 +70,7 @@ export default class ProgramYearDetailsComponent extends Component {
             @expand={{fn @setPyCompetencyDetails true}}
           />
         {{/if}}
+
         {{#if (or (eq @programYear.programYearObjectives.length 0) @pyObjectiveDetails)}}
           <Objectives
             @programYear={{@programYear}}
@@ -89,13 +79,13 @@ export default class ProgramYearDetailsComponent extends Component {
             @expand={{fn @setPyObjectiveDetails true}}
             @expandedObjectiveIds={{@expandedObjectiveIds}}
             @setExpandedObjectiveIds={{@setExpandedObjectiveIds}}
-            @showMeSH={{this.showMeSH}}
+            @showMeSH={{this.schoolConfigs.showMeSH}}
           />
         {{else}}
           <CollapsedObjectives
             @programYear={{@programYear}}
             @expand={{fn @setPyObjectiveDetails true}}
-            @showMeSH={{this.showMeSH}}
+            @showMeSH={{this.schoolConfigs.showMeSH}}
           />
         {{/if}}
         {{#if (or (eq @programYear.terms.length 0) @pyTaxonomyDetails)}}

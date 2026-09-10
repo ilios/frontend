@@ -14,6 +14,7 @@ import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import ObjectiveList from 'ilios-common/components/course/objective-list';
 import removeHtmlTags from 'ilios-common/helpers/remove-html-tags';
 import PrintCourseSession from 'ilios-common/components/print-course-session';
+import getSchoolConfigs from 'ilios-common/utils/get-school-config.js';
 
 export default class PrintCourseComponent extends Component {
   @service store;
@@ -114,36 +115,20 @@ export default class PrintCourseComponent extends Component {
 
     return this.sessionsRelationship;
   }
+
   @cached
   get schoolConfigsData() {
-    return new TrackedAsyncData(this.getSchoolConfigs(this.args.course));
-  }
-
-  async getSchoolConfigs(course) {
-    const school = await course.school;
-    return await school.configurations;
-  }
-
-  @cached
-  get schoolConfigs() {
-    const rhett = new Map();
-    if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, config.parsedValue);
-      });
-    }
-    return rhett;
-  }
-
-  get showMeSH() {
-    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
+    return new TrackedAsyncData(
+      getSchoolConfigs(async (course) => course.school, this.args.course),
+    );
   }
 
   get schoolConfigsLoaded() {
-    return (
-      this.academicYearCrossesCalendarYearBoundariesData.isResolved &&
-      this.schoolConfigsData.isResolved
-    );
+    return this.schoolConfigsData.isResolved;
+  }
+
+  get schoolConfigs() {
+    return this.schoolConfigsLoaded ? this.schoolConfigsData.value : {};
   }
 
   <template>
@@ -274,7 +259,7 @@ export default class PrintCourseComponent extends Component {
                 @course={{@course}}
                 @editable={{false}}
                 @printable={{true}}
-                @showMeSH={{this.showMeSH}}
+                @showMeSH={{this.schoolConfigs.showMeSH}}
               />
             </div>
           {{/if}}
@@ -349,7 +334,7 @@ export default class PrintCourseComponent extends Component {
             </div>
           {{/if}}
         </section>
-        {{#if this.showMeSH}}
+        {{#if this.schoolConfigs.showMeSH}}
           <section class="block" data-test-course-mesh>
             <div class="title">
               {{t "general.mesh"}}
@@ -372,7 +357,7 @@ export default class PrintCourseComponent extends Component {
           <PrintCourseSession
             @session={{session}}
             @editable={{false}}
-            @showMeSH={{this.showMeSH}}
+            @showMeSH={{this.schoolConfigs.showMeSH}}
           />
         {{/each}}
       </section>
