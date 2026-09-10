@@ -117,6 +117,8 @@ export default class SessionDetailsComponent extends Component {
           @isCourse={{false}}
           @editable={{@editable}}
           @showMeSH={{this.schoolConfigs.showMeSH}}
+          @accessibilityRequired={{this.schoolConfigs.learningMaterialAccessibilityRequired}}
+          @accessibilityRequirementsLink={{this.schoolConfigs.learningMaterialAccessibilityRequirementsLink}}
         />
         {{#if (or (eq @session.terms.length 0) @sessionTaxonomyDetails)}}
           <DetailTaxonomies

@@ -146,39 +146,6 @@ export default class NewLearningmaterialComponent extends Component {
     return new TrackedAsyncData(null);
   }
 
-  // https://www.ada.gov/law-and-regs/regulations/title-ii-2010-regulations/#-35200-requirements-for-web-and-mobile-accessibility
-  @cached
-  get accessibilityRequiredData() {
-    if (this.schoolData.isResolved) {
-      return new TrackedAsyncData(
-        this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequired'),
-      );
-    }
-
-    return new TrackedAsyncData(null);
-  }
-
-  get accessibilityRequired() {
-    return this.accessibilityRequiredData.isResolved ? this.accessibilityRequiredData.value : false;
-  }
-
-  @cached
-  get accessibilityRequirementsLinkData() {
-    if (this.schoolData.isResolved) {
-      return new TrackedAsyncData(
-        this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequirementsLink'),
-      );
-    }
-
-    return new TrackedAsyncData(null);
-  }
-
-  get accessibilityRequirementsLink() {
-    return this.accessibilityRequirementsLinkData.isResolved
-      ? this.accessibilityRequirementsLinkData.value
-      : '';
-  }
-
   get uniqueId() {
     return guidFor(this);
   }
@@ -539,7 +506,7 @@ export default class NewLearningmaterialComponent extends Component {
             </span>
           </div>
         {{/unless}}
-        {{#if this.accessibilityRequiredData.isResolved}}
+        {{#if @accessibilityRequired}}
           <div class="item accessibility" data-test-marked-accessible>
             <span>
               <p id="lm-accessibility-permissions-text">
@@ -557,7 +524,7 @@ export default class NewLearningmaterialComponent extends Component {
                 <label for="marked-accessible-{{this.uniqueId}}">
                   {{t "general.accessibilityAgreement"}}
                 </label>
-                {{#if this.accessibilityRequirementsLink}}
+                {{#if @accessibilityRequirementsLink}}
                   <a
                     href="{{this.accessibilityRequirementsLink}}"
                     target="_blank"
@@ -578,7 +545,6 @@ export default class NewLearningmaterialComponent extends Component {
           </div>
         {{/if}}
       {{/if}}
-
       <div class="buttons">
         <button class="done text" type="button" {{on "click" (perform this.prepareSave)}}>
           {{#if this.prepareSave.isRunning}}

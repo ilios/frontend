@@ -53,6 +53,8 @@ import DetailCohorts from 'ilios-common/components/detail-cohorts';
       @subject={{@course}}
       @isCourse={{true}}
       @editable={{@editable}}
+      @accessibilityRequired={{@learningMaterialAccessibilityRequired}}
+      @accessibilityRequirementsLink={{@learningMaterialAccessibilityRequirementsLink}}
       @showMeSH={{@showMeSH}}
     />
     {{#if (or (eq (get @course.competencies "length") 0) @courseCompetencyDetails)}}

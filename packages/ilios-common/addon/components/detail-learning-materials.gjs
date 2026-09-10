@@ -237,6 +237,8 @@ export default class DetailLearningMaterialsComponent extends Component {
             @closeManager={{this.closeLearningmaterialManager}}
             @learningMaterialStatuses={{this.learningMaterialStatuses}}
             @showMeSH={{@showMeSH}}
+            @accessibilityRequired={{@accessibilityRequired}}
+            @accessibilityRequirementsLink={{@accessibilityRequirementsLink}}
           />
         {{else if this.isSorting}}
           <LearningMaterialsSortManager
@@ -253,6 +255,8 @@ export default class DetailLearningMaterialsComponent extends Component {
             @learningMaterialUserRoles={{this.learningMaterialUserRoles}}
             @save={{perform this.saveNewLearningMaterial}}
             @cancel={{this.closeNewLearningmaterial}}
+            @accessibilityRequired={{@accessibilityRequired}}
+            @accessibilityRequirementsLink={{@accessibilityRequirementsLink}}
           />
         {{else if this.materials.length}}
           {{#if (and @editable this.hasMoreThanOneLearningMaterial)}}

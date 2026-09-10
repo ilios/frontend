@@ -107,6 +107,8 @@ export default class CourseDetailsComponent extends Component {
             @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
             @setCourseManageLeadership={{@setCourseManageLeadership}}
             @showMeSH={{this.schoolConfigs.showMeSH}}
+            @learningMaterialAccessibilityRequired={{this.schoolConfigs.learningMaterialAccessibilityRequired}}
+            @learningMaterialAccessibilityRequirementsLink={{this.schoolConfigs.learningMaterialAccessibilityRequirementsLink}}
           />
           {{#if @showDetailsCollapseControl}}
             <div class="details-collapse-control">

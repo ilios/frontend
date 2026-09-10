@@ -66,23 +66,6 @@ export default class LearningmaterialManagerComponent extends Component {
     return new TrackedAsyncData(null);
   }
 
-  @cached
-  get accessibilityRequirementsLinkData() {
-    if (this.schoolData.isResolved) {
-      return new TrackedAsyncData(
-        this.schoolData.value?.getConfigValue('learningMaterialAccessibilityRequirementsLink'),
-      );
-    }
-
-    return new TrackedAsyncData(null);
-  }
-
-  get accessibilityRequirementsLink() {
-    return this.accessibilityRequirementsLinkData.isResolved
-      ? this.accessibilityRequirementsLinkData.value
-      : null;
-  }
-
   validations = new YupValidations(this, {
     title: string().required().min(4).max(120),
     startDate: date().notRequired(),
@@ -570,17 +553,16 @@ export default class LearningmaterialManagerComponent extends Component {
               </span>
             </div>
           {{/if}}
-
-          <div class="item">
-            {{#if @editable}}
-              {{#if this.accessibilityRequirementsLinkData.isResolved}}
+          {{#if @accessibilityRequired}}
+            <div class="item">
+              {{#if @editable}}
                 <div class="marked-accessible-toggle">
                   <label>
                     {{t "general.accessibilityAgreement"}}:
                   </label>
-                  {{#if this.accessibilityRequirementsLink}}
+                  {{#if @accessibilityRequirementsLink}}
                     <a
-                      href="{{this.accessibilityRequirementsLink}}"
+                      href="{{@accessibilityRequirementsLink}}"
                       target="_blank"
                       rel="noopener noreferrer"
                       title={{t "general.accessibilityRequirementsLink"}}
@@ -594,23 +576,23 @@ export default class LearningmaterialManagerComponent extends Component {
                     @toggle={{set this "markedAccessible"}}
                   />
                 </div>
+              {{else if this.markedAccessible}}
+                <label>
+                  {{t "general.markedAccessible"}}:
+                </label>
+                <span class="markedaccessible add" data-test-marked-accessible-value>
+                  {{t "general.yes"}}
+                </span>
+              {{else}}
+                <label>
+                  {{t "general.markedAccessible"}}:
+                </label>
+                <span class="markedaccessible remove" data-test-marked-accessible-value>
+                  {{t "general.no"}}
+                </span>
               {{/if}}
-            {{else if this.markedAccessible}}
-              <label>
-                {{t "general.markedAccessible"}}:
-              </label>
-              <span class="markedaccessible add" data-test-marked-accessible-value>
-                {{t "general.yes"}}
-              </span>
-            {{else}}
-              <label>
-                {{t "general.markedAccessible"}}:
-              </label>
-              <span class="markedaccessible remove" data-test-marked-accessible-value>
-                {{t "general.no"}}
-              </span>
-            {{/if}}
-          </div>
+            </div>
+          {{/if}}
 
           <div class="item timed-release">
             <label>
