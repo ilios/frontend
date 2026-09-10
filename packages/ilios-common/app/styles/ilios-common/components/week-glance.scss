@@ -21,6 +21,10 @@
     flex-direction: row-reverse;
     justify-content: space-between;
 
+    &.today .day {
+      color: light-dark(var(--green), var(--light-green));
+    }
+
     .day {
       @include m.ilios-heading-h4;
       align-self: flex-start;
