@@ -68,7 +68,14 @@ export default class SessionDetailsComponent extends Component {
       </div>
 
       <section class="session-details" data-test-session-details>
-        <Overview @session={{@session}} @editable={{@editable}} />
+        <Overview
+          @session={{@session}}
+          @editable={{@editable}}
+          @showAttendanceRequired={{this.schoolConfigs.showSessionAttendanceRequired}}
+          @showSupplemental={{this.schoolConfigs.showSessionSupplemental}}
+          @showSpecialAttireRequired={{this.schoolConfigs.showSessionSpecialAttireRequired}}
+          @showSpecialEquipmentRequired={{this.schoolConfigs.showSessionSpecialEquipmentRequired}}
+        />
         {{#if @sessionLeadershipDetails}}
           <LeadershipExpanded
             @model={{@session}}

@@ -358,6 +358,10 @@ export default class PrintCourseComponent extends Component {
             @session={{session}}
             @editable={{false}}
             @showMeSH={{this.schoolConfigs.showMeSH}}
+            @showAttendanceRequired={{this.schoolConfigs.showSessionAttendanceRequired}}
+            @showSupplemental={{this.schoolConfigs.showSessionSupplemental}}
+            @showSpecialAttireRequired={{this.schoolConfigs.showSessionSpecialAttireRequired}}
+            @showSpecialEquipmentRequired={{this.schoolConfigs.showSessionSpecialEquipmentRequired}}
           />
         {{/each}}
       </section>

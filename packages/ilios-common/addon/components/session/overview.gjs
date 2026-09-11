@@ -95,70 +95,12 @@ export default class SessionOverviewComponent extends Component {
   }
 
   @cached
-  get showAttendanceRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionAttendanceRequired')
-        : false,
-    );
-  }
-
-  @cached
-  get showSupplementalData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSupplemental')
-        : false,
-    );
-  }
-
-  @cached
-  get showSpecialAttireRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSpecialAttireRequired')
-        : false,
-    );
-  }
-
-  @cached
-  get showSpecialEquipmentRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSpecialEquipmentRequired')
-        : false,
-    );
-  }
-
-  get showAttendanceRequired() {
-    return this.showAttendanceRequiredData.isResolved
-      ? this.showAttendanceRequiredData.value
-      : false;
-  }
-
-  get showSupplemental() {
-    return this.showSupplementalData.isResolved ? this.showSupplementalData.value : false;
-  }
-
-  get showSpecialAttireRequired() {
-    return this.showSpecialAttireRequiredData.isResolved
-      ? this.showSpecialAttireRequiredData.value
-      : false;
-  }
-
-  get showSpecialEquipmentRequired() {
-    return this.showSpecialEquipmentRequiredData.isResolved
-      ? this.showSpecialEquipmentRequiredData.value
-      : false;
-  }
-
-  @cached
   get showAttributes() {
     return (
-      this.showAttendanceRequired ||
-      this.showSupplemental ||
-      this.showSpecialAttireRequired ||
-      this.showSpecialEquipmentRequired
+      this.args.showAttendanceRequired ||
+      this.args.showSupplemental ||
+      this.args.showSpecialAttireRequired ||
+      this.args.showSpecialEquipmentRequired
     );
   }
 
@@ -227,10 +169,6 @@ export default class SessionOverviewComponent extends Component {
     return (
       this.sessionTypesData.isResolved &&
       this.sessionTypeData.isResolved &&
-      this.showAttendanceRequiredData.isResolved &&
-      this.showSupplementalData.isResolved &&
-      this.showSpecialAttireRequiredData.isResolved &&
-      this.showSpecialEquipmentRequiredData.isResolved &&
       this.showCopyData.isResolved
     );
   }
@@ -449,7 +387,7 @@ export default class SessionOverviewComponent extends Component {
                 data-test-attributes
               >
                 <legend>{{t "general.sessionAttributes"}}</legend>
-                {{#if this.showSupplemental}}
+                {{#if @showSupplemental}}
                   <label data-test-supplemental>
                     <input
                       type="checkbox"
@@ -460,7 +398,7 @@ export default class SessionOverviewComponent extends Component {
                     {{t "general.supplementalCurriculum"}}
                   </label>
                 {{/if}}
-                {{#if this.showSpecialAttireRequired}}
+                {{#if @showSpecialAttireRequired}}
                   <label data-test-special-attire>
                     <input
                       type="checkbox"
@@ -471,7 +409,7 @@ export default class SessionOverviewComponent extends Component {
                     {{t "general.specialAttireRequired"}}
                   </label>
                 {{/if}}
-                {{#if this.showSpecialEquipmentRequired}}
+                {{#if @showSpecialEquipmentRequired}}
                   <label data-test-special-equipment>
                     <input
                       type="checkbox"
@@ -482,7 +420,7 @@ export default class SessionOverviewComponent extends Component {
                     {{t "general.specialEquipmentRequired"}}
                   </label>
                 {{/if}}
-                {{#if this.showAttendanceRequired}}
+                {{#if @showAttendanceRequired}}
                   <label data-test-attendance-required>
                     <input
                       type="checkbox"
