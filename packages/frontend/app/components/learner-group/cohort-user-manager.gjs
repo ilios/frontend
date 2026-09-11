@@ -18,6 +18,7 @@ import UserStatus from 'ilios-common/components/user-status';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import preserveScroll from 'ilios-common/modifiers/preserve-scroll';
 
 export default class LearnerGroupCohortUserManagerComponent extends Component {
   @service currentUser;
@@ -25,6 +26,8 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
   @tracked filter = '';
   @tracked selectedUsers = [];
   @tracked usersBeingMoved = [];
+
+  cohortScroll = 0;
 
   get sortedAscending() {
     return this.args.sortBy.search(/desc/) === -1;
@@ -118,7 +121,11 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
         </div>
         {{#if @users.length}}
           <div class="learner-group-cohort-user-manager-content">
-            <div class="list">
+            <div
+              class="list"
+              {{on "scrollend" (pick "target.scrollTop" (set this "cohortScroll"))}}
+              {{preserveScroll this.filteredUsers this.cohortScroll}}
+            >
               <table class="ilios-table ilios-table-colors ilios-zebra-table sticky-header">
                 <thead data-test-headers>
                   <tr>
@@ -161,8 +168,11 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
                   </tr>
                 </thead>
                 <tbody data-test-users>
-                  {{#each (sortBy @sortBy this.filteredUsers) as |user index|}}
-                    <tr class={{unless user.enabled "disabled-user-account"}}>
+                  {{#each (sortBy @sortBy this.filteredUsers) key="id" as |user index|}}
+                    <tr
+                      class={{unless user.enabled "disabled-user-account"}}
+                      data-user-id={{user.id}}
+                    >
                       {{#if @canUpdate}}
                         <td class="text-left checks">
                           <input
