@@ -96,6 +96,42 @@ module('Integration | Service | school config', function (hooks) {
     assert.false(this.schoolConfig.getShowSessionSupplemental(school2.id));
   });
 
+  test('missing or wrong school ids return undefined', async function (assert) {
+    const school = await this.server.create('school');
+
+    await this.server.create('school-config', {
+      school,
+      name: 'showMeSH',
+      value: 'true',
+    });
+
+    await this.schoolConfig.setup();
+
+    assert.true(this.schoolConfig.getShowMeSH(null));
+    assert.strictEqual(
+      this.schoolConfig.getLearningMaterialAccessibilityRequirementsLink(null),
+      undefined,
+    );
+    assert.strictEqual(this.schoolConfig.getLearningMaterialAccessibilityRequired(null), undefined);
+    assert.strictEqual(this.schoolConfig.getShowSessionAttendanceRequired(null), undefined);
+    assert.strictEqual(this.schoolConfig.getShowSessionSupplemental(null), undefined);
+    assert.strictEqual(this.schoolConfig.getShowSessionSpecialAttireRequired(null), undefined);
+    assert.strictEqual(this.schoolConfig.getShowSessionSpecialEquipmentRequired(null), undefined);
+    assert.strictEqual(this.schoolConfig.getAllowMultipleCourseObjectiveParents(null), undefined);
+
+    assert.true(this.schoolConfig.getShowMeSH(13));
+    assert.strictEqual(
+      this.schoolConfig.getLearningMaterialAccessibilityRequirementsLink(13),
+      undefined,
+    );
+    assert.strictEqual(this.schoolConfig.getLearningMaterialAccessibilityRequired(13), undefined);
+    assert.strictEqual(this.schoolConfig.getShowSessionAttendanceRequired(13), undefined);
+    assert.strictEqual(this.schoolConfig.getShowSessionSupplemental(13), undefined);
+    assert.strictEqual(this.schoolConfig.getShowSessionSpecialAttireRequired(13), undefined);
+    assert.strictEqual(this.schoolConfig.getShowSessionSpecialEquipmentRequired(13), undefined);
+    assert.strictEqual(this.schoolConfig.getAllowMultipleCourseObjectiveParents(13), undefined);
+  });
+
   test('creating a new config', async function (assert) {
     const school = await this.server.create('school');
     const schoolModel = await this.store.findRecord('school', school.id);
