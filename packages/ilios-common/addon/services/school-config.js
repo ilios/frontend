@@ -1,12 +1,11 @@
 import Service, { service } from '@ember/service';
-import { tracked } from 'tracked-built-ins';
 
 const DEFAULT_SHOW_MESH = true;
 
 export default class SchoolConfig extends Service {
   @service store;
 
-  #config = tracked(Map);
+  #config = new Map();
   #dirtyConfigs = new Set();
 
   async setup() {
@@ -14,49 +13,45 @@ export default class SchoolConfig extends Service {
     const schools = await this.store.findAll('school', { include: 'configurations' });
 
     for (const school of schools) {
+      const schoolConfig = new Map();
       const configs = await school.configurations;
       configs.forEach(({ name, parsedValue }) => {
-        this.#config.set(this.#getConfigName(school.id, name), parsedValue);
+        schoolConfig.set(name, parsedValue);
       });
+      this.#config.set(Number(school.id), schoolConfig);
     }
   }
 
-  #getConfigName(schoolId, name) {
-    return `${schoolId}-${name}`;
-  }
-
   getShowSessionAttendanceRequired(schoolId) {
-    return this.#config.get(this.#getConfigName(schoolId, 'showSessionAttendanceRequired'));
+    return this.#config.get(Number(schoolId))?.get('showSessionAttendanceRequired');
   }
 
   getShowSessionSupplemental(schoolId) {
-    return this.#config.get(this.#getConfigName(schoolId, 'showSessionSupplemental'));
+    return this.#config.get(Number(schoolId))?.get('showSessionSupplemental');
   }
 
   getShowSessionSpecialAttireRequired(schoolId) {
-    return this.#config.get(this.#getConfigName(schoolId, 'showSessionSpecialAttireRequired'));
+    return this.#config.get(Number(schoolId))?.get('showSessionSpecialAttireRequired');
   }
 
   getShowSessionSpecialEquipmentRequired(schoolId) {
-    return this.#config.get(this.#getConfigName(schoolId, 'showSessionSpecialEquipmentRequired'));
+    return this.#config.get(Number(schoolId))?.get('showSessionSpecialEquipmentRequired');
   }
 
   getAllowMultipleCourseObjectiveParents(schoolId) {
-    return this.#config.get(this.#getConfigName(schoolId, 'allowMultipleCourseObjectiveParents'));
+    return this.#config.get(Number(schoolId))?.get('allowMultipleCourseObjectiveParents');
   }
 
   getLearningMaterialAccessibilityRequirementsLink(schoolId) {
-    return this.#config.get(
-      this.#getConfigName(schoolId, 'learningMaterialAccessibilityRequirementsLink'),
-    );
+    return this.#config.get(Number(schoolId))?.get('learningMaterialAccessibilityRequirementsLink');
   }
 
   getLearningMaterialAccessibilityRequired(schoolId) {
-    return this.#config.get(this.#getConfigName(schoolId, 'learningMaterialAccessibilityRequired'));
+    return this.#config.get(Number(schoolId))?.get('learningMaterialAccessibilityRequired');
   }
 
   getShowMeSH(schoolId) {
-    return this.#config.get(this.#getConfigName(schoolId, 'showMeSH')) ?? DEFAULT_SHOW_MESH;
+    return this.#config.get(Number(schoolId))?.get('showMeSH') ?? DEFAULT_SHOW_MESH;
   }
 
   async setShowSessionAttendanceRequired(schoolId, value) {
@@ -87,7 +82,12 @@ export default class SchoolConfig extends Service {
     await Promise.all([...this.#dirtyConfigs].map(async (c) => c.save()));
     this.#dirtyConfigs.forEach((config) => {
       const schoolId = config.belongsTo('school').id();
-      this.#config.set(this.#getConfigName(schoolId, config.name), config.parsedValue);
+      let schoolConfig = this.#config.get(Number(schoolId));
+      if (!schoolConfig) {
+        schoolConfig = new Map();
+        this.#config.set(Number(schoolId), schoolConfig);
+      }
+      schoolConfig.set(config.name, config.parsedValue);
     });
     this.#dirtyConfigs.clear();
   }
