@@ -44,8 +44,41 @@ export default class SessionDetailsComponent extends Component {
   }
 
   get showMeSH() {
-    const schoolId = this.course?.belongsTo('school').id();
-    return this.schoolConfig.getShowMeSH(schoolId);
+    return this.schoolConfig.getShowMeSH(this.course?.belongsTo('school').id());
+  }
+
+  get showAttendanceRequired() {
+    return this.schoolConfig.getShowSessionAttendanceRequired(
+      this.course?.belongsTo('school').id(),
+    );
+  }
+
+  get showSupplemental() {
+    return this.schoolConfig.getShowSessionSupplemental(this.course?.belongsTo('school').id());
+  }
+
+  get showSpecialAttireRequired() {
+    return this.schoolConfig.getShowSessionSpecialAttireRequired(
+      this.course?.belongsTo('school').id(),
+    );
+  }
+
+  get showSpecialEquipmentRequired() {
+    return this.schoolConfig.getShowSessionSpecialEquipmentRequired(
+      this.course?.belongsTo('school').id(),
+    );
+  }
+
+  get accessibilityRequired() {
+    return this.schoolConfig.getLearningMaterialAccessibilityRequired(
+      this.course?.belongsTo('school').id(),
+    );
+  }
+
+  get accessibilityRequirementsLink() {
+    return this.schoolConfig.getLearningMaterialAccessibilityRequirementsLink(
+      this.course?.belongsTo('school').id(),
+    );
   }
 
   <template>
@@ -57,7 +90,14 @@ export default class SessionDetailsComponent extends Component {
     </div>
 
     <section class="session-details" data-test-session-details>
-      <Overview @session={{@session}} @editable={{@editable}} />
+      <Overview
+        @session={{@session}}
+        @editable={{@editable}}
+        @showSpecialEquipmentRequired={{this.showSpecialEquipmentRequired}}
+        @showSpecialAttireRequired={{this.showSpecialAttireRequired}}
+        @showSupplemental={{this.showSupplemental}}
+        @showAttendanceRequired={{this.showAttendanceRequired}}
+      />
       {{#if @sessionLeadershipDetails}}
         <LeadershipExpanded
           @model={{@session}}
@@ -106,6 +146,8 @@ export default class SessionDetailsComponent extends Component {
         @isCourse={{false}}
         @editable={{@editable}}
         @showMeSH={{this.showMeSH}}
+        @accessibilityRequired={{this.accessibilityRequired}}
+        @accessibilityRequirementsLink={{this.accessibilityRequirementsLink}}
       />
       {{#if (or (eq @session.terms.length 0) @sessionTaxonomyDetails)}}
         <DetailTaxonomies

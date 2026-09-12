@@ -1,8 +1,11 @@
 import Controller from '@ember/controller';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+import { service } from '@ember/service';
 
 export default class ProgramYearIndexController extends Controller {
+  @service schoolConfig;
+
   queryParams = [
     'pyObjectiveDetails',
     'pyTaxonomyDetails',
@@ -34,6 +37,12 @@ export default class ProgramYearIndexController extends Controller {
   @cached
   get program() {
     return this.programData.isResolved ? this.programData.value : null;
+  }
+
+  get showMeSH() {
+    return this.schoolConfig.getShowMeSH(
+      this.programData.isResolved ? this.programData.value.belongsTo('school').id() : null,
+    );
   }
 
   get expandedObjectiveIds() {

@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import PublicationStatus from 'ilios-common/components/publication-status';
@@ -15,8 +14,6 @@ import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 
 export default class PrintCourseSessionComponent extends Component {
-  @service schoolConfig;
-
   @cached
   get sessionObjectivesData() {
     return new TrackedAsyncData(this.args.session.sessionObjectives);
@@ -47,16 +44,6 @@ export default class PrintCourseSessionComponent extends Component {
     return new TrackedAsyncData(this.args.session.prerequisites);
   }
 
-  @cached
-  get courseData() {
-    return new TrackedAsyncData(this.args.session.course);
-  }
-
-  @cached
-  get schoolData() {
-    return new TrackedAsyncData(this.courseData.isResolved ? this.courseData.value.school : null);
-  }
-
   get sessionObjectives() {
     return this.sessionObjectivesData.isResolved ? this.sessionObjectivesData.value : [];
   }
@@ -79,38 +66,6 @@ export default class PrintCourseSessionComponent extends Component {
 
   get prerequisites() {
     return this.prerequisitesData.isResolved ? this.prerequisitesData.value : null;
-  }
-
-  get showAttendanceRequired() {
-    if (this.schoolData.isResolved && this.schoolData.value) {
-      return this.schoolConfig.getShowSessionAttendanceRequired(this.schoolData.value.id);
-    }
-
-    return false;
-  }
-
-  get showSupplemental() {
-    if (this.schoolData.isResolved && this.schoolData.value) {
-      return this.schoolConfig.getShowSessionSupplemental(this.schoolData.value.id);
-    }
-
-    return false;
-  }
-
-  get showSpecialAttireRequired() {
-    if (this.schoolData.isResolved && this.schoolData.value) {
-      return this.schoolConfig.getShowSessionSpecialAttireRequired(this.schoolData.value.id);
-    }
-
-    return false;
-  }
-
-  get showSpecialEquipmentRequired() {
-    if (this.schoolData.isResolved && this.schoolData.value) {
-      return this.schoolConfig.getShowSessionSpecialEquipmentRequired(this.schoolData.value.id);
-    }
-
-    return false;
   }
 
   get uniqueId() {
@@ -163,7 +118,7 @@ export default class PrintCourseSessionComponent extends Component {
             </div>
           </div>
           <br />
-          {{#if this.showSupplemental}}
+          {{#if @showSupplemental}}
             <div class="inline-label-data-block">
               <label for="supplemental-curriculum-{{this.uniqueId}}">
                 {{t "general.supplementalCurriculum"}}:
@@ -178,7 +133,7 @@ export default class PrintCourseSessionComponent extends Component {
               </div>
             </div>
           {{/if}}
-          {{#if this.showSpecialAttireRequired}}
+          {{#if @showSpecialAttireRequired}}
             <div class="inline-label-data-block">
               <label for="special-attire-{{this.uniqueId}}">
                 {{t "general.specialAttireRequired"}}:
@@ -193,7 +148,7 @@ export default class PrintCourseSessionComponent extends Component {
               </div>
             </div>
           {{/if}}
-          {{#if this.showSpecialEquipmentRequired}}
+          {{#if @showSpecialEquipmentRequired}}
             <div class="inline-label-data-block">
               <label for="special-equipment-{{this.uniqueId}}">
                 {{t "general.specialEquipmentRequired"}}:
@@ -208,7 +163,7 @@ export default class PrintCourseSessionComponent extends Component {
               </div>
             </div>
           {{/if}}
-          {{#if this.showAttendanceRequired}}
+          {{#if @showAttendanceRequired}}
             <div class="inline-label-data-block">
               <label for="attendance-{{this.uniqueId}}">
                 {{t "general.attendanceRequired"}}:

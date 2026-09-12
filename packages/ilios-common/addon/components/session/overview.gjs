@@ -36,7 +36,6 @@ export default class SessionOverviewComponent extends Component {
   @service permissionChecker;
   @service intl;
   @service store;
-  @service schoolConfig;
 
   @tracked localInstructionalNotes;
   @tracked localDescription;
@@ -95,29 +94,13 @@ export default class SessionOverviewComponent extends Component {
     return this.sessionTypesData.value;
   }
 
-  get showAttendanceRequired() {
-    return this.schoolConfig.getShowSessionAttendanceRequired(this.schoolData.value.id);
-  }
-
-  get showSupplemental() {
-    return this.schoolConfig.getShowSessionSupplemental(this.schoolData.value.id);
-  }
-
-  get showSpecialAttireRequired() {
-    return this.schoolConfig.getShowSessionSpecialAttireRequired(this.schoolData.value.id);
-  }
-
-  get showSpecialEquipmentRequired() {
-    return this.schoolConfig.getShowSessionSpecialEquipmentRequired(this.schoolData.value.id);
-  }
-
   @cached
   get showAttributes() {
     return (
-      this.showAttendanceRequired ||
-      this.showSupplemental ||
-      this.showSpecialAttireRequired ||
-      this.showSpecialEquipmentRequired
+      this.args.showAttendanceRequired ||
+      this.args.showSupplemental ||
+      this.args.showSpecialAttireRequired ||
+      this.args.showSpecialEquipmentRequired
     );
   }
 
@@ -186,8 +169,6 @@ export default class SessionOverviewComponent extends Component {
     return (
       this.sessionTypesData.isResolved &&
       this.sessionTypeData.isResolved &&
-      this.schoolData.isResolved &&
-      this.schoolData.value &&
       this.showCopyData.isResolved
     );
   }
@@ -406,7 +387,7 @@ export default class SessionOverviewComponent extends Component {
                 data-test-attributes
               >
                 <legend>{{t "general.sessionAttributes"}}</legend>
-                {{#if this.showSupplemental}}
+                {{#if @showSupplemental}}
                   <label data-test-supplemental>
                     <input
                       type="checkbox"
@@ -417,7 +398,7 @@ export default class SessionOverviewComponent extends Component {
                     {{t "general.supplementalCurriculum"}}
                   </label>
                 {{/if}}
-                {{#if this.showSpecialAttireRequired}}
+                {{#if @showSpecialAttireRequired}}
                   <label data-test-special-attire>
                     <input
                       type="checkbox"
@@ -428,7 +409,7 @@ export default class SessionOverviewComponent extends Component {
                     {{t "general.specialAttireRequired"}}
                   </label>
                 {{/if}}
-                {{#if this.showSpecialEquipmentRequired}}
+                {{#if @showSpecialEquipmentRequired}}
                   <label data-test-special-equipment>
                     <input
                       type="checkbox"
@@ -439,7 +420,7 @@ export default class SessionOverviewComponent extends Component {
                     {{t "general.specialEquipmentRequired"}}
                   </label>
                 {{/if}}
-                {{#if this.showAttendanceRequired}}
+                {{#if @showAttendanceRequired}}
                   <label data-test-attendance-required>
                     <input
                       type="checkbox"
