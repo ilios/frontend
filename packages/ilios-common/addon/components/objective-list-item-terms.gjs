@@ -3,12 +3,10 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import noop from 'ilios-common/helpers/noop';
 import { fn } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class ObjectiveListItemTermsComponent extends Component {
   @cached
@@ -22,29 +20,7 @@ export default class ObjectiveListItemTermsComponent extends Component {
   <template>
     <div class="objective-list-item-terms grid-item" data-test-objective-list-item-terms>
       {{#if @isManaging}}
-        <button
-          type="button"
-          class="bigadd"
-          disabled={{@isSaving}}
-          aria-label={{t "general.save"}}
-          data-test-save
-          {{on "click" @save}}
-        >
-          {{#if @isSaving}}
-            <LoadingSpinner />
-          {{else}}
-            <FaIcon @icon={{faCheck}} />
-          {{/if}}
-        </button>
-        <button
-          type="button"
-          class="bigcancel"
-          aria-label={{t "general.cancel"}}
-          data-test-cancel
-          {{on "click" @cancel}}
-        >
-          <FaIcon @icon={{faArrowRotateLeft}} />
-        </button>
+        <BigAddCancelButtons @add={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
       {{else}}
         {{#each @subject.associatedVocabularies as |vocab|}}
           {{#if vocab.termCount}}

@@ -13,12 +13,8 @@ import { or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import CompetenciesManager from './competencies-manager';
 import CompetenciesList from './competencies-list';
-import {
-  faArrowRotateLeft,
-  faCaretDown,
-  faCheck,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;
@@ -155,27 +151,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
         {{/if}}
         <div class="actions" data-test-actions>
           {{#if @isManaging}}
-            <button
-              type="button"
-              class="bigadd"
-              aria-label={{t "general.save"}}
-              {{on "click" (perform this.save)}}
-              data-test-save
-            >
-              <FaIcon
-                @icon={{if this.save.isRunning faSpinner faCheck}}
-                @spin={{this.save.isRunning}}
-              />
-            </button>
-            <button
-              type="button"
-              class="bigcancel"
-              aria-label={{t "general.cancel"}}
-              {{on "click" this.stopManaging}}
-              data-test-cancel
-            >
-              <FaIcon @icon={{faArrowRotateLeft}} />
-            </button>
+            <BigAddCancelButtons @add={{perform this.save}} @cancel={{this.stopManaging}} />
           {{else if (or @canUpdate @canDelete @canCreate)}}
             <button
               type="button"

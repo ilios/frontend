@@ -17,7 +17,8 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
-import { faArrowRotateLeft, faCheck, faSpinner, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faRotate } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class UserProfileBioManagerComponent extends Component {
   @service intl;
@@ -303,28 +304,7 @@ export default class UserProfileBioManagerComponent extends Component {
   <template>
     <div class="user-profile-bio-manager" data-test-user-profile-bio-manager ...attributes>
       <div class="actions">
-        <button
-          aria-label={{t "general.save"}}
-          type="button"
-          class="bigadd"
-          {{on "click" (perform this.save)}}
-          data-test-save
-        >
-          <FaIcon
-            @icon={{if this.save.isRunning faSpinner faCheck}}
-            @spin={{if this.save.isRunning true false}}
-          />
-        </button>
-        <button
-          aria-label={{t "general.cancel"}}
-          type="button"
-          disabled={{this.save.isRunning}}
-          class="bigcancel"
-          {{on "click" this.cancel}}
-          data-test-cancel
-        >
-          <FaIcon @icon={{faArrowRotateLeft}} />
-        </button>
+        <BigAddCancelButtons @add={{perform this.save}} @cancel={{this.cancel}} />
       </div>
 
       {{#unless @userAuthentication.username}}

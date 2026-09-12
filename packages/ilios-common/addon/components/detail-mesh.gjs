@@ -6,11 +6,10 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import MeshManager from 'ilios-common/components/mesh-manager';
 import sortBy from 'ilios-common/helpers/sort-by';
 import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
-import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class DetailMeshComponent extends Component {
   @tracked isManaging = false;
@@ -70,22 +69,11 @@ export default class DetailMeshComponent extends Component {
           </div>
           <div class="actions">
             {{#if this.isManaging}}
-              <button
-                class="bigadd"
-                type="button"
-                aria-label={{t "general.save"}}
-                {{on "click" (perform this.save)}}
-              >
-                <FaIcon @icon={{faCheck}} />
-              </button>
-              <button
-                class="bigcancel"
-                type="button"
-                aria-label={{t "general.cancel"}}
-                {{on "click" this.cancel}}
-              >
-                <FaIcon @icon={{faArrowRotateLeft}} />
-              </button>
+              <BigAddCancelButtons
+                @add={{perform this.save}}
+                @cancel={{this.cancel}}
+                @disableSave={{this.save.isRunning}}
+              />
             {{else if @editable}}
               <button type="button" {{on "click" this.manage}}>
                 {{t "general.meshManageTitle"}}
