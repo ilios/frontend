@@ -6,14 +6,13 @@ import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import noop from 'ilios-common/helpers/noop';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { number, string } from 'yup';
-import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class SchoolInstitutionalInformationManagerComponent extends Component {
   @service store;
@@ -81,26 +80,12 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
           </div>
           <div class="actions">
             {{#if @canUpdate}}
-              <button
-                type="button"
-                class="bigadd"
-                aria-label={{t "general.save"}}
-                {{on "click" (perform this.save)}}
-              >
-                <FaIcon
-                  @icon={{if this.save.isRunning faSpinner faCheck}}
-                  @spin={{this.save.isRunning}}
-                />
-              </button>
+              <BigAddCancelButtons
+                @add={{perform this.save}}
+                @cancel={{fn @manage false}}
+                @disableSave={{this.save.isRunning}}
+              />
             {{/if}}
-            <button
-              type="button"
-              class="bigcancel"
-              aria-label={{t "general.cancel"}}
-              {{on "click" (fn @manage false)}}
-            >
-              <FaIcon @icon={{faArrowRotateLeft}} />
-            </button>
           </div>
         </div>
         <div

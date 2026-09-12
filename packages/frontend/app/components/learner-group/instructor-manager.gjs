@@ -10,7 +10,8 @@ import UserNameInfo from 'ilios-common/components/user-name-info';
 import InstructorGroupMembersList from './instructor-group-members-list';
 import UserSearch from 'ilios-common/components/user-search';
 import UserStatus from 'ilios-common/components/user-status';
-import { faArrowRotateLeft, faCheck, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class LearnerGroupInstructorManagerComponent extends Component {
   @tracked instructors = [];
@@ -59,26 +60,10 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
             @availableInstructorGroups={{@availableInstructorGroups}}
             @currentlyActiveInstructorGroups={{this.instructorGroups}}
           />
-          <div>
-            <button
-              type="button"
-              class="bigadd"
-              aria-label={{t "general.save"}}
-              {{on "click" (fn @save this.instructors this.instructorGroups)}}
-              data-test-save
-            >
-              <FaIcon @icon={{faCheck}} />
-            </button>
-            <button
-              type="button"
-              class="bigcancel"
-              aria-label={{t "general.cancel"}}
-              {{on "click" @cancel}}
-              data-test-cancel
-            >
-              <FaIcon @icon={{faArrowRotateLeft}} />
-            </button>
-          </div>
+          <BigAddCancelButtons
+            @add={{fn @save this.instructors this.instructorGroups}}
+            @cancel={{@cancel}}
+          />
         </div>
       </div>
       <div class="detail-content">

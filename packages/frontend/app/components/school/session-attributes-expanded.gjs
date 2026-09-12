@@ -9,13 +9,8 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import SessionAttributesManager from './session-attributes-manager';
-import {
-  faArrowRotateLeft,
-  faCaretDown,
-  faCheck,
-  faSpinner,
-  faBan,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class SchoolSessionAttributesExpandedComponent extends Component {
   @tracked flippedShowSessionAttendanceRequired = false;
@@ -112,27 +107,11 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
         {{/if}}
         <div class="actions">
           {{#if @isManaging}}
-            <button
-              type="button"
-              class="bigadd"
-              aria-label={{t "general.save"}}
-              {{on "click" (perform this.save)}}
-              data-test-save
-            >
-              <FaIcon
-                @icon={{if this.save.isRunning faSpinner faCheck}}
-                @spin={{this.save.isRunning}}
-              />
-            </button>
-            <button
-              type="button"
-              class="bigcancel"
-              aria-label={{t "general.cancel"}}
-              {{on "click" this.cancel}}
-              data-test-cancel
-            >
-              <FaIcon @icon={{faArrowRotateLeft}} />
-            </button>
+            <BigAddCancelButtons
+              @add={{perform this.save}}
+              @cancel={{this.cancel}}
+              @disableSave={{this.save.isRunning}}
+            />
           {{else if @canUpdate}}
             <button type="button" {{on "click" (fn @manage true)}} data-test-manage>
               {{t "general.manageSessionAttributes"}}

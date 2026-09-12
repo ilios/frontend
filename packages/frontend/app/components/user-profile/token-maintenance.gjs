@@ -13,7 +13,8 @@ import pipe from 'ilios-common/helpers/pipe';
 import DatePicker from 'ilios-common/components/date-picker';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import { faCheck, faCopy, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faXmark } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class UserProfileApiTokenComponent extends Component {
   @service flashMessages;
@@ -140,28 +141,11 @@ export default class UserProfileApiTokenComponent extends Component {
                 @minDate={{this.minDate}}
                 @onChange={{this.selectExpiresAtDate}}
               />
-              <button
-                type="button"
-                class="bigadd"
-                aria-label={{t "general.newToken"}}
-                data-test-new-token-create
-                {{on "click" (perform this.createNewToken)}}
-              >
-                {{#if this.createNewToken.isRunning}}
-                  <LoadingSpinner />
-                {{else}}
-                  <FaIcon @icon={{faCheck}} />
-                {{/if}}
-              </button>
-              <button
-                type="button"
-                class="bigcancel"
-                aria-label={{t "general.cancel"}}
-                data-test-new-token-cancel
-                {{on "click" (pipe @toggleShowCreateNewToken this.reset)}}
-              >
-                <FaIcon @icon={{faXmark}} />
-              </button>
+              <BigAddCancelButtons
+                @add={{perform this.createNewToken}}
+                @cancel={{pipe @toggleShowCreateNewToken this.reset}}
+                @disableSave={{this.createNewToken.isRunning}}
+              />
             </div>
           {{/if}}
         {{/if}}

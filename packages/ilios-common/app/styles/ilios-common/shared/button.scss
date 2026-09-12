@@ -43,16 +43,16 @@ button {
   }
 
   &.bigadd {
-    background-color: var(--green);
-    color: var(--white);
-    margin-right: 0.25em;
+    background-color: light-dark(var(--green), var(--green));
+    color: light-dark(var(--white), var(--white));
+    margin-right: 0.5em;
 
     &:hover {
       background-color: var(--light-green);
     }
 
     &:disabled {
-      background-color: var(--grey);
+      background-color: light-dark(var(--grey), var(--grey));
       cursor: default;
 
       &:hover {
@@ -62,11 +62,11 @@ button {
   }
 
   &.bigcancel {
-    background-color: var(--red);
-    color: var(--white);
+    background-color: light-dark(var(--red), var(--red));
+    color: light-dark(var(--white), var(--white));
 
     &:hover {
-      background-color: var(--light-red);
+      background-color: light-dark(var(--light-red), var(--light-red));
     }
   }
 }

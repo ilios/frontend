@@ -12,12 +12,8 @@ import { fn } from '@ember/helper';
 import LmTypeIcon from 'ilios-common/components/lm-type-icon';
 import capitalize from 'ilios-common/helpers/capitalize';
 import t from 'ember-intl/helpers/t';
-import {
-  faArrowRotateLeft,
-  faUpDownLeftRight,
-  faSpinner,
-  faCheck,
-} from '@fortawesome/free-solid-svg-icons';
+import { faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class LearningMaterialsSortManagerComponent extends Component {
   @tracked sortableObjectList;
@@ -91,27 +87,11 @@ export default class LearningMaterialsSortManagerComponent extends Component {
     <div class="sort-manager" data-test-detail-learning-materials-sort-manager>
       {{#if this.learningMaterials.isResolved}}
         <div class="actions">
-          <button
-            class="bigadd"
-            type="button"
-            aria-label={{t "general.save"}}
-            {{on "click" (perform this.callSave)}}
-            data-test-save
-          >
-            <FaIcon
-              @icon={{if this.callSave.isRunning faSpinner faCheck}}
-              @spin={{this.callSave.isRunning}}
-            />
-          </button>
-          <button
-            class="bigcancel"
-            type="button"
-            aria-label={{t "general.cancel"}}
-            {{on "click" @cancel}}
-            data-test-cancel
-          >
-            <FaIcon @icon={{faArrowRotateLeft}} />
-          </button>
+          <BigAddCancelButtons
+            @add={{perform this.callSave}}
+            @cancel={{@cancel}}
+            @disableSave={{this.callSave.isRunning}}
+          />
         </div>
         <div class="content">
           <ul class="sortable-items">
