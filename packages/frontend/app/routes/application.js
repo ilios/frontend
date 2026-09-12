@@ -36,7 +36,7 @@ export default class AuthenticatedRoute extends Route {
     if (this.session.isAuthenticated) {
       //preload all the schools and configs
       //this is also done when a user is first authetnicated in app/services/session.js
-      await this.schoolConfig.setup();
+      await this.schoolConfig.load();
     }
   }
 
