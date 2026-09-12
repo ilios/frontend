@@ -117,8 +117,29 @@ export default class PrintCourseComponent extends Component {
   }
 
   get showMeSH() {
-    const schoolId = this.args.course.belongsTo('school').id();
-    return this.schoolConfig.getShowMeSH(schoolId);
+    return this.schoolConfig.getShowMeSH(this.args.course.belongsTo('school').id());
+  }
+
+  get showAttendanceRequired() {
+    return this.schoolConfig.getShowSessionAttendanceRequired(
+      this.args.course.belongsTo('school').id(),
+    );
+  }
+
+  get showSupplemental() {
+    return this.schoolConfig.getShowSessionSupplemental(this.args.course.belongsTo('school').id());
+  }
+
+  get showSpecialAttireRequired() {
+    return this.schoolConfig.getShowSessionSpecialAttireRequired(
+      this.args.course.belongsTo('school').id(),
+    );
+  }
+
+  get showSpecialEquipmentRequired() {
+    return this.schoolConfig.getShowSessionSpecialEquipmentRequired(
+      this.args.course.belongsTo('school').id(),
+    );
   }
 
   <template>
@@ -343,7 +364,15 @@ export default class PrintCourseComponent extends Component {
         </section>
       {{/if}}
       {{#each (sortBy "title" this.sessions) as |session|}}
-        <PrintCourseSession @session={{session}} @editable={{false}} @showMeSH={{this.showMeSH}} />
+        <PrintCourseSession
+          @session={{session}}
+          @editable={{false}}
+          @showMeSH={{this.showMeSH}}
+          @showSpecialEquipmentRequired={{this.showSpecialEquipmentRequired}}
+          @showSpecialAttireRequired={{this.showSpecialAttireRequired}}
+          @showSupplemental={{this.showSupplemental}}
+          @showAttendanceRequired={{this.showAttendanceRequired}}
+        />
       {{/each}}
     </section>
   </template>

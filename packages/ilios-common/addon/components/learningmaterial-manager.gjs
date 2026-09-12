@@ -32,22 +32,10 @@ export default class LearningmaterialManagerComponent extends Component {
   @service store;
   @service flashMessages;
   @service intl;
-  @service schoolConfig;
 
   constructor() {
     super(...arguments);
     this.loadExistingData();
-  }
-
-  get schoolId() {
-    const course = this.args.isCourse
-      ? this.args.subject
-      : this.store.peekRecord('course', this.args.subject.belongsTo('course').id());
-    return course.belongsTo('school').id();
-  }
-
-  get accessibilityRequirementsLink() {
-    return this.schoolConfig.getLearningMaterialAccessibilityRequirementsLink(this.schoolId);
   }
 
   validations = new YupValidations(this, {
@@ -544,9 +532,9 @@ export default class LearningmaterialManagerComponent extends Component {
                 <label>
                   {{t "general.accessibilityAgreement"}}:
                 </label>
-                {{#if this.accessibilityRequirementsLink}}
+                {{#if @accessibilityRequirementsLink}}
                   <a
-                    href="{{this.accessibilityRequirementsLink}}"
+                    href="{{@accessibilityRequirementsLink}}"
                     target="_blank"
                     rel="noopener noreferrer"
                     title={{t "general.accessibilityRequirementsLink"}}

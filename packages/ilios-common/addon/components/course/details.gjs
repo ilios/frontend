@@ -49,8 +49,25 @@ export default class CourseDetailsComponent extends Component {
   }
 
   get showMeSH() {
-    const schoolId = this.args.course.belongsTo('school').id();
-    return this.schoolConfig.getShowMeSH(schoolId);
+    return this.schoolConfig.getShowMeSH(this.args.course.belongsTo('school').id());
+  }
+
+  get allowMultipleCourseObjectiveParents() {
+    return this.schoolConfig.getAllowMultipleCourseObjectiveParents(
+      this.args.course.belongsTo('school').id(),
+    );
+  }
+
+  get accessibilityRequired() {
+    return this.schoolConfig.getLearningMaterialAccessibilityRequired(
+      this.args.course.belongsTo('school').id(),
+    );
+  }
+
+  get accessibilityRequirementsLink() {
+    return this.schoolConfig.getLearningMaterialAccessibilityRequirementsLink(
+      this.args.course.belongsTo('school').id(),
+    );
   }
 
   get notRolloverRoute() {
@@ -90,7 +107,10 @@ export default class CourseDetailsComponent extends Component {
             @setCourseTaxonomyDetails={{@setCourseTaxonomyDetails}}
             @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
             @setCourseManageLeadership={{@setCourseManageLeadership}}
+            @accessibilityRequired={{this.accessibilityRequired}}
+            @accessibilityRequirementsLink={{this.accessibilityRequirementsLink}}
             @showMeSH={{this.showMeSH}}
+            @allowMultipleCourseObjectiveParents={{this.allowMultipleCourseObjectiveParents}}
           />
           {{#if @showDetailsCollapseControl}}
             <div class="details-collapse-control">

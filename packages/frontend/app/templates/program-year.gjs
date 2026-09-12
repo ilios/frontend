@@ -27,5 +27,6 @@ import set from 'ember-set-helper/helpers/set';
     @setShowCohortMembers={{set @controller "showCohortMembers"}}
     @expandedObjectiveIds={{@controller.expandedObjectiveIds}}
     @setExpandedObjectiveIds={{@controller.setExpandedObjectiveIds}}
+    @showMeSH={{@controller.showMeSH}}
   />
 </template>

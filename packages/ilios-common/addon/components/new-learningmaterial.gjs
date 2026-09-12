@@ -31,7 +31,6 @@ export default class NewLearningmaterialComponent extends Component {
   @service currentUser;
   @service iliosConfig;
   @service intl;
-  @service schoolConfig;
 
   @tracked filename;
   @tracked fileHash;
@@ -98,7 +97,7 @@ export default class NewLearningmaterialComponent extends Component {
           (value) => this.copyrightRationale || value === true,
         ),
     }),
-    markedAccessible: boolean().when(['$isFile', '$accessibilityRequired'], {
+    markedAccessible: boolean().when(['$isFile', '$args.accessibilityRequired'], {
       is: true,
       then: (schema) =>
         schema.test(
@@ -120,22 +119,6 @@ export default class NewLearningmaterialComponent extends Component {
       }),
   });
   userModel = new TrackedAsyncData(this.currentUser.getModel());
-
-  get schoolId() {
-    const course = this.args.isCourse
-      ? this.args.subject
-      : this.store.peekRecord('course', this.args.subject.belongsTo('course').id());
-    return course.belongsTo('school').id();
-  }
-
-  // https://www.ada.gov/law-and-regs/regulations/title-ii-2010-regulations/#-35200-requirements-for-web-and-mobile-accessibility
-  get accessibilityRequired() {
-    return this.schoolConfig.getLearningMaterialAccessibilityRequired(this.schoolId);
-  }
-
-  get accessibilityRequirementsLink() {
-    return this.schoolConfig.getLearningMaterialAccessibilityRequirementsLink(this.schoolId);
-  }
 
   get uniqueId() {
     return guidFor(this);
@@ -514,9 +497,9 @@ export default class NewLearningmaterialComponent extends Component {
               <label for="marked-accessible-{{this.uniqueId}}">
                 {{t "general.accessibilityAgreement"}}
               </label>
-              {{#if this.accessibilityRequirementsLink}}
+              {{#if @accessibilityRequirementsLink}}
                 <a
-                  href="{{this.accessibilityRequirementsLink}}"
+                  href="{{@accessibilityRequirementsLink}}"
                   target="_blank"
                   rel="noopener noreferrer"
                   title={{t "general.accessibilityRequirementsLink"}}
