@@ -1,11 +1,12 @@
 import Service, { service } from '@ember/service';
+import { tracked } from 'tracked-built-ins';
 
 const DEFAULT_SHOW_MESH = true;
 
 export default class SchoolConfig extends Service {
   @service store;
 
-  #config = new Map();
+  #config = tracked(Map);
   #dirtyConfigs = new Set();
 
   async setup() {
@@ -13,7 +14,7 @@ export default class SchoolConfig extends Service {
     const schools = await this.store.findAll('school', { include: 'configurations' });
 
     for (const school of schools) {
-      const schoolConfig = new Map();
+      const schoolConfig = tracked(new Map());
       const configs = await school.configurations;
       configs.forEach(({ name, parsedValue }) => {
         schoolConfig.set(name, parsedValue);
@@ -84,7 +85,7 @@ export default class SchoolConfig extends Service {
       const schoolId = config.belongsTo('school').id();
       let schoolConfig = this.#config.get(Number(schoolId));
       if (!schoolConfig) {
-        schoolConfig = new Map();
+        schoolConfig = tracked(new Map());
         this.#config.set(Number(schoolId), schoolConfig);
       }
       schoolConfig.set(config.name, config.parsedValue);
