@@ -7,19 +7,22 @@ export default class SchoolConfig extends Service {
   @service store;
 
   #config = tracked(Map);
-  #dirtyConfigs = new Set();
+  #modifiedConfigs = new Set();
 
-  async setup() {
+  async load() {
     //we need all the schools, so load through them
     const schools = await this.store.findAll('school', { include: 'configurations' });
 
     for (const school of schools) {
-      const schoolConfig = tracked(new Map());
+      let schoolConfig = this.#config.get(Number(school.id));
+      if (!schoolConfig) {
+        schoolConfig = tracked(new Map());
+        this.#config.set(Number(school.id), schoolConfig);
+      }
       const configs = await school.configurations;
       configs.forEach(({ name, parsedValue }) => {
         schoolConfig.set(name, parsedValue);
       });
-      this.#config.set(Number(school.id), schoolConfig);
     }
   }
 
@@ -80,17 +83,9 @@ export default class SchoolConfig extends Service {
   }
 
   async save() {
-    await Promise.all([...this.#dirtyConfigs].map(async (c) => c.save()));
-    this.#dirtyConfigs.forEach((config) => {
-      const schoolId = config.belongsTo('school').id();
-      let schoolConfig = this.#config.get(Number(schoolId));
-      if (!schoolConfig) {
-        schoolConfig = tracked(new Map());
-        this.#config.set(Number(schoolId), schoolConfig);
-      }
-      schoolConfig.set(config.name, config.parsedValue);
-    });
-    this.#dirtyConfigs.clear();
+    await Promise.all([...this.#modifiedConfigs].map(async (c) => c.save()));
+    this.#modifiedConfigs.clear();
+    await this.load();
   }
 
   async #setValue(schoolId, name, value) {
@@ -105,7 +100,7 @@ export default class SchoolConfig extends Service {
     }
     if (config.parsedValue !== value) {
       config.value = value;
-      this.#dirtyConfigs.add(config);
+      this.#modifiedConfigs.add(config);
     }
   }
 }

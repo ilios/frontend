@@ -60,7 +60,7 @@ module('Integration | Service | school config', function (hooks) {
       value: 'true',
     });
 
-    await this.schoolConfig.setup();
+    await this.schoolConfig.load();
 
     assert.true(this.schoolConfig.getShowMeSH(school.id));
     assert.strictEqual(
@@ -90,7 +90,7 @@ module('Integration | Service | school config', function (hooks) {
       value: 'false',
     });
 
-    await this.schoolConfig.setup();
+    await this.schoolConfig.load();
 
     assert.true(this.schoolConfig.getShowSessionSupplemental(school1.id));
     assert.false(this.schoolConfig.getShowSessionSupplemental(school2.id));
@@ -105,7 +105,7 @@ module('Integration | Service | school config', function (hooks) {
       value: 'true',
     });
 
-    await this.schoolConfig.setup();
+    await this.schoolConfig.load();
 
     assert.true(this.schoolConfig.getShowMeSH(null));
     assert.strictEqual(
@@ -141,8 +141,10 @@ module('Integration | Service | school config', function (hooks) {
 
       assert.strictEqual(data.attributes.name, 'showSessionSupplemental');
       assert.strictEqual(data.attributes.value, 'false');
+      assert.strictEqual(data.relationships.school.data.id, schoolModel.id);
 
       const config = await this.server.create('school-config', {
+        school,
         name: data.attributes.name,
         value: data.attributes.value,
       });
@@ -202,8 +204,10 @@ module('Integration | Service | school config', function (hooks) {
         assert.step('POST called');
         assert.strictEqual(data.attributes.name, configName);
         assert.strictEqual(data.attributes.value, String(value));
+        assert.strictEqual(data.relationships.school.data.id, schoolModel.id);
 
         const config = await this.server.create('school-config', {
+          school,
           name: data.attributes.name,
           value: data.attributes.value,
         });
@@ -263,7 +267,7 @@ module('Integration | Service | school config', function (hooks) {
         value: initialValue,
       });
 
-      await this.schoolConfig.setup();
+      await this.schoolConfig.load();
 
       const upperCase = configName[0].toUpperCase() + configName.slice(1);
       const setter = `set${upperCase}`;
@@ -308,7 +312,7 @@ module('Integration | Service | school config', function (hooks) {
       value: 'true',
     });
 
-    await this.schoolConfig.setup();
+    await this.schoolConfig.load();
 
     this.server.post('/api/schoolconfigs', function () {
       assert.step('POST called');
@@ -343,7 +347,7 @@ module('Integration | Service | school config', function (hooks) {
       value: 'false',
     });
 
-    await this.schoolConfig.setup();
+    await this.schoolConfig.load();
 
     this.server.post('/api/schoolconfigs', function () {
       assert.step('POST called');
