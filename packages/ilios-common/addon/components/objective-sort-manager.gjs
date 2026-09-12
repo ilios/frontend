@@ -6,13 +6,12 @@ import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
 import FadeText from 'ilios-common/components/fade-text';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faArrowRotateLeft, faCheck, faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
+import { faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class ObjectiveSortManagerComponent extends Component {
   @tracked totalObjectivesToSave;
@@ -110,29 +109,13 @@ export default class ObjectiveSortManagerComponent extends Component {
   <template>
     <div class="sort-manager">
       <div class="actions">
-        <button
-          class="bigadd"
-          type="button"
-          disabled={{this.saveSortOrder.isRunning}}
-          aria-label={{t "general.save"}}
-          {{on "click" (perform this.saveSortOrder)}}
-        >
-          {{#if this.saveSortOrder.isRunning}}
-            <LoadingSpinner />
-            {{this.saveProgress}}%
-          {{else}}
-            <FaIcon @icon={{faCheck}} />
-          {{/if}}
-        </button>
-        <button
-          class="bigcancel"
-          type="button"
-          disabled={{this.saveSortOrder.isRunning}}
-          aria-label={{t "general.cancel"}}
-          {{on "click" @close}}
-        >
-          <FaIcon @icon={{faArrowRotateLeft}} />
-        </button>
+        <BigAddCancelButtons
+          @add={{perform this.saveSortOrder}}
+          @addProgress={{this.saveProgress}}
+          @cancel={{@close}}
+          @disableSave={{this.saveSortOrder.isRunning}}
+          @disableCancel={{this.saveSortOrder.isRunning}}
+        />
       </div>
       <div class="content">
         <ul class="sortable-items">

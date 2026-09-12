@@ -10,12 +10,11 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { or } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import LearnergroupSelectionManager from 'ilios-common/components/learnergroup-selection-manager';
 import LearnerSelectionManager from 'ilios-common/components/learner-selection-manager';
 import SelectedLearnerGroups from 'ilios-common/components/selected-learner-groups';
 import SelectedLearners from 'ilios-common/components/selected-learners';
-import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @service currentUser;
@@ -178,24 +177,11 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
         </div>
         <div class="actions">
           {{#if this.isManaging}}
-            <button
-              class="bigadd"
-              type="button"
-              aria-label={{t "general.save"}}
-              {{on "click" (perform this.save)}}
-              data-test-save
-            >
-              <FaIcon @icon={{faCheck}} />
-            </button>
-            <button
-              class="bigcancel"
-              type="button"
-              aria-label={{t "general.cancel"}}
-              {{on "click" this.cancel}}
-              data-test-cancel
-            >
-              <FaIcon @icon={{faArrowRotateLeft}} />
-            </button>
+            <BigAddCancelButtons
+              @add={{perform this.save}}
+              @cancel={{this.cancel}}
+              @disableSave={{this.save.isRunning}}
+            />
           {{else if @editable}}
             <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
               {{t "general.manageLearners"}}

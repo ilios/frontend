@@ -7,10 +7,9 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import DetailCohortManager from 'ilios-common/components/detail-cohort-manager';
 import DetailCohortList from 'ilios-common/components/detail-cohort-list';
-import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class DetailCohortsComponent extends Component {
   @tracked isManaging = false;
@@ -112,27 +111,11 @@ export default class DetailCohortsComponent extends Component {
         </div>
         <div class="actions">
           {{#if this.isManaging}}
-            <button
-              class="bigadd"
-              aria-label={{t "general.save"}}
-              type="button"
-              {{on "click" (perform this.save)}}
-              data-test-save
-            >
-              <FaIcon
-                @icon={{if this.save.isRunning faSpinner faCheck}}
-                @spin={{this.save.isRunning}}
-              />
-            </button>
-            <button
-              class="bigcancel"
-              type="button"
-              aria-label={{t "general.cancel"}}
-              {{on "click" this.cancel}}
-              data-test-cancel
-            >
-              <FaIcon @icon={{faArrowRotateLeft}} />
-            </button>
+            <BigAddCancelButtons
+              @add={{perform this.save}}
+              @cancel={{this.cancel}}
+              @disableSave={{this.save.isRunning}}
+            />
           {{else if @editable}}
             <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
               {{t "general.cohortsManageTitle"}}

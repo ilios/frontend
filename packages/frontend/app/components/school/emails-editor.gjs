@@ -7,14 +7,13 @@ import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
-import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class SchoolEmailsEditorComponent extends Component {
   @service intl;
@@ -105,27 +104,11 @@ export default class SchoolEmailsEditorComponent extends Component {
         <div class="header">
           <div class="title">{{t "general.emails"}}</div>
           <div class="actions">
-            <button
-              type="button"
-              class="bigadd"
-              aria-label={{t "general.save"}}
-              {{on "click" (perform this.save)}}
-              data-test-save
-            >
-              <FaIcon
-                @icon={{if this.save.isRunning faSpinner faCheck}}
-                @spin={{this.save.isRunning}}
-              />
-            </button>
-            <button
-              type="button"
-              class="bigcancel"
-              aria-label={{t "general.cancel"}}
-              {{on "click" @cancel}}
-              data-test-cancel
-            >
-              <FaIcon @icon={{faArrowRotateLeft}} />
-            </button>
+            <BigAddCancelButtons
+              @add={{perform this.save}}
+              @cancel={{@cancel}}
+              @disableSave={{this.save.isRunning}}
+            />
           </div>
         </div>
         <div class="content">

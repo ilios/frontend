@@ -2,10 +2,8 @@ import Component from '@glimmer/component';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import FadeText from 'ilios-common/components/fade-text';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class SessionObjectiveListItemParentsComponent extends Component {
   get parentTitles() {
@@ -26,29 +24,7 @@ export default class SessionObjectiveListItemParentsComponent extends Component 
       data-test-objective-list-item-parents
     >
       {{#if @isManaging}}
-        <button
-          type="button"
-          class="bigadd"
-          {{on "click" @save}}
-          disabled={{@isSaving}}
-          aria-label={{t "general.save"}}
-          data-test-save
-        >
-          {{#if @isSaving}}
-            <LoadingSpinner />
-          {{else}}
-            <FaIcon @icon={{faCheck}} />
-          {{/if}}
-        </button>
-        <button
-          type="button"
-          class="bigcancel"
-          {{on "click" @cancel}}
-          aria-label={{t "general.cancel"}}
-          data-test-cancel
-        >
-          <FaIcon @icon={{faArrowRotateLeft}} />
-        </button>
+        <BigAddCancelButtons @add={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
       {{else}}
         {{#if @parents}}
           <FadeText

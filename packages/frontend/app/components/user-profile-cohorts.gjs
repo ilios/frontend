@@ -13,12 +13,8 @@ import { fn } from '@ember/helper';
 import UserProfileCohortsManager from './user-profile-cohorts-manager';
 import set from 'ember-set-helper/helpers/set';
 import UserProfileCohortsDetails from './user-profile-cohorts-details';
-import {
-  faArrowRotateLeft,
-  faPenToSquare,
-  faCheck,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class UserProfileCohortsComponent extends Component {
   @service currentUser;
@@ -182,40 +178,28 @@ export default class UserProfileCohortsComponent extends Component {
           </h2>
           <div class="actions">
             {{#if @isManaging}}
-              <button
-                type="button"
-                disabled={{or
-                  this.save.isRunning
-                  this.cancel.isRunning
-                  (not this.currentPrimaryCohort)
+              <BigAddCancelButtons
+                @add={{perform this.save}}
+                @cancel={{perform this.cancel}}
+                @addClasses={{if
+                  (or this.save.isRunning this.cancel.isRunning (not this.currentPrimaryCohort))
+                  "bigadd disabled"
+                  "bigadd"
                 }}
-                class="bigadd{{if
-                    (or this.save.isRunning this.cancel.isRunning (not this.currentPrimaryCohort))
-                    ' disabled'
-                  }}"
-                title={{if
+                @title={{if
                   (or this.save.isRunning this.cancel.isRunning (not this.currentPrimaryCohort))
                   (t "general.disabledNoPrimaryCohort")
                   (t "general.save")
                 }}
-                {{on "click" (perform this.save)}}
-                data-test-save
-              >
-                <FaIcon
-                  @icon={{if this.save.isRunning faSpinner faCheck}}
-                  @spin={{this.save.isRunning}}
-                />
-              </button>
-              <button
-                type="button"
-                disabled={{or this.save.isRunning this.cancel.isRunning}}
-                class="bigcancel"
-                aria-label={{t "general.cancel"}}
-                {{on "click" (perform this.cancel)}}
-                data-test-cancel
-              >
-                <FaIcon @icon={{faArrowRotateLeft}} />
-              </button>
+                @disableSave={{or
+                  this.save.isRunning
+                  this.cancel.isRunning
+                  (not this.currentPrimaryCohort)
+                }}
+                @iconSpinOverride={{true}}
+                @iconSpin={{this.save.isRunning}}
+                @disableCancel={{or this.save.isRunning this.cancel.isRunning}}
+              />
             {{else if @isManageable}}
               <button
                 aria-label={{t "general.manage"}}

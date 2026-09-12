@@ -9,11 +9,10 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { or } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import InstructorSelectionManager from 'ilios-common/components/instructor-selection-manager';
 import SelectedInstructors from 'ilios-common/components/selected-instructors';
 import SelectedInstructorGroups from 'ilios-common/components/selected-instructor-groups';
-import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class DetailInstructorsComponent extends Component {
   @service currentUser;
@@ -149,24 +148,11 @@ export default class DetailInstructorsComponent extends Component {
         </div>
         <div class="actions">
           {{#if this.isManaging}}
-            <button
-              class="bigadd"
-              type="button"
-              aria-label={{t "general.save"}}
-              {{on "click" (perform this.save)}}
-              data-test-save
-            >
-              <FaIcon @icon={{faCheck}} />
-            </button>
-            <button
-              class="bigcancel"
-              type="button"
-              aria-label={{t "general.cancel"}}
-              {{on "click" this.cancel}}
-              data-test-cancel
-            >
-              <FaIcon @icon={{faArrowRotateLeft}} />
-            </button>
+            <BigAddCancelButtons
+              @add={{perform this.save}}
+              @cancel={{this.cancel}}
+              @disableSave={{this.save.isRunning}}
+            />
           {{else if @editable}}
             <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
               {{t "general.instructorsManageTitle"}}

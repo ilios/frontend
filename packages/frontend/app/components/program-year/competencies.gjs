@@ -17,12 +17,8 @@ import { or } from 'ember-truth-helpers';
 import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import CompetencyListItem from './competency-list-item';
-import {
-  faArrowRotateLeft,
-  faCaretDown,
-  faCheck,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class ProgramYearCompetenciesComponent extends Component {
   @service flashMessages;
@@ -175,27 +171,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
         <div class="actions" data-test-actions>
           {{#if @canUpdate}}
             {{#if @isManaging}}
-              <button
-                type="button"
-                class="bigadd"
-                aria-label={{t "general.save"}}
-                {{on "click" (perform this.save)}}
-                data-test-save
-              >
-                <FaIcon
-                  @icon={{if this.save.isRunning faSpinner faCheck}}
-                  @spin={{this.save.isRunning}}
-                />
-              </button>
-              <button
-                type="button"
-                class="bigcancel"
-                aria-label={{t "general.cancel"}}
-                {{on "click" this.cancel}}
-                data-test-cancel
-              >
-                <FaIcon @icon={{faArrowRotateLeft}} />
-              </button>
+              <BigAddCancelButtons @add={{perform this.save}} @cancel={{this.cancel}} />
             {{else}}
               <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>
                 {{t "general.competenciesManageTitle"}}

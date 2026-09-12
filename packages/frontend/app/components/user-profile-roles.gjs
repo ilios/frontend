@@ -13,12 +13,8 @@ import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
 import { eq, not } from 'ember-truth-helpers';
 import YesNo from './yes-no';
-import {
-  faArrowRotateLeft,
-  faPenToSquare,
-  faCheck,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class UserProfileRolesComponent extends Component {
   @service store;
@@ -115,27 +111,7 @@ export default class UserProfileRolesComponent extends Component {
     >
       <div class="actions">
         {{#if @isManaging}}
-          <button
-            type="button"
-            class="bigadd"
-            data-test-save
-            aria-label={{t "general.save"}}
-            {{on "click" (perform this.save)}}
-          >
-            <FaIcon
-              @icon={{if this.save.isRunning faSpinner faCheck}}
-              @spin={{this.save.isRunning}}
-            />
-          </button>
-          <button
-            type="button"
-            disabled={{this.save.isRunning}}
-            class="bigcancel"
-            aria-label={{t "general.cancel"}}
-            {{on "click" this.cancel}}
-          >
-            <FaIcon @icon={{faArrowRotateLeft}} />
-          </button>
+          <BigAddCancelButtons @add={{perform this.save}} @cancel={{this.cancel}} />
         {{else if @isManageable}}
           <button
             aria-label={{t "general.manage"}}
