@@ -421,6 +421,9 @@ importers:
       ember-qunit:
         specifier: ^9.0.4
         version: 9.1.0(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(qunit@2.26.0)(supports-color@8.1.1)
+      ember-qunit-nice-errors:
+        specifier: ^3.0.0
+        version: 3.0.0(@babel/core@7.29.7(supports-color@8.1.1))
       ember-resolver:
         specifier: ^13.1.1
         version: 13.2.0
@@ -1460,6 +1463,9 @@ importers:
       ember-qunit:
         specifier: ^9.0.4
         version: 9.1.0(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(qunit@2.26.0)(supports-color@8.1.1)
+      ember-qunit-nice-errors:
+        specifier: ^3.0.0
+        version: 3.0.0(@babel/core@7.29.7(supports-color@8.1.1))
       ember-resolver:
         specifier: ^13.1.1
         version: 13.2.0
@@ -5426,6 +5432,12 @@ packages:
         optional: true
       '@glint/template':
         optional: true
+
+  ember-qunit-nice-errors@3.0.0:
+    resolution: {integrity: sha512-U5ZAPeaEXxKyMIKLjvTFgl4jIhtWhMQzJUqwQr+l7Z2FcTQ6ZncyoCs2V0mIHyR2f/Q3vMoc33gx+7Rw45Xy7g==}
+    engines: {node: '>= 22'}
+    peerDependencies:
+      '@babel/core': ^7.0.0 || ^8.0.0
 
   ember-qunit@9.1.0:
     resolution: {integrity: sha512-dE32lSODyv4em0ACBS8PDzrAIPKR75hhSpn/au0qFBlzbdmNA/VVsgv2aoFAVRdlQ0zYJ8EiNPFqsBFciIeXVA==}
@@ -15501,6 +15513,10 @@ snapshots:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+
+  ember-qunit-nice-errors@3.0.0(@babel/core@7.29.7(supports-color@8.1.1)):
+    dependencies:
+      '@babel/core': 7.29.7(supports-color@8.1.1)
 
   ember-qunit@9.1.0(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(qunit@2.26.0)(supports-color@8.1.1):
     dependencies:

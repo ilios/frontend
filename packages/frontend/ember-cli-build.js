@@ -19,7 +19,10 @@ module.exports = async function (defaults) {
 
     hinting: isTestBuild,
     babel: {
-      plugins: [require.resolve('ember-concurrency/async-arrow-task-transform')],
+      plugins: [
+        require.resolve('ember-concurrency/async-arrow-task-transform'),
+        require.resolve('ember-qunit-nice-errors'),
+      ],
     },
     'ember-cli-qunit': {
       useLintTree: false,

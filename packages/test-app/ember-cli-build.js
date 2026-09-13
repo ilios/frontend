@@ -25,6 +25,7 @@ module.exports = async function (defaults) {
       plugins: [
         require.resolve('ember-auto-import/babel-plugin'),
         require.resolve('ember-concurrency/async-arrow-task-transform'),
+        require.resolve('ember-qunit-nice-errors'),
       ],
     },
   });
