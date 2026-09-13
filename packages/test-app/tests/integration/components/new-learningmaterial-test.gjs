@@ -36,6 +36,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{false}}
+          @accessibilityRequirementsLink={{false}}
         />
       </template>,
     );
@@ -64,6 +66,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{false}}
+          @accessibilityRequirementsLink={{false}}
         />
       </template>,
     );
@@ -99,6 +103,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{false}}
+          @accessibilityRequirementsLink={{false}}
         />
       </template>,
     );
@@ -119,6 +125,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{false}}
+          @accessibilityRequirementsLink={{false}}
         />
       </template>,
     );
@@ -161,6 +169,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{false}}
+          @accessibilityRequirementsLink={{false}}
         />
       </template>,
     );
@@ -191,12 +201,6 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   });
 
   test('validate accessibility permission enabled', async function (assert) {
-    this.schoolConfig = this.store.createRecord('school-config', {
-      name: 'learningMaterialAccessibilityRequired',
-      value: true,
-      school: this.schoolModel,
-    });
-
     this.set('type', 'file');
     await render(
       <template>
@@ -208,6 +212,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{true}}
+          @accessibilityRequirementsLink={{false}}
         />
       </template>,
     );
@@ -240,12 +246,6 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   });
 
   test('validate accessibility permission disabled', async function (assert) {
-    this.schoolConfig = this.store.createRecord('school-config', {
-      name: 'learningMaterialAccessibilityRequired',
-      value: false,
-      school: this.schoolModel,
-    });
-
     this.set('type', 'file');
     await render(
       <template>
@@ -257,6 +257,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{false}}
+          @accessibilityRequirementsLink={{false}}
         />
       </template>,
     );
@@ -272,12 +274,6 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   });
 
   test('validate accessibility requirements link blank', async function (assert) {
-    this.schoolConfig = this.store.createRecord('school-config', {
-      name: 'learningMaterialAccessibilityRequirementsLink',
-      value: '',
-      school: this.schoolModel,
-    });
-
     this.set('type', 'file');
     await render(
       <template>
@@ -289,6 +285,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{false}}
+          @accessibilityRequirementsLink=""
         />
       </template>,
     );
@@ -299,12 +297,6 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   });
 
   test('validate accessibility requirements link', async function (assert) {
-    this.schoolConfig = this.store.createRecord('school-config', {
-      name: 'learningMaterialAccessibilityRequirementsLink',
-      value: 'https://iliosproject.org',
-      school: this.schoolModel,
-    });
-
     this.set('type', 'file');
     await render(
       <template>
@@ -316,6 +308,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{false}}
+          @accessibilityRequirementsLink="https://iliosproject.org"
         />
       </template>,
     );
@@ -337,6 +331,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{false}}
+          @accessibilityRequirementsLink={{false}}
         />
       </template>,
     );
@@ -379,6 +375,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
           @learningMaterialUserRoles={{(array)}}
           @save={{(noop)}}
           @cancel={{(noop)}}
+          @accessibilityRequired={{false}}
+          @accessibilityRequirementsLink={{false}}
         />
       </template>,
     );

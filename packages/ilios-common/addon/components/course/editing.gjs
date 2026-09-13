@@ -41,6 +41,7 @@ import DetailCohorts from 'ilios-common/components/detail-cohorts';
         @collapse={{fn @setCourseObjectiveDetails false}}
         @expand={{fn @setCourseObjectiveDetails true}}
         @showMeSH={{@showMeSH}}
+        @allowMultipleCourseObjectiveParents={{@allowMultipleCourseObjectiveParents}}
       />
     {{else}}
       <CollapsedObjectives
@@ -53,6 +54,8 @@ import DetailCohorts from 'ilios-common/components/detail-cohorts';
       @subject={{@course}}
       @isCourse={{true}}
       @editable={{@editable}}
+      @accessibilityRequired={{@accessibilityRequired}}
+      @accessibilityRequirementsLink={{@accessibilityRequirementsLink}}
       @showMeSH={{@showMeSH}}
     />
     {{#if (or (eq (get @course.competencies "length") 0) @courseCompetencyDetails)}}

@@ -44,52 +44,6 @@ export default class PrintCourseSessionComponent extends Component {
     return new TrackedAsyncData(this.args.session.prerequisites);
   }
 
-  @cached
-  get showAttendanceRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionAttendanceRequired')
-        : false,
-    );
-  }
-
-  @cached
-  get courseData() {
-    return new TrackedAsyncData(this.args.session.course);
-  }
-
-  @cached
-  get schoolData() {
-    return new TrackedAsyncData(this.courseData.isResolved ? this.courseData.value.school : null);
-  }
-
-  @cached
-  get showSupplementalData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSupplemental')
-        : false,
-    );
-  }
-
-  @cached
-  get showSpecialAttireRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSpecialAttireRequired')
-        : false,
-    );
-  }
-
-  @cached
-  get showSpecialEquipmentRequiredData() {
-    return new TrackedAsyncData(
-      this.schoolData.isResolved
-        ? this.schoolData.value?.getConfigValue('showSessionSpecialEquipmentRequired')
-        : false,
-    );
-  }
-
   get sessionObjectives() {
     return this.sessionObjectivesData.isResolved ? this.sessionObjectivesData.value : [];
   }
@@ -112,28 +66,6 @@ export default class PrintCourseSessionComponent extends Component {
 
   get prerequisites() {
     return this.prerequisitesData.isResolved ? this.prerequisitesData.value : null;
-  }
-
-  get showAttendanceRequired() {
-    return this.showAttendanceRequiredData.isResolved
-      ? this.showAttendanceRequiredData.value
-      : false;
-  }
-
-  get showSupplemental() {
-    return this.showSupplementalData.isResolved ? this.showSupplementalData.value : false;
-  }
-
-  get showSpecialAttireRequired() {
-    return this.showSpecialAttireRequiredData.isResolved
-      ? this.showSpecialAttireRequiredData.value
-      : false;
-  }
-
-  get showSpecialEquipmentRequired() {
-    return this.showSpecialEquipmentRequiredData.isResolved
-      ? this.showSpecialEquipmentRequiredData.value
-      : false;
   }
 
   get uniqueId() {
@@ -186,7 +118,7 @@ export default class PrintCourseSessionComponent extends Component {
             </div>
           </div>
           <br />
-          {{#if this.showSupplemental}}
+          {{#if @showSupplemental}}
             <div class="inline-label-data-block">
               <label for="supplemental-curriculum-{{this.uniqueId}}">
                 {{t "general.supplementalCurriculum"}}:
@@ -201,7 +133,7 @@ export default class PrintCourseSessionComponent extends Component {
               </div>
             </div>
           {{/if}}
-          {{#if this.showSpecialAttireRequired}}
+          {{#if @showSpecialAttireRequired}}
             <div class="inline-label-data-block">
               <label for="special-attire-{{this.uniqueId}}">
                 {{t "general.specialAttireRequired"}}:
@@ -216,7 +148,7 @@ export default class PrintCourseSessionComponent extends Component {
               </div>
             </div>
           {{/if}}
-          {{#if this.showSpecialEquipmentRequired}}
+          {{#if @showSpecialEquipmentRequired}}
             <div class="inline-label-data-block">
               <label for="special-equipment-{{this.uniqueId}}">
                 {{t "general.specialEquipmentRequired"}}:
@@ -231,7 +163,7 @@ export default class PrintCourseSessionComponent extends Component {
               </div>
             </div>
           {{/if}}
-          {{#if this.showAttendanceRequired}}
+          {{#if @showAttendanceRequired}}
             <div class="inline-label-data-block">
               <label for="attendance-{{this.uniqueId}}">
                 {{t "general.attendanceRequired"}}:

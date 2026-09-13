@@ -16,6 +16,7 @@ import ObjectiveListLoading from 'ilios-common/components/course/objective-list-
 export default class CourseObjectiveListComponent extends Component {
   @service store;
   @service intl;
+
   @tracked isSorting = false;
 
   @cached
@@ -78,10 +79,7 @@ export default class CourseObjectiveListComponent extends Component {
       cohorts.map(async (cohort) => {
         const programYear = await cohort.programYear;
         const program = await programYear.program;
-        const school = await program.school;
-        const allowMultipleCourseObjectiveParents = await school.getConfigValue(
-          'allowMultipleCourseObjectiveParents',
-        );
+        const allowMultipleCourseObjectiveParents = this.args.allowMultipleCourseObjectiveParents;
         const objectives = await programYear.programYearObjectives;
         const objectiveObjects = await Promise.all(
           objectives.map(async (objective) => {
