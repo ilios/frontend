@@ -18,10 +18,6 @@ module.exports = function (environment) {
     i18n: {
       defaultLocale: 'en',
     },
-    'ember-qunit-nice-errors': {
-      completeExistingMessages: true,
-      showFileInfo: true,
-    },
     fontawesome: {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
