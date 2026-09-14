@@ -27,5 +27,7 @@ setupDeprecationWorkflow({
     { handler: 'silence', matchId: 'deprecate-import-default-value-from-ember' },
     { handler: 'silence', matchId: 'ember-data:deprecate-non-strict-types' },
     { handler: 'silence', matchId: 'warp-drive:deprecate-legacy-request-methods' },
+    { handler: 'silence', matchId: 'ember-simple-auth.configuration-resolver' },
+    { handler: 'silence', matchId: 'ember-simple-auth.session-main' },
   ],
 });
