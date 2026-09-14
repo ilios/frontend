@@ -636,4 +636,20 @@ module('Acceptance | Learner Group', function (hooks) {
     );
     assert.ok(page.root.courseAssociations.header.toggle.isExpanded);
   });
+
+  test('moving learners from cohort maintains scroll posision ilios/ilios#7305', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.create('learner-group', { cohort });
+    await this.server.createList('user', 50, { cohorts: [cohort] });
+
+    await page.visit({ learnerGroupId: 1 });
+    assert.notOk(await page.root.cohortUserManager.users[25].isInView());
+
+    await page.root.cohortUserManager.users[25].scrollTo();
+    assert.ok(await page.root.cohortUserManager.users[25].isInView());
+
+    await page.root.cohortUserManager.users[22].add();
+    assert.ok(await page.root.cohortUserManager.users[25].isInView());
+  });
 });

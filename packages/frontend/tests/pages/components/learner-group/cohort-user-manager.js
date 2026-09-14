@@ -9,6 +9,7 @@ import {
 } from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 import userStatus from 'ilios-common/page-objects/components/user-status';
+import { scrollTo, isInView } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-learner-group-cohort-user-manager]',
@@ -43,6 +44,8 @@ const definition = {
     },
     add: clickable('[data-test-add-user]'),
     canBeAdded: isPresent('[data-test-add-user]'),
+    scrollTo: scrollTo('td:eq(1)'),
+    isInView: isInView('td:eq(1)'),
   }),
   add: clickable('button.done'),
   addButtonText: text('button.done'),
