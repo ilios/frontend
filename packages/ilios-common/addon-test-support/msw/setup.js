@@ -47,7 +47,7 @@ export function setupMSW(hooks) {
   });
 }
 
-function get(url, callback) {
+function get(url, callback, once = true) {
   if (!url.startsWith('/')) {
     throw new Error(`Handler URL must start with /, you passed: ${url}`);
   }
@@ -61,12 +61,12 @@ function get(url, callback) {
         }
         return HttpResponse.json(rhett);
       },
-      { once: true },
+      { once },
     ),
   );
 }
 
-function post(url, callback) {
+function post(url, callback, once = true) {
   if (!url.startsWith('/')) {
     throw new Error(`Handler URL must start with /, you passed: ${url}`);
   }
@@ -80,12 +80,12 @@ function post(url, callback) {
         }
         return HttpResponse.json(rhett);
       },
-      { once: true },
+      { once },
     ),
   );
 }
 
-function patch(url, callback) {
+function patch(url, callback, once = true) {
   if (!url.startsWith('/')) {
     throw new Error(`Handler URL must start with /, you passed: ${url}`);
   }
@@ -99,12 +99,12 @@ function patch(url, callback) {
         }
         return HttpResponse.json(rhett);
       },
-      { once: true },
+      { once },
     ),
   );
 }
 
-function put(url, callback) {
+function put(url, callback, once = true) {
   if (!url.startsWith('/')) {
     throw new Error(`Handler URL must start with /, you passed: ${url}`);
   }
@@ -118,7 +118,7 @@ function put(url, callback) {
         }
         return HttpResponse.json(rhett);
       },
-      { once: true },
+      { once },
     ),
   );
 }

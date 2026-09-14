@@ -20,6 +20,7 @@ import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 export default class CourseDetailsComponent extends Component {
   @service router;
   @service iliosConfig;
+  @service schoolConfig;
 
   @cached
   get academicYearCrossesCalendarYearBoundariesData() {
@@ -47,35 +48,25 @@ export default class CourseDetailsComponent extends Component {
     this.args.setShowDetails(false);
   }
 
-  @cached
-  get schoolConfigsData() {
-    return new TrackedAsyncData(this.getSchoolConfigs(this.args.course));
-  }
-
-  async getSchoolConfigs(course) {
-    const school = await course.school;
-    return await school.configurations;
-  }
-
-  @cached
-  get schoolConfigs() {
-    const rhett = new Map();
-    if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, config.parsedValue);
-      });
-    }
-    return rhett;
-  }
-
   get showMeSH() {
-    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
+    return this.schoolConfig.getShowMeSH(this.args.course.belongsTo('school').id());
   }
 
-  get configLoaded() {
-    return (
-      this.academicYearCrossesCalendarYearBoundariesData.isResolved &&
-      this.schoolConfigsData.isResolved
+  get allowMultipleCourseObjectiveParents() {
+    return this.schoolConfig.getAllowMultipleCourseObjectiveParents(
+      this.args.course.belongsTo('school').id(),
+    );
+  }
+
+  get accessibilityRequired() {
+    return this.schoolConfig.getLearningMaterialAccessibilityRequired(
+      this.args.course.belongsTo('school').id(),
+    );
+  }
+
+  get accessibilityRequirementsLink() {
+    return this.schoolConfig.getLearningMaterialAccessibilityRequirementsLink(
+      this.args.course.belongsTo('school').id(),
     );
   }
 
@@ -83,7 +74,7 @@ export default class CourseDetailsComponent extends Component {
     return this.router.currentRouteName !== 'course.rollover';
   }
   <template>
-    {{#if this.configLoaded}}
+    {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
       {{pageTitle "Courses | " @course.title " " this.academicYearDisplay}}
       <BackToCourses @course={{@course}} />
 
@@ -116,7 +107,10 @@ export default class CourseDetailsComponent extends Component {
             @setCourseTaxonomyDetails={{@setCourseTaxonomyDetails}}
             @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
             @setCourseManageLeadership={{@setCourseManageLeadership}}
+            @accessibilityRequired={{this.accessibilityRequired}}
+            @accessibilityRequirementsLink={{this.accessibilityRequirementsLink}}
             @showMeSH={{this.showMeSH}}
+            @allowMultipleCourseObjectiveParents={{this.allowMultipleCourseObjectiveParents}}
           />
           {{#if @showDetailsCollapseControl}}
             <div class="details-collapse-control">

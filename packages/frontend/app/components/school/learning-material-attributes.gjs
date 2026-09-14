@@ -1,55 +1,32 @@
 import Component from '@glimmer/component';
-import { cached } from '@glimmer/tracking';
+import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { TrackedAsyncData } from 'ember-async-data';
-import { or } from 'ember-truth-helpers';
-import perform from 'ember-concurrency/helpers/perform';
 import LearningMaterialAttributesCollapsed from './learning-material-attributes-collapsed';
 import LearningMaterialAttributesExpanded from './learning-material-attributes-expanded';
 
 export default class SchoolLearningMaterialAttributesComponent extends Component {
-  schoolConfigNames = [
-    'learningMaterialAccessibilityRequired',
-    'learningMaterialAccessibilityRequirementsLink',
-  ];
-
-  @cached
-  get schoolConfigsData() {
-    return new TrackedAsyncData(this.args.school.configurations);
-  }
-
-  @cached
-  get schoolConfigs() {
-    const rhett = new Map();
-    if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, config.parsedValue);
-      });
-    }
-    return rhett;
-  }
+  @service schoolConfig;
 
   get learningMaterialAccessibilityRequired() {
-    return this.schoolConfigs.get('learningMaterialAccessibilityRequired') || false;
+    return this.schoolConfig.getLearningMaterialAccessibilityRequired(this.args.school.id);
   }
 
   get learningMaterialAccessibilityRequirementsLink() {
-    return this.schoolConfigs.get('learningMaterialAccessibilityRequirementsLink') || '';
+    return this.schoolConfig.getLearningMaterialAccessibilityRequirementsLink(this.args.school.id);
   }
 
   save = task({ drop: true }, async (newValues) => {
     try {
-      const needToSave = await Promise.all(
-        this.schoolConfigNames.map((name) => {
-          const value = newValues[name];
-          if (value !== null) {
-            return this.args.school.setConfigValue(name, value);
-          }
-        }),
+      await this.schoolConfig.setLearningMaterialAccessibilityRequired(
+        this.args.school.id,
+        newValues.learningMaterialAccessibilityRequired ?? false,
+      );
+      await this.schoolConfig.setLearningMaterialAccessibilityRequirementsLink(
+        this.args.school.id,
+        newValues.learningMaterialAccessibilityRequirementsLink ?? '',
       );
 
-      const toSave = needToSave.filter(Boolean);
-      await Promise.all(toSave.map((o) => o.save()));
+      await this.schoolConfig.save();
     } finally {
       this.args.manage(false);
     }
@@ -60,24 +37,22 @@ export default class SchoolLearningMaterialAttributesComponent extends Component
       data-test-school-learning-material-attributes
       ...attributes
     >
-      {{#if (or this.schoolConfigsData.isResolved this.save.isRunning)}}
-        {{#if @details}}
-          <LearningMaterialAttributesExpanded
-            @canUpdate={{@canUpdate}}
-            @accessibilityRequired={{this.learningMaterialAccessibilityRequired}}
-            @accessibilityRequirementsLink={{this.learningMaterialAccessibilityRequirementsLink}}
-            @collapse={{@collapse}}
-            @isManaging={{@isManaging}}
-            @manage={{@manage}}
-            @saveAll={{perform this.save}}
-          />
-        {{else}}
-          <LearningMaterialAttributesCollapsed
-            @accessibilityRequired={{this.learningMaterialAccessibilityRequired}}
-            @accessibilityRequirementsLink={{this.learningMaterialAccessibilityRequirementsLink}}
-            @expand={{@expand}}
-          />
-        {{/if}}
+      {{#if @details}}
+        <LearningMaterialAttributesExpanded
+          @canUpdate={{@canUpdate}}
+          @accessibilityRequired={{this.learningMaterialAccessibilityRequired}}
+          @accessibilityRequirementsLink={{this.learningMaterialAccessibilityRequirementsLink}}
+          @collapse={{@collapse}}
+          @isManaging={{@isManaging}}
+          @manage={{@manage}}
+          @saveAll={{this.save.perform}}
+        />
+      {{else}}
+        <LearningMaterialAttributesCollapsed
+          @accessibilityRequired={{this.learningMaterialAccessibilityRequired}}
+          @accessibilityRequirementsLink={{this.learningMaterialAccessibilityRequirementsLink}}
+          @expand={{@expand}}
+        />
       {{/if}}
     </div>
   </template>

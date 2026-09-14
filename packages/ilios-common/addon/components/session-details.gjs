@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
@@ -22,6 +23,8 @@ import SessionOfferings from 'ilios-common/components/session-offerings';
 import { pageTitle } from 'ember-page-title';
 
 export default class SessionDetailsComponent extends Component {
+  @service schoolConfig;
+
   @cached
   get courseData() {
     return new TrackedAsyncData(this.args.session.course);
@@ -40,119 +43,131 @@ export default class SessionDetailsComponent extends Component {
     return this.cohortsData.isResolved ? this.cohortsData.value : null;
   }
 
-  @cached
-  get schoolConfigsData() {
-    return new TrackedAsyncData(this.getSchoolConfigs(this.args.session));
-  }
-
-  async getSchoolConfigs(session) {
-    const course = await session.course;
-    const school = await course.school;
-    return await school.configurations;
-  }
-
-  @cached
-  get schoolConfigs() {
-    const rhett = new Map();
-    if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
-        rhett.set(config.name, config.parsedValue);
-      });
-    }
-    return rhett;
-  }
-
-  get schoolConfigsLoaded() {
-    return this.schoolConfigsData.isResolved;
-  }
-
   get showMeSH() {
-    return this.schoolConfigs.has('showMeSH') ? this.schoolConfigs.get('showMeSH') : true;
+    return this.schoolConfig.getShowMeSH(this.course?.belongsTo('school').id());
+  }
+
+  get showAttendanceRequired() {
+    return this.schoolConfig.getShowSessionAttendanceRequired(
+      this.course?.belongsTo('school').id(),
+    );
+  }
+
+  get showSupplemental() {
+    return this.schoolConfig.getShowSessionSupplemental(this.course?.belongsTo('school').id());
+  }
+
+  get showSpecialAttireRequired() {
+    return this.schoolConfig.getShowSessionSpecialAttireRequired(
+      this.course?.belongsTo('school').id(),
+    );
+  }
+
+  get showSpecialEquipmentRequired() {
+    return this.schoolConfig.getShowSessionSpecialEquipmentRequired(
+      this.course?.belongsTo('school').id(),
+    );
+  }
+
+  get accessibilityRequired() {
+    return this.schoolConfig.getLearningMaterialAccessibilityRequired(
+      this.course?.belongsTo('school').id(),
+    );
+  }
+
+  get accessibilityRequirementsLink() {
+    return this.schoolConfig.getLearningMaterialAccessibilityRequirementsLink(
+      this.course?.belongsTo('school').id(),
+    );
   }
 
   <template>
     {{pageTitle " | Session: " @session.title}}
-    {{#if this.schoolConfigsLoaded}}
-      <div class="back-to-session" {{scrollIntoView delay=10}}>
-        <LinkTo @route="course" @model={{@session.course}} data-test-back-to-sessions>
-          {{t "general.backToSessionList"}}
-        </LinkTo>
-      </div>
+    <div class="back-to-session" {{scrollIntoView delay=10}}>
+      <LinkTo @route="course" @model={{@session.course}} data-test-back-to-sessions>
+        {{t "general.backToSessionList"}}
+      </LinkTo>
+    </div>
 
-      <section class="session-details" data-test-session-details>
-        <Overview @session={{@session}} @editable={{@editable}} />
-        {{#if @sessionLeadershipDetails}}
-          <LeadershipExpanded
-            @model={{@session}}
-            @editable={{@editable}}
-            @collapse={{fn @setSessionLeadershipDetails false}}
-            @expand={{fn @setSessionLeadershipDetails true}}
-            @isManaging={{@sessionManageLeadership}}
-            @setIsManaging={{@setSessionManageLeadership}}
-          />
-        {{else}}
-          <LeadershipCollapsed
-            @showDirectors={{false}}
-            @showAdministrators={{true}}
-            @showStudentAdvisors={{true}}
-            @administratorsCount={{hasManyLength @session "administrators"}}
-            @studentAdvisorsCount={{hasManyLength @session "studentAdvisors"}}
-            @expand={{fn @setSessionLeadershipDetails true}}
-          />
-        {{/if}}
-        {{#if @session.isIndependentLearning}}
-          <DetailLearnersAndLearnerGroups
-            @session={{@session}}
-            @editable={{@editable}}
-            @cohorts={{this.cohorts}}
-          />
-          <DetailInstructors @session={{@session}} @editable={{@editable}} />
-        {{/if}}
-        {{#if (or (eq @session.sessionObjectives.length 0) @sessionObjectiveDetails)}}
-          <Objectives
-            @session={{@session}}
-            @editable={{@editable}}
-            @collapse={{fn @setSessionObjectiveDetails false}}
-            @expand={{fn @setSessionObjectiveDetails true}}
-            @showMeSH={{this.showMeSH}}
-          />
-        {{else}}
-          <CollapsedObjectives
-            @session={{@session}}
-            @editable={{@editable}}
-            @expand={{fn @setSessionObjectiveDetails true}}
-            @showMeSH={{this.showMeSH}}
-          />
-        {{/if}}
-        <DetailLearningMaterials
-          @subject={{@session}}
-          @isCourse={{false}}
+    <section class="session-details" data-test-session-details>
+      <Overview
+        @session={{@session}}
+        @editable={{@editable}}
+        @showSpecialEquipmentRequired={{this.showSpecialEquipmentRequired}}
+        @showSpecialAttireRequired={{this.showSpecialAttireRequired}}
+        @showSupplemental={{this.showSupplemental}}
+        @showAttendanceRequired={{this.showAttendanceRequired}}
+      />
+      {{#if @sessionLeadershipDetails}}
+        <LeadershipExpanded
+          @model={{@session}}
           @editable={{@editable}}
-          @showMeSH={{this.showMeSH}}
+          @collapse={{fn @setSessionLeadershipDetails false}}
+          @expand={{fn @setSessionLeadershipDetails true}}
+          @isManaging={{@sessionManageLeadership}}
+          @setIsManaging={{@setSessionManageLeadership}}
         />
-        {{#if (or (eq @session.terms.length 0) @sessionTaxonomyDetails)}}
-          <DetailTaxonomies
-            @subject={{@session}}
-            @editable={{@editable}}
-            @collapse={{fn @setSessionTaxonomyDetails false}}
-            @expand={{fn @setSessionTaxonomyDetails true}}
-          />
-        {{else}}
-          <CollapsedTaxonomies
-            @subject={{@session}}
-            @expand={{fn @setSessionTaxonomyDetails true}}
-          />
-        {{/if}}
-        {{#if this.showMeSH}}
-          <DetailMesh @subject={{@session}} @isSession={{true}} @editable={{@editable}} />
-        {{/if}}
-        <SessionOfferings
+      {{else}}
+        <LeadershipCollapsed
+          @showDirectors={{false}}
+          @showAdministrators={{true}}
+          @showStudentAdvisors={{true}}
+          @administratorsCount={{hasManyLength @session "administrators"}}
+          @studentAdvisorsCount={{hasManyLength @session "studentAdvisors"}}
+          @expand={{fn @setSessionLeadershipDetails true}}
+        />
+      {{/if}}
+      {{#if @session.isIndependentLearning}}
+        <DetailLearnersAndLearnerGroups
           @session={{@session}}
           @editable={{@editable}}
-          @showNewOfferingForm={{@showNewOfferingForm}}
-          @toggleShowNewOfferingForm={{@toggleShowNewOfferingForm}}
+          @cohorts={{this.cohorts}}
         />
-      </section>
-    {{/if}}
+        <DetailInstructors @session={{@session}} @editable={{@editable}} />
+      {{/if}}
+      {{#if (or (eq @session.sessionObjectives.length 0) @sessionObjectiveDetails)}}
+        <Objectives
+          @session={{@session}}
+          @editable={{@editable}}
+          @collapse={{fn @setSessionObjectiveDetails false}}
+          @expand={{fn @setSessionObjectiveDetails true}}
+          @showMeSH={{this.showMeSH}}
+        />
+      {{else}}
+        <CollapsedObjectives
+          @session={{@session}}
+          @editable={{@editable}}
+          @expand={{fn @setSessionObjectiveDetails true}}
+          @showMeSH={{this.showMeSH}}
+        />
+      {{/if}}
+      <DetailLearningMaterials
+        @subject={{@session}}
+        @isCourse={{false}}
+        @editable={{@editable}}
+        @showMeSH={{this.showMeSH}}
+        @accessibilityRequired={{this.accessibilityRequired}}
+        @accessibilityRequirementsLink={{this.accessibilityRequirementsLink}}
+      />
+      {{#if (or (eq @session.terms.length 0) @sessionTaxonomyDetails)}}
+        <DetailTaxonomies
+          @subject={{@session}}
+          @editable={{@editable}}
+          @collapse={{fn @setSessionTaxonomyDetails false}}
+          @expand={{fn @setSessionTaxonomyDetails true}}
+        />
+      {{else}}
+        <CollapsedTaxonomies @subject={{@session}} @expand={{fn @setSessionTaxonomyDetails true}} />
+      {{/if}}
+      {{#if this.showMeSH}}
+        <DetailMesh @subject={{@session}} @isSession={{true}} @editable={{@editable}} />
+      {{/if}}
+      <SessionOfferings
+        @session={{@session}}
+        @editable={{@editable}}
+        @showNewOfferingForm={{@showNewOfferingForm}}
+        @toggleShowNewOfferingForm={{@toggleShowNewOfferingForm}}
+      />
+    </section>
   </template>
 }

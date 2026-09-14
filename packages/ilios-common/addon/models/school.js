@@ -1,7 +1,5 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { isEmpty } from '@ember/utils';
 import { deprecate } from '@ember/debug';
-import { findBy } from 'ilios-common/utils/array-helpers';
 
 export default class School extends Model {
   @attr('string')
@@ -45,46 +43,5 @@ export default class School extends Model {
         schools: [this.id],
       },
     });
-  }
-
-  async getConfigByName(name) {
-    const configs = await this.configurations;
-    const config = findBy(configs, 'name', name);
-
-    return isEmpty(config) ? null : config;
-  }
-
-  async getConfigValue(name) {
-    const config = await this.getConfigByName(name);
-    if (!config) {
-      return null;
-    }
-
-    return config.parsedValue;
-  }
-
-  async setConfigValue(name, value) {
-    const oldValue = await this.getConfigValue(name);
-    if (value !== oldValue) {
-      let config = await this.getConfigByName(name);
-      if (isEmpty(config)) {
-        config = await this.createConfig(name);
-      }
-      config.set('value', value);
-
-      return config;
-    }
-
-    return false;
-  }
-
-  async createConfig(name) {
-    const store = this.store;
-    const config = store.createRecord('school-config', {
-      school: this,
-      name,
-    });
-
-    return config;
   }
 }
