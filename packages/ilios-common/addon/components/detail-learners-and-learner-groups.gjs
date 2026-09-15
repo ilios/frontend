@@ -14,7 +14,7 @@ import LearnergroupSelectionManager from 'ilios-common/components/learnergroup-s
 import LearnerSelectionManager from 'ilios-common/components/learner-selection-manager';
 import SelectedLearnerGroups from 'ilios-common/components/selected-learner-groups';
 import SelectedLearners from 'ilios-common/components/selected-learners';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @service currentUser;
@@ -177,8 +177,8 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
         </div>
         <div class="actions">
           {{#if this.isManaging}}
-            <BigAddCancelButtons
-              @add={{perform this.save}}
+            <BigSaveCancelButtons
+              @save={{perform this.save}}
               @cancel={{this.cancel}}
               @disableSave={{this.save.isRunning}}
             />

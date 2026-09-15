@@ -12,7 +12,7 @@ import noop from 'ilios-common/helpers/noop';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { number, string } from 'yup';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class SchoolInstitutionalInformationManagerComponent extends Component {
   @service store;
@@ -80,8 +80,8 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
           </div>
           <div class="actions">
             {{#if @canUpdate}}
-              <BigAddCancelButtons
-                @add={{perform this.save}}
+              <BigSaveCancelButtons
+                @save={{perform this.save}}
                 @cancel={{fn @manage false}}
                 @disableSave={{this.save.isRunning}}
               />

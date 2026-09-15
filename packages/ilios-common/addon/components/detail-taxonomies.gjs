@@ -12,7 +12,7 @@ import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class DetailTaxonomiesComponent extends Component {
   @service store;
@@ -99,8 +99,8 @@ export default class DetailTaxonomiesComponent extends Component {
         {{/if}}
         <div class="actions">
           {{#if this.isManaging}}
-            <BigAddCancelButtons
-              @add={{perform this.save}}
+            <BigSaveCancelButtons
+              @save={{perform this.save}}
               @cancel={{this.cancel}}
               @disableSave={{this.save.isRunning}}
               {{scrollIntoView}}

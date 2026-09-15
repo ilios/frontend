@@ -8,7 +8,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { fn } from '@ember/helper';
 import pcrsUriToNumber from '../../helpers/pcrs-uri-to-number';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class SchoolCompetenciesListItemPcrsComponent extends Component {
   save = task({ drop: true }, async () => {
@@ -30,8 +30,8 @@ export default class SchoolCompetenciesListItemPcrsComponent extends Component {
       ...attributes
     >
       {{#if @isManaging}}
-        <BigAddCancelButtons
-          @add={{perform this.save}}
+        <BigSaveCancelButtons
+          @save={{perform this.save}}
           @cancel={{@cancel}}
           @disableSave={{this.save.isRunning}}
         />

@@ -13,7 +13,7 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class SchoolEmailsEditorComponent extends Component {
   @service intl;
@@ -104,8 +104,8 @@ export default class SchoolEmailsEditorComponent extends Component {
         <div class="header">
           <div class="title">{{t "general.emails"}}</div>
           <div class="actions">
-            <BigAddCancelButtons
-              @add={{perform this.save}}
+            <BigSaveCancelButtons
+              @save={{perform this.save}}
               @cancel={{@cancel}}
               @disableSave={{this.save.isRunning}}
             />

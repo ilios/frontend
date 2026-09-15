@@ -9,7 +9,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import LearningMaterialAttributesManager from './learning-material-attributes-manager';
 import { faCaretDown, faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class SchoolLearningMaterialAttributesExpandedComponent extends Component {
   @tracked accessibilityRequired = this.args.accessibilityRequired || false;
@@ -62,8 +62,8 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
         {{/if}}
         <div class="actions">
           {{#if @isManaging}}
-            <BigAddCancelButtons
-              @add={{perform this.save}}
+            <BigSaveCancelButtons
+              @save={{perform this.save}}
               @cancel={{this.cancel}}
               @disableSave={{this.save.isRunning}}
             />

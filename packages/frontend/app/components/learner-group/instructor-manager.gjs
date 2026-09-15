@@ -11,7 +11,7 @@ import InstructorGroupMembersList from './instructor-group-members-list';
 import UserSearch from 'ilios-common/components/user-search';
 import UserStatus from 'ilios-common/components/user-status';
 import { faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class LearnerGroupInstructorManagerComponent extends Component {
   @tracked instructors = [];
@@ -60,8 +60,8 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
             @availableInstructorGroups={{@availableInstructorGroups}}
             @currentlyActiveInstructorGroups={{this.instructorGroups}}
           />
-          <BigAddCancelButtons
-            @add={{fn @save this.instructors this.instructorGroups}}
+          <BigSaveCancelButtons
+            @save={{fn @save this.instructors this.instructorGroups}}
             @cancel={{@cancel}}
           />
         </div>

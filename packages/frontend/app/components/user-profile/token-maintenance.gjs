@@ -14,7 +14,7 @@ import DatePicker from 'ilios-common/components/date-picker';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { faCopy, faXmark } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class UserProfileApiTokenComponent extends Component {
   @service flashMessages;
@@ -141,8 +141,8 @@ export default class UserProfileApiTokenComponent extends Component {
                 @minDate={{this.minDate}}
                 @onChange={{this.selectExpiresAtDate}}
               />
-              <BigAddCancelButtons
-                @add={{perform this.createNewToken}}
+              <BigSaveCancelButtons
+                @save={{perform this.createNewToken}}
                 @cancel={{pipe @toggleShowCreateNewToken this.reset}}
                 @disableSave={{this.createNewToken.isRunning}}
               />

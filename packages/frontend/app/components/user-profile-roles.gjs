@@ -14,7 +14,7 @@ import set from 'ember-set-helper/helpers/set';
 import { eq, not } from 'ember-truth-helpers';
 import YesNo from './yes-no';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class UserProfileRolesComponent extends Component {
   @service store;
@@ -111,7 +111,7 @@ export default class UserProfileRolesComponent extends Component {
     >
       <div class="actions">
         {{#if @isManaging}}
-          <BigAddCancelButtons @add={{perform this.save}} @cancel={{this.cancel}} />
+          <BigSaveCancelButtons @save={{perform this.save}} @cancel={{this.cancel}} />
         {{else if @isManageable}}
           <button
             aria-label={{t "general.manage"}}

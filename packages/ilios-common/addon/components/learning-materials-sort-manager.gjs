@@ -13,7 +13,7 @@ import LmTypeIcon from 'ilios-common/components/lm-type-icon';
 import capitalize from 'ilios-common/helpers/capitalize';
 import t from 'ember-intl/helpers/t';
 import { faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class LearningMaterialsSortManagerComponent extends Component {
   @tracked sortableObjectList;
@@ -87,8 +87,8 @@ export default class LearningMaterialsSortManagerComponent extends Component {
     <div class="sort-manager" data-test-detail-learning-materials-sort-manager>
       {{#if this.learningMaterials.isResolved}}
         <div class="actions">
-          <BigAddCancelButtons
-            @add={{perform this.callSave}}
+          <BigSaveCancelButtons
+            @save={{perform this.callSave}}
             @cancel={{@cancel}}
             @disableSave={{this.callSave.isRunning}}
           />

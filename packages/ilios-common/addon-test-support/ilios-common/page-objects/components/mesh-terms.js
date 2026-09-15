@@ -4,7 +4,7 @@ import meshManager from './mesh-manager';
 export default {
   scope: '[data-test-detail-mesh]',
   manage: clickable('.actions button'),
-  save: clickable('.actions button.bigadd'),
+  save: clickable('.actions button.bigsave'),
   cancel: clickable('.actions button.bigcancel'),
   current: collection('.selected-mesh-terms li', {
     title: text('.term-title'),

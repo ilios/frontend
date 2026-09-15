@@ -1,13 +1,13 @@
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 <template>
   <div
     class="program-year-objective-list-item-competency grid-item"
     data-test-objective-list-item-competency
   >
     {{#if @isManaging}}
-      <BigAddCancelButtons @add={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
+      <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
     {{else}}
       {{#if @objective.competency}}
         {{#if @editable}}

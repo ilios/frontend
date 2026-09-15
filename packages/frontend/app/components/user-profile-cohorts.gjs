@@ -19,7 +19,7 @@ import {
   faArrowRotateLeft,
   faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class UserProfileCohortsComponent extends Component {
   @service currentUser;
@@ -183,8 +183,8 @@ export default class UserProfileCohortsComponent extends Component {
           </h2>
           <div class="actions">
             {{#if @isManaging}}
-              <BigAddCancelButtons
-                @add={{perform this.save}}
+              <BigSaveCancelButtons
+                @save={{perform this.save}}
                 @cancel={{perform this.cancel}}
                 @disableSave={{or
                   this.save.isRunning
@@ -192,19 +192,19 @@ export default class UserProfileCohortsComponent extends Component {
                   (not this.currentPrimaryCohort)
                 }}
                 @disableCancel={{or this.save.isRunning this.cancel.isRunning}}
-                as |add cancel disableSave disableCancel|
+                as |save cancel disableSave disableCancel|
               >
                 <button
                   aria-label={{t "general.save"}}
                   type="button"
-                  class="bigadd"
+                  class="bigsave"
                   disabled={{disableSave}}
                   title={{if
                     (or this.save.isRunning this.cancel.isRunning (not this.currentPrimaryCohort))
                     (t "general.disabledNoPrimaryCohort")
                     (t "general.save")
                   }}
-                  {{on "click" add}}
+                  {{on "click" save}}
                   data-test-save
                 >
                   <FaIcon
@@ -223,7 +223,7 @@ export default class UserProfileCohortsComponent extends Component {
                 >
                   <FaIcon @icon={{faArrowRotateLeft}} @fixedWidth={{true}} />
                 </button>
-              </BigAddCancelButtons>
+              </BigSaveCancelButtons>
             {{else if @isManageable}}
               <button
                 aria-label={{t "general.manage"}}

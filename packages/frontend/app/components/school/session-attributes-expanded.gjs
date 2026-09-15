@@ -10,7 +10,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import SessionAttributesManager from './session-attributes-manager';
 import { faCaretDown, faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class SchoolSessionAttributesExpandedComponent extends Component {
   @tracked flippedShowSessionAttendanceRequired = false;
@@ -107,8 +107,8 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
         {{/if}}
         <div class="actions">
           {{#if @isManaging}}
-            <BigAddCancelButtons
-              @add={{perform this.save}}
+            <BigSaveCancelButtons
+              @save={{perform this.save}}
               @cancel={{this.cancel}}
               @disableSave={{this.save.isRunning}}
             />

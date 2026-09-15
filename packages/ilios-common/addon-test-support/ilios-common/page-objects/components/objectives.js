@@ -5,7 +5,7 @@ import meshManager from './mesh-manager';
 export default {
   scope: '[data-test-detail-objectives]',
   createNew: clickable('.detail-objectives-actions button'),
-  save: clickable('.detail-objectives-actions button.bigadd'),
+  save: clickable('.detail-objectives-actions button.bigsave'),
   cancel: clickable('.detail-objectives-actions button.bigcancel'),
   newObjective: {
     description: pageObjectFillInQuillEditor('[data-test-html-editor]'),

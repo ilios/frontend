@@ -11,7 +11,7 @@ import InstructorManager from './instructor-manager';
 import sortBy from 'ilios-common/helpers/sort-by';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class InstructorGroupUsersComponent extends Component {
   @tracked usersBuffer = [];
@@ -59,8 +59,8 @@ export default class InstructorGroupUsersComponent extends Component {
         </h2>
         <div class="actions">
           {{#if this.isManaging}}
-            <BigAddCancelButtons
-              @add={{perform this.save}}
+            <BigSaveCancelButtons
+              @save={{perform this.save}}
               @cancel={{set this "isManaging" false}}
             />
           {{else if @canUpdate}}

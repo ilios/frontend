@@ -11,7 +11,7 @@ import { fn } from '@ember/helper';
 import LeadershipManager from 'ilios-common/components/leadership-manager';
 import LeadershipList from 'ilios-common/components/leadership-list';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class LeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];
@@ -193,8 +193,8 @@ export default class LeadershipExpandedComponent extends Component {
         {{/if}}
         <div class="actions">
           {{#if @isManaging}}
-            <BigAddCancelButtons
-              @add={{perform this.save}}
+            <BigSaveCancelButtons
+              @save={{perform this.save}}
               @cancel={{this.close}}
               @disableSave={{this.save.isRunning}}
             />

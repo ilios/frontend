@@ -1,14 +1,14 @@
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import sortBy from 'ilios-common/helpers/sort-by';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 <template>
   <div
     class="program-year-objective-list-item-descriptors grid-item"
     data-test-objective-list-item-descriptors
   >
     {{#if @isManaging}}
-      <BigAddCancelButtons @add={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
+      <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
     {{else}}
       <ul class="mesh-descriptor-list">
         {{#each (sortBy "name" @meshDescriptors) as |descriptor|}}

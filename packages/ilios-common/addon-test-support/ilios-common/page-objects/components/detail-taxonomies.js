@@ -6,7 +6,7 @@ export default {
   scope: '[data-test-detail-taxonomies]',
   title: text('.title'),
   manage: clickable('.actions button'),
-  save: clickable('.actions .bigadd'),
+  save: clickable('.actions .bigsave'),
   cancel: clickable('.actions .bigcancel'),
   vocabularies: collection('[data-test-detail-terms-list]', detailTermsList),
   manager,

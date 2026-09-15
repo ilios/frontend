@@ -17,7 +17,7 @@ import {
   faArrowRotateLeft,
   faUpDownLeftRight,
 } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class ObjectiveSortManagerComponent extends Component {
   @tracked totalObjectivesToSave;
@@ -115,19 +115,19 @@ export default class ObjectiveSortManagerComponent extends Component {
   <template>
     <div class="sort-manager">
       <div class="actions">
-        <BigAddCancelButtons
-          @add={{perform this.saveSortOrder}}
+        <BigSaveCancelButtons
+          @save={{perform this.saveSortOrder}}
           @cancel={{perform @close}}
           @disableSave={{this.saveSortOrder.isRunning}}
           @disableCancel={{this.saveSortOrder.isRunning}}
-          as |add cancel disableSave disableCancel|
+          as |save cancel disableSave disableCancel|
         >
           <button
             aria-label={{t "general.save"}}
             type="button"
-            class="bigadd"
+            class="bigsave"
             disabled={{disableSave}}
-            {{on "click" add}}
+            {{on "click" save}}
             data-test-save
           >
             {{#if disableSave}}
@@ -150,7 +150,7 @@ export default class ObjectiveSortManagerComponent extends Component {
           >
             <FaIcon @icon={{faArrowRotateLeft}} @fixedWidth={{true}} />
           </button>
-        </BigAddCancelButtons>
+        </BigSaveCancelButtons>
 
       </div>
       <div class="content">

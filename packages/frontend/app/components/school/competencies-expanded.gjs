@@ -14,7 +14,7 @@ import { fn } from '@ember/helper';
 import CompetenciesManager from './competencies-manager';
 import CompetenciesList from './competencies-list';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;
@@ -151,7 +151,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
         {{/if}}
         <div class="actions" data-test-actions>
           {{#if @isManaging}}
-            <BigAddCancelButtons @add={{perform this.save}} @cancel={{this.stopManaging}} />
+            <BigSaveCancelButtons @save={{perform this.save}} @cancel={{this.stopManaging}} />
           {{else if (or @canUpdate @canDelete @canCreate)}}
             <button
               type="button"

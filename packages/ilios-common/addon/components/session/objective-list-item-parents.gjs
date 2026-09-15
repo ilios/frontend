@@ -3,7 +3,7 @@ import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FadeText from 'ilios-common/components/fade-text';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class SessionObjectiveListItemParentsComponent extends Component {
   get parentTitles() {
@@ -24,7 +24,7 @@ export default class SessionObjectiveListItemParentsComponent extends Component 
       data-test-objective-list-item-parents
     >
       {{#if @isManaging}}
-        <BigAddCancelButtons @add={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
+        <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
       {{else}}
         {{#if @parents}}
           <FadeText

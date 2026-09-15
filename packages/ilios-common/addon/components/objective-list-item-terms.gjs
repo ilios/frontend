@@ -6,7 +6,7 @@ import { on } from '@ember/modifier';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import noop from 'ilios-common/helpers/noop';
 import { fn } from '@ember/helper';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class ObjectiveListItemTermsComponent extends Component {
   @cached
@@ -20,7 +20,7 @@ export default class ObjectiveListItemTermsComponent extends Component {
   <template>
     <div class="objective-list-item-terms grid-item" data-test-objective-list-item-terms>
       {{#if @isManaging}}
-        <BigAddCancelButtons @add={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
+        <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
       {{else}}
         {{#each @subject.associatedVocabularies as |vocab|}}
           {{#if vocab.termCount}}

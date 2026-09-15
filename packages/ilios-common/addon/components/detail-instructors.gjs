@@ -12,7 +12,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import InstructorSelectionManager from 'ilios-common/components/instructor-selection-manager';
 import SelectedInstructors from 'ilios-common/components/selected-instructors';
 import SelectedInstructorGroups from 'ilios-common/components/selected-instructor-groups';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class DetailInstructorsComponent extends Component {
   @service currentUser;
@@ -148,8 +148,8 @@ export default class DetailInstructorsComponent extends Component {
         </div>
         <div class="actions">
           {{#if this.isManaging}}
-            <BigAddCancelButtons
-              @add={{perform this.save}}
+            <BigSaveCancelButtons
+              @save={{perform this.save}}
               @cancel={{this.cancel}}
               @disableSave={{this.save.isRunning}}
             />

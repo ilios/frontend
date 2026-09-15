@@ -9,7 +9,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import MeshManager from 'ilios-common/components/mesh-manager';
 import sortBy from 'ilios-common/helpers/sort-by';
 import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class DetailMeshComponent extends Component {
   @tracked isManaging = false;
@@ -69,8 +69,8 @@ export default class DetailMeshComponent extends Component {
           </div>
           <div class="actions">
             {{#if this.isManaging}}
-              <BigAddCancelButtons
-                @add={{perform this.save}}
+              <BigSaveCancelButtons
+                @save={{perform this.save}}
                 @cancel={{this.cancel}}
                 @disableSave={{this.save.isRunning}}
               />

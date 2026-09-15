@@ -6,26 +6,26 @@ import { or } from 'ember-truth-helpers';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSpinner, faCheck, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
-export default class BigAddCancelButtonsComponent extends Component {
+export default class BigSaveCancelButtonsComponent extends Component {
   @service intl;
 
   <template>
-    <div data-test-big-add-cancel-buttons>
+    <div data-test-big-save-cancel-buttons>
       {{#if (has-block)}}
-        {{yield @add @cancel @disableSave @disableCancel}}
+        {{yield @save @cancel @disableSave @disableCancel}}
       {{else}}
         <button
           aria-label={{t "general.save"}}
           type="button"
-          class="bigadd"
+          class="bigsave"
           disabled={{@disableSave}}
-          {{on "click" @add}}
+          {{on "click" @save}}
           data-test-save
           ...attributes
         >
           <FaIcon
-            @icon={{if (or @add.isRunning @disableSave) faSpinner faCheck}}
-            @spin={{if (or @add.isRunning @disableSave) true false}}
+            @icon={{if (or @save.isRunning @disableSave) faSpinner faCheck}}
+            @spin={{if (or @save.isRunning @disableSave) true false}}
             @fixedWidth={{true}}
           />
         </button>
@@ -33,7 +33,7 @@ export default class BigAddCancelButtonsComponent extends Component {
           aria-label={{t "general.cancel"}}
           type="button"
           class="bigcancel"
-          disabled={{if @disableCancel @disableCancel @add.isRunning}}
+          disabled={{if @disableCancel @disableCancel @save.isRunning}}
           {{on "click" @cancel}}
           data-test-cancel
         >

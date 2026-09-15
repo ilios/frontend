@@ -1,15 +1,15 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/big-add-cancel-buttons';
-import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
+import { component } from 'ilios-common/page-objects/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | big-add-cancel-buttons', function (hooks) {
+module('Integration | Component | big-save-cancel-buttons', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    await render(<template><BigAddCancelButtons @add={{(noop)}} @cancel={{(noop)}} /></template>);
+    await render(<template><BigSaveCancelButtons @save={{(noop)}} @cancel={{(noop)}} /></template>);
 
     assert.ok(component.addButton, 'add button exists');
     assert.strictEqual(component.addButton.cssClasses, 'bigadd', 'css classes correct');
