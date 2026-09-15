@@ -26,6 +26,7 @@ export default class BigAddCancelButtonsComponent extends Component {
           <FaIcon
             @icon={{if (or @add.isRunning @disableSave) faSpinner faCheck}}
             @spin={{if (or @add.isRunning @disableSave) true false}}
+            @fixedWidth={{true}}
           />
         </button>
         <button
@@ -36,7 +37,7 @@ export default class BigAddCancelButtonsComponent extends Component {
           {{on "click" @cancel}}
           data-test-cancel
         >
-          <FaIcon @icon={{faArrowRotateLeft}} />
+          <FaIcon @icon={{faArrowRotateLeft}} @fixedWidth={{true}} />
         </button>
       {{/if}}
     </div>

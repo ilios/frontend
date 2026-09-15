@@ -210,6 +210,7 @@ export default class UserProfileCohortsComponent extends Component {
                   <FaIcon
                     @icon={{if this.save.isRunning faSpinner faCheck}}
                     @spin={{if this.save.isRunning true false}}
+                    @fixedWidth={{true}}
                   />
                 </button>
                 <button
@@ -220,7 +221,7 @@ export default class UserProfileCohortsComponent extends Component {
                   {{on "click" cancel}}
                   data-test-cancel
                 >
-                  <FaIcon @icon={{faArrowRotateLeft}} />
+                  <FaIcon @icon={{faArrowRotateLeft}} @fixedWidth={{true}} />
                 </button>
               </BigAddCancelButtons>
             {{else if @isManageable}}

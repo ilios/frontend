@@ -131,9 +131,13 @@ export default class ObjectiveSortManagerComponent extends Component {
             data-test-save
           >
             {{#if disableSave}}
-              <FaIcon @icon={{faSpinner}} @spin={{true}} />{{this.saveProgress}}%
+              <FaIcon
+                @icon={{faSpinner}}
+                @spin={{true}}
+                @fixedWidth={{true}}
+              />{{this.saveProgress}}%
             {{else}}
-              <FaIcon @icon={{faCheck}} />
+              <FaIcon @icon={{faCheck}} @fixedWidth={{true}} />
             {{/if}}
           </button>
           <button
@@ -144,7 +148,7 @@ export default class ObjectiveSortManagerComponent extends Component {
             {{on "click" cancel}}
             data-test-cancel
           >
-            <FaIcon @icon={{faArrowRotateLeft}} />
+            <FaIcon @icon={{faArrowRotateLeft}} @fixedWidth={{true}} />
           </button>
         </BigAddCancelButtons>
 
