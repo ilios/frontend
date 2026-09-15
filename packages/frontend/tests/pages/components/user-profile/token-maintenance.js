@@ -8,8 +8,8 @@ const definition = {
     scope: '[data-test-new-token-form]',
     dateValue: value('input'),
     setDate: flatpickrDatePicker('input'),
-    submit: clickable('[data-test-new-token-create]'),
-    cancel: clickable('[data-test-new-token-cancel]'),
+    submit: clickable('[data-test-save]'),
+    cancel: clickable('[data-test-cancel]'),
   },
   newTokenResult: {
     scope: '[data-test-new-token-result]',
