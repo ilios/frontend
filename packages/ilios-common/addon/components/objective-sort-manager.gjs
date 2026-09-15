@@ -117,7 +117,7 @@ export default class ObjectiveSortManagerComponent extends Component {
       <div class="actions">
         <BigSaveCancelButtons
           @save={{perform this.saveSortOrder}}
-          @cancel={{perform @close}}
+          @cancel={{@close}}
           @disableSave={{this.saveSortOrder.isRunning}}
           @disableCancel={{this.saveSortOrder.isRunning}}
           as |save cancel disableSave disableCancel|
