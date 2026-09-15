@@ -12,7 +12,7 @@ module('Integration | Component | big-save-cancel-buttons', function (hooks) {
     await render(<template><BigSaveCancelButtons @save={{(noop)}} @cancel={{(noop)}} /></template>);
 
     assert.ok(component.addButton, 'add button exists');
-    assert.strictEqual(component.addButton.cssClasses, 'bigadd', 'css classes correct');
+    assert.strictEqual(component.addButton.cssClasses, 'bigsave', 'css classes correct');
     assert.strictEqual(component.addButton.ariaLabel, 'Save', 'aria-label correct');
     assert.ok(component.cancelButton, 'cancel button exists');
     assert.strictEqual(component.cancelButton.cssClasses, 'bigcancel', 'css classes correct');

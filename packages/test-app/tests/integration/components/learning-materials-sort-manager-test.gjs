@@ -91,7 +91,7 @@ module('Integration | Component | learning materials sort manager', function (ho
         statusModel1.title
       }`.replace(/[\s\n\t]+/g, ''),
     );
-    assert.dom('.actions .bigadd').exists({ count: 1 });
+    assert.dom('.actions .bigsave').exists({ count: 1 });
     assert.dom('.actions .bigcancel').exists({ count: 1 });
   });
 
@@ -188,7 +188,7 @@ module('Integration | Component | learning materials sort manager', function (ho
         />
       </template>,
     );
-    await click('.actions .bigadd');
+    await click('.actions .bigsave');
     assert.verifySteps(['save called']);
   });
 

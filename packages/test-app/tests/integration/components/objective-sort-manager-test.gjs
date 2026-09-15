@@ -21,7 +21,7 @@ module('Integration | Component | objective sort manager', function (hooks) {
     assert.dom('.item').exists({ count: 2 });
     assert.dom('.item').hasText('session objective 1');
     assert.dom(findAll('.item')[1]).hasText('session objective 0');
-    assert.dom('.actions .bigadd').exists({ count: 1 });
+    assert.dom('.actions .bigsave').exists({ count: 1 });
     assert.dom('.actions .bigcancel').exists({ count: 1 });
   });
 
@@ -37,7 +37,7 @@ module('Integration | Component | objective sort manager', function (hooks) {
     assert.dom('.item').exists({ count: 2 });
     assert.dom('.item').hasText('course objective 1');
     assert.dom(findAll('.item')[1]).hasText('course objective 0');
-    assert.dom('.actions .bigadd').exists({ count: 1 });
+    assert.dom('.actions .bigsave').exists({ count: 1 });
     assert.dom('.actions .bigcancel').exists({ count: 1 });
   });
 
@@ -55,7 +55,7 @@ module('Integration | Component | objective sort manager', function (hooks) {
     assert.dom('.item').exists({ count: 2 });
     assert.dom('.item').hasText('program-year objective 1');
     assert.dom(findAll('.item')[1]).hasText('program-year objective 0');
-    assert.dom('.actions .bigadd').exists({ count: 1 });
+    assert.dom('.actions .bigsave').exists({ count: 1 });
     assert.dom('.actions .bigcancel').exists({ count: 1 });
   });
 

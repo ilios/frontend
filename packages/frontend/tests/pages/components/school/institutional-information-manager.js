@@ -4,9 +4,9 @@ const definition = {
   scope: '[data-test-school-institutional-information-manager]',
   header: {
     scope: '[data-test-school-institutional-information-manager-header]',
-    save: clickable('.actions button.bigadd'),
+    save: clickable('.actions button.bigsave'),
     cancel: clickable('.actions button.bigcancel'),
-    hasSaveButton: isPresent('.actions button.bigadd'),
+    hasSaveButton: isPresent('.actions button.bigsave'),
     title: text('.title'),
   },
   content: {
