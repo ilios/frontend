@@ -27,9 +27,6 @@ export default class BigAddCancelButtonsComponent extends Component {
             @icon={{if (or @add.isRunning @disableSave) faSpinner faCheck}}
             @spin={{if (or @add.isRunning @disableSave) true false}}
           />
-          {{#if @addProgress}}
-            {{@addProgress}}%
-          {{/if}}
         </button>
         <button
           aria-label={{t "general.cancel"}}

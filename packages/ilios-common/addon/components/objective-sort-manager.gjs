@@ -6,11 +6,17 @@ import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import FadeText from 'ilios-common/components/fade-text';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSpinner,
+  faCheck,
+  faArrowRotateLeft,
+  faUpDownLeftRight,
+} from '@fortawesome/free-solid-svg-icons';
 import BigAddCancelButtons from 'ilios-common/components/big-add-cancel-buttons';
 
 export default class ObjectiveSortManagerComponent extends Component {
@@ -111,11 +117,37 @@ export default class ObjectiveSortManagerComponent extends Component {
       <div class="actions">
         <BigAddCancelButtons
           @add={{perform this.saveSortOrder}}
-          @addProgress={{this.saveProgress}}
-          @cancel={{@close}}
+          @cancel={{perform @close}}
           @disableSave={{this.saveSortOrder.isRunning}}
           @disableCancel={{this.saveSortOrder.isRunning}}
-        />
+          as |add cancel disableSave disableCancel|
+        >
+          <button
+            aria-label={{t "general.save"}}
+            type="button"
+            class="bigadd"
+            disabled={{disableSave}}
+            {{on "click" add}}
+            data-test-save
+          >
+            {{#if disableSave}}
+              <FaIcon @icon={{faSpinner}} @spin={{true}} />{{this.saveProgress}}%
+            {{else}}
+              <FaIcon @icon={{faCheck}} />
+            {{/if}}
+          </button>
+          <button
+            aria-label={{t "general.cancel"}}
+            type="button"
+            class="bigcancel"
+            disabled={{disableCancel}}
+            {{on "click" cancel}}
+            data-test-cancel
+          >
+            <FaIcon @icon={{faArrowRotateLeft}} />
+          </button>
+        </BigAddCancelButtons>
+
       </div>
       <div class="content">
         <ul class="sortable-items">
