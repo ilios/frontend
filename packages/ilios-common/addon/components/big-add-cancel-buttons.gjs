@@ -18,7 +18,7 @@ export default class BigAddCancelButtonsComponent extends Component {
         disabled={{@disableSave}}
         title={{@title}}
         {{on "click" @add}}
-        data-test-add
+        data-test-save
       >
         {{#if @iconSpinOverride}}
           <FaIcon @icon={{if @iconSpin faSpinner faCheck}} @spin={{if @iconSpin true false}} />
