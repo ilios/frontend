@@ -3,7 +3,7 @@ import { attribute, create, property } from 'ember-cli-page-object';
 const definition = {
   scope: '[data-test-big-add-cancel-buttons]',
   addButton: {
-    scope: '[data-test-add]',
+    scope: '[data-test-save]',
     cssClasses: attribute('class'),
     ariaLabel: attribute('aria-label'),
     isDisabled: property('disabled'),
