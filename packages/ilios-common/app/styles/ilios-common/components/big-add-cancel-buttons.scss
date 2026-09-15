@@ -5,7 +5,7 @@ button {
     margin-right: 0.5em;
 
     &:hover {
-      background-color: var(--light-green);
+      background-color: light-dark(var(--light-green), var(--light-green));
     }
 
     &:disabled {
@@ -13,7 +13,7 @@ button {
       cursor: default;
 
       &:hover {
-        background-color: var(--grey);
+        background-color: light-dark(var(--grey), var(--grey));
       }
     }
   }
