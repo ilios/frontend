@@ -497,8 +497,8 @@ importers:
         specifier: ^3.5.0
         version: 3.6.0
       sass:
-        specifier: ^1.104.0
-        version: 1.104.0
+        specifier: ^1.104.1
+        version: 1.104.1
       striptags:
         specifier: ^3.2.0
         version: 3.2.0
@@ -843,8 +843,8 @@ importers:
         specifier: ^6.16.0
         version: 6.16.0
       sass:
-        specifier: ^1.104.0
-        version: 1.104.0
+        specifier: ^1.104.1
+        version: 1.104.1
       stylelint:
         specifier: ^16.26.1
         version: 16.26.1(supports-color@8.1.1)(typescript@6.0.3)
@@ -1074,8 +1074,8 @@ importers:
         specifier: ^3.5.0
         version: 3.6.0
       sass:
-        specifier: ^1.104.0
-        version: 1.104.0
+        specifier: ^1.104.1
+        version: 1.104.1
       stylelint:
         specifier: ^16.26.1
         version: 16.26.1(supports-color@8.1.1)(typescript@6.0.3)
@@ -1302,8 +1302,8 @@ importers:
         specifier: ^3.5.0
         version: 3.6.0
       sass:
-        specifier: ^1.104.0
-        version: 1.104.0
+        specifier: ^1.104.1
+        version: 1.104.1
       stylelint:
         specifier: ^16.26.1
         version: 16.26.1(supports-color@8.1.1)(typescript@6.0.3)
@@ -8677,8 +8677,8 @@ packages:
     resolution: {integrity: sha512-PGtEkc9cbnedU3s9TmzDbpsZ8w086g/0Q8k8/oIO1NLNU3i5k9yn835CrjJSajp1KMmkisbO1qPXxNKO3welAg==}
     engines: {node: '>=22.12.0'}
 
-  sass@1.104.0:
-    resolution: {integrity: sha512-btHMApW2bgolvClhRW8AlQJzgI9lUB3pPSofBQQT+E46GWvf9o0TVQ13SYv5riWZVFyPN+JNz3TKW9XhBlc10w==}
+  sass@1.104.1:
+    resolution: {integrity: sha512-yDA+1aIG3EHgN4V/BvuhCvu61FF6hEd4e+9DxikUm9U0CAGuvdIZ/UYy7qbOxjhbbWQraoyLlMuzdRGOSV5Bmw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -19214,7 +19214,7 @@ snapshots:
       parse-srcset: 1.0.2
       postcss: 8.5.26
 
-  sass@1.104.0:
+  sass@1.104.1:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.9
