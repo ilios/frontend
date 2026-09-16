@@ -638,8 +638,8 @@ importers:
         specifier: ^4.0.0
         version: 4.1.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.109.2(csso@4.2.0)(postcss@8.5.26)(uglify-js@3.19.3))
       ember-inflector:
-        specifier: ^5.0.2
-        version: 5.0.2(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
+        specifier: ^7.0.0
+        version: 7.0.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
       ember-intl:
         specifier: ^9.0.0
         version: 9.0.0(@babel/core@7.29.7(supports-color@8.1.1))(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1)
@@ -742,7 +742,7 @@ importers:
         version: 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
       '@ember-data/request-utils':
         specifier: ~5.8.1
-        version: 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(ember-inflector@5.0.2(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1)
+        version: 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(ember-inflector@7.0.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1)
       '@ember-data/serializer':
         specifier: ~5.8.1
         version: 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
@@ -5366,6 +5366,9 @@ packages:
 
   ember-inflector@5.0.2:
     resolution: {integrity: sha512-aoPaT7B3pbUHSi4ulf02iRaMMvPteuDBO8jA1SLLOl/JwnO2YI5F/MhNPaolxp8DWwAd/P6MNN+wD5bLwmiUIA==}
+
+  ember-inflector@7.0.0:
+    resolution: {integrity: sha512-dHnlYfxBnpiRMZUgrYpdcQ/kGGMCuVh3KhHhJ0TU2PPJY7TB+3XqUWCf7ihppxkbRf1igLVRietYK2v0OXzm8Q==}
 
   ember-intl@9.0.0:
     resolution: {integrity: sha512-X1YcDMC4VaKcAIxO2jvfzxCca3WR3BOrB3R1gziFh5HKitEGtHBP8h+m726PmmLs9Ie3zeaXw827UW9VjmhHdA==}
@@ -11093,6 +11096,18 @@ snapshots:
       - '@glint/template'
       - supports-color
 
+  '@ember-data/request-utils@5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(ember-inflector@7.0.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1)':
+    dependencies:
+      '@embroider/macros': 1.20.6(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
+      '@warp-drive/core': 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
+      '@warp-drive/utilities': 5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(@warp-drive/core@5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1)
+    optionalDependencies:
+      ember-inflector: 7.0.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@glint/template'
+      - supports-color
+
   '@ember-data/request@5.8.2(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)':
     dependencies:
       '@embroider/macros': 1.20.6(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
@@ -15403,6 +15418,15 @@ snapshots:
       - webpack
 
   ember-inflector@5.0.2(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1):
+    dependencies:
+      '@embroider/addon-shim': 1.10.3(supports-color@8.1.1)
+      decorator-transforms: 2.4.0(@babel/core@7.29.7(supports-color@8.1.1))
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+    optional: true
+
+  ember-inflector@7.0.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       '@embroider/addon-shim': 1.10.3(supports-color@8.1.1)
       decorator-transforms: 2.4.0(@babel/core@7.29.7(supports-color@8.1.1))
