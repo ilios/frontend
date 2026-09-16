@@ -11,9 +11,9 @@ module('Integration | Component | big-save-cancel-buttons', function (hooks) {
   test('it renders', async function (assert) {
     await render(<template><BigSaveCancelButtons @save={{(noop)}} @cancel={{(noop)}} /></template>);
 
-    assert.ok(component.addButton, 'add button exists');
-    assert.strictEqual(component.addButton.cssClasses, 'bigsave', 'css classes correct');
-    assert.strictEqual(component.addButton.ariaLabel, 'Save', 'aria-label correct');
+    assert.ok(component.saveButton, 'save button exists');
+    assert.strictEqual(component.saveButton.cssClasses, 'bigsave', 'css classes correct');
+    assert.strictEqual(component.saveButton.ariaLabel, 'Save', 'aria-label correct');
     assert.ok(component.cancelButton, 'cancel button exists');
     assert.strictEqual(component.cancelButton.cssClasses, 'bigcancel', 'css classes correct');
     assert.strictEqual(component.cancelButton.ariaLabel, 'Cancel', 'aria-label correct');
