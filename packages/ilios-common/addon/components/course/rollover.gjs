@@ -211,7 +211,7 @@ export default class CourseRolloverComponent extends Component {
             {{t "general.backToTitle" title=@course.title}}
           </LinkTo>
         </div>
-        <div class="rollover-form" {{scrollIntoView}}>
+        <div class="rollover-form" {{scrollIntoView delay=10}}>
           <h3 class="title">
             {{t "general.courseRollover"}}
           </h3>
