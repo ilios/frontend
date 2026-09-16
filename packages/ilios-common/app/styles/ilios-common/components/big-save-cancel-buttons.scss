@@ -25,5 +25,14 @@ button {
     &:hover {
       background-color: light-dark(var(--light-red), var(--light-red));
     }
+
+    &:disabled {
+      background-color: light-dark(var(--grey), var(--grey));
+      cursor: default;
+
+      &:hover {
+        background-color: light-dark(var(--grey), var(--grey));
+      }
+    }
   }
 }
