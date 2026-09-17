@@ -1,4 +1,4 @@
-import { attribute, create, hasClass, property } from 'ember-cli-page-object';
+import { attribute, clickable, create, hasClass, property } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-big-save-cancel-buttons]',
@@ -23,6 +23,8 @@ const definition = {
       cssClasses: attribute('class'),
     },
   },
+  save: clickable('[data-test-save]'),
+  cancel: clickable('[data-test-cancel]'),
 };
 
 export default definition;
