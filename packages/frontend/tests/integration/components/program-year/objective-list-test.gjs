@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest, takeScreenshot } from 'frontend/tests/helpers';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/objective-list';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -51,7 +51,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
         />
       </template>,
     );
-    await takeScreenshot(assert, 'default');
+    await takeComponentScreenshot(assert, 'default');
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.headers[0].text, 'Description');
     assert.strictEqual(component.headers[1].text, 'Competency');
@@ -122,7 +122,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
         />
       </template>,
     );
-    await takeScreenshot(assert, 'default');
+    await takeComponentScreenshot(assert, 'default');
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.headers[0].text, 'Description');
     assert.strictEqual(component.headers[1].text, 'Competency');
@@ -166,7 +166,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
         <ObjectiveList @editable={{true}} @programYear={{this.programYear}} @showMeSH={{true}} />
       </template>,
     );
-    await takeScreenshot(assert, 'default');
+    await takeComponentScreenshot(assert, 'default');
     assert.notOk(component.sortIsVisible);
     assert.strictEqual(component.text, '');
   });
