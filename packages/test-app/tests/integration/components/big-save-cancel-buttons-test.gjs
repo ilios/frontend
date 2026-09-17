@@ -4,23 +4,15 @@ import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 import noop from 'ilios-common/helpers/noop';
+import noopTask from 'ilios-common/helpers/noop-task';
 import { on } from '@ember/modifier';
 
 module('Integration | Component | big-save-cancel-buttons', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(async function () {
-    this.set('noopTask', {
-      perform: async () => {
-        return true;
-      },
-      isRunning: false,
-    });
-  });
-
   test('it renders without block', async function (assert) {
     await render(
-      <template><BigSaveCancelButtons @save={{this.noopTask}} @cancel={{(noop)}} /></template>,
+      <template><BigSaveCancelButtons @save={{(noopTask)}} @cancel={{(noop)}} /></template>,
     );
 
     assert.ok(component.saveButton, 'save button exists');
@@ -50,7 +42,7 @@ module('Integration | Component | big-save-cancel-buttons', function (hooks) {
     await render(
       <template>
         <BigSaveCancelButtons
-          @save={{this.noopTask}}
+          @save={{(noopTask)}}
           @cancel={{(noop)}}
           @disableSave={{(noop)}}
           @disableCancel={{(noop)}}
@@ -110,7 +102,7 @@ module('Integration | Component | big-save-cancel-buttons', function (hooks) {
     };
 
     await render(
-      <template><BigSaveCancelButtons @save={{this.noopTask}} @cancel={{this.cancel}} /></template>,
+      <template><BigSaveCancelButtons @save={{(noopTask)}} @cancel={{this.cancel}} /></template>,
     );
 
     await component.cancelButton.click();

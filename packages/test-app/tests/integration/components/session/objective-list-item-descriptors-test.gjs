@@ -7,6 +7,7 @@ import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItemDescriptors from 'ilios-common/components/session/objective-list-item-descriptors';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
+import noopTask from 'ilios-common/helpers/noop-task';
 
 module('Integration | Component | session/objective-list-item-descriptors', function (hooks) {
   setupRenderingTest(hooks);
@@ -30,7 +31,7 @@ module('Integration | Component | session/objective-list-item-descriptors', func
           @editable={{false}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{(noop)}}
         />
@@ -106,8 +107,10 @@ module('Integration | Component | session/objective-list-item-descriptors', func
   });
 
   test('clicking save fires save', async function (assert) {
-    this.set('save', () => {
-      assert.step('save called');
+    this.set('save', {
+      perform() {
+        assert.step('save called');
+      },
     });
     this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(
@@ -139,7 +142,7 @@ module('Integration | Component | session/objective-list-item-descriptors', func
           @editable={{true}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{this.cancel}}
         />

@@ -7,6 +7,7 @@ import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItemParents from 'ilios-common/components/session/objective-list-item-parents';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
+import noopTask from 'ilios-common/helpers/noop-task';
 
 module('Integration | Component | session/objective-list-item-parents', function (hooks) {
   setupRenderingTest(hooks);
@@ -33,7 +34,7 @@ module('Integration | Component | session/objective-list-item-parents', function
           @editable={{false}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{(noop)}}
         />
@@ -109,8 +110,10 @@ module('Integration | Component | session/objective-list-item-parents', function
   });
 
   test('clicking save fires save', async function (assert) {
-    this.set('save', () => {
-      assert.step('save called');
+    this.set('save', {
+      perform: async () => {
+        assert.step('save called');
+      },
     });
     this.set('parents', [this.courseObjective1, this.courseObjective2]);
     await render(
@@ -142,7 +145,7 @@ module('Integration | Component | session/objective-list-item-parents', function
           @editable={{true}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{this.cancel}}
         />
