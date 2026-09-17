@@ -8,30 +8,22 @@ import { faSpinner, faCheck, faArrowRotateLeft } from '@fortawesome/free-solid-s
 export default class BigSaveCancelButtonsComponent extends Component {
   get save() {
     assert('save must be a task', typeof this.args.save.perform === 'function');
-    return this.args.save;
+    return this.args.save.perform;
   }
   get isSaving() {
     return this.args.save.isRunning;
-  }
-  get cancel() {
-    // if ember-concurrency Task, perform it, otherwise run function normally
-    if (typeof this.args.cancel.perform === 'function') {
-      return this.args.cancel.perform;
-    }
-
-    return this.args.cancel;
   }
 
   <template>
     <div data-test-big-save-cancel-buttons>
       {{#if (has-block)}}
-        {{yield this.save this.cancel @disableSave @disableCancel}}
+        {{yield this.save @cancel @disableSave @disableCancel}}
       {{else}}
         <button
           aria-label={{t "general.save"}}
           type="button"
           class="bigsave"
-          disabled={{this.isSaving}}
+          disabled={{if @disableSave @disableSave this.isSaving}}
           {{on "click" this.save}}
           data-test-save
           ...attributes
@@ -46,8 +38,8 @@ export default class BigSaveCancelButtonsComponent extends Component {
           aria-label={{t "general.cancel"}}
           type="button"
           class="bigcancel"
-          disabled={{this.isSaving}}
-          {{on "click" this.cancel}}
+          disabled={{if @disableCancel @disableCancel this.isSaving}}
+          {{on "click" @cancel}}
           data-test-cancel
         >
           <FaIcon @icon={{faArrowRotateLeft}} @fixedWidth={{true}} />
