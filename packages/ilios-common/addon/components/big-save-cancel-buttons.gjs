@@ -1,25 +1,17 @@
 import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
+import { assert } from '@ember/debug';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSpinner, faCheck, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default class BigSaveCancelButtonsComponent extends Component {
   get save() {
-    // if ember-concurrency Task, perform it, otherwise run function normally
-    if (typeof this.args.save.perform === 'function') {
-      return this.args.save.perform;
-    }
-
+    assert('save must be a task', typeof this.args.save.perform === 'function');
     return this.args.save;
   }
   get isSaving() {
-    // if ember-concurrency Task, check for running task
-    if (typeof this.args.save.perform === 'function') {
-      return this.args.save.isRunning;
-    }
-
-    return false;
+    return this.args.save.isRunning;
   }
   get cancel() {
     // if ember-concurrency Task, perform it, otherwise run function normally
