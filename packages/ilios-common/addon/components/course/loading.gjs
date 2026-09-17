@@ -6,7 +6,7 @@ import { faSquarePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 <template>
   <BackToCourses />
 
-  <div aria-hidden="true">
+  <div aria-hidden="true" data-test-course-loading>
     <div class="course-loading" {{animateLoading "course" loadingTime=10000 finalOpacity=".5"}}>
       <div class="header">
         <span class="title loading-text">&nbsp;</span>

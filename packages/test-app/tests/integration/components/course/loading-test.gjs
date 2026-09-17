@@ -17,7 +17,7 @@ module('Integration | Component | course/loading', function (hooks) {
     this.set('course', courseModel);
 
     await render(<template><Loading @course={{this.course}} /></template>);
-    assert.dom('div').hasAttribute('aria-hidden', 'true');
-    assert.dom('.header').exists();
+    assert.dom('[data-test-course-loading]').hasAttribute('aria-hidden', 'true');
+    assert.dom('[data-test-course-loading] .header').exists();
   });
 });
