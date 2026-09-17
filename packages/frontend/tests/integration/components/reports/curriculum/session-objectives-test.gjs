@@ -41,7 +41,7 @@ module('Integration | Component | reports/curriculum/session-objectives', functi
         const courses = rawCourses.map((course) => {
           course.sessions.forEach((session) => {
             session.sessionObjectives = this.server.db.sessionObjective
-              .findMany((q) => q.where({ session: (s) => s.id === session.id }))
+              .findMany((q) => q.where({ session: (s) => Number(s.id) === Number(session.id) }))
               .map(({ id, title }) => ({ id, title }));
           });
 
