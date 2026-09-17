@@ -5,25 +5,30 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSpinner, faCheck, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default class BigSaveCancelButtonsComponent extends Component {
+  get save() {
+    // if ember-concurrency Task, perform it, otherwise run function normally
+    return this.args.save.perform ?? this.args.save;
+  }
   get isSaving() {
-    if (this.args.save.isTask) {
-      return this.args.save.isRunning;
-    }
-
-    return this.args.disableSave;
+    // if ember-concurrency Task, check for running task
+    return this.args.save.perform ? this.args.save.isRunning : false;
+  }
+  get cancel() {
+    // if ember-concurrency Task, perform it, otherwise run function normally
+    return this.args.cancel.perform ?? this.args.cancel;
   }
 
   <template>
     <div data-test-big-save-cancel-buttons>
       {{#if (has-block)}}
-        {{yield @save @cancel @disableSave @disableCancel}}
+        {{yield this.save this.cancel @disableSave @disableCancel}}
       {{else}}
         <button
           aria-label={{t "general.save"}}
           type="button"
           class="bigsave"
           disabled={{this.isSaving}}
-          {{on "click" @save}}
+          {{on "click" this.save}}
           data-test-save
           ...attributes
         >
@@ -38,7 +43,7 @@ export default class BigSaveCancelButtonsComponent extends Component {
           type="button"
           class="bigcancel"
           disabled={{this.isSaving}}
-          {{on "click" @cancel}}
+          {{on "click" this.cancel}}
           data-test-cancel
         >
           <FaIcon @icon={{faArrowRotateLeft}} @fixedWidth={{true}} />
