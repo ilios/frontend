@@ -7,15 +7,27 @@ import { faSpinner, faCheck, faArrowRotateLeft } from '@fortawesome/free-solid-s
 export default class BigSaveCancelButtonsComponent extends Component {
   get save() {
     // if ember-concurrency Task, perform it, otherwise run function normally
-    return this.args.save.perform ?? this.args.save;
+    if (typeof this.args.save.perform === 'function') {
+      return this.args.save.perform;
+    }
+
+    return this.args.save;
   }
   get isSaving() {
     // if ember-concurrency Task, check for running task
-    return this.args.save.perform ? this.args.save.isRunning : false;
+    if (typeof this.args.save.perform === 'function') {
+      return this.args.save.isRunning;
+    }
+
+    return false;
   }
   get cancel() {
     // if ember-concurrency Task, perform it, otherwise run function normally
-    return this.args.cancel.perform ?? this.args.cancel;
+    if (typeof this.args.cancel.perform === 'function') {
+      return this.args.cancel.perform;
+    }
+
+    return this.args.cancel;
   }
 
   <template>
