@@ -1,5 +1,16 @@
 # How To Contribute
 
+## Contributor Accountability
+
+Whether AI-generated or poorly crafted by a human contributor, verbose, over-engineered, or superficially-correct code places a disproportionate review burden on maintainers. Disclosure creates accountability, and helps ensure contributors take ownership of any AI-assisted work. Contributors are expected to:
+
+- Thoroughly review and understand every line of code before submission
+- Refine all code whether AI output or human-written to meet project quality standards
+- Take **full ownership** of all submitted content regardless of origin
+- Disclose when AI has been used in (or as assistance for) code generation
+
+Low-effort submissions or submissions without clearly identified human ownership will be rejected without detailed feedback until properly refined. This applies to all contributions, but is particularly relevant for AI-assisted work.
+
 ## Installation
 
 - `git clone <repository-url>`
