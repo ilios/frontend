@@ -1,13 +1,10 @@
 import Component from '@glimmer/component';
-import { service } from '@ember/service';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSpinner, faCheck, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default class BigSaveCancelButtonsComponent extends Component {
-  @service intl;
-
   get isSaving() {
     if (this.args.save.isTask) {
       return this.args.save.isRunning;
