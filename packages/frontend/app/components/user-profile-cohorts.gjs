@@ -7,7 +7,6 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { or, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import UserProfileCohortsManager from './user-profile-cohorts-manager';
@@ -184,8 +183,8 @@ export default class UserProfileCohortsComponent extends Component {
           <div class="actions">
             {{#if @isManaging}}
               <BigSaveCancelButtons
-                @save={{perform this.save}}
-                @cancel={{perform this.cancel}}
+                @save={{this.save}}
+                @cancel={{this.cancel}}
                 @disableSave={{or
                   this.save.isRunning
                   this.cancel.isRunning

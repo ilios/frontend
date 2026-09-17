@@ -104,11 +104,7 @@ export default class SchoolEmailsEditorComponent extends Component {
         <div class="header">
           <div class="title">{{t "general.emails"}}</div>
           <div class="actions">
-            <BigSaveCancelButtons
-              @save={{perform this.save}}
-              @cancel={{@cancel}}
-              @disableSave={{this.save.isRunning}}
-            />
+            <BigSaveCancelButtons @save={{this.save}} @cancel={{@cancel}} />
           </div>
         </div>
         <div class="content">

@@ -5,7 +5,6 @@ import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import LearningMaterialAttributesManager from './learning-material-attributes-manager';
 import { faCaretDown, faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
@@ -62,11 +61,7 @@ export default class SchoolLearningMaterialAttributesExpandedComponent extends C
         {{/if}}
         <div class="actions">
           {{#if @isManaging}}
-            <BigSaveCancelButtons
-              @save={{perform this.save}}
-              @cancel={{this.cancel}}
-              @disableSave={{this.save.isRunning}}
-            />
+            <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} />
           {{else if @canUpdate}}
             <button type="button" {{on "click" (fn @manage true)}} data-test-manage>
               {{t "general.manageLearningMaterialAttributes"}}

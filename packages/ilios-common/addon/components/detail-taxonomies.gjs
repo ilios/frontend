@@ -99,12 +99,7 @@ export default class DetailTaxonomiesComponent extends Component {
         {{/if}}
         <div class="actions">
           {{#if this.isManaging}}
-            <BigSaveCancelButtons
-              @save={{perform this.save}}
-              @cancel={{this.cancel}}
-              @disableSave={{this.save.isRunning}}
-              {{scrollIntoView}}
-            />
+            <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} {{scrollIntoView}} />
           {{else if @editable}}
             <button type="button" {{on "click" (perform this.manage)}}>
               {{t "general.termsManageTitle"}}

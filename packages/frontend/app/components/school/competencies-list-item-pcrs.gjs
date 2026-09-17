@@ -4,7 +4,6 @@ import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { fn } from '@ember/helper';
 import pcrsUriToNumber from '../../helpers/pcrs-uri-to-number';
@@ -30,11 +29,7 @@ export default class SchoolCompetenciesListItemPcrsComponent extends Component {
       ...attributes
     >
       {{#if @isManaging}}
-        <BigSaveCancelButtons
-          @save={{perform this.save}}
-          @cancel={{@cancel}}
-          @disableSave={{this.save.isRunning}}
-        />
+        <BigSaveCancelButtons @save={{this.save}} @cancel={{@cancel}} />
       {{else}}
         <ul>
           {{#each (sortBy "id" this.aamcPcrses) as |pcrs|}}

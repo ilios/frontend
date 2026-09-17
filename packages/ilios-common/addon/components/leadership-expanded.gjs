@@ -6,7 +6,6 @@ import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import LeadershipManager from 'ilios-common/components/leadership-manager';
 import LeadershipList from 'ilios-common/components/leadership-list';
@@ -193,11 +192,7 @@ export default class LeadershipExpandedComponent extends Component {
         {{/if}}
         <div class="actions">
           {{#if @isManaging}}
-            <BigSaveCancelButtons
-              @save={{perform this.save}}
-              @cancel={{this.close}}
-              @disableSave={{this.save.isRunning}}
-            />
+            <BigSaveCancelButtons @save={{this.save}} @cancel={{this.close}} />
           {{else if @editable}}
             <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>
               {{t "general.manageLeadership"}}

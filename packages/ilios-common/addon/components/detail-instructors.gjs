@@ -148,11 +148,7 @@ export default class DetailInstructorsComponent extends Component {
         </div>
         <div class="actions">
           {{#if this.isManaging}}
-            <BigSaveCancelButtons
-              @save={{perform this.save}}
-              @cancel={{this.cancel}}
-              @disableSave={{this.save.isRunning}}
-            />
+            <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} />
           {{else if @editable}}
             <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
               {{t "general.instructorsManageTitle"}}

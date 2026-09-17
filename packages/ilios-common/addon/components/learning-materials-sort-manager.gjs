@@ -5,7 +5,6 @@ import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
@@ -87,11 +86,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
     <div class="sort-manager" data-test-detail-learning-materials-sort-manager>
       {{#if this.learningMaterials.isResolved}}
         <div class="actions">
-          <BigSaveCancelButtons
-            @save={{perform this.callSave}}
-            @cancel={{@cancel}}
-            @disableSave={{this.callSave.isRunning}}
-          />
+          <BigSaveCancelButtons @save={{this.callSave}} @cancel={{@cancel}} />
         </div>
         <div class="content">
           <ul class="sortable-items">

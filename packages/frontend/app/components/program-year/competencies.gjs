@@ -9,7 +9,6 @@ import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import sortBy from 'ilios-common/helpers/sort-by';
 import ManagedCompetencyListItem from './managed-competency-list-item';
@@ -171,7 +170,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
         <div class="actions" data-test-actions>
           {{#if @canUpdate}}
             {{#if @isManaging}}
-              <BigSaveCancelButtons @save={{perform this.save}} @cancel={{this.cancel}} />
+              <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} />
             {{else}}
               <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>
                 {{t "general.competenciesManageTitle"}}

@@ -5,7 +5,6 @@ import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
@@ -116,7 +115,7 @@ export default class ObjectiveSortManagerComponent extends Component {
     <div class="sort-manager">
       <div class="actions">
         <BigSaveCancelButtons
-          @save={{perform this.saveSortOrder}}
+          @save={{this.saveSortOrder}}
           @cancel={{@close}}
           @disableSave={{this.saveSortOrder.isRunning}}
           @disableCancel={{this.saveSortOrder.isRunning}}

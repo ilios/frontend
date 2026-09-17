@@ -8,7 +8,6 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import perform from 'ember-concurrency/helpers/perform';
 import { or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import CompetenciesManager from './competencies-manager';
@@ -151,7 +150,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
         {{/if}}
         <div class="actions" data-test-actions>
           {{#if @isManaging}}
-            <BigSaveCancelButtons @save={{perform this.save}} @cancel={{this.stopManaging}} />
+            <BigSaveCancelButtons @save={{this.save}} @cancel={{this.stopManaging}} />
           {{else if (or @canUpdate @canDelete @canCreate)}}
             <button
               type="button"

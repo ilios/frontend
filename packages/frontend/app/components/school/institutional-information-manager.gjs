@@ -80,11 +80,7 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
           </div>
           <div class="actions">
             {{#if @canUpdate}}
-              <BigSaveCancelButtons
-                @save={{perform this.save}}
-                @cancel={{fn @manage false}}
-                @disableSave={{this.save.isRunning}}
-              />
+              <BigSaveCancelButtons @save={{this.save}} @cancel={{fn @manage false}} />
             {{/if}}
           </div>
         </div>

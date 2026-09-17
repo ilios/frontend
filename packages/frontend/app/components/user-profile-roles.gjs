@@ -6,7 +6,6 @@ import { action } from '@ember/object';
 import { findBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
@@ -111,7 +110,7 @@ export default class UserProfileRolesComponent extends Component {
     >
       <div class="actions">
         {{#if @isManaging}}
-          <BigSaveCancelButtons @save={{perform this.save}} @cancel={{this.cancel}} />
+          <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} />
         {{else if @isManageable}}
           <button
             aria-label={{t "general.manage"}}

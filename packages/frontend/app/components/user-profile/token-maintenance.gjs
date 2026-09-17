@@ -142,9 +142,8 @@ export default class UserProfileApiTokenComponent extends Component {
                 @onChange={{this.selectExpiresAtDate}}
               />
               <BigSaveCancelButtons
-                @save={{perform this.createNewToken}}
+                @save={{this.createNewToken}}
                 @cancel={{pipe @toggleShowCreateNewToken this.reset}}
-                @disableSave={{this.createNewToken.isRunning}}
               />
             </div>
           {{/if}}

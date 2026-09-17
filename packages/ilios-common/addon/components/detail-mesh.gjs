@@ -5,7 +5,6 @@ import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
 import MeshManager from 'ilios-common/components/mesh-manager';
 import sortBy from 'ilios-common/helpers/sort-by';
 import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
@@ -69,11 +68,7 @@ export default class DetailMeshComponent extends Component {
           </div>
           <div class="actions">
             {{#if this.isManaging}}
-              <BigSaveCancelButtons
-                @save={{perform this.save}}
-                @cancel={{this.cancel}}
-                @disableSave={{this.save.isRunning}}
-              />
+              <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} />
             {{else if @editable}}
               <button type="button" {{on "click" this.manage}}>
                 {{t "general.meshManageTitle"}}

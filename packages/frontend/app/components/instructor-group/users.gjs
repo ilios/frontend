@@ -59,10 +59,7 @@ export default class InstructorGroupUsersComponent extends Component {
         </h2>
         <div class="actions">
           {{#if this.isManaging}}
-            <BigSaveCancelButtons
-              @save={{perform this.save}}
-              @cancel={{set this "isManaging" false}}
-            />
+            <BigSaveCancelButtons @save={{this.save}} @cancel={{set this "isManaging" false}} />
           {{else if @canUpdate}}
             <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
               {{t "general.instructorsManageTitle"}}
