@@ -1,6 +1,6 @@
 import { clickable, create, collection, isHidden, isPresent } from 'ember-cli-page-object';
 import fadeText from '../fade-text';
-import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import bigSaveCancelButtons from '../big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-objective-list-item-parents]',
