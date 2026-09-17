@@ -8,7 +8,7 @@ import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-button
     data-test-objective-list-item-descriptors
   >
     {{#if @isManaging}}
-      <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
+      <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} />
     {{else}}
       <ul class="mesh-descriptor-list">
         {{#each (sortBy "name" @meshDescriptors) as |descriptor|}}

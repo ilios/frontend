@@ -20,7 +20,7 @@ export default class CourseObjectiveListItemParentsComponent extends Component {
   <template>
     <div class="course-objective-list-item-parents grid-item" data-test-objective-list-item-parents>
       {{#if @isManaging}}
-        <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
+        <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} />
       {{else}}
         {{#if @parents}}
           <FadeText

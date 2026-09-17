@@ -7,7 +7,7 @@ import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-button
     data-test-objective-list-item-competency
   >
     {{#if @isManaging}}
-      <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
+      <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} />
     {{else}}
       {{#if @objective.competency}}
         {{#if @editable}}

@@ -20,7 +20,7 @@ export default class ObjectiveListItemTermsComponent extends Component {
   <template>
     <div class="objective-list-item-terms grid-item" data-test-objective-list-item-terms>
       {{#if @isManaging}}
-        <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} @disableSave={{@isSaving}} />
+        <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} />
       {{else}}
         {{#each @subject.associatedVocabularies as |vocab|}}
           {{#if vocab.termCount}}
