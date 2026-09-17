@@ -1,17 +1,9 @@
-import {
-  create,
-  clickable,
-  fillable,
-  isVisible,
-  isPresent,
-  text,
-  value,
-} from 'ember-cli-page-object';
+import { create, fillable, isVisible, isPresent, text, value } from 'ember-cli-page-object';
+import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-learner-group-new-multiple]',
-  save: clickable('[data-test-save]'),
-  cancel: clickable('[data-test-cancel]'),
+  bigSaveCancelButtons,
   isVisible: isVisible(),
   set: fillable('input'),
   value: value('input'),

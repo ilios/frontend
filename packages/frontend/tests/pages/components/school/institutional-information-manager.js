@@ -1,11 +1,11 @@
-import { clickable, create, fillable, text, isPresent, value } from 'ember-cli-page-object';
+import { create, fillable, text, isPresent, value } from 'ember-cli-page-object';
+import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-school-institutional-information-manager]',
   header: {
     scope: '[data-test-school-institutional-information-manager-header]',
-    save: clickable('.actions [data-test-save]'),
-    cancel: clickable('.actions [data-test-cancel]'),
+    bigSaveCancelButtons,
     hasSaveButton: isPresent('.actions [data-test-save]'),
     title: text('.title'),
   },

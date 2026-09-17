@@ -9,11 +9,11 @@ import {
   triggerable,
   value,
 } from 'ember-cli-page-object';
+import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-user-profile-bio-manager]',
-  save: clickable('[data-test-save]'),
-  cancel: clickable('[data-test-cancel]'),
+  bigSaveCancelButtons,
   syncWithDirectory: {
     scope: '[data-test-directory-sync]',
   },

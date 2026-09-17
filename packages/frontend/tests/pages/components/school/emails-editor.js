@@ -1,18 +1,10 @@
-import {
-  clickable,
-  create,
-  fillable,
-  isPresent,
-  text,
-  triggerable,
-  value,
-} from 'ember-cli-page-object';
+import { create, fillable, isPresent, text, triggerable, value } from 'ember-cli-page-object';
+import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 const definition = create({
   scope: '[data-test-school-emails-editor]',
   title: text('[data-test-title]'),
-  save: clickable('[data-test-save]'),
-  cancel: clickable('[data-test-cancel]'),
+  bigSaveCancelButtons,
   administratorEmail: {
     scope: '[data-test-administrator-email]',
     label: text('label'),

@@ -1,15 +1,12 @@
-import { clickable, create, property, text } from 'ember-cli-page-object';
+import { clickable, create, text } from 'ember-cli-page-object';
 import details from './user-profile-cohorts-details';
 import manager from './user-profile-cohorts-manager';
+import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+
 const definition = {
   scope: '[data-test-user-profile-cohorts]',
   title: text('[data-test-title]', { at: 0 }),
-  save: {
-    scope: '[data-test-save]',
-    click: clickable(),
-    isDisabled: property('disabled'),
-  },
-  cancel: clickable('[data-test-cancel]'),
+  bigSaveCancelButtons,
   manage: clickable('[data-test-manage]'),
   details,
   manager,
