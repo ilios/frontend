@@ -9,8 +9,19 @@ import { on } from '@ember/modifier';
 module('Integration | Component | big-save-cancel-buttons', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(async function () {
+    this.set('noopTask', {
+      perform: async () => {
+        return true;
+      },
+      isRunning: false,
+    });
+  });
+
   test('it renders without block', async function (assert) {
-    await render(<template><BigSaveCancelButtons @save={{(noop)}} @cancel={{(noop)}} /></template>);
+    await render(
+      <template><BigSaveCancelButtons @save={{this.noopTask}} @cancel={{(noop)}} /></template>,
+    );
 
     assert.ok(component.saveButton, 'save button exists');
     assert.strictEqual(component.saveButton.cssClasses, 'bigsave', 'css classes correct');
@@ -39,7 +50,7 @@ module('Integration | Component | big-save-cancel-buttons', function (hooks) {
     await render(
       <template>
         <BigSaveCancelButtons
-          @save={{(noop)}}
+          @save={{this.noopTask}}
           @cancel={{(noop)}}
           @disableSave={{(noop)}}
           @disableCancel={{(noop)}}
@@ -78,16 +89,19 @@ module('Integration | Component | big-save-cancel-buttons', function (hooks) {
   });
 
   test('save handler', async function (assert) {
-    this.save = function () {
-      assert.step('save called');
-    };
+    this.set('save', {
+      perform() {
+        assert.step('save.perform called');
+      },
+    });
 
     await render(
       <template><BigSaveCancelButtons @save={{this.save}} @cancel={{(noop)}} /></template>,
     );
 
+    assert.notOk(component.saveButton.icon.isSpinning);
     await component.saveButton.click();
-    assert.verifySteps(['save called']);
+    assert.verifySteps(['save.perform called']);
   });
 
   test('cancel handler', async function (assert) {
@@ -96,10 +110,25 @@ module('Integration | Component | big-save-cancel-buttons', function (hooks) {
     };
 
     await render(
-      <template><BigSaveCancelButtons @save={{(noop)}} @cancel={{this.cancel}} /></template>,
+      <template><BigSaveCancelButtons @save={{this.noopTask}} @cancel={{this.cancel}} /></template>,
     );
 
     await component.cancelButton.click();
     assert.verifySteps(['cancel called']);
+  });
+
+  test('save icon spinning', async function (assert) {
+    this.set('save', {
+      perform: async () => {
+        return true;
+      },
+      isRunning: true,
+    });
+
+    await render(
+      <template><BigSaveCancelButtons @save={{this.save}} @cancel={{(noop)}} /></template>,
+    );
+
+    assert.ok(component.saveButton.icon.isSpinning);
   });
 });
