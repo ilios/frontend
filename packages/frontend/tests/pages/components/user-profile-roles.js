@@ -1,6 +1,6 @@
 import { clickable, create, property, text } from 'ember-cli-page-object';
 import yesNo from './yes-no';
-import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-user-profile-roles]',

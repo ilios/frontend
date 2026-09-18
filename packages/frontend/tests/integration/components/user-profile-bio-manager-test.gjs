@@ -204,7 +204,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     await component.pronouns.set('me/my/him');
     await component.preferredEmail.set('e2@e.com');
     await component.phone.set('12345x');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
 
     assert.strictEqual(userModel.firstName, 'new first', 'new first name is correct');
     assert.strictEqual(userModel.middleName, 'new middle', 'new middle name is correct');
@@ -267,7 +267,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     await component.preferredEmail.set('e2@e.com');
     await component.phone.set('12345x');
     await component.username.set('new-test-user');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.strictEqual(userModel.firstName, 'new first', 'new first name is correct');
     assert.strictEqual(userModel.middleName, 'new middle', 'new middle name is correct');
     assert.strictEqual(userModel.lastName, 'new last', 'new last name is correct');
@@ -334,7 +334,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     await component.phone.set('12345x');
     await component.username.set('new-test-user');
     await component.password.set('new-password');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
 
     assert.strictEqual(userModel.firstName, 'new first', 'new first name is correct');
     assert.strictEqual(userModel.middleName, 'new middle', 'new middle name is correct');
@@ -389,12 +389,12 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     await component.password.edit();
     assert.notOk(component.password.hasError);
     await component.password.set('');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.strictEqual(component.password.error, 'Password can not be empty');
     await component.password.set('a');
     assert.strictEqual(component.password.error, 'Password is too short (minimum is 5 characters)');
     await component.password.set('abcdef');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.notOk(component.password.hasError);
   });
 
@@ -598,7 +598,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
       'preferred email has value',
     );
     await component.preferredEmail.set('');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.strictEqual(userModel.preferredEmail, '', 'preferred email is blank');
   });
 
@@ -613,7 +613,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
 
     assert.strictEqual(component.displayName.value, 'Best Name', 'display name has value');
     await component.displayName.set('');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.strictEqual(userModel.displayName, '', 'display name is blank');
   });
 
@@ -628,7 +628,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
 
     assert.strictEqual(component.pronouns.value, 'they/them/tay', 'pronouns have value');
     await component.pronouns.set('');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.strictEqual(userModel.pronouns, '', 'pronouns are blank');
   });
 

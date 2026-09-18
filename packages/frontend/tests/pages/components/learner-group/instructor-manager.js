@@ -2,7 +2,7 @@ import { clickable, collection, create, fillable, hasClass, text } from 'ember-c
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 import userStatus from 'ilios-common/page-objects/components/user-status';
 import membersList from './instructor-group-members-list';
-import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-learner-group-instructor-manager]',

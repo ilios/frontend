@@ -346,7 +346,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
         @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
         @manage={{perform this.manageCompetency}}
         @isManaging={{this.isManagingCompetency}}
-        @save={{perform this.saveCompetency}}
+        @save={{this.saveCompetency}}
         @isSaving={{this.saveCompetency.isRunning}}
         @cancel={{this.cancel}}
       />
@@ -356,7 +356,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
         @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
         @manage={{perform this.manageTerms}}
         @isManaging={{this.isManagingTerms}}
-        @save={{perform this.saveTerms}}
+        @save={{this.saveTerms}}
         @isSaving={{this.saveTerms.isRunning}}
         @cancel={{this.cancel}}
       />
@@ -366,7 +366,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
           @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
           @manage={{perform this.manageDescriptors}}
           @isManaging={{this.isManagingDescriptors}}
-          @save={{perform this.saveDescriptors}}
+          @save={{this.saveDescriptors}}
           @isSaving={{this.saveDescriptors.isRunning}}
           @cancel={{this.cancel}}
         />
@@ -478,7 +478,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
           @add={{this.addDescriptorToBuffer}}
           @remove={{this.removeDescriptorFromBuffer}}
           @editable={{@editable}}
-          @save={{perform this.saveDescriptors}}
+          @save={{this.saveDescriptors}}
           @cancel={{this.cancel}}
         />
       {{/if}}
@@ -493,7 +493,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
           @add={{this.addTermToBuffer}}
           @remove={{this.removeTermFromBuffer}}
           @editable={{@editable}}
-          @save={{perform this.saveTerms}}
+          @save={{this.saveTerms}}
           @cancel={{this.cancel}}
         />
       {{/if}}

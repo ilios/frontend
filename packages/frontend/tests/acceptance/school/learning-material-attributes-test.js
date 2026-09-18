@@ -110,7 +110,7 @@ module('Acceptance | School - Learning Material Attributes', function (hooks) {
       'https://iliosproject.org',
     );
     await takeScreenshot(assert, 'learning material attributes checked and filled out');
-    await page.root.learningMaterialAttributes.expanded.save();
+    await page.root.learningMaterialAttributes.expanded.bigSaveCancelButtons.save();
     assert.strictEqual(
       page.root.learningMaterialAttributes.expanded.attributes.accessibilityRequired.label,
       'Accessibility Required',

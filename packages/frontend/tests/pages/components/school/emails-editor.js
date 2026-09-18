@@ -1,5 +1,5 @@
 import { create, fillable, isPresent, text, triggerable, value } from 'ember-cli-page-object';
-import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 
 const definition = create({
   scope: '[data-test-school-emails-editor]',

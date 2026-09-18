@@ -1,7 +1,7 @@
 import { clickable, collection, create, isPresent, text } from 'ember-cli-page-object';
 import managedCompetencyListItem from './managed-competency-list-item';
 import competencyListItem from './competency-list-item';
-import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-program-year-competencies]',

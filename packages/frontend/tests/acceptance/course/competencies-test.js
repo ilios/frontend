@@ -70,7 +70,7 @@ module('Acceptance | Course - Competencies', function (hooks) {
     await m.competencies[1].objectives[0].add();
     assert.ok(m.competencies[0].objectives[0].notSelected);
     assert.ok(m.competencies[1].objectives[0].selected);
-    await page.details.objectives.objectiveList.objectives[1].parents.save();
+    await page.details.objectives.objectiveList.objectives[1].parents.bigSaveCancelButtons.save();
 
     assert.strictEqual(page.details.collapsedCompetencies.title, 'Competencies (2)');
     assert.strictEqual(page.details.collapsedCompetencies.headers[0].text, 'School');

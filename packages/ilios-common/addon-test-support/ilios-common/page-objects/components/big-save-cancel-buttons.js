@@ -1,4 +1,4 @@
-import { attribute, clickable, create, hasClass, property } from 'ember-cli-page-object';
+import { attribute, clickable, create, hasClass, isVisible, property } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-big-save-cancel-buttons]',
@@ -6,6 +6,7 @@ const definition = {
     scope: '[data-test-save]',
     cssClasses: attribute('class'),
     ariaLabel: attribute('aria-label'),
+    isVisible: isVisible(),
     isDisabled: property('disabled'),
     icon: {
       scope: 'svg',
@@ -17,6 +18,7 @@ const definition = {
     scope: '[data-test-cancel]',
     cssClasses: attribute('class'),
     ariaLabel: attribute('aria-label'),
+    isVisible: isVisible(),
     isDisabled: property('disabled'),
     icon: {
       scope: 'svg',

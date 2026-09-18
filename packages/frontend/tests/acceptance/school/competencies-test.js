@@ -161,7 +161,7 @@ module('Acceptance | School - Competencies', function (hooks) {
     await e.competenciesManager.newDomain.newCompetency.title.set('new domain');
     await e.competenciesManager.newDomain.newCompetency.save();
 
-    await e.save();
+    await e.bigSaveCancelButtons.save();
 
     const { items } = e.competenciesList;
     assert.strictEqual(items.length, 3);

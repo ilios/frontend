@@ -106,7 +106,7 @@ module('Integration | Component | school/institutional-information-manager', fun
         />
       </template>,
     );
-    await component.header.cancel();
+    await component.header.bigSaveCancelButtons.cancel();
     assert.verifySteps(['manage called']);
   });
 
@@ -168,7 +168,7 @@ module('Integration | Component | school/institutional-information-manager', fun
     await component.content.addressZipCode.change(newAddressZipCode);
     await component.content.addressCountryCode.change(newAddressCountryCode);
 
-    await component.header.save();
+    await component.header.bigSaveCancelButtons.save();
     assert.verifySteps(['saveInstitution called']);
   });
 
@@ -216,7 +216,7 @@ module('Integration | Component | school/institutional-information-manager', fun
     await component.content.addressZipCode.change(newAddressZipCode);
     await component.content.addressCountryCode.change(newAddressCountryCode);
 
-    await component.header.save();
+    await component.header.bigSaveCancelButtons.save();
     assert.verifySteps(['saveInstitution called']);
   });
 
@@ -241,7 +241,7 @@ module('Integration | Component | school/institutional-information-manager', fun
     assert.notOk(component.content.addressZipCode.hasError);
     assert.notOk(component.content.addressCountryCode.hasError);
 
-    await component.header.save();
+    await component.header.bigSaveCancelButtons.save();
 
     assert.ok(component.content.name.hasError);
     assert.strictEqual(

@@ -609,7 +609,7 @@ export default class LearnerGroupRootComponent extends Component {
               @instructors={{this.instructors}}
               @instructorGroups={{this.instructorGroups}}
               @availableInstructorGroups={{this.availableInstructorGroups}}
-              @save={{perform this.saveInstructors}}
+              @save={{this.saveInstructors}}
               @cancel={{set this "isManagingInstructors" false}}
             />
           {{else}}

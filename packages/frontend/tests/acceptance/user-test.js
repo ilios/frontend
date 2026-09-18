@@ -186,7 +186,7 @@ module('Acceptance | User', function (hooks) {
     assert.strictEqual(page.cohorts.details.primaryCohort.title, 'school 0 program 0 Medicine');
     await page.cohorts.manage();
     assert.strictEqual(page.cohorts.manager.primaryCohort.title, 'school 0 program 0 Medicine');
-    await page.cohorts.cancel();
+    await page.cohorts.bigSaveCancelButtons.cancel();
 
     await page.visit({ userId: user2.id });
     assert.strictEqual(page.bioDetails.username.text, 'Username: username2');

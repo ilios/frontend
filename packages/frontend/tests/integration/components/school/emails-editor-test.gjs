@@ -49,7 +49,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     assert.notOk(component.changeAlertRecipients.hasError);
     await component.administratorEmail.set('admin@school.edu');
     await component.changeAlertRecipients.set('email1@school.edu,email2@school.edu,,');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.notOk(component.administratorEmail.hasError);
     assert.notOk(component.changeAlertRecipients.hasError);
     assert.verifySteps(['save called']);
@@ -80,7 +80,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     assert.notOk(component.administratorEmail.hasError);
     assert.notOk(component.changeAlertRecipients.hasError);
     await component.changeAlertRecipients.set('');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.notOk(component.administratorEmail.hasError);
     assert.notOk(component.changeAlertRecipients.hasError);
     assert.verifySteps(['save called']);
@@ -106,7 +106,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     assert.notOk(component.administratorEmail.hasError);
     assert.notOk(component.changeAlertRecipients.hasError);
     await component.administratorEmail.set('');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.strictEqual(component.administratorEmail.error, 'Administrator Email can not be blank');
     assert.notOk(component.changeAlertRecipients.hasError);
   });
@@ -124,7 +124,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     assert.notOk(component.changeAlertRecipients.hasError);
     await component.administratorEmail.set('not an email');
     await component.changeAlertRecipients.set('email1@school.edu,not an email,email2@school.edu');
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.strictEqual(
       component.administratorEmail.error,
       'Administrator Email must be a valid email address',
@@ -147,7 +147,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
         <EmailsEditor @school={{this.school}} @save={{(noop)}} @cancel={{this.cancel}} />
       </template>,
     );
-    await component.cancel();
+    await component.bigSaveCancelButtons.cancel();
     assert.verifySteps(['cancel called']);
   });
 

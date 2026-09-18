@@ -108,7 +108,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     await m.competencies[1].objectives[0].add();
     assert.ok(m.competencies[0].objectives[0].notSelected);
     assert.ok(m.competencies[1].objectives[0].selected);
-    await page.details.objectives.objectiveList.objectives[0].parents.save();
+    await page.details.objectives.objectiveList.objectives[0].parents.bigSaveCancelButtons.save();
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
@@ -149,7 +149,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     await m.competencies[1].objectives[0].add();
     assert.ok(m.competencies[0].objectives[0].notSelected);
     assert.ok(m.competencies[1].objectives[0].selected);
-    await page.details.objectives.objectiveList.objectives[0].parents.cancel();
+    await page.details.objectives.objectiveList.objectives[0].parents.bigSaveCancelButtons.cancel();
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,

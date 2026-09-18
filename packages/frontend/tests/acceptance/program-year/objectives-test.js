@@ -406,7 +406,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.strictEqual(m.selectedTerms[0].title, 'descriptor 1');
     assert.strictEqual(m.selectedTerms[1].title, 'descriptor 2');
 
-    await page.details.objectives.objectiveList.objectives[0].meshDescriptors.save();
+    await page.details.objectives.objectiveList.objectives[0].meshDescriptors.bigSaveCancelButtons.save();
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
       2,
@@ -451,7 +451,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.strictEqual(m.selectedTerms[0].title, 'descriptor 1');
     assert.strictEqual(m.selectedTerms[1].title, 'descriptor 2');
 
-    await page.details.objectives.objectiveList.objectives[0].meshDescriptors.cancel();
+    await page.details.objectives.objectiveList.objectives[0].meshDescriptors.bigSaveCancelButtons.cancel();
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
       2,
@@ -495,7 +495,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.ok(m.domains[0].selected);
     assert.ok(m.domains[0].competencies[0].notSelected);
     assert.ok(m.domains[0].competencies[1].selected);
-    await page.details.objectives.objectiveList.objectives[0].competency.save();
+    await page.details.objectives.objectiveList.objectives[0].competency.bigSaveCancelButtons.save();
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
@@ -520,7 +520,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await m.domains[0].competencies[0].toggle();
     assert.ok(m.domains[0].notSelected);
     assert.ok(m.domains[0].competencies[0].notSelected);
-    await page.details.objectives.objectiveList.objectives[0].competency.save();
+    await page.details.objectives.objectiveList.objectives[0].competency.bigSaveCancelButtons.save();
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
@@ -537,7 +537,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.ok(m.domains[0].selected);
     assert.ok(m.domains[0].competencies[0].notSelected);
     assert.ok(m.domains[0].competencies[1].selected);
-    await page.details.objectives.objectiveList.objectives[0].competency.cancel();
+    await page.details.objectives.objectiveList.objectives[0].competency.bigSaveCancelButtons.cancel();
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
@@ -563,7 +563,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.ok(m.domains[0].notSelected);
     assert.ok(m.domains[0].competencies[0].notSelected);
     assert.ok(m.domains[0].competencies[1].notSelected);
-    await page.details.objectives.objectiveList.objectives[0].competency.cancel();
+    await page.details.objectives.objectiveList.objectives[0].competency.bigSaveCancelButtons.cancel();
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
@@ -595,7 +595,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.ok(m.domains[0].selected);
     assert.ok(m.domains[0].competencies[0].notSelected);
     assert.ok(m.domains[0].competencies[1].selected);
-    await page.details.objectives.objectiveList.objectives[2].competency.save();
+    await page.details.objectives.objectiveList.objectives[2].competency.bigSaveCancelButtons.save();
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].description.text,

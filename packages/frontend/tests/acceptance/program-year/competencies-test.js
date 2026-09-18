@@ -101,7 +101,7 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     await manager.domains[1].click();
     await manager.domains[1].competencies[0].click();
     await manager.domains[0].competencies[1].click();
-    await page.details.competencies.save();
+    await page.details.competencies.bigSaveCancelButtons.save();
 
     assert.strictEqual(page.details.competencies.title, 'Competencies (3)');
     assert.strictEqual(page.details.competencies.list.domains.length, 2);
@@ -136,7 +136,7 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     await manager.domains[1].click();
     await manager.domains[1].competencies[0].click();
     await manager.domains[0].competencies[1].click();
-    await page.details.competencies.cancel();
+    await page.details.competencies.bigSaveCancelButtons.cancel();
 
     assert.strictEqual(page.details.competencies.title, 'Competencies (2)');
     assert.strictEqual(page.details.competencies.list.domains.length, 1);

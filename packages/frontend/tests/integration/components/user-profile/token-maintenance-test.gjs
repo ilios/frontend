@@ -61,7 +61,7 @@ module('Integration | Component | user-profile/token-maintenance', function (hoo
       </template>,
     );
 
-    await component.newTokenForm.submit();
+    await component.newTokenForm.bigSaveCancelButtons.save();
     assert.strictEqual(component.newTokenResult.value, 'new token');
     assert.verifySteps(['API called']);
   });
@@ -82,7 +82,7 @@ module('Integration | Component | user-profile/token-maintenance', function (hoo
       </template>,
     );
 
-    await component.newTokenForm.submit();
+    await component.newTokenForm.bigSaveCancelButtons.save();
     assert.strictEqual(component.newTokenResult.value, 'new token');
     assert.notOk(component.newTokenForm.isVisible);
     await component.newTokenResult.reset();
@@ -134,7 +134,7 @@ module('Integration | Component | user-profile/token-maintenance', function (hoo
 
     const dt = DateTime.fromObject({ hours: 8 }).plus({ days: 41 }).toJSDate();
     await component.newTokenForm.setDate(dt);
-    await component.newTokenForm.submit();
+    await component.newTokenForm.bigSaveCancelButtons.save();
     assert.verifySteps(['API called']);
   });
 
@@ -216,7 +216,7 @@ module('Integration | Component | user-profile/token-maintenance', function (hoo
       </template>,
     );
 
-    await component.newTokenForm.submit();
+    await component.newTokenForm.bigSaveCancelButtons.save();
     assert.strictEqual(component.newTokenResult.value, 'new token');
     assert.verifySteps(['API called']);
   });
@@ -250,7 +250,7 @@ module('Integration | Component | user-profile/token-maintenance', function (hoo
       </template>,
     );
 
-    await component.newTokenForm.submit();
+    await component.newTokenForm.bigSaveCancelButtons.save();
     assert.strictEqual(component.newTokenResult.value, 'new token');
     assert.verifySteps(['API called']);
   });

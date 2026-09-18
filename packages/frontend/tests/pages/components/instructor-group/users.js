@@ -2,7 +2,7 @@ import { collection, create, text } from 'ember-cli-page-object';
 import manager from './instructor-manager';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 import userStatus from 'ilios-common/page-objects/components/user-status';
-import bigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-instructor-group-users]',
