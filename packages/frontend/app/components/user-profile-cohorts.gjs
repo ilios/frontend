@@ -185,7 +185,7 @@ export default class UserProfileCohortsComponent extends Component {
             {{#if @isManaging}}
               <BigSaveCancelButtons
                 @save={{this.save}}
-                @cancel={{this.cancel}}
+                @cancel={{this.cancel.perform}}
                 @disableSave={{or
                   this.save.isRunning
                   this.cancel.isRunning
