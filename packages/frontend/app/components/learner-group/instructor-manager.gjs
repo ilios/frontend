@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
@@ -11,8 +10,7 @@ import UserNameInfo from 'ilios-common/components/user-name-info';
 import InstructorGroupMembersList from './instructor-group-members-list';
 import UserSearch from 'ilios-common/components/user-search';
 import UserStatus from 'ilios-common/components/user-status';
-import { faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import { faArrowRotateLeft, faCheck, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupInstructorManagerComponent extends Component {
   @tracked instructors = [];
@@ -43,9 +41,6 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
   removeInstructorGroup(instructorGroup) {
     this.instructorGroups = this.instructorGroups.filter((group) => group !== instructorGroup);
   }
-  save = task(async () => {
-    return this.args.save.perform(this.instructors, this.instructorGroups);
-  });
 
   <template>
     <div
@@ -65,7 +60,26 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
             @availableInstructorGroups={{@availableInstructorGroups}}
             @currentlyActiveInstructorGroups={{this.instructorGroups}}
           />
-          <BigSaveCancelButtons @save={{this.save}} @cancel={{@cancel}} />
+          <div>
+            <button
+              type="button"
+              class="bigsave"
+              aria-label={{t "general.save"}}
+              {{on "click" (fn @save this.instructors this.instructorGroups)}}
+              data-test-save
+            >
+              <FaIcon @icon={{faCheck}} />
+            </button>
+            <button
+              type="button"
+              class="bigcancel"
+              aria-label={{t "general.cancel"}}
+              {{on "click" @cancel}}
+              data-test-cancel
+            >
+              <FaIcon @icon={{faArrowRotateLeft}} />
+            </button>
+          </div>
         </div>
       </div>
       <div class="detail-content">

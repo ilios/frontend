@@ -5,7 +5,6 @@ import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/instructor-manager';
 import InstructorManager from 'frontend/components/learner-group/instructor-manager';
 import noop from 'ilios-common/helpers/noop';
-import noopTask from 'ilios-common/helpers/noop-task';
 import { array } from '@ember/helper';
 import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
 import { HttpResponse } from 'msw';
@@ -72,7 +71,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
           @instructors={{this.instructors}}
           @instructorGroups={{this.instructorGroups}}
           @availableInstructorGroups={{this.availableInstructorGroups}}
-          @save={{(noopTask)}}
+          @save={{(noop)}}
           @cancel={{(noop)}}
         />
       </template>,
@@ -111,7 +110,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
           @instructors={{(array)}}
           @instructorGroups={{(array)}}
           @availableInstructorGroups={{(array)}}
-          @save={{(noopTask)}}
+          @save={{(noop)}}
           @cancel={{(noop)}}
         />
       </template>,
@@ -150,12 +149,12 @@ module('Integration | Component | learner-group/instructor-manager', function (h
           @instructors={{(array)}}
           @instructorGroups={{(array)}}
           @availableInstructorGroups={{(array)}}
-          @save={{(noopTask)}}
+          @save={{(noop)}}
           @cancel={{this.cancel}}
         />
       </template>,
     );
-    await component.bigSaveCancelButtons.cancel();
+    await component.cancel.click();
     assert.verifySteps(['cancel called']);
   });
 
@@ -207,14 +206,12 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     this.set('instructors', [instructorModel1, instructorModel2]);
     this.set('instructorGroups', [instructorGroupModel1, instructorGroupModel2]);
     this.set('availableInstructorGroups', [instructorGroupModel1, instructorGroupModel2]);
-    this.set('save', {
-      async perform(users, groups) {
-        assert.step('save called');
-        assert.strictEqual(users.length, 1);
-        assert.strictEqual(groups.length, 1);
-        assert.strictEqual(users[0].get('fullName'), 'test person');
-        assert.strictEqual(groups[0].get('title'), 'test group 2');
-      },
+    this.set('save', (users, groups) => {
+      assert.step('save called');
+      assert.strictEqual(users.length, 1);
+      assert.strictEqual(groups.length, 1);
+      assert.strictEqual(users[0].get('fullName'), 'test person');
+      assert.strictEqual(groups[0].get('title'), 'test group 2');
     });
     this.set('learnerGroup', learnerGroupModel);
     await render(
@@ -235,7 +232,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     await component.selectedInstructorGroups[0].remove();
     assert.strictEqual(component.selectedInstructors.length, 1);
     assert.strictEqual(component.selectedInstructorGroups.length, 1);
-    await component.bigSaveCancelButtons.save();
+    await component.save.click();
     assert.verifySteps(['save called']);
   });
 
@@ -263,7 +260,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
           @instructors={{(array)}}
           @instructorGroups={{(array)}}
           @availableInstructorGroups={{this.availableInstructorGroup}}
-          @save={{(noopTask)}}
+          @save={{(noop)}}
           @cancel={{(noop)}}
         />
       </template>,
@@ -297,7 +294,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
           @instructors={{(array)}}
           @instructorGroups={{(array)}}
           @availableInstructorGroups={{(array)}}
-          @save={{(noopTask)}}
+          @save={{(noop)}}
           @cancel={{(noop)}}
         />
       </template>,

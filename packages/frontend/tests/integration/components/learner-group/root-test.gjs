@@ -1111,11 +1111,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
         .fullName,
       'test person2',
     );
-    await component.instructorManager.bigSaveCancelButtons.cancel();
+    await component.instructorManager.cancel.click();
     assert.notOk(component.instructorManager.isVisible);
     await component.instructorsList.manage.click();
     assert.notOk(component.instructorsList.isVisible);
-    await component.instructorManager.bigSaveCancelButtons.save();
+    await component.instructorManager.save.click();
     assert.notOk(component.instructorManager.isVisible);
     assert.ok(component.instructorsList.isVisible);
   });
@@ -1159,7 +1159,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.instructorManager.selectedInstructors.length, 2);
     await component.instructorManager.selectedInstructors[0].remove();
     assert.strictEqual(component.instructorManager.selectedInstructors.length, 1);
-    await component.instructorManager.bigSaveCancelButtons.cancel();
+    await component.instructorManager.cancel.click();
     assert.strictEqual(component.instructorsList.assignedInstructors.length, 2);
   });
 
@@ -1218,7 +1218,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     await component.instructorManager.selectedInstructorGroups[0].remove();
     assert.strictEqual(component.instructorManager.selectedInstructors.length, 1);
     assert.strictEqual(component.instructorManager.selectedInstructorGroups.length, 1);
-    await component.instructorManager.bigSaveCancelButtons.save();
+    await component.instructorManager.save.click();
     assert.strictEqual(component.instructorsList.assignedInstructors.length, 1);
   });
 
