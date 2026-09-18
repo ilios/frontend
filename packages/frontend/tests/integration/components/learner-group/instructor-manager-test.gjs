@@ -207,12 +207,14 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     this.set('instructors', [instructorModel1, instructorModel2]);
     this.set('instructorGroups', [instructorGroupModel1, instructorGroupModel2]);
     this.set('availableInstructorGroups', [instructorGroupModel1, instructorGroupModel2]);
-    this.set('save', (users, groups) => {
-      assert.step('save called');
-      assert.strictEqual(users.length, 1);
-      assert.strictEqual(groups.length, 1);
-      assert.strictEqual(users[0].get('fullName'), 'test person');
-      assert.strictEqual(groups[0].get('title'), 'test group 2');
+    this.set('save', {
+      async perform(users, groups) {
+        assert.step('save called');
+        assert.strictEqual(users.length, 1);
+        assert.strictEqual(groups.length, 1);
+        assert.strictEqual(users[0].get('fullName'), 'test person');
+        assert.strictEqual(groups[0].get('title'), 'test group 2');
+      },
     });
     this.set('learnerGroup', learnerGroupModel);
     await render(
