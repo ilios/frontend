@@ -60,6 +60,7 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked totalGroupsToSave = 0;
   @tracked isManagingInstructors = false;
   @tracked filter = '';
+  allDescendantUsersCache = [];
 
   get location() {
     return this.locationBuffer ?? this.args.learnerGroup.location;
@@ -368,23 +369,44 @@ export default class LearnerGroupRootComponent extends Component {
   }
 
   @cached
-  get usersForCohortManagerData() {
-    // Learnergroup members are only referenced here to trigger a re-computation on membership changes.
-    return new TrackedAsyncData(
-      this.getUsersToPassToCohortManager(this.args.learnerGroup, this.args.learnerGroup.users),
-    );
+  get cohortUsersData() {
+    if (!this.cohort) {
+      return [];
+    }
+
+    return new TrackedAsyncData(this.cohort.users);
+  }
+
+  @cached
+  get allDescendantUsersData() {
+    if (!this.topLevelGroup) {
+      return null;
+    }
+
+    return new TrackedAsyncData(this.getAllDescendantUsers(this.topLevelGroup));
+  }
+
+  async getAllDescendantUsers(topLevelGroup) {
+    const users = await topLevelGroup.getAllDescendantUsers();
+    this.allDescendantUsersCache = users;
+    return users;
+  }
+
+  get allDescendantUsers() {
+    if (!this.allDescendantUsersData) {
+      return [];
+    }
+
+    return this.allDescendantUsersData.isResolved
+      ? this.allDescendantUsersData.value
+      : this.allDescendantUsersCache;
   }
 
   get usersForCohortManager() {
-    return this.usersForCohortManagerData.isResolved ? this.usersForCohortManagerData.value : [];
-  }
-
-  async getUsersToPassToCohortManager(learnerGroup) {
-    const cohort = await learnerGroup.cohort;
-    const topLevelGroup = await learnerGroup.getTopLevelGroup();
-    const currentUsers = await topLevelGroup.getAllDescendantUsers();
-    const users = await cohort.users;
-    return users.filter((user) => !currentUsers.includes(user));
+    if (!this.cohortUsersData.isResolved) {
+      return [];
+    }
+    return this.cohortUsersData.value.filter((user) => !this.allDescendantUsers.includes(user));
   }
 
   addUserToGroup = task({ enqueue: true }, async (user) => {

@@ -13,3 +13,5 @@ export { hasFocus } from './helpers/has-focus';
 export { focusedText } from './helpers/focused-text';
 export { keyOnFocus } from './helpers/key-on-focus';
 export { default as jwtEncode } from './helpers/jwt-encode';
+export { default as scrollTo } from './helpers/scroll-to';
+export { default as isInView } from './helpers/is-in-view';
