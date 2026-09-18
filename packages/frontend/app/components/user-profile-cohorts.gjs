@@ -143,11 +143,10 @@ export default class UserProfileCohortsComponent extends Component {
     this.cohortsToAdd = this.cohortsToAdd.filter((c) => c !== cohort);
   }
 
-  @action
-  cancel() {
+  cancel = task({ restartable: true }, async () => {
     this.reset();
     this.args.setIsManaging(false);
-  }
+  });
 
   reset() {
     this.cohortsToAdd = [];
