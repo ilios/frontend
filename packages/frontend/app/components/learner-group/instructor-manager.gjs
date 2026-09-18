@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
@@ -42,18 +43,9 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
   removeInstructorGroup(instructorGroup) {
     this.instructorGroups = this.instructorGroups.filter((group) => group !== instructorGroup);
   }
-
-  get saveInstructors() {
-    const saveTask = this.args.save;
-
-    return {
-      perform: () => saveTask.perform(this.instructors, this.instructorGroups),
-
-      get isRunning() {
-        return saveTask.isRunning;
-      },
-    };
-  }
+  save = task(async () => {
+    return this.args.save.perform(this.instructors, this.instructorGroups);
+  });
 
   <template>
     <div
@@ -73,7 +65,7 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
             @availableInstructorGroups={{@availableInstructorGroups}}
             @currentlyActiveInstructorGroups={{this.instructorGroups}}
           />
-          <BigSaveCancelButtons @save={{this.saveInstructors}} @cancel={{@cancel}} />
+          <BigSaveCancelButtons @save={{this.save}} @cancel={{@cancel}} />
         </div>
       </div>
       <div class="detail-content">
