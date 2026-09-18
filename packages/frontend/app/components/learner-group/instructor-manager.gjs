@@ -42,6 +42,19 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
   removeInstructorGroup(instructorGroup) {
     this.instructorGroups = this.instructorGroups.filter((group) => group !== instructorGroup);
   }
+
+  get saveInstructors() {
+    const saveTask = this.args.save;
+
+    return {
+      perform: () => saveTask.perform(this.instructors, this.instructorGroups),
+
+      get isRunning() {
+        return saveTask.isRunning;
+      },
+    };
+  }
+
   <template>
     <div
       class="learner-group-instructor-manager"
@@ -60,10 +73,7 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
             @availableInstructorGroups={{@availableInstructorGroups}}
             @currentlyActiveInstructorGroups={{this.instructorGroups}}
           />
-          <BigSaveCancelButtons
-            @save={{fn @save this.instructors this.instructorGroups}}
-            @cancel={{@cancel}}
-          />
+          <BigSaveCancelButtons @save={{this.saveInstructors}} @cancel={{@cancel}} />
         </div>
       </div>
       <div class="detail-content">
