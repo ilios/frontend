@@ -6,6 +6,7 @@ import { component } from 'frontend/tests/pages/components/program-year/objectiv
 import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItemCompetency from 'frontend/components/program-year/objective-list-item-competency';
 import noop from 'ilios-common/helpers/noop';
+import noopTask from 'ilios-common/helpers/noop-task';
 
 module('Integration | Component | program-year/objective-list-item-competency', function (hooks) {
   setupRenderingTest(hooks);
@@ -19,7 +20,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
           @editable={{false}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{(noop)}}
         />
@@ -171,8 +172,10 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       .lookup('service:store')
       .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
-    this.set('save', () => {
-      assert.step('save called');
+    this.set('save', {
+      perform: async () => {
+        assert.step('save called');
+      },
     });
     await render(
       <template>
@@ -187,7 +190,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
         />
       </template>,
     );
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.verifySteps(['save called']);
   });
 
@@ -211,13 +214,13 @@ module('Integration | Component | program-year/objective-list-item-competency', 
           @editable={{true}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{this.cancel}}
         />
       </template>,
     );
-    await component.cancel();
+    await component.bigSaveCancelButtons.cancel();
     assert.verifySteps(['cancel called']);
   });
 

@@ -5,14 +5,18 @@ import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import t from 'ember-intl/helpers/t';
 import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
 import FadeText from 'ilios-common/components/fade-text';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faArrowRotateLeft, faCheck, faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSpinner,
+  faCheck,
+  faArrowRotateLeft,
+  faUpDownLeftRight,
+} from '@fortawesome/free-solid-svg-icons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class ObjectiveSortManagerComponent extends Component {
   @tracked totalObjectivesToSave;
@@ -110,29 +114,43 @@ export default class ObjectiveSortManagerComponent extends Component {
   <template>
     <div class="sort-manager">
       <div class="actions">
-        <button
-          class="bigadd"
-          type="button"
-          disabled={{this.saveSortOrder.isRunning}}
-          aria-label={{t "general.save"}}
-          {{on "click" (perform this.saveSortOrder)}}
+        <BigSaveCancelButtons
+          @save={{this.saveSortOrder}}
+          @cancel={{@close}}
+          @disableSave={{this.saveSortOrder.isRunning}}
+          @disableCancel={{this.saveSortOrder.isRunning}}
+          as |save cancel disableSave disableCancel|
         >
-          {{#if this.saveSortOrder.isRunning}}
-            <LoadingSpinner />
-            {{this.saveProgress}}%
-          {{else}}
-            <FaIcon @icon={{faCheck}} />
-          {{/if}}
-        </button>
-        <button
-          class="bigcancel"
-          type="button"
-          disabled={{this.saveSortOrder.isRunning}}
-          aria-label={{t "general.cancel"}}
-          {{on "click" @close}}
-        >
-          <FaIcon @icon={{faArrowRotateLeft}} />
-        </button>
+          <button
+            aria-label={{t "general.save"}}
+            type="button"
+            class="bigsave"
+            disabled={{disableSave}}
+            {{on "click" save}}
+            data-test-save
+          >
+            {{#if disableSave}}
+              <FaIcon
+                @icon={{faSpinner}}
+                @spin={{true}}
+                @fixedWidth={{true}}
+              />{{this.saveProgress}}%
+            {{else}}
+              <FaIcon @icon={{faCheck}} @fixedWidth={{true}} />
+            {{/if}}
+          </button>
+          <button
+            aria-label={{t "general.cancel"}}
+            type="button"
+            class="bigcancel"
+            disabled={{disableCancel}}
+            {{on "click" cancel}}
+            data-test-cancel
+          >
+            <FaIcon @icon={{faArrowRotateLeft}} @fixedWidth={{true}} />
+          </button>
+        </BigSaveCancelButtons>
+
       </div>
       <div class="content">
         <ul class="sortable-items">

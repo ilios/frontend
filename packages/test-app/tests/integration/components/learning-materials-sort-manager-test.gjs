@@ -91,8 +91,8 @@ module('Integration | Component | learning materials sort manager', function (ho
         statusModel1.title
       }`.replace(/[\s\n\t]+/g, ''),
     );
-    assert.dom('.actions .bigadd').exists({ count: 1 });
-    assert.dom('.actions .bigcancel').exists({ count: 1 });
+    assert.dom('.actions [data-test-save]').exists({ count: 1 });
+    assert.dom('.actions [data-test-cancel]').exists({ count: 1 });
   });
 
   test('cancel', async function (assert) {
@@ -188,7 +188,7 @@ module('Integration | Component | learning materials sort manager', function (ho
         />
       </template>,
     );
-    await click('.actions .bigadd');
+    await click('.actions [data-test-save]');
     assert.verifySteps(['save called']);
   });
 

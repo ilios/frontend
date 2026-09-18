@@ -6,6 +6,7 @@ import { component } from 'ilios-common/page-objects/components/objective-list-i
 import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItemTerms from 'ilios-common/components/objective-list-item-terms';
 import noop from 'ilios-common/helpers/noop';
+import noopTask from 'ilios-common/helpers/noop-task';
 
 module('Integration | Component | objective-list-item-terms', function (hooks) {
   setupRenderingTest(hooks);
@@ -38,7 +39,7 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
           @editable={{true}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{(noop)}}
         />
@@ -128,8 +129,10 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
 
   test('save', async function (assert) {
     this.set('subject', this.subject);
-    this.set('save', () => {
-      assert.step('save called');
+    this.set('save', {
+      perform() {
+        assert.step('save called');
+      },
     });
     await render(
       <template>
@@ -160,7 +163,7 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
           @editable={{true}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{this.cancel}}
         />

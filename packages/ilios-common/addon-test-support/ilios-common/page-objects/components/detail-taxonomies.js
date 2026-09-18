@@ -6,8 +6,8 @@ export default {
   scope: '[data-test-detail-taxonomies]',
   title: text('.title'),
   manage: clickable('.actions button'),
-  save: clickable('.actions .bigadd'),
-  cancel: clickable('.actions .bigcancel'),
+  save: clickable('.actions [data-test-save]'),
+  cancel: clickable('.actions [data-test-cancel]'),
   vocabularies: collection('[data-test-detail-terms-list]', detailTermsList),
   manager,
 };

@@ -27,6 +27,45 @@
           width: 100%;
         }
       }
+
+      // copied from big-save-cancel-buttons.scss component style
+      // this is one loose instance that could not be converted...yet
+      &.bigsave {
+        background-color: light-dark(var(--green), var(--green));
+        color: light-dark(var(--white), var(--white));
+        margin-right: 0.5em;
+
+        &:hover {
+          background-color: light-dark(var(--light-green), var(--light-green));
+        }
+
+        &:disabled {
+          background-color: light-dark(var(--grey), var(--grey));
+          cursor: default;
+
+          &:hover {
+            background-color: light-dark(var(--grey), var(--grey));
+          }
+        }
+      }
+
+      &.bigcancel {
+        background-color: light-dark(var(--red), var(--red));
+        color: light-dark(var(--white), var(--white));
+
+        &:hover {
+          background-color: light-dark(var(--light-red), var(--light-red));
+        }
+
+        &:disabled {
+          background-color: light-dark(var(--grey), var(--grey));
+          cursor: default;
+
+          &:hover {
+            background-color: light-dark(var(--grey), var(--grey));
+          }
+        }
+      }
     }
   }
 

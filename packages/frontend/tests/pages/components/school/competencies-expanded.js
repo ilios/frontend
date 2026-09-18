@@ -1,6 +1,7 @@
 import { clickable, create, text } from 'ember-cli-page-object';
 import competenciesManager from './competencies-manager';
 import competenciesList from './competencies-list';
+import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-school-competencies-expanded]',
@@ -9,8 +10,7 @@ const definition = {
   collapser: {
     scope: '[data-test-header] [data-test-title]',
   },
-  save: clickable('[data-test-actions] [data-test-save]'),
-  cancel: clickable('[data-test-actions] [data-test-cancel]'),
+  bigSaveCancelButtons,
   manage: clickable('[data-test-actions] [data-test-manage]'),
   competenciesManager,
   competenciesList,

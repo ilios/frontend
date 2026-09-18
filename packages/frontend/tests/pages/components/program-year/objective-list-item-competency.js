@@ -1,4 +1,5 @@
 import { clickable, create, isHidden, isPresent, text } from 'ember-cli-page-object';
+import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-objective-list-item-competency]',
@@ -8,8 +9,7 @@ const definition = {
   hasCompetency: isPresent('[data-test-competency]'),
   hasDomain: isPresent('[data-test-domain]'),
   manage: clickable('[data-test-manage]'),
-  save: clickable('[data-test-save]'),
-  cancel: clickable('[data-test-cancel]'),
+  bigSaveCancelButtons,
   canSave: isPresent('[data-test-save]'),
   canCancel: isPresent('[data-test-cancel]'),
 };

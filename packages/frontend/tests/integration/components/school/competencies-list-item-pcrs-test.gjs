@@ -44,11 +44,12 @@ module('Integration | Component | school/competencies-list-item-pcrs', function 
         />
       </template>,
     );
+
     assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].text, '101 Zylinder');
     assert.strictEqual(component.items[1].text, '201 Alfons');
-    assert.notOk(component.save.isVisible);
-    assert.notOk(component.cancel.isVisible);
+    assert.notOk(component.bigSaveCancelButtons.saveButton.isVisible);
+    assert.notOk(component.bigSaveCancelButtons.cancelButton.isVisible);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -68,8 +69,8 @@ module('Integration | Component | school/competencies-list-item-pcrs', function 
       </template>,
     );
     assert.strictEqual(component.items.length, 0);
-    assert.ok(component.save.isVisible);
-    assert.ok(component.cancel.isVisible);
+    assert.ok(component.bigSaveCancelButtons.saveButton.isVisible);
+    assert.ok(component.bigSaveCancelButtons.cancelButton.isVisible);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -116,7 +117,7 @@ module('Integration | Component | school/competencies-list-item-pcrs', function 
         />
       </template>,
     );
-    await component.cancel.click();
+    await component.bigSaveCancelButtons.cancel();
     assert.verifySteps(['cancel called']);
   });
 
@@ -138,7 +139,7 @@ module('Integration | Component | school/competencies-list-item-pcrs', function 
         />
       </template>,
     );
-    await component.save.click();
+    await component.bigSaveCancelButtons.save();
     assert.verifySteps(['save called']);
   });
 

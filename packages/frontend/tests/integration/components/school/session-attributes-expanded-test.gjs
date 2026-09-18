@@ -115,7 +115,7 @@ module('Integration | Component | school/session-attributes-expanded', function 
     await component.manager.supplemental.check();
     await component.manager.specialAttireRequired.check();
     await component.manager.specialEquipmentRequired.check();
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.verifySteps(['save called']);
   });
 });

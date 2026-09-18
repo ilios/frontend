@@ -137,7 +137,7 @@ module('Acceptance | Instructor Group', function (hooks) {
       page.root.users.manager.selectedInstructors.users[2].userNameInfo.fullName,
       '3 guy M. Mc3son',
     );
-    await page.root.users.save.click();
+    await page.root.users.bigSaveCancelButtons.save();
     assert.strictEqual(page.root.users.users.length, 3);
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.root.users.users[1].userNameInfo.fullName, '2 guy M. Mc2son');
@@ -167,7 +167,7 @@ module('Acceptance | Instructor Group', function (hooks) {
       page.root.users.manager.selectedInstructors.users[0].userNameInfo.fullName,
       '2 guy M. Mc2son',
     );
-    await page.root.users.save.click();
+    await page.root.users.bigSaveCancelButtons.save();
     assert.strictEqual(page.root.users.users.length, 1);
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '2 guy M. Mc2son');
     assert.strictEqual(page.root.header.members, 'Members: 1');

@@ -42,7 +42,7 @@ module('Acceptance | School - Institutional Information', function (hooks) {
     await page.root.institutionalInformationManager.content.addressStateOrProvince.change('AB');
     await page.root.institutionalInformationManager.content.addressZipCode.change('22222');
     await page.root.institutionalInformationManager.content.addressCountryCode.change('CA');
-    await page.root.institutionalInformationManager.header.save();
+    await page.root.institutionalInformationManager.header.bigSaveCancelButtons.save();
 
     assert.strictEqual(
       page.root.institutionalInformationDetails.content.name,
@@ -127,7 +127,7 @@ module('Acceptance | School - Institutional Information', function (hooks) {
     await page.root.institutionalInformationManager.content.addressStateOrProvince.change('AB');
     await page.root.institutionalInformationManager.content.addressZipCode.change('22222');
     await page.root.institutionalInformationManager.content.addressCountryCode.change('CA');
-    await page.root.institutionalInformationManager.header.save();
+    await page.root.institutionalInformationManager.header.bigSaveCancelButtons.save();
 
     assert.strictEqual(
       page.root.institutionalInformationDetails.content.name,

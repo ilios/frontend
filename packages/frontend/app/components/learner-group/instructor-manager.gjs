@@ -41,6 +41,7 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
   removeInstructorGroup(instructorGroup) {
     this.instructorGroups = this.instructorGroups.filter((group) => group !== instructorGroup);
   }
+
   <template>
     <div
       class="learner-group-instructor-manager"
@@ -62,7 +63,7 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
           <div>
             <button
               type="button"
-              class="bigadd"
+              class="bigsave"
               aria-label={{t "general.save"}}
               {{on "click" (fn @save this.instructors this.instructorGroups)}}
               data-test-save

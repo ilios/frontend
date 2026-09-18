@@ -6,11 +6,11 @@ import membersList from './instructor-group-members-list';
 const definition = {
   scope: '[data-test-learner-group-instructor-manager]',
   title: text('[data-test-title]'),
-  cancel: {
-    scope: '[data-test-cancel]',
-  },
   save: {
     scope: '[data-test-save]',
+  },
+  cancel: {
+    scope: '[data-test-cancel]',
   },
   selectedInstructors: collection('[data-test-selected-instructor]', {
     userStatus,

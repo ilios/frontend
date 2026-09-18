@@ -95,7 +95,7 @@ module('Acceptance | Course - Multiple Objective Parents', function (hooks) {
     assert.ok(m.competencies[0].objectives[0].selected);
     assert.ok(m.competencies[0].objectives[1].notSelected);
     assert.ok(m.competencies[0].objectives[2].selected);
-    await page.details.objectives.objectiveList.objectives[0].parents.save();
+    await page.details.objectives.objectiveList.objectives[0].parents.bigSaveCancelButtons.save();
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,

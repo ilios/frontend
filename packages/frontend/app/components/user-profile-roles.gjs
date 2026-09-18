@@ -6,19 +6,14 @@ import { action } from '@ember/object';
 import { findBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
 import { eq, not } from 'ember-truth-helpers';
 import YesNo from './yes-no';
-import {
-  faArrowRotateLeft,
-  faPenToSquare,
-  faCheck,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class UserProfileRolesComponent extends Component {
   @service store;
@@ -115,27 +110,7 @@ export default class UserProfileRolesComponent extends Component {
     >
       <div class="actions">
         {{#if @isManaging}}
-          <button
-            type="button"
-            class="bigadd"
-            data-test-save
-            aria-label={{t "general.save"}}
-            {{on "click" (perform this.save)}}
-          >
-            <FaIcon
-              @icon={{if this.save.isRunning faSpinner faCheck}}
-              @spin={{this.save.isRunning}}
-            />
-          </button>
-          <button
-            type="button"
-            disabled={{this.save.isRunning}}
-            class="bigcancel"
-            aria-label={{t "general.cancel"}}
-            {{on "click" this.cancel}}
-          >
-            <FaIcon @icon={{faArrowRotateLeft}} />
-          </button>
+          <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} />
         {{else if @isManageable}}
           <button
             aria-label={{t "general.manage"}}

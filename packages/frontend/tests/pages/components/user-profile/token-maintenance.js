@@ -1,5 +1,6 @@
 import { clickable, create, text, value } from 'ember-cli-page-object';
 import { flatpickrDatePicker } from 'ilios-common';
+import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-token-maintenance]',
@@ -8,8 +9,7 @@ const definition = {
     scope: '[data-test-new-token-form]',
     dateValue: value('input'),
     setDate: flatpickrDatePicker('input'),
-    submit: clickable('[data-test-new-token-create]'),
-    cancel: clickable('[data-test-new-token-cancel]'),
+    bigSaveCancelButtons,
   },
   newTokenResult: {
     scope: '[data-test-new-token-result]',

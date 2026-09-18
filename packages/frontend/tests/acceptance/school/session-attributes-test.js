@@ -122,7 +122,7 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     await page.root.sessionAttributes.expanded.manager.supplemental.check();
     await page.root.sessionAttributes.expanded.manager.specialEquipmentRequired.check();
     await takeScreenshot(assert, 'session attributes checked');
-    await page.root.sessionAttributes.expanded.save();
+    await page.root.sessionAttributes.expanded.bigSaveCancelButtons.save();
     assert.strictEqual(
       page.root.sessionAttributes.expanded.attributes.attendanceRequired.label,
       'Attendance Required',

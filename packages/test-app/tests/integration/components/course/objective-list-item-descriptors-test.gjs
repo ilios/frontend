@@ -7,6 +7,7 @@ import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItemDescriptors from 'ilios-common/components/course/objective-list-item-descriptors';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
+import noopTask from 'ilios-common/helpers/noop-task';
 
 module('Integration | Component | course/objective-list-item-descriptors', function (hooks) {
   setupRenderingTest(hooks);
@@ -30,7 +31,7 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
           @editable={{false}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{(noop)}}
         />
@@ -50,7 +51,7 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
           @editable={{false}}
           @manage={{(noop)}}
           @isManaging={{false}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{(noop)}}
         />
@@ -70,7 +71,7 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
           @editable={{false}}
           @manage={{(noop)}}
           @isManaging={{false}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{(noop)}}
         />
@@ -92,7 +93,7 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
           @editable={{true}}
           @manage={{(noop)}}
           @isManaging={{false}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{(noop)}}
         />
@@ -106,8 +107,10 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   });
 
   test('clicking save fires save', async function (assert) {
-    this.set('save', () => {
-      assert.step('save called');
+    this.set('save', {
+      perform() {
+        assert.step('save called');
+      },
     });
     this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(
@@ -139,7 +142,7 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
           @editable={{true}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{this.cancel}}
         />
@@ -161,7 +164,7 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
           @editable={{true}}
           @manage={{this.manage}}
           @isManaging={{false}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{(noop)}}
         />

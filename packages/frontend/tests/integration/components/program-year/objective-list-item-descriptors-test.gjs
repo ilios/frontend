@@ -7,6 +7,7 @@ import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItemDescriptors from 'frontend/components/program-year/objective-list-item-descriptors';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
+import noopTask from 'ilios-common/helpers/noop-task';
 
 module('Integration | Component | program-year/objective-list-item-descriptors', function (hooks) {
   setupRenderingTest(hooks);
@@ -20,7 +21,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
           @editable={{false}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{(noop)}}
         />
@@ -118,8 +119,10 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[1].id);
     this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
-    this.set('save', () => {
-      assert.step('save called');
+    this.set('save', {
+      perform: async () => {
+        assert.step('save called');
+      },
     });
     await render(
       <template>
@@ -134,7 +137,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
         />
       </template>,
     );
-    await component.save();
+    await component.bigSaveCancelButtons.save();
     assert.verifySteps(['save called']);
   });
 
@@ -157,13 +160,13 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
           @editable={{true}}
           @manage={{(noop)}}
           @isManaging={{true}}
-          @save={{(noop)}}
+          @save={{(noopTask)}}
           @isSaving={{false}}
           @cancel={{this.cancel}}
         />
       </template>,
     );
-    await component.cancel();
+    await component.bigSaveCancelButtons.cancel();
     assert.verifySteps(['cancel called']);
   });
 

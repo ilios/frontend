@@ -36,7 +36,7 @@ module('Acceptance | School - Emails', function (hooks) {
 
     await c.administratorEmail.set('new-admin@school.edu');
     await c.changeAlertRecipients.set('third@school.edu');
-    await c.save();
+    await c.bigSaveCancelButtons.save();
 
     const { emails } = page.root;
 

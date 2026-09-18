@@ -6,16 +6,11 @@ import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import LeadershipManager from 'ilios-common/components/leadership-manager';
 import LeadershipList from 'ilios-common/components/leadership-list';
-import {
-  faArrowRotateLeft,
-  faCaretDown,
-  faCheck,
-  faSpinner,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class LeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];
@@ -197,27 +192,7 @@ export default class LeadershipExpandedComponent extends Component {
         {{/if}}
         <div class="actions">
           {{#if @isManaging}}
-            <button
-              class="bigadd"
-              type="button"
-              aria-label={{t "general.save"}}
-              {{on "click" (perform this.save)}}
-              data-test-save
-            >
-              <FaIcon
-                @icon={{if this.save.isRunning faSpinner faCheck}}
-                @spin={{this.save.isRunning}}
-              />
-            </button>
-            <button
-              class="bigcancel"
-              type="button"
-              aria-label={{t "general.cancel"}}
-              {{on "click" this.close}}
-              data-test-cancel
-            >
-              <FaIcon @icon={{faArrowRotateLeft}} />
-            </button>
+            <BigSaveCancelButtons @save={{this.save}} @cancel={{this.close}} />
           {{else if @editable}}
             <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>
               {{t "general.manageLeadership"}}

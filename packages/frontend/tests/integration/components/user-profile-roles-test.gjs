@@ -96,7 +96,7 @@ module('Integration | Component | user profile roles', function (hooks) {
     await component.formerStudent.check();
     await component.enabled.check();
     await component.excludeFromSync.check();
-    await component.save.click();
+    await component.bigSaveCancelButtons.save();
     assert.ok(userModel.hasMany('roles').ids().includes(`${this.studentRole.id}`));
     assert.ok(userModel.hasMany('roles').ids().includes(`${this.formerStudentRole.id}`));
     assert.false(userModel.get('enabled'), 'user is disabled');

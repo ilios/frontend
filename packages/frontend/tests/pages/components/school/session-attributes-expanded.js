@@ -1,12 +1,12 @@
 import { clickable, create, hasClass, text } from 'ember-cli-page-object';
 import manager from './session-attributes-manager';
+import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-school-session-attributes-expanded]',
   collapse: clickable('[data-test-title]'),
   manage: clickable('[data-test-manage]'),
-  save: clickable('[data-test-save]'),
-  cancel: clickable('[data-test-cancel]'),
+  bigSaveCancelButtons,
   attributes: {
     scope: '[data-test-attributes]',
     attendanceRequired: {

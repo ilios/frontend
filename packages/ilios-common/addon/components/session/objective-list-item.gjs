@@ -236,7 +236,7 @@ export default class SessionObjectiveListItemComponent extends Component {
         @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
         @manage={{perform this.manageParents}}
         @isManaging={{this.isManagingParents}}
-        @save={{perform this.saveParents}}
+        @save={{this.saveParents}}
         @isSaving={{this.saveParents.isRunning}}
         @cancel={{this.cancel}}
         @fadeTextExpanded={{this.fadeTextExpanded}}
@@ -248,7 +248,7 @@ export default class SessionObjectiveListItemComponent extends Component {
         @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
         @manage={{perform this.manageTerms}}
         @isManaging={{this.isManagingTerms}}
-        @save={{perform this.saveTerms}}
+        @save={{this.saveTerms}}
         @isSaving={{this.saveTerms.isRunning}}
         @cancel={{this.cancel}}
       />
@@ -259,7 +259,7 @@ export default class SessionObjectiveListItemComponent extends Component {
           @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
           @manage={{perform this.manageDescriptors}}
           @isManaging={{this.isManagingDescriptors}}
-          @save={{perform this.saveDescriptors}}
+          @save={{this.saveDescriptors}}
           @isSaving={{this.saveDescriptors.isRunning}}
           @cancel={{this.cancel}}
         />

@@ -2,6 +2,7 @@ import { collection, create, text } from 'ember-cli-page-object';
 import manager from './instructor-manager';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 import userStatus from 'ilios-common/page-objects/components/user-status';
+import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-instructor-group-users]',
@@ -9,12 +10,7 @@ const definition = {
   manage: {
     scope: '[data-test-manage]',
   },
-  save: {
-    scope: '[data-test-save]',
-  },
-  cancel: {
-    scope: '[data-test-cancel]',
-  },
+  bigSaveCancelButtons,
   manager,
   users: collection('[data-test-users-list] [data-test-user]', {
     userStatus,

@@ -216,7 +216,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].parents.manage();
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     await m.competencies[0].objectives[0].add();
-    await page.details.objectives.objectiveList.objectives[0].parents.save();
+    await page.details.objectives.objectiveList.objectives[0].parents.bigSaveCancelButtons.save();
     assert.notOk(page.publishAllSessions.hasUnlinkedWarning);
   });
 

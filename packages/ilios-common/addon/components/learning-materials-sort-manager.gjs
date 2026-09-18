@@ -5,19 +5,14 @@ import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import LmTypeIcon from 'ilios-common/components/lm-type-icon';
 import capitalize from 'ilios-common/helpers/capitalize';
 import t from 'ember-intl/helpers/t';
-import {
-  faArrowRotateLeft,
-  faUpDownLeftRight,
-  faSpinner,
-  faCheck,
-} from '@fortawesome/free-solid-svg-icons';
+import { faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class LearningMaterialsSortManagerComponent extends Component {
   @tracked sortableObjectList;
@@ -91,27 +86,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
     <div class="sort-manager" data-test-detail-learning-materials-sort-manager>
       {{#if this.learningMaterials.isResolved}}
         <div class="actions">
-          <button
-            class="bigadd"
-            type="button"
-            aria-label={{t "general.save"}}
-            {{on "click" (perform this.callSave)}}
-            data-test-save
-          >
-            <FaIcon
-              @icon={{if this.callSave.isRunning faSpinner faCheck}}
-              @spin={{this.callSave.isRunning}}
-            />
-          </button>
-          <button
-            class="bigcancel"
-            type="button"
-            aria-label={{t "general.cancel"}}
-            {{on "click" @cancel}}
-            data-test-cancel
-          >
-            <FaIcon @icon={{faArrowRotateLeft}} />
-          </button>
+          <BigSaveCancelButtons @save={{this.callSave}} @cancel={{@cancel}} />
         </div>
         <div class="content">
           <ul class="sortable-items">

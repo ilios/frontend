@@ -26,8 +26,8 @@ const definition = {
   pickNew: clickOnText(
     '.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-item]',
   ),
-  save: clickable('.actions button.bigadd'),
-  cancel: clickable('.actions button.bigcancel'),
+  save: clickable('.actions [data-test-save]'),
+  cancel: clickable('.actions [data-test-cancel]'),
   canCreateNew: isVisible('.detail-learningmaterials-actions [data-test-choose-material-type]'),
   canCollapse: isVisible('.detail-learningmaterials-actions .collapse-button'),
   canSort: isVisible('[data-test-sort-button]'),

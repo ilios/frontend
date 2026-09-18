@@ -4,13 +4,10 @@ import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { fn } from '@ember/helper';
 import pcrsUriToNumber from '../../helpers/pcrs-uri-to-number';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
+import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
 
 export default class SchoolCompetenciesListItemPcrsComponent extends Component {
   save = task({ drop: true }, async () => {
@@ -32,29 +29,7 @@ export default class SchoolCompetenciesListItemPcrsComponent extends Component {
       ...attributes
     >
       {{#if @isManaging}}
-        <button
-          type="button"
-          class="bigadd"
-          {{on "click" (perform this.save)}}
-          disabled={{this.save.isRunning}}
-          aria-label={{t "general.save"}}
-          data-test-save
-        >
-          {{#if this.save.isRunning}}
-            <LoadingSpinner />
-          {{else}}
-            <FaIcon @icon={{faCheck}} />
-          {{/if}}
-        </button>
-        <button
-          type="button"
-          class="bigcancel"
-          {{on "click" @cancel}}
-          aria-label={{t "general.cancel"}}
-          data-test-cancel
-        >
-          <FaIcon @icon={{faArrowRotateLeft}} />
-        </button>
+        <BigSaveCancelButtons @save={{this.save}} @cancel={{@cancel}} />
       {{else}}
         <ul>
           {{#each (sortBy "id" this.aamcPcrses) as |pcrs|}}

@@ -1,5 +1,6 @@
 import { clickable, create, collection, isHidden, isPresent } from 'ember-cli-page-object';
 import fadeText from '../fade-text';
+import bigSaveCancelButtons from '../big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-objective-list-item-parents]',
@@ -9,8 +10,7 @@ const definition = {
   empty: isHidden('[data-test-parent]'),
   saveParents: clickable('[data-test-save]'),
   cancelParents: clickable('[data-test-cancel]'),
-  save: clickable('[data-test-save]'),
-  cancel: clickable('[data-test-cancel]'),
+  bigSaveCancelButtons,
   canSave: isPresent('[data-test-save]'),
   canCancel: isPresent('[data-test-cancel]'),
 };
