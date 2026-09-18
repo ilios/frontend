@@ -1218,7 +1218,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     await component.instructorManager.selectedInstructorGroups[0].remove();
     assert.strictEqual(component.instructorManager.selectedInstructors.length, 1);
     assert.strictEqual(component.instructorManager.selectedInstructorGroups.length, 1);
-    await component.instructorManager.save.click();
+    await component.instructorManager.bigSaveCancelButtons.save();
     assert.strictEqual(component.instructorsList.assignedInstructors.length, 1);
   });
 

@@ -69,8 +69,8 @@ module('Integration | Component | school/competencies-list-item-pcrs', function 
       </template>,
     );
     assert.strictEqual(component.items.length, 0);
-    assert.ok(component.save.isVisible);
-    assert.ok(component.cancel.isVisible);
+    assert.ok(component.bigSaveCancelButtons.saveButton.isVisible);
+    assert.ok(component.bigSaveCancelButtons.cancelButton.isVisible);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
