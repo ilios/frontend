@@ -17,12 +17,12 @@
     "start:lti-course-manager": "pnpm --filter lti-course-manager exec ember serve",
     "start:lti-dashboard": "pnpm --filter lti-dashboard exec ember serve",
     "start:test-app": "pnpm --filter test-app exec ember serve",
-    "test:frontend": "pnpm --filter frontend exec ember exam --parallel=8 --load-balance",
-    "test:lti-course-manager": "pnpm --filter lti-course-manager exec ember exam --parallel=8 --load-balance",
-    "test:lti-dashboard": "pnpm --filter lti-dashboard exec ember exam --parallel=8 --load-balance",
-    "test:test-app": "pnpm --filter test-app exec ember exam --parallel=8 --load-balance",
-    "test:frontend:screenshots": "pnpm --filter frontend exec ember exam --parallel=8 --load-balance --config-file=testem/screenshots-config.js",
-    "test:frontend:darkmode-screenshots": "pnpm --filter frontend exec ember exam --parallel=8 --load-balance --config-file=testem/screenshots-darkmode-config.js",
+    "test:frontend": "pnpm --filter frontend exec ember exam --parallel=${EMBER_EXAM_CONCURRENCY:-8} --load-balance",
+    "test:lti-course-manager": "pnpm --filter lti-course-manager exec ember exam --parallel=${EMBER_EXAM_CONCURRENCY:-8} --load-balance",
+    "test:lti-dashboard": "pnpm --filter lti-dashboard exec ember exam --parallel=${EMBER_EXAM_CONCURRENCY:-8} --load-balance",
+    "test:test-app": "pnpm --filter test-app exec ember exam --parallel=${EMBER_EXAM_CONCURRENCY:-8} --load-balance",
+    "test:frontend:screenshots": "pnpm --filter frontend exec ember exam --parallel=${EMBER_EXAM_CONCURRENCY:-8} --load-balance --config-file=testem/screenshots-config.js",
+    "test:frontend:darkmode-screenshots": "pnpm --filter frontend exec ember exam --parallel=${EMBER_EXAM_CONCURRENCY:-8} --load-balance --config-file=testem/screenshots-darkmode-config.js",
     "prepare": "husky"
   },
   "engines": {
