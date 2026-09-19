@@ -13,6 +13,7 @@ concurrency:
 
 env:
   SW_DISABLED: true
+  EMBER_EXAM_CONCURRENCY: 3
 
 jobs:
   baseline:
@@ -61,7 +62,7 @@ jobs:
       - name: Capture Screenshots
         continue-on-error: true
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
-        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-config.js
+        run: pnpm run test:frontend:screenshots
       - name: Rename screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
@@ -73,7 +74,7 @@ jobs:
       - name: Capture Screenshots in Darkmode
         continue-on-error: true
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
-        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-darkmode-config.js
+        run: pnpm run test:frontend:darkmode-screenshots
       - name: Rename Darkmode screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
@@ -136,7 +137,7 @@ jobs:
       - name: Capture Screenshots
         continue-on-error: true
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
-        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-config.js
+        run: pnpm run test:frontend:screenshots
       - name: Rename screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
@@ -148,7 +149,7 @@ jobs:
       - name: Capture Screenshots in Darkmode
         continue-on-error: true
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
-        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-darkmode-config.js
+        run: pnpm run test:frontend:darkmode-screenshots
       - name: Rename Darkmode screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |

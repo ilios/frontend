@@ -15,6 +15,7 @@ concurrency:
 
 env:
   SW_DISABLED: true
+  EMBER_EXAM_CONCURRENCY: 3
 
 jobs:
   lint:
@@ -60,7 +61,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Run Tests
-        run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --config-file=testem/light-mode-config.js
+        run: pnpm run test:${{matrix.workspace}} --write-execution-file --config-file=testem/light-mode-config.js
 
   test-dark:
     name: Test in Darkmode
@@ -86,7 +87,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Run Tests
-        run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --config-file=testem/dark-mode-config.js
+        run: pnpm run test:${{matrix.workspace}} --write-execution-file --config-file=testem/dark-mode-config.js
 
   build:
     name: Build
@@ -195,7 +196,7 @@ jobs:
         run: pnpm install
       - name: Capture Screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
-        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-config.js
+        run: pnpm run test:frontend:screenshots
       - name: Rename screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
@@ -206,7 +207,7 @@ jobs:
           done
       - name: Capture Screenshots in Darkmode
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
-        run: pnpm --filter frontend exec ember exam --parallel=3 --load-balance --config-file=testem/screenshots-darkmode-config.js
+        run: test:frontend:darkmode-screenshots
       - name: Rename Darkmode screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
