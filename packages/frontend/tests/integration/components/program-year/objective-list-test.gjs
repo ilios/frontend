@@ -166,7 +166,6 @@ module('Integration | Component | program-year/objective-list', function (hooks)
         <ObjectiveList @editable={{true}} @programYear={{this.programYear}} @showMeSH={{true}} />
       </template>,
     );
-    await takeComponentScreenshot(assert, 'default');
     assert.notOk(component.sortIsVisible);
     assert.strictEqual(component.text, '');
   });
