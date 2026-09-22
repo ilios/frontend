@@ -1,10 +1,10 @@
-@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
 
 .admin-block {
   display: grid;
   gap: 0.5rem;
 
-  @include cm.for-laptop-and-up {
+  @include m.for-laptop-and-up {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -28,13 +28,13 @@
     }
 
     button {
-      @include cm.font-size("base");
+      @include m.font-size("base");
     }
 
     select {
       max-width: 88vw;
 
-      @include cm.for-tablet-and-up {
+      @include m.for-tablet-and-up {
         max-width: none;
       }
     }

@@ -1,4 +1,4 @@
-@use "../../ilios-common/mixins" as m;
+@use "../../mixins" as m;
 
 .assign-students-manager {
   @include m.main-list-box;

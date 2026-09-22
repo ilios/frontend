@@ -1,5 +1,5 @@
-@use "../../ilios-common/mixins" as m;
-@use "../../ilios-common/mixins" as media;
+@use "../../mixins" as m;
+@use "../../mixins" as media;
 
 :root {
   --top-right-clip: polygon(0 0, 100% 0, 100% 100%);

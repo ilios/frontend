@@ -1,4 +1,4 @@
-@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
 
 .header-menu {
   margin: 0 0 0 0.5rem;
@@ -39,7 +39,7 @@
       padding: 0.5rem 0.5rem 0.5rem 1.5rem;
       text-align: right;
 
-      @include cm.for-laptop-and-up {
+      @include m.for-laptop-and-up {
         padding: 0.5rem;
         text-align: center;
       }
@@ -87,7 +87,7 @@
     span {
       display: none;
 
-      @include cm.for-laptop-and-up {
+      @include m.for-laptop-and-up {
         display: inline;
         margin-left: 0.5rem;
       }

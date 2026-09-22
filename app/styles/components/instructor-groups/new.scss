@@ -1,4 +1,4 @@
-@use "../../ilios-common/mixins" as m;
+@use "../../mixins" as m;
 
 .new-instructor-group {
   background-color: light-dark(var(--white), var(--dark-grey));

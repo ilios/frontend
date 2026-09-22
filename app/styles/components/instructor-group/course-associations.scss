@@ -1,4 +1,4 @@
-@use "../../ilios-common/mixins" as m;
+@use "../../mixins" as m;
 
 .instructor-group-course-associations {
   @include m.detail-container-content;

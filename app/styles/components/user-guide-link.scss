@@ -1,7 +1,7 @@
-@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
 
 .user-guide-link {
-  @include cm.for-phone-only {
+  @include m.for-phone-only {
     vertical-align: -0.25em;
   }
 
@@ -10,7 +10,7 @@
     border: 1px solid light-dark(var(--super-light-grey), var(--grey));
     border-radius: 0.2rem;
     color: light-dark(var(--black), var(--white));
-    @include cm.font-size("small");
+    @include m.font-size("small");
     font-weight: 400;
     margin-left: 0.5rem;
     padding: 0.25em 0.5em;
@@ -21,7 +21,7 @@
       color: light-dark(var(--black), var(--white));
     }
 
-    @include cm.for-tablet-and-up {
+    @include m.for-tablet-and-up {
       display: inline;
       margin-left: 0.5rem;
     }

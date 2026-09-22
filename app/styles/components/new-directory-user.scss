@@ -1,4 +1,4 @@
-@use "../ilios-common/mixins" as m;
+@use "../mixins" as m;
 
 .new-directory-user {
   border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));

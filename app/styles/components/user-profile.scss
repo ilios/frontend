@@ -1,4 +1,4 @@
-@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
 
 .user-profile {
   h1 {
@@ -23,7 +23,7 @@
 
 .user-profile-learnergroups {
   h2.title {
-    @include cm.ilios-heading-h3;
+    @include m.ilios-heading-h3;
   }
 
   p {
@@ -31,7 +31,7 @@
   }
 
   ul {
-    @include cm.ilios-list-reset;
+    @include m.ilios-list-reset;
   }
 }
 

@@ -1,11 +1,11 @@
-@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
 
 .reports-curriculum {
   table {
     margin: 1rem 0;
     width: 100%;
     caption {
-      @include cm.ilios-heading-h5;
+      @include m.ilios-heading-h5;
     }
     th,
     td {

@@ -1,4 +1,4 @@
-@use "../../ilios-common/mixins" as m;
+@use "../../mixins" as m;
 
 .learner-group-user-manager {
   @include m.detail-container(var(--blue));

@@ -1,4 +1,4 @@
-@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
 
 .my-profile {
   .name {
@@ -22,14 +22,14 @@
     margin-top: 1rem;
 
     ul {
-      @include cm.ilios-list-reset;
+      @include m.ilios-list-reset;
       margin-left: 1rem;
     }
   }
 
   .my-profile-schools {
     label {
-      @include cm.ilios-label;
+      @include m.ilios-label;
     }
   }
 }

@@ -1,9 +1,9 @@
-@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
 
 .reports-subject {
   .content-container {
     .report-results {
-      @include cm.ilios-list-reset;
+      @include m.ilios-list-reset;
 
       li {
         margin-bottom: 0;

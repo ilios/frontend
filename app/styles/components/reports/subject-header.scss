@@ -1,4 +1,4 @@
-@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
 
 .reports-subject-header {
   border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
@@ -13,7 +13,7 @@
   margin: 0 0.8rem 0.25rem 0;
   padding-bottom: 0.25rem;
 
-  @include cm.for-tablet-and-up {
+  @include m.for-tablet-and-up {
     grid-template-areas:
       "title edit download"
       "description description description"
@@ -24,7 +24,7 @@
   }
 
   h2 {
-    @include cm.ilios-heading-h4;
+    @include m.ilios-heading-h4;
     grid-area: title;
 
     input {
@@ -35,14 +35,14 @@
   .copy-report {
     grid-area: edit;
 
-    @include cm.for-tablet-and-up {
+    @include m.for-tablet-and-up {
       margin-right: 0.5em;
       text-align: right;
     }
 
     a {
       font-weight: 400;
-      @include cm.ilios-button;
+      @include m.ilios-button;
 
       &:hover {
         background-color: light-dark(var(--light-blue), var(--brighter-blue));
