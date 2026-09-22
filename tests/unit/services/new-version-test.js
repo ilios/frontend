@@ -28,10 +28,10 @@ module('Unit | Service | new-version', function (hooks) {
     assert.notOk(service.isNewVersionAvailable);
 
     this.server.get('/VERSION.txt', function () {
-      return new HttpResponse(config.newVersion.currentVersion);
+      return new HttpResponse(config.APP.VERSION);
     });
     await service.updateVersion.perform();
-    assert.strictEqual(service.latestVersion, config.newVersion.currentVersion);
+    assert.strictEqual(service.latestVersion, config.APP.VERSION);
     assert.strictEqual(service.latestVersion, service.currentVersion);
     assert.notOk(service.isNewVersionAvailable);
   });
