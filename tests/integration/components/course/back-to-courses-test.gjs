@@ -1,26 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import Service from '@ember/service';
 import BackToCourses from 'frontend/components/course/back-to-courses';
 import { component } from 'frontend/tests/pages/components/course/back-to-courses';
 
 module('Integration | Component | course/back-to-courses', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders empty if courses route does not exist', async function (assert) {
-    await render(<template><BackToCourses /></template>);
 
-    assert.dom(this.element).hasText('');
-  });
-
-  test('it renders if courses route does exists', async function (assert) {
-    class RouterMock extends Service {
-      urlFor() {
-        return 'courses';
-      }
-    }
-    this.owner.register('service:router', RouterMock);
+  test('it renders', async function (assert) {
     await render(<template><BackToCourses /></template>);
     assert.strictEqual(component.text, 'Back to Courses List');
   });
