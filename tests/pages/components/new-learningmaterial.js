@@ -1,5 +1,5 @@
 import { attribute, clickable, create, fillable, isPresent } from 'ember-cli-page-object';
-import { pageObjectFillInQuillEditor } from 'ilios-common';
+import { pageObjectFillInQuillEditor } from 'frontend/tests/helpers';
 import userNameInfo from './user-name-info';
 
 const definition = {

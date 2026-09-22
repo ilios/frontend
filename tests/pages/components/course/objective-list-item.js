@@ -1,5 +1,5 @@
 import { clickable, create, hasClass, isPresent, isVisible, text } from 'ember-cli-page-object';
-import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'ilios-common';
+import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'frontend/tests/helpers';
 import fadeText from '../fade-text';
 import meshManager from './manage-objective-descriptors';
 import parentManager from './manage-objective-parents';

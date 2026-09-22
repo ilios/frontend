@@ -2,9 +2,9 @@
 
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import includes from 'ilios-common/helpers/includes';
+import includes from 'frontend/helpers/includes';
 
 module('Integration | Helper | includes', function (hooks) {
   setupRenderingTest(hooks);

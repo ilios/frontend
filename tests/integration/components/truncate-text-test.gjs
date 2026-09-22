@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/truncate-text';
-import TruncateText from 'ilios-common/components/truncate-text';
+import { component } from 'frontend/tests/pages/components/truncate-text';
+import TruncateText from 'frontend/components/truncate-text';
 import { on } from '@ember/modifier';
 
 module('Integration | Component | truncate-text', function (hooks) {

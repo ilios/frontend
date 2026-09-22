@@ -3,9 +3,9 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/manage-objective-competency';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import ManageObjectiveCompetency from 'frontend/components/program-year/manage-objective-competency';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | program-year/manage-objective-competency', function (hooks) {
   setupRenderingTest(hooks);

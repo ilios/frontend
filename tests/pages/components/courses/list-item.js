@@ -1,7 +1,7 @@
 import { attribute, clickable, create, hasClass, property, text } from 'ember-cli-page-object';
 import { findOne } from 'ember-cli-page-object/extend';
 import { getter } from 'ember-cli-page-object/macros';
-import publicationStatus from 'ilios-common/page-objects/components/publication-status';
+import publicationStatus from 'frontend/tests/pages/components/publication-status';
 
 const definition = {
   scope: '[data-test-courses-list-item]',

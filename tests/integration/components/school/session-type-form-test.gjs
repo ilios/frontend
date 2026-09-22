@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/school/session-type-form';
 import SessionTypeForm from 'frontend/components/school/session-type-form';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | school/session-type-form', function (hooks) {

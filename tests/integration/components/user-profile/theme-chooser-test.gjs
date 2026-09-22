@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import ThemeChooser from 'frontend/components/user-profile/theme-chooser';
 import { component } from 'frontend/tests/pages/components/user-profile/theme-chooser';

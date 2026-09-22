@@ -1,5 +1,5 @@
 import { attribute, create } from 'ember-cli-page-object';
-import breadcrumbs from 'ilios-common/page-objects/components/breadcrumbs';
+import breadcrumbs from 'frontend/tests/pages/components/breadcrumbs';
 import treeChart from './../visualizer-program-year-objectives';
 
 const definition = {

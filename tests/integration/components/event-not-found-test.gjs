@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/event-not-found';
-import EventNotFound from 'ilios-common/components/event-not-found';
+import { component } from 'frontend/tests/pages/components/event-not-found';
+import EventNotFound from 'frontend/components/event-not-found';
 
 module('Integration | Component | event-not-found', function (hooks) {
   setupRenderingTest(hooks);

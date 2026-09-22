@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/big-save-cancel-buttons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
-import noop from 'ilios-common/helpers/noop';
-import noopTask from 'ilios-common/helpers/noop-task';
+import { component } from 'frontend/tests/pages/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from 'frontend/components/big-save-cancel-buttons';
+import noop from 'frontend/helpers/noop';
+import noopTask from 'frontend/helpers/noop-task';
 import { on } from '@ember/modifier';
 
 module('Integration | Component | big-save-cancel-buttons', function (hooks) {

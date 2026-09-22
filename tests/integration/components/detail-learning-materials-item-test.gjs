@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/detail-learning-materials-item';
-import DetailLearningMaterialsItem from 'ilios-common/components/detail-learning-materials-item';
-import noop from 'ilios-common/helpers/noop';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/detail-learning-materials-item';
+import DetailLearningMaterialsItem from 'frontend/components/detail-learning-materials-item';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | detail learning materials item', function (hooks) {
   setupRenderingTest(hooks);

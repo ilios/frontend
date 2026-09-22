@@ -1,6 +1,6 @@
 import { clickable, create, hasClass, text } from 'ember-cli-page-object';
 import manager from './learning-material-attributes-manager';
-import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
+import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-school-learning-material-attributes-expanded]',

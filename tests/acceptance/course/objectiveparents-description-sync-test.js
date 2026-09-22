@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { waitFor } from '@ember/test-helpers';
-import page from 'ilios-common/page-objects/course';
+import page from 'frontend/tests/pages/course';
 
 module('Acceptance | Course - Objective Parents - Faded Status Sync', function (hooks) {
   setupApplicationTest(hooks);

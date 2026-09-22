@@ -7,7 +7,7 @@ import {
   property,
   text,
 } from 'ember-cli-page-object';
-import { pageObjectFillInQuillEditor } from 'ilios-common';
+import { pageObjectFillInQuillEditor } from 'frontend/tests/helpers';
 import postrequisiteEditor from './postrequisite-editor';
 import ilm from './ilm';
 import publicationStatus from '../publication-status';

@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/program-year/managed-competency-list-item';
 import ManagedCompetencyListItem from 'frontend/components/program-year/managed-competency-list-item';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | program-year/managed-competency-list-item', function (hooks) {

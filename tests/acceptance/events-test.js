@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import { currentURL } from '@ember/test-helpers';
-import page from 'ilios-common/page-objects/events';
+import page from 'frontend/tests/pages/events';
 import { DateTime } from 'luxon';
 
 module('Acceptance | Event', function (hooks) {

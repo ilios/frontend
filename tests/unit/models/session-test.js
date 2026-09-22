@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { DateTime } from 'luxon';
-import { waitForResource } from 'ilios-common';
+import { waitForResource } from 'frontend/tests/helpers';
 
 module('Unit | Model | Session', function (hooks) {
   setupTest(hooks);

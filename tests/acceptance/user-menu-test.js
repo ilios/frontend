@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import dashboardPage from 'frontend/tests/pages/dashboard';
 import myprofilePage from 'frontend/tests/pages/my-profile';
 

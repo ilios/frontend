@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { setupAuthentication } from 'ilios-common';
-import { component } from 'ilios-common/page-objects/components/session-publicationcheck';
-import SessionPublicationcheck from 'ilios-common/components/session-publicationcheck';
+import { setupMSW } from 'frontend/tests/msw';
+import { setupAuthentication } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/session-publicationcheck';
+import SessionPublicationcheck from 'frontend/components/session-publicationcheck';
 
 module('Integration | Component | session-publicationcheck', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,6 +1,6 @@
 import { attribute, create } from 'ember-cli-page-object';
-import toggle from 'ilios-common/page-objects/components/toggle-yesno';
-import calendar from 'ilios-common/page-objects/components/weekly-calendar';
+import toggle from 'frontend/tests/pages/components/toggle-yesno';
+import calendar from 'frontend/tests/pages/components/weekly-calendar';
 
 const definition = {
   scope: '[data-test-learner-group-calendar]',

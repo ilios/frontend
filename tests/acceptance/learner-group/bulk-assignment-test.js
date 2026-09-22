@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { triggerEvent, waitFor } from '@ember/test-helpers';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import page from '../../pages/learner-group';
 
 module('Acceptance | learner-group/bulk-assignment', function (hooks) {

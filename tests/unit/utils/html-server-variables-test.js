@@ -1,4 +1,4 @@
-import { getValueFromHtml } from 'ilios-common/utils/html-server-variables';
+import { getValueFromHtml } from 'frontend/utils/html-server-variables';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | html server variables', function () {

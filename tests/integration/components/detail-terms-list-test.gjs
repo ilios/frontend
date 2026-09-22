@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/detail-terms-list';
-import DetailTermsList from 'ilios-common/components/detail-terms-list';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/detail-terms-list';
+import DetailTermsList from 'frontend/components/detail-terms-list';
 
 module('Integration | Component | detail terms list', function (hooks) {
   setupRenderingTest(hooks);

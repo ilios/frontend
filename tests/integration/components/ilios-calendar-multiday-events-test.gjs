@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { DateTime } from 'luxon';
-import { component } from 'ilios-common/page-objects/components/ilios-calendar-multiday-events';
-import IliosCalendarMultidayEvents from 'ilios-common/components/ilios-calendar-multiday-events';
+import { component } from 'frontend/tests/pages/components/ilios-calendar-multiday-events';
+import IliosCalendarMultidayEvents from 'frontend/components/ilios-calendar-multiday-events';
 
 module('Integration | Component | ilios calendar multiday events', function (hooks) {
   setupRenderingTest(hooks);

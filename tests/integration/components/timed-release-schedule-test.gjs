@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
+import TimedReleaseSchedule from 'frontend/components/timed-release-schedule';
 
 const localeFormatOptions = {
   year: 'numeric',

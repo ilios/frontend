@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import NewObjective from 'ilios-common/components/new-objective';
-import noop from 'ilios-common/helpers/noop';
-import { component } from 'ilios-common/page-objects/components/new-objective';
+import NewObjective from 'frontend/components/new-objective';
+import noop from 'frontend/helpers/noop';
+import { component } from 'frontend/tests/pages/components/new-objective';
 
 module('Integration | Component | new objective', function (hooks) {
   setupRenderingTest(hooks);

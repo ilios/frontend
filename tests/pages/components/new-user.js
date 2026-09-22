@@ -10,7 +10,7 @@ import {
   value,
 } from 'ember-cli-page-object';
 
-import clickChoiceButtons from 'ilios-common/page-objects/components/click-choice-buttons';
+import clickChoiceButtons from 'frontend/tests/pages/components/click-choice-buttons';
 
 const definition = {
   scope: '[data-test-new-user]',

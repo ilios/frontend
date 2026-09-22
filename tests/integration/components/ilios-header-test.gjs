@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/ilios-header';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import pageTitle from 'ember-page-title/helpers/page-title';
 import IliosHeader from 'frontend/components/ilios-header';
 

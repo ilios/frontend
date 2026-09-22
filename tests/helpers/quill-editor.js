@@ -1,5 +1,5 @@
 import { findOne } from 'ember-cli-page-object/extend';
-import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
+import { loadQuillEditor } from 'frontend/utils/load-quill-editor';
 import { later } from '@ember/runloop';
 
 export async function fillInQuillEditor(element, html) {

@@ -1,5 +1,5 @@
 import { clickable, create, fillable, isHidden, text } from 'ember-cli-page-object';
-import { hasFocus } from 'ilios-common';
+import { hasFocus } from 'frontend/tests/helpers';
 import table from './table';
 import newSubject from './new-subject';
 

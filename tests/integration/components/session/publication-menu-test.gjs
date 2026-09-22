@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/session/publication-menu';
+import { component } from 'frontend/tests/pages/components/session/publication-menu';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMSW } from 'ilios-common/msw';
-import PublicationMenu from 'ilios-common/components/session/publication-menu';
+import { setupMSW } from 'frontend/tests/msw';
+import PublicationMenu from 'frontend/components/session/publication-menu';
 
 module('Integration | Component | session/publication-menu', function (hooks) {
   setupRenderingTest(hooks);

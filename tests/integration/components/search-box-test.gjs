@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { component } from 'ilios-common/page-objects/components/search-box';
-import SearchBox from 'ilios-common/components/search-box';
-import noop from 'ilios-common/helpers/noop';
+import { component } from 'frontend/tests/pages/components/search-box';
+import SearchBox from 'frontend/components/search-box';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | search box', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';
-import { component } from 'ilios-common/page-objects/components/course/visualize-instructor';
-import VisualizeInstructor from 'ilios-common/components/course/visualize-instructor';
+import { component } from 'frontend/tests/pages/components/course/visualize-instructor';
+import VisualizeInstructor from 'frontend/components/course/visualize-instructor';
 
 module('Integration | Component | course/visualize-instructor', function (hooks) {
   setupRenderingTest(hooks);

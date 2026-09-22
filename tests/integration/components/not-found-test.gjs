@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/not-found';
+import { component } from 'frontend/tests/pages/components/not-found';
 
 // @todo figure out how to suppress the dashboard route for testing purposes [ST 2021/11/04]
-import NotFound from 'ilios-common/components/not-found';
+import NotFound from 'frontend/components/not-found';
 module('Integration | Component | not-found', function (hooks) {
   setupRenderingTest(hooks);
 

@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import IliosCalendarEventMonth from 'ilios-common/components/ilios-calendar-event-month';
-import Event from 'ilios-common/classes/event';
+import IliosCalendarEventMonth from 'frontend/components/ilios-calendar-event-month';
+import Event from 'frontend/classes/event';
 const s = '[data-test-ilios-calendar-event-month]';
 
 module('Integration | Component | ilios calendar event month', function (hooks) {

@@ -1,6 +1,6 @@
-import { decodedJwtHasLtiAudienceClaims, jwtDecode } from 'ilios-common/utils/jwt-utils';
+import { decodedJwtHasLtiAudienceClaims, jwtDecode } from 'frontend/utils/jwt-utils';
 import { module, test } from 'qunit';
-import { jwtEncode } from 'ilios-common';
+import { jwtEncode } from 'frontend/tests/helpers';
 
 module('Unit | Utility | jwt-utils', function () {
   test('it decodes a token', function (assert) {

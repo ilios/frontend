@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import PulseLoader from 'ilios-common/components/pulse-loader';
+import PulseLoader from 'frontend/components/pulse-loader';
 
 module('Integration | Component | pulse loader', function (hooks) {
   setupRenderingTest(hooks);

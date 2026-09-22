@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { waitForResource } from 'ilios-common';
+import { waitForResource } from 'frontend/tests/helpers';
 
 module('Unit | Model | Program', function (hooks) {
   setupTest(hooks);

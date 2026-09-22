@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
-import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
+import ExpandCollapseButton from 'frontend/components/expand-collapse-button';
 
 module('Integration | Component | expand collapse button', function (hooks) {
   setupRenderingTest(hooks);

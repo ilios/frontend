@@ -1,4 +1,4 @@
-import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
+import createTypedLearningMaterialProxy from 'frontend/utils/create-typed-learning-material-proxy';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | create-typed-learning-material-proxy', function () {

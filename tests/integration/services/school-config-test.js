@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { setupMSW } from 'ilios-common/msw';
-import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
+import { setupMSW } from 'frontend/tests/msw';
+import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
 
 module('Integration | Service | school config', function (hooks) {
   setupTest(hooks);

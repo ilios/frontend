@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/instructor-groups/new';
 import New from 'frontend/components/instructor-groups/new';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | instructor-groups/new', function (hooks) {
   setupRenderingTest(hooks);

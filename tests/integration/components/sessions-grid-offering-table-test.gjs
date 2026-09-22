@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';
 import { create } from 'ember-cli-page-object';
-import table from 'ilios-common/page-objects/components/sessions-grid-offering-table';
-import SessionsGridOfferingTable from 'ilios-common/components/sessions-grid-offering-table';
+import table from 'frontend/tests/pages/components/sessions-grid-offering-table';
+import SessionsGridOfferingTable from 'frontend/components/sessions-grid-offering-table';
 
 const page = create({ table });
 

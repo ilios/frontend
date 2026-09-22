@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { htmlSafe } from '@ember/template';
-import capitalize from 'ilios-common/helpers/capitalize';
+import capitalize from 'frontend/helpers/capitalize';
 
 module('Integration | Helper | {{capitalize}}', function (hooks) {
   setupRenderingTest(hooks);

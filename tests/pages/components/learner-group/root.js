@@ -19,8 +19,8 @@ import members from './members';
 import subgroupList from './list';
 import calendar from './calendar';
 import newLearnerGroupForm from './new';
-import toggleButtons from 'ilios-common/page-objects/components/toggle-buttons';
-import toggleYesNo from 'ilios-common/page-objects/components/toggle-yesno';
+import toggleButtons from 'frontend/tests/pages/components/toggle-buttons';
+import toggleYesNo from 'frontend/tests/pages/components/toggle-yesno';
 
 const definition = {
   scope: '[data-test-learner-group-root]',

@@ -1,6 +1,6 @@
 import { currentURL } from '@ember/test-helpers';
 import { test, module } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program-year';
 

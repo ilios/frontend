@@ -1,11 +1,11 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, render } from '@ember/test-helpers';
 import { on } from '@ember/modifier';
-import pipe from 'ilios-common/helpers/pipe';
-import pick from 'ilios-common/helpers/pick';
+import pipe from 'frontend/helpers/pipe';
+import pick from 'frontend/helpers/pick';
 
 module('Integration | Helper | pick', function (hooks) {
   setupRenderingTest(hooks);

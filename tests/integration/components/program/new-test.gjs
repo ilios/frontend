@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program/new';
 import New from 'frontend/components/program/new';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | program/new', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import Loading from 'ilios-common/components/course/loading';
+import { setupMSW } from 'frontend/tests/msw';
+import Loading from 'frontend/components/course/loading';
 
 module('Integration | Component | course/loading', function (hooks) {
   setupRenderingTest(hooks);

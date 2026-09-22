@@ -10,7 +10,7 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
-import yesNoToggle from 'ilios-common/page-objects/components/toggle-yesno';
+import yesNoToggle from 'frontend/tests/pages/components/toggle-yesno';
 
 const definition = {
   scope: '[data-test-school-session-type-form]',

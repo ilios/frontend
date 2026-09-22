@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { DateTime } from 'luxon';
-import Event from 'ilios-common/classes/event';
+import Event from 'frontend/classes/event';
 
 module('Unit | Service | calendar-event-tooltip', function (hooks) {
   setupTest(hooks);

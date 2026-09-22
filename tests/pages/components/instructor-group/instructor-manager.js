@@ -1,7 +1,7 @@
 import { collection, clickable, create, text } from 'ember-cli-page-object';
-import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
-import userSearch from 'ilios-common/page-objects/components/user-search';
-import userStatus from 'ilios-common/page-objects/components/user-status';
+import userNameInfo from 'frontend/tests/pages/components/user-name-info';
+import userSearch from 'frontend/tests/pages/components/user-search';
+import userStatus from 'frontend/tests/pages/components/user-status';
 
 const definition = {
   scope: '[data-test-instructor-group-instructor-manager]',

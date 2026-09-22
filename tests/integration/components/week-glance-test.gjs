@@ -1,13 +1,13 @@
 import Service from '@ember/service';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, settled, click } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/week-glance';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/week-glance';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
-import WeekGlance from 'ilios-common/components/week-glance';
+import WeekGlance from 'frontend/components/week-glance';
 import formatDate from 'ember-intl/helpers/format-date';
 
 module('Integration | Component | week-glance', function (hooks) {

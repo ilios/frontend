@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import removeHtmlTags from 'ilios-common/helpers/remove-html-tags';
+import removeHtmlTags from 'frontend/helpers/remove-html-tags';
 
 module('Integration | Helper | remove-html-tags', function (hooks) {
   setupRenderingTest(hooks);

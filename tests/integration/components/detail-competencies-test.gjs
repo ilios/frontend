@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { component } from 'ilios-common/page-objects/components/detail-competencies';
-import DetailCompetencies from 'ilios-common/components/detail-competencies';
-import noop from 'ilios-common/helpers/noop';
+import { component } from 'frontend/tests/pages/components/detail-competencies';
+import DetailCompetencies from 'frontend/components/detail-competencies';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | detail-competencies', function (hooks) {
   setupRenderingTest(hooks);

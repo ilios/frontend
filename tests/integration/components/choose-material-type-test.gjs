@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/choose-material-type';
+import { component } from 'frontend/tests/pages/components/choose-material-type';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import ChooseMaterialType from 'ilios-common/components/choose-material-type';
-import noop from 'ilios-common/helpers/noop';
+import ChooseMaterialType from 'frontend/components/choose-material-type';
+import noop from 'frontend/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | choose-material-type', function (hooks) {

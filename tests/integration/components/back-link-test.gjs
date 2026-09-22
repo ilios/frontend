@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/back-link';
-import BackLink from 'ilios-common/components/back-link';
+import { component } from 'frontend/tests/pages/components/back-link';
+import BackLink from 'frontend/components/back-link';
 
 module('Integration | Component | back link', function (hooks) {
   setupRenderingTest(hooks);

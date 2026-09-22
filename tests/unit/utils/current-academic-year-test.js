@@ -1,4 +1,4 @@
-import currentAcademicYear from 'ilios-common/utils/current-academic-year';
+import currentAcademicYear from 'frontend/utils/current-academic-year';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | current-academic-year', function () {

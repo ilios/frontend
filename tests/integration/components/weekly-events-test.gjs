@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/weekly-events';
+import { component } from 'frontend/tests/pages/components/weekly-events';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
-import WeeklyEvents from 'ilios-common/components/weekly-events';
+import WeeklyEvents from 'frontend/components/weekly-events';
 import { array } from '@ember/helper';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | weekly events', function (hooks) {
   setupRenderingTest(hooks);

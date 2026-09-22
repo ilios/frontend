@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, find } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import datePicker from 'ilios-common/modifiers/date-picker';
+import datePicker from 'frontend/modifiers/date-picker';
 
 module('Integration | Modifier | date-picker', function (hooks) {
   setupRenderingTest(hooks);

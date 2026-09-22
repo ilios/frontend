@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from 'frontend/components/loading-spinner';
 
 module('Integration | Component | loading-spinner', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/detail-learnergroups-list';
-import DetailLearnergroupsList from 'ilios-common/components/detail-learnergroups-list';
-import noop from 'ilios-common/helpers/noop';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/detail-learnergroups-list';
+import DetailLearnergroupsList from 'frontend/components/detail-learnergroups-list';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | detail-learnergroups-list', function (hooks) {
   setupRenderingTest(hooks);

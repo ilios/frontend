@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import scrollIntoView from 'frontend/modifiers/scroll-into-view';
 
 module('Integration | Modifier | scroll-into-view', function (hooks) {
   setupRenderingTest(hooks);

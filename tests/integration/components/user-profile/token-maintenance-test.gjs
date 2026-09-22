@@ -3,11 +3,11 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime, Duration } from 'luxon';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/user-profile/token-maintenance';
-import { freezeDateAt, unfreezeDate } from 'ilios-common';
+import { freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import TokenMaintenance from 'frontend/components/user-profile/token-maintenance';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | user-profile/token-maintenance', function (hooks) {
   setupRenderingTest(hooks);

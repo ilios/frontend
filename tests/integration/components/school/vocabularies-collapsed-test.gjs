@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/school/vocabularies-collapsed';
 import VocabulariesCollapsed from 'frontend/components/school/vocabularies-collapsed';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | school/vocabulbaries-collapsed', function (hooks) {
   setupRenderingTest(hooks);

@@ -3,9 +3,9 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/objectives';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import Objectives from 'frontend/components/program-year/objectives';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | program-year/objectives', function (hooks) {

@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/instructor-manager';
 import InstructorManager from 'frontend/components/learner-group/instructor-manager';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 import { array } from '@ember/helper';
-import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
+import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
 import { HttpResponse } from 'msw';
 
 module('Integration | Component | learner-group/instructor-manager', function (hooks) {

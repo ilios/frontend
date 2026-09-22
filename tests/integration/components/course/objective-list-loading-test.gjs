@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import ObjectiveListLoading from 'ilios-common/components/course/objective-list-loading';
+import ObjectiveListLoading from 'frontend/components/course/objective-list-loading';
 
 module('Integration | Component | course/objective-list-loading', function (hooks) {
   setupRenderingTest(hooks);

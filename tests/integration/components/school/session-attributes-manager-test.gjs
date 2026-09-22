@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/school/session-attributes-manager';
 import SessionAttributesManager from 'frontend/components/school/session-attributes-manager';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | school/session-attributes-manager', function (hooks) {
   setupRenderingTest(hooks);

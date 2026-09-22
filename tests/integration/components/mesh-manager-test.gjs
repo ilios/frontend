@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/mesh-manager';
-import { setupMSW } from 'ilios-common/msw';
-import MeshManager from 'ilios-common/components/mesh-manager';
-import noop from 'ilios-common/helpers/noop';
+import { component } from 'frontend/tests/pages/components/mesh-manager';
+import { setupMSW } from 'frontend/tests/msw';
+import MeshManager from 'frontend/components/mesh-manager';
+import noop from 'frontend/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | mesh-manager', function (hooks) {

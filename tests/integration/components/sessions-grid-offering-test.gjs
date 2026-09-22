@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMSW } from 'ilios-common/msw';
-import SessionsGridOffering from 'ilios-common/components/sessions-grid-offering';
-import { component } from 'ilios-common/page-objects/components/sessions-grid-offering';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import SessionsGridOffering from 'frontend/components/sessions-grid-offering';
+import { component } from 'frontend/tests/pages/components/sessions-grid-offering';
 
 module('Integration | Component | sessions-grid-offering', function (hooks) {
   setupRenderingTest(hooks);

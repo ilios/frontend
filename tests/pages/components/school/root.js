@@ -11,8 +11,8 @@ import sessionTypesCollapsed from './session-types-collapsed';
 import sessionTypesExpanded from './session-types-expanded';
 import vocabulariesCollapsed from './vocabularies-collapsed';
 import vocabulariesExpanded from './vocabularies-expanded';
-import leadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
-import leadershipExpanded from 'ilios-common/page-objects/components/leadership-expanded';
+import leadershipCollapsed from 'frontend/tests/pages/components/leadership-collapsed';
+import leadershipExpanded from 'frontend/tests/pages/components/leadership-expanded';
 
 const definition = {
   scope: '[data-test-school-root]',

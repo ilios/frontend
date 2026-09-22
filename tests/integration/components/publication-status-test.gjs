@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { component } from 'ilios-common/page-objects/components/publication-status';
-import PublicationStatus from 'ilios-common/components/publication-status';
+import { component } from 'frontend/tests/pages/components/publication-status';
+import PublicationStatus from 'frontend/components/publication-status';
 
 module('Integration | Component | publication-status', function (hooks) {
   setupRenderingTest(hooks);

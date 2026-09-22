@@ -6,7 +6,7 @@
  * during teardown.
  *
  * ```js
- * import { setPreferReducedMotion } from 'ilios-common';
+ * import { setPreferReducedMotion } from 'frontend/tests/helpers';
  *
  * module('Integration | Component | my-component', function (hooks) {
  *   setupRenderingTest(hooks);

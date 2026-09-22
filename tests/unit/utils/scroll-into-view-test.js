@@ -1,7 +1,7 @@
 import { settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import scrollIntoView from 'ilios-common/utils/scroll-into-view';
-import { setPreferReducedMotion } from 'ilios-common';
+import scrollIntoView from 'frontend/utils/scroll-into-view';
+import { setPreferReducedMotion } from 'frontend/tests/helpers';
 
 module('Unit | Utility | scroll into view', function (hooks) {
   hooks.beforeEach(function () {

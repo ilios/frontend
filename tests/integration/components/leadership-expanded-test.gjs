@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/leadership-expanded';
-import { setupMSW } from 'ilios-common/msw';
-import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
-import noop from 'ilios-common/helpers/noop';
+import { component } from 'frontend/tests/pages/components/leadership-expanded';
+import { setupMSW } from 'frontend/tests/msw';
+import LeadershipExpanded from 'frontend/components/leadership-expanded';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | leadership expanded', function (hooks) {
   setupRenderingTest(hooks);

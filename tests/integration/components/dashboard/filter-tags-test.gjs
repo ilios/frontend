@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import FilterTags from 'ilios-common/components/dashboard/filter-tags';
+import { setupMSW } from 'frontend/tests/msw';
+import FilterTags from 'frontend/components/dashboard/filter-tags';
 import { array } from '@ember/helper';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | dashboard/filter-tags', function (hooks) {
   setupRenderingTest(hooks);

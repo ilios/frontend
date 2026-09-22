@@ -5,7 +5,7 @@ import {
   OfferingBlock,
   OfferingDateBlock,
   OfferingTimeBlock,
-} from 'ilios-common/utils/offering-date-block';
+} from 'frontend/utils/offering-date-block';
 
 module('Unit | Utility | offering-date-block', function (hooks) {
   setupTest(hooks);

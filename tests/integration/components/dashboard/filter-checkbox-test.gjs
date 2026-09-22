@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/dashboard/filter-checkbox';
-import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
-import noop from 'ilios-common/helpers/noop';
+import { component } from 'frontend/tests/pages/components/dashboard/filter-checkbox';
+import FilterCheckbox from 'frontend/components/dashboard/filter-checkbox';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
   setupRenderingTest(hooks);

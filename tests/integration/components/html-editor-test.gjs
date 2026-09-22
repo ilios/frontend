@@ -1,8 +1,8 @@
 import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, triggerKeyEvent } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/html-editor';
-import HtmlEditor from 'ilios-common/components/html-editor';
+import { component } from 'frontend/tests/pages/components/html-editor';
+import HtmlEditor from 'frontend/components/html-editor';
 
 module('Integration | Component | html editor', function (hooks) {
   setupRenderingTest(hooks);

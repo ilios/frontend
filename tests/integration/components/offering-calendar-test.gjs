@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { array } from '@ember/helper';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';
-import OfferingCalendar from 'ilios-common/components/offering-calendar';
-import { component } from 'ilios-common/page-objects/components/offering-calendar';
+import OfferingCalendar from 'frontend/components/offering-calendar';
+import { component } from 'frontend/tests/pages/components/offering-calendar';
 
 module('Integration | Component | offering-calendar', function (hooks) {
   setupRenderingTest(hooks);

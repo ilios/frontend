@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import noop from 'ilios-common/helpers/noop';
-import { component } from 'ilios-common/page-objects/components/publish-all-sessions';
-import PublishAllSessions from 'ilios-common/components/publish-all-sessions';
+import { setupMSW } from 'frontend/tests/msw';
+import noop from 'frontend/helpers/noop';
+import { component } from 'frontend/tests/pages/components/publish-all-sessions';
+import PublishAllSessions from 'frontend/components/publish-all-sessions';
 
 module('Integration | Component | publish all sessions', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/programs/list-item';
 import ListItem from 'frontend/components/programs/list-item';

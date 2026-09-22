@@ -3,8 +3,8 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
 import component from 'frontend/tests/pages/components/user-menu';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupAuthentication } from 'ilios-common';
-import { setupMSW } from 'ilios-common/msw';
+import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import UserMenu from 'frontend/components/user-menu';
 
 module('Integration | Component | user-menu', function (hooks) {

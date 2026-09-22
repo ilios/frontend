@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/dashboard/cohort-calendar-filter';
+import { component } from 'frontend/tests/pages/components/dashboard/cohort-calendar-filter';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import CohortCalendarFilter from 'ilios-common/components/dashboard/cohort-calendar-filter';
-import noop from 'ilios-common/helpers/noop';
+import CohortCalendarFilter from 'frontend/components/dashboard/cohort-calendar-filter';
+import noop from 'frontend/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | dashboard/cohort-calendar-filter', function (hooks) {

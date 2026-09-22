@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 import { currentURL, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import page from 'ilios-common/page-objects/course-visualizations-objectives';
-import { setupAuthentication } from 'ilios-common';
+import page from 'frontend/tests/pages/course-visualizations-objectives';
+import { setupAuthentication } from 'frontend/tests/helpers';
 
 module('Acceptance | course visualizations - objectives', function (hooks) {
   setupApplicationTest(hooks);

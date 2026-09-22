@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/school/session-attributes-collapsed';
 import SessionAttributesCollapsed from 'frontend/components/school/session-attributes-collapsed';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | school/session-attributes-collapsed', function (hooks) {
   setupRenderingTest(hooks);

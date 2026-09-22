@@ -1,5 +1,5 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
-import asArray from 'ilios-common/utils/as-array';
+import asArray from 'frontend/utils/as-array';
 import { module, test } from 'qunit';
 import EmberObject from '@ember/object';
 

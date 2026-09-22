@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/course/manage-objective-parents';
+import { component } from 'frontend/tests/pages/components/course/manage-objective-parents';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMSW } from 'ilios-common/msw';
-import ManageObjectiveParents from 'ilios-common/components/course/manage-objective-parents';
+import { setupMSW } from 'frontend/tests/msw';
+import ManageObjectiveParents from 'frontend/components/course/manage-objective-parents';
 import { array } from '@ember/helper';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | course/manage-objective-parents', function (hooks) {
   setupRenderingTest(hooks);

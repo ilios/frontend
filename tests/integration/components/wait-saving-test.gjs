@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { fillIn, render, waitFor, settled, find } from '@ember/test-helpers';
-import WaitSaving from 'ilios-common/components/wait-saving';
+import WaitSaving from 'frontend/components/wait-saving';
 
 module('Integration | Component | wait saving', function (hooks) {
   setupRenderingTest(hooks);

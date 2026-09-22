@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
+import OfferingUrlDisplay from 'frontend/components/offering-url-display';
 
 module('Integration | Component | offering-url-display', function (hooks) {
   setupRenderingTest(hooks);

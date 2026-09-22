@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { component } from 'ilios-common/page-objects/components/week-glance-event';
-import { setupMSW } from 'ilios-common/msw';
-import WeekGlanceEvent from 'ilios-common/components/week-glance-event';
+import { component } from 'frontend/tests/pages/components/week-glance-event';
+import { setupMSW } from 'frontend/tests/msw';
+import WeekGlanceEvent from 'frontend/components/week-glance-event';
 
 const today = DateTime.fromObject({ hour: 8 });
 

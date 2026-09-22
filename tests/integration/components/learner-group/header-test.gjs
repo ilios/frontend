@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/learner-group/header';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';

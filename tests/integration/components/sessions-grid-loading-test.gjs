@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import SessionsGridLoading from 'ilios-common/components/sessions-grid-loading';
+import SessionsGridLoading from 'frontend/components/sessions-grid-loading';
 
 module('Integration | Component | sessions-grid-loading', function (hooks) {
   setupRenderingTest(hooks);

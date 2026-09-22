@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/courses/list-item';
 import ListItem from 'frontend/components/courses/list-item';
 import { array } from '@ember/helper';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | courses/list-item', function (hooks) {
   setupRenderingTest(hooks);

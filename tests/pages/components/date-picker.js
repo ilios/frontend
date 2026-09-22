@@ -1,5 +1,5 @@
 import { create } from 'ember-cli-page-object';
-import { flatpickrDatePicker, flatpickrDateValue } from 'ilios-common';
+import { flatpickrDatePicker, flatpickrDateValue } from 'frontend/tests/helpers';
 
 const definition = {
   scope: '[data-test-date-picker]',

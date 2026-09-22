@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import page from 'ilios-common/page-objects/components/course/publish-all-sessions';
+import page from 'frontend/tests/pages/components/course/publish-all-sessions';
 
 module('Acceptance | Course - Publish All Sessions', function (hooks) {
   setupApplicationTest(hooks);

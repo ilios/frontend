@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/course/publicationcheck';
-import Publicationcheck from 'ilios-common/components/course/publicationcheck';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/publicationcheck';
+import Publicationcheck from 'frontend/components/course/publicationcheck';
 
 module('Integration | Component | course/publicationcheck', function (hooks) {
   setupRenderingTest(hooks);

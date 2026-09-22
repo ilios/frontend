@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import LeadershipList from 'ilios-common/components/leadership-list';
-import { component } from 'ilios-common/page-objects/components/leadership-list';
+import { setupMSW } from 'frontend/tests/msw';
+import LeadershipList from 'frontend/components/leadership-list';
+import { component } from 'frontend/tests/pages/components/leadership-list';
 
 module('Integration | Component | leadership-list', function (hooks) {
   setupRenderingTest(hooks);

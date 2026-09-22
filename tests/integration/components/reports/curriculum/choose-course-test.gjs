@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
-import { setupMSW } from 'ilios-common/msw';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/choose-course';
 import { buildSchoolsFromData } from 'frontend/tests/helpers/curriculum-report';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import ChooseCourse from 'frontend/components/reports/curriculum/choose-course';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | reports/curriculum/choose-course', function (hooks) {
   setupRenderingTest(hooks);

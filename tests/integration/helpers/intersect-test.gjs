@@ -3,9 +3,9 @@
 import { A as emberArray } from '@ember/array';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import intersect from 'ilios-common/helpers/intersect';
+import intersect from 'frontend/helpers/intersect';
 
 module('Integration | Helper | intersect', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/click-choice-buttons';
+import { component } from 'frontend/tests/pages/components/click-choice-buttons';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
-import noop from 'ilios-common/helpers/noop';
+import ClickChoiceButtons from 'frontend/components/click-choice-buttons';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | click choice buttons', function (hooks) {
   setupRenderingTest(hooks);

@@ -2,10 +2,10 @@
 
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 import { on } from '@ember/modifier';
-import pipe from 'ilios-common/helpers/pipe';
+import pipe from 'frontend/helpers/pipe';
 import { fn } from '@ember/helper';
 
 module('Integration | Helper | pipe', function (hooks) {

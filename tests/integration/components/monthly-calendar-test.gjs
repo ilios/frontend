@@ -1,15 +1,15 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { component } from 'ilios-common/page-objects/components/monthly-calendar';
+import { component } from 'frontend/tests/pages/components/monthly-calendar';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { setLocale } from 'ember-intl/test-support';
-import MonthlyCalendar from 'ilios-common/components/monthly-calendar';
-import Event from 'ilios-common/classes/event';
+import MonthlyCalendar from 'frontend/components/monthly-calendar';
+import Event from 'frontend/classes/event';
 import { array } from '@ember/helper';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | monthly-calendar', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,15 +1,15 @@
 import Service from '@ember/service';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click, find, findAll, fillIn, blur as emberBlur } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMSW } from 'ilios-common/msw';
-import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
+import { setupMSW } from 'frontend/tests/msw';
+import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { freezeDateAt, unfreezeDate } from 'ilios-common';
-import Rollover from 'ilios-common/components/course/rollover';
-import noop from 'ilios-common/helpers/noop';
+import { freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
+import Rollover from 'frontend/components/course/rollover';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | course/rollover', function (hooks) {
   setupRenderingTest(hooks);

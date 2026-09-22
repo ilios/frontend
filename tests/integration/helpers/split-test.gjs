@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import split from 'ilios-common/helpers/split';
+import split from 'frontend/helpers/split';
 
 module('Integration | Helper | split', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { settled, render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupAuthentication } from 'ilios-common';
-import { component } from 'ilios-common/page-objects/components/session/overview';
-import Overview from 'ilios-common/components/session/overview';
+import { setupMSW } from 'frontend/tests/msw';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupAuthentication } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/session/overview';
+import Overview from 'frontend/components/session/overview';
 
 module('Integration | Component | session/overview', function (hooks) {
   setupRenderingTest(hooks);

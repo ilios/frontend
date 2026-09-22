@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 import DownloadDropdownItem from 'frontend/components/download-dropdown-item';
 
 module('Integration | Component | download-dropdown-item', function (hooks) {

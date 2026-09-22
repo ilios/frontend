@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { render } from '@ember/test-helpers';
-import sortByPosition from 'ilios-common/helpers/sort-by-position';
+import sortByPosition from 'frontend/helpers/sort-by-position';
 import { array } from '@ember/helper';
 
 module('Integration | Helper | sort-by-position', function (hooks) {

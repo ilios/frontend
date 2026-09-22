@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/global-search-box';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import GlobalSearchBox from 'frontend/components/global-search-box';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | global search box', function (hooks) {
   setupRenderingTest(hooks);

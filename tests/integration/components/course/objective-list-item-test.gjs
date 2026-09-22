@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, settled } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/course/objective-list-item';
+import { component } from 'frontend/tests/pages/components/course/objective-list-item';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMSW } from 'ilios-common/msw';
-import ObjectiveListItem from 'ilios-common/components/course/objective-list-item';
+import { setupMSW } from 'frontend/tests/msw';
+import ObjectiveListItem from 'frontend/components/course/objective-list-item';
 import { array } from '@ember/helper';
 
 module('Integration | Component | course/objective-list-item', function (hooks) {

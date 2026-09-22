@@ -3,7 +3,7 @@ import {
   setupRenderingTest as upstreamSetupRenderingTest,
   setupTest as upstreamSetupTest,
 } from 'ember-qunit';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { setupIntl } from 'ember-intl/test-support';
 import { setRunOptions } from 'ember-a11y-testing/test-support';
 
@@ -58,7 +58,22 @@ function setupTest(hooks, options) {
 }
 
 export { setupApplicationTest, setupRenderingTest, setupTest };
+export { takeScreenshot, takeComponentScreenshot } from './take-screenshot';
+
+export { default as setupAuthentication } from './setup-authentication';
+export { default as waitForResource } from './wait-for-resource';
+export { freezeDateAt, unfreezeDate } from './mockdate';
+export { flatpickrDatePicker, flatpickrDateValue } from './flatpickr-date-picker';
+export { default as setPreferReducedMotion } from './set-prefer-reduced-motion';
 export {
-  takeScreenshot,
-  takeComponentScreenshot,
-} from 'ilios-common/tests/helpers/take-screenshot';
+  fillInQuillEditor,
+  quillEditorValue,
+  pageObjectFillInQuillEditor,
+  pageObjectQuillEditorValue,
+} from './quill-editor';
+export { hasFocus } from './has-focus';
+export { focusedText } from './focused-text';
+export { keyOnFocus } from './key-on-focus';
+export { default as jwtEncode } from './jwt-encode';
+export { default as isInView } from './is-in-view';
+export { default as scrollTo } from './scroll-to';

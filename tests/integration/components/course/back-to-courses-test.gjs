@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
-import BackToCourses from 'ilios-common/components/course/back-to-courses';
-import { component } from 'ilios-common/page-objects/components/course/back-to-courses';
+import BackToCourses from 'frontend/components/course/back-to-courses';
+import { component } from 'frontend/tests/pages/components/course/back-to-courses';
 
 module('Integration | Component | course/back-to-courses', function (hooks) {
   setupRenderingTest(hooks);

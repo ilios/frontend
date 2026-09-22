@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import Service from '@ember/service';
 import { defer } from 'rsvp';
-import Loader from 'ilios-common/components/course/loader';
-import noop from 'ilios-common/helpers/noop';
+import Loader from 'frontend/components/course/loader';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | course/loader', function (hooks) {
   setupRenderingTest(hooks);

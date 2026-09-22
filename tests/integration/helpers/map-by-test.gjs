@@ -3,9 +3,9 @@
 import { A as emberArray } from '@ember/array';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import mapBy from 'ilios-common/helpers/map-by';
+import mapBy from 'frontend/helpers/map-by';
 
 module('Integration | Helper | map-by', function (hooks) {
   setupRenderingTest(hooks);

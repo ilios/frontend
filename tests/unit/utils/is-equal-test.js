@@ -1,6 +1,6 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 import EmberObject from '@ember/object';
-import isEqual from 'ilios-common/utils/is-equal';
+import isEqual from 'frontend/utils/is-equal';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | is equal', function () {

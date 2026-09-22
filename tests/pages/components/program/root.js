@@ -1,8 +1,8 @@
 import { clickable, create } from 'ember-cli-page-object';
-import leadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
+import leadershipCollapsed from 'frontend/tests/pages/components/leadership-collapsed';
 import overview from './overview';
 import header from './header';
-import leadershipExpanded from 'ilios-common/page-objects/components/leadership-expanded';
+import leadershipExpanded from 'frontend/tests/pages/components/leadership-expanded';
 
 const definition = {
   scope: '[data-test-program-details]',

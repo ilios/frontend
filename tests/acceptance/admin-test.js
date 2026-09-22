@@ -1,7 +1,7 @@
 import { click, fillIn, currentURL, triggerEvent, visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
-import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
+import { setupAuthentication } from 'frontend/tests/helpers';
+import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
 const url = '/admin';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 

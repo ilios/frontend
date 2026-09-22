@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'test-app/tests/helpers';
-import Controller from 'ilios-common/controllers/events';
+import { setupTest } from 'frontend/tests/helpers';
+import Controller from 'frontend/controllers/events';
 
 module('Unit | Controller | events', function (hooks) {
   setupTest(hooks);

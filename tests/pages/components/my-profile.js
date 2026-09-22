@@ -1,5 +1,5 @@
 import { clickable, collection, create, isVisible, text, value } from 'ember-cli-page-object';
-import { flatpickrDatePicker } from 'ilios-common';
+import { flatpickrDatePicker } from 'frontend/tests/helpers';
 import themeChooser from './user-profile/theme-chooser';
 
 const definition = {

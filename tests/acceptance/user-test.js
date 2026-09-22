@@ -1,6 +1,6 @@
 import { click, fillIn, currentURL, triggerEvent, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/user';
 

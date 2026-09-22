@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/leadership-collapsed';
-import LeadershipCollapsed from 'ilios-common/components/leadership-collapsed';
-import noop from 'ilios-common/helpers/noop';
+import { component } from 'frontend/tests/pages/components/leadership-collapsed';
+import LeadershipCollapsed from 'frontend/components/leadership-collapsed';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | leadership collapsed', function (hooks) {
   setupRenderingTest(hooks);

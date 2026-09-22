@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';
-import { component } from 'ilios-common/page-objects/components/daily-calendar-event';
-import DailyCalendarEvent from 'ilios-common/components/daily-calendar-event';
-import Event from 'ilios-common/classes/event';
+import { component } from 'frontend/tests/pages/components/daily-calendar-event';
+import DailyCalendarEvent from 'frontend/components/daily-calendar-event';
+import Event from 'frontend/classes/event';
 import { array } from '@ember/helper';
 
 module('Integration | Component | daily-calendar-event', function (hooks) {

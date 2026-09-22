@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 
 module('Unit | Service | fetch', function (hooks) {

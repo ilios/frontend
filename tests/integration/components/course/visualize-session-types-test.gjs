@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/course/visualize-session-types';
-import VisualizeSessionTypes from 'ilios-common/components/course/visualize-session-types';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/visualize-session-types';
+import VisualizeSessionTypes from 'frontend/components/course/visualize-session-types';
 
 module('Integration | Component | course/visualize-session-types', function (hooks) {
   setupRenderingTest(hooks);

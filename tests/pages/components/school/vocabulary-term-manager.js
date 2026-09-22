@@ -1,7 +1,7 @@
 import { clickable, create, collection, isPresent, fillable, text } from 'ember-cli-page-object';
 import newTermForm from './vocabulary-new-term';
-import yesNoToggle from 'ilios-common/page-objects/components/toggle-yesno';
-import breadcrumbs from 'ilios-common/page-objects/components/breadcrumbs';
+import yesNoToggle from 'frontend/tests/pages/components/toggle-yesno';
+import breadcrumbs from 'frontend/tests/pages/components/breadcrumbs';
 
 const definition = {
   scope: '[data-test-school-vocabulary-term-manager]',

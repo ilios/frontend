@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'test-app/tests/helpers';
+import { setupTest } from 'frontend/tests/helpers';
 
 module('Unit | Route | event-not-found', function (hooks) {
   setupTest(hooks);

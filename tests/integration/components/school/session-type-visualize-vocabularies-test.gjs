@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/school/session-type-visualize-vocabularies';
 import SessionTypeVisualizeVocabularies from 'frontend/components/school/session-type-visualize-vocabularies';
 

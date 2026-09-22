@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/course/sessions';
-import Sessions from 'ilios-common/components/course/sessions';
-import noop from 'ilios-common/helpers/noop';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/sessions';
+import Sessions from 'frontend/components/course/sessions';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | course/sessions', function (hooks) {
   setupRenderingTest(hooks);

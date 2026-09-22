@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import page from 'ilios-common/page-objects/course';
+import page from 'frontend/tests/pages/course';
 
 module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   setupApplicationTest(hooks);

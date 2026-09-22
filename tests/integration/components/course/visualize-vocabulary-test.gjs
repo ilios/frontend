@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/course/visualize-vocabulary';
-import VisualizeVocabulary from 'ilios-common/components/course/visualize-vocabulary';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/visualize-vocabulary';
+import VisualizeVocabulary from 'frontend/components/course/visualize-vocabulary';
 
 module('Integration | Component | course/visualize-vocabulary', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/detail-learners-and-learner-groups';
-import DetailLearnersAndLearnerGroups from 'ilios-common/components/detail-learners-and-learner-groups';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/detail-learners-and-learner-groups';
+import DetailLearnersAndLearnerGroups from 'frontend/components/detail-learners-and-learner-groups';
 import { array } from '@ember/helper';
-import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
+import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | detail-learners-and-learner-groups', function (hooks) {
   setupRenderingTest(hooks);

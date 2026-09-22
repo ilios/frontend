@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import UserProfileCalendar from 'frontend/components/user-profile-calendar';
 
 module('Integration | Component | user profile calendar', function (hooks) {

@@ -1,10 +1,10 @@
 import { module, test, skip } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { authenticateSession, invalidateSession } from 'ember-simple-auth/test-support';
-import { mapBy } from 'ilios-common/utils/array-helpers';
-import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
-import { jwtEncode } from 'ilios-common';
+import { mapBy } from 'frontend/utils/array-helpers';
+import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
+import { jwtEncode } from 'frontend/tests/helpers';
 
 module('Integration | Service | Current User', function (hooks) {
   setupTest(hooks);

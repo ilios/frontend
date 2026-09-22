@@ -3,9 +3,9 @@
 import { A as emberArray } from '@ember/array';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import reverse from 'ilios-common/helpers/reverse';
+import reverse from 'frontend/helpers/reverse';
 
 module('Integration | Helper | reverse', function (hooks) {
   setupRenderingTest(hooks);

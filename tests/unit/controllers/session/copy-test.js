@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import Controller from 'ilios-common/controllers/session/copy';
+import Controller from 'frontend/controllers/session/copy';
 
 module('Unit | Controller | session/copy', function (hooks) {
   setupTest(hooks);

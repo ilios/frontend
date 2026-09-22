@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/sessions-grid-header-row';
-import SessionsGridHeaderRow from 'ilios-common/components/sessions-grid-header-row';
-import noop from 'ilios-common/helpers/noop';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/sessions-grid-header-row';
+import SessionsGridHeaderRow from 'frontend/components/sessions-grid-header-row';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | sessions-grid-header-row', function (hooks) {
   setupRenderingTest(hooks);

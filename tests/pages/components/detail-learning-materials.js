@@ -15,7 +15,7 @@ import newLearningMaterial from './new-learningmaterial';
 import datePicker from './date-picker';
 import timePicker from './time-picker';
 import items from './detail-learning-materials-item';
-import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'ilios-common';
+import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'frontend/tests/helpers';
 
 const definition = {
   scope: '[data-test-detail-learning-materials]',

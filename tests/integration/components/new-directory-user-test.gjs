@@ -2,11 +2,11 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/new-directory-user';
 import NewDirectoryUser from 'frontend/components/new-directory-user';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | new-directory-user', function (hooks) {
   setupRenderingTest(hooks);

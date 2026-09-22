@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import VisualizerProgramYearObjectives from 'frontend/components/visualizer-program-year-objectives';
 
 module('Integration | Component | visualizer-program-year-objectives', function (hooks) {

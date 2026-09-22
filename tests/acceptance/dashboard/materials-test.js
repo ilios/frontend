@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import page from 'ilios-common/page-objects/dashboard-materials';
+import page from 'frontend/tests/pages/dashboard-materials';
 
 module('Acceptance | Dashboard Materials', function (hooks) {
   setupApplicationTest(hooks);

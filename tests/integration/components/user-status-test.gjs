@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/user-status';
-import { setupMSW } from 'ilios-common/msw';
-import UserStatus from 'ilios-common/components/user-status';
+import { component } from 'frontend/tests/pages/components/user-status';
+import { setupMSW } from 'frontend/tests/msw';
+import UserStatus from 'frontend/components/user-status';
 
 module('Integration | Component | user-status', function (hooks) {
   setupRenderingTest(hooks);

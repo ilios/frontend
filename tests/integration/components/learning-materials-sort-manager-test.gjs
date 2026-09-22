@@ -1,10 +1,10 @@
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click, find } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { capitalize } from '@ember/string';
-import LearningMaterialsSortManager from 'ilios-common/components/learning-materials-sort-manager';
-import noop from 'ilios-common/helpers/noop';
+import LearningMaterialsSortManager from 'frontend/components/learning-materials-sort-manager';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | learning materials sort manager', function (hooks) {
   setupRenderingTest(hooks);

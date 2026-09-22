@@ -1,5 +1,5 @@
 import { clickable, create, isPresent, text } from 'ember-cli-page-object';
-import meshManager from 'ilios-common/page-objects/components/mesh-manager';
+import meshManager from 'frontend/tests/pages/components/mesh-manager';
 
 const definition = {
   scope: '[data-test-reports-subject-new-mesh-term]',

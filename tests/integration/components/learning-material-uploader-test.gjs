@@ -1,11 +1,11 @@
 import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { selectFiles } from 'ember-file-upload/test-support';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import Service from '@ember/service';
-import LearningMaterialUploader from 'ilios-common/components/learning-material-uploader';
-import noop from 'ilios-common/helpers/noop';
+import LearningMaterialUploader from 'frontend/components/learning-material-uploader';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | learning-material-uploader', function (hooks) {
   setupRenderingTest(hooks);

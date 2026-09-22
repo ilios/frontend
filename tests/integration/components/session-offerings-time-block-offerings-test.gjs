@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { OfferingTimeBlock } from 'ilios-common/utils/offering-date-block';
-import { component } from 'ilios-common/page-objects/components/session-offerings-time-block-offerings';
-import SessionOfferingsTimeBlockOfferings from 'ilios-common/components/session-offerings-time-block-offerings';
-import noop from 'ilios-common/helpers/noop';
+import { OfferingTimeBlock } from 'frontend/utils/offering-date-block';
+import { component } from 'frontend/tests/pages/components/session-offerings-time-block-offerings';
+import SessionOfferingsTimeBlockOfferings from 'frontend/components/session-offerings-time-block-offerings';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | session-offerings-time-block-offerings', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, render } from '@ember/test-helpers';
-import SaveButton from 'ilios-common/components/save-button';
+import SaveButton from 'frontend/components/save-button';
 import { on } from '@ember/modifier';
 
 module('Integration | Component | save-button', function (hooks) {

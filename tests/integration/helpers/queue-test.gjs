@@ -2,11 +2,11 @@
 
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import queue from 'ilios-common/helpers/queue';
+import queue from 'frontend/helpers/queue';
 
 module('Integration | Helper | queue', function (hooks) {
   setupRenderingTest(hooks);

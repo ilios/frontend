@@ -8,7 +8,7 @@ import {
   uniqueBy,
   uniqueById,
   uniqueValues,
-} from 'ilios-common/utils/array-helpers';
+} from 'frontend/utils/array-helpers';
 import { module, test, skip } from 'qunit';
 
 function getDogs() {

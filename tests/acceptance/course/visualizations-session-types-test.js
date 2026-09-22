@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 import { currentURL, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import page from 'ilios-common/page-objects/course-visualizations-session-types';
-import { setupAuthentication } from 'ilios-common';
+import page from 'frontend/tests/pages/course-visualizations-session-types';
+import { setupAuthentication } from 'frontend/tests/helpers';
 
 module('Acceptance | course visualizations - session-types', function (hooks) {
   setupApplicationTest(hooks);

@@ -1,8 +1,8 @@
 import { currentRouteName } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import page from 'ilios-common/page-objects/session';
+import page from 'frontend/tests/pages/session';
 
 module('Acceptance | Session - Independent Learning', function (hooks) {
   setupApplicationTest(hooks);

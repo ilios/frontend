@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import ManageObjectiveParentsItem from 'ilios-common/components/session/manage-objective-parents-item';
-import noop from 'ilios-common/helpers/noop';
+import ManageObjectiveParentsItem from 'frontend/components/session/manage-objective-parents-item';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | session/manage-objective-parents-item', function (hooks) {
   setupRenderingTest(hooks);

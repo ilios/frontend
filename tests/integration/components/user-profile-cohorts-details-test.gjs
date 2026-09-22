@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/user-profile-cohorts-details';
 import UserProfileCohortsDetails from 'frontend/components/user-profile-cohorts-details';
 import { array } from '@ember/helper';

@@ -1,5 +1,5 @@
 import { clickable, collection, create, isPresent } from 'ember-cli-page-object';
-import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
+import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-school-competencies-list-item-pcrs]',

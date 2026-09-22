@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';
-import { component } from 'ilios-common/page-objects/components/offering-manager';
-import noop from 'ilios-common/helpers/noop';
-import OfferingManager from 'ilios-common/components/offering-manager';
+import { component } from 'frontend/tests/pages/components/offering-manager';
+import noop from 'frontend/helpers/noop';
+import OfferingManager from 'frontend/components/offering-manager';
 
 module('Integration | Component | offering-manager', function (hooks) {
   setupRenderingTest(hooks);

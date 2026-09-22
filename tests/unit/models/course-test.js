@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { waitForResource, freezeDateAt, unfreezeDate } from 'ilios-common';
+import { waitForResource, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 
 module('Unit | Model | Course', function (hooks) {
   setupTest(hooks);

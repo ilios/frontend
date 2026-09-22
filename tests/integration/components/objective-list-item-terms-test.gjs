@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { component } from 'ilios-common/page-objects/components/objective-list-item-terms';
-import { setupMSW } from 'ilios-common/msw';
-import ObjectiveListItemTerms from 'ilios-common/components/objective-list-item-terms';
-import noop from 'ilios-common/helpers/noop';
-import noopTask from 'ilios-common/helpers/noop-task';
+import { component } from 'frontend/tests/pages/components/objective-list-item-terms';
+import { setupMSW } from 'frontend/tests/msw';
+import ObjectiveListItemTerms from 'frontend/components/objective-list-item-terms';
+import noop from 'frontend/helpers/noop';
+import noopTask from 'frontend/helpers/noop-task';
 
 module('Integration | Component | objective-list-item-terms', function (hooks) {
   setupRenderingTest(hooks);

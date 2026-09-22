@@ -1,12 +1,12 @@
 import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { click, render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { component } from 'ilios-common/page-objects/components/offering-form';
-import { freezeDateAt, unfreezeDate } from 'ilios-common';
-import OfferingForm from 'ilios-common/components/offering-form';
-import noop from 'ilios-common/helpers/noop';
+import { component } from 'frontend/tests/pages/components/offering-form';
+import { freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
+import OfferingForm from 'frontend/components/offering-form';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | offering form', function (hooks) {
   setupRenderingTest(hooks);

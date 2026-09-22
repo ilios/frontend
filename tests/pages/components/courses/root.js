@@ -8,7 +8,7 @@ import {
   property,
   text,
 } from 'ember-cli-page-object';
-import { hasFocus } from 'ilios-common';
+import { hasFocus } from 'frontend/tests/helpers';
 import list from './list';
 import newCourse from './new';
 

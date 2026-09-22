@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/search';
 import dashboardPage from 'frontend/tests/pages/dashboard';
-import currentAcademicYear from 'ilios-common/utils/current-academic-year';
+import currentAcademicYear from 'frontend/utils/current-academic-year';
 
 module('Acceptance | search', function (hooks) {
   setupApplicationTest(hooks);

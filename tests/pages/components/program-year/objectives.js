@@ -1,5 +1,5 @@
 import { clickable, create, text } from 'ember-cli-page-object';
-import newObjective from 'ilios-common/page-objects/components/new-objective';
+import newObjective from 'frontend/tests/pages/components/new-objective';
 import objectiveList from './objective-list';
 
 const definition = {

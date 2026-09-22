@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { setupAuthentication } from 'ilios-common';
+import { setupMSW } from 'frontend/tests/msw';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { component } from 'frontend/tests/pages/components/reports/list';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import SubjectsList from 'frontend/components/reports/subjects-list';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | reports/subjects-list', function (hooks) {
   setupRenderingTest(hooks);

@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { htmlSafe } from '@ember/template';
-import truncate from 'ilios-common/helpers/truncate';
+import truncate from 'frontend/helpers/truncate';
 
 module('Integration | Helper | {{truncate}}', function (hooks) {
   setupRenderingTest(hooks);

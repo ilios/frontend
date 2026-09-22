@@ -13,9 +13,9 @@ import {
 } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { HttpResponse } from 'msw';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import BulkNewUsers from 'frontend/components/bulk-new-users';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | bulk new users', function (hooks) {
   setupRenderingTest(hooks);

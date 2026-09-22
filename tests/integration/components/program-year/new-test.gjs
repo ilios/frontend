@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/new';
 import New from 'frontend/components/program-year/new';
 import { array } from '@ember/helper';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | program-year/new', function (hooks) {
   setupRenderingTest(hooks);

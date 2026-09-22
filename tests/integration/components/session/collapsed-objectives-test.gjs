@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/session/collapsed-objectives';
-import { setupMSW } from 'ilios-common/msw';
-import CollapsedObjectives from 'ilios-common/components/session/collapsed-objectives';
-import noop from 'ilios-common/helpers/noop';
+import { component } from 'frontend/tests/pages/components/session/collapsed-objectives';
+import { setupMSW } from 'frontend/tests/msw';
+import CollapsedObjectives from 'frontend/components/session/collapsed-objectives';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | session/collapsed-objectives', function (hooks) {
   setupRenderingTest(hooks);

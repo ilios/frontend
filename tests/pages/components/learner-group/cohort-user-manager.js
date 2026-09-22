@@ -7,9 +7,9 @@ import {
   property,
   text,
 } from 'ember-cli-page-object';
-import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
-import userStatus from 'ilios-common/page-objects/components/user-status';
-import { scrollTo, isInView } from 'ilios-common';
+import userNameInfo from 'frontend/tests/pages/components/user-name-info';
+import userStatus from 'frontend/tests/pages/components/user-status';
+import { scrollTo, isInView } from 'frontend/tests/helpers';
 
 const definition = {
   scope: '[data-test-learner-group-cohort-user-manager]',

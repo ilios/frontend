@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { array } from '@ember/helper';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/taxonomy-manager-terms-list';
-import List from 'ilios-common/components/taxonomy-manager-terms-list';
-import noop from 'ilios-common/helpers/noop';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/taxonomy-manager-terms-list';
+import List from 'frontend/components/taxonomy-manager-terms-list';
+import noop from 'frontend/helpers/noop';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | taxonomy manager terms list', function (hooks) {

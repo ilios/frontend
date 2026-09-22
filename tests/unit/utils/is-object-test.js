@@ -1,7 +1,7 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 import EmberObject from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
-import isObject from 'ilios-common/utils/is-object';
+import isObject from 'frontend/utils/is-object';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | is-object', function () {

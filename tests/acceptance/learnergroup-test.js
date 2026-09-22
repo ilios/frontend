@@ -1,6 +1,6 @@
 import { currentURL } from '@ember/test-helpers';
 import { test, module } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from '../pages/learner-group';

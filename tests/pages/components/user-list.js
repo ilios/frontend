@@ -1,6 +1,6 @@
 import { clickable, collection, create } from 'ember-cli-page-object';
-import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
-import userStatus from 'ilios-common/page-objects/components/user-status';
+import userNameInfo from 'frontend/tests/pages/components/user-name-info';
+import userStatus from 'frontend/tests/pages/components/user-status';
 
 const definition = {
   scope: '[data-test-user-list]',

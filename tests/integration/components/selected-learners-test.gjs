@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/selected-learners';
-import { setupMSW } from 'ilios-common/msw';
+import { component } from 'frontend/tests/pages/components/selected-learners';
+import { setupMSW } from 'frontend/tests/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import SelectedLearners from 'ilios-common/components/selected-learners';
+import SelectedLearners from 'frontend/components/selected-learners';
 
 module('Integration | Component | selected-learners', function (hooks) {
   setupRenderingTest(hooks);

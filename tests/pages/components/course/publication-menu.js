@@ -1,5 +1,5 @@
 import { clickable, create, isVisible, isHidden, triggerable } from 'ember-cli-page-object';
-import { focusedText, keyOnFocus } from 'ilios-common';
+import { focusedText, keyOnFocus } from 'frontend/tests/helpers';
 
 const definition = {
   scope: '[data-test-course-publication-menu]',

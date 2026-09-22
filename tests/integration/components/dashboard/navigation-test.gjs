@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/dashboard/navigation';
+import { component } from 'frontend/tests/pages/components/dashboard/navigation';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import Navigation from 'ilios-common/components/dashboard/navigation';
+import Navigation from 'frontend/components/dashboard/navigation';
 import Service from '@ember/service';
 
 module('Integration | Component | dashboard/navigation', function (hooks) {

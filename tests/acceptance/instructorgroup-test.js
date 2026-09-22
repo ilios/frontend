@@ -1,6 +1,6 @@
 import { currentRouteName, visit, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import page from '../pages/instructor-group';

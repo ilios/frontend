@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';
-import { component } from 'ilios-common/page-objects/components/dashboard/material-list-item';
+import { component } from 'frontend/tests/pages/components/dashboard/material-list-item';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import MaterialListItem from 'ilios-common/components/dashboard/material-list-item';
+import MaterialListItem from 'frontend/components/dashboard/material-list-item';
 
 module('Integration | Component | dashboard/material-list-item', function (hooks) {
   setupRenderingTest(hooks);

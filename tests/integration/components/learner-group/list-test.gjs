@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/list';
 import Service from '@ember/service';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import List from 'frontend/components/learner-group/list';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 import set from 'ember-set-helper/helpers/set';
 
 module('Integration | Component | learner-group/list', function (hooks) {

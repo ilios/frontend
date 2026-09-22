@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, find, render } from '@ember/test-helpers';
-import SortableHeading from 'ilios-common/components/sortable-heading';
+import SortableHeading from 'frontend/components/sortable-heading';
 
 module('Integration | Component | sortable heading', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,9 +1,9 @@
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click, findAll } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
-import { setupMSW } from 'ilios-common/msw';
-import ObjectiveSortManager from 'ilios-common/components/objective-sort-manager';
-import noop from 'ilios-common/helpers/noop';
+import { setupMSW } from 'frontend/tests/msw';
+import ObjectiveSortManager from 'frontend/components/objective-sort-manager';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | objective sort manager', function (hooks) {
   setupRenderingTest(hooks);

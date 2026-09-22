@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { eq } from 'ember-truth-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import Breadcrumbs from 'ilios-common/components/breadcrumbs';
-import { component } from 'ilios-common/page-objects/components/breadcrumbs';
+import Breadcrumbs from 'frontend/components/breadcrumbs';
+import { component } from 'frontend/tests/pages/components/breadcrumbs';
 
 module('Integration | Component | breadcrumbs', function (hooks) {
   setupRenderingTest(hooks);

@@ -2,10 +2,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/root';
 import Root from 'frontend/components/learner-group/root';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 import set from 'ember-set-helper/helpers/set';
 
 module('Integration | Component | learner-group/root', function (hooks) {

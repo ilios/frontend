@@ -1,10 +1,10 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/course/overview';
-import Overview from 'ilios-common/components/course/overview';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/overview';
+import Overview from 'frontend/components/course/overview';
 
 module('Integration | Component | course overview', function (hooks) {
   setupRenderingTest(hooks);

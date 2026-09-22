@@ -8,7 +8,7 @@ import {
   text,
   visitable,
 } from 'ember-cli-page-object';
-import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import userNameInfo from 'frontend/tests/pages/components/user-name-info';
 
 export default create({
   visit: visitable('/admin/userupdates'),

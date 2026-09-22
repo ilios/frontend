@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import hasManyIds from 'ilios-common/helpers/has-many-ids';
+import hasManyIds from 'frontend/helpers/has-many-ids';
 
 module('Integration | Helper | has-many-ids', function (hooks) {
   setupRenderingTest(hooks);

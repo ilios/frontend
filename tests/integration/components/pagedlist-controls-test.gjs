@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/pagedlist-controls';
-import PagedlistControls from 'ilios-common/components/pagedlist-controls';
+import { component } from 'frontend/tests/pages/components/pagedlist-controls';
+import PagedlistControls from 'frontend/components/pagedlist-controls';
 
 module('Integration | Component | pagedlist controls', function (hooks) {
   setupRenderingTest(hooks);

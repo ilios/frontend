@@ -7,9 +7,9 @@ import ics from './user-profile-ics';
 import learnerGroups from './user-profile/learner-groups';
 import permissions from './user-profile-permissions';
 import roles from './user-profile-roles';
-import toggleButtons from 'ilios-common/page-objects/components/toggle-buttons';
-import userNameInfo from 'ilios-common/page-objects//components/user-name-info';
-import userStatus from 'ilios-common/page-objects/components/user-status';
+import toggleButtons from 'frontend/tests/pages/components/toggle-buttons';
+import userNameInfo from 'frontend/tests/pages//components/user-name-info';
+import userStatus from 'frontend/tests/pages/components/user-status';
 
 // @todo flesh this out. [ST 2023/09/08]
 const definition = {

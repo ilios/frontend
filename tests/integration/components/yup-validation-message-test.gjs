@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import YupValidationMessage from 'frontend/components/yup-validation-message';
 import { array } from '@ember/helper';
 
 module('Integration | Component | yup-validation-message', function (hooks) {

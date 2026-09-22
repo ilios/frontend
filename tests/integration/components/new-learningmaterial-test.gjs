@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupAuthentication } from 'ilios-common';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/new-learningmaterial';
-import { setupMSW } from 'ilios-common/msw';
-import NewLearningmaterial from 'ilios-common/components/new-learningmaterial';
+import { component } from 'frontend/tests/pages/components/new-learningmaterial';
+import { setupMSW } from 'frontend/tests/msw';
+import NewLearningmaterial from 'frontend/components/new-learningmaterial';
 import { array } from '@ember/helper';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 // @todo flesh this integration test out [ST 2020/09/02]
 module('Integration | Component | new learningmaterial', function (hooks) {

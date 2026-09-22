@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/lm-type-icon';
-import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
-import LmTypeIcon from 'ilios-common/components/lm-type-icon';
+import { component } from 'frontend/tests/pages/components/lm-type-icon';
+import createTypedLearningMaterialProxy from 'frontend/utils/create-typed-learning-material-proxy';
+import LmTypeIcon from 'frontend/components/lm-type-icon';
 
 module('Integration | Component | lm type icon', function (hooks) {
   setupRenderingTest(hooks);

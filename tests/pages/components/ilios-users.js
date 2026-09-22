@@ -1,7 +1,7 @@
 import { clickable, create, fillable, value } from 'ember-cli-page-object';
 import newUserForm from 'frontend/tests/pages/components/new-user';
 import userList from 'frontend/tests/pages/components/user-list';
-import pagedlistControls from 'ilios-common/page-objects/components/pagedlist-controls';
+import pagedlistControls from 'frontend/tests/pages/components/pagedlist-controls';
 
 const definition = {
   scope: '[data-test-ilios-users]',

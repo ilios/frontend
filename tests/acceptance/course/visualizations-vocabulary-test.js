@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 import { currentURL, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import page from 'ilios-common/page-objects/course-visualizations-vocabulary';
-import { setupAuthentication } from 'ilios-common';
+import page from 'frontend/tests/pages/course-visualizations-vocabulary';
+import { setupAuthentication } from 'frontend/tests/helpers';
 
 module('Acceptance | course visualizations - vocabulary', function (hooks) {
   setupApplicationTest(hooks);

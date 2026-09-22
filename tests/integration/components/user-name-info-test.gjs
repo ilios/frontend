@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/user-name-info';
-import { setupMSW } from 'ilios-common/msw';
-import UserNameInfo from 'ilios-common/components/user-name-info';
+import { component } from 'frontend/tests/pages/components/user-name-info';
+import { setupMSW } from 'frontend/tests/msw';
+import UserNameInfo from 'frontend/components/user-name-info';
 
 module('Integration | Component | user-name-info', function (hooks) {
   setupRenderingTest(hooks);

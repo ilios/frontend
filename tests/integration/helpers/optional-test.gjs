@@ -1,11 +1,11 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 import { on } from '@ember/modifier';
-import optional from 'ilios-common/helpers/optional';
-import pipe from 'ilios-common/helpers/pipe';
+import optional from 'frontend/helpers/optional';
+import pipe from 'frontend/helpers/pipe';
 import { fn } from '@ember/helper';
 
 module('Integration | Helper | optional', function (hooks) {

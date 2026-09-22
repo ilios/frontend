@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import Controller from 'ilios-common/controllers/dashboard/materials';
+import Controller from 'frontend/controllers/dashboard/materials';
 
 module('Unit | Controller | dashboard/materials', function (hooks) {
   setupTest(hooks);

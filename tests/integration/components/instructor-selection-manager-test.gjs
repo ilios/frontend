@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/instructor-selection-manager';
-import { setupMSW } from 'ilios-common/msw';
-import InstructorSelectionManager from 'ilios-common/components/instructor-selection-manager';
-import noop from 'ilios-common/helpers/noop';
-import { formatJsonApi } from 'ilios-common/msw/utils/json-api-formatter.js';
+import { component } from 'frontend/tests/pages/components/instructor-selection-manager';
+import { setupMSW } from 'frontend/tests/msw';
+import InstructorSelectionManager from 'frontend/components/instructor-selection-manager';
+import noop from 'frontend/helpers/noop';
+import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
 
 module('Integration | Component | instructor selection manager', function (hooks) {
   setupRenderingTest(hooks);

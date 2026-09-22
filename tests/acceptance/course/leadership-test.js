@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import { setupAuthentication } from 'ilios-common';
-import page from 'ilios-common/page-objects/course';
+import { setupAuthentication } from 'frontend/tests/helpers';
+import page from 'frontend/tests/pages/course';
 
 module('Acceptance | Course - Leadership', function (hooks) {
   setupApplicationTest(hooks);

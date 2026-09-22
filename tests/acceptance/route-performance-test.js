@@ -1,6 +1,6 @@
 import { currentRouteName, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
 import { graphQL } from 'frontend/tests/helpers/curriculum-report';

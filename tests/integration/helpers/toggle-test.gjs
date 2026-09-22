@@ -1,10 +1,10 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 import { on } from '@ember/modifier';
-import toggle from 'ilios-common/helpers/toggle';
+import toggle from 'frontend/helpers/toggle';
 
 module('Integration | Helper | toggle', function (hooks) {
   setupRenderingTest(hooks);

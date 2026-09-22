@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/fade-text';
-import FadeText from 'ilios-common/components/fade-text';
+import { component } from 'frontend/tests/pages/components/fade-text';
+import FadeText from 'frontend/components/fade-text';
 
 module('Integration | Component | fade-text', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/mesh-descriptor-last-tree-number';
-import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/mesh-descriptor-last-tree-number';
+import MeshDescriptorLastTreeNumber from 'frontend/components/mesh-descriptor-last-tree-number';
 
 module('Integration | Component | mesh-descriptor-last-tree-number', function (hooks) {
   setupRenderingTest(hooks);

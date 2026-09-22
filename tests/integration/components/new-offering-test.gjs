@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import NewOffering from 'ilios-common/components/new-offering';
-import noop from 'ilios-common/helpers/noop';
+import NewOffering from 'frontend/components/new-offering';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | new offering', function (hooks) {
   setupRenderingTest(hooks);

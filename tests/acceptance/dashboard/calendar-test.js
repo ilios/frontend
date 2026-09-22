@@ -1,9 +1,9 @@
 import { currentURL, currentRouteName } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import page from 'ilios-common/page-objects/dashboard-calendar';
+import page from 'frontend/tests/pages/dashboard-calendar';
 
 module('Acceptance | Dashboard Calendar', function (hooks) {
   setupApplicationTest(hooks);

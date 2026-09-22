@@ -1,6 +1,6 @@
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 
 module('Acceptance | Access Denied', function (hooks) {

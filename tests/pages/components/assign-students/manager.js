@@ -7,7 +7,7 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
-import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import userNameInfo from 'frontend/tests/pages/components/user-name-info';
 
 const definition = {
   scope: '[data-test-assign-students-manager]',

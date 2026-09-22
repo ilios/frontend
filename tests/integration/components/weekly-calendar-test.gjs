@@ -1,15 +1,15 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { setLocale } from 'ember-intl/test-support';
-import { component } from 'ilios-common/page-objects/components/weekly-calendar';
-import WeeklyCalendar from 'ilios-common/components/weekly-calendar';
-import Event from 'ilios-common/classes/event';
+import { component } from 'frontend/tests/pages/components/weekly-calendar';
+import WeeklyCalendar from 'frontend/components/weekly-calendar';
+import Event from 'frontend/classes/event';
 import { array } from '@ember/helper';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | weekly-calendar', function (hooks) {
   setupRenderingTest(hooks);

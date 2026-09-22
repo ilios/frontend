@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import focus from 'ilios-common/modifiers/focus';
+import focus from 'frontend/modifiers/focus';
 
 module('Integration | Modifier | focus', function (hooks) {
   setupRenderingTest(hooks);

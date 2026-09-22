@@ -1,5 +1,5 @@
 import { attribute, clickable, create, hasClass } from 'ember-cli-page-object';
-import { hasFocus } from 'ilios-common';
+import { hasFocus } from 'frontend/tests/helpers';
 
 const definition = {
   scope: '[data-test-link-to-with-action]',

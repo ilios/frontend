@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitUntil } from '@ember/test-helpers';
-import animateLoading from 'ilios-common/modifiers/animate-loading';
-import { setPreferReducedMotion } from 'ilios-common';
+import animateLoading from 'frontend/modifiers/animate-loading';
+import { setPreferReducedMotion } from 'frontend/tests/helpers';
 
 module('Integration | Modifier | animate-loading', function (hooks) {
   setupRenderingTest(hooks);

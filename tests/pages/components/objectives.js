@@ -1,5 +1,5 @@
 import { clickable, collection, isVisible, property, text } from 'ember-cli-page-object';
-import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'ilios-common';
+import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'frontend/tests/helpers';
 import meshManager from './mesh-manager';
 
 export default {

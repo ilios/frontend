@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/collapsed-taxonomies';
-import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/collapsed-taxonomies';
+import CollapsedTaxonomies from 'frontend/components/collapsed-taxonomies';
 
 module('Integration | Component | collapsed taxonomies', function (hooks) {
   setupRenderingTest(hooks);

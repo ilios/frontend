@@ -1,10 +1,10 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/user-material-status';
-import UserMaterialStatus from 'ilios-common/components/user-material-status';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/user-material-status';
+import UserMaterialStatus from 'frontend/components/user-material-status';
 
 module('Integration | Component | user-material-status', function (hooks) {
   setupRenderingTest(hooks);

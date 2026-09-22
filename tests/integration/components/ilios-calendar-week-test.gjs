@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/ilios-calendar-week';
+import { component } from 'frontend/tests/pages/components/ilios-calendar-week';
 import { DateTime } from 'luxon';
-import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
+import IliosCalendarWeek from 'frontend/components/ilios-calendar-week';
 import { array } from '@ember/helper';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | ilios calendar week', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/program-year/course-associations';
 import CourseAssociations from 'frontend/components/program-year/course-associations';
 

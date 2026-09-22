@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'frontend/tests/helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { HttpResponse } from 'msw';
 import config from 'frontend/config/environment';
 

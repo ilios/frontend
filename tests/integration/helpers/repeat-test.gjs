@@ -1,9 +1,9 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import repeat from 'ilios-common/helpers/repeat';
+import repeat from 'frontend/helpers/repeat';
 
 module('Integration | Helper | repeat', function (hooks) {
   setupRenderingTest(hooks);

@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { htmlSafe } from '@ember/template';
 import { render, find } from '@ember/test-helpers';
-import htmlSafe0 from 'ilios-common/helpers/html-safe';
+import htmlSafe0 from 'frontend/helpers/html-safe';
 
 module('Integration | Helper | {{html-safe}}', function (hooks) {
   setupRenderingTest(hooks);

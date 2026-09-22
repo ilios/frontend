@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/learner-selection-manager';
-import { setupMSW } from 'ilios-common/msw';
-import LearnerSelectionManager from 'ilios-common/components/learner-selection-manager';
-import noop from 'ilios-common/helpers/noop';
+import { component } from 'frontend/tests/pages/components/learner-selection-manager';
+import { setupMSW } from 'frontend/tests/msw';
+import LearnerSelectionManager from 'frontend/components/learner-selection-manager';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | learner selection manager', function (hooks) {
   setupRenderingTest(hooks);

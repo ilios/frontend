@@ -1,4 +1,4 @@
-import { hasManyLength } from 'ilios-common/helpers/has-many-length';
+import { hasManyLength } from 'frontend/helpers/has-many-length';
 import { module, test } from 'qunit';
 
 module('Unit | Helper | has many length', function () {

@@ -1,9 +1,9 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/api-version-notice';
-import ApiVersionNotice from 'ilios-common/components/api-version-notice';
+import { component } from 'frontend/tests/pages/components/api-version-notice';
+import ApiVersionNotice from 'frontend/components/api-version-notice';
 
 module('Integration | Component | api-version-notice', function (hooks) {
   setupRenderingTest(hooks);

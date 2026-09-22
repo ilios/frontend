@@ -7,7 +7,7 @@ import {
   value,
   isPresent,
 } from 'ember-cli-page-object';
-import breadcrumbs from 'ilios-common/page-objects/components/breadcrumbs';
+import breadcrumbs from 'frontend/tests/pages/components/breadcrumbs';
 
 const definition = {
   scope: '[data-test-learner-group-header]',

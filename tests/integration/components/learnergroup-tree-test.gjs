@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/learnergroup-tree';
-import LearnergroupTree from 'ilios-common/components/learnergroup-tree';
-import noop from 'ilios-common/helpers/noop';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/learnergroup-tree';
+import LearnergroupTree from 'frontend/components/learnergroup-tree';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | learnergroup-tree', function (hooks) {
   setupRenderingTest(hooks);

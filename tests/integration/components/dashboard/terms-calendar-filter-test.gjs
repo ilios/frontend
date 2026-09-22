@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/dashboard/terms-calendar-filter';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/dashboard/terms-calendar-filter';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import TermsCalendarFilter from 'ilios-common/components/dashboard/terms-calendar-filter';
-import noop from 'ilios-common/helpers/noop';
+import TermsCalendarFilter from 'frontend/components/dashboard/terms-calendar-filter';
+import noop from 'frontend/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | dashboard/terms-calendar-filter', function (hooks) {

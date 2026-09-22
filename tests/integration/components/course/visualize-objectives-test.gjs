@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/course/visualize-objectives';
-import VisualizeObjectives from 'ilios-common/components/course/visualize-objectives';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/visualize-objectives';
+import VisualizeObjectives from 'frontend/components/course/visualize-objectives';
 
 module('Integration | Component | course/visualize-objectives', function (hooks) {
   setupRenderingTest(hooks);

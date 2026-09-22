@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, find, render } from '@ember/test-helpers';
-import SortableTh from 'ilios-common/components/sortable-th';
+import SortableTh from 'frontend/components/sortable-th';
 
 module('Integration | Component | sortable th', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,10 +1,10 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import page from 'ilios-common/page-objects/sessions';
-import sessionPage from 'ilios-common/page-objects/session';
+import page from 'frontend/tests/pages/sessions';
+import sessionPage from 'frontend/tests/pages/session';
 
 module('Acceptance | Course - Session List', function (hooks) {
   setupApplicationTest(hooks);

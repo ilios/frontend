@@ -2,10 +2,10 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/reports/new-subject';
 import NewSubject from 'frontend/components/reports/new-subject';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | reports/new-subject', function (hooks) {
   setupRenderingTest(hooks);

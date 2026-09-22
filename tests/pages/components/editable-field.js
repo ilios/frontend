@@ -7,7 +7,7 @@ import {
   text,
   triggerable,
 } from 'ember-cli-page-object';
-import { hasFocus } from 'ilios-common';
+import { hasFocus } from 'frontend/tests/helpers';
 import fadeText from './fade-text.js';
 
 const definition = {

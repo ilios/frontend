@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import Controller from 'ilios-common/controllers/course-visualize-instructors';
+import Controller from 'frontend/controllers/course-visualize-instructors';
 
 module('Unit | Controller | course-visualize-instructors', function (hooks) {
   setupTest(hooks);

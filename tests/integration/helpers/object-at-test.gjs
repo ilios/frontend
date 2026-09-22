@@ -3,9 +3,9 @@
 import { A as emberArray } from '@ember/array';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import objectAt from 'ilios-common/helpers/object-at';
+import objectAt from 'frontend/helpers/object-at';
 
 module('Integration | Helper | object-at', function (hooks) {
   setupRenderingTest(hooks);

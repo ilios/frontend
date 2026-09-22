@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { DateTime } from 'luxon';
-import Event from 'ilios-common/classes/event';
+import Event from 'frontend/classes/event';
 
 module('Unit | Classes | Event', function (hooks) {
   setupTest(hooks);

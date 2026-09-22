@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import DetailCohortManager from 'ilios-common/components/detail-cohort-manager';
-import { component } from 'ilios-common/page-objects/components/detail-cohort-manager';
-import { setupAuthentication } from 'ilios-common';
-import noop from 'ilios-common/helpers/noop';
+import { setupMSW } from 'frontend/tests/msw';
+import DetailCohortManager from 'frontend/components/detail-cohort-manager';
+import { component } from 'frontend/tests/pages/components/detail-cohort-manager';
+import { setupAuthentication } from 'frontend/tests/helpers';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | detail cohort manager', function (hooks) {
   setupRenderingTest(hooks);

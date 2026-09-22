@@ -1,8 +1,8 @@
 import { visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import { component } from 'ilios-common/page-objects/components/api-version-notice';
+import { component } from 'frontend/tests/pages/components/api-version-notice';
 
 module('Acceptance | API Version Check', function (hooks) {
   setupApplicationTest(hooks);

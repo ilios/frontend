@@ -1,7 +1,7 @@
 import { clickable, create, text } from 'ember-cli-page-object';
 import competenciesManager from './competencies-manager';
 import competenciesList from './competencies-list';
-import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
+import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-school-competencies-expanded]',

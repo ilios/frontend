@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { component } from 'ilios-common/page-objects/components/single-event-learningmaterial-list-item';
-import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
-import { setupMSW } from 'ilios-common/msw';
+import { component } from 'frontend/tests/pages/components/single-event-learningmaterial-list-item';
+import createTypedLearningMaterialProxy from 'frontend/utils/create-typed-learning-material-proxy';
+import { setupMSW } from 'frontend/tests/msw';
 import Service from '@ember/service';
-import SingleEventLearningmaterialListItem from 'ilios-common/components/single-event-learningmaterial-list-item';
+import SingleEventLearningmaterialListItem from 'frontend/components/single-event-learningmaterial-list-item';
 
 module('Integration | Component | single-event-learningmaterial-list-item', function (hooks) {
   setupRenderingTest(hooks);

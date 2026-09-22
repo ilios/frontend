@@ -3,9 +3,9 @@
 import { A as emberArray } from '@ember/array';
 import { run } from '@ember/runloop';
 import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from 'frontend/helpers/sort-by';
 
 module('Integration | Helper | sort-by', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,8 +1,8 @@
 import { currentURL, currentRouteName } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import { setupAuthentication } from 'ilios-common';
-import page from 'ilios-common/page-objects/course';
+import { setupAuthentication } from 'frontend/tests/helpers';
+import page from 'frontend/tests/pages/course';
 
 module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);

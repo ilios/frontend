@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, find } from '@ember/test-helpers';
-import ProgressBar from 'ilios-common/components/progress-bar';
+import ProgressBar from 'frontend/components/progress-bar';
 
 module('Integration | Component | progress bar', function (hooks) {
   setupRenderingTest(hooks);

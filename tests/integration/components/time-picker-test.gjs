@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'ilios-common/page-objects/components/time-picker';
+import { component } from 'frontend/tests/pages/components/time-picker';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import TimePicker from 'ilios-common/components/time-picker';
-import noop from 'ilios-common/helpers/noop';
+import TimePicker from 'frontend/components/time-picker';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | time-picker', function (hooks) {
   setupRenderingTest(hooks);

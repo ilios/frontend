@@ -1,5 +1,5 @@
 import { clickable, create, isPresent, text } from 'ember-cli-page-object';
-import userSearch from 'ilios-common/page-objects/components/user-search';
+import userSearch from 'frontend/tests/pages/components/user-search';
 
 const definition = {
   scope: '[data-test-reports-subject-new-instructor]',

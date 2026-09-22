@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import { component } from 'ilios-common/page-objects/components/dashboard/selected-term-tree';
-import SelectedTermTree from 'ilios-common/components/dashboard/selected-term-tree';
-import noop from 'ilios-common/helpers/noop';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/dashboard/selected-term-tree';
+import SelectedTermTree from 'frontend/components/dashboard/selected-term-tree';
+import noop from 'frontend/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | dashboard/SelectedTermTree', function (hooks) {

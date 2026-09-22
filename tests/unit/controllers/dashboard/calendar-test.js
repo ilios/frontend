@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import Controller from 'ilios-common/controllers/dashboard/calendar';
+import Controller from 'frontend/controllers/dashboard/calendar';
 
 module('Unit | Controller | dashboard/calendar', function (hooks) {
   setupTest(hooks);

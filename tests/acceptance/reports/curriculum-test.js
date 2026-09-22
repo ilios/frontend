@@ -2,8 +2,8 @@ import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import page from 'frontend/tests/pages/reports';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import { setupAuthentication } from 'ilios-common';
-import currentAcademicYear from 'ilios-common/utils/current-academic-year';
+import { setupAuthentication } from 'frontend/tests/helpers';
+import currentAcademicYear from 'frontend/utils/current-academic-year';
 import { graphQL } from 'frontend/tests/helpers/curriculum-report';
 
 module('Acceptance | Reports - Curriculum Reports', function (hooks) {

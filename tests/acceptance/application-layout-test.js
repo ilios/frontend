@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication } from 'frontend/tests/helpers';
 import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 
 module('Acceptance | Application layout', function (hooks) {

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import lmType from 'ilios-common/helpers/lm-type';
+import lmType from 'frontend/helpers/lm-type';
 
 module('Integration | Helper | lm-type', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'ilios-common/msw';
-import DetailCohortList from 'ilios-common/components/detail-cohort-list';
-import { component } from 'ilios-common/page-objects/components/detail-cohort-list';
+import { setupMSW } from 'frontend/tests/msw';
+import DetailCohortList from 'frontend/components/detail-cohort-list';
+import { component } from 'frontend/tests/pages/components/detail-cohort-list';
 
 module('Integration | Component | detail cohort list', function (hooks) {
   setupRenderingTest(hooks);

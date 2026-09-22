@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'test-app/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
-import { component } from 'ilios-common/page-objects/components/editable-field';
-import EditableField from 'ilios-common/components/editable-field';
+import { component } from 'frontend/tests/pages/components/editable-field';
+import EditableField from 'frontend/components/editable-field';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from 'frontend/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | editable field', function (hooks) {
   setupRenderingTest(hooks);

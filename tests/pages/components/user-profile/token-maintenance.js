@@ -1,6 +1,6 @@
 import { clickable, create, text, value } from 'ember-cli-page-object';
-import { flatpickrDatePicker } from 'ilios-common';
-import bigSaveCancelButtons from 'ilios-common/page-objects/components/big-save-cancel-buttons';
+import { flatpickrDatePicker } from 'frontend/tests/helpers';
+import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
 
 const definition = {
   scope: '[data-test-token-maintenance]',

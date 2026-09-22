@@ -2,10 +2,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render, settled } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/global-search';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import Service from '@ember/service';
 import GlobalSearch from 'frontend/components/global-search';
-import noop from 'ilios-common/helpers/noop';
+import noop from 'frontend/helpers/noop';
 import set from 'ember-set-helper/helpers/set';
 
 module('Integration | Component | global-search', function (hooks) {

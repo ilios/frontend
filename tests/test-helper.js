@@ -3,7 +3,7 @@ import '@warp-drive/ember/install'; // must be first in this file
 import Application from 'frontend/app';
 import config from 'frontend/config/environment';
 import * as QUnit from 'qunit';
-import { stopMSW } from 'ilios-common/msw';
+import { stopMSW } from 'frontend/tests/msw';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 import { setupEmberOnerrorValidation } from 'ember-qunit';

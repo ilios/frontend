@@ -3,11 +3,11 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/program-year/objective-list-item-descriptors';
-import { setupMSW } from 'ilios-common/msw';
+import { setupMSW } from 'frontend/tests/msw';
 import ObjectiveListItemDescriptors from 'frontend/components/program-year/objective-list-item-descriptors';
 import { array } from '@ember/helper';
-import noop from 'ilios-common/helpers/noop';
-import noopTask from 'ilios-common/helpers/noop-task';
+import noop from 'frontend/helpers/noop';
+import noopTask from 'frontend/helpers/noop-task';
 
 module('Integration | Component | program-year/objective-list-item-descriptors', function (hooks) {
   setupRenderingTest(hooks);

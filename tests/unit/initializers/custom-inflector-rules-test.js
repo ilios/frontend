@@ -1,6 +1,6 @@
 import Application from '@ember/application';
-import config from 'test-app/config/environment';
-import { initialize } from 'test-app/initializers/custom-inflector-rules';
+import config from 'frontend/config/environment';
+import { initialize } from 'frontend/initializers/custom-inflector-rules';
 import { module, test } from 'qunit';
 import Resolver from 'ember-resolver';
 import { run } from '@ember/runloop';
