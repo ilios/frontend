@@ -33,7 +33,7 @@ class OfferingDateBlock extends OfferingBlock {
   get dayOfWeek() {
     deprecate(`Calling dayOfWeek on OfferingDateBlock. Format this from date instead`, false, {
       id: 'common.date-block-formats',
-      for: 'ilios-common',
+      for: 'frontend',
       until: '85',
       since: '84',
     });
@@ -43,7 +43,7 @@ class OfferingDateBlock extends OfferingBlock {
   get dayOfMonth() {
     deprecate(`Calling dayOfMonth on OfferingDateBlock. Format this from date instead`, false, {
       id: 'common.date-block-formats',
-      for: 'ilios-common',
+      for: 'frontend',
       until: '85',
       since: '84',
     });
@@ -96,7 +96,7 @@ class OfferingTimeBlock extends OfferingBlock {
   get startTime() {
     deprecate(`Calling startTime on OfferingTimeBlock. Format this from startDate instead`, false, {
       id: 'common.date-block-formats',
-      for: 'ilios-common',
+      for: 'frontend',
       until: '85',
       since: '84',
     });
@@ -106,7 +106,7 @@ class OfferingTimeBlock extends OfferingBlock {
   get endTime() {
     deprecate(`Calling endTime on OfferingTimeBlock. Format this from endDate instead`, false, {
       id: 'common.date-block-formats',
-      for: 'ilios-common',
+      for: 'frontend',
       until: '85',
       since: '84',
     });
@@ -119,7 +119,7 @@ class OfferingTimeBlock extends OfferingBlock {
       false,
       {
         id: 'common.date-block-formats',
-        for: 'ilios-common',
+        for: 'frontend',
         until: '85',
         since: '84',
       },
@@ -130,7 +130,7 @@ class OfferingTimeBlock extends OfferingBlock {
   get longEndText() {
     deprecate(`Calling longEndText on OfferingTimeBlock. Format this from endDate instead`, false, {
       id: 'common.date-block-formats',
-      for: 'ilios-common',
+      for: 'frontend',
       until: '85',
       since: '84',
     });

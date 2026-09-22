@@ -34,7 +34,7 @@ export default class School extends Model {
   get cohorts() {
     deprecate(`school.cohorts is called, don't use this.`, false, {
       id: 'common.school-cohorts',
-      for: 'ilios-common',
+      for: 'frontend',
       until: '63',
       since: '62.0.1',
     });

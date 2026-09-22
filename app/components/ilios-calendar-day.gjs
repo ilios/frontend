@@ -14,7 +14,7 @@ export default class IliosCalendarDayComponent extends Component {
     if (typeof this.args.date === 'string') {
       deprecate(`String passed to IliosCalendarDay @date instead of Date`, false, {
         id: 'common.dates-no-strings',
-        for: 'ilios-common',
+        for: 'frontend',
         until: '72',
         since: '71',
       });
