@@ -1,7 +1,7 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import LearningMaterialListItem from 'ilios-common/components/week-glance/learning-material-list-item';
+import LearningMaterialListItem from './learning-material-list-item';
 import { faFileSignature, faPersonChalkboard } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="week-glance-learning-materials" data-test-learning-materials>

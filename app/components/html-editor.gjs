@@ -6,17 +6,17 @@ import { guidFor } from '@ember/object/internals';
 import { modifier } from 'ember-modifier';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidations from '../classes/yup-validations';
 import { string } from 'yup';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import YupValidationMessage from './yup-validation-message';
 import { TrackedAsyncData } from 'ember-async-data';
-import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
+import { loadQuillEditor } from '../utils/load-quill-editor';
 
 const DEFAULT_URL_VALUE = 'https://';
 

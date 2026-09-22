@@ -1,18 +1,18 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { findBy, mapBy } from 'ilios-common/utils/array-helpers';
+import { findBy, mapBy } from '../../utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import { uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
-import focus from 'ilios-common/modifiers/focus';
-import includes from 'ilios-common/helpers/includes';
-import pick from 'ilios-common/helpers/pick';
+import focus from '../../modifiers/focus';
+import includes from '../../helpers/includes';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import { eq } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 
 export default class ProgramYearNewComponent extends Component {
   allYears = [];

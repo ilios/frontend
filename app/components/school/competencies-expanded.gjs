@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { filterBy, uniqueValues } from '../../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -13,7 +13,7 @@ import { fn } from '@ember/helper';
 import CompetenciesManager from './competencies-manager';
 import CompetenciesList from './competencies-list';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;

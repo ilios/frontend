@@ -9,16 +9,16 @@ import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { uniqueId, concat } from '@ember/helper';
-import includes from 'ilios-common/helpers/includes';
-import pick from 'ilios-common/helpers/pick';
+import includes from '../helpers/includes';
+import pick from '../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import { eq, not } from 'ember-truth-helpers';
-import YupValidations from 'ilios-common/classes/yup-validations';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import YupValidations from '../classes/yup-validations';
+import YupValidationMessage from './yup-validation-message';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
 import { faSpinner, faRotate } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class UserProfileBioManagerComponent extends Component {
   @service intl;

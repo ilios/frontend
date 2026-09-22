@@ -1,4 +1,4 @@
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from './array-helpers';
 
 export default async function sortCohorts(cohorts) {
   const sortProxies = await Promise.all(

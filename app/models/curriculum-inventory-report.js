@@ -1,5 +1,5 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { mapBy } from 'ilios-common/utils/array-helpers';
+import { mapBy } from '../utils/array-helpers';
 
 export default class CurriculumInventoryReport extends Model {
   @attr('string')

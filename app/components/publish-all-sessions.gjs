@@ -4,20 +4,20 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { uniqueValues } from 'ilios-common/utils/array-helpers';
+import { uniqueValues } from '../utils/array-helpers';
 import { on } from '@ember/modifier';
 import { eq, or, not, and } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { LinkTo } from '@ember/routing';
 import { fn, hash } from '@ember/helper';
-import includes from 'ilios-common/helpers/includes';
-import mapBy from 'ilios-common/helpers/map-by';
-import SaveButton from 'ilios-common/components/save-button';
+import includes from '../helpers/includes';
+import mapBy from '../helpers/map-by';
+import SaveButton from './save-button';
 import perform from 'ember-concurrency/helpers/perform';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
-import SortableTh from 'ilios-common/components/sortable-th';
-import PublicationStatus from 'ilios-common/components/publication-status';
+import scrollIntoView from '../modifiers/scroll-into-view';
+import SortableTh from './sortable-th';
+import PublicationStatus from './publication-status';
 import { faLinkSlash, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class PublishAllSessionsComponent extends Component {

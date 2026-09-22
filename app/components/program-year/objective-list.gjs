@@ -3,9 +3,9 @@ import { cached, tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
-import sortableByPosition from 'ilios-common/utils/sortable-by-position';
-import ObjectiveSortManager from 'ilios-common/components/objective-sort-manager';
+import { mapBy, uniqueValues } from '../../utils/array-helpers';
+import sortableByPosition from '../../utils/sortable-by-position';
+import ObjectiveSortManager from '../objective-sort-manager';
 import set from 'ember-set-helper/helpers/set';
 import { and, gt, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
@@ -15,7 +15,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import ObjectiveListItem from './objective-list-item';
 import ObjectiveListLoading from './objective-list-loading';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 import {
   faCaretDown,
   faCaretRight,

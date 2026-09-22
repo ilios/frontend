@@ -9,10 +9,10 @@ import CourseSearchResult from './course-search-result';
 import { on } from '@ember/modifier';
 import add from 'ember-math-helpers/helpers/add';
 import { fn } from '@ember/helper';
-import includes from 'ilios-common/helpers/includes';
+import includes from '../helpers/includes';
 import PaginationLinks from './pagination-links';
 import { modifier } from 'ember-modifier';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 
 const COURSES_PER_PAGE = 10;
 

@@ -5,23 +5,23 @@ import { cached, tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
 import { TrackedAsyncData } from 'ember-async-data';
-import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
-import OfferingForm from 'ilios-common/components/offering-form';
-import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
+import { mapBy, sortBy } from '../utils/array-helpers';
+import OfferingForm from './offering-form';
+import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
 import { fn, get, concat } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { and, eq } from 'ember-truth-helpers';
-import includes from 'ilios-common/helpers/includes';
-import IliosTooltip from 'ilios-common/components/ilios-tooltip';
-import mapBy0 from 'ilios-common/helpers/map-by';
-import join from 'ilios-common/helpers/join';
-import reverse from 'ilios-common/helpers/reverse';
-import FadeText from 'ilios-common/components/fade-text';
-import TruncateText from 'ilios-common/components/truncate-text';
-import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
-import UserStatus from 'ilios-common/components/user-status';
-import UserNameInfo from 'ilios-common/components/user-name-info';
+import includes from '../helpers/includes';
+import IliosTooltip from './ilios-tooltip';
+import mapBy0 from '../helpers/map-by';
+import join from '../helpers/join';
+import reverse from '../helpers/reverse';
+import FadeText from './fade-text';
+import TruncateText from './truncate-text';
+import OfferingUrlDisplay from './offering-url-display';
+import UserStatus from './user-status';
+import UserNameInfo from './user-name-info';
 import { on } from '@ember/modifier';
 import set0 from 'ember-set-helper/helpers/set';
 import {
@@ -31,7 +31,7 @@ import {
   faUserPlus,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import scrollIntoView from '../modifiers/scroll-into-view';
 
 export default class OfferingManagerComponent extends Component {
   @service intl;

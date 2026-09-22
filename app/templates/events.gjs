@@ -1,5 +1,5 @@
-import BackLink from 'ilios-common/components/back-link';
-import SingleEvent from 'ilios-common/components/single-event';
+import BackLink from '../components/back-link';
+import SingleEvent from '../components/single-event';
 <template>
   {{#if @controller.showBackLink}}
     <BackLink />

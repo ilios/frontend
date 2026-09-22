@@ -5,10 +5,10 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import { and } from 'ember-truth-helpers';
-import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
+import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import IliosTooltip from './ilios-tooltip';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserNameInfoComponent extends Component {

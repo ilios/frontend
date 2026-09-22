@@ -1,7 +1,7 @@
 'use strict';
 
-const base = require('ilios-common/testem/base');
-const storeFirefoxPreferences = require('ilios-common/testem/firefox-preferences');
+const base = require('./base');
+const storeFirefoxPreferences = require('./firefox-preferences');
 
 const firefoxUserJsPath = storeFirefoxPreferences([
   ['layout.css.prefers-color-scheme.content-override', 1],

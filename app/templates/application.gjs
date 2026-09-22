@@ -1,7 +1,7 @@
 import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
 import ConnectionStatus from 'frontend/components/connection-status';
-import ApiVersionNotice from 'ilios-common/components/api-version-notice';
+import ApiVersionNotice from '../components/api-version-notice';
 import UpdateNotification from 'frontend/components/update-notification';
 import IliosHeader from 'frontend/components/ilios-header';
 import { LinkTo } from '@ember/routing';

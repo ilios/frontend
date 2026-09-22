@@ -7,13 +7,13 @@ import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from '../yup-validation-message';
+import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class SchoolEmailsEditorComponent extends Component {
   @service intl;

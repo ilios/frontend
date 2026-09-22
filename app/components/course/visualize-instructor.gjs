@@ -3,13 +3,13 @@ import { service } from '@ember/service';
 import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import { mapBy } from 'ilios-common/utils/array-helpers';
+import { mapBy } from '../../utils/array-helpers';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
-import Breadcrumbs from 'ilios-common/components/breadcrumbs';
-import VisualizeInstructorTermGraph from 'ilios-common/components/course/visualize-instructor-term-graph';
-import VisualizeInstructorSessionTypeGraph from 'ilios-common/components/course/visualize-instructor-session-type-graph';
+import Breadcrumbs from '../breadcrumbs';
+import VisualizeInstructorTermGraph from './visualize-instructor-term-graph';
+import VisualizeInstructorSessionTypeGraph from './visualize-instructor-session-type-graph';
 
 export default class CourseVisualizeInstructorComponent extends Component {
   @service iliosConfig;

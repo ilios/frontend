@@ -1,5 +1,5 @@
 import Service from '@ember/service';
-import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class EventsBase extends Service {
   /**

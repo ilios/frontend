@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 
 export default class DetailCohortListComponent extends Component {
   @service intl;

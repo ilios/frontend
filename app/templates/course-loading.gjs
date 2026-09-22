@@ -1,2 +1,2 @@
-import Loading from 'ilios-common/components/course/loading';
+import Loading from '../components/course/loading';
 <template><Loading /></template>

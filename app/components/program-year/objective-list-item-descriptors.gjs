@@ -1,7 +1,7 @@
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import sortBy from 'ilios-common/helpers/sort-by';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import sortBy from '../../helpers/sort-by';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 <template>
   <div
     class="program-year-objective-list-item-descriptors grid-item"

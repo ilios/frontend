@@ -3,21 +3,21 @@ import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { DateTime } from 'luxon';
 import { cached, tracked } from '@glimmer/tracking';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById } from '../../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import { and, eq, gt, lt, not, or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import includes from 'ilios-common/helpers/includes';
+import LoadingSpinner from '../loading-spinner';
+import includes from '../../helpers/includes';
 import { LinkTo } from '@ember/routing';
-import UserNameInfo from 'ilios-common/components/user-name-info';
-import SortableTh from 'ilios-common/components/sortable-th';
+import UserNameInfo from '../user-name-info';
+import SortableTh from '../sortable-th';
 
 export default class AssignStudentsManagerComponent extends Component {
   @service store;

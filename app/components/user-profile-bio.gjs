@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { modifier } from 'ember-modifier';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import UserProfileBioDetails from './user-profile-bio-details';
 import UserProfileBioManager from './user-profile-bio-manager';
 

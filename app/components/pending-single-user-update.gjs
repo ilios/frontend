@@ -7,7 +7,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { eq } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import { concat } from '@ember/helper';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import {

@@ -1,2 +1,2 @@
-import EventNotFound from 'ilios-common/components/event-not-found';
+import EventNotFound from '../components/event-not-found';
 <template><EventNotFound /></template>

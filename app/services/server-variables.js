@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
-import { getValueFromHtml } from 'ilios-common/utils/html-server-variables';
+import { getValueFromHtml } from '../utils/html-server-variables';
 
 export default class ServerVariablesService extends Service {
   @tracked localApiNameSpace = null;

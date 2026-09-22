@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { sortBy, uniqueValues } from '../../utils/array-helpers';
 import CompetencyTitleEditor from './competency-title-editor';
 import { and, eq } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';

@@ -5,7 +5,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import { and, not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
-import DetailTermsListItem from 'ilios-common/components/detail-terms-list-item';
+import DetailTermsListItem from './detail-terms-list-item';
 
 export default class DetailTermsListComponent extends Component {
   @cached

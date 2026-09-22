@@ -3,19 +3,19 @@ import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById } from '../../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { and, not } from 'ember-truth-helpers';
-import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
+import ExpandCollapseButton from '../expand-collapse-button';
 import { fn } from '@ember/helper';
 import NewVocabularyForm from './new-vocabulary-form';
 import VocabularyTermManager from './vocabulary-term-manager';
 import VocabularyManager from './vocabulary-manager';
 import VocabulariesList from './vocabularies-list';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabulariesExpandedComponent extends Component {

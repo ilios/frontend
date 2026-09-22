@@ -1,6 +1,6 @@
 import { on } from '@ember/modifier';
-import htmlSafe from 'ilios-common/helpers/html-safe';
-import removeHtmlTags from 'ilios-common/helpers/remove-html-tags';
+import htmlSafe from '../../helpers/html-safe';
+import removeHtmlTags from '../../helpers/remove-html-tags';
 <template>
   {{#if @isSelected}}
     <label {{on "click" @remove}} class="selected">

@@ -6,12 +6,12 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { eq, gt } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import sortBy from 'ilios-common/helpers/sort-by';
-import { sortBy as uSortBy } from 'ilios-common/utils/array-helpers';
+import sortBy from '../../../helpers/sort-by';
+import { sortBy as uSortBy } from '../../../utils/array-helpers';
 import { fn } from '@ember/helper';
-import includes from 'ilios-common/helpers/includes';
+import includes from '../../../helpers/includes';
 import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsCurriculumChooseCourseComponent extends Component {

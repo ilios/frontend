@@ -1,5 +1,5 @@
 import { on } from '@ember/modifier';
-import noop from 'ilios-common/helpers/noop';
+import noop from '../helpers/noop';
 import { fn } from '@ember/helper';
 <template>
   <div class="click-choice-buttons" data-test-click-choice-buttons>

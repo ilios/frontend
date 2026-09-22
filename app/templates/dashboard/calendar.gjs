@@ -1,11 +1,11 @@
 import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
-import Navigation from 'ilios-common/components/dashboard/navigation';
-import Calendar from 'ilios-common/components/dashboard/calendar';
+import Navigation from '../../components/dashboard/navigation';
+import Calendar from '../../components/dashboard/calendar';
 import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
 import { not } from 'ember-truth-helpers';
-import split from 'ilios-common/helpers/split';
+import split from '../../helpers/split';
 <template>
   {{pageTitle " | " (t "general.calendar") prepend=false}}
   <Navigation />

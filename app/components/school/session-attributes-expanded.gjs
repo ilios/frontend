@@ -9,7 +9,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import SessionAttributesManager from './session-attributes-manager';
 import { faCaretDown, faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class SchoolSessionAttributesExpandedComponent extends Component {
   @tracked flippedShowSessionAttendanceRequired = false;

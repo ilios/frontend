@@ -1,5 +1,5 @@
 import t from 'ember-intl/helpers/t';
-import DetailLearnergroupsList from 'ilios-common/components/detail-learnergroups-list';
+import DetailLearnergroupsList from './detail-learnergroups-list';
 <template>
   <div class="selected-learner-groups" data-test-selected-learner-groups ...attributes>
     <label data-test-heading>{{t "general.selectedLearnerGroups"}}:</label>

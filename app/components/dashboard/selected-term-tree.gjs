@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
-import includes from 'ilios-common/helpers/includes';
+import FilterCheckbox from './filter-checkbox';
+import includes from '../../helpers/includes';
 import { fn } from '@ember/helper';
-import sortBy from 'ilios-common/helpers/sort-by';
-import SelectedTermTree from 'ilios-common/components/dashboard/selected-term-tree';
+import sortBy from '../../helpers/sort-by';
+import SelectedTermTree from './selected-term-tree';
 import add from 'ember-math-helpers/helpers/add';
 
 export default class DashboardSelectedTermTreeComponent extends Component {

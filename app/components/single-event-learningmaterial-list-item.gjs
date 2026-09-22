@@ -1,11 +1,11 @@
 import { uniqueId, concat } from '@ember/helper';
-import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
-import UserMaterialStatus from 'ilios-common/components/user-material-status';
+import TimedReleaseSchedule from './timed-release-schedule';
+import UserMaterialStatus from './user-material-status';
 import { eq, not } from 'ember-truth-helpers';
-import LmIcons from 'ilios-common/components/lm-icons';
+import LmIcons from './lm-icons';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import filesize from 'ilios-common/helpers/filesize';
+import filesize from '../helpers/filesize';
 import { faDownload, faSquarePen } from '@fortawesome/free-solid-svg-icons';
 <template>
   <li

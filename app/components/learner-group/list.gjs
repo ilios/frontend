@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import SortableTh from 'ilios-common/components/sortable-th';
+import SortableTh from '../sortable-th';
 import { fn } from '@ember/helper';
 import { eq, or } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import ListItem from './list-item';
 
 export default class LearnerGroupListComponent extends Component {

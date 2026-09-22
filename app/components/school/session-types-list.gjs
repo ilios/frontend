@@ -1,5 +1,5 @@
 import t from 'ember-intl/helpers/t';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import SessionTypesListItem from './session-types-list-item';
 <template>
   <div class="school-session-types-list" data-test-school-session-types-list ...attributes>

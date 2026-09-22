@@ -1,18 +1,18 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import escapeRegExp from '../../utils/escape-reg-exp';
+import { sortBy } from '../../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import { eq } from 'ember-truth-helpers';
 import formatDate from 'ember-intl/helpers/format-date';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 import { faMinus, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionPostrequisiteEditorComponent extends Component {

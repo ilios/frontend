@@ -1,8 +1,8 @@
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import sortBy from 'ilios-common/helpers/sort-by';
-import UserNameInfo from 'ilios-common/components/user-name-info';
-import UserStatus from 'ilios-common/components/user-status';
+import sortBy from '../../helpers/sort-by';
+import UserNameInfo from '../user-name-info';
+import UserStatus from '../user-status';
 
 <template>
   <div

@@ -7,10 +7,10 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import LeadershipManager from 'ilios-common/components/leadership-manager';
-import LeadershipList from 'ilios-common/components/leadership-list';
+import LeadershipManager from './leadership-manager';
+import LeadershipList from './leadership-list';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class LeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];

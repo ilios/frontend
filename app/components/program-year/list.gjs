@@ -2,11 +2,11 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from '../../utils/array-helpers';
 import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
 import t from 'ember-intl/helpers/t';
-import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
+import ExpandCollapseButton from '../expand-collapse-button';
 import set from 'ember-set-helper/helpers/set';
 import { eq, or, not } from 'ember-truth-helpers';
 import New from './new';
@@ -16,7 +16,7 @@ import { array, fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import add from 'ember-math-helpers/helpers/add';
 import ListItem from './list-item';
-import SortableTh from 'ilios-common/components/sortable-th';
+import SortableTh from '../sortable-th';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearListComponent extends Component {

@@ -2,9 +2,9 @@ import Component from '@glimmer/component';
 import { guidFor } from '@ember/object/internals';
 import focusTrap from 'ember-focus-trap/modifiers/focus-trap';
 import { hash } from '@ember/helper';
-import PulseLoader from 'ilios-common/components/pulse-loader';
+import PulseLoader from './pulse-loader';
 import t from 'ember-intl/helpers/t';
-import ProgressBar from 'ilios-common/components/progress-bar';
+import ProgressBar from './progress-bar';
 
 export default class WaitSavingComponent extends Component {
   get contentId() {

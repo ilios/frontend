@@ -2,9 +2,9 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
-import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
-import DetailLearnergroupsListItem from 'ilios-common/components/detail-learnergroups-list-item';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { mapBy, uniqueValues } from '../utils/array-helpers';
+import DetailLearnergroupsListItem from './detail-learnergroups-list-item';
+import LoadingSpinner from './loading-spinner';
 
 export default class DetailLearnerGroupsListComponent extends Component {
   @cached

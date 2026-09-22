@@ -1,6 +1,6 @@
-import IliosSerializer from './ilios';
+import ApplicationSerializer from './application';
 
-export default class OfferingSerializer extends IliosSerializer {
+export default class OfferingSerializer extends ApplicationSerializer {
   serialize(snapshot, options) {
     const json = super.serialize(snapshot, options);
     //don't persist this, it is handled by the server

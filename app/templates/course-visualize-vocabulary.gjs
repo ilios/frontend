@@ -1,2 +1,2 @@
-import VisualizeVocabulary from 'ilios-common/components/course/visualize-vocabulary';
+import VisualizeVocabulary from '../components/course/visualize-vocabulary';
 <template><VisualizeVocabulary @model={{@model}} /></template>

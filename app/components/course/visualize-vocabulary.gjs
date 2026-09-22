@@ -6,8 +6,8 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import { pageTitle } from 'ember-page-title';
-import Breadcrumbs from 'ilios-common/components/breadcrumbs';
-import VisualizeVocabularyGraph from 'ilios-common/components/course/visualize-vocabulary-graph';
+import Breadcrumbs from '../breadcrumbs';
+import VisualizeVocabularyGraph from './visualize-vocabulary-graph';
 
 export default class CourseVisualizeVocabularyComponent extends Component {
   @service iliosConfig;

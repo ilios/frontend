@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById, findBy, sortBy } from 'ilios-common/utils/array-helpers';
+import { findById, findBy, sortBy } from '../../utils/array-helpers';
 import cloneLearnerGroup from '../../utils/clone-learner-group';
 import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
@@ -11,16 +11,16 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { eq, gt, not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
-import sortBy0 from 'ilios-common/helpers/sort-by';
+import pick from '../../helpers/pick';
+import sortBy0 from '../../helpers/sort-by';
 import perform from 'ember-concurrency/helpers/perform';
-import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
+import ExpandCollapseButton from '../expand-collapse-button';
 import set from 'ember-set-helper/helpers/set';
 import New from '../learner-group/new';
 import { LinkTo } from '@ember/routing';
 import List from '../learner-group/list';
 import Loading from './loading';
-import WaitSaving from 'ilios-common/components/wait-saving';
+import WaitSaving from '../wait-saving';
 import {
   faBuildingColumns,
   faCalendar,

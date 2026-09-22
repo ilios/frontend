@@ -5,17 +5,17 @@ import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { cached, tracked } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
-import { findById, sortBy } from 'ilios-common/utils/array-helpers';
+import { findById, sortBy } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueId, get } from '@ember/helper';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import scrollIntoView from '../modifiers/scroll-into-view';
 import { on } from '@ember/modifier';
 import { isEqual, or, not } from 'ember-truth-helpers';
 import add from 'ember-math-helpers/helpers/add';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 
 export default class SessionCopyComponent extends Component {
   @service store;

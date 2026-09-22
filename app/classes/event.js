@@ -1,6 +1,6 @@
 import { cached } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from '../utils/array-helpers';
 
 /**
  * This is an object representation of an event, to be used in the

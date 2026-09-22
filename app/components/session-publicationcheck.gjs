@@ -3,15 +3,15 @@ import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import Overview from 'ilios-common/components/session/overview';
+import Overview from './session/overview';
 import { LinkTo } from '@ember/routing';
 import { array, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { and, not } from 'ember-truth-helpers';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
-import hasManyLength from 'ilios-common/helpers/has-many-length';
+import scrollIntoView from '../modifiers/scroll-into-view';
+import hasManyLength from '../helpers/has-many-length';
 import { faArrowRotateLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionPublicationCheckComponent extends Component {

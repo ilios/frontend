@@ -1,9 +1,9 @@
 import { and, not } from 'ember-truth-helpers';
-import includes from 'ilios-common/helpers/includes';
+import includes from '../helpers/includes';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import Component from '@glimmer/component';
-import UserStatus from 'ilios-common/components/user-status';
+import UserStatus from './user-status';
 
 export default class UserSearchResultUserComponent extends Component {
   get canAddUser() {

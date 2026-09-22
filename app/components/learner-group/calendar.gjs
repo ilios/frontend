@@ -3,18 +3,18 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
-import { mapBy } from 'ilios-common/utils/array-helpers';
+import { mapBy } from '../../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import ToggleYesno from 'ilios-common/components/toggle-yesno';
+import ToggleYesno from '../toggle-yesno';
 import set from 'ember-set-helper/helpers/set';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import { not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import Event from 'ilios-common/classes/event';
+import IliosCalendarWeek from '../ilios-calendar-week';
+import LoadingSpinner from '../loading-spinner';
+import Event from '../../classes/event';
 import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupCalendarComponent extends Component {

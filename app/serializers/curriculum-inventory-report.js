@@ -1,10 +1,7 @@
-import IliosSerializer from './ilios';
-import {
-  jsonApiUtcSerializeDate,
-  jsonApiUtcNormalizeDate,
-} from 'ilios-common/utils/json-api-utc-date';
+import ApplicationSerializer from './application';
+import { jsonApiUtcSerializeDate, jsonApiUtcNormalizeDate } from '../utils/json-api-utc-date';
 
-export default class CurriculumInventoryReportSerializer extends IliosSerializer {
+export default class CurriculumInventoryReportSerializer extends ApplicationSerializer {
   serialize(snapshot, options) {
     const json = super.serialize(snapshot, options);
     jsonApiUtcSerializeDate(json, 'startDate');

@@ -2,13 +2,13 @@ import Component from '@glimmer/component';
 import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
-import CopyButton from 'ilios-common/components/copy-button';
+import CopyButton from './copy-button';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
+import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import IliosTooltip from './ilios-tooltip';
 import { faSquareRss } from '@fortawesome/free-solid-svg-icons';
 
 export default class IcsFeedComponent extends Component {

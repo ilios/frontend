@@ -7,19 +7,19 @@ import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { filter } from 'rsvp';
-import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import escapeRegExp from '../utils/escape-reg-exp';
+import { sortBy } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import includes from 'ilios-common/helpers/includes';
-import SessionsGridSessionRow from 'ilios-common/components/sessions-grid-session-row';
+import includes from '../helpers/includes';
+import SessionsGridSessionRow from './sessions-grid-session-row';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import { fn } from '@ember/helper';
-import SessionsGridLastUpdated from 'ilios-common/components/sessions-grid-last-updated';
-import SessionsGridOfferingTable from 'ilios-common/components/sessions-grid-offering-table';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import SessionsGridLastUpdated from './sessions-grid-last-updated';
+import SessionsGridOfferingTable from './sessions-grid-offering-table';
+import scrollIntoView from '../modifiers/scroll-into-view';
 
 export default class SessionsGridComponent extends Component {
   @service router;

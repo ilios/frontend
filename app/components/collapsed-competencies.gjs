@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class CollapsedCompetenciesComponent extends Component {

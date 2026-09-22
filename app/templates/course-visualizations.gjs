@@ -1,2 +1,2 @@
-import Visualizations from 'ilios-common/components/course/visualizations';
+import Visualizations from '../components/course/visualizations';
 <template><Visualizations @model={{@model}} /></template>

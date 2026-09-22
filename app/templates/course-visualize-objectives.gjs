@@ -1,2 +1,2 @@
-import VisualizeObjectives from 'ilios-common/components/course/visualize-objectives';
+import VisualizeObjectives from '../components/course/visualize-objectives';
 <template><VisualizeObjectives @model={{@model}} /></template>

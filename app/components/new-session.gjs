@@ -3,18 +3,18 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { findBy } from 'ilios-common/utils/array-helpers';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import { findBy } from '../utils/array-helpers';
+import YupValidations from '../classes/yup-validations';
 import { string } from 'yup';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import focus from 'ilios-common/modifiers/focus';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import focus from '../modifiers/focus';
+import YupValidationMessage from './yup-validation-message';
 import isArray from 'ember-truth-helpers/helpers/is-array';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../helpers/sort-by';
 import { eq } from 'ember-truth-helpers';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
 
 export default class NewSessionComponent extends Component {

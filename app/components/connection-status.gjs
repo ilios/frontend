@@ -7,7 +7,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import toggle from 'ilios-common/helpers/toggle';
+import toggle from '../helpers/toggle';
 import { faCircleExclamation, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class ConnectionStatusComponent extends Component {

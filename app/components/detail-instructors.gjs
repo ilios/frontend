@@ -9,10 +9,10 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { or } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
-import InstructorSelectionManager from 'ilios-common/components/instructor-selection-manager';
-import SelectedInstructors from 'ilios-common/components/selected-instructors';
-import SelectedInstructorGroups from 'ilios-common/components/selected-instructor-groups';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import InstructorSelectionManager from './instructor-selection-manager';
+import SelectedInstructors from './selected-instructors';
+import SelectedInstructorGroups from './selected-instructor-groups';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class DetailInstructorsComponent extends Component {
   @service currentUser;

@@ -1,6 +1,6 @@
 import Modifier from 'ember-modifier';
 import { registerDestructor } from '@ember/destroyable';
-import { default as scroll } from 'ilios-common/utils/scroll-into-view';
+import { default as scroll } from '../utils/scroll-into-view';
 
 export default class ScrollIntoView extends Modifier {
   timeoutId;

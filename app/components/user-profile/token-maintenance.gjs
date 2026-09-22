@@ -6,15 +6,15 @@ import { or } from 'ember-truth-helpers';
 import { isPresent } from '@ember/utils';
 import { DateTime } from 'luxon';
 import { task, timeout } from 'ember-concurrency';
-import CopyButton from 'ilios-common/components/copy-button';
+import CopyButton from '../copy-button';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
-import pipe from 'ilios-common/helpers/pipe';
-import DatePicker from 'ilios-common/components/date-picker';
+import pipe from '../../helpers/pipe';
+import DatePicker from '../date-picker';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 import { faCopy, faXmark } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class UserProfileApiTokenComponent extends Component {
   @service flashMessages;

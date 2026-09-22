@@ -1,14 +1,14 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import sortableByPosition from '../utils/sortable-by-position';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
-import FadeText from 'ilios-common/components/fade-text';
+import FadeText from './fade-text';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faSpinner,
@@ -16,7 +16,7 @@ import {
   faArrowRotateLeft,
   faUpDownLeftRight,
 } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class ObjectiveSortManagerComponent extends Component {
   @tracked totalObjectivesToSave;

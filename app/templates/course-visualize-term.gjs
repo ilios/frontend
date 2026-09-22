@@ -1,2 +1,2 @@
-import VisualizeTerm from 'ilios-common/components/course/visualize-term';
+import VisualizeTerm from '../components/course/visualize-term';
 <template><VisualizeTerm @model={{@model}} /></template>

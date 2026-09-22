@@ -1,6 +1,6 @@
-import IliosSerializer from './ilios';
+import ApplicationSerializer from './application';
 
-export default class CurriculumInventoryExportSerializer extends IliosSerializer {
+export default class CurriculumInventoryExportSerializer extends ApplicationSerializer {
   serialize(snapshot, options) {
     const json = super.serialize(snapshot, options);
 

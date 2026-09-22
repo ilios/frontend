@@ -8,11 +8,11 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
-import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
-import DetailTermsList from 'ilios-common/components/detail-terms-list';
+import scrollIntoView from '../modifiers/scroll-into-view';
+import TaxonomyManager from './taxonomy-manager';
+import DetailTermsList from './detail-terms-list';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class DetailTaxonomiesComponent extends Component {
   @service store;

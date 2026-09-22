@@ -2,13 +2,13 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { filter } from 'rsvp';
-import { mapBy } from 'ilios-common/utils/array-helpers';
+import { mapBy } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../helpers/sort-by';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailCohortManagerComponent extends Component {

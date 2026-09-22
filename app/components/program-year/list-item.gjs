@@ -8,11 +8,11 @@ import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import scrollIntoView from '../../modifiers/scroll-into-view';
 import { faLock, faLockOpen, faSquareUpRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearListItemComponent extends Component {

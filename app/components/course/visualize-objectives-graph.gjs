@@ -8,21 +8,21 @@ import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import striptags from 'striptags';
 import PapaParse from 'papaparse';
-import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
-import createDownloadFile from 'ilios-common/utils/create-download-file';
+import { mapBy, sortBy, uniqueValues } from '../../utils/array-helpers';
+import createDownloadFile from '../../utils/create-download-file';
 import SimpleChart from 'ember-simple-charts/components/simple-chart';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { and, eq, not, or } from 'ember-truth-helpers';
-import sortBy0 from 'ilios-common/helpers/sort-by';
+import sortBy0 from '../../helpers/sort-by';
 import { on } from '@ember/modifier';
-import SortableTh from 'ilios-common/components/sortable-th';
+import SortableTh from '../sortable-th';
 import { fn, array } from '@ember/helper';
 import { LinkTo } from '@ember/routing';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import sub_ from 'ember-math-helpers/helpers/sub';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 import { faDownload, faFaceMeh, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseVisualizeObjectivesGraphComponent extends Component {

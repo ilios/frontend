@@ -1,4 +1,4 @@
-import CommonDataLoaderService from 'ilios-common/services/data-loader';
+import CommonDataLoaderService from './common-data-loader';
 
 export default class DataLoaderService extends CommonDataLoaderService {
   #loadedLearnerGroupWithCourses = new Map();

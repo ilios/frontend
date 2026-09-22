@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import t from 'ember-intl/helpers/t';
-import repeat from 'ilios-common/helpers/repeat';
-import truncate from 'ilios-common/helpers/truncate';
+import repeat from '../../helpers/repeat';
+import truncate from '../../helpers/truncate';
 import formatDate from 'ember-intl/helpers/format-date';
 import { isTesting } from '@embroider/macros';
 

@@ -4,13 +4,13 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
-import HtmlEditor from 'ilios-common/components/html-editor';
+import HtmlEditor from './html-editor';
 import { or } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import YupValidations from 'ilios-common/classes/yup-validations';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import LoadingSpinner from './loading-spinner';
+import YupValidations from '../classes/yup-validations';
+import YupValidationMessage from './yup-validation-message';
 import { string } from 'yup';
 import striptags from 'striptags';
 

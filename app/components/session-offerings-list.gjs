@@ -1,14 +1,14 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
-import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
+import OfferingDateBlock from '../utils/offering-date-block';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from '../utils/array-helpers';
 import formatDate from 'ember-intl/helpers/format-date';
 import t from 'ember-intl/helpers/t';
-import SessionOfferingsTimeBlockOfferings from 'ilios-common/components/session-offerings-time-block-offerings';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import SessionOfferingsTimeBlockOfferings from './session-offerings-time-block-offerings';
+import LoadingSpinner from './loading-spinner';
 
 export default class SessionOfferingsListComponent extends Component {
   @service store;

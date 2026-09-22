@@ -2,7 +2,7 @@ import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
 import UserProfile from 'frontend/components/user-profile';
 import set from 'ember-set-helper/helpers/set';
-import toggle from 'ilios-common/helpers/toggle';
+import toggle from '../helpers/toggle';
 <template>
   {{pageTitle (t "general.admin") " | " (t "general.users") " | " @model.fullName}}
   <UserProfile

@@ -1,18 +1,18 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
 import { task } from 'ember-concurrency';
-import EditableField from 'ilios-common/components/editable-field';
+import EditableField from '../editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import PublicationMenu from 'ilios-common/components/session/publication-menu';
-import PublicationStatus from 'ilios-common/components/publication-status';
-import focus from 'ilios-common/modifiers/focus';
+import YupValidationMessage from '../yup-validation-message';
+import PublicationMenu from './publication-menu';
+import PublicationStatus from '../publication-status';
+import focus from '../../modifiers/focus';
 
 export default class SessionHeaderComponent extends Component {
   @tracked title;

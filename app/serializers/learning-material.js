@@ -1,6 +1,6 @@
-import IliosSerializer from './ilios';
+import ApplicationSerializer from './application';
 
-export default class LearningMaterialSerializer extends IliosSerializer {
+export default class LearningMaterialSerializer extends ApplicationSerializer {
   serialize(snapshot, options) {
     const json = super.serialize(snapshot, options);
     //When POSTing new file learningMaterials we need to include the file hash

@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById } from '../../utils/array-helpers';
 
 export default class DashboardCalendarController extends Controller {
   @service currentUser;

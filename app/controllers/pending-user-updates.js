@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById } from '../utils/array-helpers';
 import { isEmpty } from '@ember/utils';
 
 export default class PendingUserUpdatesController extends Controller {

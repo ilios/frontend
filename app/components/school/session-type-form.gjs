@@ -3,19 +3,19 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { findById, sortBy } from 'ilios-common/utils/array-helpers';
+import { findById, sortBy } from '../../utils/array-helpers';
 import { uniqueId, concat } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
 import { eq, not } from 'ember-truth-helpers';
-import sortBy0 from 'ilios-common/helpers/sort-by';
-import ToggleYesno from 'ilios-common/components/toggle-yesno';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import sortBy0 from '../../helpers/sort-by';
+import ToggleYesno from '../toggle-yesno';
+import LoadingSpinner from '../loading-spinner';
+import YupValidationMessage from '../yup-validation-message';
+import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
 
 export default class SchoolSessionTypeFormComponent extends Component {

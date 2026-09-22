@@ -1,7 +1,7 @@
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import { eq, or } from 'ember-truth-helpers';
-import includes from 'ilios-common/helpers/includes';
-import mapBy from 'ilios-common/helpers/map-by';
+import includes from '../../helpers/includes';
+import mapBy from '../../helpers/map-by';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';

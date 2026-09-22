@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById } from '../../utils/array-helpers';
 import { action } from '@ember/object';
 import { ensureSafeComponent } from '@embroider/util';
 import NewCompetencyComponent from './subject/new/competency';
@@ -21,13 +21,13 @@ import NewAcademicYearComponent from './subject/new/academic-year';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import { eq } from 'ember-truth-helpers';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import LoadingSpinner from '../loading-spinner';
+import YupValidationMessage from '../yup-validation-message';
+import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
 
 export default class ReportsNewSubjectComponent extends Component {

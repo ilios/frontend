@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
-import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
+import { loadQuillEditor } from '../utils/load-quill-editor';
 
 export default class ProgramYearRoute extends Route {
   @service currentUser;

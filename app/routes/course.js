@@ -1,6 +1,6 @@
 import { service } from '@ember/service';
 import Route from '@ember/routing/route';
-import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
+import { loadQuillEditor } from '../utils/load-quill-editor';
 
 export default class CourseRoute extends Route {
   @service permissionChecker;

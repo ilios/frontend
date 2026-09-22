@@ -2,6 +2,8 @@
 
 const { version } = require('../package.json');
 
+const API_VERSION = require('./api-version.js');
+
 module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'frontend',
@@ -9,6 +11,7 @@ module.exports = function (environment) {
     rootURL: '/',
     locationType: 'history',
     redirectAfterShibLogin: true,
+    apiVersion: API_VERSION,
     flashMessageDefaults: {
       timeout: 3000,
       extendedTimeout: 1000,

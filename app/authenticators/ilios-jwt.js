@@ -1,6 +1,6 @@
 import { service } from '@ember/service';
 import Base from 'ember-simple-auth/authenticators/base';
-import { jwtDecode } from 'ilios-common/utils/jwt-utils';
+import { jwtDecode } from '../utils/jwt-utils';
 import { cancel, later } from '@ember/runloop';
 import { DateTime } from 'luxon';
 

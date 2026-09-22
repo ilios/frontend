@@ -1,4 +1,4 @@
-import Loader from 'ilios-common/components/course/loader';
+import Loader from '../components/course/loader';
 import set from 'ember-set-helper/helpers/set';
 <template>
   <Loader

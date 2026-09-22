@@ -1,7 +1,7 @@
 import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
-import Navigation from 'ilios-common/components/dashboard/navigation';
-import Materials from 'ilios-common/components/dashboard/materials';
+import Navigation from '../../components/dashboard/navigation';
+import Materials from '../../components/dashboard/materials';
 <template>
   {{pageTitle " | " (t "general.myMaterials") prepend=false}}
   <Navigation />

@@ -1,17 +1,17 @@
-import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
+import LeadershipExpanded from '../leadership-expanded';
 import { fn, get } from '@ember/helper';
-import LeadershipCollapsed from 'ilios-common/components/leadership-collapsed';
-import hasManyLength from 'ilios-common/helpers/has-many-length';
+import LeadershipCollapsed from '../leadership-collapsed';
+import hasManyLength from '../../helpers/has-many-length';
 import { eq, not, or } from 'ember-truth-helpers';
-import Objectives from 'ilios-common/components/course/objectives';
-import CollapsedObjectives from 'ilios-common/components/course/collapsed-objectives';
-import DetailLearningMaterials from 'ilios-common/components/detail-learning-materials';
-import DetailCompetencies from 'ilios-common/components/detail-competencies';
-import CollapsedCompetencies from 'ilios-common/components/collapsed-competencies';
-import DetailTaxonomies from 'ilios-common/components/detail-taxonomies';
-import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
-import DetailMesh from 'ilios-common/components/detail-mesh';
-import DetailCohorts from 'ilios-common/components/detail-cohorts';
+import Objectives from './objectives';
+import CollapsedObjectives from './collapsed-objectives';
+import DetailLearningMaterials from '../detail-learning-materials';
+import DetailCompetencies from '../detail-competencies';
+import CollapsedCompetencies from '../collapsed-competencies';
+import DetailTaxonomies from '../detail-taxonomies';
+import CollapsedTaxonomies from '../collapsed-taxonomies';
+import DetailMesh from '../detail-mesh';
+import DetailCohorts from '../detail-cohorts';
 <template>
   <div>
     {{#if @courseLeadershipDetails}}

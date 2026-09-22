@@ -1,16 +1,16 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from '../utils/array-helpers';
 import { modifier } from 'ember-modifier';
 import { DateTime } from 'luxon';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import WeeklyCalendarEvent from 'ilios-common/components/weekly-calendar-event';
-import Event from 'ilios-common/classes/event';
+import WeeklyCalendarEvent from './weekly-calendar-event';
+import Event from '../classes/event';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;

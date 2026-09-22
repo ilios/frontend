@@ -1,5 +1,5 @@
 import Service, { service } from '@ember/service';
-import { mapBy } from 'ilios-common/utils/array-helpers';
+import { mapBy } from '../utils/array-helpers';
 
 export default class PermissionMatrixService extends Service {
   @service store;

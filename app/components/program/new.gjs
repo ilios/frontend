@@ -3,17 +3,17 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import focus from 'ilios-common/modifiers/focus';
-import pick from 'ilios-common/helpers/pick';
+import focus from '../../modifiers/focus';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import YupValidationMessage from '../yup-validation-message';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 
 export default class ProgramNewComponent extends Component {
   @service store;

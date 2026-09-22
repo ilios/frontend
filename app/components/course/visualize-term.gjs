@@ -8,8 +8,8 @@ import t from 'ember-intl/helpers/t';
 import { array, concat } from '@ember/helper';
 import { pageTitle } from 'ember-page-title';
 import add from 'ember-math-helpers/helpers/add';
-import Breadcrumbs from 'ilios-common/components/breadcrumbs';
-import VisualizeTermGraph from 'ilios-common/components/course/visualize-term-graph';
+import Breadcrumbs from '../breadcrumbs';
+import VisualizeTermGraph from './visualize-term-graph';
 
 export default class CourseVisualizeTermComponent extends Component {
   @service iliosConfig;

@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import sortBy from 'ilios-common/helpers/sort-by';
-import UserNameInfo from 'ilios-common/components/user-name-info';
+import sortBy from '../helpers/sort-by';
+import UserNameInfo from './user-name-info';
 
 export default class SelectedInstructorGroupMembersComponent extends Component {
   @cached

@@ -5,7 +5,7 @@ import { service } from '@ember/service';
 import set from 'ember-set-helper/helpers/set';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../helpers/pick';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';

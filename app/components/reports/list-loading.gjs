@@ -1,5 +1,5 @@
 import t from 'ember-intl/helpers/t';
-import repeat from 'ilios-common/helpers/repeat';
+import repeat from '../../helpers/repeat';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 <template>

@@ -6,13 +6,13 @@ import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import noop from 'ilios-common/helpers/noop';
-import YupValidations from 'ilios-common/classes/yup-validations';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import noop from '../../helpers/noop';
+import YupValidations from '../../classes/yup-validations';
+import YupValidationMessage from '../yup-validation-message';
 import { number, string } from 'yup';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class SchoolInstitutionalInformationManagerComponent extends Component {
   @service store;

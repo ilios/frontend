@@ -8,21 +8,21 @@ import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { action } from '@ember/object';
 import PapaParse from 'papaparse';
-import createDownloadFile from 'ilios-common/utils/create-download-file';
-import { findById, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
+import createDownloadFile from '../../utils/create-download-file';
+import { findById, mapBy, sortBy } from '../../utils/array-helpers';
 import { and, eq, not, or } from 'ember-truth-helpers';
 import SimpleChart from 'ember-simple-charts/components/simple-chart';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import SortableTh from 'ilios-common/components/sortable-th';
+import SortableTh from '../sortable-th';
 import { fn, array } from '@ember/helper';
-import sortBy0 from 'ilios-common/helpers/sort-by';
+import sortBy0 from '../../helpers/sort-by';
 import { LinkTo } from '@ember/routing';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import sub_ from 'ember-math-helpers/helpers/sub';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseVisualizeInstructorTermGraphComponent extends Component {

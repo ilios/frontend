@@ -4,20 +4,20 @@ import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
-import { uniqueValues } from 'ilios-common/utils/array-helpers';
+import { uniqueValues } from '../../utils/array-helpers';
 import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import ManagedCompetencyListItem from './managed-competency-list-item';
 import { or } from 'ember-truth-helpers';
-import includes from 'ilios-common/helpers/includes';
-import mapBy from 'ilios-common/helpers/map-by';
+import includes from '../../helpers/includes';
+import mapBy from '../../helpers/map-by';
 import CompetencyListItem from './competency-list-item';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class ProgramYearCompetenciesComponent extends Component {
   @service flashMessages;

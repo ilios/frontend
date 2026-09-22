@@ -2,17 +2,17 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import PapaParse from 'papaparse';
 import { task, timeout } from 'ember-concurrency';
-import createDownloadFile from 'ilios-common/utils/create-download-file';
+import createDownloadFile from '../../../utils/create-download-file';
 import { DateTime } from 'luxon';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { chunk, uniqueById } from 'ilios-common/utils/array-helpers';
+import { chunk, uniqueById } from '../../../utils/array-helpers';
 import Header from './header';
-import noop from 'ilios-common/helpers/noop';
+import noop from '../../../helpers/noop';
 import perform from 'ember-concurrency/helpers/perform';
 import add from 'ember-math-helpers/helpers/add';
 import t from 'ember-intl/helpers/t';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../../helpers/sort-by';
 import { LinkTo } from '@ember/routing';
 
 export default class ReportsCurriculumLearnerGroupsComponent extends Component {

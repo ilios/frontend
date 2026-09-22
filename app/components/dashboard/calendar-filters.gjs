@@ -2,15 +2,15 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
-import CoursesCalendarFilter from 'ilios-common/components/dashboard/courses-calendar-filter';
+import { mapBy, sortBy } from '../../utils/array-helpers';
+import CoursesCalendarFilter from './courses-calendar-filter';
 import t from 'ember-intl/helpers/t';
-import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
-import includes from 'ilios-common/helpers/includes';
+import FilterCheckbox from './filter-checkbox';
+import includes from '../../helpers/includes';
 import { fn } from '@ember/helper';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import CohortCalendarFilter from 'ilios-common/components/dashboard/cohort-calendar-filter';
-import TermsCalendarFilter from 'ilios-common/components/dashboard/terms-calendar-filter';
+import LoadingSpinner from '../loading-spinner';
+import CohortCalendarFilter from './cohort-calendar-filter';
+import TermsCalendarFilter from './terms-calendar-filter';
 
 export default class DashboardCalendarFiltersComponent extends Component {
   @service dataLoader;

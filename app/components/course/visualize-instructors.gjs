@@ -6,11 +6,11 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import { pageTitle } from 'ember-page-title';
-import Breadcrumbs from 'ilios-common/components/breadcrumbs';
-import VisualizeInstructorsGraph from 'ilios-common/components/course/visualize-instructors-graph';
+import Breadcrumbs from '../breadcrumbs';
+import VisualizeInstructorsGraph from './visualize-instructors-graph';
 
 export default class CourseVisualizeInstructorsComponent extends Component {
   @service iliosConfig;

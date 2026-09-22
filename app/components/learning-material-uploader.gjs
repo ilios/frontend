@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
 import { task } from 'ember-concurrency';
-import readableFileSize from 'ilios-common/utils/readable-file-size';
+import readableFileSize from '../utils/readable-file-size';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import fileQueue from 'ember-file-upload/helpers/file-queue';
 import perform from 'ember-concurrency/helpers/perform';
 import { and, not } from 'ember-truth-helpers';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCheck, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';

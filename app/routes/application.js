@@ -3,7 +3,6 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
 import { launchWorker } from '../utils/launch-worker';
-import { formats } from 'ilios-common/app/ember-intl';
 
 export default class AuthenticatedRoute extends Route {
   @service currentUser;
@@ -19,7 +18,6 @@ export default class AuthenticatedRoute extends Route {
   async beforeModel(transition) {
     await launchWorker();
     await this.session.setup(transition.targetName === 'lti-login');
-    this.intl.setFormats(formats);
     // We need a default locale, preferences will always return something
     this.intl.setLocale(this.preferences.locale);
     if (this.currentUser.currentUserId) {

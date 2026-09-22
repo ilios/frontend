@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import { DateTime } from 'luxon';
-import { uniqueValues } from 'ilios-common/utils/array-helpers';
+import { uniqueValues } from '../utils/array-helpers';
 
 /**
  * Timezone handling utility service.

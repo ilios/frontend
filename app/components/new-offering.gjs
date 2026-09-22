@@ -2,11 +2,11 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import scrollIntoView from '../modifiers/scroll-into-view';
 import t from 'ember-intl/helpers/t';
-import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
+import ClickChoiceButtons from './click-choice-buttons';
 import set from 'ember-set-helper/helpers/set';
-import OfferingForm from 'ilios-common/components/offering-form';
+import OfferingForm from './offering-form';
 import { not } from 'ember-truth-helpers';
 
 export default class NewOfferingComponent extends Component {

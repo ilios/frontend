@@ -3,17 +3,17 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { mapBy } from 'ilios-common/utils/array-helpers';
+import { mapBy } from '../../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { LinkTo } from '@ember/routing';
-import VisualizeObjectivesGraph from 'ilios-common/components/course/visualize-objectives-graph';
-import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
-import NewObjective from 'ilios-common/components/new-objective';
+import VisualizeObjectivesGraph from './visualize-objectives-graph';
+import ExpandCollapseButton from '../expand-collapse-button';
+import NewObjective from '../new-objective';
 import perform from 'ember-concurrency/helpers/perform';
-import ObjectiveList from 'ilios-common/components/course/objective-list';
+import ObjectiveList from './objective-list';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseObjectivesComponent extends Component {

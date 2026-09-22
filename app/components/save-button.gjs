@@ -1,5 +1,5 @@
 import { eq } from 'ember-truth-helpers';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 <template>

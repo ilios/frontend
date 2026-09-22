@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { cleanQuery } from 'ilios-common/utils/query-utils';
+import { cleanQuery } from '../../../../../utils/query-utils';
 import { action } from '@ember/object';
-import SearchBox from 'ilios-common/components/search-box';
+import SearchBox from '../../../../search-box';
 import t from 'ember-intl/helpers/t';
 import { and, gt, not } from 'ember-truth-helpers';
 

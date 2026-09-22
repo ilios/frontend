@@ -1,9 +1,9 @@
 import t from 'ember-intl/helpers/t';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../helpers/sort-by';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import SelectedInstructorGroupMembers from 'ilios-common/components/selected-instructor-group-members';
+import SelectedInstructorGroupMembers from './selected-instructor-group-members';
 import { faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="selected-instructor-groups" data-test-selected-instructor-groups ...attributes>

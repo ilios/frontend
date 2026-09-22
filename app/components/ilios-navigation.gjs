@@ -7,7 +7,7 @@ import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { LinkTo } from '@ember/routing';
-import join from 'ilios-common/helpers/join';
+import join from '../helpers/join';
 import { array } from '@ember/helper';
 import {
   faBars,

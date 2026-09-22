@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
-import { decodedJwtHasLtiAudienceClaims, jwtDecode } from 'ilios-common/utils/jwt-utils';
+import { decodedJwtHasLtiAudienceClaims, jwtDecode } from '../utils/jwt-utils';
 
 export default class LtiLoginRoute extends Route {
   @service serverVariables;

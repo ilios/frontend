@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import SelectedLearnerGroups from 'ilios-common/components/selected-learner-groups';
+import SelectedLearnerGroups from './selected-learner-groups';
 import t from 'ember-intl/helpers/t';
-import SearchBox from 'ilios-common/components/search-box';
+import SearchBox from './search-box';
 import { fn } from '@ember/helper';
-import sortBy from 'ilios-common/helpers/sort-by';
-import LearnergroupSelectionCohortManager from 'ilios-common/components/learnergroup-selection-cohort-manager';
+import sortBy from '../helpers/sort-by';
+import LearnergroupSelectionCohortManager from './learnergroup-selection-cohort-manager';
 
 export default class LearnergroupSelectionManagerComponent extends Component {
   @tracked filter = '';

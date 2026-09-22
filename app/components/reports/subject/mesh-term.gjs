@@ -8,7 +8,7 @@ import { action } from '@ember/object';
 import SubjectHeader from '../subject-header';
 import t from 'ember-intl/helpers/t';
 import SubjectDownload from '../subject-download';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../../loading-spinner';
 
 export default class ReportsSubjectMeshTermComponent extends Component {
   @service graphql;

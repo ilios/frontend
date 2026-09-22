@@ -5,10 +5,10 @@ import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import MeshManager from 'ilios-common/components/mesh-manager';
-import sortBy from 'ilios-common/helpers/sort-by';
-import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import MeshManager from './mesh-manager';
+import sortBy from '../helpers/sort-by';
+import MeshDescriptorLastTreeNumber from './mesh-descriptor-last-tree-number';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class DetailMeshComponent extends Component {
   @tracked isManaging = false;

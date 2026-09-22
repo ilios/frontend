@@ -4,12 +4,12 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import SearchBox from 'ilios-common/components/search-box';
+import SearchBox from './search-box';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { and, eq, gt } from 'ember-truth-helpers';
-import UserSearchResultUser from 'ilios-common/components/user-search-result-user';
-import UserSearchResultInstructorGroup from 'ilios-common/components/user-search-result-instructor-group';
+import UserSearchResultUser from './user-search-result-user';
+import UserSearchResultInstructorGroup from './user-search-result-instructor-group';
 
 export default class UserSearchComponent extends Component {
   @service store;

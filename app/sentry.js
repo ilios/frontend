@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/ember';
 import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
-import { getValueFromHtml } from 'ilios-common/utils/html-server-variables';
+import { getValueFromHtml } from './utils/html-server-variables';
 
 function startSentry(config) {
   const [captureErrors, environment] = errorCaptureConfig(config);

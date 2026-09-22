@@ -1,7 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import { uniqueValues } from 'ilios-common/utils/array-helpers';
+import { uniqueValues } from '../utils/array-helpers';
 
 export default class Program extends Model {
   @attr('string')

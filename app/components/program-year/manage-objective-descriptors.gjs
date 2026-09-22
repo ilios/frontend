@@ -1,4 +1,4 @@
-import MeshManager from 'ilios-common/components/mesh-manager';
+import MeshManager from '../mesh-manager';
 <template>
   <div
     class="program-year-manage-objective-descriptors"

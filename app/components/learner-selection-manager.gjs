@@ -1,6 +1,6 @@
-import SelectedLearners from 'ilios-common/components/selected-learners';
+import SelectedLearners from './selected-learners';
 import t from 'ember-intl/helpers/t';
-import UserSearch from 'ilios-common/components/user-search';
+import UserSearch from './user-search';
 <template>
   <div class="learner-selection-manager" data-test-learner-selection-manager>
     <SelectedLearners @learners={{@learners}} @isManaging={{true}} @remove={{@remove}} />

@@ -8,7 +8,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import LearningMaterialAttributesManager from './learning-material-attributes-manager';
 import { faCaretDown, faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class SchoolLearningMaterialAttributesExpandedComponent extends Component {
   @tracked accessibilityRequired = this.args.accessibilityRequired || false;

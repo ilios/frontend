@@ -1,7 +1,7 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import SingleEventLearningmaterialListItem from 'ilios-common/components/single-event-learningmaterial-list-item';
+import SingleEventLearningmaterialListItem from './single-event-learningmaterial-list-item';
 import { and, not } from 'ember-truth-helpers';
 import { faFileSignature, faPersonChalkboard } from '@fortawesome/free-solid-svg-icons';
 <template>

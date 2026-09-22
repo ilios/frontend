@@ -6,8 +6,8 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import { pageTitle } from 'ember-page-title';
-import Breadcrumbs from 'ilios-common/components/breadcrumbs';
-import VisualizeObjectivesGraph from 'ilios-common/components/course/visualize-objectives-graph';
+import Breadcrumbs from '../breadcrumbs';
+import VisualizeObjectivesGraph from './visualize-objectives-graph';
 
 export default class CourseVisualizeObjectivesComponent extends Component {
   @service iliosConfig;

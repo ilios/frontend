@@ -4,10 +4,10 @@ import { action } from '@ember/object';
 import { uniqueId, fn } from '@ember/helper';
 import { eq, or } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
-import SortableTh from 'ilios-common/components/sortable-th';
-import sortBy from 'ilios-common/helpers/sort-by';
-import UserNameInfo from 'ilios-common/components/user-name-info';
-import UserStatus from 'ilios-common/components/user-status';
+import SortableTh from '../sortable-th';
+import sortBy from '../../helpers/sort-by';
+import UserNameInfo from '../user-name-info';
+import UserStatus from '../user-status';
 
 export default class LearnerGroupUserMembersComponent extends Component {
   @service currentUser;

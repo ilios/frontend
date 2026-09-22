@@ -1,4 +1,4 @@
-import IliosAdapter from 'ilios-common/adapters/ilios';
+import IliosAdapter from './application';
 
 export default class SchoolAdapter extends IliosAdapter {
   /**

@@ -4,10 +4,10 @@ import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import { fn } from '@ember/helper';
 import pcrsUriToNumber from '../../helpers/pcrs-uri-to-number';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class SchoolCompetenciesListItemPcrsComponent extends Component {
   save = task({ drop: true }, async () => {

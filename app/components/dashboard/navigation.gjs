@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import IcsFeed from 'ilios-common/components/ics-feed';
+import IcsFeed from '../ics-feed';
 
 export default class DashboardNavigationComponent extends Component {
   @service currentUser;

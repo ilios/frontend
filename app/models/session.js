@@ -1,11 +1,11 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { DateTime } from 'luxon';
-import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import sortableByPosition from '../utils/sortable-by-position';
 import striptags from 'striptags';
 import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class SessionModel extends Model {
   @attr('string')

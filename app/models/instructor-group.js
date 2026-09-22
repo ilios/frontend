@@ -1,5 +1,5 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { uniqueValues } from 'ilios-common/utils/array-helpers';
+import { uniqueValues } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 

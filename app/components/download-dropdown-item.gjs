@@ -5,9 +5,9 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import { eq } from 'ember-truth-helpers';
 import { guidFor } from '@ember/object/internals';
-import focus from 'ilios-common/modifiers/focus';
-import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
-import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import focus from '../modifiers/focus';
+import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
+import IliosTooltip from './ilios-tooltip';
 
 export default class DownloadDropdownComponent extends Component {
   @tracked showTooltip = false;

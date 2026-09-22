@@ -1,18 +1,18 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueId, get, hash } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { eq, gt } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../helpers/sort-by';
 import { LinkTo } from '@ember/routing';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import { faBuildingColumns, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class UnassignedStudentsSummaryComponent extends Component {

@@ -7,7 +7,7 @@ import { hash } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
-import PublicationStatus from 'ilios-common/components/publication-status';
+import PublicationStatus from '../publication-status';
 import { faPrint, faShuffle } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseSummaryHeaderComponent extends Component {

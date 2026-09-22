@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from '../utils/array-helpers';
 import { modifier } from 'ember-modifier';
 import { DateTime } from 'luxon';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
-import DailyCalendarEvent from 'ilios-common/components/daily-calendar-event';
+import DailyCalendarEvent from './daily-calendar-event';
 import { fn } from '@ember/helper';
 
 export default class DailyCalendarComponent extends Component {

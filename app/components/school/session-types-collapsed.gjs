@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { filterBy } from 'ilios-common/utils/array-helpers';
+import { filterBy } from '../../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';

@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { tracked, cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { findBy } from 'ilios-common/utils/array-helpers';
+import { findBy } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -13,7 +13,7 @@ import set from 'ember-set-helper/helpers/set';
 import { eq, not } from 'ember-truth-helpers';
 import YesNo from './yes-no';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class UserProfileRolesComponent extends Component {
   @service store;

@@ -3,8 +3,8 @@ import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { fn } from '@ember/helper';
 import inViewport from 'ember-in-viewport/modifiers/in-viewport';
-import sortBy from 'ilios-common/helpers/sort-by';
-import SelectedTermTree from 'ilios-common/components/dashboard/selected-term-tree';
+import sortBy from '../../helpers/sort-by';
+import SelectedTermTree from './selected-term-tree';
 
 export default class DashboardSelectedVocabularyComponent extends Component {
   @cached

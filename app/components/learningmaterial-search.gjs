@@ -3,15 +3,15 @@ import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import SearchBox from 'ilios-common/components/search-box';
+import SearchBox from './search-box';
 import { modifier } from 'ember-modifier';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
-import includes from 'ilios-common/helpers/includes';
+import includes from '../helpers/includes';
 import { on } from '@ember/modifier';
-import LmTypeIcon from 'ilios-common/components/lm-type-icon';
+import LmTypeIcon from './lm-type-icon';
 import formatDate from 'ember-intl/helpers/format-date';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from './loading-spinner';
 
 export default class LearningmaterialSearchComponent extends Component {
   @service store;

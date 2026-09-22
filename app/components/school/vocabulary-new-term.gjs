@@ -3,15 +3,15 @@ import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import LoadingSpinner from '../loading-spinner';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class SchoolVocabularyNewTermComponent extends Component {
   @service store;

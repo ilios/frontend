@@ -1,9 +1,9 @@
 import t from 'ember-intl/helpers/t';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../helpers/sort-by';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import UserNameInfo from 'ilios-common/components/user-name-info';
-import UserStatus from 'ilios-common/components/user-status';
+import UserNameInfo from './user-name-info';
+import UserStatus from './user-status';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 <template>

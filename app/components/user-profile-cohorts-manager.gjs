@@ -3,16 +3,16 @@ import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById } from '../utils/array-helpers';
 import sortCohorts from '../utils/sort-cohorts';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { eq, gt } from 'ember-truth-helpers';
-import pick from 'ilios-common/helpers/pick';
-import sortBy from 'ilios-common/helpers/sort-by';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import pick from '../helpers/pick';
+import sortBy from '../helpers/sort-by';
+import LoadingSpinner from './loading-spinner';
 import {
   faBuildingColumns,
   faPlus,

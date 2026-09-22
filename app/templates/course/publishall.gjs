@@ -1,6 +1,6 @@
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
-import PublishAllSessions from 'ilios-common/components/publish-all-sessions';
+import PublishAllSessions from '../../components/publish-all-sessions';
 import set from 'ember-set-helper/helpers/set';
 <template>
   <section class="publishall main-section">

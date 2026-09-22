@@ -1,6 +1,6 @@
-import sortByPosition from 'ilios-common/helpers/sort-by-position';
-import ManageObjectiveParentsItem from 'ilios-common/components/session/manage-objective-parents-item';
-import includes from 'ilios-common/helpers/includes';
+import sortByPosition from '../../helpers/sort-by-position';
+import ManageObjectiveParentsItem from './manage-objective-parents-item';
+import includes from '../../helpers/includes';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 <template>

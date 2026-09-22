@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const buildDir = process.env.BUILD_DIR || path.resolve(__dirname, '../../../build');
+const buildDir = process.env.BUILD_DIR || path.resolve(__dirname, '../build');
 const firefoxUserJsPath = path.join(buildDir, 'firefox-user.js');
 
 // Ensure directories exist

@@ -1,4 +1,4 @@
-import Sessions from 'ilios-common/components/course/sessions';
+import Sessions from '../../components/course/sessions';
 import set from 'ember-set-helper/helpers/set';
 <template>
   <Sessions

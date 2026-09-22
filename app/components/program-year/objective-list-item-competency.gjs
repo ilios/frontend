@@ -1,6 +1,6 @@
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 <template>
   <div
     class="program-year-objective-list-item-competency grid-item"

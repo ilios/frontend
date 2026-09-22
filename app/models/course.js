@@ -1,9 +1,9 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import sortableByPosition from '../utils/sortable-by-position';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
-import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class Course extends Model {
   @attr('string')

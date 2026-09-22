@@ -4,11 +4,11 @@ import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import t from 'ember-intl/helpers/t';
-import EditableField from 'ilios-common/components/editable-field';
+import EditableField from './editable-field';
 import formatDate from 'ember-intl/helpers/format-date';
 import perform from 'ember-concurrency/helpers/perform';
-import DatePicker from 'ilios-common/components/date-picker';
-import TimePicker from 'ilios-common/components/time-picker';
+import DatePicker from './date-picker';
+import TimePicker from './time-picker';
 
 export default class SessionOverviewIlmDuedateComponent extends Component {
   @tracked dueDateBuffer;

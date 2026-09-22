@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
-import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
+import ClickChoiceButtons from '../click-choice-buttons';
 import set from 'ember-set-helper/helpers/set';
 import NewSingle from './new-single';
 import NewMultiple from './new-multiple';

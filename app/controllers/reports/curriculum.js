@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
-import currentAcademicYear from 'ilios-common/utils/current-academic-year';
+import currentAcademicYear from '../../utils/current-academic-year';
 
 export default class ReportsCurriculumController extends Controller {
   queryParams = [{ courses: 'courses' }, { years: 'years' }, { report: 'report' }, { run: 'run' }];

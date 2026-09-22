@@ -31,7 +31,6 @@ module.exports = async function (defaults) {
     },
     autoImport: {
       insertScriptsAt: 'auto-import-scripts',
-      watchDependencies: ['ilios-common'],
     },
     sassOptions: {
       includePaths: ['node_modules/ember-a11y-refocus/dist/styles'],

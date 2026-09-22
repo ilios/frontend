@@ -4,7 +4,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesCollapsedComponent extends Component {

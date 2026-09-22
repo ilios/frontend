@@ -7,7 +7,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import UserSearch from 'ilios-common/components/user-search';
+import UserSearch from '../../../user-search';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectNewInstructorComponent extends Component {

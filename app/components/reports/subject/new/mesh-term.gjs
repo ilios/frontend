@@ -6,9 +6,9 @@ import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
+import MeshDescriptorLastTreeNumber from '../../../mesh-descriptor-last-tree-number';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import MeshManager from 'ilios-common/components/mesh-manager';
+import MeshManager from '../../../mesh-manager';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectNewMeshTermComponent extends Component {

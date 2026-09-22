@@ -2,18 +2,18 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import PapaParse from 'papaparse';
 import { task, timeout } from 'ember-concurrency';
-import createDownloadFile from 'ilios-common/utils/create-download-file';
+import createDownloadFile from '../../../utils/create-download-file';
 import { DateTime } from 'luxon';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { chunk } from 'ilios-common/utils/array-helpers';
+import { chunk } from '../../../utils/array-helpers';
 import Header from './header';
-import noop from 'ilios-common/helpers/noop';
+import noop from '../../../helpers/noop';
 import perform from 'ember-concurrency/helpers/perform';
 import add from 'ember-math-helpers/helpers/add';
 import t from 'ember-intl/helpers/t';
-import sortBy from 'ilios-common/helpers/sort-by';
-import getUserNameForGraphUser from 'ilios-common/utils/get-user-name-for-graph-user';
+import sortBy from '../../../helpers/sort-by';
+import getUserNameForGraphUser from '../../../utils/get-user-name-for-graph-user';
 import { LinkTo } from '@ember/routing';
 
 export default class ReportsCurriculumInstructionalTimeComponent extends Component {

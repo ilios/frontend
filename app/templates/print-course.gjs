@@ -1,7 +1,7 @@
 import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import PrintCourse from 'ilios-common/components/print-course';
+import PrintCourse from '../components/print-course';
 import { and } from 'ember-truth-helpers';
 <template>
   {{pageTitle (t "general.courses") " | " @model.title " (" (t "general.printSummary") ")"}}

@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import t from 'ember-intl/helpers/t';
-import datePicker from 'ilios-common/modifiers/date-picker';
-import focus from 'ilios-common/modifiers/focus';
+import datePicker from '../modifiers/date-picker';
+import focus from '../modifiers/focus';
 
 export default class DatePickerComponent extends Component {
   @service intl;

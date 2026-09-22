@@ -2,16 +2,16 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import sortableByPosition from 'ilios-common/utils/sortable-by-position';
-import { findById } from 'ilios-common/utils/array-helpers';
-import ObjectiveSortManager from 'ilios-common/components/objective-sort-manager';
+import sortableByPosition from '../../utils/sortable-by-position';
+import { findById } from '../../utils/array-helpers';
+import ObjectiveSortManager from '../objective-sort-manager';
 import set from 'ember-set-helper/helpers/set';
 import { and, gt, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import isArray from 'ember-truth-helpers/helpers/is-array';
-import ObjectiveListItem from 'ilios-common/components/course/objective-list-item';
-import ObjectiveListLoading from 'ilios-common/components/course/objective-list-loading';
+import ObjectiveListItem from './objective-list-item';
+import ObjectiveListLoading from './objective-list-loading';
 
 export default class CourseObjectiveListComponent extends Component {
   @service store;

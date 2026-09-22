@@ -3,16 +3,16 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import SortableTh from 'ilios-common/components/sortable-th';
+import SortableTh from '../sortable-th';
 import { eq, or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import ListItem from './list-item';
 import perform from 'ember-concurrency/helpers/perform';
-import includes from 'ilios-common/helpers/includes';
+import includes from '../../helpers/includes';
 import ResponsiveTd from '../responsive-td';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import scrollIntoView from '../../modifiers/scroll-into-view';
 import { on } from '@ember/modifier';
 
 export default class CoursesListComponent extends Component {

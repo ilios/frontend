@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import load from 'ember-async-data/helpers/load';
-import Details from 'ilios-common/components/course/details';
-import BackToCourses from 'ilios-common/components/course/back-to-courses';
-import animateLoading from 'ilios-common/modifiers/animate-loading';
-import Header from 'ilios-common/components/course/header';
-import Overview from 'ilios-common/components/course/overview';
+import Details from './details';
+import BackToCourses from './back-to-courses';
+import animateLoading from '../../modifiers/animate-loading';
+import Header from './header';
+import Overview from './overview';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';

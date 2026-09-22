@@ -4,17 +4,17 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { hash } from 'rsvp';
-import { uniqueValues } from 'ilios-common/utils/array-helpers';
+import { uniqueValues } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { or } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
-import LearnergroupSelectionManager from 'ilios-common/components/learnergroup-selection-manager';
-import LearnerSelectionManager from 'ilios-common/components/learner-selection-manager';
-import SelectedLearnerGroups from 'ilios-common/components/selected-learner-groups';
-import SelectedLearners from 'ilios-common/components/selected-learners';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import LearnergroupSelectionManager from './learnergroup-selection-manager';
+import LearnerSelectionManager from './learner-selection-manager';
+import SelectedLearnerGroups from './selected-learner-groups';
+import SelectedLearners from './selected-learners';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @service currentUser;

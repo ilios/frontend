@@ -8,7 +8,7 @@ import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import set from 'ember-set-helper/helpers/set';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import focus from 'ilios-common/modifiers/focus';
+import focus from '../../modifiers/focus';
 import t from 'ember-intl/helpers/t';
 import {
   faCaretRight,

@@ -2,11 +2,11 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import OfferingDateBlock from '../utils/offering-date-block';
+import { sortBy } from '../utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
-import SessionsGridOfferingTableOfferings from 'ilios-common/components/sessions-grid-offering-table-offerings';
+import SessionsGridOfferingTableOfferings from './sessions-grid-offering-table-offerings';
 
 export default class SessionsGridOfferingTableComponent extends Component {
   @service permissionChecker;

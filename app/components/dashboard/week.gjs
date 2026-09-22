@@ -8,7 +8,7 @@ import { LinkTo } from '@ember/routing';
 import { fn, hash } from '@ember/helper';
 import inViewport from 'ember-in-viewport/modifiers/in-viewport';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import WeekGlance from 'ilios-common/components/week-glance';
+import WeekGlance from '../week-glance';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardWeekComponent extends Component {

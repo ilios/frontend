@@ -4,12 +4,12 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from '../../../utils/array-helpers';
 import { action } from '@ember/object';
 import SubjectHeader from '../subject-header';
 import t from 'ember-intl/helpers/t';
 import SubjectDownload from '../subject-download';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../../loading-spinner';
 
 export default class ReportsSubjectTermComponent extends Component {
   @service graphql;

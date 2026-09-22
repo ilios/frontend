@@ -8,7 +8,7 @@ import t from 'ember-intl/helpers/t';
 import load from 'ember-async-data/helpers/load';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../../../loading-spinner';
 import SearchInput from './search/input';
 import perform from 'ember-concurrency/helpers/perform';
 import isArray from 'ember-truth-helpers/helpers/is-array';

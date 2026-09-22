@@ -7,7 +7,7 @@ import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import CopyButton from 'ilios-common/components/copy-button';
+import CopyButton from './copy-button';
 import {
   faArrowRotateLeft,
   faCopy,

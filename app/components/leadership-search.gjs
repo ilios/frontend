@@ -1,16 +1,16 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
-import { cleanQuery } from 'ilios-common/utils/query-utils';
+import { cleanQuery } from '../utils/query-utils';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
-import { mapBy } from 'ilios-common/utils/array-helpers';
+import { mapBy } from '../utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import { eq, or } from 'ember-truth-helpers';
-import includes from 'ilios-common/helpers/includes';
-import UserStatus from 'ilios-common/components/user-status';
+import includes from '../helpers/includes';
+import UserStatus from './user-status';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;

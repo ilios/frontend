@@ -1,5 +1,5 @@
-import repeat from 'ilios-common/helpers/repeat';
-import truncate from 'ilios-common/helpers/truncate';
+import repeat from '../../helpers/repeat';
+import truncate from '../../helpers/truncate';
 import random from 'ember-math-helpers/helpers/random';
 <template>
   {{! template-lint-disable no-unused-block-params }}

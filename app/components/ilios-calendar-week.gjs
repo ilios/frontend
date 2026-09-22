@@ -3,9 +3,9 @@ import { action } from '@ember/object';
 import { deprecate } from '@ember/debug';
 import { DateTime } from 'luxon';
 import isArray from 'ember-truth-helpers/helpers/is-array';
-import WeeklyCalendar from 'ilios-common/components/weekly-calendar';
-import noop from 'ilios-common/helpers/noop';
-import IliosCalendarMultidayEvents from 'ilios-common/components/ilios-calendar-multiday-events';
+import WeeklyCalendar from './weekly-calendar';
+import noop from '../helpers/noop';
+import IliosCalendarMultidayEvents from './ilios-calendar-multiday-events';
 
 export default class IliosCalendarWeekComponent extends Component {
   get date() {

@@ -3,18 +3,18 @@ import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
 import t from 'ember-intl/helpers/t';
 import { concat, array } from '@ember/helper';
-import EditableField from 'ilios-common/components/editable-field';
+import EditableField from '../editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import pick from '../../helpers/pick';
+import YupValidationMessage from '../yup-validation-message';
 import { eq } from 'ember-truth-helpers';
-import focus from 'ilios-common/modifiers/focus';
+import focus from '../../modifiers/focus';
 
 export default class ProgramOverviewComponent extends Component {
   id = guidFor(this);

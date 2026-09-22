@@ -13,7 +13,7 @@ import { and, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import scrollIntoView from '../../modifiers/scroll-into-view';
 import {
   faArrowRotateLeft,
   faCopy,

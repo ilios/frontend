@@ -3,8 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import t from 'ember-intl/helpers/t';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import SelectedVocabulary from 'ilios-common/components/dashboard/selected-vocabulary';
+import LoadingSpinner from '../loading-spinner';
+import SelectedVocabulary from './selected-vocabulary';
 
 export default class DashboardTermsCalendarFilterComponent extends Component {
   @service dataLoader;

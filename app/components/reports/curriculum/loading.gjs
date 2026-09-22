@@ -3,11 +3,11 @@ import { service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import Header from './header';
-import noop from 'ilios-common/helpers/noop';
+import noop from '../../../helpers/noop';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import repeat from 'ilios-common/helpers/repeat';
-import truncate from 'ilios-common/helpers/truncate';
+import repeat from '../../../helpers/repeat';
+import truncate from '../../../helpers/truncate';
 import random from 'ember-math-helpers/helpers/random';
 import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 

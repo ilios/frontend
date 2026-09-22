@@ -9,11 +9,11 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { eq, or } from 'ember-truth-helpers';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import SortableTh from 'ilios-common/components/sortable-th';
-import UserNameInfo from 'ilios-common/components/user-name-info';
-import sortBy from 'ilios-common/helpers/sort-by';
+import SortableTh from '../sortable-th';
+import UserNameInfo from '../user-name-info';
+import sortBy from '../../helpers/sort-by';
 import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import UserStatus from 'ilios-common/components/user-status';
+import UserStatus from '../user-status';
 
 export default class ProgramYearCohortMembersComponent extends Component {
   @service iliosConfig;

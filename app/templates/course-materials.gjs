@@ -1,7 +1,7 @@
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
-import SummaryHeader from 'ilios-common/components/course/summary-header';
-import Materials from 'ilios-common/components/course/materials';
+import SummaryHeader from '../components/course/summary-header';
+import Materials from '../components/course/materials';
 import { or } from 'ember-truth-helpers';
 import set from 'ember-set-helper/helpers/set';
 <template>

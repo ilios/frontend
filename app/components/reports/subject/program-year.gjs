@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from '../../../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
@@ -11,7 +11,7 @@ import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import SubjectDownload from '../subject-download';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../../loading-spinner';
 
 export default class ReportsSubjectProgramYearComponent extends Component {
   @service graphql;

@@ -2,7 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { DateTime } from 'luxon';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class Offering extends Model {
   @attr('string')

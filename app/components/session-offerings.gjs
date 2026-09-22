@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import toggle from 'ilios-common/helpers/toggle';
+import toggle from '../helpers/toggle';
 import t from 'ember-intl/helpers/t';
-import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
-import NewOffering from 'ilios-common/components/new-offering';
-import SessionOfferingsList from 'ilios-common/components/session-offerings-list';
+import ExpandCollapseButton from './expand-collapse-button';
+import NewOffering from './new-offering';
+import SessionOfferingsList from './session-offerings-list';
 
 export default class SessionOfferingsComponent extends Component {
   @tracked isEditing = false;

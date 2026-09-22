@@ -2,11 +2,11 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import Header from './header';
 import Overview from './overview';
-import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
+import LeadershipExpanded from '../leadership-expanded';
 import { fn } from '@ember/helper';
 import { pageTitle } from 'ember-page-title';
-import LeadershipCollapsed from 'ilios-common/components/leadership-collapsed';
-import hasManyLength from 'ilios-common/helpers/has-many-length';
+import LeadershipCollapsed from '../leadership-collapsed';
+import hasManyLength from '../../helpers/has-many-length';
 <template>
   {{pageTitle " | " @program.title prepend=false}}
 

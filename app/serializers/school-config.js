@@ -1,6 +1,6 @@
-import IliosSerializer from 'ilios-common/serializers/ilios';
+import ApplicationSerializer from './application';
 
-export default class SchoolConfigSerializer extends IliosSerializer {
+export default class SchoolConfigSerializer extends ApplicationSerializer {
   serialize(snapshot, options) {
     const originalValue = snapshot.attr('value');
     let json = super.serialize(snapshot, options);

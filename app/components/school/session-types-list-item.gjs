@@ -9,7 +9,7 @@ import { and, eq, not } from 'ember-truth-helpers';
 import set from 'ember-set-helper/helpers/set';
 import { LinkTo } from '@ember/routing';
 import perform from 'ember-concurrency/helpers/perform';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import scrollIntoView from '../../modifiers/scroll-into-view';
 import {
   faBan,
   faChartColumn,

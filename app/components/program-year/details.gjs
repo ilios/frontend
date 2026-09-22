@@ -1,14 +1,14 @@
-import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
+import LeadershipExpanded from '../leadership-expanded';
 import { fn } from '@ember/helper';
-import LeadershipCollapsed from 'ilios-common/components/leadership-collapsed';
-import hasManyLength from 'ilios-common/helpers/has-many-length';
+import LeadershipCollapsed from '../leadership-collapsed';
+import hasManyLength from '../../helpers/has-many-length';
 import { eq, or } from 'ember-truth-helpers';
 import Competencies from './competencies';
-import CollapsedCompetencies from 'ilios-common/components/collapsed-competencies';
+import CollapsedCompetencies from '../collapsed-competencies';
 import Objectives from './objectives';
 import CollapsedObjectives from './collapsed-objectives';
-import DetailTaxonomies from 'ilios-common/components/detail-taxonomies';
-import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
+import DetailTaxonomies from '../detail-taxonomies';
+import CollapsedTaxonomies from '../collapsed-taxonomies';
 import CourseAssociations from './course-associations';
 import CohortMembers from './cohort-members';
 

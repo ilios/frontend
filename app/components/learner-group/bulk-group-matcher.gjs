@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import { findBy } from 'ilios-common/utils/array-helpers';
+import { findBy } from '../../utils/array-helpers';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import { eq } from 'ember-truth-helpers';
 
 export default class LearnerGroupBulkGroupMatcherComponent extends Component {

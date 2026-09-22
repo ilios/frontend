@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
-import Breadcrumbs from 'ilios-common/components/breadcrumbs';
+import Breadcrumbs from '../breadcrumbs';
 import { pageTitle } from 'ember-page-title';
 import VisualizerProgramYearObjectives from '../visualizer-program-year-objectives';
 

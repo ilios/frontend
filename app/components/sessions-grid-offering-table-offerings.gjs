@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { sortBy } from 'ilios-common/utils/array-helpers';
-import SessionsGridOffering from 'ilios-common/components/sessions-grid-offering';
+import { sortBy } from '../utils/array-helpers';
+import SessionsGridOffering from './sessions-grid-offering';
 import { eq } from 'ember-truth-helpers';
 import mod from 'ember-math-helpers/helpers/mod';
 import formatDate from 'ember-intl/helpers/format-date';

@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import includes from 'ilios-common/helpers/includes';
-import mapBy from 'ilios-common/helpers/map-by';
-import sortBy from 'ilios-common/helpers/sort-by';
+import includes from '../../helpers/includes';
+import mapBy from '../../helpers/map-by';
+import sortBy from '../../helpers/sort-by';
 import { and } from 'ember-truth-helpers';
 
 export default class ProgramYearCompetencyListItemComponent extends Component {

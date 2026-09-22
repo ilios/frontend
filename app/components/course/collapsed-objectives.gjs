@@ -6,7 +6,7 @@ import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { eq, gte } from 'ember-truth-helpers';
 import { get } from '@ember/helper';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 import { faBan, faCaretRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseCollapsedObjectivesComponent extends Component {

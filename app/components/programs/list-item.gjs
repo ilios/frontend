@@ -10,7 +10,7 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ResponsiveTd from '../responsive-td';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
-import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import scrollIntoView from '../../modifiers/scroll-into-view';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramListItemComponent extends Component {

@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { sortBy } from 'ilios-common/utils/array-helpers';
-import OfferingManager from 'ilios-common/components/offering-manager';
+import { sortBy } from '../utils/array-helpers';
+import OfferingManager from './offering-manager';
 
 export default class SessionOfferingsTimeBlockOfferingsComponent extends Component {
   @cached

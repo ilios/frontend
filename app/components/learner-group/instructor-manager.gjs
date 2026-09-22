@@ -5,11 +5,11 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import sortBy from 'ilios-common/helpers/sort-by';
-import UserNameInfo from 'ilios-common/components/user-name-info';
+import sortBy from '../../helpers/sort-by';
+import UserNameInfo from '../user-name-info';
 import InstructorGroupMembersList from './instructor-group-members-list';
-import UserSearch from 'ilios-common/components/user-search';
-import UserStatus from 'ilios-common/components/user-status';
+import UserSearch from '../user-search';
+import UserStatus from '../user-status';
 import { faArrowRotateLeft, faCheck, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupInstructorManagerComponent extends Component {

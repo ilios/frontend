@@ -1,6 +1,6 @@
 import EmberRouter from '@ember/routing/router';
 import config from 'frontend/config/environment';
-import { courseRoutes, dashboardRoutes } from 'ilios-common/common-routes';
+import { courseRoutes, dashboardRoutes } from './common-routes';
 
 export default class Router extends EmberRouter {
   location = config.locationType;

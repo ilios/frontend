@@ -4,8 +4,8 @@ import { cached } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import sortBy from 'ilios-common/helpers/sort-by';
+import LoadingSpinner from '../loading-spinner';
+import sortBy from '../../helpers/sort-by';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabulariesCollapsedComponent extends Component {

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { findById, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findById, uniqueValues } from '../../utils/array-helpers';
 import { isTesting } from '@embroider/macros';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';

@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import NotFound from 'ilios-common/components/not-found';
+import NotFound from './not-found';
 import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
 import formatTime from 'ember-intl/helpers/format-time';

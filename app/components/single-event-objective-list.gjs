@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { sortBy, uniqueValues } from '../utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';

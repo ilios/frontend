@@ -3,9 +3,9 @@ import { service } from '@ember/service';
 import { DateTime } from 'luxon';
 import { deprecate } from '@ember/debug';
 import isArray from 'ember-truth-helpers/helpers/is-array';
-import DailyCalendar from 'ilios-common/components/daily-calendar';
-import noop from 'ilios-common/helpers/noop';
-import IliosCalendarMultidayEvents from 'ilios-common/components/ilios-calendar-multiday-events';
+import DailyCalendar from './daily-calendar';
+import noop from '../helpers/noop';
+import IliosCalendarMultidayEvents from './ilios-calendar-multiday-events';
 
 export default class IliosCalendarDayComponent extends Component {
   @service localeDays;

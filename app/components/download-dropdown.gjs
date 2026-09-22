@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { on } from '@ember/modifier';
 import { guidFor } from '@ember/object/internals';
-import toggle from 'ilios-common/helpers/toggle';
+import toggle from '../helpers/toggle';
 import t from 'ember-intl/helpers/t';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';

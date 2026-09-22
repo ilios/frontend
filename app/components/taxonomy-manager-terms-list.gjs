@@ -2,9 +2,9 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
-import sortBy from 'ilios-common/helpers/sort-by';
-import ListItem from 'ilios-common/components/taxonomy-manager-terms-list-item';
-import List from 'ilios-common/components/taxonomy-manager-terms-list';
+import sortBy from '../helpers/sort-by';
+import ListItem from './taxonomy-manager-terms-list-item';
+import List from './taxonomy-manager-terms-list';
 import add from 'ember-math-helpers/helpers/add';
 import { and } from 'ember-truth-helpers';
 

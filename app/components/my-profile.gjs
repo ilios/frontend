@@ -1,6 +1,6 @@
 import t from 'ember-intl/helpers/t';
 import UserProfileRoles from './user-profile-roles';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../helpers/sort-by';
 import UserProfilePermissions from './user-profile-permissions';
 import LearnerGroups from './user-profile/learner-groups';
 import ThemeChooser from './user-profile/theme-chooser';

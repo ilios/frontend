@@ -2,10 +2,10 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { htmlSafe } from '@ember/template';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById } from '../../utils/array-helpers';
 import t from 'ember-intl/helpers/t';
-import sortBy from 'ilios-common/helpers/sort-by';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import sortBy from '../../helpers/sort-by';
+import LoadingSpinner from '../loading-spinner';
 
 export default class ProgramYearObjectiveListItemExpandedComponent extends Component {
   @cached

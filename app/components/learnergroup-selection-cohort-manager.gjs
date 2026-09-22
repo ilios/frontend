@@ -3,9 +3,9 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import sortBy from 'ilios-common/helpers/sort-by';
-import LearnergroupTree from 'ilios-common/components/learnergroup-tree';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import sortBy from '../helpers/sort-by';
+import LearnergroupTree from './learnergroup-tree';
+import LoadingSpinner from './loading-spinner';
 
 export default class LearnergroupSelectionCohortManagerComponent extends Component {
   @service intl;

@@ -1,2 +1,2 @@
-import PulseLoader from 'ilios-common/components/pulse-loader';
+import PulseLoader from './pulse-loader';
 <template><PulseLoader /></template>

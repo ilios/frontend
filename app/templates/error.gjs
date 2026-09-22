@@ -1,6 +1,6 @@
 import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
-import NotFound from 'ilios-common/components/not-found';
+import NotFound from '../components/not-found';
 import { on } from '@ember/modifier';
 <template>
   {{pageTitle (t "general.error")}}

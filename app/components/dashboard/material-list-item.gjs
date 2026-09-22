@@ -1,17 +1,17 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import UserMaterialStatus from 'ilios-common/components/user-material-status';
+import UserMaterialStatus from '../user-material-status';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
-import LmTypeIcon from 'ilios-common/components/lm-type-icon';
-import lmType from 'ilios-common/helpers/lm-type';
+import TimedReleaseSchedule from '../timed-release-schedule';
+import LmTypeIcon from '../lm-type-icon';
+import lmType from '../../helpers/lm-type';
 import { eq } from 'ember-truth-helpers';
 import isEmpty from 'ember-truth-helpers/helpers/is-empty';
-import TruncateText from 'ilios-common/components/truncate-text';
-import join from 'ilios-common/helpers/join';
-import sortBy from 'ilios-common/helpers/sort-by';
+import TruncateText from '../truncate-text';
+import join from '../../helpers/join';
+import sortBy from '../../helpers/sort-by';
 import formatDate from 'ember-intl/helpers/format-date';
 import { faClock, faDownload } from '@fortawesome/free-solid-svg-icons';
 

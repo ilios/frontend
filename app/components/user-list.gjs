@@ -6,10 +6,10 @@ import { eq, or } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
 import { TrackedAsyncData } from 'ember-async-data';
-import UserStatus from 'ilios-common/components/user-status';
-import UserNameInfo from 'ilios-common/components/user-name-info';
-import SortableTh from 'ilios-common/components/sortable-th';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import UserStatus from './user-status';
+import UserNameInfo from './user-name-info';
+import SortableTh from './sortable-th';
+import LoadingSpinner from './loading-spinner';
 
 export default class UserListComponent extends Component {
   get sortedAscending() {

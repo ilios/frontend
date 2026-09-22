@@ -4,22 +4,22 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
 import { and } from 'ember-truth-helpers';
-import EditableField from 'ilios-common/components/editable-field';
+import EditableField from '../editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { pageTitle } from 'ember-page-title';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import YupValidationMessage from '../yup-validation-message';
 import SubjectCopy from './subject-copy';
 import SubjectDownload from './subject-download';
 import SubjectYearFilter from './subject-year-filter';
 import SubjectDescription from './subject-description';
-import focus from 'ilios-common/modifiers/focus';
+import focus from '../../modifiers/focus';
 
 export default class ReportsSubjectHeaderComponent extends Component {
   @service router;

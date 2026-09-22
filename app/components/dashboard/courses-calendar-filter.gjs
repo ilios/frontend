@@ -4,18 +4,18 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { modifier } from 'ember-modifier';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findBy, sortBy } from 'ilios-common/utils/array-helpers';
-import currentAcademicYear from 'ilios-common/utils/current-academic-year';
+import { findBy, sortBy } from '../../utils/array-helpers';
+import currentAcademicYear from '../../utils/current-academic-year';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import includes from 'ilios-common/helpers/includes';
+import LoadingSpinner from '../loading-spinner';
+import includes from '../../helpers/includes';
 import inViewport from 'ember-in-viewport/modifiers/in-viewport';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import sortBy0 from 'ilios-common/helpers/sort-by';
-import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
+import sortBy0 from '../../helpers/sort-by';
+import FilterCheckbox from './filter-checkbox';
 import { faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {

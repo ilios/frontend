@@ -1,8 +1,8 @@
-import EventsBase from 'ilios-common/classes/events-base';
+import EventsBase from '../classes/events-base';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
-import { sortBy } from 'ilios-common/utils/array-helpers';
-import Event from 'ilios-common/classes/event';
+import { sortBy } from '../utils/array-helpers';
+import Event from '../classes/event';
 
 export default class SchoolEvents extends EventsBase {
   @service store;

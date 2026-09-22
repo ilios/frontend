@@ -8,7 +8,7 @@ import t from 'ember-intl/helpers/t';
 import GlobalSearchBox from './global-search-box';
 import UserMenu from './user-menu';
 import UserGuideLink from './user-guide-link';
-import currentAcademicYear from 'ilios-common/utils/current-academic-year';
+import currentAcademicYear from '../utils/current-academic-year';
 
 export default class IliosHeaderComponent extends Component {
   @service currentUser;

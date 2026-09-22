@@ -1,9 +1,9 @@
 import t from 'ember-intl/helpers/t';
-import sortBy from 'ilios-common/helpers/sort-by';
-import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
-import includes from 'ilios-common/helpers/includes';
+import sortBy from '../../helpers/sort-by';
+import FilterCheckbox from './filter-checkbox';
+import includes from '../../helpers/includes';
 import { fn } from '@ember/helper';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 <template>
   <div
     class="calendar-filter-list large-filter-list dashboard-cohort-calendar-filter"

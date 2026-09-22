@@ -3,13 +3,13 @@ import { service } from '@ember/service';
 import { DateTime } from 'luxon';
 import { tracked, cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
-import Event from 'ilios-common/classes/event';
+import IliosCalendarWeek from './ilios-calendar-week';
+import Event from '../classes/event';
 import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileCalendarComponent extends Component {

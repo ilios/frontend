@@ -6,19 +6,19 @@ import { isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
-import { filterBy, sortBy, uniqueById } from 'ilios-common/utils/array-helpers';
+import { filterBy, sortBy, uniqueById } from '../../utils/array-helpers';
 import t from 'ember-intl/helpers/t';
-import ToggleButtons from 'ilios-common/components/toggle-buttons';
+import ToggleButtons from '../toggle-buttons';
 import { eq, not, or } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import add from 'ember-math-helpers/helpers/add';
 import perform from 'ember-concurrency/helpers/perform';
-import PagedlistControls from 'ilios-common/components/pagedlist-controls';
-import SortableTh from 'ilios-common/components/sortable-th';
+import PagedlistControls from '../pagedlist-controls';
+import SortableTh from '../sortable-th';
 import { fn } from '@ember/helper';
-import MaterialListItem from 'ilios-common/components/dashboard/material-list-item';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import MaterialListItem from './material-list-item';
+import LoadingSpinner from '../loading-spinner';
 
 const DEBOUNCE_DELAY = 250;
 

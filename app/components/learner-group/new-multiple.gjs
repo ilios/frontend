@@ -5,13 +5,13 @@ import { action } from '@ember/object';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import focus from 'ilios-common/modifiers/focus';
-import pick from 'ilios-common/helpers/pick';
+import focus from '../../modifiers/focus';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import YupValidations from 'ilios-common/classes/yup-validations';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import LoadingSpinner from '../loading-spinner';
+import YupValidations from '../../classes/yup-validations';
+import YupValidationMessage from '../yup-validation-message';
 import { number } from 'yup';
 
 export default class LearnerGroupNewMultipleComponent extends Component {

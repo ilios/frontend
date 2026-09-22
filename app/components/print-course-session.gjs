@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import PublicationStatus from 'ilios-common/components/publication-status';
+import PublicationStatus from './publication-status';
 import t from 'ember-intl/helpers/t';
-import ObjectiveList from 'ilios-common/components/session/objective-list';
-import removeHtmlTags from 'ilios-common/helpers/remove-html-tags';
-import DetailTermsList from 'ilios-common/components/detail-terms-list';
-import sortBy from 'ilios-common/helpers/sort-by';
+import ObjectiveList from './session/objective-list';
+import removeHtmlTags from '../helpers/remove-html-tags';
+import DetailTermsList from './detail-terms-list';
+import sortBy from '../helpers/sort-by';
 import formatDate from 'ember-intl/helpers/format-date';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import sub_ from 'ember-math-helpers/helpers/sub';

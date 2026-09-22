@@ -2,16 +2,16 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import includes from 'ilios-common/helpers/includes';
+import includes from '../helpers/includes';
 import { on } from '@ember/modifier';
 import { fn, array } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { and, eq, not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import truncate from 'ilios-common/helpers/truncate';
+import truncate from '../helpers/truncate';
 import formatDate from 'ember-intl/helpers/format-date';
-import PublicationStatus from 'ilios-common/components/publication-status';
+import PublicationStatus from './publication-status';
 import {
   faArrowRightToBracket,
   faCaretDown,

@@ -6,10 +6,10 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import Breadcrumbs from 'ilios-common/components/breadcrumbs';
-import VisualizeSessionTypeGraph from 'ilios-common/components/course/visualize-session-type-graph';
+import Breadcrumbs from '../breadcrumbs';
+import VisualizeSessionTypeGraph from './visualize-session-type-graph';
 
 export default class CourseVisualizeSessionTypeComponent extends Component {
   @service iliosConfig;

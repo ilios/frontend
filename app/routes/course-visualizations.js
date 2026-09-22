@@ -1,6 +1,6 @@
 import { service } from '@ember/service';
 import Route from '@ember/routing/route';
-import { mapBy } from 'ilios-common/utils/array-helpers';
+import { mapBy } from '../utils/array-helpers';
 
 export default class CourseVisualizationsRoute extends Route {
   @service store;

@@ -3,15 +3,15 @@ import t from 'ember-intl/helpers/t';
 import BackToAdminDashboard from 'frontend/components/back-to-admin-dashboard';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../helpers/sort-by';
 import { eq } from 'ember-truth-helpers';
 import { LinkTo } from '@ember/routing';
-import UserNameInfo from 'ilios-common/components/user-name-info';
+import UserNameInfo from '../components/user-name-info';
 import { concat } from '@ember/helper';
-import includes from 'ilios-common/helpers/includes';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import includes from '../helpers/includes';
+import LoadingSpinner from '../components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
 import {
   faBan,

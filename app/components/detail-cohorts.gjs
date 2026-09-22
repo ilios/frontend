@@ -7,9 +7,9 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import DetailCohortManager from 'ilios-common/components/detail-cohort-manager';
-import DetailCohortList from 'ilios-common/components/detail-cohort-list';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import DetailCohortManager from './detail-cohort-manager';
+import DetailCohortList from './detail-cohort-list';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class DetailCohortsComponent extends Component {
   @tracked isManaging = false;

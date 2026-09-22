@@ -1,5 +1,5 @@
-import sortBy from 'ilios-common/helpers/sort-by';
-import includes from 'ilios-common/helpers/includes';
+import sortBy from '../../helpers/sort-by';
+import includes from '../../helpers/includes';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import pcrsUriToNumber from '../../helpers/pcrs-uri-to-number';

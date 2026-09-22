@@ -6,16 +6,16 @@ import { isPresent } from '@ember/utils';
 import { TrackedAsyncData } from 'ember-async-data';
 import { task, timeout } from 'ember-concurrency';
 import { filter } from 'rsvp';
-import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
+import escapeRegExp from '../utils/escape-reg-exp';
 import { uniqueId } from '@ember/helper';
-import DetailTermsList from 'ilios-common/components/detail-terms-list';
+import DetailTermsList from './detail-terms-list';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { eq } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
-import sortBy from 'ilios-common/helpers/sort-by';
-import ListItem from 'ilios-common/components/taxonomy-manager-terms-list-item';
-import List from 'ilios-common/components/taxonomy-manager-terms-list';
+import sortBy from '../helpers/sort-by';
+import ListItem from './taxonomy-manager-terms-list-item';
+import List from './taxonomy-manager-terms-list';
 
 export default class TaxonomyManagerComponent extends Component {
   @service store;

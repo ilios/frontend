@@ -3,17 +3,17 @@ import { cached, tracked } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
-import ToggleYesno from 'ilios-common/components/toggle-yesno';
+import ToggleYesno from './toggle-yesno';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
 import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
-import toggle from 'ilios-common/helpers/toggle';
-import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
-import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import Event from 'ilios-common/classes/event';
-import { uniqueBy } from 'ilios-common/utils/array-helpers';
+import toggle from '../helpers/toggle';
+import IliosCalendarWeek from './ilios-calendar-week';
+import LoadingSpinner from './loading-spinner';
+import Event from '../classes/event';
+import { uniqueBy } from '../utils/array-helpers';
 
 export default class OfferingCalendarComponent extends Component {
   @service localeDays;

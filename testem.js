@@ -1,6 +1,6 @@
 'use strict';
 
-const base = require('ilios-common/testem/base');
+const base = require('./testem/base');
 
 module.exports = {
   ...base,

@@ -1,11 +1,11 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import UserMaterialStatus from 'ilios-common/components/user-material-status';
+import UserMaterialStatus from '../user-material-status';
 import { and, eq, not } from 'ember-truth-helpers';
-import LmIcons from 'ilios-common/components/lm-icons';
+import LmIcons from '../lm-icons';
 import { concat } from '@ember/helper';
-import TruncateText from 'ilios-common/components/truncate-text';
-import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
+import TruncateText from '../truncate-text';
+import TimedReleaseSchedule from '../timed-release-schedule';
 import { faClock, faDownload } from '@fortawesome/free-solid-svg-icons';
 <template>
   <li class="week-glance-learning-material-list-item" ...attributes>

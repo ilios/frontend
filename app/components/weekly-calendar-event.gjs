@@ -1,14 +1,14 @@
 import Component from '@glimmer/component';
 import { DateTime } from 'luxon';
-import colorChange from 'ilios-common/utils/color-change';
+import colorChange from '../utils/color-change';
 import { htmlSafe } from '@ember/template';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import { on } from '@ember/modifier';
-import noop from 'ilios-common/helpers/noop';
-import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
+import noop from '../helpers/noop';
+import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
 import set from 'ember-set-helper/helpers/set';
-import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import IliosTooltip from './ilios-tooltip';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { not } from 'ember-truth-helpers';

@@ -18,7 +18,7 @@ import {
   faArrowRotateLeft,
   faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class UserProfileCohortsComponent extends Component {
   @service currentUser;

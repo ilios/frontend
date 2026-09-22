@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import ToggleButtons from 'ilios-common/components/toggle-buttons';
+import ToggleButtons from '../toggle-buttons';
 import t from 'ember-intl/helpers/t';
-import noop from 'ilios-common/helpers/noop';
+import noop from '../../helpers/noop';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import sortBy from 'ilios-common/helpers/sort-by';
+import sortBy from '../../helpers/sort-by';
 import LoadingList from './loading-list';
 import { faBuildingColumns, faCalendar } from '@fortawesome/free-solid-svg-icons';
 

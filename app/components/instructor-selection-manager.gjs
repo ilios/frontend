@@ -1,7 +1,7 @@
-import SelectedInstructors from 'ilios-common/components/selected-instructors';
-import SelectedInstructorGroups from 'ilios-common/components/selected-instructor-groups';
+import SelectedInstructors from './selected-instructors';
+import SelectedInstructorGroups from './selected-instructor-groups';
 import t from 'ember-intl/helpers/t';
-import UserSearch from 'ilios-common/components/user-search';
+import UserSearch from './user-search';
 <template>
   <section class="instructor-selection-manager" data-test-instructor-selection-manager>
     <SelectedInstructors

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
-import createDownloadFile from 'ilios-common/utils/create-download-file';
+import createDownloadFile from '../../utils/create-download-file';
 import PapaParse from 'papaparse';
 import { TrackedAsyncData } from 'ember-async-data';
 import { not } from 'ember-truth-helpers';

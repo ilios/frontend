@@ -3,20 +3,20 @@ import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import { TrackedAsyncData } from 'ember-async-data';
-import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidations from '../../classes/yup-validations';
 import { number } from 'yup';
 import { task } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import t from 'ember-intl/helpers/t';
-import ToggleYesno from 'ilios-common/components/toggle-yesno';
+import ToggleYesno from '../toggle-yesno';
 import perform from 'ember-concurrency/helpers/perform';
-import EditableField from 'ilios-common/components/editable-field';
+import EditableField from '../editable-field';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
+import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import SessionOverviewIlmDuedate from 'ilios-common/components/session-overview-ilm-duedate';
-import focus from 'ilios-common/modifiers/focus';
+import YupValidationMessage from '../yup-validation-message';
+import SessionOverviewIlmDuedate from '../session-overview-ilm-duedate';
+import focus from '../../modifiers/focus';
 
 export default class SessionIlmComponent extends Component {
   @service store;

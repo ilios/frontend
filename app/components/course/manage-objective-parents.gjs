@@ -1,15 +1,15 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { findById, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy, sortBy } from '../../utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import { eq, gt, or } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
-import sortBy0 from 'ilios-common/helpers/sort-by';
-import includes from 'ilios-common/helpers/includes';
-import ManageObjectiveParentsItem from 'ilios-common/components/course/manage-objective-parents-item';
-import pipe from 'ilios-common/helpers/pipe';
-import noop from 'ilios-common/helpers/noop';
+import sortBy0 from '../../helpers/sort-by';
+import includes from '../../helpers/includes';
+import ManageObjectiveParentsItem from './manage-objective-parents-item';
+import pipe from '../../helpers/pipe';
+import noop from '../../helpers/noop';
 import { fn } from '@ember/helper';
 
 export default class CourseManageObjectiveParentsComponent extends Component {

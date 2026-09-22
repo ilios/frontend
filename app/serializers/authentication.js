@@ -1,6 +1,6 @@
-import IliosSerializer from './ilios';
+import ApplicationSerializer from './application';
 
-export default class AuthenticationSerializer extends IliosSerializer {
+export default class AuthenticationSerializer extends ApplicationSerializer {
   // primaryKey = 'user';
   serialize(snapshot, options) {
     const json = super.serialize(snapshot, options);

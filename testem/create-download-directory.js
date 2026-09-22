@@ -4,7 +4,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const buildDir = process.env.BUILD_DIR || path.resolve(__dirname, '../../../build');
+const buildDir = process.env.BUILD_DIR || path.resolve(__dirname, '../build');
 const downloadDir = `${buildDir}/screenshots`;
 
 module.exports = () => {

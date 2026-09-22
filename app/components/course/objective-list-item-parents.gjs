@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
-import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import sortableByPosition from '../../utils/sortable-by-position';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FadeText from 'ilios-common/components/fade-text';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import FadeText from '../fade-text';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class CourseObjectiveListItemParentsComponent extends Component {
   get parentTitles() {

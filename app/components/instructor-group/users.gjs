@@ -8,10 +8,10 @@ import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
 import InstructorManager from './instructor-manager';
-import sortBy from 'ilios-common/helpers/sort-by';
-import UserNameInfo from 'ilios-common/components/user-name-info';
-import UserStatus from 'ilios-common/components/user-status';
-import BigSaveCancelButtons from 'ilios-common/components/big-save-cancel-buttons';
+import sortBy from '../../helpers/sort-by';
+import UserNameInfo from '../user-name-info';
+import UserStatus from '../user-status';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class InstructorGroupUsersComponent extends Component {
   @tracked usersBuffer = [];
