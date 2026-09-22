@@ -6,6 +6,8 @@ const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options
 const { Webpack } = require('@embroider/webpack');
 const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const fs = require('fs');
+const path = require('path');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = async function (defaults) {
@@ -50,6 +52,26 @@ module.exports = async function (defaults) {
       DEPRECATE_TRACKING_PACKAGE: false,
     },
   });
+
+  // Import normalize.css
+  app.import(path.join('node_modules', 'normalize.css', 'normalize.css'));
+
+  // Import Quill editor styles
+  app.import(path.join('node_modules', 'quill', 'dist', 'quill.snow.css'));
+
+  // Import flatpickr styles
+  app.import(path.join('node_modules', 'flatpickr', 'dist', 'flatpickr.css'));
+
+  // Import Nunito Font Files
+  const nunitoDir = path.join(
+    path.dirname(require.resolve('@fontsource-variable/nunito')),
+    'files',
+  );
+  for (const file of fs.readdirSync(nunitoDir)) {
+    app.import(path.join(nunitoDir, file), {
+      destDir: 'assets/fonts/nunito',
+    });
+  }
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
     staticAddonTestSupportTrees: true,
