@@ -32,7 +32,7 @@ export default function asArray(maybeArray) {
 
 function _asArray(maybeArray) {
   if (typeof maybeArray === 'number') {
-    throw new Error('Numbers not supported as arrays [ilios-common]');
+    throw new Error('Numbers not supported as arrays [frontend]');
   }
   if (typeof maybeArray === 'string') {
     return maybeArray.split('');
@@ -49,15 +49,15 @@ function _asArray(maybeArray) {
   } else if (maybeArray instanceof Map) {
     return Array.from(maybeArray.values());
   } else if (maybeArray instanceof WeakMap) {
-    throw new Error('WeakMaps is not supported as arrays [ilios-common]');
+    throw new Error('WeakMaps is not supported as arrays [frontend]');
   } else if (maybeArray instanceof WeakSet) {
-    throw new Error('WeakSets is not supported as arrays [ilios-common]');
+    throw new Error('WeakSets is not supported as arrays [frontend]');
   }
   if (typeof maybeArray === 'object') {
     if (isPromiseProxyLike(maybeArray)) {
       const { content } = maybeArray;
       if (typeof content !== 'object' || content === null) {
-        throw new Error('Unknown content type in array-like object [ilios-common]');
+        throw new Error('Unknown content type in array-like object [frontend]');
       }
       if (isArrayable(content)) {
         return content.toArray();
@@ -66,13 +66,13 @@ function _asArray(maybeArray) {
       }
     }
     if (isPromiseLike(maybeArray)) {
-      throw new Error('Promise-like objects is not supported as arrays [ilios-common]');
+      throw new Error('Promise-like objects is not supported as arrays [frontend]');
     }
     if (isArrayable(maybeArray)) {
       return maybeArray.toArray();
     }
     if (maybeArray instanceof EmberObject) {
-      throw new Error('EmberObjects is not supported as arrays [ilios-common]');
+      throw new Error('EmberObjects is not supported as arrays [frontend]');
     }
     return Array.from(Object.values(maybeArray));
   }
@@ -80,7 +80,7 @@ function _asArray(maybeArray) {
     return [];
   }
   if (!isIterable(maybeArray)) {
-    throw new Error('Argument, passed as array is not iterable [ilios-common]');
+    throw new Error('Argument, passed as array is not iterable [frontend]');
   }
   return maybeArray;
 }
