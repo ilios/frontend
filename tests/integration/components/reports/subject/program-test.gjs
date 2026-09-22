@@ -1,0 +1,248 @@
+import { module, test } from 'qunit';
+import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
+import { render } from '@ember/test-helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/reports/subject/program';
+import Program from 'frontend/components/reports/subject/program';
+
+module('Integration | Component | reports/subject/program', function (hooks) {
+  setupRenderingTest(hooks);
+  setupMSW(hooks);
+
+  const responseData = {
+    data: {
+      programs: [
+        { id: 1, title: 'First Program', school: { title: 'School B' } },
+        { id: 2, title: 'Second Program', school: { title: 'School A' } },
+      ],
+    },
+  };
+
+  test('it renders for user with permissions', async function (assert) {
+    // The component checks permissions against the "performs non-learner function" of the current user,
+    // and not against user relationships in the curriculum.
+    // Making the current user a root user makes that perms check pass.
+    await setupAuthentication({ root: true });
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.step('API called');
+      assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
+      return responseData;
+    });
+    const { id } = await this.server.create('report', {
+      subject: 'program',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(
+      <template>
+        <Program
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.results.length, 2);
+    assert.ok(component.results[0].hasLink);
+    assert.ok(component.results[1].hasLink);
+    assert.strictEqual(component.results[0].school, 'School A:');
+    assert.strictEqual(component.results[1].school, 'School B:');
+    assert.strictEqual(component.results[0].title, 'Second Program');
+    assert.strictEqual(component.results[1].title, 'First Program');
+    assert.strictEqual(component.results[0].link, '/programs/2');
+    assert.strictEqual(component.results[1].link, '/programs/1');
+    assert.verifySteps(['API called']);
+  });
+
+  test('it renders for user with no permissions', async function (assert) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.step('API called');
+      assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
+      return responseData;
+    });
+    const { id } = await this.server.create('report', {
+      subject: 'program',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(
+      <template>
+        <Program
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.results.length, 2);
+    assert.notOk(component.results[0].hasLink);
+    assert.notOk(component.results[1].hasLink);
+    assert.strictEqual(component.results[0].school, 'School A:');
+    assert.strictEqual(component.results[1].school, 'School B:');
+    assert.strictEqual(component.results[0].title, 'Second Program');
+    assert.strictEqual(component.results[1].title, 'First Program');
+    assert.verifySteps(['API called']);
+  });
+
+  test('it renders all results when resultsLengthMax is not reached', async function (assert) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.step('API called');
+      assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
+      return responseData;
+    });
+    const { id } = await this.server.create('report', {
+      subject: 'program',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(
+      <template>
+        <Program
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 programs');
+    assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+    assert.verifySteps(['API called']);
+  });
+
+  test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
+    const alphabet = [...Array(26).keys()].map((i) => String.fromCharCode(i + 65));
+    const responseDataLarge = {
+      data: {
+        programs: [],
+      },
+    };
+
+    for (let i = 0; i < 220; i++) {
+      const letter = alphabet[Math.floor(Math.random() * alphabet.length)];
+      responseDataLarge.data.programs.push({
+        id: i,
+        title: `program ${i}`,
+        school: { id: 1, title: `School ${letter}` },
+      });
+    }
+
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.step('API called');
+      assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
+      return responseDataLarge;
+    });
+    const { id } = await this.server.create('report', {
+      subject: 'program',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(
+      <template>
+        <Program
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(
+      component.results.length,
+      200,
+      'responseDataLarge shows only 200 of 220 programs',
+    );
+    assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+    assert.verifySteps(['API called']);
+  });
+
+  test('filter by school', async function (assert) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.step('API called');
+      assert.strictEqual(
+        query,
+        'query { programs(schools: [33]) { id, title, school { title } } }',
+      );
+      return responseData;
+    });
+    const { id } = await this.server.create('report', {
+      subject: 'program',
+      school: await this.server.create('school', { id: 33 }),
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
+    await render(
+      <template>
+        <Program
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+          @school={{this.school}}
+        />
+      </template>,
+    );
+    assert.verifySteps(['API called']);
+  });
+
+  test('filter by session', async function (assert) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.step('API called');
+      assert.strictEqual(
+        query,
+        'query { programs(sessions: [13]) { id, title, school { title } } }',
+      );
+      return responseData;
+    });
+    const { id } = await this.server.create('report', {
+      subject: 'program',
+      prepositionalObject: 'session',
+      prepositionalObjectTableRowId: '13',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(
+      <template>
+        <Program
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+        />
+      </template>,
+    );
+    assert.verifySteps(['API called']);
+  });
+
+  test('filter by school and session', async function (assert) {
+    this.server.post('/api/graphql', async ({ request }) => {
+      const { query } = await request.json();
+      assert.step('API called');
+      assert.strictEqual(
+        query,
+        'query { programs(schools: [24], sessions: [13]) { id, title, school { title } } }',
+      );
+      return responseData;
+    });
+    const { id } = await this.server.create('report', {
+      subject: 'program',
+      school: await this.server.create('school', { id: 24 }),
+      prepositionalObject: 'session',
+      prepositionalObjectTableRowId: '13',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    this.set('school', await this.owner.lookup('service:store').findRecord('school', 24));
+    await render(
+      <template>
+        <Program
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+          @school={{this.school}}
+        />
+      </template>,
+    );
+    assert.verifySteps(['API called']);
+  });
+});

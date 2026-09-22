@@ -1,0 +1,102 @@
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import SortableTh from '../sortable-th';
+import { eq, or } from 'ember-truth-helpers';
+import { fn } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
+import sortBy from '../../helpers/sort-by';
+import TableRow from './table-row';
+import includes from '../../helpers/includes';
+import scrollIntoView from '../../modifiers/scroll-into-view';
+import { on } from '@ember/modifier';
+
+export default class ReportsTableComponent extends Component {
+  @tracked reportsForRemovalConfirmation = [];
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'nearest',
+  };
+
+  get sortedAscending() {
+    return !this.args.sortBy.includes(':desc');
+  }
+
+  @action
+  confirmRemoval(report) {
+    this.reportsForRemovalConfirmation = [...this.reportsForRemovalConfirmation, report.id];
+  }
+
+  @action
+  cancelRemove(report) {
+    this.reportsForRemovalConfirmation = this.reportsForRemovalConfirmation.filter(
+      (id) => id !== report.id,
+    );
+  }
+
+  @action
+  setSortBy(what) {
+    if (this.args.sortBy === what) {
+      what += ':desc';
+    }
+    this.args.setSortBy(what);
+  }
+  <template>
+    <table
+      class="ilios-table ilios-table-colors ilios-zebra-table ilios-removable-table"
+      data-test-reports-table
+      ...attributes
+    >
+      <thead>
+        <tr data-test-report-headings>
+          <SortableTh
+            data-test-report-title-heading
+            @sortedAscending={{this.sortedAscending}}
+            @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+            @colspan="11"
+            @onClick={{fn this.setSortBy "title"}}
+          >
+            {{t "general.title"}}
+          </SortableTh>
+          <th class="text-right" colspan="1">{{t "general.actions"}}</th>
+        </tr>
+      </thead>
+      <tbody data-test-reports>
+        {{#each (sortBy @sortBy @decoratedReports) as |decoratedReport|}}
+          <TableRow
+            @decoratedReport={{decoratedReport}}
+            @reportsForRemovalConfirmation={{this.reportsForRemovalConfirmation}}
+            @confirmRemoval={{this.confirmRemoval}}
+          />
+          {{#if (includes decoratedReport.report.id this.reportsForRemovalConfirmation)}}
+            <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}}>
+              <td colspan="12">
+                <div class="confirm-message">
+                  {{t "general.confirmRemoveReport"}}
+                  <br />
+                  <div class="confirm-buttons">
+                    <button
+                      {{on "click" (fn @remove decoratedReport.report)}}
+                      type="button"
+                      class="remove text"
+                    >
+                      {{t "general.yes"}}
+                    </button>
+                    <button
+                      type="button"
+                      class="done text"
+                      {{on "click" (fn this.cancelRemove decoratedReport.report)}}
+                    >
+                      {{t "general.cancel"}}
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {{/if}}
+        {{/each}}
+      </tbody>
+    </table>
+  </template>
+}

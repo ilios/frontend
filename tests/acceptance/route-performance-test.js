@@ -1,0 +1,330 @@
+import { currentRouteName, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import {
+  setupAuthentication,
+  freezeDateAt,
+  unfreezeDate,
+  setupApplicationTest,
+} from 'frontend/tests/helpers';
+import { DateTime } from 'luxon';
+import { graphQL } from 'frontend/tests/helpers/curriculum-report';
+
+module('Acceptance | performance', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(async function () {
+    this.set('maxDuration', 10000);
+
+    this.school = await this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school, directedSchools: [this.school] });
+  });
+
+  test('/dashboard/week', async function (assert) {
+    const today = DateTime.fromObject({ hour: 8 });
+    const oct14th2025 = DateTime.fromObject({
+      year: 2025,
+      month: 10,
+      day: 14,
+      hour: 8,
+    });
+    freezeDateAt(oct14th2025.toJSDate());
+    const { firstDayOfThisWeek } = this.owner.lookup('service:locale-days');
+    const startOfWeek = DateTime.fromJSDate(firstDayOfThisWeek);
+
+    for (let i = 0; i < 7; i++) {
+      await this.server.create('userevent', {
+        user: Number(this.user.id),
+        name: `user event ${i}`,
+        startDate: startOfWeek.plus({ hour: i }).toISO(),
+        endDate: startOfWeek.plus({ hour: i + i }).toISO(),
+        lastModified: today.minus({ year: 1 }).toISO(),
+        isPublished: true,
+        offering: i,
+      });
+    }
+
+    let start = performance.now();
+
+    await visit('/dashboard/week');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'dashboard.week', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+
+    unfreezeDate();
+  });
+
+  test('/dashboard/materials', async function (assert) {
+    let start = performance.now();
+
+    await visit('/dashboard/materials');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'dashboard.materials', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/dashboard/calendar', async function (assert) {
+    let start = performance.now();
+
+    await visit('/dashboard/calendar');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'dashboard.calendar', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/weeklyevents', async function (assert) {
+    let start = performance.now();
+
+    await visit('/weeklyevents');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'weeklyevents', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/courses', async function (assert) {
+    await this.server.create('academic-year');
+    this.sessionTypes = await this.server.createList('session-type', 1, {
+      school: this.school,
+    });
+
+    for (let i = 0; i < 100; i++) {
+      await this.server.create('course', {
+        school: this.school,
+      });
+    }
+
+    let start = performance.now();
+
+    await visit('/courses');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'courses', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/courses/[course-id]/sessions', async function (assert) {
+    await this.server.create('academic-year');
+    this.sessionTypes = await this.server.createList('session-type', 1, {
+      school: this.school,
+    });
+
+    this.course = await this.server.create('course', {
+      school: this.school,
+    });
+
+    for (let i = 0; i < 100; i++) {
+      await this.server.create('session', {
+        course: this.course,
+        sessionType: this.sessionTypes[0],
+        instructionalNotes: `session ${i} notes`,
+      });
+    }
+
+    let start = performance.now();
+
+    await visit('/courses/1');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'course.index', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/learnergroups', async function (assert) {
+    await this.server.createList('user', 20);
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+
+    for (let i = 2; i < 22; i += 5) {
+      await this.server.create('learner-group', {
+        cohort,
+        userIds: [i, i + 1, i + 2, i + 3, i + 4],
+      });
+    }
+
+    let start = performance.now();
+
+    await visit('/learnergroups');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'learner-groups', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/instructorgroups', async function (assert) {
+    await this.server.createList('user', 50);
+
+    for (let i = 2; i < 52; i += 5) {
+      await this.server.create('instructor-group', {
+        school: this.school,
+        userIds: [i, i + 1, i + 2, i + 3, i + 4],
+      });
+    }
+
+    let start = performance.now();
+
+    await visit('/instructorgroups');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'instructor-groups', 'current route is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/schools', async function (assert) {
+    for (let i = 0; i < 20; i++) {
+      await this.server.create('school');
+    }
+
+    let start = performance.now();
+
+    await visit('/schools');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'schools', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/programs', async function (assert) {
+    for (let i = 0; i < 20; i++) {
+      await this.server.create('program');
+    }
+
+    let start = performance.now();
+
+    await visit('/programs');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'programs', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/reports/curriculum', async function (assert) {
+    this.getCourseCompetenciesResponse = (assert) => {
+      return () => {
+        const courses = this.server.db.course.all().map((c) => graphQL.buildCourse(c));
+        assert.step('API called');
+        return { data: { courses } };
+      };
+    };
+    this.server.post('/api/graphql', this.getCourseCompetenciesResponse(assert));
+    await this.server.create('academic-year');
+    this.sessionTypes = await this.server.createList('session-type', 1, {
+      school: this.school,
+    });
+
+    const courses = await this.server.createList('course', 10, { school: this.school });
+    const promises = [];
+
+    for (let i = 0, n = courses.length; i < n; i++) {
+      promises.push(
+        await this.server.createList('session', 10, {
+          course: courses[i],
+          sessionType: this.sessionTypes[0],
+        }),
+      );
+    }
+
+    await Promise.all(promises);
+
+    let start = performance.now();
+
+    await visit('/reports/curriculum');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'reports.curriculum', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+    assert.verifySteps(['API called']);
+  });
+
+  test('/reports/subjects', async function (assert) {
+    await this.server.create('academic-year');
+    this.sessionTypes = await this.server.createList('session-type', 1, {
+      school: this.school,
+    });
+
+    const courses = await this.server.createList('course', 10, { school: this.school });
+    const promises = [];
+
+    for (let i = 0, n = courses.length; i < n; i++) {
+      promises.push(
+        await this.server.createList('session', 10, {
+          course: courses[i],
+          sessionType: this.sessionTypes[0],
+        }),
+      );
+      promises.push(
+        await this.server.create('report', {
+          title: `my report {i}`,
+          subject: 'session',
+          prepositionalObject: 'course',
+          prepositionalObjectTableRowId: String(courses[0].id),
+          user: this.user,
+          school: this.school,
+        }),
+      );
+    }
+
+    await Promise.all(promises);
+
+    let start = performance.now();
+
+    await visit('/reports/subjects');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'reports.subjects', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/admin', async function (assert) {
+    let start = performance.now();
+
+    await visit('/admin');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'admin-dashboard', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+
+  test('/users', async function (assert) {
+    await this.server.createList('user', 25);
+
+    let start = performance.now();
+
+    await visit('/users');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'users', 'current route name is correct');
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
+  });
+});

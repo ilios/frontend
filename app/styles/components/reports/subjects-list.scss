@@ -1,0 +1,38 @@
+@use "../../mixins" as m;
+
+.reports-subjects-list {
+  .filters {
+    @include m.main-list-filters;
+
+    .title-filter {
+      @include m.main-list-filter;
+    }
+  }
+
+  .new .saved-result {
+    @include m.main-list-saved-new;
+  }
+
+  .reports {
+    @include m.main-list-box;
+
+    .header {
+      @include m.main-list-box-header;
+
+      .actions {
+        @include m.main-list-box-header-actions;
+      }
+    }
+
+    .list {
+      @include m.main-list-box-table;
+    }
+
+    .report-results {
+      li {
+        margin-bottom: 0;
+        padding: 0.25rem 0.1rem;
+      }
+    }
+  }
+}

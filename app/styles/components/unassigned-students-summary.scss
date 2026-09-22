@@ -1,0 +1,12 @@
+@use "../mixins" as m;
+
+.unassigned-students-summary {
+  .manage-link {
+    @include m.ilios-button;
+
+    &:hover {
+      background-color: light-dark(var(--light-blue), var(--brighter-blue));
+      text-decoration: none;
+    }
+  }
+}

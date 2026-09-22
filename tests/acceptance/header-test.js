@@ -1,0 +1,80 @@
+import { module, test } from 'qunit';
+import { visit } from '@ember/test-helpers';
+import {
+  setupApplicationTest,
+  takeScreenshot,
+  setupAuthentication,
+  freezeDateAt,
+  unfreezeDate,
+} from 'frontend/tests/helpers';
+
+module('Acceptance | header', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(async function () {
+    freezeDateAt(new Date('9/19/2029'));
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
+  });
+
+  test('privileged users can view search', async function (assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('/application/config', function () {
+      assert.step('API called');
+      return {
+        config: {
+          searchEnabled: true,
+          apiVersion,
+        },
+      };
+    });
+    // Global search requires the current user to perform a non-learner function.
+    // Creating the current user as root gives us the necessary permissions.
+    // Please see the `ilios-header` component for details.
+    await setupAuthentication({ root: true });
+    await visit('/');
+    await takeScreenshot(assert);
+    assert.dom('.global-search-box').exists();
+    assert.verifySteps(['API called']);
+  });
+
+  test('when search is disabled on the server it does not display', async function (assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('/application/config', function () {
+      assert.step('API called');
+      return {
+        config: {
+          searchEnabled: false,
+          apiVersion,
+        },
+      };
+    });
+    // Global search requires the current user to perform a non-learner function.
+    // Creating the current user as root gives us the necessary permissions.
+    // Please see the `ilios-header` component for details.
+    await setupAuthentication({ root: true });
+    await visit('/');
+    await takeScreenshot(assert);
+    assert.dom('.global-search-box').doesNotExist();
+    assert.verifySteps(['API called']);
+  });
+
+  test('students can not view search', async function (assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('/application/config', function () {
+      assert.step('API called');
+      return {
+        config: {
+          searchEnabled: true,
+          apiVersion,
+        },
+      };
+    });
+    await setupAuthentication();
+    await visit('/');
+    assert.dom('.global-search-box').doesNotExist();
+    assert.verifySteps(['API called']);
+  });
+});

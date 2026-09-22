@@ -1,17 +1,24 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
+# compiled output
+/dist/
+/declarations/
 
 # dependencies
-node_modules/
+/node_modules/
 
 # misc
-.env*
-.pnp*
-.pnpm-debug.log
-.sass-cache
-.eslintcache
-coverage/
-build/
-npm-debug.log*
-yarn-error.log
+/.env*
+/.pnp*
+/.eslintcache
+/coverage/
+/build/
+/npm-debug.log*
+/testem.log
+/yarn-error.log
 
-packages/**/test-execution-*.json
+/test-execution-*.json
+
+# broccoli-debug
+/DEBUG/
+
+#msw's worker
+/public/mockServiceWorker.js

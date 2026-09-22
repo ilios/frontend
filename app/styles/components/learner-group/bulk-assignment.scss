@@ -1,0 +1,71 @@
+@use "../../mixins" as m;
+
+.learner-group-bulk-assignment {
+  border-bottom: 1px dotted var(--orange);
+  padding: 1rem 0;
+
+  .learner-group-upload-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .loading-file {
+      display: flex;
+      padding: 1rem;
+      text-align: center;
+      width: 100%;
+
+      i {
+        color: light-dark(var(--light-blue), var(--light-blue));
+        @include m.font-size("xxl");
+        font-weight: 600;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .issue {
+      color: light-dark(var(--grey), var(--light-grey));
+      margin-left: 1rem;
+    }
+
+    p:has(button) {
+      margin: 0;
+    }
+  }
+
+  .group-matcher {
+    th:nth-child(1),
+    td:nth-child(1) {
+      width: 60%;
+
+      button {
+        margin-left: 2rem;
+      }
+    }
+
+    .learner-group-bulk-group-matcher {
+      select {
+        width: 100%;
+      }
+
+      &.matched {
+        background-color: light-dark(
+          var(--transparent-green),
+          var(--transparent-green)
+        );
+      }
+    }
+  }
+
+  .bulk-finalize-users {
+    h2 {
+      @include m.ilios-heading-h5;
+      margin-top: 1rem;
+    }
+  }
+
+  table caption {
+    @include m.ilios-heading-h5;
+  }
+}

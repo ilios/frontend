@@ -1,0 +1,45 @@
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { render } from '@ember/test-helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/learningmaterial-search';
+import LearningmaterialSearch from 'frontend/components/learningmaterial-search';
+
+module('Integration | Component | learningmaterial search', function (hooks) {
+  setupRenderingTest(hooks);
+  setupMSW(hooks);
+
+  test('search shows results', async function (assert) {
+    await this.server.createList('learning-material', 2);
+    await render(<template><LearningmaterialSearch /></template>);
+    await component.search.set('material');
+    assert.strictEqual(component.searchResults.length, 2);
+  });
+
+  test('empty search clears results', async function (assert) {
+    await this.server.createList('learning-material', 2);
+    await render(<template><LearningmaterialSearch /></template>);
+    await component.search.set('    material    ');
+    assert.strictEqual(component.searchResults.length, 2);
+    await component.search.set('        ');
+    assert.strictEqual(component.searchResults.length, 0);
+  });
+
+  test('search does not show Search More button if result count is same as searchResultsPerPage', async function (assert) {
+    this.set('searchResultsPerPage', 50);
+    await this.server.createList('learning-material', this.searchResultsPerPage);
+    await render(<template><LearningmaterialSearch /></template>);
+    await component.search.set('    material    ');
+    assert.strictEqual(component.searchResults.length, this.searchResultsPerPage);
+    assert.dom('[data-test-show-more]').doesNotExist();
+  });
+
+  test('search shows Search More button if result count above searchResultsPerPage', async function (assert) {
+    this.set('searchResultsPerPage', 50);
+    await this.server.createList('learning-material', this.searchResultsPerPage + 1);
+    await render(<template><LearningmaterialSearch /></template>);
+    await component.search.set('    material    ');
+    assert.strictEqual(component.searchResults.length, this.searchResultsPerPage + 1);
+    assert.dom('[data-test-show-more]').exists();
+  });
+});

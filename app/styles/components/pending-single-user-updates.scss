@@ -1,0 +1,41 @@
+@use "../mixins" as m;
+
+.pending-single-user-updates {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  .update {
+    border: 1px solid light-dark(var(--orange), var(--dark-orange));
+    border-radius: 1rem;
+    display: block;
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 75%;
+
+    .explanation {
+      text-align: left;
+
+      h2 {
+        display: inline;
+      }
+    }
+
+    .actions {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      @include m.for-tablet-and-up {
+        flex-direction: row;
+        justify-content: space-around;
+      }
+
+      button {
+        @include m.ilios-button-reset;
+        margin-right: 1rem;
+      }
+    }
+  }
+}

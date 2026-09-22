@@ -1,0 +1,210 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { task } from 'ember-concurrency';
+import { on } from '@ember/modifier';
+import { fn, concat } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { and, eq, not } from 'ember-truth-helpers';
+import set from 'ember-set-helper/helpers/set';
+import { LinkTo } from '@ember/routing';
+import perform from 'ember-concurrency/helpers/perform';
+import scrollIntoView from '../../modifiers/scroll-into-view';
+import {
+  faBan,
+  faChartColumn,
+  faCheck,
+  faPenToSquare,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
+
+export default class SchoolSessionTypesListItemComponent extends Component {
+  @tracked showRemoveConfirmation = false;
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'nearest',
+  };
+
+  remove = task({ drop: true }, async () => {
+    await this.args.sessionType.destroyRecord();
+  });
+  <template>
+    <tr
+      class="school-session-types-list-item{{if this.showRemoveConfirmation ' confirm-removal'}}"
+      data-test-school-session-types-list-item
+      ...attributes
+    >
+      <td colspan="3" data-test-title>
+        <button
+          class="link-button"
+          type="button"
+          {{on "click" (fn @manageSessionType @sessionType.id)}}
+        >
+          {{@sessionType.title}}
+        </button>
+        {{#unless @sessionType.active}}
+          <em data-test-inactive>
+            ({{t "general.inactive"}})
+          </em>
+        {{/unless}}
+      </td>
+      <td class="hide-from-small-screen" data-test-sessions-count>
+        {{@sessionType.sessionCount}}
+      </td>
+      <td data-test-is-assessment>
+        {{#if @sessionType.assessment}}
+          <FaIcon @icon={{faCheck}} class="yes" />
+        {{else}}
+          <FaIcon @icon={{faBan}} class="no" />
+        {{/if}}
+      </td>
+      <td class="hide-from-small-screen" colspan="2" data-test-assessment-option>
+        {{@sessionType.assessmentOption.name}}
+      </td>
+      <td class="hide-from-small-screen" colspan="2" data-test-assessment-method-description>
+        {{@sessionType.firstAamcMethod.description}}
+
+        {{#if (and @sessionType.firstAamcMethod (not @sessionType.firstAamcMethod.active))}}
+          <em>
+            ({{t "general.inactive"}})
+          </em>
+        {{/if}}
+      </td>
+      <td class="calendar-color hide-from-small-screen">
+        {{! template-lint-disable no-inline-styles style-concatenation no-triple-curlies}}
+        <span
+          class="box"
+          data-test-colorbox
+          style={{{concat "background-color: " @sessionType.safeCalendarColor}}}
+        ></span>
+      </td>
+      <td>
+        <button
+          type="button"
+          class="link-button manage-button{{if this.showRemoveConfirmation ' disabled'}}"
+          aria-label={{t "general.manage"}}
+          title={{if
+            this.showRemoveConfirmation
+            (t "general.disabledByConfirmation")
+            (t "general.manage")
+          }}
+          disabled={{this.showRemoveConfirmation}}
+          {{on "click" (fn @manageSessionType @sessionType.id)}}
+          data-test-manage
+        >
+          <FaIcon
+            @icon={{faPenToSquare}}
+            class={{if this.showRemoveConfirmation "disabled" "edit"}}
+          />
+        </button>
+        {{#if (eq @sessionType.sessionCount 0)}}
+          {{#if @canDelete}}
+            <button
+              type="button"
+              class="link-button delete-button{{if this.showRemoveConfirmation ' disabled'}}"
+              title={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.remove")
+              }}
+              disabled={{this.showRemoveConfirmation}}
+              {{on "click" (set this "showRemoveConfirmation" true)}}
+              data-test-delete
+            >
+              <FaIcon
+                @icon={{faTrash}}
+                class={{if this.showRemoveConfirmation "disabled" "remove"}}
+              />
+            </button>
+          {{else}}
+            <button
+              type="button"
+              class="link-button delete-button disabled"
+              title={{t "general.canNotDeleteSchoolSessionType"}}
+              disabled
+              data-test-delete
+            >
+              <FaIcon @icon={{faTrash}} class="disabled" />
+            </button>
+          {{/if}}
+        {{else}}
+          <button
+            type="button"
+            class="link-button disabled"
+            title={{t "general.canNotDeleteSchoolSessionType"}}
+            disabled
+            data-test-delete
+          >
+            <FaIcon @icon={{faTrash}} class="disabled" />
+          </button>
+        {{/if}}
+        <LinkTo
+          @route="session-type-visualize-vocabularies"
+          @model={{@sessionType}}
+          @disabled={{this.showRemoveConfirmation}}
+          class="visualization-button"
+          title={{if
+            this.showRemoveConfirmation
+            (t "general.disabledByConfirmation")
+            (t "general.vocabularies")
+          }}
+        >
+          <FaIcon @icon={{faChartColumn}} class={{if this.showRemoveConfirmation "disabled"}} />
+        </LinkTo>
+      </td>
+    </tr>
+    {{#if this.showRemoveConfirmation}}
+      <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}}>
+        <td colspan="11" class="hide-from-small-screen">
+          <div class="confirm-message" data-test-message>
+            {{t "general.confirmRemoveSessionType"}}
+            <br />
+            <div class="confirm-buttons">
+              <button
+                type="button"
+                class="remove text"
+                {{on "click" (perform this.remove)}}
+                data-test-confirm
+              >
+                {{t "general.yes"}}
+              </button>
+              <button
+                type="button"
+                class="done text"
+                {{on "click" (set this "showRemoveConfirmation" false)}}
+                data-test-cancel
+              >
+                {{t "general.cancel"}}
+              </button>
+            </div>
+          </div>
+        </td>
+        <td colspan="5" class="hide-from-large-screen" data-test-confirm-removal>
+          <div class="confirm-message" data-test-message>
+            {{t "general.confirmRemoveSessionType"}}
+            <br />
+            <div class="confirm-buttons">
+              <button
+                type="button"
+                class="remove text"
+                {{on "click" (perform this.remove)}}
+                data-test-confirm
+              >
+                {{t "general.yes"}}
+              </button>
+              <button
+                type="button"
+                class="done text"
+                {{on "click" (set this "showRemoveConfirmation" false)}}
+                data-test-cancel
+              >
+                {{t "general.cancel"}}
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    {{/if}}
+  </template>
+}

@@ -1,0 +1,5 @@
+@use "../../mixins" as m;
+
+.program-year-objective-list-item-competency {
+  @include m.objective-list-item(0.5em);
+}

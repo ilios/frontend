@@ -1,0 +1,337 @@
+import { currentRouteName } from '@ember/test-helpers';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
+import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import page from 'frontend/tests/pages/program';
+
+module('Acceptance | Program - ProgramYear List', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(async function () {
+    this.school = await this.server.create('school');
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
+    this.program = await this.server.create('program', { school: this.school });
+  });
+
+  test('check list', async function (assert) {
+    const thisYear = new Date().getFullYear();
+    const cohorts = await this.server.createList('cohort', 4);
+    await this.server.create('program-year', {
+      program: this.program,
+      startYear: thisYear,
+      cohort: cohorts[0],
+    });
+    await this.server.create('program-year', {
+      program: this.program,
+      startYear: thisYear - 2,
+      cohort: cohorts[1],
+    });
+    await this.server.create('program-year', {
+      program: this.program,
+      startYear: thisYear - 1,
+      cohort: cohorts[2],
+    });
+    await this.server.create('program-year', {
+      program: this.program,
+      startYear: thisYear - 3,
+      cohort: cohorts[3],
+      archived: true,
+    });
+    await page.visit({ programId: this.program.id });
+    await takeScreenshot(assert, 'default');
+    assert.strictEqual(page.programYears.items.length, 3);
+    assert.strictEqual(page.programYears.items[0].link.text, `${thisYear}`);
+    assert.strictEqual(page.programYears.items[0].title, 'cohort 0');
+    assert.strictEqual(page.programYears.items[1].link.text, `${thisYear - 1}`);
+    assert.strictEqual(page.programYears.items[1].title, 'cohort 2');
+    assert.strictEqual(page.programYears.items[2].link.text, `${thisYear - 2}`);
+    assert.strictEqual(page.programYears.items[2].title, 'cohort 1');
+    await page.programYears.expandCollapse.toggle();
+    await takeScreenshot(assert, 'show programYears');
+    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 10);
+  });
+
+  test('sort list', async function (assert) {
+    const thisYear = new Date().getFullYear();
+    const cohorts = await this.server.createList('cohort', 4);
+    await this.server.create('program-year', {
+      program: this.program,
+      startYear: thisYear - 2,
+      cohort: cohorts[0],
+    });
+    await this.server.create('program-year', {
+      program: this.program,
+      startYear: thisYear - 1,
+      cohort: cohorts[1],
+    });
+    await this.server.create('program-year', {
+      program: this.program,
+      startYear: thisYear,
+      cohort: cohorts[2],
+    });
+    await page.visit({ programId: this.program.id });
+
+    assert.ok(page.programYears.header.startYear.isSortedDescending);
+    assert.strictEqual(page.programYears.items.length, 3);
+    assert.strictEqual(page.programYears.items[0].link.text, `${thisYear}`);
+    assert.strictEqual(page.programYears.items[0].title, 'cohort 2');
+    assert.strictEqual(page.programYears.items[1].link.text, `${thisYear - 1}`);
+    assert.strictEqual(page.programYears.items[1].title, 'cohort 1');
+    assert.strictEqual(page.programYears.items[2].link.text, `${thisYear - 2}`);
+    assert.strictEqual(page.programYears.items[2].title, 'cohort 0');
+
+    await page.programYears.header.startYear.click();
+
+    assert.ok(page.programYears.header.startYear.isSortedAscending);
+    assert.strictEqual(page.programYears.items.length, 3);
+    assert.strictEqual(page.programYears.items[0].link.text, `${thisYear - 2}`);
+    assert.strictEqual(page.programYears.items[0].title, 'cohort 0');
+    assert.strictEqual(page.programYears.items[1].link.text, `${thisYear - 1}`);
+    assert.strictEqual(page.programYears.items[1].title, 'cohort 1');
+    assert.strictEqual(page.programYears.items[2].link.text, `${thisYear}`);
+    assert.strictEqual(page.programYears.items[2].title, 'cohort 2');
+
+    await page.programYears.header.startYear.click();
+
+    assert.ok(page.programYears.header.startYear.isSortedDescending);
+    assert.strictEqual(page.programYears.items.length, 3);
+    assert.strictEqual(page.programYears.items[0].link.text, `${thisYear}`);
+    assert.strictEqual(page.programYears.items[0].title, 'cohort 2');
+    assert.strictEqual(page.programYears.items[1].link.text, `${thisYear - 1}`);
+    assert.strictEqual(page.programYears.items[1].title, 'cohort 1');
+    assert.strictEqual(page.programYears.items[2].link.text, `${thisYear - 2}`);
+    assert.strictEqual(page.programYears.items[2].title, 'cohort 0');
+  });
+
+  test('check competencies', async function (assert) {
+    const programYear = await this.server.create('program-year', {
+      program: this.program,
+    });
+    await this.server.createList('competency', 5, {
+      programYears: [programYear],
+    });
+    await this.server.create('cohort', { programYear });
+    await page.visit({ programId: this.program.id });
+    assert.strictEqual(page.programYears.items[0].competencies.text, '5');
+  });
+
+  test('check objectives', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    await this.server.createList('program-year-objective', 5, { programYear });
+    await this.server.create('cohort', { programYear });
+    await page.visit({ programId: this.program.id });
+    assert.strictEqual(page.programYears.items[0].objectives.text, '5');
+  });
+
+  test('check directors', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    await this.server.createList('user', 5, {
+      programYears: [programYear],
+    });
+    await this.server.create('cohort', { programYear });
+    await page.visit({ programId: this.program.id });
+    assert.strictEqual(page.programYears.items[0].directors.text, '5');
+  });
+
+  test('check terms', async function (assert) {
+    const vocabulary = await this.server.create('vocabulary', {
+      school: this.school,
+    });
+    const programYear = await this.server.create('program-year', {
+      program: this.program,
+    });
+    await this.server.createList('term', 5, {
+      programYears: [programYear],
+      vocabulary,
+    });
+    await this.server.create('cohort', { programYear });
+    await page.visit({ programId: this.program.id });
+    assert.strictEqual(page.programYears.items[0].terms.text, '5');
+  });
+
+  test('check empty values', async function (assert) {
+    const programYear = await this.server.create('program-year', {
+      program: this.program,
+    });
+    await this.server.create('cohort', { programYear });
+    await page.visit({ programId: this.program.id });
+    assert.strictEqual(page.programYears.items[0].competencies.text, '0');
+    assert.strictEqual(page.programYears.items[0].objectives.text, '0');
+    assert.strictEqual(page.programYears.items[0].directors.text, '0');
+    assert.strictEqual(page.programYears.items[0].terms.text, '0');
+  });
+
+  test('check link', async function (assert) {
+    const programYear = await this.server.create('program-year', {
+      program: this.program,
+    });
+    await this.server.create('cohort', { programYear });
+    await page.visit({ programId: this.program.id });
+    await page.programYears.items[0].link.click();
+    assert.strictEqual(currentRouteName(), 'program-year');
+  });
+
+  test('can delete a program-year', async function (assert) {
+    const programYear = await this.server.create('program-year', {
+      program: this.program,
+    });
+    await this.server.create('cohort', { programYear });
+    await page.visit({ programId: this.program.id });
+    assert.strictEqual(page.programYears.items.length, 1);
+    await page.programYears.items[0].remove();
+    await page.programYears.items[0].confirmRemoval.confirm();
+    assert.strictEqual(page.programYears.items.length, 0);
+  });
+
+  test('canceling adding new program-year collapses new program year form', async function (assert) {
+    await page.visit({ programId: this.program.id });
+    assert.notOk(page.programYears.newProgramYear.isVisible);
+    await page.programYears.expandCollapse.toggle();
+    assert.ok(page.programYears.newProgramYear.isVisible);
+    await page.programYears.newProgramYear.cancel.click();
+    assert.notOk(page.programYears.newProgramYear.isVisible);
+  });
+
+  test('can add a program-year (with no pre-existing program-years)', async function (assert) {
+    const thisYear = new Date().getFullYear();
+
+    await page.visit({ programId: this.program.id });
+    assert.strictEqual(page.programYears.items.length, 0);
+    await page.programYears.expandCollapse.toggle();
+    await page.programYears.newProgramYear.years.select(thisYear);
+    await page.programYears.newProgramYear.done.click();
+    assert.strictEqual(parseInt(page.programYears.items[0].link.text, 10), thisYear);
+    assert.strictEqual(page.programYears.items[0].title, `Class of ${thisYear + 4}`);
+    assert.strictEqual(page.programYears.items[0].competencies.text, '0');
+    assert.strictEqual(page.programYears.items[0].objectives.text, '0');
+    assert.strictEqual(page.programYears.items[0].directors.text, '0');
+    assert.strictEqual(page.programYears.items[0].terms.text, '0');
+  });
+
+  test('can add a program-year (with pre-existing program-year)', async function (assert) {
+    const thisYear = new Date().getFullYear();
+
+    const directors = await this.server.createList('user', 3);
+    const competencies = await this.server.createList('competency', 3);
+    const vocabulary = await this.server.create('vocabulary', { school: this.school });
+    const terms = await this.server.createList('term', 3, { vocabulary });
+    const currentYear = DateTime.now().year;
+    const programYear = await this.server.create('program-year', {
+      program: this.program,
+      startYear: currentYear,
+      directors,
+      competencies,
+      terms,
+    });
+    await this.server.create('cohort', { programYear });
+    await this.server.createList('program-year-objective', 2, { programYear });
+    const ancestor = await this.server.create('program-year-objective');
+    await this.server.create('program-year-objective', { programYear, ancestor });
+    await page.visit({ programId: this.program.id });
+    assert.strictEqual(page.programYears.items.length, 1);
+    assert.strictEqual(
+      parseInt(page.programYears.items[0].link.text, 10),
+      thisYear,
+      'first program year equals current year',
+    );
+    assert.strictEqual(page.programYears.items[0].title, 'cohort 0');
+    assert.strictEqual(page.programYears.items[0].competencies.text, '3');
+    assert.strictEqual(page.programYears.items[0].objectives.text, '3');
+    assert.strictEqual(page.programYears.items[0].directors.text, '3');
+    assert.strictEqual(page.programYears.items[0].terms.text, '3');
+    await page.programYears.expandCollapse.toggle();
+    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 10);
+    await page.programYears.newProgramYear.years.select(thisYear + 1);
+    await page.programYears.newProgramYear.done.click();
+    assert.strictEqual(page.programYears.items.length, 2);
+    assert.strictEqual(
+      parseInt(page.programYears.items[0].link.text, 10),
+      thisYear + 1,
+      'new first program year equals current year plus 1',
+    );
+    assert.strictEqual(
+      parseInt(page.programYears.items[1].link.text, 10),
+      thisYear,
+      'new second program year equals current year',
+    );
+    assert.strictEqual(page.programYears.items[0].title, `Class of ${(thisYear + 5).toString()}`);
+    assert.strictEqual(page.programYears.items[0].competencies.text, '3');
+    assert.strictEqual(page.programYears.items[0].objectives.text, '3');
+    assert.strictEqual(page.programYears.items[0].directors.text, '3');
+    assert.strictEqual(page.programYears.items[0].terms.text, '3');
+    await page.programYears.expandCollapse.toggle();
+    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 10);
+  });
+
+  test('privileged users can lock and unlock program-year', async function (assert) {
+    const cohorts = await this.server.createList('cohort', 2);
+    await this.server.create('program-year', {
+      program: this.program,
+      startYear: 2014,
+      cohort: cohorts[0],
+      locked: true,
+      directorIds: [this.user.id],
+    });
+    await this.server.create('program-year', {
+      program: this.program,
+      startYear: 2015,
+      cohort: cohorts[1],
+      locked: false,
+      directorIds: [this.user.id],
+    });
+    await page.visit({ programId: this.program.id });
+    await takeScreenshot(assert);
+    assert.strictEqual(page.programYears.items.length, 2, 'correct number of program years listed');
+    assert.ok(page.programYears.items[0].isUnlocked, 'first program year is unlocked');
+    assert.ok(page.programYears.items[1].isLocked, 'second program year is locked');
+    await page.programYears.items[0].lock();
+    await page.programYears.items[1].unlock();
+    assert.ok(page.programYears.items[0].isLocked, 'first program year is now locked');
+    assert.ok(page.programYears.items[1].isUnlocked, 'second program year is now unlocked');
+  });
+
+  test('delete-button is not visible for program years with populated cohorts', async function (assert) {
+    const programYears = await this.server.createList('programYear', 2, {
+      program: this.program,
+    });
+    const cohort = await this.server.create('cohort', {
+      programYear: programYears[0],
+    });
+    await this.server.create('cohort', {
+      programYear: programYears[1],
+    });
+    await this.server.create('user', {
+      cohorts: [cohort],
+    });
+    await page.visit({ programId: this.program.id });
+    assert.ok(page.programYears.items[0].canBeRemoved);
+    assert.notOk(page.programYears.items[1].canBeRemoved);
+  });
+
+  test('save button disabled if no available academic years #7168', async function (assert) {
+    const currentYear = DateTime.now().year;
+    const programYear = await this.server.create('program-year', {
+      program: this.program,
+      startYear: currentYear,
+    });
+    await this.server.create('cohort', { programYear });
+    await this.server.createList('program-year-objective', 2, { programYear });
+    const ancestor = await this.server.create('program-year-objective');
+    await this.server.create('program-year-objective', { programYear, ancestor });
+    await page.visit({ programId: this.program.id });
+
+    await page.programYears.expandCollapse.toggle();
+    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 10);
+
+    for (let i = 0; i < page.programYears.newProgramYear.years.options.length - 1; i++) {
+      assert.notOk(page.programYears.newProgramYear.done.isDisabled);
+      await page.programYears.newProgramYear.done.click();
+      await page.programYears.expandCollapse.toggle();
+    }
+
+    assert.ok(page.programYears.newProgramYear.done.isDisabled);
+  });
+});

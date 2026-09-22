@@ -1,0 +1,9 @@
+@use "../mixins" as m;
+
+.user-menu {
+  .menu {
+    li {
+      padding: 0;
+    }
+  }
+}

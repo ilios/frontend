@@ -1,0 +1,39 @@
+@use "../constants";
+@use "../mixins" as m;
+
+.programyear-header {
+  .backtolink {
+    margin: 0.5rem;
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 0.5rem;
+
+    @include m.for-tablet-and-up {
+      flex-direction: row;
+    }
+
+    .title {
+      display: flex;
+      flex-direction: column;
+
+      @include m.for-tablet-and-up {
+        flex-direction: row;
+        gap: 0.5rem;
+      }
+
+      .editable,
+      h3 {
+        display: block;
+        @include m.font-size("large");
+
+        @include m.for-laptop-and-up {
+          display: inline;
+        }
+      }
+    }
+  }
+}

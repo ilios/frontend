@@ -1,0 +1,38 @@
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { render } from '@ember/test-helpers';
+import { component } from 'frontend/tests/pages/components/ics-feed';
+import IcsFeed from 'frontend/components/ics-feed';
+
+module('Integration | Component | ics feed', function (hooks) {
+  setupRenderingTest(hooks);
+
+  test('copy', async function (assert) {
+    // skip this test if we can't access the clipboard
+    if (!navigator.clipboard) {
+      assert.expect(0);
+      return;
+    }
+
+    const instructions = 'SOME TEST INS';
+    const url = 'https://iliosproject.org';
+
+    // temporarily overwrite the writeText method.
+    const writeText = navigator.clipboard.writeText;
+    navigator.clipboard.writeText = (value) => {
+      assert.step('writeText called');
+      assert.strictEqual(value, url, 'clipboard text == url');
+    };
+
+    this.set('url', url);
+    this.set('instructions', instructions);
+    await render(
+      <template><IcsFeed @instructions={{this.instructions}} @url={{this.url}} /></template>,
+    );
+    await component.copy.click();
+    assert.verifySteps(['writeText called']);
+
+    // undo writeText overwrite.
+    navigator.clipboard.writeText = writeText;
+  });
+});

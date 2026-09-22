@@ -1,0 +1,12 @@
+@use "../../mixins" as m;
+
+.assign-students-root {
+  .filters {
+    @include m.main-list-filters;
+
+    .schoolsfilter,
+    .titlefilter {
+      @include m.main-list-filter;
+    }
+  }
+}

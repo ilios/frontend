@@ -1,0 +1,21 @@
+@use "../../mixins" as m;
+
+.school-emails {
+  @include m.detail-container(var(--orange));
+
+  .header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .content {
+    @include m.collapsed-container-content;
+  }
+}

@@ -1,0 +1,229 @@
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { render } from '@ember/test-helpers';
+import { component } from 'frontend/tests/pages/components/course/publication-menu';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
+import { setupMSW } from 'frontend/tests/msw';
+import PublicationMenu from 'frontend/components/course/publication-menu';
+
+module('Integration | Component | course/publication-menu', function (hooks) {
+  setupRenderingTest(hooks);
+  setupMSW(hooks);
+
+  test('it renders and is accessible for draft course', async function (assert) {
+    await this.server.create('course');
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+
+    await a11yAudit(this.element, {
+      rules: {
+        'color-contrast': {
+          enabled: false,
+        },
+      },
+    });
+    assert.strictEqual(component.text, 'Not Published');
+    await component.toggle.click();
+    await a11yAudit(this.element, {
+      rules: {
+        'color-contrast': {
+          enabled: false,
+        },
+      },
+    });
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders and is accessible for scheduled course', async function (assert) {
+    await this.server.create('course', {
+      published: true,
+      publishedAsTbd: true,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+
+    await a11yAudit(this.element);
+    assert.strictEqual(component.text, 'Scheduled');
+    await component.toggle.click();
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders and is accessible for published course', async function (assert) {
+    await this.server.create('course', {
+      published: true,
+      publishedAsTbd: false,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+
+    await a11yAudit(this.element);
+    assert.strictEqual(component.text, 'Published');
+    await component.toggle.click();
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('click opens menu', async function (assert) {
+    await this.server.create('course');
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+    assert.ok(component.menuClosed);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+  });
+
+  test('correct actions for unpublished course', async function (assert) {
+    await this.server.create('course');
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.ok(component.hasPublish);
+    assert.ok(component.hasTbd);
+    assert.notOk(component.hasUnPublish);
+  });
+
+  test('correct actions for unpublished course with required cohort', async function (assert) {
+    const cohort = await this.server.create('cohort');
+    await this.server.create('course', {
+      cohorts: [cohort],
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.ok(component.hasPublish);
+    assert.ok(component.hasTbd);
+    assert.notOk(component.hasUnPublish);
+  });
+
+  test('correct actions for scheduled course', async function (assert) {
+    await this.server.create('course', {
+      published: true,
+      publishedAsTbd: true,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.ok(component.hasPublish);
+    assert.notOk(component.hasTbd);
+    assert.ok(component.hasUnPublish);
+  });
+
+  test('correct actions for scheduled course with required cohort', async function (assert) {
+    const cohort = await this.server.create('cohort');
+    await this.server.create('course', {
+      cohorts: [cohort],
+      published: true,
+      publishedAsTbd: true,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.ok(component.hasPublish);
+    assert.notOk(component.hasTbd);
+    assert.ok(component.hasUnPublish);
+  });
+
+  test('correct actions for published course', async function (assert) {
+    await this.server.create('course', {
+      published: true,
+      publishedAsTbd: false,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.notOk(component.hasPublishAsIs);
+    assert.notOk(component.hasPublish);
+    assert.ok(component.hasTbd);
+    assert.ok(component.hasUnPublish);
+  });
+
+  test('down opens menu', async function (assert) {
+    await this.server.create('course');
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+
+    assert.ok(component.menuClosed, 'menu is closed');
+    await component.toggle.down();
+    assert.ok(component.menuOpen, 'hitting ArrowDown made menu open');
+  });
+
+  test('escape closes menu', async function (assert) {
+    await this.server.create('course');
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+
+    await component.toggle.down();
+    assert.ok(component.menuOpen, 'hitting ArrowDown made menu open');
+    await component.toggle.esc();
+    assert.ok(component.menuClosed, 'hitting Escape made menu close');
+  });
+
+  test('dropdown options are accessible for unpublished course', async function (assert) {
+    const cohort = await this.server.create('cohort');
+    await this.server.create('course', {
+      cohorts: [cohort],
+      published: false,
+      publishedAsTbd: false,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.ok(component.hasPublish);
+    assert.ok(component.hasTbd);
+    assert.notOk(component.hasUnPublish);
+
+    assert.strictEqual(component.selectedMenuItem, 'Publish');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.menu.up();
+    assert.strictEqual(component.selectedMenuItem, 'Mark as Scheduled');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('dropdown options are accessible for published course', async function (assert) {
+    const cohort = await this.server.create('cohort');
+    await this.server.create('course', {
+      cohorts: [cohort],
+      published: true,
+      publishedAsTbd: false,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
+    this.set('course', courseModel);
+    await render(<template><PublicationMenu @course={{this.course}} /></template>);
+    await component.toggle.click();
+    assert.ok(component.menuOpen);
+    assert.notOk(component.hasPublish);
+    assert.ok(component.hasTbd);
+    assert.ok(component.hasUnPublish);
+
+    assert.strictEqual(component.selectedMenuItem, 'Mark as Scheduled');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.menu.up();
+    assert.strictEqual(component.selectedMenuItem, 'UnPublish Course');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+});

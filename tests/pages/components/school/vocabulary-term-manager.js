@@ -1,0 +1,33 @@
+import { clickable, create, collection, isPresent, fillable, text } from 'ember-cli-page-object';
+import newTermForm from './vocabulary-new-term';
+import yesNoToggle from 'frontend/tests/pages/components/toggle-yesno';
+import breadcrumbs from 'frontend/tests/pages/components/breadcrumbs';
+
+const definition = {
+  scope: '[data-test-school-vocabulary-term-manager]',
+  title: text('[data-test-title] [data-test-label-and-value]'),
+  editTitle: clickable('[data-test-title] [data-test-edit]'),
+  changeTitle: fillable('[data-test-title] input'),
+  saveTitle: clickable('[data-test-title] .done'),
+  cancelTitleChanges: clickable('[data-test-title] .cancel'),
+  hasError: isPresent('[data-test-title-validation-error-message]'),
+  error: text('[data-test-title-validation-error-message]'),
+  description: text('[data-test-description]'),
+  delete: clickable('[data-test-delete]'),
+  breadcrumbs,
+  isActive: {
+    scope: '[data-test-is-active]',
+    yesNoToggle,
+  },
+  subTerms: {
+    scope: '[data-test-sub-terms]',
+    list: collection('[data-test-term-list] [data-test-term]', {
+      title: text(),
+      hasChildren: isPresent('[data-test-has-children]'),
+    }),
+    newTermForm,
+  },
+};
+
+export default definition;
+export const component = create(definition);

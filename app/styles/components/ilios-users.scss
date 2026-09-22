@@ -1,0 +1,43 @@
+@use "../mixins" as m;
+
+.ilios-users {
+  .filters {
+    @include m.main-list-filters;
+
+    .filter {
+      @include m.main-list-filter;
+
+      input {
+        font-style: normal;
+      }
+    }
+  }
+
+  .users {
+    @include m.main-list-box;
+
+    .header {
+      @include m.main-list-box-header;
+
+      .actions {
+        @include m.main-list-box-header-actions;
+      }
+    }
+  }
+
+  .list {
+    @include m.main-list-box-table;
+
+    i {
+      margin-left: 0.5rem;
+    }
+
+    .disabled-user-account {
+      font-style: italic;
+    }
+  }
+
+  .pagedlist-controls {
+    float: right;
+  }
+}

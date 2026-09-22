@@ -1,0 +1,35 @@
+@use "../mixins" as m;
+
+.my-profile {
+  .name {
+    margin: 0.25rem 0 0;
+    text-align: center;
+  }
+
+  .is-student {
+    display: block;
+    text-align: center;
+    width: 100%;
+
+    h2 {
+      color: light-dark(var(--green), var(--lighter-green));
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .admin-block {
+    margin-top: 1rem;
+
+    ul {
+      @include m.ilios-list-reset;
+      margin-left: 1rem;
+    }
+  }
+
+  .my-profile-schools {
+    label {
+      @include m.ilios-label;
+    }
+  }
+}

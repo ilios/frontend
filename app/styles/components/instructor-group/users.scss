@@ -1,0 +1,25 @@
+@use "../../mixins" as m;
+
+.instructor-group-users {
+  @include m.detail-container(var(--orange));
+
+  .instructor-group-users-header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .instructor-group-users-content {
+    @include m.detail-container-content;
+
+    .instructor-group-users-list {
+      @include m.ilios-tag-list;
+    }
+  }
+}

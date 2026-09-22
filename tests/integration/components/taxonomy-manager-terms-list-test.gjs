@@ -1,0 +1,216 @@
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { render } from '@ember/test-helpers';
+import { array } from '@ember/helper';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/taxonomy-manager-terms-list';
+import List from 'frontend/components/taxonomy-manager-terms-list';
+import noop from 'frontend/helpers/noop';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
+
+module('Integration | Component | taxonomy manager terms list', function (hooks) {
+  setupRenderingTest(hooks);
+  setupMSW(hooks);
+
+  hooks.beforeEach(async function () {
+    const vocabulary = await this.server.create('vocabulary');
+    const term1 = await this.server.create('term', {
+      title: 'Alpha',
+      active: true,
+      vocabulary,
+    });
+    const term2 = await this.server.create('term', {
+      title: 'Beta',
+      active: false,
+      vocabulary,
+    });
+    const term3 = await this.server.create('term', {
+      title: 'Gamma',
+      active: true,
+      vocabulary,
+    });
+    const term4 = await this.server.create('term', {
+      title: 'Delta',
+      active: false,
+      vocabulary,
+    });
+    const term5 = await this.server.create('term', {
+      title: 'First',
+      active: true,
+      vocabulary,
+      children: [term1, term2],
+    });
+    const term6 = await this.server.create('term', {
+      title: 'Second',
+      active: false,
+      vocabulary,
+      children: [term3, term4],
+    });
+    const root = await this.server.create('term', {
+      title: 'root',
+      active: true,
+      vocabulary,
+      children: [term5, term6],
+    });
+
+    this.rootTerm = await this.owner.lookup('service:store').findRecord('term', root.id);
+    this.term1 = await this.owner.lookup('service:store').findRecord('term', term1.id);
+    this.term2 = await this.owner.lookup('service:store').findRecord('term', term2.id);
+    this.term3 = await this.owner.lookup('service:store').findRecord('term', term3.id);
+    this.term4 = await this.owner.lookup('service:store').findRecord('term', term4.id);
+    this.term5 = await this.owner.lookup('service:store').findRecord('term', term5.id);
+  });
+
+  test('it renders', async function (assert) {
+    this.set('term', this.rootTerm);
+    await render(
+      <template>
+        <List
+          @hasActiveParent={{true}}
+          @selectedTerms={{(array)}}
+          @parent={{this.term}}
+          @add={{(noop)}}
+          @remove={{(noop)}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.items.length, 2);
+    assert.strictEqual(component.items[0].title, 'First');
+    assert.ok(component.items[0].isButton);
+    assert.notOk(component.items[0].isLabeledAsInactive);
+    assert.strictEqual(component.items[1].title, 'Second');
+    assert.notOk(component.items[1].isButton);
+    assert.ok(component.items[1].isLabeledAsInactive);
+    assert.strictEqual(component.lists.length, 2);
+    assert.strictEqual(component.lists[0].items.length, 2);
+    assert.strictEqual(component.lists[0].items[0].title, 'Alpha');
+    assert.ok(component.lists[0].items[0].isButton);
+    assert.notOk(component.lists[0].items[0].isLabeledAsInactive);
+    assert.strictEqual(component.lists[0].items[1].title, 'Beta');
+    assert.notOk(component.lists[0].items[1].isButton);
+    assert.ok(component.lists[0].items[1].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items.length, 2);
+    assert.strictEqual(component.lists[1].items[0].title, 'Delta');
+    assert.notOk(component.lists[1].items[0].isButton);
+    assert.notOk(component.lists[1].items[0].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items[1].title, 'Gamma');
+    assert.notOk(component.lists[1].items[1].isButton);
+    assert.notOk(component.lists[1].items[1].isLabeledAsInactive);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders list with inactive parent', async function (assert) {
+    this.set('term', this.rootTerm);
+    await render(
+      <template>
+        <List
+          @hasActiveParent={{false}}
+          @selectedTerms={{(array)}}
+          @parent={{this.term}}
+          @add={{(noop)}}
+          @remove={{(noop)}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.items.length, 2);
+    assert.strictEqual(component.items[0].title, 'First');
+    assert.notOk(component.items[0].isButton);
+    assert.notOk(component.items[0].isLabeledAsInactive);
+    assert.strictEqual(component.items[1].title, 'Second');
+    assert.notOk(component.items[1].isButton);
+    assert.notOk(component.items[1].isLabeledAsInactive);
+    assert.strictEqual(component.lists.length, 2);
+    assert.strictEqual(component.lists[0].items.length, 2);
+    assert.strictEqual(component.lists[0].items[0].title, 'Alpha');
+    assert.notOk(component.lists[0].items[0].isButton);
+    assert.notOk(component.lists[0].items[0].isLabeledAsInactive);
+    assert.strictEqual(component.lists[0].items[1].title, 'Beta');
+    assert.notOk(component.lists[0].items[1].isButton);
+    assert.notOk(component.lists[0].items[1].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items.length, 2);
+    assert.strictEqual(component.lists[1].items[0].title, 'Delta');
+    assert.notOk(component.lists[1].items[0].isButton);
+    assert.notOk(component.lists[1].items[0].isLabeledAsInactive);
+    assert.strictEqual(component.lists[1].items[1].title, 'Gamma');
+    assert.notOk(component.lists[1].items[1].isButton);
+    assert.notOk(component.lists[1].items[1].isLabeledAsInactive);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('select/deselect term', async function (assert) {
+    this.set('selectedTerms', []);
+    this.set('term', this.rootTerm);
+    this.set('add', (term) => {
+      assert.strictEqual(term, this.term5);
+      this.set('selectedTerms', [...this.selectedTerms, term]);
+      assert.step('add called');
+    });
+    this.set('remove', (term) => {
+      assert.strictEqual(term, this.term5);
+      this.set(
+        'selectedTerms',
+        this.selectedTerms.filter((t) => t !== term),
+      );
+      assert.step('remove called');
+    });
+    await render(
+      <template>
+        <List
+          @hasActiveParent={{true}}
+          @selectedTerms={{this.selectedTerms}}
+          @parent={{this.term}}
+          @add={{this.add}}
+          @remove={{this.remove}}
+        />
+      </template>,
+    );
+    assert.notOk(component.items[0].isSelected);
+    await component.items[0].click();
+    assert.ok(component.items[0].isSelected);
+    await component.items[0].click();
+    assert.notOk(component.items[0].isSelected);
+    assert.verifySteps(['add called', 'remove called']);
+  });
+
+  test('filter terms', async function (assert) {
+    this.set('term', this.rootTerm);
+    this.set('termFilter', 'Gamma');
+    await render(
+      <template>
+        <List
+          @selectedTerms={{(array)}}
+          @parent={{this.term}}
+          @add={{(noop)}}
+          @remove={{(noop)}}
+          @termFilter={{this.termFilter}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.items.length, 1);
+    assert.strictEqual(component.items[0].title, 'Second');
+    assert.strictEqual(component.lists[0].items.length, 1);
+    assert.strictEqual(component.lists[0].items[0].title, 'Gamma');
+  });
+
+  test('filter terms - partial match', async function (assert) {
+    this.set('term', this.rootTerm);
+    this.set('termFilter', 'amma');
+    await render(
+      <template>
+        <List
+          @selectedTerms={{(array)}}
+          @parent={{this.term}}
+          @add={{(noop)}}
+          @remove={{(noop)}}
+          @termFilter={{this.termFilter}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.items.length, 1);
+    assert.strictEqual(component.items[0].title, 'Second');
+    assert.strictEqual(component.lists[0].items.length, 1);
+    assert.strictEqual(component.lists[0].items[0].title, 'Gamma');
+  });
+});

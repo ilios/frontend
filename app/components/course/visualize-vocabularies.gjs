@@ -1,0 +1,80 @@
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
+import { LinkTo } from '@ember/routing';
+import t from 'ember-intl/helpers/t';
+import add from 'ember-math-helpers/helpers/add';
+import { pageTitle } from 'ember-page-title';
+import Breadcrumbs from '../breadcrumbs';
+import VisualizeVocabulariesGraph from './visualize-vocabularies-graph';
+
+export default class CourseVisualizeVocabulariesComponent extends Component {
+  @service iliosConfig;
+  @service intl;
+
+  crossesBoundaryConfig = new TrackedAsyncData(
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+  );
+
+  paths = [
+    {
+      route: 'course',
+      title: this.args.model.title,
+    },
+    {
+      route: 'course-visualizations',
+      title: this.intl.t('general.visualizations'),
+    },
+  ];
+
+  @cached
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : null;
+  }
+  <template>
+    {{pageTitle
+      (t "general.courses")
+      " | "
+      @model.title
+      " | "
+      (t "general.visualizations")
+      " | "
+      (t "general.vocabularies")
+    }}
+
+    <section
+      class="course-visualize-vocabularies data-visualization"
+      data-test-course-visualize-vocabularies
+      ...attributes
+    >
+      <Breadcrumbs
+        @paths={{this.paths}}
+        @model={{@model}}
+        @rootTitle={{t "general.vocabularies"}}
+      />
+      <h2>
+        {{t "general.vocabularies"}}
+      </h2>
+      <h3 class="clickable" data-test-course-title>
+        <LinkTo @route="course" @model={{@model}}>
+          {{@model.title}}
+          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+            {{@model.year}}
+            -
+            {{add @model.year 1}}
+          {{else}}
+            {{@model.year}}
+          {{/if}}
+        </LinkTo>
+      </h3>
+      <div class="visualizations">
+        <VisualizeVocabulariesGraph
+          @course={{@model}}
+          @showDataTable={{true}}
+          @showNoChartDataError={{true}}
+        />
+      </div>
+    </section>
+  </template>
+}

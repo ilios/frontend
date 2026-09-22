@@ -1,0 +1,37 @@
+@use "../mixins" as m;
+
+.login-form {
+  margin: 0.5rem;
+  padding: 1rem;
+  width: 90%;
+
+  @include m.for-tablet-and-up {
+    width: 60%;
+  }
+
+  @include m.for-laptop-and-up {
+    width: 40%;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  form {
+    @include m.ilios-form;
+
+    .item {
+      @include m.ilios-form-item;
+      flex-direction: column;
+      grid-column: 1 / -1;
+    }
+
+    .buttons {
+      @include m.ilios-form-buttons;
+
+      button {
+        width: 6rem;
+      }
+    }
+  }
+}

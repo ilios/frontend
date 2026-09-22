@@ -1,0 +1,64 @@
+import Component from '@glimmer/component';
+import sortableByPosition from '../../utils/sortable-by-position';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import FadeText from '../fade-text';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
+
+export default class SessionObjectiveListItemParentsComponent extends Component {
+  get parentTitles() {
+    return this.args.parents
+      .slice()
+      .sort(sortableByPosition)
+      .map((t) => t.title);
+  }
+
+  get parentsList() {
+    const items = this.parentTitles.map((t) => `<li>${t}</li>`).join('');
+    return `<ul>${items}</ul>`;
+  }
+
+  <template>
+    <div
+      class="session-objective-list-item-parents grid-item"
+      data-test-objective-list-item-parents
+    >
+      {{#if @isManaging}}
+        <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} />
+      {{else}}
+        {{#if @parents}}
+          <FadeText
+            @text={{this.parentsList}}
+            @forceExpanded={{@fadeTextExpanded}}
+            @setExpanded={{@setFadeTextExpanded}}
+            as |ft|
+          >
+            {{#if @editable}}
+              <button
+                type="button"
+                class="link-button"
+                title={{t "general.edit"}}
+                {{on "click" @manage}}
+                data-test-manage
+              >
+                {{ft.text}}
+              </button>
+              {{ft.controls}}
+            {{else}}
+              {{ft.text preserveLinks=true}}
+              {{ft.controls}}
+            {{/if}}
+          </FadeText>
+        {{else}}
+          {{#if @editable}}
+            <button type="button" {{on "click" @manage}} data-test-manage>
+              {{t "general.addNew"}}
+            </button>
+          {{else}}
+            {{t "general.none"}}
+          {{/if}}
+        {{/if}}
+      {{/if}}
+    </div>
+  </template>
+}

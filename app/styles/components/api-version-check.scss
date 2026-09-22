@@ -1,0 +1,17 @@
+@use "../mixins" as m;
+
+.api-version-check-container {
+  width: 80%;
+
+  .content {
+    padding: 2rem;
+
+    h1 {
+      @include m.ilios-heading-h1;
+    }
+
+    p {
+      width: 80%;
+    }
+  }
+}

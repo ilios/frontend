@@ -1,0 +1,53 @@
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { click, render } from '@ember/test-helpers';
+import SaveButton from 'frontend/components/save-button';
+import { on } from '@ember/modifier';
+
+module('Integration | Component | save-button', function (hooks) {
+  setupRenderingTest(hooks);
+
+  test('it renders', async function (assert) {
+    this.set('label', 'Save');
+    await render(
+      <template>
+        <SaveButton>{{this.label}}</SaveButton>
+      </template>,
+    );
+    assert.dom().hasText('Save');
+  });
+
+  test('it displays save percent and spinner when saving', async function (assert) {
+    this.set('label', 'Save');
+    await render(
+      <template>
+        <SaveButton @isSaving={{true}} @saveProgressPercent={{11}}>{{this.label}}</SaveButton>
+      </template>,
+    );
+    assert.dom('[data-icon="spinner"]').exists();
+    assert.dom().hasText('11%');
+  });
+
+  test('icon is a check at 100%', async function (assert) {
+    this.set('label', 'Save');
+    await render(
+      <template>
+        <SaveButton @isSaving={{true}} @saveProgressPercent={{100}}>{{this.label}}</SaveButton>
+      </template>,
+    );
+    assert.dom('[data-icon="check"]').exists();
+    assert.dom().hasText('100%');
+  });
+
+  test('binds passed action', async function (assert) {
+    this.set('label', 'Save');
+    this.set('click', () => assert.step('click called'));
+    await render(
+      <template>
+        <SaveButton data-test-save {{on "click" this.click}}>{{this.label}}</SaveButton>
+      </template>,
+    );
+    await click('[data-test-save]');
+    assert.verifySteps(['click called']);
+  });
+});

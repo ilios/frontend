@@ -1,0 +1,121 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { task } from 'ember-concurrency';
+import { findBy, mapBy } from '../../utils/array-helpers';
+import t from 'ember-intl/helpers/t';
+import { uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
+import focus from '../../modifiers/focus';
+import includes from '../../helpers/includes';
+import pick from '../../helpers/pick';
+import set from 'ember-set-helper/helpers/set';
+import sortBy from '../../helpers/sort-by';
+import { eq } from 'ember-truth-helpers';
+import perform from 'ember-concurrency/helpers/perform';
+import LoadingSpinner from '../loading-spinner';
+
+export default class ProgramYearNewComponent extends Component {
+  allYears = [];
+  @tracked year;
+
+  constructor() {
+    super(...arguments);
+    const firstYear = new Date().getFullYear() - 5;
+    for (let i = 0; i < 10; i++) {
+      this.allYears.push(firstYear + i);
+    }
+  }
+
+  get existingStartYears() {
+    return mapBy(this.args.programYears ?? [], 'startYear');
+  }
+
+  get availableAcademicYears() {
+    const years = this.allYears
+      .filter((year) => !this.existingStartYears.includes(year))
+      .map((startYear) => {
+        return {
+          label: this.args.academicYearCrossesCalendarYearBoundaries
+            ? `${startYear} - ${startYear + 1}`
+            : startYear.toString(),
+          value: startYear.toString(),
+        };
+      });
+
+    return years;
+  }
+
+  get selectedYear() {
+    if (!this.year) {
+      return this.existingStartYears.length
+        ? this.availableAcademicYears.filter(
+            (year) => !this.existingStartYears.includes(year.value),
+          )[0]
+        : this.availableAcademicYears[0];
+    }
+    return findBy(this.availableAcademicYears, 'value', this.year);
+  }
+
+  get noAvailableYears() {
+    return !this.selectedYear;
+  }
+
+  saveNewYear = task({ drop: true }, async () => {
+    await this.args.save(this.selectedYear.value);
+  });
+  <template>
+    <div class="new-program-year" data-test-new-program-year ...attributes>
+      <h3 class="title" data-test-title>
+        {{t "general.newProgramYear"}}
+      </h3>
+      <div class="form">
+        <div class="startyear-select" data-test-start-year>
+          {{#let (uniqueId) as |yearId|}}
+            <label for={{yearId}}>
+              {{t "general.academicYear"}}:
+            </label>
+            <select
+              id={{yearId}}
+              {{focus}}
+              {{on "change" (pick "target.value" (set this "year"))}}
+              data-test-year
+            >
+              {{#each (sortBy "value" this.availableAcademicYears) as |obj|}}
+                <option
+                  value={{obj.value}}
+                  selected={{eq obj.value this.selectedYear.value}}
+                  disabled={{includes obj.value this.existingStartYears}}
+                >
+                  {{obj.label}}
+                </option>
+              {{/each}}
+            </select>
+          {{/let}}
+        </div>
+        <div class="buttons">
+          <button
+            type="button"
+            class="done text"
+            title={{if
+              this.noAvailableYears
+              (t "general.canNotCreateProgramYear")
+              (t "general.done")
+            }}
+            disabled={{this.noAvailableYears}}
+            {{on "click" (perform this.saveNewYear)}}
+            data-test-done
+          >
+            {{#if this.saveNewYear.isRunning}}
+              <LoadingSpinner />
+            {{else}}
+              {{t "general.done"}}
+            {{/if}}
+          </button>
+          <button type="button" class="cancel text" {{on "click" @cancel}} data-test-cancel>
+            {{t "general.cancel"}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+}

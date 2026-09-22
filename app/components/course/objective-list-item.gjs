@@ -1,0 +1,380 @@
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
+import { service } from '@ember/service';
+import { findById, mapBy } from '../../utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
+import { and, not } from 'ember-truth-helpers';
+import EditableField from '../editable-field';
+import perform from 'ember-concurrency/helpers/perform';
+import HtmlEditor from '../html-editor';
+import FadeText from '../fade-text';
+import ObjectiveListItemParents from './objective-list-item-parents';
+import ObjectiveListItemTerms from '../objective-list-item-terms';
+import ObjectiveListItemDescriptors from './objective-list-item-descriptors';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import set from 'ember-set-helper/helpers/set';
+import LoadingSpinner from '../loading-spinner';
+import ManageObjectiveParents from './manage-objective-parents';
+import ManageObjectiveDescriptors from './manage-objective-descriptors';
+import TaxonomyManager from '../taxonomy-manager';
+import YupValidations from '../../classes/yup-validations';
+import YupValidationMessage from '../yup-validation-message';
+import { string } from 'yup';
+import striptags from 'striptags';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
+export default class CourseObjectiveListItemComponent extends Component {
+  @service store;
+  @service intl;
+
+  @tracked description;
+  @tracked isManagingParents;
+  @tracked parentsBuffer = [];
+  @tracked isManagingDescriptors;
+  @tracked descriptorsBuffer = [];
+  @tracked isManagingTerms;
+  @tracked termsBuffer = [];
+  @tracked selectedVocabulary;
+  @tracked fadeTextExpanded = this.args.printable ?? false;
+
+  constructor() {
+    super(...arguments);
+    this.description = this.args.courseObjective.title;
+  }
+
+  validations = new YupValidations(this, {
+    descriptionWithoutMarkup: string().trim().min(3).max(65000),
+  });
+
+  get descriptionWithoutMarkup() {
+    return striptags(this.description ?? '').replace(/&nbsp;/gi, '');
+  }
+
+  @cached
+  get parentsData() {
+    return new TrackedAsyncData(this.args.courseObjective.programYearObjectives);
+  }
+
+  @cached
+  get meshDescriptorsData() {
+    return new TrackedAsyncData(this.args.courseObjective.meshDescriptors);
+  }
+
+  get parents() {
+    return this.parentsData.isResolved ? this.parentsData.value : null;
+  }
+
+  get meshDescriptors() {
+    return this.meshDescriptorsData.isResolved ? this.meshDescriptorsData.value : null;
+  }
+
+  get isManaging() {
+    return this.isManagingParents || this.isManagingDescriptors || this.isManagingTerms;
+  }
+
+  saveDescriptionChanges = task({ drop: true }, async () => {
+    this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
+    const isValid = await this.validations.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.validations.removeErrorDisplayFor('descriptionWithoutMarkup');
+    this.args.courseObjective.set('title', this.description);
+    await this.args.courseObjective.save();
+  });
+
+  manageParents = task({ drop: true }, async () => {
+    const objectives = this.args.cohortObjectives.reduce((set, cohortObject) => {
+      const cohortObjectives = mapBy(cohortObject.competencies, 'objectives');
+      return [...set, ...cohortObjectives.flat()];
+    }, []);
+    const parents = await this.args.courseObjective.programYearObjectives;
+    this.parentsBuffer = parents.map((objective) => {
+      return findById(objectives, objective.id);
+    });
+    this.isManagingParents = true;
+  });
+
+  manageDescriptors = task({ drop: true }, async () => {
+    this.descriptorsBuffer = await this.args.courseObjective.meshDescriptors;
+    this.isManagingDescriptors = true;
+  });
+
+  manageTerms = task({ drop: true }, async (vocabulary) => {
+    this.selectedVocabulary = vocabulary;
+    const terms = await this.args.courseObjective.terms;
+    this.termsBuffer = terms;
+    this.isManagingTerms = true;
+  });
+
+  highlightSave = task({ restartable: true }, async () => {
+    await timeout(1000);
+  });
+
+  saveParents = task({ drop: true }, async () => {
+    const newParents = this.parentsBuffer.map((obj) => {
+      return this.store.peekRecord('program-year-objective', obj.id);
+    });
+    this.args.courseObjective.set('programYearObjectives', newParents);
+    await this.args.courseObjective.save();
+    this.parentsBuffer = [];
+    this.isManagingParents = false;
+    this.highlightSave.perform();
+  });
+
+  saveDescriptors = task({ drop: true }, async () => {
+    this.args.courseObjective.set('meshDescriptors', this.descriptorsBuffer);
+    await this.args.courseObjective.save();
+    this.descriptorsBuffer = [];
+    this.isManagingDescriptors = false;
+    this.highlightSave.perform();
+  });
+
+  saveTerms = task({ drop: true }, async () => {
+    this.args.courseObjective.set('terms', this.termsBuffer);
+    await this.args.courseObjective.save();
+    this.termsBuffer = [];
+    this.isManagingTerms = false;
+    this.highlightSave.perform();
+  });
+
+  @action
+  revertDescriptionChanges() {
+    this.description = this.args.courseObjective.title;
+    this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
+  }
+  @action
+  changeDescription(contents) {
+    this.description = contents;
+    this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
+  }
+  @action
+  addParentToBuffer(objective) {
+    this.parentsBuffer = [...this.parentsBuffer, objective];
+  }
+  @action
+  removeParentFromBuffer(objective) {
+    this.parentsBuffer = this.parentsBuffer.filter((obj) => obj.id !== objective.id);
+  }
+  @action
+  removeParentsWithCohortFromBuffer(cohort) {
+    const cohortObjectives = mapBy(cohort.competencies, 'objectives');
+    const ids = mapBy([...cohortObjectives.flat()], 'id');
+    this.parentsBuffer = this.parentsBuffer.filter((obj) => {
+      return !ids.includes(obj.id);
+    });
+  }
+  @action
+  addDescriptorToBuffer(descriptor) {
+    this.descriptorsBuffer = [...this.descriptorsBuffer, descriptor];
+  }
+  @action
+  removeDescriptorFromBuffer(descriptor) {
+    this.descriptorsBuffer = this.descriptorsBuffer.filter((obj) => obj.id !== descriptor.id);
+  }
+  @action
+  addTermToBuffer(term) {
+    this.termsBuffer = [...this.termsBuffer, term];
+  }
+  @action
+  removeTermFromBuffer(term) {
+    this.termsBuffer = this.termsBuffer.filter((obj) => obj.id !== term.id);
+  }
+  @action
+  cancel() {
+    this.parentsBuffer = [];
+    this.descriptorsBuffer = [];
+    this.termsBuffer = [];
+    this.isManagingParents = false;
+    this.isManagingDescriptors = false;
+    this.isManagingTerms = false;
+    this.selectedVocabulary = null;
+  }
+
+  deleteObjective = task({ drop: true }, async () => {
+    await this.args.courseObjective.destroyRecord();
+  });
+  <template>
+    <div
+      id="objective-{{@courseObjective.id}}"
+      class="grid-row objective-row{{if this.showRemoveConfirmation ' confirm-removal'}}{{unless
+          @editable
+          ' no-actions'
+        }}{{unless @showMeSH ' no-mesh'}}{{if this.highlightSave.isRunning ' highlight-ok'}}{{if
+          this.isManaging
+          ' is-managing'
+        }}"
+      data-test-course-objective-list-item
+    >
+      <div class="description grid-item" data-test-description>
+        <FadeText
+          @forceExpanded={{this.fadeTextExpanded}}
+          @setExpanded={{set this "fadeTextExpanded"}}
+          @text={{this.description}}
+          as |ft|
+        >
+          {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
+            <EditableField
+              @value={{this.description}}
+              @save={{perform this.saveDescriptionChanges}}
+              @close={{this.revertDescriptionChanges}}
+            >
+              <:default>
+                <HtmlEditor
+                  @content={{this.description}}
+                  @update={{this.changeDescription}}
+                  @autofocus={{true}}
+                />
+                <YupValidationMessage
+                  @description={{t "general.description"}}
+                  @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
+                  data-test-description-validation-error-message
+                />
+              </:default>
+              <:value>
+                {{ft.text}}
+              </:value>
+              <:postValue>
+                {{ft.controls}}
+              </:postValue>
+            </EditableField>
+          {{else}}
+            {{ft.text preserveLinks=true}}
+            {{ft.controls}}
+          {{/if}}
+        </FadeText>
+      </div>
+      <ObjectiveListItemParents
+        @parents={{this.parents}}
+        @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+        @manage={{perform this.manageParents}}
+        @isManaging={{this.isManagingParents}}
+        @save={{this.saveParents}}
+        @isSaving={{this.saveParents.isRunning}}
+        @cancel={{this.cancel}}
+        @fadeTextExpanded={{this.fadeTextExpanded}}
+        @setFadeTextExpanded={{set this "fadeTextExpanded"}}
+      />
+
+      <ObjectiveListItemTerms
+        @subject={{@courseObjective}}
+        @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+        @manage={{perform this.manageTerms}}
+        @isManaging={{this.isManagingTerms}}
+        @save={{this.saveTerms}}
+        @isSaving={{this.saveTerms.isRunning}}
+        @cancel={{this.cancel}}
+      />
+
+      {{#if @showMeSH}}
+        <ObjectiveListItemDescriptors
+          @meshDescriptors={{this.meshDescriptors}}
+          @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+          @manage={{perform this.manageDescriptors}}
+          @isManaging={{this.isManagingDescriptors}}
+          @save={{this.saveDescriptors}}
+          @isSaving={{this.saveDescriptors.isRunning}}
+          @cancel={{this.cancel}}
+        />
+      {{/if}}
+      {{#if @editable}}
+        <div class="actions grid-item" data-test-actions>
+          {{#if this.isManaging}}
+            <button
+              type="button"
+              class="link-button disabled"
+              title={{t "general.canNotDeleteCourseObjective"}}
+              disabled
+              data-test-remove
+            >
+              <FaIcon @icon={{faTrash}} class="disabled" />
+            </button>
+          {{else}}
+            <button
+              class="link-button delete-button{{if this.showRemoveConfirmation ' disabled'}}"
+              type="button"
+              title={{if
+                this.showRemoveConfirmation
+                (t "general.disabledByConfirmation")
+                (t "general.remove")
+              }}
+              disabled={{this.showRemoveConfirmation}}
+              {{on "click" (set this "showRemoveConfirmation" true)}}
+              data-test-remove
+            >
+              <FaIcon
+                @icon={{faTrash}}
+                class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+              />
+            </button>
+          {{/if}}
+        </div>
+      {{/if}}
+
+      {{#if this.showRemoveConfirmation}}
+        <div class="confirm-message" data-test-confirm-removal>
+          {{t "general.confirmRemoveObjective"}}
+          <br />
+          <div class="confirm-buttons">
+            <button
+              class="remove"
+              type="button"
+              data-test-confirm
+              {{on "click" (perform this.deleteObjective)}}
+            >
+              {{#if this.deleteObjective.isRunning}}
+                <LoadingSpinner />
+              {{else}}
+                {{t "general.yes"}}
+              {{/if}}
+            </button>
+            <button
+              class="done"
+              type="button"
+              data-test-cancel
+              {{on "click" (set this "showRemoveConfirmation" false)}}
+            >
+              {{t "general.cancel"}}
+            </button>
+          </div>
+        </div>
+      {{/if}}
+
+      {{#if this.isManagingParents}}
+        <ManageObjectiveParents
+          @cohortObjectives={{@cohortObjectives}}
+          @selected={{this.parentsBuffer}}
+          @add={{this.addParentToBuffer}}
+          @remove={{this.removeParentFromBuffer}}
+          @removeFromCohort={{this.removeParentsWithCohortFromBuffer}}
+        />
+      {{/if}}
+      {{#if this.isManagingDescriptors}}
+        <ManageObjectiveDescriptors
+          @selected={{this.descriptorsBuffer}}
+          @add={{this.addDescriptorToBuffer}}
+          @remove={{this.removeDescriptorFromBuffer}}
+          @editable={{@editable}}
+          @save={{perform this.saveDescriptors}}
+          @cancel={{this.cancel}}
+        />
+      {{/if}}
+      {{#if this.isManagingTerms}}
+        <TaxonomyManager
+          @vocabularies={{@course.assignableVocabularies}}
+          @vocabulary={{this.selectedVocabulary}}
+          @selectedTerms={{this.termsBuffer}}
+          @add={{this.addTermToBuffer}}
+          @remove={{this.removeTermFromBuffer}}
+          @editable={{@editable}}
+          @save={{perform this.saveTerms}}
+          @cancel={{this.cancel}}
+        />
+      {{/if}}
+    </div>
+  </template>
+}

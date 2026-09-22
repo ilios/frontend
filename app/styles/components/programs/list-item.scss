@@ -1,0 +1,14 @@
+@use "../../mixins" as m;
+
+.list-item {
+  .actions {
+    button {
+      @include m.ilios-button-reset;
+      color: light-dark(var(--red), var(--light-red));
+
+      &.disabled {
+        cursor: default;
+      }
+    }
+  }
+}

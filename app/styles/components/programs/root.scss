@@ -1,0 +1,28 @@
+@use "../../mixins" as m;
+
+.programs-root {
+  .filters {
+    @include m.main-list-filters;
+
+    .schools,
+    .title {
+      @include m.main-list-filter;
+    }
+  }
+
+  .new .saved-result {
+    @include m.main-list-saved-new;
+  }
+
+  .main-list {
+    @include m.main-list-box;
+
+    .header {
+      @include m.main-list-box-header;
+
+      .actions {
+        @include m.main-list-box-header-actions;
+      }
+    }
+  }
+}

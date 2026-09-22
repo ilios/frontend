@@ -1,0 +1,53 @@
+@use "../mixins" as m;
+
+.ilios-header {
+  background-color: light-dark(var(--orange), var(--dark-orange));
+  align-content: center;
+
+  // Elements on the far right
+  .tools {
+    align-items: center;
+    background: transparent;
+    margin-right: 0.25rem;
+    padding: 0.25rem 0;
+    display: grid;
+    justify-content: end;
+    grid-template-rows: 1fr min-content;
+    row-gap: 0.25rem;
+
+    @include m.for-tablet-and-up {
+      grid-template-rows: 1fr;
+      padding: 0;
+    }
+
+    @media print {
+      display: none;
+    }
+
+    .user-menu,
+    .user-guide-link {
+      button {
+        @include m.font-size("base");
+      }
+    }
+    .user-menu {
+      grid-row: 1;
+      grid-column: 3;
+    }
+    .user-guide-link {
+      display: flex;
+      grid-row: 1;
+      grid-column: 4;
+    }
+
+    .global-search-box {
+      height: 100%;
+      grid-row: 2;
+      grid-column: 1 / span 4;
+      @include m.for-tablet-and-up {
+        grid-column: 1;
+        grid-row: 1;
+      }
+    }
+  }
+}

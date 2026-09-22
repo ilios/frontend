@@ -1,0 +1,98 @@
+@use "../../mixins" as m;
+
+.reports-curriculum-header {
+  margin: 0 0.8rem 0.25rem 0;
+  padding-bottom: 0.25rem;
+
+  @include m.for-tablet-and-up {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "selection actions"
+      "summary summary";
+    @include m.font-size("medium");
+    justify-content: space-between;
+    row-gap: 0.25rem;
+  }
+
+  &.results {
+    display: block;
+
+    .selection {
+      display: none;
+    }
+
+    .actions {
+      margin-bottom: 1rem;
+
+      @include m.for-tablet-and-up {
+        float: right;
+        margin-bottom: 0;
+        margin-left: 1rem;
+        width: auto;
+      }
+    }
+  }
+
+  .selection {
+    grid-area: "selection";
+    margin: 0;
+  }
+
+  .actions {
+    // keep buttons from vertically stretching when other column wraps to multiple lines
+    align-items: baseline;
+    margin: 0.5rem 0;
+    width: 100%;
+
+    @include m.for-tablet-and-up {
+      display: flex;
+      gap: 5px;
+      grid-area: "actions";
+      margin: 0;
+    }
+
+    .tagged-terms-mode {
+      align-items: center;
+      display: flex;
+      gap: 0.5em;
+      margin-bottom: 0.25rem;
+    }
+
+    button,
+    div {
+      display: block;
+      margin-bottom: 0.25rem;
+
+      &.download-dropdown {
+        display: inline-block;
+      }
+
+      &.toggle {
+        margin-bottom: 0;
+      }
+
+      &:disabled {
+        cursor: default;
+        background-color: light-dark(var(--grey), var(--light-grey));
+      }
+    }
+
+    .loading-results {
+      @include m.ilios-button {
+        cursor: default;
+      }
+    }
+  }
+
+  .summary {
+    grid-area: "summary";
+    grid-column: 1 / 3;
+    margin: 0.5rem 0;
+
+    label {
+      display: inline-block;
+      margin-bottom: 0.5em;
+    }
+  }
+}

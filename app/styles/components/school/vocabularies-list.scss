@@ -1,0 +1,21 @@
+@use "../../mixins" as m;
+
+.school-vocabularies-list {
+  .school-vocabularies-list-new {
+    .form {
+      @include m.ilios-form;
+
+      .item {
+        @include m.ilios-form-item;
+      }
+
+      .buttons {
+        @include m.ilios-form-buttons;
+      }
+    }
+
+    .savedvocabulary {
+      @include m.main-list-saved-new;
+    }
+  }
+}

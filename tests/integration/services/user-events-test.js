@@ -1,0 +1,200 @@
+import EmberObject from '@ember/object';
+import Service from '@ember/service';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
+import { DateTime } from 'luxon';
+import { setupMSW } from 'frontend/tests/msw';
+
+module('Integration | Service | user events', function (hooks) {
+  setupTest(hooks);
+  setupMSW(hooks);
+
+  hooks.beforeEach(function () {
+    class MockCurrentUserService extends Service {
+      async getModel() {
+        return EmberObject.create({
+          id: 1,
+        });
+      }
+    }
+    this.owner.register('service:current-user', MockCurrentUserService);
+    this.currentUser = this.owner.lookup('service:current-user');
+  });
+
+  test('getEvents', async function (assert) {
+    const event1 = {
+      offering: 1,
+      startDate: '2011-04-21',
+      prerequisites: [],
+      postrequisites: [],
+    };
+    const event2 = {
+      ilmSession: 3,
+      startDate: '2008-09-02',
+      prerequisites: [],
+      postrequisites: [],
+    };
+    const event3 = {
+      startDate: '2015-11-20',
+      prerequisites: [],
+      postrequisites: [],
+    };
+    const from = DateTime.fromObject({ year: 2015, month: 3, day: 5, hour: 0 });
+    const to = from.set({ hour: 24 });
+
+    this.server.get(`/api/userevents/:id`, ({ params, request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.ok('id' in params);
+      assert.strictEqual(Number(params.id), 1);
+      assert.strictEqual(Number(searchParams.get('from')), from.toUnixInteger());
+      assert.strictEqual(Number(searchParams.get('to')), to.toUnixInteger());
+
+      assert.step('API called');
+      return { userEvents: [event1, event2, event3] };
+    });
+
+    const subject = this.owner.lookup('service:user-events');
+    const events = await subject.getEvents(from.toUnixInteger(), to.toUnixInteger());
+    assert.strictEqual(events.length, 3);
+    assert.strictEqual(events[0].ilmSession, event2.ilmSession);
+    assert.strictEqual(events[0].startDate, event2.startDate);
+    assert.false(events[0].isBlanked);
+    assert.strictEqual(events[0].slug, 'U20080902I3');
+    assert.false(events[1].isBlanked);
+    assert.strictEqual(events[1].slug, 'U20110421O1');
+    assert.strictEqual(events[1].offering, event1.offering);
+    assert.strictEqual(events[1].startDate, event1.startDate);
+    assert.true(events[2].isBlanked);
+    assert.strictEqual(events[2].startDate, event3.startDate);
+    assert.verifySteps(['API called']);
+  });
+
+  test('getEvents - no user', async function (assert) {
+    this.currentUser.reopen({
+      async getModel() {
+        return EmberObject.create({
+          id: 1,
+        });
+      },
+    });
+    const subject = this.owner.lookup('service:user-events');
+    const from = DateTime.fromObject({ year: 2015, month: 3, day: 5, hour: 0 });
+    const to = from.set({ hour: 24 });
+    const events = await subject.getEvents(from.toUnixInteger(), to.toUnixInteger());
+    assert.strictEqual(events.length, 0);
+  });
+
+  test('getEvents - with configured namespace', async function (assert) {
+    class IliosConfigMock extends Service {
+      apiNameSpace = 'geflarknik';
+    }
+    this.owner.register('service:iliosConfig', IliosConfigMock);
+    const from = DateTime.fromObject({ year: 2015, month: 3, day: 5, hour: 0 });
+    const to = from.set({ hour: 24 });
+    this.server.get(`/geflarknik/userevents/:id`, ({ params }) => {
+      assert.step('API called');
+      assert.strictEqual(Number(params.id), 1);
+      return { userEvents: [] };
+    });
+    const subject = this.owner.lookup('service:user-events');
+
+    const events = await subject.getEvents(from.toUnixInteger(), to.toUnixInteger());
+    assert.strictEqual(events.length, 0);
+    assert.verifySteps(['API called']);
+  });
+
+  test('getEvents - sorted by name for events occupying same time slot', async function (assert) {
+    const event1 = {
+      name: 'Zeppelin',
+      offering: 1,
+      startDate: '2011-04-21',
+      prerequisites: [],
+      postrequisites: [],
+    };
+    const event2 = {
+      name: 'Aardvark',
+      offering: 2,
+      startDate: '2011-04-21',
+      prerequisites: [],
+      postrequisites: [],
+    };
+
+    const from = DateTime.fromObject({ year: 2011, month: 4, day: 21, hour: 0 });
+    const to = from.set({ hour: 24 });
+    this.server.get(`/api/userevents/:id`, ({ params }) => {
+      assert.strictEqual(Number(params.id), 1);
+      assert.step('API called');
+      return { userEvents: [event1, event2] };
+    });
+
+    const subject = this.owner.lookup('service:user-events');
+    const events = await subject.getEvents(from.toUnixInteger(), to.toUnixInteger());
+    assert.strictEqual(events.length, 2);
+    assert.strictEqual(events[0].name, event2.name);
+    assert.strictEqual(events[1].name, event1.name);
+    assert.verifySteps(['API called']);
+  });
+
+  test('getEventsForSlug - offering', async function (assert) {
+    const event1 = {
+      offering: 1,
+      startDate: '2011-04-21',
+      prerequisites: [],
+      postrequisites: [],
+    };
+    const event2 = {
+      ilmSession: 3,
+      startDate: '2008-09-02',
+      prerequisites: [],
+      postrequisites: [],
+    };
+
+    this.server.get(`/api/userevents/:id`, ({ params, request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(Number(params.id), 1);
+      const from = DateTime.fromObject({ year: 2013, month: 1, day: 21, hour: 0 });
+      const to = from.set({ hour: 24 });
+      assert.strictEqual(Number(searchParams.get('from')), from.toUnixInteger());
+      assert.strictEqual(Number(searchParams.get('to')), to.toUnixInteger());
+
+      assert.step('API called');
+      return { userEvents: [event1, event2] };
+    });
+
+    const subject = this.owner.lookup('service:user-events');
+    const event = await subject.getEventForSlug('U20130121O1');
+    assert.strictEqual(event.offering, event1.offering);
+    assert.verifySteps(['API called']);
+  });
+
+  test('getEventsForSlug - ILM', async function (assert) {
+    const event1 = {
+      offering: 1,
+      startDate: '2011-04-21',
+      prerequisites: [],
+      postrequisites: [],
+    };
+    const event2 = {
+      ilmSession: 3,
+      startDate: '2008-09-02',
+      prerequisites: [],
+      postrequisites: [],
+    };
+
+    this.server.get(`/api/userevents/:id`, ({ params, request }) => {
+      const { searchParams } = new URL(request.url);
+      assert.strictEqual(Number(params.id), 1);
+      const from = DateTime.fromObject({ year: 2013, month: 1, day: 21, hour: 0 });
+      const to = from.set({ hour: 24 });
+      assert.strictEqual(Number(searchParams.get('from')), from.toUnixInteger());
+      assert.strictEqual(Number(searchParams.get('to')), to.toUnixInteger());
+      assert.step('API called');
+      return { userEvents: [event1, event2] };
+    });
+
+    const subject = this.owner.lookup('service:user-events');
+    const event = await subject.getEventForSlug('U20130121I3');
+    assert.strictEqual(event.ilmSession, event2.ilmSession);
+    assert.verifySteps(['API called']);
+  });
+});

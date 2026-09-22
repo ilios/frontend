@@ -1,0 +1,305 @@
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { service } from '@ember/service';
+import { task } from 'ember-concurrency';
+import { and, not, or } from 'ember-truth-helpers';
+import { LinkTo } from '@ember/routing';
+import { array } from '@ember/helper';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import t from 'ember-intl/helpers/t';
+import LoadingSpinner from '../loading-spinner';
+import { on } from '@ember/modifier';
+import perform from 'ember-concurrency/helpers/perform';
+import set from 'ember-set-helper/helpers/set';
+import scrollIntoView from '../../modifiers/scroll-into-view';
+import { faLock, faLockOpen, faSquareUpRight, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+export default class ProgramYearListItemComponent extends Component {
+  @service permissionChecker;
+  @service currentUser;
+
+  @tracked showRemoveConfirmation = false;
+
+  scrollOpts = {
+    behavior: 'smooth',
+    block: 'nearest',
+  };
+
+  @cached
+  get canLockData() {
+    return new TrackedAsyncData(this.permissionChecker.canLockProgramYear(this.args.programYear));
+  }
+
+  @cached
+  get canUnlockData() {
+    return new TrackedAsyncData(this.permissionChecker.canUnlockProgramYear(this.args.programYear));
+  }
+
+  @cached
+  get canDeleteData() {
+    return new TrackedAsyncData(this.permissionChecker.canDeleteProgramYear(this.args.programYear));
+  }
+
+  @cached
+  get programData() {
+    return new TrackedAsyncData(this.args.programYear.program);
+  }
+
+  get program() {
+    return this.programData.isResolved ? this.programData.value : null;
+  }
+
+  @cached
+  get cohortData() {
+    return new TrackedAsyncData(this.args.programYear.cohort);
+  }
+
+  get cohort() {
+    return this.cohortData.isResolved ? this.cohortData.value : null;
+  }
+
+  get canLock() {
+    return this.canLockData.isResolved ? this.canLockData.value : false;
+  }
+
+  get canUnlock() {
+    return this.canUnlockData.isResolved ? this.canUnlockData.value : false;
+  }
+
+  get canDelete() {
+    if (!this.cohort) {
+      return false;
+    }
+
+    const cohortUsers = this.cohort.hasMany('users').ids();
+    if (cohortUsers.length) {
+      return false;
+    }
+
+    return this.canDeleteData.isResolved ? this.canDeleteData.value : false;
+  }
+
+  get classOfYear() {
+    if (!this.program) {
+      return '';
+    }
+
+    return Number(this.args.programYear.startYear) + Number(this.program.duration);
+  }
+
+  get academicYear() {
+    if (this.args.academicYearCrossesCalendarYearBoundaries) {
+      const endYear = Number(this.args.programYear.startYear) + 1;
+      return `${this.args.programYear.startYear} - ${endYear}`;
+    }
+
+    return this.args.programYear.startYear;
+  }
+
+  async checkerPermissions(programYear, program, cohort) {
+    let canDelete = false;
+    const canLock = await this.permissionChecker.canLockProgramYear(programYear);
+    const canUnlock = await this.permissionChecker.canUnlockProgramYear(programYear);
+
+    const cohortUsers = cohort.hasMany('users').ids();
+    if (cohortUsers.length === 0) {
+      canDelete = await this.permissionChecker.canDeleteProgramYear(programYear);
+    }
+
+    return { canDelete, canLock, canUnlock };
+  }
+
+  lock = task({ drop: true }, async () => {
+    this.args.programYear.set('locked', true);
+    await this.args.programYear.save();
+  });
+
+  unlock = task({ drop: true }, async () => {
+    this.args.programYear.set('locked', false);
+    await this.args.programYear.save();
+  });
+
+  remove = task({ drop: true }, async () => {
+    await this.args.programYear.destroyRecord();
+  });
+  <template>
+    {{#if (and this.cohort (not @programYear.archived))}}
+      <tr
+        class={{if this.showRemoveConfirmation "confirm-removal"}}
+        data-test-program-year-list-item
+      >
+        <td class="text-left" colspan="2">
+          <LinkTo @route="program-year" @models={{array this.program @programYear}} data-test-link>
+            <FaIcon @icon={{faSquareUpRight}} />
+            {{this.academicYear}}
+          </LinkTo>
+        </td>
+        <td class="text-left" data-test-title>
+          {{#if this.cohort.title}}
+            {{this.cohort.title}}
+          {{else}}
+            {{t "general.classOf" year=this.classOfYear}}
+          {{/if}}
+        </td>
+        <td class="text-left hide-from-small-screen" data-test-competencies>
+          {{@programYear.competencies.length}}
+        </td>
+        <td class="text-left hide-from-small-screen" data-test-objectives>
+          {{@programYear.programYearObjectives.length}}
+        </td>
+        <td class="text-left hide-from-small-screen" data-test-directors>
+          {{@programYear.directors.length}}
+        </td>
+        <td class="text-left hide-from-small-screen" data-test-terms>
+          {{@programYear.terms.length}}
+        </td>
+        <td class="text-right" data-test-actions>
+          {{#if (or this.lock.isRunning this.unlock.isRunning)}}
+            <LoadingSpinner />
+          {{else}}
+            {{#if @programYear.locked}}
+              {{#if this.canUnlock}}
+                <button
+                  type="button"
+                  class="link-button{{if this.showRemoveConfirmation ' disabled'}}"
+                  title={{if
+                    this.showRemoveConfirmation
+                    (t "general.disabledByConfirmation")
+                    (t "general.unlock")
+                  }}
+                  disabled={{this.showRemoveConfirmation}}
+                  {{on "click" (perform this.unlock)}}
+                  data-test-unlock
+                >
+                  <FaIcon @icon={{faLock}} @fixedWidth={{true}} />
+                </button>
+              {{else}}
+                <button
+                  type="button"
+                  class="link-button disabled"
+                  title={{t "general.canNotUnlockProgramYear"}}
+                  disabled
+                  data-test-unlock
+                >
+                  <FaIcon @icon={{faLock}} @fixedWidth={{true}} />
+                </button>
+              {{/if}}
+            {{else if this.canLock}}
+              <button
+                type="button"
+                class="link-button lock-button{{if this.showRemoveConfirmation ' disabled'}}"
+                title={{if
+                  this.showRemoveConfirmation
+                  (t "general.disabledByConfirmation")
+                  (t "general.lock")
+                }}
+                disabled={{this.showRemoveConfirmation}}
+                {{on "click" (perform this.lock)}}
+                data-test-lock
+              >
+                <FaIcon
+                  @icon={{faLockOpen}}
+                  @fixedWidth={{true}}
+                  class={{if this.showRemoveConfirmation "disabled"}}
+                />
+              </button>
+            {{else}}
+              <button
+                type="button"
+                class="link-button lock-button disabled"
+                title={{t "general.canNotLockProgramYear"}}
+                disabled
+                data-test-lock
+              >
+                <FaIcon @icon={{faLockOpen}} @fixedWidth={{true}} class="disabled" />
+              </button>
+            {{/if}}
+            {{#if this.canDelete}}
+              <button
+                type="button"
+                class="link-button delete-button{{if this.showRemoveConfirmation ' disabled'}}"
+                title={{if
+                  this.showRemoveConfirmation
+                  (t "general.disabledByConfirmation")
+                  (t "general.remove")
+                }}
+                {{on "click" (set this "showRemoveConfirmation" true)}}
+                disabled={{this.showRemoveConfirmation}}
+                data-test-remove
+              >
+                <FaIcon
+                  @icon={{faTrash}}
+                  @fixedWidth={{true}}
+                  class={{if this.showRemoveConfirmation "disabled" "remove enabled"}}
+                />
+              </button>
+            {{else}}
+              <button
+                type="button"
+                class="link-button delete-button disabled"
+                title={{t "general.canNotDeleteProgramYear"}}
+                disabled
+                data-test-remove
+              >
+                <FaIcon @icon={{faTrash}} @fixedWidth={{true}} class="disabled" />
+              </button>
+            {{/if}}
+          {{/if}}
+        </td>
+      </tr>
+      {{#if this.showRemoveConfirmation}}
+        <tr class="confirm-removal" {{scrollIntoView opts=this.scrollOpts}}>
+          <td colspan="8" class="hide-from-small-screen">
+            <div class="confirm-message" data-test-message>
+              {{t "general.confirmRemoveProgramYear" courseCount=this.cohort.courses.length}}
+              <br />
+              <div class="confirm-buttons">
+                <button
+                  type="button"
+                  class="remove text"
+                  {{on "click" (perform this.remove)}}
+                  data-test-confirm
+                >
+                  {{t "general.yes"}}
+                </button>
+                <button
+                  type="button"
+                  class="done text"
+                  {{on "click" (set this "showRemoveConfirmation" false)}}
+                  data-test-cancel
+                >
+                  {{t "general.cancel"}}
+                </button>
+              </div>
+            </div>
+          </td>
+          <td colspan="4" class="hide-from-large-screen" data-test-confirm-removal>
+            <div class="confirm-message" data-test-message>
+              {{t "general.confirmRemoveProgramYear" courseCount=this.cohort.courses.length}}
+              <br />
+              <div class="confirm-buttons">
+                <button
+                  type="button"
+                  class="remove text"
+                  {{on "click" (perform this.remove)}}
+                  data-test-confirm
+                >
+                  {{t "general.yes"}}
+                </button>
+                <button
+                  type="button"
+                  class="done text"
+                  {{on "click" (set this "showRemoveConfirmation" false)}}
+                  data-test-cancel
+                >
+                  {{t "general.cancel"}}
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      {{/if}}
+    {{/if}}
+  </template>
+}

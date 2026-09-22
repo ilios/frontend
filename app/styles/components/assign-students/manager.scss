@@ -1,0 +1,42 @@
+@use "../../mixins" as m;
+
+.assign-students-manager {
+  @include m.main-list-box;
+
+  .header {
+    @include m.main-list-box-header;
+  }
+
+  .form {
+    align-items: baseline;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+
+    @include m.for-laptop-and-up {
+      flex-direction: row;
+
+      .titlefilter {
+        margin-left: auto;
+      }
+    }
+
+    label {
+      @include m.ilios-label;
+      margin: 0 0.5rem 0 0;
+    }
+
+    .done {
+      margin-left: 0.3rem;
+    }
+
+    .no-cohorts {
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+  }
+
+  .list {
+    @include m.main-list-box-table;
+  }
+}

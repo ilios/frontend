@@ -1,0 +1,833 @@
+import Service from '@ember/service';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import {
+  render,
+  settled,
+  click,
+  findAll,
+  find,
+  triggerEvent,
+  waitUntil,
+  waitFor,
+} from '@ember/test-helpers';
+import { DateTime } from 'luxon';
+import { HttpResponse } from 'msw';
+import { setupMSW } from 'frontend/tests/msw';
+import BulkNewUsers from 'frontend/components/bulk-new-users';
+import noop from 'frontend/helpers/noop';
+
+module('Integration | Component | bulk new users', function (hooks) {
+  setupRenderingTest(hooks);
+  setupMSW(hooks);
+
+  hooks.beforeEach(async function () {
+    const duration = 4;
+    await this.server.create('school', { title: 'first' });
+    const school = await this.server.create('school', { title: 'second' });
+    await this.server.create('school', { title: 'third' });
+
+    const program = await this.server.create('program', {
+      id: 1,
+      title: 'Program',
+      duration,
+      school,
+    });
+    const startYear = DateTime.now().year;
+    const py1 = await this.server.create('program-year', { program, startYear });
+    const py2 = await this.server.create('program-year', { program, startYear });
+    await this.server.create('cohort', { id: 2, title: 'second', programYear: py1 });
+    await this.server.create('cohort', { id: 1, title: 'first', programYear: py2 });
+
+    const user = await this.server.create('user', { school });
+    await this.server.create('authentication', { user });
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    class PermissionCheckerMock extends Service {
+      async canCreateUser() {
+        return true;
+      }
+    }
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+
+    this.owner.register('service:current-user', CurrentUserMock);
+    this.owner.lookup('service:flash-messages').registerTypes(['success', 'warning']);
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
+  });
+
+  const createFile = function (users) {
+    let file;
+    const lines = users.map((arr) => {
+      return arr.join('\t');
+    });
+
+    const contents = lines.join('\n');
+    if (typeof window.WebKitBlobBuilder === 'undefined') {
+      file = new Blob([contents], { type: 'text/plain' });
+    } else {
+      const builder = new window.WebKitBlobBuilder();
+      builder.append(contents);
+      file = builder.getBlob();
+    }
+
+    file.mime = 'text/plain';
+    file.name = 'test.txt';
+    return file;
+  };
+
+  const triggerUpload = async function (users, inputElement) {
+    const file = createFile(users);
+    await triggerEvent(inputElement, 'change', { files: [file] });
+    await waitFor('[data-test-proposed-new-users]');
+  };
+
+  test('it renders', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const content = this.element.textContent.trim();
+    assert.notEqual(content.search(/Provide file with user data/), -1);
+    assert.notEqual(content.search(/Primary School/), -1);
+
+    const schools = 'select:nth-of-type(1) option';
+    const options = findAll(schools);
+    assert.strictEqual(options.length, 3);
+    assert.dom(options[0]).hasText('first');
+    assert.dom(options[1]).hasText('second');
+    assert.dom(options[2]).hasText('third');
+  });
+
+  test('select student mode display cohort', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+    await click('.click-choice-buttons .second-button');
+    const content = this.element.textContent.trim();
+    assert.notEqual(content.search(/Provide file with user data/), -1);
+    assert.notEqual(content.search(/Primary School/), -1);
+    assert.notEqual(content.search(/Primary Cohort/), -1);
+
+    const schools = '[data-test-schools] option';
+    let options = findAll(schools);
+    assert.strictEqual(options.length, 3);
+    assert.dom(options[0]).hasText('first');
+    assert.dom(options[1]).hasText('second');
+    assert.dom(options[2]).hasText('third');
+
+    const cohorts = '[data-test-cohorts] option';
+    options = findAll(cohorts);
+    assert.strictEqual(options.length, 2);
+    assert.dom(options[0]).hasText('Program first');
+    assert.dom(options[1]).hasText('Program second');
+  });
+
+  test('parses file into table', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        'jck',
+        '1234Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    assert.dom('table tbody tr').exists({ count: 2 });
+    assert.dom('tbody tr:nth-of-type(2) th:nth-of-type(1) input').isChecked();
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(1)').hasText('jasper');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(2)').hasText('johnson');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(3)').hasText('');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4)').hasText('1234567890');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(5)').hasText('jasper.johnson@example.com');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(6)').hasText('123Campus');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7)').hasText('123Other');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(8)').hasText('jasper');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(9)').hasText('123Test');
+
+    assert.dom('tbody tr:nth-of-type(2) th:nth-of-type(1) input').isChecked();
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1)').hasText('jackson');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(2)').hasText('johnson');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(3)').hasText('middle');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4)').hasText('12345');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(5)').hasText('jj@example.com');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(6)').hasText('1234Campus');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(7)').hasText('1234Other');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(8)').hasText('jck');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(9)').hasText('1234Test');
+  });
+
+  test('saves valid faculty users', async function (assert) {
+    await this.server.create('user-role', { id: 4 });
+
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        'jck',
+        '1234Test',
+      ],
+      ['invaliduser'],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+    await click('.done');
+    assert.strictEqual(this.server.db.user.all()[1].firstName, 'jasper');
+    assert.strictEqual(this.server.db.user.all()[1].lastName, 'johnson');
+    assert.strictEqual(this.server.db.user.all()[1].middleName, null);
+    assert.strictEqual(this.server.db.user.all()[1].phone, '1234567890');
+    assert.strictEqual(this.server.db.user.all()[1].email, 'jasper.johnson@example.com');
+    assert.strictEqual(this.server.db.user.all()[1].campusId, '123Campus');
+    assert.strictEqual(this.server.db.user.all()[1].otherId, '123Other');
+    assert.true(this.server.db.user.all()[1].addedViaIlios);
+    assert.true(this.server.db.user.all()[1].enabled);
+    assert.strictEqual(this.server.db.user.all()[1].roles.length, 0);
+    assert.strictEqual(this.server.db.user.all()[1].cohorts.length, 0);
+    assert.strictEqual(this.server.db.user.all()[1].primaryCohort, undefined);
+    assert.strictEqual(this.server.db.user.all()[1].authentication.id, 2);
+
+    assert.strictEqual(this.server.db.authentication.all()[1].username, 'jasper');
+    assert.strictEqual(this.server.db.authentication.all()[1].password, '123Test');
+    assert.strictEqual(this.server.db.authentication.all()[1].id, 2);
+
+    assert.strictEqual(this.server.db.user.all()[2].firstName, 'jackson');
+    assert.strictEqual(this.server.db.user.all()[2].lastName, 'johnson');
+    assert.strictEqual(this.server.db.user.all()[2].middleName, 'middle');
+    assert.strictEqual(this.server.db.user.all()[2].phone, '12345');
+    assert.strictEqual(this.server.db.user.all()[2].email, 'jj@example.com');
+    assert.strictEqual(this.server.db.user.all()[2].campusId, '1234Campus');
+    assert.strictEqual(this.server.db.user.all()[2].otherId, '1234Other');
+    assert.true(this.server.db.user.all()[2].addedViaIlios);
+    assert.true(this.server.db.user.all()[2].enabled);
+    assert.strictEqual(this.server.db.user.all()[2].roles.length, 0);
+    assert.strictEqual(this.server.db.user.all()[2].cohorts.length, 0);
+    assert.strictEqual(this.server.db.user.all()[2].primaryCohort, undefined);
+    assert.strictEqual(this.server.db.user.all()[2].authentication.id, 3);
+
+    assert.strictEqual(this.server.db.authentication.all()[2].username, 'jck');
+    assert.strictEqual(this.server.db.authentication.all()[2].password, '1234Test');
+    assert.strictEqual(parseInt(this.server.db.authentication.all()[2].id, 10), 3);
+  });
+
+  test('saves valid student users', async function (assert) {
+    await this.server.create('user-role', { id: 4 });
+
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+    await click('.click-choice-buttons .second-button');
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        'jck',
+        '1234Test',
+      ],
+      ['invaliduser'],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+    await click('.done');
+
+    assert.strictEqual(this.server.db.user.all()[1].firstName, 'jasper');
+    assert.strictEqual(this.server.db.user.all()[1].lastName, 'johnson');
+    assert.strictEqual(this.server.db.user.all()[1].middleName, null);
+    assert.strictEqual(this.server.db.user.all()[1].phone, '1234567890');
+    assert.strictEqual(this.server.db.user.all()[1].email, 'jasper.johnson@example.com');
+    assert.strictEqual(this.server.db.user.all()[1].campusId, '123Campus');
+    assert.strictEqual(this.server.db.user.all()[1].otherId, '123Other');
+    assert.true(this.server.db.user.all()[1].addedViaIlios);
+    assert.true(this.server.db.user.all()[1].enabled);
+    assert.deepEqual(
+      this.server.db.user.all()[1].roles.map((role) => Number(role.id)),
+      [4],
+    );
+    assert.strictEqual(this.server.db.user.all()[1].primaryCohort.id, 1);
+    assert.strictEqual(this.server.db.user.all()[1].authentication.id, 2);
+    assert.strictEqual(this.server.db.authentication.all()[1].username, 'jasper');
+    assert.strictEqual(this.server.db.authentication.all()[1].password, '123Test');
+    assert.strictEqual(this.server.db.authentication.all()[1].user.id, 2);
+
+    assert.strictEqual(this.server.db.user.all()[2].firstName, 'jackson');
+    assert.strictEqual(this.server.db.user.all()[2].lastName, 'johnson');
+    assert.strictEqual(this.server.db.user.all()[2].middleName, 'middle');
+    assert.strictEqual(this.server.db.user.all()[2].phone, '12345');
+    assert.strictEqual(this.server.db.user.all()[2].email, 'jj@example.com');
+    assert.strictEqual(this.server.db.user.all()[2].campusId, '1234Campus');
+    assert.strictEqual(this.server.db.user.all()[2].otherId, '1234Other');
+    assert.true(this.server.db.user.all()[2].addedViaIlios);
+    assert.true(this.server.db.user.all()[2].enabled);
+    assert.deepEqual(
+      this.server.db.user.all()[2].roles.map((role) => Number(role.id)),
+      [4],
+    );
+    assert.strictEqual(this.server.db.user.all()[2].primaryCohort.id, 1);
+    assert.strictEqual(this.server.db.user.all()[2].authentication.id, 3);
+    assert.strictEqual(this.server.db.authentication.all()[2].username, 'jck');
+    assert.strictEqual(this.server.db.authentication.all()[2].password, '1234Test');
+    assert.strictEqual(parseInt(this.server.db.authentication.all()[2].user.id, 10), 3);
+  });
+
+  test('cancel fires close', async function (assert) {
+    this.set('close', () => {
+      assert.step('close called');
+    });
+    await render(<template><BulkNewUsers @close={{this.close}} /></template>);
+    await click('.cancel');
+    assert.verifySteps(['close called']);
+  });
+
+  test('validate firstName', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        '',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        'jck',
+        '1234Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
+  });
+
+  test('validate lastName', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        'jackson',
+        '',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        'jck',
+        '1234Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
+  });
+
+  test('validate middleName', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        'jackson',
+        'johnson',
+        'middlenamewhchiswaytoolongforilios',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        'jck',
+        '1234Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
+  });
+
+  test('validate email address', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj.com',
+        '1234Campus',
+        '1234Other',
+        'jck',
+        '1234Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(5)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(5)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
+  });
+
+  test('validate campusId', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus123456TOOLONGJACK',
+        '1234Other',
+        'jck',
+        '1234Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(6)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(6)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
+  });
+
+  test('validate otherId', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234OtherWAYTOOLONGFORANID',
+        'jck',
+        '1234Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(7)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(7)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
+  });
+
+  test('validate username length', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        'jayden',
+        'johnson',
+        '',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        'long_name'.repeat(20),
+        '1234Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(8)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
+  });
+
+  test('validate username uniqueness', async function (assert) {
+    const user = await this.server.create('user');
+    await this.server.create('authentication', { user, username: 'existingName' });
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        'existingName',
+        '1234Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(8)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
+  });
+
+  test('duplicate username errors on save', async function (assert) {
+    this.server.post('/api/authentications', function () {
+      return new HttpResponse(null, { status: 500 });
+    });
+    const user = await this.server.create('user');
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+    await this.server.create('authentication', { user, username: 'jasper' });
+    await click('.done');
+    assert.ok(findAll('.saving-authentication-errors').length, 1);
+    assert
+      .dom('.saving-authentication-errors li')
+      .hasText('johnson, jasper (jasper.johnson@example.com)');
+  });
+
+  test('error saving user', async function (assert) {
+    this.server.post('/api/users', function () {
+      return new HttpResponse(null, { status: 500 });
+    });
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        'jasper',
+        '123Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+    await click('.done');
+
+    assert.ok(findAll('.saving-user-errors').length, 1);
+    assert.dom('.saving-user-errors li').hasText('johnson, jasper (jasper.johnson@example.com)');
+  });
+
+  test('username not required', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        '',
+        '1234Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+  });
+
+  test('password not required if username is blank', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        '',
+        '',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+  });
+
+  test('password required if username is not blank', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+    const users = [
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        'username',
+        'password',
+      ],
+      [
+        'jayden',
+        'johnson',
+        'middle',
+        '123456',
+        'jj2@example.com',
+        '12345Campus',
+        '',
+        'username',
+        '',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(9)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
+  });
+
+  test('dont create authentication if username is not set', async function (assert) {
+    const proposedNewUsers = '[data-test-proposed-new-users]';
+    const waitSaving = '[data-test-wait-saving]';
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      [
+        'jasper',
+        'johnson',
+        '',
+        '1234567890',
+        'jasper.johnson@example.com',
+        '123Campus',
+        '123Other',
+        '',
+        '123Test',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+    await click('.done');
+    await waitUntil(() => {
+      return findAll(proposedNewUsers).length === 0 && findAll(waitSaving).length === 0;
+    });
+    await settled();
+    assert.strictEqual(this.server.db.user.all()[1].firstName, 'jasper');
+    assert.strictEqual(this.server.db.user.all()[1].authentication, undefined);
+  });
+
+  test('ignore header row', async function (assert) {
+    await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
+
+    const users = [
+      ['First', 'Last', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
+      [
+        'Test Person',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        '',
+        '',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const rows = 'tbody tr';
+    assert.dom(rows).exists({ count: 1 });
+  });
+});

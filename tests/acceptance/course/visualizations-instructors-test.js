@@ -1,0 +1,102 @@
+import { module, test } from 'qunit';
+import { currentURL, waitFor } from '@ember/test-helpers';
+import { setupApplicationTest, takeScreenshot, setupAuthentication } from 'frontend/tests/helpers';
+import page from 'frontend/tests/pages/course-visualizations-instructors';
+
+module('Acceptance | course visualizations - instructors', function (hooks) {
+  setupApplicationTest(hooks);
+  hooks.beforeEach(async function () {
+    const instructor1 = await this.server.create('user');
+    const instructor2 = await this.server.create('user');
+    const vocabulary1 = await this.server.create('vocabulary');
+    const vocabulary2 = await this.server.create('vocabulary');
+    const term1 = await this.server.create('term', {
+      vocabulary: vocabulary1,
+    });
+    const term2 = await this.server.create('term', {
+      vocabulary: vocabulary1,
+    });
+    const term3 = await this.server.create('term', {
+      vocabulary: vocabulary2,
+    });
+    const sessionType1 = await this.server.create('session-type');
+    const sessionType2 = await this.server.create('session-type');
+    const session1 = await this.server.create('session', {
+      sessionType: sessionType1,
+      terms: [term1],
+    });
+    const session2 = await this.server.create('session', {
+      sessionType: sessionType2,
+      terms: [term2, term3],
+    });
+    const session3 = await this.server.create('session');
+    const instructorGroup1 = await this.server.create('instructor-group', {
+      users: [instructor1],
+    });
+    const instructorGroup2 = await this.server.create('instructor-group', {
+      users: [instructor2],
+    });
+    await this.server.create('offering', {
+      instructorGroups: [instructorGroup1],
+      startDate: '2022-07-20T09:00:00',
+      endDate: '2022-07-20T10:00:00',
+      session: session1,
+    });
+    await this.server.create('offering', {
+      instructors: [instructor1],
+      startDate: '2022-07-20T09:00:00',
+      endDate: '2022-07-20T09:15:00',
+      session: session2,
+    });
+    await this.server.create('offering', {
+      instructorGroups: [instructorGroup2],
+      startDate: '2022-07-20T09:00:00',
+      endDate: '2022-07-20T10:30:00',
+      session: session1,
+    });
+    this.course = await this.server.create('course', {
+      sessions: [session1, session2, session3],
+      year: 2022,
+    });
+    this.user = await setupAuthentication({ directedCourses: [this.course] });
+  });
+
+  test('it renders', async function (assert) {
+    await page.visit({ courseId: this.course.id });
+    assert.strictEqual(currentURL(), '/data/courses/1/instructors');
+    assert.strictEqual(page.root.title, 'course 0 2022');
+    assert.strictEqual(page.root.breadcrumbs.crumbs.length, 3);
+    assert.strictEqual(page.root.breadcrumbs.crumbs[0].text, 'course 0');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[0].link, '/courses/1');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(page.root.breadcrumbs.crumbs[2].text, 'Instructors');
+    // wait for charts to load
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
+    await takeScreenshot(assert);
+    assert.strictEqual(page.root.instructorsChart.chart.bars.length, 2);
+    assert.strictEqual(
+      page.root.instructorsChart.chart.bars[0].description,
+      '0 guy M. Mc0son - 75 Minutes',
+    );
+    assert.strictEqual(
+      page.root.instructorsChart.chart.bars[1].description,
+      '1 guy M. Mc1son - 90 Minutes',
+    );
+    assert.strictEqual(page.root.instructorsChart.chart.labels.length, 2);
+    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '0 guy M. Mc0son\u200b');
+    assert.strictEqual(page.root.instructorsChart.chart.labels[1].text, '1 guy M. Mc1son\u200b');
+    assert.strictEqual(page.root.instructorsChart.dataTable.rows.length, 2);
+  });
+
+  test('clicking chart transitions user to instructor visualization', async function (assert) {
+    await page.visit({ courseId: this.course.id });
+    // wait for charts to load
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
+    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '0 guy M. Mc0son\u200b');
+    await page.root.instructorsChart.chart.bars[0].click();
+    assert.strictEqual(currentURL(), '/data/courses/1/instructors/1');
+  });
+});

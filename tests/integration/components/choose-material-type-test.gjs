@@ -1,0 +1,86 @@
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { render } from '@ember/test-helpers';
+import { component } from 'frontend/tests/pages/components/choose-material-type';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
+import ChooseMaterialType from 'frontend/components/choose-material-type';
+import noop from 'frontend/helpers/noop';
+import { array } from '@ember/helper';
+
+module('Integration | Component | choose-material-type', function (hooks) {
+  setupRenderingTest(hooks);
+
+  test('it renders and is accessible', async function (assert) {
+    this.set('nothing', () => {});
+    await render(
+      <template>
+        <ChooseMaterialType @choose={{(noop)}} @types={{array "file" "link" "citation"}} />
+      </template>,
+    );
+
+    await a11yAudit(this.element);
+    assert.strictEqual(component.text, 'Add');
+
+    await component.toggle.click();
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('click opens menu', async function (assert) {
+    this.set('nothing', () => {});
+    await render(
+      <template>
+        <ChooseMaterialType @choose={{(noop)}} @types={{array "file" "link" "citation"}} />
+      </template>,
+    );
+
+    assert.strictEqual(component.types.length, 0);
+    await component.toggle.click();
+    assert.strictEqual(component.types.length, 3);
+    assert.strictEqual(component.types[0].text, 'File');
+    assert.strictEqual(component.types[1].text, 'Web Link');
+    assert.strictEqual(component.types[2].text, 'Citation');
+  });
+
+  test('clicking type fires action', async function (assert) {
+    this.set('choose', (type) => {
+      assert.step('choose called');
+      assert.strictEqual(type, 'link');
+    });
+    await render(
+      <template>
+        <ChooseMaterialType @choose={{this.choose}} @types={{array "file" "link" "citation"}} />
+      </template>,
+    );
+    await component.toggle.click();
+    await component.types[1].click();
+    assert.verifySteps(['choose called']);
+  });
+
+  test('down opens menu', async function (assert) {
+    this.set('nothing', () => {});
+    await render(
+      <template>
+        <ChooseMaterialType @choose={{(noop)}} @types={{array "file" "link" "citation"}} />
+      </template>,
+    );
+
+    assert.strictEqual(component.types.length, 0);
+    await component.toggle.down();
+    assert.strictEqual(component.types.length, 3);
+  });
+
+  test('escape closes menu', async function (assert) {
+    this.set('nothing', () => {});
+    await render(
+      <template>
+        <ChooseMaterialType @choose={{(noop)}} @types={{array "file" "link" "citation"}} />
+      </template>,
+    );
+
+    await component.toggle.down();
+    assert.strictEqual(component.types.length, 3);
+    await component.toggle.esc();
+    assert.strictEqual(component.types.length, 0);
+  });
+});

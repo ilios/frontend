@@ -1,0 +1,39 @@
+@use "../mixins" as m;
+
+.new-user {
+  background-color: light-dark(var(--white), var(--dark-grey));
+  border: 1px solid light-dark(var(--lightest-grey), var(--grey));
+  margin: 0.5rem 0;
+  padding: 1rem;
+
+  & > .title {
+    @include m.ilios-heading-h4;
+  }
+
+  .new-user-form {
+    @include m.ilios-form;
+
+    .choose-form-type {
+      align-items: baseline;
+      display: flex;
+      grid-column: 1 / -1;
+      justify-content: flex-end;
+
+      label {
+        margin-right: 0.5rem;
+      }
+    }
+
+    .item {
+      @include m.ilios-form-item;
+
+      &.last {
+        @include m.ilios-form-last-item;
+      }
+    }
+
+    .buttons {
+      @include m.ilios-form-buttons;
+    }
+  }
+}

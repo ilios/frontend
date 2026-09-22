@@ -1,0 +1,116 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { service } from '@ember/service';
+import { action } from '@ember/object';
+import { task } from 'ember-concurrency';
+import { eq } from 'ember-truth-helpers';
+import YupValidations from '../../classes/yup-validations';
+import { string } from 'yup';
+import EditableField from '../editable-field';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import pick from '../../helpers/pick';
+import set from 'ember-set-helper/helpers/set';
+import YupValidationMessage from '../yup-validation-message';
+import { LinkTo } from '@ember/routing';
+import Breadcrumbs from '../breadcrumbs';
+import focus from '../../modifiers/focus';
+
+export default class InstructorGroupHeaderComponent extends Component {
+  @service store;
+  @service intl;
+  @tracked title;
+
+  constructor() {
+    super(...arguments);
+    this.title = this.args.instructorGroup.title;
+  }
+
+  validations = new YupValidations(this, {
+    title: string().ensure().trim().min(3).max(60),
+  });
+
+  changeTitle = task({ drop: true }, async () => {
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.validations.clearErrorDisplay();
+    this.args.instructorGroup.title = this.title;
+    await this.args.instructorGroup.save();
+    this.title = this.args.instructorGroup.title;
+  });
+
+  paths = [
+    {
+      route: 'instructor-groups',
+      title: this.intl.t('general.instructorGroups'),
+    },
+    {
+      route: 'instructor-groups',
+      title: this.intl.t('general.instructorGroups'),
+      query: { schoolId: this.args.instructorGroup.school.id },
+    },
+  ];
+
+  @action
+  revertTitleChanges() {
+    this.title = this.args.instructorGroup.title;
+  }
+  <template>
+    <div class="instructor-group-header" data-test-instructor-group-header ...attributes>
+      {{! template-lint-disable no-bare-strings }}
+      <div class="header-bar">
+        <span class="title">
+          {{#if @canUpdate}}
+            <EditableField
+              data-test-title
+              @value={{this.title}}
+              @save={{perform this.changeTitle}}
+              @close={{this.revertTitleChanges}}
+              as |keyboard isSaving|
+            >
+              <input
+                aria-label={{t "general.instructorGroupTitle"}}
+                type="text"
+                value={{this.title}}
+                disabled={{isSaving}}
+                {{on "input" (pick "target.value" (set this "title"))}}
+                {{this.validations.attach "title"}}
+                {{keyboard}}
+                {{focus}}
+              />
+              <YupValidationMessage
+                @description={{t "general.title"}}
+                @validationErrors={{this.validations.errors.title}}
+                data-test-title-validation-error-message
+              />
+            </EditableField>
+          {{else}}
+            <h2 data-test-title>
+              {{this.title}}
+            </h2>
+          {{/if}}
+        </span>
+        <span class="info" data-test-members>
+          {{t "general.members"}}:
+          {{@instructorGroup.users.length}}
+        </span>
+      </div>
+
+      <Breadcrumbs @paths={{this.paths}} @rootTitle={{@instructorGroup.title}} as |path index|>
+        {{#if (eq index 1)}}
+          <LinkTo @route="instructor-groups" @query={{path.query}} class="crumb" data-test-crumb>
+            {{@instructorGroup.school.title}}
+          </LinkTo>
+        {{else}}
+          <LinkTo @route={{path.route}} class="crumb" data-test-crumb>
+            {{path.title}}
+          </LinkTo>
+        {{/if}}
+      </Breadcrumbs>
+    </div>
+  </template>
+}

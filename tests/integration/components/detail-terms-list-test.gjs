@@ -1,0 +1,203 @@
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { render } from '@ember/test-helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/detail-terms-list';
+import DetailTermsList from 'frontend/components/detail-terms-list';
+
+module('Integration | Component | detail terms list', function (hooks) {
+  setupRenderingTest(hooks);
+  setupMSW(hooks);
+
+  test('list with terms', async function (assert) {
+    const school = await this.server.create('school', {
+      title: 'Medicine',
+    });
+
+    const vocabulary = await this.server.create('vocabulary', {
+      title: 'Topics',
+      school,
+    });
+
+    const vocabulary2 = await this.server.create('vocabulary', {
+      title: 'Something else',
+      school,
+    });
+
+    await this.server.create('term', {
+      title: 'foo',
+      vocabulary,
+    });
+    await this.server.create('term', {
+      title: 'bar',
+      active: true,
+      vocabulary,
+    });
+    await this.server.create('term', {
+      title: 'baz',
+      vocabulary: vocabulary2,
+    });
+    await this.server.create('term', {
+      title: 'bat',
+      vocabulary: vocabulary2,
+    });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const terms = await this.owner.lookup('service:store').findAll('term');
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('terms', terms);
+    await render(
+      <template>
+        <DetailTermsList @vocabulary={{this.vocabulary}} @terms={{this.terms}} @canEdit={{false}} />
+      </template>,
+    );
+    assert.strictEqual(component.title, 'Topics (Medicine)');
+    assert.strictEqual(component.vocabularyName, 'Topics');
+    assert.strictEqual(component.terms.length, 2);
+    assert.strictEqual(component.terms[0].name, 'bar');
+    assert.strictEqual(component.terms[1].name, 'foo (inactive)');
+  });
+
+  test('empty list', async function (assert) {
+    const school = await this.server.create('school', {
+      title: 'Medicine',
+    });
+
+    const vocabulary = await this.server.create('vocabulary', {
+      title: 'Topics',
+      school,
+    });
+
+    const vocabulary2 = await this.server.create('vocabulary', {
+      title: 'Something else',
+      school,
+    });
+
+    await this.server.create('term', {
+      title: 'foo',
+      vocabulary: vocabulary2,
+    });
+    await this.server.create('term', {
+      title: 'bar',
+      vocabulary: vocabulary2,
+    });
+    await this.server.create('term', {
+      title: 'baz',
+      vocabulary: vocabulary2,
+    });
+    await this.server.create('term', {
+      title: 'bat',
+      vocabulary: vocabulary2,
+    });
+
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const terms = await this.owner.lookup('service:store').findAll('term');
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('terms', terms);
+    await render(
+      <template>
+        <DetailTermsList @vocabulary={{this.vocabulary}} @terms={{this.terms}} @canEdit={{false}} />
+      </template>,
+    );
+    assert.strictEqual(component.title, 'Topics (Medicine)');
+    assert.strictEqual(component.terms.length, 0);
+  });
+
+  test('remove term', async function (assert) {
+    const school = await this.server.create('school', {
+      title: 'Medicine',
+    });
+
+    const vocabulary = await this.server.create('vocabulary', {
+      title: 'Topics',
+      school,
+    });
+
+    const term1 = await this.server.create('term', {
+      title: 'foo',
+      vocabulary,
+    });
+
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const terms = await this.owner.lookup('service:store').findAll('term');
+    this.set('vocabulary', vocabularyModel);
+    this.set('terms', terms);
+
+    this.set('remove', (val) => {
+      assert.strictEqual(Number(val.id), term1.id);
+      assert.step('remove called');
+    });
+    await render(
+      <template>
+        <DetailTermsList
+          @vocabulary={{this.vocabulary}}
+          @terms={{this.terms}}
+          @remove={{this.remove}}
+          @canEdit={{true}}
+        />
+      </template>,
+    );
+    assert.ok(component.terms[0].hasDeleteIcon);
+    await component.terms[0].remove();
+    assert.verifySteps(['remove called']);
+  });
+
+  test('inactive vocabulary labeled as such in edit mode', async function (assert) {
+    const school = await this.server.create('school', {
+      title: 'Medicine',
+    });
+
+    const vocabulary = await this.server.create('vocabulary', {
+      title: 'Topics',
+      active: false,
+      school,
+    });
+
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    this.set('vocabulary', vocabularyModel);
+    this.set('terms', []);
+    await render(
+      <template>
+        <DetailTermsList @vocabulary={{this.vocabulary}} @terms={{this.terms}} @canEdit={{true}} />
+      </template>,
+    );
+    assert.dom('[data-test-title] .inactive').hasText('(inactive)');
+  });
+
+  test('click vocabulary title to manage', async function (assert) {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    await this.server.create('term', { vocabulary });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    this.set('vocabulary', vocabularyModel);
+    this.set('terms', []);
+    this.set('manage', (vocabulary) => {
+      assert.step('manage called');
+      assert.strictEqual(vocabulary, vocabularyModel);
+    });
+    await render(
+      <template>
+        <DetailTermsList
+          @vocabulary={{this.vocabulary}}
+          @terms={{this.terms}}
+          @canEdit={{true}}
+          @manage={{this.manage}}
+          @canManage={{true}}
+        />
+      </template>,
+    );
+    await component.manage();
+    assert.verifySteps(['manage called']);
+  });
+});

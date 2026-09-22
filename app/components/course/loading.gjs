@@ -1,0 +1,75 @@
+import BackToCourses from './back-to-courses';
+import animateLoading from '../../modifiers/animate-loading';
+import t from 'ember-intl/helpers/t';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faSquarePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
+<template>
+  <BackToCourses />
+
+  <div aria-hidden="true" data-test-course-loading>
+    <div class="course-loading" {{animateLoading "course" loadingTime=10000 finalOpacity=".5"}}>
+      <div class="header">
+        <span class="title loading-text">&nbsp;</span>
+      </div>
+      <div class="ilios-overview">
+        <div class="overview-header">
+          <div class="overview-actions"></div>
+        </div>
+        <div class="overview-content">
+          <div class="overview-block">
+            <label>{{t "general.externalId"}}:</label>
+          </div>
+          <div class="overview-block">
+            <label>{{t "general.clerkshipType"}}:</label>
+          </div>
+          <div class="overview-block">
+            <label>{{t "general.start"}}:</label>
+          </div>
+          <div class="overview-block">
+            <label>{{t "general.end"}}:</label>
+          </div>
+          <div class="overview-block">
+            <label>{{t "general.level"}}:</label>
+          </div>
+          <div class="overview-block">
+            <label>{{t "general.universalLocator"}}:</label>
+          </div>
+        </div>
+      </div>
+      <div class="mock-detail-box">
+        <span>
+          {{t "general.expandDetails"}}
+          <FaIcon @icon={{faSquarePlus}} class="expand-collapse-icon" />
+        </span>
+      </div>
+    </div>
+
+    <section
+      class="course-sessions course-sessions-loading loading-shimmer main-section"
+      {{animateLoading "course-sessions" finalOpacity=".5"}}
+    >
+      <div class="course-sessions-header">
+        {{! template-lint-disable no-bare-strings }}
+        <div class="title loading-text">
+          {{t "general.sessions"}}
+          (xx)
+        </div>
+        <div class="actions">
+          <div class="filter">
+            {{! template-lint-disable require-input-label }}
+            <input disabled />
+          </div>
+          <button type="button" class="loading-text" disabled>
+            <FaIcon @icon={{faPlus}} />
+          </button>
+          <button type="button" class="loading-text" disabled>
+            {{t "general.publicationReview"}}
+          </button>
+        </div>
+      </div>
+      <section>
+        <div class="sessions-grid-row sessions-grid-header-row loading-text"></div>
+      </section>
+    </section>
+  </div>
+</template>

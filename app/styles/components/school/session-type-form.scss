@@ -1,0 +1,41 @@
+@use "../../mixins" as m;
+
+.school-session-type-form {
+  .form {
+    background-color: light-dark(var(--white), var(--dark-grey));
+    border: 1px solid light-dark(var(--lightest-grey), var(--grey));
+    margin: 0.5rem 0;
+
+    @include m.ilios-form {
+      padding: 1rem;
+    }
+
+    .item {
+      @include m.ilios-form-item;
+      height: 4rem;
+
+      label {
+        display: block;
+      }
+    }
+
+    .calendar-color {
+      input {
+        width: 3rem;
+      }
+
+      .box {
+        border: 1px solid light-dark(var(--black), var(--light-grey));
+        display: inline-block;
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+    }
+
+    .buttons {
+      @include m.ilios-form-buttons {
+        padding-top: 2rem;
+      }
+    }
+  }
+}

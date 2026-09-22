@@ -1,0 +1,33 @@
+@use "../../mixins" as m;
+
+.reports-choose-course {
+  .schools {
+    margin: 0 0 1em 0;
+  }
+  button {
+    @include m.ilios-button-reset;
+    font-weight: 600;
+  }
+
+  ul {
+    @include m.ilios-list-reset;
+
+    li {
+      margin-left: 0.5em;
+    }
+
+    ul {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .deselect-all {
+    @include m.ilios-button-reset;
+    @include m.font-size("small");
+    color: light-dark(var(--blue), var(--bright-blue));
+  }
+
+  .select-all {
+    font-style: italic;
+  }
+}

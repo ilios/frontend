@@ -1,0 +1,6 @@
+@use "../../mixins" as m;
+
+.program-year-objectives {
+  @include m.detail-container(var(--orange));
+  @include m.objectives;
+}

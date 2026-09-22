@@ -1,0 +1,735 @@
+import { currentRouteName } from '@ember/test-helpers';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
+import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
+import page from 'frontend/tests/pages/session';
+
+module('Acceptance | Session - Overview', function (hooks) {
+  setupApplicationTest(hooks);
+  hooks.beforeEach(async function () {
+    this.intl = this.owner.lookup('service:intl');
+    this.school = await this.server.create('school');
+    await this.server.create('academic-year');
+    this.course = await this.server.create('course', {
+      school: this.school,
+    });
+    this.sessionTypes = await this.server.createList('session-type', 2, {
+      school: this.school,
+    });
+    await setupAuthentication({ school: this.school, directedCourses: [this.course] });
+  });
+
+  test('check fields', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      instructionalNotes: 'session notes',
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(page.details.overview.sessionType.value, 'session type 0');
+    assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
+    assert.strictEqual(page.details.overview.instructionalNotes.value, 'session notes');
+    assert.notOk(page.details.overview.ilm.ilmHours.isVisible);
+  });
+
+  test('check remove ilm', async function (assert) {
+    const ilmSession = await this.server.create('ilm-session');
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      ilmSession,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.ok(page.details.overview.ilm.ilmHours.isVisible);
+    assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
+    assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), ilmSession.hours);
+    assert.strictEqual(
+      page.details.overview.ilm.ilmDueDateAndTime.value,
+      this.intl.formatDate(ilmSession.dueDate, {
+        month: '2-digit',
+        day: '2-digit',
+        year: '2-digit',
+        hour12: true,
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    );
+
+    await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
+
+    assert.notOk(page.details.overview.ilm.ilmHours.isVisible);
+    assert.notOk(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
+  });
+
+  test('check add ilm', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.notOk(page.details.overview.ilm.ilmHours.isVisible);
+    assert.notOk(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
+
+    await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
+
+    assert.ok(page.details.overview.ilm.ilmHours.isVisible);
+    assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
+    assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), 1);
+    assert.strictEqual(
+      page.details.overview.ilm.ilmDueDateAndTime.value,
+      this.intl.formatDate(DateTime.fromObject({ hour: 17, minute: 0 }).plus({ weeks: 6 }), {
+        month: '2-digit',
+        day: '2-digit',
+        year: '2-digit',
+        hour12: true,
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    );
+  });
+
+  test('change ilm hours', async function (assert) {
+    const ilmSession = await this.server.create('ilm-session', {
+      hours: 3,
+    });
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      ilmSession,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), 3);
+    await page.details.overview.ilm.ilmHours.edit();
+    await page.details.overview.ilm.ilmHours.set(23);
+    await page.details.overview.ilm.ilmHours.save();
+    assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), 23);
+  });
+
+  test('change ilm due date and time', async function (assert) {
+    const dueDate = DateTime.fromObject({
+      year: 2021,
+      month: 5,
+      day: 18,
+      hour: 17,
+      minute: 0,
+      second: 0,
+    });
+    const ilmSession = await this.server.create('ilm-session', {
+      hours: 3,
+      dueDate: dueDate.toISO(),
+    });
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      ilmSession,
+    });
+    const newDate = dueDate.set({ hour: 23, minute: 55 }).plus({ weeks: 3 });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(
+      page.details.overview.ilm.ilmDueDateAndTime.value,
+      this.intl.formatDate(dueDate.toJSDate(), {
+        month: '2-digit',
+        day: '2-digit',
+        year: '2-digit',
+        hour12: true,
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    );
+    await page.details.overview.ilm.ilmDueDateAndTime.edit();
+    await page.details.overview.ilm.ilmDueDateAndTime.datePicker.set(newDate.toJSDate());
+    await page.details.overview.ilm.ilmDueDateAndTime.timePicker.hour.select(
+      newDate.toFormat('hh'),
+    );
+    await page.details.overview.ilm.ilmDueDateAndTime.timePicker.minute.select(
+      newDate.toFormat('mm'),
+    );
+    await page.details.overview.ilm.ilmDueDateAndTime.timePicker.ampm.select(newDate.toFormat('a'));
+
+    await page.details.overview.ilm.ilmDueDateAndTime.save();
+    assert.strictEqual(
+      page.details.overview.ilm.ilmDueDateAndTime.value,
+      this.intl.formatDate(newDate.toJSDate(), {
+        month: '2-digit',
+        day: '2-digit',
+        year: '2-digit',
+        hour12: true,
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    );
+  });
+
+  test('change title', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(page.details.overview.title.value, session.title);
+    await page.details.overview.title.edit();
+    await page.details.overview.title.set('Rad Session Dude');
+    await page.details.overview.title.save();
+    assert.strictEqual(page.details.overview.title.value, 'Rad Session Dude');
+  });
+
+  test('last Updated', async function (assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
+    const updatedAt = DateTime.fromObject({
+      year: 2019,
+      month: 7,
+      day: 9,
+      hour: 17,
+      minute: 0,
+      second: 0,
+    });
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      updatedAt: updatedAt.toISO(),
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    const updatedAtString = this.intl.formatDate(updatedAt.toJSDate(), {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(
+      page.details.overview.lastUpdated,
+      `Last Update Last Update: ${updatedAtString}`,
+    );
+  });
+
+  test('change type', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(page.details.overview.sessionType.value, 'session type 0');
+    await page.details.overview.sessionType.edit();
+    await page.details.overview.sessionType.set(2);
+    await page.details.overview.sessionType.save();
+    assert.strictEqual(page.details.overview.sessionType.value, 'session type 1');
+  });
+
+  test('session attributes are shown by school config', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[1],
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSupplemental',
+      value: true,
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSpecialAttireRequired',
+      value: true,
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSpecialEquipmentRequired',
+      value: true,
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionAttendanceRequired',
+      value: true,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.ok(page.details.overview.attributes.supplemental.isVisible);
+    assert.ok(page.details.overview.attributes.specialAttire.isVisible);
+    assert.ok(page.details.overview.attributes.specialEquipment.isVisible);
+    assert.ok(page.details.overview.attributes.attendanceRequired.isVisible);
+  });
+
+  test('session attributes are hidden by school config', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSupplemental',
+      value: false,
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSpecialAttireRequired',
+      value: false,
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSpecialEquipmentRequired',
+      value: false,
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionAttendanceRequired',
+      value: false,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.notOk(page.details.overview.attributes.isVisible);
+    assert.notOk(page.details.overview.attributes.supplemental.isVisible);
+    assert.notOk(page.details.overview.attributes.specialAttire.isVisible);
+    assert.notOk(page.details.overview.attributes.specialEquipment.isVisible);
+    assert.notOk(page.details.overview.attributes.attendanceRequired.isVisible);
+  });
+
+  test('session attributes are hidden when there is no school config', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.notOk(page.details.overview.attributes.isVisible);
+    assert.notOk(page.details.overview.attributes.supplemental.isVisible);
+    assert.notOk(page.details.overview.attributes.specialAttire.isVisible);
+    assert.notOk(page.details.overview.attributes.specialEquipment.isVisible);
+    assert.notOk(page.details.overview.attributes.attendanceRequired.isVisible);
+  });
+
+  test('change supplemental', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[1],
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSupplemental',
+      value: true,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.ok(page.details.overview.attributes.isVisible);
+    assert.ok(page.details.overview.attributes.supplemental.isVisible);
+    assert.notOk(page.details.overview.attributes.supplemental.checked);
+    await page.details.overview.attributes.supplemental.click();
+    assert.ok(page.details.overview.attributes.supplemental.checked);
+  });
+
+  test('change special attire', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[1],
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSpecialAttireRequired',
+      value: true,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.ok(page.details.overview.attributes.isVisible);
+    assert.ok(page.details.overview.attributes.specialAttire.isVisible);
+    assert.notOk(page.details.overview.attributes.specialAttire.checked);
+    await page.details.overview.attributes.specialAttire.click();
+    assert.ok(page.details.overview.attributes.specialAttire.checked);
+  });
+
+  test('change special equipment', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[1],
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionSpecialEquipmentRequired',
+      value: true,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.ok(page.details.overview.attributes.isVisible);
+    assert.ok(page.details.overview.attributes.specialEquipment.isVisible);
+    assert.notOk(page.details.overview.attributes.specialEquipment.checked);
+    await page.details.overview.attributes.specialEquipment.click();
+    assert.ok(page.details.overview.attributes.specialEquipment.checked);
+  });
+
+  test('change attendance required', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[1],
+    });
+    await this.server.create('schoolConfig', {
+      school: this.school,
+      name: 'showSessionAttendanceRequired',
+      value: true,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.ok(page.details.overview.attributes.isVisible);
+    assert.ok(page.details.overview.attributes.attendanceRequired.isVisible);
+    assert.notOk(page.details.overview.attributes.attendanceRequired.checked);
+    await page.details.overview.attributes.attendanceRequired.click();
+    assert.ok(page.details.overview.attributes.attendanceRequired.checked);
+  });
+
+  test('change description', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    const newDescription = 'some new thing';
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
+    await page.details.overview.sessionDescription.edit();
+    await page.details.overview.sessionDescription.set(newDescription);
+    await page.details.overview.sessionDescription.save();
+    assert.strictEqual(page.details.overview.sessionDescription.value, newDescription);
+  });
+
+  test('add description', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      description: null,
+    });
+    const newDescription = 'some new thing';
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+    await page.details.overview.sessionDescription.edit();
+    await page.details.overview.sessionDescription.set(newDescription);
+    await page.details.overview.sessionDescription.save();
+    assert.strictEqual(page.details.overview.sessionDescription.value, newDescription);
+  });
+
+  test('empty description removes description', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      description: null,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+    await page.details.overview.sessionDescription.edit();
+    await page.details.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.details.overview.sessionDescription.save();
+    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+  });
+
+  test('remove description', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
+    await page.details.overview.sessionDescription.edit();
+    await page.details.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.details.overview.sessionDescription.save();
+    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+  });
+
+  test('cancel editing empty description #3210', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      description: null,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+    await page.details.overview.sessionDescription.edit();
+    await page.details.overview.sessionDescription.set('something useless this way types');
+    await page.details.overview.sessionDescription.cancel();
+    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+  });
+
+  test('click copy', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    await page.details.overview.copy.visit();
+
+    assert.strictEqual(currentRouteName(), 'session.copy');
+  });
+
+  test('copy button is visible', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.ok(page.details.overview.copy.isVisible);
+  });
+
+  test('copy hidden on copy route', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.ok(page.details.overview.copy.isVisible);
+    await page.details.overview.copy.visit();
+    assert.strictEqual(currentRouteName(), 'session.copy');
+    assert.notOk(page.details.overview.copy.isVisible);
+  });
+
+  test('change instructionalNotes', async function (assert) {
+    let session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      instructionalNotes: 'instructional note',
+    });
+    const newInstructionalNotes = 'some new thing';
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index', 'route name is correct');
+    assert.strictEqual(
+      page.details.overview.instructionalNotes.value,
+      'instructional note',
+      'instructional notes value is correct',
+    );
+    await page.details.overview.instructionalNotes.edit();
+    await page.details.overview.instructionalNotes.set(newInstructionalNotes);
+    await page.details.overview.instructionalNotes.save();
+    assert.strictEqual(
+      page.details.overview.instructionalNotes.value,
+      newInstructionalNotes,
+      'new instructional notes value is correct',
+    );
+    session = (await this.server.db.session.all())[0];
+    assert.strictEqual(
+      session.instructionalNotes,
+      `<p>${newInstructionalNotes}</p>`,
+      'instructional notes value in database is correct',
+    );
+  });
+
+  test('add instructionalNotes', async function (assert) {
+    let session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    const newInstructionalNotes = 'some new thing';
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index', 'route name is correct');
+    assert.strictEqual(
+      page.details.overview.instructionalNotes.value,
+      'Click to edit',
+      'initial instructional notes value is correct',
+    );
+    await page.details.overview.instructionalNotes.edit();
+    await page.details.overview.instructionalNotes.set(newInstructionalNotes);
+    await page.details.overview.instructionalNotes.save();
+    assert.strictEqual(
+      page.details.overview.instructionalNotes.value,
+      newInstructionalNotes,
+      'new instructional notes value is correct',
+    );
+    session = (await this.server.db.session.all())[0];
+    assert.strictEqual(
+      session.instructionalNotes,
+      `<p>${newInstructionalNotes}</p>`,
+      'instructional notes value in database is correct',
+    );
+  });
+
+  test('empty instructionalNotes removes instructionalNotes', async function (assert) {
+    let session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+    await page.details.overview.instructionalNotes.edit();
+    await page.details.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.details.overview.instructionalNotes.save();
+    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+    session = (await this.server.db.session.all())[0];
+    assert.strictEqual(session.instructionalNotes, null);
+  });
+
+  test('remove instructionalNotes', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      instructionalNotes: 'instructional note',
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(page.details.overview.instructionalNotes.value, 'instructional note');
+    await page.details.overview.instructionalNotes.edit();
+    await page.details.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.details.overview.instructionalNotes.save();
+    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+  });
+
+  test('cancel editing empty instructionalNotes #3210', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+    await page.details.overview.instructionalNotes.edit();
+    await page.details.overview.instructionalNotes.set('something useless this way types');
+    await page.details.overview.instructionalNotes.cancel();
+    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+  });
+
+  test('has no pre-requisite', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(page.details.overview.prerequisites.text, 'Prerequisites: None');
+  });
+
+  test('has pre-requisites', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await this.server.createList('session', 3, {
+      course: this.course,
+      postrequisite: session,
+    });
+    await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(
+      page.details.overview.prerequisites.text,
+      'Prerequisites: session 1, session 2, session 3',
+    );
+  });
+
+  test('has no post-requisite', async function (assert) {
+    const ilmSession = await this.server.create('ilm-session');
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      ilmSession,
+    });
+    await page.visit({
+      courseId: this.course.id,
+      sessionId: session.id,
+      sessionLearnergroupDetails: true,
+    });
+    assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: None');
+    assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
+  });
+
+  test('has post-requisite', async function (assert) {
+    const ilmSession = await this.server.create('ilm-session');
+    const postrequisite = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      ilmSession,
+      postrequisite,
+    });
+    await page.visit({
+      courseId: this.course.id,
+      sessionId: session.id,
+      sessionLearnergroupDetails: true,
+    });
+    assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: session 0');
+    assert.notOk(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
+  });
+
+  test('change post-requisite', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await this.server.createList('session', 3, {
+      course: this.course,
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(page.details.overview.postrequisite.value, 'None');
+    await page.details.overview.postrequisite.edit();
+    await page.details.overview.postrequisite.editor.postRequisites[1].click();
+    await page.details.overview.postrequisite.editor.save();
+    assert.strictEqual(page.details.overview.postrequisite.value, 'session 2');
+  });
+
+  test('shows expanded objectives if no objectives exist', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.notOk(page.details.collapsedObjectives.isPresent);
+  });
+
+  test('shows collapsed objectives if objectives exist', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    await this.server.create('session-objective', { session });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.ok(page.details.collapsedObjectives.isPresent);
+  });
+
+  test('shows associated learner groups', async function (assert) {
+    const session = await this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
+    const learnerGroups = await this.server.createList('learner-group', 3);
+    await this.server.create('offering', { session, learnerGroups });
+    await this.server.create('offering', { session, learnerGroups });
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(
+      page.details.overview.associatedGroups.groups,
+      'learner group 0, learner group 1, learner group 2',
+    );
+  });
+});

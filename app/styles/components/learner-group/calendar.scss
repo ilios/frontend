@@ -1,0 +1,42 @@
+@use "../../mixins" as m;
+
+.learner-group-calendar {
+  border: 1px solid light-dark(var(--black), var(--grey));
+  border-radius: 5px;
+  box-sizing: border-box;
+  clear: both;
+  margin: 1rem 0;
+  min-height: 5rem;
+  padding: 0.25rem 2rem 0.75rem;
+  position: relative;
+
+  h2 {
+    @include m.ilios-heading;
+    @include m.font-size("medium");
+    margin-bottom: 1rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .learner-group-calendar-time-picker {
+    @include m.ilios-list-reset;
+
+    li {
+      display: inline;
+      margin-right: 2em;
+    }
+  }
+
+  .loading-indicator {
+    @include m.ilios-heading-h1;
+    left: 4rem;
+    opacity: 75;
+    position: absolute;
+    top: 5rem;
+    transition: all 0.5s ease-in-out;
+
+    &.loaded {
+      opacity: 0;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@use "../../mixins" as m;
+
+.program-year-objective-list-item-expanded {
+  margin: 1em 2em;
+  grid-column: 1 / -1;
+
+  table {
+    thead {
+      background-color: light-dark(var(--lightest-grey), var(--dark-grey));
+    }
+
+    tbody tr {
+      &:nth-of-type(even) {
+        background-color: light-dark(var(--lightest-grey), var(--grey));
+      }
+
+      ul {
+        @include m.ilios-list-reset;
+
+        p {
+          margin: 0;
+        }
+
+        li {
+          border-top: 1px solid light-dark(var(--grey), var(--light-grey));
+          padding-top: 1rem;
+        }
+
+        li:nth-of-type(1) {
+          border: 0;
+          padding: 0;
+        }
+      }
+    }
+  }
+}

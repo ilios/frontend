@@ -1,0 +1,30 @@
+@use "../../mixins" as m;
+
+.reports-curriculum {
+  table {
+    margin: 1rem 0;
+    width: 100%;
+    caption {
+      @include m.ilios-heading-h5;
+    }
+    th,
+    td {
+      text-align: left;
+    }
+  }
+
+  .report-results.running {
+    &,
+    table caption,
+    a {
+      color: transparent;
+      text-shadow: var(--very-transparent-black) 0 0 10px;
+    }
+  }
+
+  .progress-container {
+    display: flex;
+    height: 1rem;
+    justify-content: end;
+  }
+}

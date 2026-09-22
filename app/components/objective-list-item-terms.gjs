@@ -1,0 +1,50 @@
+import Component from '@glimmer/component';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import DetailTermsList from './detail-terms-list';
+import noop from '../helpers/noop';
+import { fn } from '@ember/helper';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
+
+export default class ObjectiveListItemTermsComponent extends Component {
+  @cached
+  get termsData() {
+    return new TrackedAsyncData(this.args.subject.terms);
+  }
+
+  get terms() {
+    return this.termsData.isResolved ? this.termsData.value : null;
+  }
+  <template>
+    <div class="objective-list-item-terms grid-item" data-test-objective-list-item-terms>
+      {{#if @isManaging}}
+        <BigSaveCancelButtons @save={{@save}} @cancel={{@cancel}} />
+      {{else}}
+        {{#each @subject.associatedVocabularies as |vocab|}}
+          {{#if vocab.termCount}}
+            <DetailTermsList
+              @vocabulary={{vocab}}
+              @terms={{this.terms}}
+              @canEdit={{false}}
+              @manage={{if @editable @manage (noop)}}
+            />
+          {{/if}}
+        {{else}}
+          <ul>
+            <li>
+              {{#if @editable}}
+                <button type="button" {{on "click" (fn @manage null)}} data-test-manage>
+                  {{t "general.addNew"}}
+                </button>
+              {{else}}
+                {{t "general.none"}}
+              {{/if}}
+            </li>
+          </ul>
+        {{/each}}
+      {{/if}}
+    </div>
+  </template>
+}

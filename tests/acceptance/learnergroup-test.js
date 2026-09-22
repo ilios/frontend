@@ -1,0 +1,654 @@
+import { currentURL } from '@ember/test-helpers';
+import { test, module } from 'qunit';
+import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { DateTime } from 'luxon';
+import page from '../pages/learner-group';
+import learnerGroupsPage from '../pages/learner-groups';
+
+module('Acceptance | Learner Group', function (hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(async function () {
+    this.school = await this.server.create('school');
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
+    this.program = await this.server.create('program', { school: this.school });
+  });
+
+  test('move learners individually from cohort to group', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.create('learner-group', { cohort });
+    await this.server.createList('user', 2, { cohorts: [cohort] });
+
+    await page.visit({ learnerGroupId: 1 });
+
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      0,
+      'current group user count correct',
+    );
+    assert.strictEqual(
+      page.root.cohortUserManager.users.length,
+      2,
+      'potential cohort user count correct',
+    );
+    assert.strictEqual(
+      page.root.cohortUserManager.users[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+      'first cohort user name correct',
+    );
+    assert.strictEqual(
+      page.root.cohortUserManager.users[1].name.userNameInfo.fullName,
+      '2 guy M. Mc2son',
+      'second cohort user name correct',
+    );
+
+    await page.root.cohortUserManager.users[0].add();
+    await page.root.actions.buttons.manageUsers.click();
+
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      1,
+      'user count in current group correct',
+    );
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+      'current group user name correct',
+    );
+    assert.strictEqual(
+      page.root.cohortUserManager.users.length,
+      1,
+      'potential cohort user count correct',
+    );
+    assert.strictEqual(
+      page.root.cohortUserManager.users[0].name.userNameInfo.fullName,
+      '2 guy M. Mc2son',
+      'remaining cohort user name correct',
+    );
+  });
+
+  test('remove learners individually from group', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
+
+    await page.visit({ learnerGroupId: 1 });
+    await page.root.actions.buttons.manageUsers.click();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 2);
+    assert.strictEqual(page.root.cohortUserManager.users.length, 0);
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup[1].name.userNameInfo.fullName,
+      '2 guy M. Mc2son',
+    );
+    await page.root.userManager.usersInCurrentGroup[0].remove();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '2 guy M. Mc2son',
+    );
+    assert.strictEqual(page.root.cohortUserManager.users.length, 1);
+    assert.strictEqual(
+      page.root.cohortUserManager.users[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
+  });
+
+  test('generate new subgroups', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.createList('user', 2);
+    const parent = await this.server.create('learner-group', {
+      cohort,
+    });
+    const parent2 = await this.server.create('learner-group', {
+      cohort,
+      parent,
+      userIds: [2, 3],
+    });
+    await this.server.create('learner-group', {
+      cohort,
+      parent,
+    });
+    await this.server.createList('learner-group', 2, {
+      cohort,
+      parent: parent2,
+    });
+
+    await page.visit({ learnerGroupId: 1 });
+    await takeScreenshot(assert, 'learnerGroupId1');
+    assert.strictEqual(page.root.subgroups.list.items.length, 2);
+    assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 1');
+    assert.strictEqual(page.root.subgroups.list.items[1].title, 'learner group 2');
+
+    await page.root.subgroups.toggleNewLearnerGroupForm();
+    await takeScreenshot(assert, 'toggleNewLearnerGroupForm');
+
+    assert.ok(page.root.subgroups.newLearnerGroupForm.singleGroupSelected);
+    assert.notOk(page.root.subgroups.newLearnerGroupForm.multipleGroupSelected);
+    await page.root.subgroups.newLearnerGroupForm.chooseMultipleGroups();
+    await page.root.subgroups.newLearnerGroupForm.multiple.set('5');
+    await page.root.subgroups.newLearnerGroupForm.multiple.save();
+
+    assert.strictEqual(page.root.subgroups.list.items.length, 7);
+    assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 0 1');
+    assert.strictEqual(page.root.subgroups.list.items[1].title, 'learner group 0 2');
+    assert.strictEqual(page.root.subgroups.list.items[2].title, 'learner group 0 3');
+    assert.strictEqual(page.root.subgroups.list.items[3].title, 'learner group 0 4');
+    assert.strictEqual(page.root.subgroups.list.items[4].title, 'learner group 0 5');
+    assert.strictEqual(page.root.subgroups.list.items[5].title, 'learner group 1');
+    assert.strictEqual(page.root.subgroups.list.items[6].title, 'learner group 2');
+
+    // add two more subgroups
+    await page.root.subgroups.toggleNewLearnerGroupForm();
+    await page.root.subgroups.newLearnerGroupForm.chooseMultipleGroups();
+    await page.root.subgroups.newLearnerGroupForm.multiple.set('2');
+    await page.root.subgroups.newLearnerGroupForm.multiple.save();
+    await takeScreenshot(assert, 'toggleNewLearnerGroupForm +2 subgroups');
+
+    assert.strictEqual(page.root.subgroups.list.items.length, 9);
+    assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 0 1');
+    assert.strictEqual(page.root.subgroups.list.items[1].title, 'learner group 0 2');
+    assert.strictEqual(page.root.subgroups.list.items[2].title, 'learner group 0 3');
+    assert.strictEqual(page.root.subgroups.list.items[3].title, 'learner group 0 4');
+    assert.strictEqual(page.root.subgroups.list.items[4].title, 'learner group 0 5');
+    assert.strictEqual(page.root.subgroups.list.items[5].title, 'learner group 0 6');
+    assert.strictEqual(page.root.subgroups.list.items[6].title, 'learner group 0 7');
+    assert.strictEqual(page.root.subgroups.list.items[7].title, 'learner group 1');
+    assert.strictEqual(page.root.subgroups.list.items[8].title, 'learner group 2');
+  });
+
+  test('copy learnergroup without learners', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', {
+      programYear,
+    });
+    const parent = await this.server.create('learner-group', {
+      cohort,
+    });
+    const subGroup = await this.server.create('learner-group', {
+      cohort,
+      parent,
+    });
+    await this.server.createList('learner-group', 2, {
+      cohort,
+      parent: subGroup,
+    });
+
+    await page.visit({ learnerGroupId: 1 });
+
+    assert.strictEqual(page.root.subgroups.list.items.length, 1);
+    assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 1');
+    assert.strictEqual(page.root.subgroups.list.items[0].users, '0');
+    assert.strictEqual(page.root.subgroups.list.items[0].children, '2');
+    await page.root.subgroups.list.items[0].copy();
+    await page.root.subgroups.list.confirmCopy.copyWithoutLearners();
+    assert.strictEqual(page.root.subgroups.list.items.length, 2);
+    assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 1');
+    assert.strictEqual(page.root.subgroups.list.items[0].users, '0');
+    assert.strictEqual(page.root.subgroups.list.items[0].children, '2');
+    assert.strictEqual(page.root.subgroups.list.items[1].title, 'learner group 1 (Copy)');
+    assert.strictEqual(page.root.subgroups.list.items[1].users, '0');
+    assert.strictEqual(page.root.subgroups.list.items[1].children, '2');
+
+    await page.visit({ learnerGroupId: 1 });
+    assert.strictEqual(page.root.subgroups.list.items.length, 2);
+    assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 1');
+    assert.strictEqual(page.root.subgroups.list.items[0].users, '0');
+    assert.strictEqual(page.root.subgroups.list.items[0].children, '2');
+    assert.strictEqual(page.root.subgroups.list.items[1].title, 'learner group 1 (Copy)');
+    assert.strictEqual(page.root.subgroups.list.items[1].users, '0');
+    assert.strictEqual(page.root.subgroups.list.items[1].children, '2');
+
+    await page.root.subgroups.list.items[1].clickTitle();
+    assert.strictEqual(currentURL(), '/learnergroups/5');
+    assert.strictEqual(page.root.subgroups.list.items.length, 2);
+    assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 2');
+    assert.strictEqual(page.root.subgroups.list.items[0].users, '0');
+    assert.strictEqual(page.root.subgroups.list.items[0].children, '0');
+    assert.strictEqual(page.root.subgroups.list.items[1].title, 'learner group 3');
+    assert.strictEqual(page.root.subgroups.list.items[1].users, '0');
+    assert.strictEqual(page.root.subgroups.list.items[1].children, '0');
+  });
+
+  test('cannot copy learnergroup with learners', async function (assert) {
+    const users = await this.server.createList('user', 3);
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', {
+      programYear,
+    });
+    const parent = await this.server.create('learner-group', {
+      cohort,
+    });
+    const subGroup = await this.server.create('learner-group', {
+      cohort,
+      parent,
+      users,
+    });
+    await this.server.createList('learner-group', 2, {
+      cohort,
+      parent: subGroup,
+    });
+
+    await page.visit({ learnerGroupId: 1 });
+    assert.strictEqual(page.root.subgroups.list.items.length, 1);
+    assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 1');
+    assert.strictEqual(page.root.subgroups.list.items[0].users, '3');
+    assert.strictEqual(page.root.subgroups.list.items[0].children, '2');
+    await page.root.subgroups.list.items[0].copy();
+    assert.notOk(page.root.subgroups.list.confirmCopy.canCopyWithLearners);
+    assert.ok(page.root.subgroups.list.confirmCopy.canCopyWithoutLearners);
+  });
+
+  test('cannot copy learnergroup with learners in subgroup', async function (assert) {
+    const users = await this.server.createList('user', 3);
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', {
+      programYear,
+    });
+    const parent = await this.server.create('learner-group', {
+      cohort,
+    });
+    const subGroup = await this.server.create('learner-group', {
+      cohort,
+      parent,
+    });
+    await this.server.create('learner-group', {
+      cohort,
+      parent: subGroup,
+      users,
+    });
+    await this.server.create('learner-group', {
+      cohort,
+      parent: subGroup,
+    });
+
+    await page.visit({ learnerGroupId: 1 });
+    assert.strictEqual(page.root.subgroups.list.items.length, 1);
+    assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 1');
+    assert.strictEqual(page.root.subgroups.list.items[0].users, '0');
+    assert.strictEqual(page.root.subgroups.list.items[0].children, '2');
+    await page.root.subgroups.list.items[0].copy();
+    assert.notOk(page.root.subgroups.list.confirmCopy.canCopyWithLearners);
+    assert.ok(page.root.subgroups.list.confirmCopy.canCopyWithoutLearners);
+  });
+
+  test('Cohort members not in learner group appear after navigating to learner group #3428', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', {
+      programYear,
+    });
+    const learnerGroup = await this.server.create('learner-group', {
+      cohort,
+    });
+    await this.server.createList('user', 5, {
+      cohorts: [cohort],
+      primaryCohort: cohort,
+    });
+    await this.server.createList('user', 5, {
+      cohorts: [cohort],
+      primaryCohort: cohort,
+      learnerGroups: [learnerGroup],
+    });
+
+    await learnerGroupsPage.visit();
+    assert.strictEqual(learnerGroupsPage.list.items.length, 1);
+    assert.strictEqual(learnerGroupsPage.list.items[0].title, 'learner group 0');
+    await learnerGroupsPage.list.items[0].clickTitle();
+    assert.strictEqual(currentURL(), '/learnergroups/1');
+    assert.strictEqual(page.root.members.users.length, 5);
+    assert.strictEqual(page.root.cohortUserManager.users.length, 5);
+  });
+
+  test('learner group calendar', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    const course = await this.server.create('course', { school: this.school, cohorts: [cohort] });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
+      course,
+      sessionType,
+    });
+    await this.server.create('offering', {
+      session,
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
+      learnerGroups: [learnerGroup],
+      updatedAt: DateTime.now().toISO(),
+    });
+    await this.server.create('offering');
+    await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
+
+    await page.visit({ learnerGroupId: 1 });
+    assert.ok(
+      page.root.actions.buttons.toggle.firstButton.isChecked,
+      'toggle first choice is selected',
+    );
+    assert.notOk(page.root.calendar.isVisible, 'calendar is not visible');
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      0,
+      'calendar has no events loaded',
+    );
+    await page.root.actions.buttons.toggle.secondButton.click();
+    assert.ok(
+      page.root.actions.buttons.toggle.secondButton.isChecked,
+      'toggle button second choice is selected',
+    );
+    assert.ok(page.root.calendar.isVisible, 'calendar is visible');
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      1,
+      'calendar has correct number of events loaded',
+    );
+    await page.root.actions.buttons.toggle.firstButton.click();
+    assert.ok(
+      page.root.actions.buttons.toggle.firstButton.isChecked,
+      'toggle first choice is selected again',
+    );
+    assert.notOk(page.root.calendar.isVisible, 'calendar is no longer visible');
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      0,
+      'calendar has no events loaded again',
+    );
+  });
+
+  test('learner group calendar with subgroup events', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    const course = await this.server.create('course', { school: this.school, cohorts: [cohort] });
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
+      course,
+      sessionType,
+    });
+    const subgroup = await this.server.create('learner-group', {
+      cohort,
+      parent: learnerGroup,
+    });
+    await this.server.create('offering', {
+      session,
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
+      learnerGroups: [learnerGroup],
+      updatedAt: DateTime.now().toISO(),
+    });
+    await this.server.create('offering', {
+      session,
+      startDate: DateTime.fromObject({ hour: 8 }).toISO(),
+      endDate: DateTime.fromObject({ hour: 9 }).toISO(),
+      learnerGroups: [subgroup],
+      updatedAt: DateTime.now().toISO(),
+    });
+    await this.server.create('offering');
+    await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [learnerGroup] });
+
+    await page.visit({ learnerGroupId: 1 });
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      0,
+      'calendar has no events loaded',
+    );
+    assert.notOk(page.root.calendar.calendar.isVisible, 'calendar is not visible');
+    await page.root.actions.buttons.toggle.secondButton.click();
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      1,
+      'calendar has correct number of groups loaded, but no subgroups',
+    );
+    assert.ok(page.root.calendar.calendar.isVisible, 'calendar is visible');
+    await page.root.calendar.showSubgroups.toggle.handle.click();
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      2,
+      'calendar has correct number of groups AND subgroups loaded',
+    );
+  });
+
+  test('Learners with missing parent group affiliation still appear in subgroup manager #3476', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', {
+      cohort,
+    });
+    const subGroup = await this.server.create('learner-group', {
+      cohort,
+      parent: learnerGroup,
+    });
+    await this.server.createList('user', 2, {
+      cohorts: [cohort],
+      learnerGroups: [learnerGroup],
+    });
+    await this.server.create('user', {
+      cohorts: [cohort],
+      learnerGroups: [subGroup],
+    });
+
+    await page.visit({ learnerGroupId: 2 });
+    assert.strictEqual(currentURL(), '/learnergroups/2');
+    assert.strictEqual(page.root.members.users.length, 1);
+    await page.root.actions.buttons.manageUsers.click();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
+    assert.strictEqual(page.root.userManager.usersNotInCurrentGroup.length, 2);
+  });
+
+  test('moving learners to group updates count #3570', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    await this.server.createList('user', 2, {
+      cohorts: [cohort],
+      learnerGroups: [learnerGroup],
+    });
+    await this.server.createList('user', 2, { cohorts: [cohort] });
+
+    await page.visit({ learnerGroupId: 1 });
+    await page.root.actions.buttons.manageUsers.click();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 2);
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2);
+    assert.strictEqual(page.root.header.members, 'Members: 2 / 4');
+    await page.root.cohortUserManager.users[0].add();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 3);
+    assert.strictEqual(page.root.cohortUserManager.users.length, 1);
+    assert.strictEqual(page.root.header.members, 'Members: 3 / 4');
+  });
+
+  test('moving learners out of group updates count #3570', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    await this.server.createList('user', 2, {
+      cohorts: [cohort],
+      learnerGroups: [learnerGroup],
+    });
+    await this.server.createList('user', 2, { cohorts: [cohort] });
+
+    await page.visit({ learnerGroupId: 1 });
+    await page.root.actions.buttons.manageUsers.click();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 2);
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2);
+    assert.strictEqual(page.root.header.members, 'Members: 2 / 4');
+
+    await page.root.userManager.usersInCurrentGroup[0].remove();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
+    assert.strictEqual(page.root.cohortUserManager.users.length, 3);
+    assert.strictEqual(page.root.header.members, 'Members: 1 / 4');
+  });
+
+  test('manage subgroup members does not duplicate members #3936', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const parent = await this.server.create('learner-group', { cohort });
+    const child = await this.server.create('learner-group', { cohort, parent });
+    await this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [parent, child] });
+
+    await page.visit({ learnerGroupId: child.id });
+    await page.root.actions.buttons.manageUsers.click();
+    const users = page.root.userManager.usersInCurrentGroup;
+    assert.strictEqual(users.length, 2);
+    assert.strictEqual(users[0].name.userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(users[1].name.userNameInfo.fullName, '2 guy M. Mc2son');
+  });
+
+  test('move learners individually from subgroup to subgroup #4953', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const parent = await this.server.create('learner-group', { cohort });
+    await this.server.createList('learner-group', 2, { cohort, parent });
+    await this.server.createList('user', 3, { cohorts: [cohort] });
+
+    await page.visit({ learnerGroupId: 1 });
+    assert.strictEqual(page.root.subgroups.list.items.length, 2, 'subgroup count is correct');
+    assert.strictEqual(
+      page.root.subgroups.list.items[0].title,
+      'learner group 1',
+      'first subgroup title is correct',
+    );
+    assert.strictEqual(
+      page.root.subgroups.list.items[1].title,
+      'learner group 2',
+      'second subgroup title is correct',
+    );
+
+    await page.root.subgroups.list.items[0].clickTitle();
+
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      0,
+      'users in current (first) subgroup count correct',
+    );
+    assert.strictEqual(
+      page.root.userManager.usersNotInCurrentGroup.length,
+      0,
+      'users not in current (first) subgroup count correct',
+    );
+
+    assert.strictEqual(page.root.cohortUserManager.users.length, 3, 'cohort users count correct');
+
+    await page.root.cohortUserManager.users[0].add();
+    await page.root.actions.buttons.manageUsers.click();
+
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      1,
+      'users in current (first) subgroup count correct',
+    );
+    assert.strictEqual(
+      page.root.userManager.usersNotInCurrentGroup.length,
+      0,
+      'users not in current (first) subgroup count correct',
+    );
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+      'name of first user in current (first) subgroup correct',
+    );
+
+    await page.root.header.breadcrumbs.crumbs[2].click();
+    await page.root.subgroups.list.items[1].clickTitle();
+    await page.root.actions.buttons.manageUsers.click();
+
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      0,
+      'users in current (second) subgroup count correct',
+    );
+    assert.strictEqual(
+      page.root.userManager.usersNotInCurrentGroup.length,
+      1,
+      'users not in current (second) subgroup count correct',
+    );
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
+
+    await page.root.userManager.usersNotInCurrentGroup[0].add();
+
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup.length,
+      1,
+      'users in current group count correct',
+    );
+    assert.strictEqual(
+      page.root.userManager.usersNotInCurrentGroup.length,
+      0,
+      'users not in current group count correct',
+    );
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2, 'cohort users count correct');
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+      'name of first user in current group correct',
+    );
+  });
+
+  test('expand and collapse course associations', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session, learnerGroups: [learnerGroup] });
+    const learnerGroupId = learnerGroup.id;
+
+    await page.visit({ learnerGroupId: learnerGroup.id });
+
+    assert.strictEqual(currentURL(), `/learnergroups/${learnerGroupId}`);
+    assert.ok(page.root.courseAssociations.header.toggle.isCollapsed);
+
+    await page.root.courseAssociations.header.toggle.click();
+    assert.ok(page.root.courseAssociations.header.toggle.isExpanded);
+    assert.strictEqual(
+      currentURL(),
+      `/learnergroups/${learnerGroupId}?showCourseAssociations=true`,
+    );
+
+    await page.root.courseAssociations.header.toggle.click();
+    assert.ok(page.root.courseAssociations.header.toggle.isCollapsed);
+    assert.strictEqual(currentURL(), `/learnergroups/${learnerGroupId}`);
+  });
+
+  test('course associations are expanded if URL contains corresponding parameter', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const learnerGroup = await this.server.create('learner-group', { cohort });
+    const course = await this.server.create('course', { school: this.school });
+    const session = await this.server.create('session', { course });
+    await this.server.create('offering', { session, learnerGroups: [learnerGroup] });
+    const learnerGroupId = learnerGroup.id;
+
+    await page.visit({ learnerGroupId, showCourseAssociations: 'true' });
+
+    assert.strictEqual(
+      currentURL(),
+      `/learnergroups/${learnerGroupId}?showCourseAssociations=true`,
+    );
+    assert.ok(page.root.courseAssociations.header.toggle.isExpanded);
+  });
+
+  test('moving learners from cohort maintains scroll posision ilios/ilios#7305', async function (assert) {
+    const programYear = await this.server.create('program-year', { program: this.program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.create('learner-group', { cohort });
+    await this.server.createList('user', 50, { cohorts: [cohort] });
+
+    await page.visit({ learnerGroupId: 1 });
+    assert.notOk(await page.root.cohortUserManager.users[25].isInView());
+
+    await page.root.cohortUserManager.users[25].scrollTo();
+    assert.ok(await page.root.cohortUserManager.users[25].isInView());
+
+    await page.root.cohortUserManager.users[22].add();
+    assert.ok(await page.root.cohortUserManager.users[25].isInView());
+  });
+});

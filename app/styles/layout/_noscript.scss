@@ -1,0 +1,17 @@
+@use "../mixins" as m;
+
+noscript {
+  p {
+    background-color: light-dark(var(--white), var(--black));
+    border: 2px dashed var(--orange);
+    color: light-dark(var(--black), var(--white));
+    @include m.font-size("xxl");
+    font-weight: 600;
+    margin: 2rem;
+    padding: 2rem;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}

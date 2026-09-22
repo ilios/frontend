@@ -1,0 +1,57 @@
+@use "../mixins" as m;
+
+.connection-status {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+
+  &.critical-notice {
+    background-color: light-dark(var(--dark-yellow), var(--dark-yellow));
+    color: light-dark(var(--black), var(--black));
+    min-height: 2.5rem;
+  }
+
+  &.offline {
+    display: flex;
+
+    @include m.for-tablet-and-up {
+      flex-direction: row;
+    }
+  }
+
+  p {
+    margin: 0 0.25rem;
+
+    &.unable-to-reconnect {
+      margin: auto;
+
+      @include m.for-tablet-and-up {
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .buttons {
+    display: inline-block;
+
+    @include m.for-tablet-and-up {
+      height: 2.5rem;
+      align-self: flex-end;
+    }
+
+    button {
+      background-color: light-dark(var(--black), var(--black));
+      border: 0;
+      border-radius: 0;
+      color: light-dark(var(--white), var(--white));
+      display: inline-block;
+      padding: 0.25rem;
+
+      @include m.for-tablet-and-up {
+        margin-left: 0.25rem;
+        height: 100%;
+      }
+    }
+  }
+}

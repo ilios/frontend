@@ -1,0 +1,21 @@
+@use "../../constants";
+@use "../../mixins" as m;
+
+.school-root {
+  .backtolink {
+    margin: 0;
+  }
+
+  .school-overview {
+    border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: calc(constants.$golden-ratio-large * 1rem) 0
+      calc(constants.$golden-ratio-small * 1rem) 0;
+
+    h2 {
+      @include m.ilios-heading-h4;
+    }
+  }
+}

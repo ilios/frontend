@@ -1,0 +1,41 @@
+@use "../../constants";
+@use "../../mixins" as m;
+
+.learner-group-header {
+  .header-bar {
+    border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: calc(constants.$golden-ratio-large * 1rem) 0
+      calc(constants.$golden-ratio-small * 1rem) 0;
+    margin: 0 0 0.8rem 0;
+
+    @include m.for-tablet-and-up {
+      flex-direction: row;
+    }
+
+    h2 {
+      @include m.ilios-heading-h4;
+    }
+
+    .title {
+      @include m.ilios-heading-h4;
+      flex-grow: 2;
+
+      .is-editing,
+      input {
+        width: 90%;
+      }
+    }
+
+    .title,
+    .info {
+      @include m.text-align-bottom;
+    }
+  }
+
+  .breadcrumbs {
+    margin: 0 0 0.8rem;
+  }
+}

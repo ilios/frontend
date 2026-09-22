@@ -1,0 +1,201 @@
+import { module, test } from 'qunit';
+import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import page from 'frontend/tests/pages/session';
+
+module('Acceptance | Session - Objective Parents', function (hooks) {
+  setupApplicationTest(hooks);
+  hooks.beforeEach(async function () {
+    const school = await this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] });
+    const course = await this.server.create('course', {
+      year: 2013,
+      school,
+    });
+    const courseObjectives = await this.server.createList('course-objective', 3, {
+      course,
+    });
+    const sessionType = await this.server.create('session-type', { school });
+    const session = await this.server.create('session', { course, sessionType });
+    await this.server.create('session-objective', {
+      session,
+      courseObjectives: courseObjectives.slice(0, 2),
+    });
+    await this.server.create('session-objective', { session });
+  });
+
+  test('list parent objectives', async function (assert) {
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionObjectiveDetails: true,
+    });
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0',
+    );
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 0',
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 1',
+    );
+
+    await takeScreenshot(assert, 'default background color');
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
+    await takeScreenshot(assert, 'managed background color');
+
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
+    assert.strictEqual(m.courseTitle, 'course 0');
+    assert.strictEqual(m.objectives.length, 3);
+    assert.strictEqual(m.objectives[0].title, 'course objective 0');
+    assert.ok(m.objectives[0].selected);
+    assert.strictEqual(m.objectives[1].title, 'course objective 1');
+    assert.ok(m.objectives[1].selected);
+    assert.strictEqual(m.objectives[2].title, 'course objective 2');
+    assert.ok(m.objectives[2].notSelected);
+  });
+
+  test('save changes', async function (assert) {
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionObjectiveDetails: true,
+    });
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0',
+    );
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 0',
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 1',
+    );
+
+    await takeScreenshot(assert, 'default background color');
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
+    await takeScreenshot(assert, 'managed background color');
+
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
+    assert.strictEqual(m.courseTitle, 'course 0');
+    await m.objectives[0].add();
+    await m.objectives[2].add();
+    assert.ok(m.objectives[0].notSelected);
+    assert.ok(m.objectives[1].selected);
+    assert.ok(m.objectives[2].selected);
+    await page.details.objectives.objectiveList.objectives[0].parents.save();
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0',
+    );
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 1',
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 2',
+    );
+  });
+
+  test('cancel changes', async function (assert) {
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionObjectiveDetails: true,
+    });
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0',
+    );
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 0',
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 1',
+    );
+
+    await takeScreenshot(assert, 'default background color');
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
+    await takeScreenshot(assert, 'managed background color');
+
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
+    assert.strictEqual(m.courseTitle, 'course 0');
+    await m.objectives[0].add();
+    await m.objectives[2].add();
+    assert.ok(m.objectives[0].notSelected);
+    assert.ok(m.objectives[1].selected);
+    assert.ok(m.objectives[2].selected);
+    await page.details.objectives.objectiveList.objectives[0].parents.cancel();
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0',
+    );
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 0',
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 1',
+    );
+  });
+
+  test('deselect all parents for session objective', async function (assert) {
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionObjectiveDetails: true,
+    });
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0',
+    );
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 0',
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 1',
+    );
+
+    await takeScreenshot(assert, 'default background color');
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
+    await takeScreenshot(assert, 'managed background color');
+
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
+    assert.strictEqual(m.courseTitle, 'course 0');
+    await m.objectives[0].add();
+    await m.objectives[1].add();
+    assert.ok(m.objectives[0].notSelected);
+    assert.ok(m.objectives[1].notSelected);
+    assert.ok(m.objectives[2].notSelected);
+    await page.details.objectives.objectiveList.objectives[0].parents.save();
+
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0',
+    );
+    assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
+  });
+});

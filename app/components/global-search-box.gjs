@@ -1,0 +1,75 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import set from 'ember-set-helper/helpers/set';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import pick from '../helpers/pick';
+import onKey from 'ember-keyboard/modifiers/on-key';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
+export default class GlobalSearchBoxComponent extends Component {
+  @service router;
+
+  @tracked internalQuery;
+
+  get computedQuery() {
+    if (typeof this.internalQuery === 'string') {
+      return this.internalQuery;
+    }
+    return this.args.query;
+  }
+
+  @action
+  focusAndSearch(event) {
+    const searchInputElement =
+      event.currentTarget.parentElement.getElementsByClassName('global-search-input')[0];
+    searchInputElement.focus();
+    this.search();
+  }
+
+  @action
+  search() {
+    this.args.search(this.computedQuery);
+    this.clear();
+  }
+
+  @action
+  onEscapeKey() {
+    this.clear();
+    if (this.router.currentRouteName === 'search') {
+      this.args.search('');
+    }
+  }
+
+  clear() {
+    this.internalQuery = null;
+  }
+
+  <template>
+    <div class="global-search-box" data-test-global-search-box>
+      <input
+        aria-label={{t "general.searchTheCurriculum"}}
+        class="global-search-input"
+        data-test-input
+        type="search"
+        value={{this.computedQuery}}
+        {{on "input" (pick "target.value" (set this "internalQuery"))}}
+        {{onKey "Escape" this.onEscapeKey}}
+        {{onKey "Enter" this.search}}
+        {{onKey "ArrowUp" this.onArrowKey}}
+        {{onKey "ArrowDown" this.onArrowKey}}
+      />
+      <button
+        aria-label={{t "general.search"}}
+        type="button"
+        data-test-search-icon
+        {{on "click" this.focusAndSearch}}
+      >
+        <FaIcon @icon={{faMagnifyingGlass}} />
+      </button>
+    </div>
+  </template>
+}

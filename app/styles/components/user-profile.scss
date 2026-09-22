@@ -1,0 +1,46 @@
+@use "../mixins" as m;
+
+.user-profile {
+  h1 {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .user-profile-actions {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+  }
+
+  .user-roles {
+    text-align: center;
+
+    .user-is-student {
+      color: light-dark(var(--green), var(--lighter-green));
+    }
+  }
+}
+
+.user-profile-learnergroups {
+  h2.title {
+    @include m.ilios-heading-h3;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  ul {
+    @include m.ilios-list-reset;
+  }
+}
+
+.user-profile-ics {
+  p {
+    margin-bottom: 0;
+  }
+
+  .refresh-key {
+    background-color: light-dark(var(--green), var(--light-green));
+  }
+}

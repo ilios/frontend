@@ -1,0 +1,39 @@
+@use "../../mixins" as m;
+
+.courses-root {
+  .filters {
+    @include m.main-list-filters;
+
+    .toggle-mycourses,
+    .schoolsfilter,
+    .yearsfilter,
+    .titlefilter {
+      @include m.main-list-filter;
+    }
+
+    & > :last-child {
+      padding-right: 0;
+    }
+  }
+
+  .new .saved-result {
+    @include m.main-list-saved-new;
+  }
+
+  .courses {
+    @include m.main-list-box;
+
+    .header {
+      @include m.main-list-box-header;
+
+      .actions {
+        min-height: 2rem;
+        @include m.main-list-box-header-actions;
+      }
+    }
+
+    .list {
+      @include m.main-list-box-table;
+    }
+  }
+}

@@ -1,0 +1,88 @@
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { render } from '@ember/test-helpers';
+import { component } from 'frontend/tests/pages/components/ilios-calendar-week';
+import { DateTime } from 'luxon';
+import IliosCalendarWeek from 'frontend/components/ilios-calendar-week';
+import { array } from '@ember/helper';
+import noop from 'frontend/helpers/noop';
+
+module('Integration | Component | ilios calendar week', function (hooks) {
+  setupRenderingTest(hooks);
+
+  test('it renders', async function (assert) {
+    const date = DateTime.fromObject({
+      year: 2015,
+      month: 9,
+      day: 30,
+      hour: 12,
+      minute: 0,
+      second: 0,
+    });
+    this.set('date', date.toJSDate());
+    await render(
+      <template><IliosCalendarWeek @date={{this.date}} @calendarEvents={{(array)}} /></template>,
+    );
+    assert.strictEqual(component.calendar.title.longWeekOfYear, 'Week of September 27, 2015');
+    assert.strictEqual(component.calendar.events.length, 0);
+  });
+
+  test('clicking on a day header fires the correct events', async function (assert) {
+    const date = DateTime.fromObject({
+      year: 2015,
+      month: 9,
+      day: 30,
+      hour: 12,
+      minute: 0,
+      second: 0,
+    });
+    this.set('date', date.toJSDate());
+    this.set('changeDate', (newDate) => {
+      assert.step('changeDate called');
+      assert.strictEqual(newDate, '2015-09-27');
+    });
+    this.set('changeView', (newView) => {
+      assert.step('changeView called');
+      assert.strictEqual(newView, 'day');
+    });
+
+    await render(
+      <template>
+        <IliosCalendarWeek
+          @date={{this.date}}
+          @calendarEvents={{(array)}}
+          @areDaysSelectable={{true}}
+          @changeDate={{this.changeDate}}
+          @changeView={{this.changeView}}
+        />
+      </template>,
+    );
+    assert.notOk(component.calendar.dayHeadings[0].button.isDisabled);
+    await component.calendar.dayHeadings[0].selectDay();
+    assert.verifySteps(['changeDate called', 'changeView called']);
+  });
+
+  test('day header is disabled when areDaysSelectable is false', async function (assert) {
+    const date = DateTime.fromObject({
+      year: 2015,
+      month: 9,
+      day: 30,
+      hour: 12,
+      minute: 0,
+      second: 0,
+    });
+    this.set('date', date.toJSDate());
+    await render(
+      <template>
+        <IliosCalendarWeek
+          @date={{this.date}}
+          @calendarEvents={{(array)}}
+          @areDaysSelectable={{false}}
+          @changeDate={{(noop)}}
+          @changeView={{(noop)}}
+        />
+      </template>,
+    );
+    assert.ok(component.calendar.dayHeadings[0].button.isDisabled);
+  });
+});

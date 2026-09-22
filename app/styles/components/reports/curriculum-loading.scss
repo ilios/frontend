@@ -1,0 +1,8 @@
+@use "../../mixins" as m;
+
+.reports-curriculum-loading {
+  .reports-curriculum-header .input-buttons button.done {
+    cursor: default;
+    background-color: light-dark(var(--lightest-grey), var(--grey));
+  }
+}

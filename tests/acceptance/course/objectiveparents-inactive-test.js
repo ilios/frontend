@@ -1,0 +1,78 @@
+import { module, test } from 'qunit';
+import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
+
+import page from 'frontend/tests/pages/course';
+
+module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
+  setupApplicationTest(hooks);
+  hooks.beforeEach(async function () {
+    this.school = await this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [this.school] });
+  });
+
+  test('inactive program year objectives are hidden unless they are selected', async function (assert) {
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', {
+      programYear,
+    });
+    const competency = await this.server.create('competency', {
+      school: this.school,
+      programYears: [programYear],
+    });
+
+    await this.server.create('program-year-objective', {
+      programYear,
+      competency,
+      title: 'active',
+      active: true,
+    });
+    await this.server.create('program-year-objective', {
+      programYear,
+      competency,
+      title: 'inactive',
+      active: false,
+    });
+    const parent = await this.server.create('program-year-objective', {
+      programYear,
+      competency,
+      title: 'inactive selected',
+      active: false,
+    });
+
+    const course = await this.server.create('course', {
+      year: 2013,
+      school: this.school,
+      cohorts: [cohort],
+    });
+    await this.server.create('course-objective', {
+      course,
+      programYearObjectives: [parent],
+    });
+
+    await page.visit({
+      courseId: course.id,
+      details: true,
+      courseObjectiveDetails: true,
+    });
+    const { objectives } = page.details.objectives.objectiveList;
+    assert.strictEqual(objectives.length, 1);
+
+    assert.strictEqual(objectives[0].description.text, 'course objective 0');
+    assert.strictEqual(objectives[0].parents.list.length, 1);
+    assert.strictEqual(objectives[0].parents.list[0].text, 'inactive selected');
+
+    await objectives[0].parents.manage();
+    const m = objectives[0].parentManager;
+
+    assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
+    assert.strictEqual(m.competencies.length, 1);
+    assert.strictEqual(m.competencies[0].title, 'competency 0');
+    assert.ok(m.competencies[0].selected);
+    assert.strictEqual(m.competencies[0].objectives.length, 2);
+    assert.strictEqual(m.competencies[0].objectives[0].title, 'active');
+    assert.ok(m.competencies[0].objectives[0].notSelected);
+    assert.strictEqual(m.competencies[0].objectives[1].title, 'inactive selected');
+    assert.ok(m.competencies[0].objectives[1].selected);
+  });
+});

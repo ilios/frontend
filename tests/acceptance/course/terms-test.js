@@ -1,0 +1,123 @@
+import { module, test } from 'qunit';
+import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
+
+import page from 'frontend/tests/pages/course';
+
+module('Acceptance | Course - Terms', function (hooks) {
+  setupApplicationTest(hooks);
+  hooks.beforeEach(async function () {
+    const school = await this.server.create('school');
+    this.user = await setupAuthentication({ administeredSchools: [school] });
+    const vocabulary = await this.server.create('vocabulary', {
+      school,
+      active: true,
+    });
+    await this.server.create('academic-year', { id: 2013 });
+
+    const term1 = await this.server.create('term', {
+      vocabulary,
+      active: true,
+    });
+    await this.server.create('term', {
+      vocabulary,
+      active: true,
+    });
+
+    this.course = await this.server.create('course', {
+      year: 2013,
+      school,
+      terms: [term1],
+    });
+  });
+
+  test('taxonomy summary', async function (assert) {
+    await page.visit({ courseId: this.course.id, details: true });
+    assert.strictEqual(
+      page.details.collapsedTaxonomies.title,
+      'Terms (' + this.course.terms.length + ')',
+    );
+    assert.strictEqual(page.details.collapsedTaxonomies.headers.length, 3);
+    assert.strictEqual(page.details.collapsedTaxonomies.headers[0].title, 'Vocabulary');
+    assert.strictEqual(page.details.collapsedTaxonomies.headers[1].title, 'School');
+    assert.strictEqual(page.details.collapsedTaxonomies.headers[2].title, 'Assigned Terms');
+
+    assert.strictEqual(page.details.collapsedTaxonomies.vocabularies.length, 1);
+    assert.strictEqual(page.details.collapsedTaxonomies.vocabularies[0].name, 'Vocabulary 1');
+    assert.strictEqual(page.details.collapsedTaxonomies.vocabularies[0].school, 'school 0');
+    assert.strictEqual(
+      page.details.collapsedTaxonomies.vocabularies[0].terms.length,
+      this.course.terms.length,
+    );
+  });
+
+  test('list terms', async function (assert) {
+    await page.visit({
+      courseId: this.course.id,
+      details: true,
+      courseTaxonomyDetails: true,
+    });
+    assert.strictEqual(page.details.taxonomies.vocabularies.length, 1);
+    assert.strictEqual(page.details.taxonomies.vocabularies[0].vocabularyName, 'Vocabulary 1');
+    assert.strictEqual(page.details.taxonomies.vocabularies[0].terms.length, 1);
+    assert.strictEqual(page.details.taxonomies.vocabularies[0].terms[0].name, 'term 0');
+  });
+
+  test('manage terms', async function (assert) {
+    await page.visit({
+      courseId: this.course.id,
+      details: true,
+      courseTaxonomyDetails: true,
+    });
+    assert.strictEqual(page.details.taxonomies.vocabularies.length, 1);
+    await page.details.taxonomies.manage();
+
+    assert.strictEqual(page.details.taxonomies.manager.selectedTerms.length, 1);
+    assert.strictEqual(
+      page.details.taxonomies.manager.selectedTerms[0].vocabularyName,
+      'Vocabulary 1',
+    );
+    assert.strictEqual(page.details.taxonomies.manager.selectedTerms[0].terms.length, 1);
+    assert.strictEqual(page.details.taxonomies.manager.selectedTerms[0].terms[0].name, 'term 0');
+    assert.strictEqual(page.details.taxonomies.manager.availableTerms.length, 2);
+    assert.strictEqual(page.details.taxonomies.manager.availableTerms[0].name, 'term 0');
+    assert.ok(page.details.taxonomies.manager.availableTerms[0].isSelected);
+    assert.strictEqual(page.details.taxonomies.manager.availableTerms[1].name, 'term 1');
+    assert.ok(page.details.taxonomies.manager.availableTerms[1].notSelected);
+  });
+
+  test('save term changes', async function (assert) {
+    await page.visit({
+      courseId: this.course.id,
+      details: true,
+      courseTaxonomyDetails: true,
+    });
+    assert.strictEqual(page.details.taxonomies.vocabularies.length, 1);
+    await page.details.taxonomies.manage();
+    await page.details.taxonomies.manager.selectedTerms[0].terms[0].remove();
+    await page.details.taxonomies.manager.availableTerms[1].toggle();
+    await page.details.taxonomies.save();
+
+    assert.strictEqual(page.details.taxonomies.vocabularies.length, 1);
+    assert.strictEqual(page.details.taxonomies.vocabularies[0].vocabularyName, 'Vocabulary 1');
+    assert.strictEqual(page.details.taxonomies.vocabularies[0].terms.length, 1);
+    assert.strictEqual(page.details.taxonomies.vocabularies[0].terms[0].name, 'term 1');
+  });
+
+  test('cancel term changes', async function (assert) {
+    await page.visit({
+      courseId: this.course.id,
+      details: true,
+      courseTaxonomyDetails: true,
+    });
+    assert.strictEqual(page.details.taxonomies.vocabularies.length, 1);
+    await page.details.taxonomies.manage();
+    await page.details.taxonomies.manager.selectedTerms[0].terms[0].remove();
+    await page.details.taxonomies.manager.availableTerms[1].toggle();
+    await page.details.taxonomies.cancel();
+
+    assert.strictEqual(page.details.taxonomies.vocabularies.length, 1);
+    assert.strictEqual(page.details.taxonomies.vocabularies[0].vocabularyName, 'Vocabulary 1');
+    assert.strictEqual(page.details.taxonomies.vocabularies[0].terms.length, 1);
+    assert.strictEqual(page.details.taxonomies.vocabularies[0].terms[0].name, 'term 0');
+  });
+});

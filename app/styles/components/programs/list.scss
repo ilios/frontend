@@ -1,0 +1,7 @@
+@use "../../mixins" as m;
+
+.programs-root {
+  .list {
+    @include m.main-list-box-table;
+  }
+}

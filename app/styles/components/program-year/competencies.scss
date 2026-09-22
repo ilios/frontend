@@ -1,0 +1,43 @@
+@use "../../mixins" as m;
+
+.program-year-competencies {
+  @include m.detail-container(var(--orange));
+
+  .header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .content {
+    @include m.detail-container-content;
+  }
+
+  .competency-list,
+  .managed-competency-list {
+    @include m.ilios-list-tree;
+    border: 1px solid light-dark(var(--lightest-grey), var(--grey));
+    border-radius: 3px;
+    margin: 2rem;
+
+    li {
+      .active {
+        font-weight: 600;
+      }
+
+      li {
+        font-weight: 600;
+      }
+    }
+
+    ul {
+      margin-left: 1rem;
+    }
+  }
+}

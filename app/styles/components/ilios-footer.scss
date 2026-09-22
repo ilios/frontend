@@ -1,0 +1,23 @@
+@use "../mixins" as m;
+
+.ilios-footer {
+  background-color: light-dark(var(--orange), var(--dark-orange));
+  display: flex;
+  height: 100%;
+  justify-content: flex-end;
+  width: 100%;
+
+  .version {
+    align-items: center;
+    background-color: light-dark(var(--super-light-grey), var(--dark-grey));
+    border: 1px solid light-dark(var(--super-light-grey), var(--dark-grey));
+    border-radius: 0.2rem;
+    color: light-dark(var(--black), var(--white));
+    display: flex;
+    @include m.font-size("smallest");
+    font-weight: 200;
+    justify-content: center;
+    margin: 0.25rem;
+    padding: 0.25rem;
+  }
+}
