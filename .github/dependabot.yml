@@ -30,6 +30,10 @@ updates:
       fontawesome:
         patterns:
           - "@fortawesome/*"
+      stylelint:
+        patterns:
+          - "stylelint"
+          - "stylelint-*"
     ignore:
       - dependency-name: "@babel/core"
       - dependency-name: "@babel/eslint-parser"
@@ -70,7 +74,5 @@ updates:
       - dependency-name: prettier-plugin-ember-template-tag
       - dependency-name: qunit
       - dependency-name: qunit-dom
-      - dependency-name: stylelint
-      - dependency-name: stylelint-config-standard
       - dependency-name: tracked-built-ins
       - dependency-name: webpack
