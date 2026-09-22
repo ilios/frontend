@@ -1,0 +1,862 @@
+general:
+  aamcMethod: AAMC Méthode
+  aamcPcrs: AAMC PCRS
+  aamcSchoolId: 'Identifiant d''école AAMC ("Identifiant d''institution")'
+  academicYear: Année Scolaire
+  academicYears: Années Scolaire
+  accessAllMaterialsForThisCourse: "Accéder à tout le matériel d'étude pour ce cours"
+  accessibilityAgreement: "Ce fichier conforme aux exigences d'accessibilité"
+  accessibilityRequired: Accessibilité requise
+  accessibilityRequirementsLink: Lien vers les exigences d'accessibilité
+  accommodationIsRequiredForLearnersInSubgroups: "Des aménagements sont nécessaires pour les apprenants des sous-groupes suivants: {groups}"
+  accommodationIsRequiredForLearnersInThisGroup: Des aménagements sont nécessaires pour les apprenants de ce groupe
+  accountEnabled: Compte Activé
+  actions: Actions
+  activate: Activer
+  active: Actif
+  activeFilters: Filtres actifs
+  add: Ajouté
+  addCohort: Ajouté cohorte
+  addNew: Ajouté Neuf
+  admin: Admin
+  administrator: Administrateur
+  administratorCount: "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
+  administratorEmail: "Courriel d'administrateur"
+  administratorEmailPlaceholder: email@example.edu
+  administrators: Administrateurs
+  all: Tous
+  allAcademicYears: Toutes Années Scolaires
+  allCourses: Tous les Cours
+  allEvents: Tous les Événements
+  allMaterials: Tous les matériaux
+  allOtherMembers: "Tous les autres membres du {topLevelGroupTitle}"
+  allSchools: Toutes les écoles
+  allVocabularies: Touts vocabulaires
+  allWeeks: Toutes les Semaines
+  anything: Quelque chose
+  apiVersionMismatch: API  conflit de version
+  apiVersionMismatchDetails: "Il s'agit généralement d'une erreur temporaire dans votre navigateur; Ilios est en mode lecture seule jusqu'à ce qu'il soit résolu. Si la mise à jour ne vous aide pas, veuillez aviser un administrateur ou le propriétaire de la technologie du système de cette erreur. Vous pouvez également essayer un autre navigateur."
+  assessment: Évaluation
+  assessmentMethods: "Méthodes d'Évaluation"
+  assessmentOption: "Option d'Évaluation"
+  assignedTerms: Termes assignées
+  associatedCourses: Cours Associés
+  associatedGroups: Groupes Associés
+  associatedWith: associée de
+  attendanceIsRequired: Présence requise
+  attendanceRequired: Participation Requise
+  attireRequired: Tenue Requise
+  attribute: Attribut
+  author: Auteur
+  autoUpdatingSeconds: "{count, plural, =1 { Mise à jour automatique en 1 seconde...} other { Mise à jour automatique en # secondes...}}"
+  availableCohorts: Cohortes Disponsibles
+  availableInstructors: Instructeurs Disponibles
+  availableInstructorsAndInstructorGroups: "Instructeurs et groupes d'instructeurs disponibles"
+  availableLearnerGroups: "Groupes d'apprenants disponsibles"
+  availableLearners: Apprenants disponibles
+  back: Retour
+  backToAdminDashboard: Rétour au Page Admin
+  backToCourse: Retour au Cours
+  backToCourses: Retour à liste
+  backToDashboard: Retour à tableau de bord
+  backToProgramYears: Retour à Années de Diplôme
+  backToPrograms: Retour à Diplôme
+  backToSchool: Retour à école
+  backToSchools: Retour aux écoles
+  backToSessionList: Retour à Liste du Séances
+  backToTitle: "Retour à {title}"
+  backToTop: Retour à haut
+  backToVocabularies: Retour à Vocabulaires
+  bad: Mal
+  badCredentials: "Nom d'utilisateur ou mot de passe incorrect"
+  beforeOrAfterMidday: Avant ou après midi
+  bottomPagination: Pagination en bas
+  calendar: Calendrier
+  campusId: Campus ID
+  campusNameOfRecord: Nombre de registro del campus
+  canNotContinueWithInvalidRecords: "Ne peut pas continuer avec ces rapports invalides, fixez s'il vous plaît et retéléchargez le fichier."
+  canNotCreateProgramYear: "Année de programme ne peut être créé car il n'y a plus d'années universitaires disponibles."
+  canNotDeleteCourse: "Ce cours ne peut pas être supprimé car il est publié, planifié, a des éléments associés ou vous n’avez pas la permission."
+  canNotDeleteCourseObjective: "Ce objectif de cours ne peut pas être supprimé car vous n'en avez pas la permission."
+  canNotDeleteInstructorGroup: "Ce groupe des instructeurs ne peut pas être supprimé car il est associé à un cours ou vous n’avez pas la permission."
+  canNotDeleteLearnerGroup: "Ce groupe d'apprenants ne peut pas être supprimé car il est associé à une session ou vous n’avez pas la permission."
+  canNotDeleteLearningMaterial: "Ce matériel d'etude ne peut pas être supprimé car vous n'en avez pas la permission."
+  canNotDeleteProgram: "Ce programme ne peut pas être supprimé car il est associé à une année de programme ou à d'autres données, ou vous n’avez pas la permission."
+  canNotDeleteProgramYear: "Cette année de programme ne peut être supprimée car elle est associée à une cohorte d'étudiants ou à des groupes, ou vous n'en avez pas la permission."
+  canNotDeleteProgramYearObjective: "Ce objectif de année de programme ne peut pas être supprimé car il est associé à un cours ou vous n'en avez pas la permission."
+  canNotDeleteReport: "Ce rapport ne peut pas être supprimé car il est encore en cours de chargement."
+  canNotDeleteSchoolCompetency: "Cette compétence ne peut pas être supprimée car elle est liée à au moins un objectif annuel du programme, ou vous n'en avez pas la permission."
+  canNotDeleteSchoolCompetencyDomain: "Ce domaine de compétences ne peut pas être supprimé car des compétences y sont associées."
+  canNotDeleteSchoolSessionType: "Ce type de séances ne peut pas être supprimé car vous n'en avez pas la permission."
+  canNotDeleteSchoolVocabulary: "Ce vocabulaire ne peut pas être supprimé car il contient au moins un terme, ou vous n'en avez pas la permission."
+  canNotDeleteSchoolVocabularyTerm: "Ce terme de vocabulaire ne peut pas être supprimé car il comporte au moins un sous-terme, une association, ou vous n'en avez pas la permission."
+  canNotDeleteSession: "Cette séances ne peut pas être supprimée car elle a des conditions préalables ou vous n’avez pas la permission."
+  canNotDeleteSessionObjective: "Ce objectif de séances ne peut pas être supprimé car vous n'en avez pas la permission."
+  canNotDeleteSessionOffering: "Cette offre ne peut pas être supprimée car vous n'en avez pas la permission."
+  canNotLockCourse: "Cette cours ne peut être verrouillée car vous n'en avez pas la permission."
+  canNotLockProgramYear: "Cette année de programme ne peut être verrouillée car vous n'en avez pas la permission."
+  canNotPublishCourse: "Ce cours ne peut être publié sans au moins une cohorte."
+  canNotPublishSession: "Cette séances ne peut être publié sans au moins une offre."
+  canNotUnlockCourse: "Cette cours ne peut être débloqué car vous n'en avez pas la permission."
+  canNotUnlockProgramYear: "Cette année de programme ne peut être débloqué car vous n'en avez pas la permission."
+  cancel: Annul
+  changeAlertRecipients: Destinataires des alertes de changement
+  changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
+  chooseCohortTitle: Choisi objectif mère pour
+  chooseFile: Choisir un Fichier
+  citation: Citation
+  city: Ville
+  classOf: "Classe de {year}"
+  clearErrors: Supprîme les Erreurs et Retour à Ilios
+  clearFilters: Effacerez les Filtres
+  clerkshipType: Genre de Stage
+  clickToAddTermDescription: Cliquez pour ajouter des notices descriptives
+  clickToEdit: Clicquez pour modifier
+  close: Fermé
+  cohort: Cohorte
+  cohortMembersNotInGroup: "Membres de la Cohorte sans affectation à {groupTitle} "
+  cohorts: Cohortes
+  cohortsManageTitle: Manager des Cohortes
+  collapse: Réduire
+  collapseDetails: Masquer Détails
+  color: Couleur
+  competencies: Compétences
+  competenciesManageTitle: Manager des Compétences
+  competency: Compétence
+  competencyDomain: Domaine de Compétence
+  complete: Accompli
+  confirmRemoveCourse: "Êtes-vous sûr vous voulez supprimer ce cours, avec {publishedOfferingCount} offres publié? Cela supprimera toutes sessions et offres pour ce cours, et ne peut pas être défait."
+  confirmRemoveInstructorGroup: "Êtes-vous sûr vous voulez supprimer cette groupe des instructeurs, avec {instructorCount} membres? Ça action ne peut pas être défait."
+  confirmRemoveLearnerGroup: "Êtes-vous sûr vous voulez supprimer cette groupe d'apprenants, avec {subgroupCount} sous-groupes? Ça action ne peut pas être défait."
+  confirmRemoveLearningMaterial: "Êtes-vous sûr vous voulez supprimer cette matériel d'étude? Ça action ne peut pas être défait."
+  confirmRemoveObjective: Êtes vous sûr de vouloir supprimer cet objectif? Ça action ne peut pas être défait.
+  confirmRemoveProgram: Êtes-vous certain que vous voulez supprimer ce diplôme? Cette action ne peut être annulée.
+  confirmRemoveProgramYear: "Êtes-vous certain que vous voulez supprimer cette année de diplôme? Cette action va supprimer tous les cohortes et groupes des étudiants associées, et liaisons avec {courseCount} des cours, et ne peut être annulée."
+  confirmRemoveReport: Êtes-vous sûrs que vous voulez supprimer ce rapport? Cette action ne peut pas être défaite.
+  confirmRemoveSession: Êtes vous sûr de vouloir supprimer cette séance? Ça action ne peut pas être défait.
+  confirmRemoveSessionOffering: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants? Ça action ne peut pas être défait."
+  confirmRemoveSessionType: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
+  confirmRemoveVocabulary: Êtes vous sûr de vouloir supprimer cette vocabulaire? Cette action ne peut être annulée.
+  connectionLost: Connexion perdu
+  contentAuthor: Auteur
+  continue: Continuez
+  copiedCurriculumReportUrl: Copié lien vers le rapport d'inventaire des programmes d'étude avec succès
+  copiedIcsFeedUrl: Copié mon lien ICS avec succès
+  copiedSuccessfully: Copié avec succès
+  copy: Copie
+  copyCurriculumReportUrl: Copier le lien de Rapport
+  copyCurriculumReportUrlTooltip: Copier le lien vers ce rapport d'inventaire des programmes d'études
+  copyIcsFeedUrl: Copier mon lien ICS
+  copyLink: Copier le lien
+  copyNewToken: Copier nouveau jeton
+  copyReport: Copier le Rapport
+  copySession: Copier Séance
+  copySessionSummary: 'Vous êtes sur le point la copie sur la séance "{title}" (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matériels d''étude. Continuer le clic "oui". Retourner à votre clic de session actuel "annul".'
+  copySuccess: Copie achevée avec succès
+  copyWithLearners: Copiér avec étudiants
+  copyWithoutLearners: Copiér sans étudiants
+  copyrightAgreement: "Le fichier J'envoie est ma propre ou j'avoir la permission expresse de reproduire et / ou distribuer cet article, ou l'utilisation de celui-ci ici a été jugée admissible par la doctrine juridique de l'utilisation équitable. Ce fichier ne contient pas protégé information sur la santé, et l'utilisation de celui-ci ici est en conformité avec le gouvernement et l'Université des politiques sur le droit d'auteur et à la sécurité de l'information et les directives de mon institution pour la conduite professionnelle."
+  copyrightPermission: Droit d’Auteur
+  copyrightRationale: "Raison du droit d'auteur"
+  couldNotFindUserCampusId: "Ne pouvait pas trouver utilisateur avec le Campus ID {campusId}"
+  countTotal: "{total} au total"
+  country: Pays
+  countryCode: Code du pays
+  course: Cours
+  courseCompetencies: Compétences du cours
+  courseCompetenciesReportSummary: "Rapport de {courseCount, plural, one {un cours} other {# cours}}. Chaque compétence est listée avec les objectifs du cours et de l'année de diplôme."
+  courseCompetenciesReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {un cours} other {# cours}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque compétence est listée avec les objectifs du cours et de l'année de diplôme."
+  courseLearningMaterials: "Matériels d'Étude du Cours"
+  courseLevel: "Niveau du cours {level}"
+  courseLevels: Niveaux de Cours
+  courseMaterials: "Matériels du Cours"
+  courseNotFound: cours introuvable
+  courseObjective: Objectif du Cours
+  courseObjectives: Objectifs du Cours
+  courseOrSessionType: Cours / Type de séance
+  courseRollover: Roulement Cours
+  courseRolloverSuccess: Roulement achevée avec succès
+  courseRolloverSummary: 'Vous êtes sur le point le roulement ce cours dans l''année universitaire choisie, avec toutes les options choisies. Continuer, cliquer "Fini". Pour retourner à votre cours actuel, le clic "Annul"'
+  courseRolloverYearUnavailable: Cours déja existant
+  courseTerm: Terme de Cours
+  courseTerms: Termes de Cours
+  courseTitle: Titre de Cours
+  courseTitleFilterPlaceholder: Filtre par titre de cours
+  courseTitlePlaceholder: Ajoutez titre par ce cours
+  courseVisualizations: Cours Visualisations
+  courseVisualizationsInstructorNoData: "{instructor} n'enseigne aucune séance dans ce cours."
+  courseVisualizationsInstructorsGraphNoData: Aucun instructeur n'a été lié à aucune session de ce cours.
+  courseVisualizationsObjectivesGraphNoHours: "Les objectifs de cours suivant ne sont ou liés avec aucune séance, ou liés seulement aux séance sans offrir ou ou des données de durée."
+  courseVisualizationsObjectivesGraphNoLink: Nul objectifs de course actuellement lié au temps dénseignment.
+  courseVisualizationsSessionTypeGraphNoData: "Aucun terme de vocabulaire n'a été lié à une session {sessionType} dans ce cours."
+  courseVisualizationsSessionTypesGraphNoData: Nul séance actuellement lié au temps dénseignment.
+  courseVisualizationsSessionVocabularyTermsGraphNoData: "Aucun vocabulaires n'a été lié à aucune session de ce cours."
+  courseVisualizationsTermGraphNoData: "Le terme de vocabulaire {term} n'a été lié à aucune session de ce cours."
+  courseVisualizationsVocabularyGraphNoData: "Aucun terme de vocabulaire {vocabulary} n'a été lié à aucune session de ce cours."
+  courses: Les Cours
+  coursesAndSessions: Des Cours et Séances
+  create: Créez un nouvel utilisateur
+  createBulk: Envoyez utilisateurs multiples
+  createNew: Créer Neuf
+  createNewGroup: Créez Ce Groupe
+  currentlySearchingPrompt: Recherchent...
+  curriculumReports: "Rapports des programmes d'études"
+  dark: Sombre
+  dashboard: Tableau de Bord
+  dashboardNavigation: Naviguer dans le tableau de bord
+  date: Date
+  dateTime: Date/Temps
+  day: Jour
+  deactivate: Désactiver
+  defaultInstructors: Instructeurs par Défaut
+  defaultLocation: Localisation par Défaut
+  defaultNotLoaded: Par défaut non chargé
+  defaultVirtualLearningLink: Address d’Étude Virtuel par Défaut
+  delete: Supprimer
+  deleteCourse: Supprimer le cours
+  deprecatedAbbreviation: obs.
+  description: Description
+  deselectAllCourses: "Désélectionner tous les cours"
+  deselectUser: "Désélectionner l'utilisateur "
+  didYouMean: Confirmez-vous <a href="{href}">{suggestion}</a>?
+  director: Directeur
+  directorCount: "Il y a {count, plural, =1 {un directeur} other {# directeurs}}"
+  directors: Directeurs
+  disableUser: Désactiver compte d’utilisateur
+  disabledByConfirmation: "Cette fonction ne peut pas être utilisée lors de la confirmation d'une suppression."
+  disabledNoPrimaryCohort: "L'utilisateur doit avoir une cohorte principale."
+  disabledUserAccount: compte utilisateur désactivé
+  displayName: Nom d’Affichage
+  doesNotMatchUserRecord: 'Téléchargé {description} ne correspond pas aux informations dans Ilios, qui est "{record}"'
+  done: Fini
+  download: Télécharger
+  downloadCompetencyMap: Télécharger la tableau de compétences
+  downloadResults: Télécharger les indices
+  dueBefore: Avant
+  dueBy: Avant
+  duePriorTo: Dû avant
+  duration: Durée
+  durationHours: "{count, plural, =1 {1 une heure} other {# heures}}"
+  durationInYears: Durée (en Années)
+  durationMinutes: "{count, plural, =1 {1 une minute} other {# minutes}}"
+  edit: Edite
+  email: Email
+  emails: Emails
+  enabled: Activé
+  end: Terminé
+  endDate: Jour Terminé
+  endTime: Heure Terminé
+  ends: Terminé
+  equipmentRequired: Équipement Requis
+  error: Erreur
+  errorDisplayMessage: "Désolé! Quelque chose s'est passé mal avec votre demande. Essayez s'il vous plaît de rafraîchir ou vérifier en arrière plus tard."
+  errorSavingAuthentication: "Les comptes ont été créés pour ces utilisateurs, mais ils ne pourront pas à la connexion. Ceci arrive d'habitude quand le nom d'utilisateur existe déjà, mais appartient à un autre utilisateur. Cliquez S'il vous plaît sur chaque utilisateur et créez un nom d'utilisateur et un mot de passe pour eux."
+  errorSavingUser: "Ces utilisateurs n'avait pas été sauvé. Vérifiez qu'ils n'existent pas déjà."
+  errors: Erreurs
+  etAl: et al.
+  event: Evénement
+  eventNotFoundExplanation: "L'événement que vous avez essayé d'atteindre n'est plus disponible ou vous avez suivi un lien utilisateur personnalisé qui n'est pas partageable. Si vous continuez à rencontrer des problèmes, veuillez contacter votre service d'assistance Ilios."
+  eventNotFoundTitle: Evénement introuvable
+  excludeFromSync: Exclure de Sync
+  existingGroup: "Groupe Existant "
+  expand: Étendre
+  expandDetails: Afficher Détails
+  externalId: ID de Cours
+  file: Fichier
+  file-audio: Fichier audio
+  file-pdf: Fichier PDF
+  file-powerpoint: Fichier PowerPoint
+  file-video: Fichier vidéo
+  fileSizeError: "Ce dossier est trop grand. Taille maximale est {maxSize})."
+  fileTypeError: "Mal fichier téléchargé : {fileType} ne semble pas être un fichier correctement délimité."
+  filterByNameOrEmail: Filtre par nom ou email
+  filterBySchool: Filtre par école
+  filterByTitle: Filtre par titre
+  filterByYear: Filtre par année
+  filterChartPlaceholder: Commencez à taper pour filtrer ce graphique
+  filterPlaceholder: Commencez à taper pour filtre la liste
+  finalErrorDisplayMessage: "Zoinks! Quelque chose ne vas pas du tout. S'il vous plaît rafraîchir votre navigateur et prévenez-nous à support@iliosproject.org si vous continuez à voir ce message."
+  finalResults: Résultats Finaux
+  findInstructor: Trouver Instructeur
+  findInstructorOrGroup: Trouver Instructeur ou Groupe
+  findLearners: Trouver des apprenants
+  first: Première
+  firstName: Prénom
+  firstOffering: Premier Offre
+  for: Pour
+  formerStudent: Ancien Étudiant
+  forward: Avancer
+  friday: Vendredi
+  fullName: Nom complet
+  goToNextYear: "Aller à l'année prochaine"
+  goToPreviousYear: "Aller à l'année précédente"
+  goToUser: "Présentant enregistrement d'utilisateur en Ilios"
+  good: Bon
+  groupByCompetencies: Groupe par Compétences
+  groupMembers: Membres du groupe courant
+  groupName: Nom de Groupe
+  groups: Groupes
+  hasPrework: A un préalable
+  hideCalendar: Cacher Calendrier
+  hideFilters: Cachez les Filtres
+  hour: Heure
+  hours: Heures
+  htmlEditor:
+    errors:
+      linkText: Texte de lien
+      linkUrl: URL de lien
+    labels:
+      bold: gras
+      italic: italique
+      insertLink: insérer un lien
+      listOrdered: liste à puces
+      listUnordered: liste numérotée
+      redo: rétablir
+      subscript: indice
+      superscript: exposante
+      undo: annuler
+    titles:
+      bold: Gras (⌘B)
+      italic: Italique (⌘I)
+      insert: Insérer
+      insertLink: Insérer un lien
+      linkNewTarget: Ouvrir dans un nouvel onglet
+      listOrdered: Liste à puces
+      listUnordered: Liste numérotée
+      redo: Rétablir (⌘⇧Z)
+      subscript: Indice
+      superscript: Exposante
+      undo: Annuler (⌘Z)
+  icsAdminInstructions: "Pour ajouter le calendrier d'un utilisateur à des services ou applications autre, devront utiliser cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir le calendrier de cet utilisateur!"
+  icsFeed: Données de ICS
+  id: ID
+  ignore: Ignorer
+  ilios: Ilios
+  iliosUpdatePending: "hourra! Nous avons fait Ilios mieux. Vous obtiendrez le nouveau truc sur votre connexion prochaine, ou cliquerez pour mettre à jour maintenant."
+  iliosUserGuide: Ilios Guide d'utilisation
+  ilm: ILM
+  ilmDue: ILM - Échéance
+  inProgress: En Cours
+  inactive: inactif
+  include: Inclure
+  incompleteSessions: "Séances incomplète: ne peut être pas publiée"
+  independentLearning: Apprentissage autonome
+  institutionalInformation: "Inventaire des programmes d'études informations institutionnelles"
+  instructing: Enseignement
+  instructionalMethods: "Modalités d'Instruction"
+  instructionalNotes: Notes Didactiques
+  instructionalTime: "Temps d'Instruction"
+  instructionalTimeReportSummary: "Rapport de for {courseCount, plural, one {one course} other {# courses}}. Chaque instructeur est listée avec cours données."
+  instructionalTimeReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque instructeur est listée avec cours données."
+  instructor: Instructeur
+  instructorGroup: Groupe des Instructeurs
+  instructorGroupTitle: Titre de Groupe des Instructeurs
+  instructorGroupTitleFilterPlaceholder: Filtre par Titre de Groupe des Instructeurs
+  instructorGroupTitlePlaceholder: Ajoutez une titre pour cette groupe des instructeurs
+  instructorGroups: Groupes des Instructeurs
+  instructors: Instructeurs
+  instructorsAndInstructorGroups: Instructeurs et Groupes des Instructeurs
+  instructorsAndInstructorGroupsWithCount: Instructeurs ({instructorCount}) et Groupes des Instructeurs ({instructorGroupCount})
+  instructorsManageTitle: Manager Instructeurs
+  invalidUsers: Utilisateurs non valides
+  invalidateTokens: Invalider tous les jetons
+  invalidateTokensConfirmation: Cette action va effacer tous les jetons de l’API. Vouz devrez générer nouveaux jetons pour toutes des vos applications.  Êtes vous sûr de vouloir le faire?
+  language:
+    en-us: English (en)
+    es: Español (es)
+    fr: Français (fr)
+  languagePickerExplanation: "Choisissez votre langue préférée pour la présentation d’Ilios. Notez: cela ne modifie pas les Matériels d'étude ni le contenu sous-jacents"
+  languages: Langues
+  last: Dernier
+  lastName: Nom de famille
+  lastUpdate: Dernière mise à jour
+  leadership: Direction
+  learner: Apprenant
+  learnerGroupTitle: "Titre de groupe d'apprenants"
+  learnerGroupTitleFilterPlaceholder: "Filtre par titre de groupe d'apprenants"
+  learnerGroupTitlePlaceholder: "Ajoutez une titre pour cette groupe d'apprenants"
+  learnerGroups: "Groupes d'Étudiants"
+  learnerGroupsReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque groupe d'étudiantes est listée avec des instructeurs et cours données."
+  learnerGroupsReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque groupe d'étudiantes est listée avec des instructeurs et cours données."
+  learners: Étudiants
+  learnersAndLearnerGroups: "Étudiants et Groupes d'Étudiants"
+  learnersAndLearnerGroupsWithCount: "Étudiants ({learnerCount}) et Groupes d'Étudiants ({learnerGroupCount})"
+  learning: Apprentissages
+  learningMaterial: "Matériel d'Étude"
+  learningMaterialAttributes: "Attributs du Matériels d'Étude"
+  learningMaterialManageTitle: "Manager Matériels d'Étude"
+  learningMaterials: "Matériels d'Étude"
+  learningMaterialsSummary: "Résumé Matériels d'Étude"
+  leave: Laissér
+  leaveAsScheduled: Laisser tel quel prevu
+  leaveAsUnPublished: "Laisser tel quel non publié"
+  level: Niveau
+  light: Clair
+  link: Lien web
+  linkedCompetencies: Compétences Liés
+  linkedCompetencyCount: "{count, plural, =1 {1 présente un compétence líé} other {# présentes des compétences líés}}"
+  listByPriority: Liste par priorité
+  loadingEvents: Rassembler les événements...
+  location: Locale
+  lock: Verrouiller
+  lockCourse: Verrouiller le cours
+  login: Login
+  logo: Ilios Logo
+  logout: Déconnexion
+  makeRecurring: Activité Récurrente
+  manage: Administrer
+  manageAPITokens: Gérer des jetons de l’API
+  manageCompetencies: Manager des Compétences
+  manageDefaultInstructors: Gérer les instructeurs par défaut
+  manageEmails: Gérer les emails
+  manageGroupMembership: "Gérer l'appartenance au groupe"
+  manageInstitutionalInformation: Manager les informations institutionnelles
+  manageLeadership: Gérer Dirigeants
+  manageLearners: Manager Étudiants
+  manageLearningMaterialAttributes: "Gérer Attributs du Matériel d'Étude"
+  manageMembers: Gérer les Membres
+  manageSessionAttributes: Gérer Attributs de Séance
+  manageUsersSummaryTitle: "utilisateurs d'Ilios"
+  markAllAsScheduled: Faire tout à prévu
+  markAsScheduled: Faire à prévu
+  markedAccessible: Accessible
+  matchGroups: "Départagez les Groupes "
+  materials: Matériels
+  matriculationYear: Année de immatriculation
+  members: Membres
+  mesh: MeSH
+  meshCount: "{count, plural, =1 {1 a des MeSH} other {# ont MeSH}}"
+  meshManageTitle: Manager MeSH
+  meshTerm: Terme de MeSH
+  meshTerms: Termes de MeSH
+  message: Message
+  metaDescription: Gestion des Programmes pour les Professions de la Santé.
+  middleName: Deuxième Prénom
+  minute: Minute
+  minutes: Minutes
+  missingCohortMessage: "S'il vous plait ajouter au moins un cohort à ce cours."
+  missingCompetenciesMessage: "S'il vous plaît ajouter au moins une compétence pour cette année de diplôme."
+  missingCourseObjectivesMessage: "S'il vous plait ajouter au  moins d'objectif au cours."
+  missingItems: Objets Manquants
+  missingRequiredUsername: "'Nom d'Utilisateur' est requis pour login; Cet utilisateur ne pourra pas login jusqu'à qu'un Nom d'Utilisateur s'affiche."
+  modifyUserPassword: Cliquez ici pour remettre à zéro votre mot de passe.
+  monday: Lundi
+  month: Mois
+  moreInputRequiredPrompt: Continuez à taper...
+  moveToGroup: "{count, plural, =1 {Placer l’étudiant à {groupTitle}} other {Placer # étudiants à {groupTitle}}}"
+  multidayEvents: Événements de plusieurs jours
+  multiple: Multiple
+  multipleGroups: Plusieurs groupes
+  multipleUsersFoundWithCampusId: "Plusieurs utilisateurs trouvés avec le Campus ID  {campusId}"
+  mustBeSameDayOfWeekAsCurrentStartDate: Doit être le même jour de la semaine que le courant date de début
+  myCourses: Mes Cours
+  myMaterials: "Mes Matériels d'étude"
+  myProfile: Mon profil
+  mySchedule: Mon Calendrier (liste)
+  name: Nom
+  navigationCompleteText: La navigation sur la page Ilios est terminée. Vous pouvez maintenant naviguer dans le contenu de la page comme vous le souhaitez.
+  newCourse: Cours neuf
+  newDomain: Domaine nouvelle
+  newInstructorGroup: Groupe des Instructeurs nouveau
+  newLearnerGroup: "Groupe d'apprenants nouvelle"
+  newObjective: Nouvel Objectif
+  newObjectiveSaved: Nouvel objective sauvé
+  newOffering: Nouvelle Offre
+  newProgram: Diplôme Nouveau
+  newProgramYear: Année de diplôme neuf
+  newReport: Nouveau rapport
+  newSchool: École nouvelle
+  newSession: Session neuf
+  newSessionType: Nuevo type de session
+  newToken: Nouveau jeton
+  newUpdates: Nouvelles mises à jour
+  newUser: Nouvel utilisateur
+  newUsersCreatedSuccessfully: Nouveaux utilisateurs crées avec succès
+  newUsersCreatedWarning: "Certains utilisateurs ont été créés, mais il y avait des erreurs."
+  newVocabulary: Nuevo vocabulaire
+  next: Proch.
+  nextXDays: "{days} prochains jours "
+  no: Non
+  noAccountExists: "Votre compte d'utilisateur {accountName} ne correspond pas à ceux des utilisateur enregistre en Ilios. Si vous avez besoin d'aide, n'hesitez pas à communiquer avec votre administrateur  d'Ilios."
+  noAssociatedCompetencies: Nul compétences associées
+  noAssociatedCompetency: Nul compétence associée
+  noCohortsAvailableForStudentAssignment: "Il n'y a pas de cohortes disponibles pour l'affectation des étudiants dans cette école."
+  noCourseLearningMaterialsAvailable: "Aucun Matériels D'étude de Cours"
+  noEvents: aucuns événements
+  noInstitutionalInformation: "Aucune information institutionnelle n'a été configurée pour cette école."
+  noMembers: Il n'y a pas de membres du groupe d'apprenants à gérer
+  noOfferings: "Ce session n'a aucun des offres"
+  noPopulateGroup: "Non!  Laissez-la vide, j'ajouterai des étudiants moi-même"
+  noProgramYears: "Il n'y-a pas des années de diplôme dans ca diplôme"
+  noResultsFound: Aucun résultat n’a été trouvé. Veuillez réessayer.
+  noSearchResultsPrompt: Aucun Résultat
+  noSessionLearningMaterialsAvailable: "Aucun Matériels D'étude de Séance"
+  nonStudent: Non étudiant
+  none: Nul
+  notAClerkship: Pas une stage
+  notFound: Non Trouvé
+  notFoundMessage: "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau."
+  notPublished: Non Publier
+  notStarted: Non Commencé
+  notes: Notes
+  numberOfGroups: Nombre de groupes
+  numberOfGroupsToGenerate: Nombre de groupes pour générer.
+  objective: Objectif
+  objectiveCount: "Il y a {count, plural, =1 {1 objectif} other {# objectifs}}"
+  objectives: Objectifs
+  offering: Offre
+  offeringDate: Date de l'offre
+  offerings: Offres
+  otherId: Autre ID
+  ownedBy: "Possédé par {owner}"
+  owner: Propriétaire
+  pagedResultsCount: "Montrant {start} - {end} de {total}"
+  parentCount: "{count, plural, =1 {1 a un objectif mère} other {# ont des objectifs mères}}"
+  parentGroup: Mère groupe
+  parentGroups: Mères groupes
+  parentObjectives: Objectifs Mères
+  password: Mot de passe
+  pendingUpdatesSummary: "{count, plural, =1 {Il y a un utilisateur nécessitant une attention particulière.} other {Il y a des # utilisateurs nécessitants une attention particulière.}}"
+  pendingUpdatesSummaryTitle: Mises du répertoire de Campus
+  pendingUserUpdates:
+    filterBy: Filtre par nom d’utilisateur
+    missingFromDirectory: "Impossible de trouver l’utilisateur dans le répertoire, s’il vous plaît mettre à jour, désactiver, ou exclure leur compte de synchronization."
+    emailMismatch: "L’address email dans le répertoire ({value}) ne correspond pas à ce email dans ilios ({email})."
+    updateIlios: Mettre à jour Ilios
+  perPage: Par Page
+  percentage: Pourcentage
+  performsNonLearnerFunctions: Acquitte de Fonctions Non-Apprenant
+  permissions: Permissions
+  phone: Téléphone
+  pickADate: Choisis une date
+  populateGroup: Voulez-vous remplir cette groupe?
+  preWork: Préalable
+  preferredEmail: Email préféré
+  prerequisites: Conditions préalables
+  prev: Précéd.
+  previous: Antérieur
+  primary: Première
+  primaryCohort: Cohorte Première
+  primarySchool: École Première
+  printSummary: Empreinte Résumé
+  program: Diplôme
+  programAndCohort: Diplôme et Cohortes
+  programCohorts: Cohortes
+  programDetail: Détail du programme
+  programObjective: "Objectif du Programme"
+  programObjectives: "Objectifs du Programme"
+  programTitle: Titre de Diplôme
+  programTitlePlaceholder: Ajoutez un titre pour ce Diplôme
+  programTitleShort: Titre (bref)
+  programYear: Année de Diplôme
+  programYearVisualizations: Tableau de Matière de Curriculum par Année de Diplôme
+  programYears: Années des Diplôme
+  programs: Diplômes
+  promoteToPrimaryCohort: Promouvoir à Cohorte Primaire
+  pronouns: Pronom
+  publicationReview: Revue de Publication
+  publicationStatus: Statut de Publication
+  publish: Publier
+  publishAll: "Publier tout"
+  publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, laissér {leaveCount}, et ignorer des {ignoreCount, plural, =1 {1 séance} other {# séances}}"
+  publishCourse: Publier Cours
+  publishCourseWithMissingItems: Publier Cours, avec {missingItemCount, plural, =1 {1 objet manquant} other {# objets manquants}}
+  publishSession: Publier Session
+  publishSessionWithMissingItems: Publier Session, avec {missingItemCount, plural, =1 {1 objet manquant} other {# objets manquants}}
+  published: Publié
+  publishedSessions: Sessions Publiées
+  publishedSuccessfully: Publié réussi
+  reconnectNow: Reconnecter Maintenant
+  reconnectionSeconds: "{count, plural, =1 {Reconnexion en 1 seconde...} other {Reconnexion en # secondes...}}"
+  refreshIcsFeedKey: Rafraîchissez la données de ICS clef pour cet utilisateur
+  refreshTheBrowser: Rafraîchir votre Navigateur
+  remove: Supprîme
+  removeCohort: Supprîmer Cohorte
+  removeLearnerToCohort: "{count, plural, =1 {Renvoyer l’étudiant à {cohort}} other {Renvoyer # étudiants à {cohort}}}"
+  removePrimaryCohort: Supprîmer Cohorte Primaire
+  reportDisplayDescriptionWithObject: 'This report shows all {subject} associated with {objectType} "{object}" {year} in {school}.'
+  reportDisplayDescriptionWithoutObject: "Ce rapport montre tous les {subject} de {school}."
+  reportDisplayTitleWithObject: "tous {subject} pour {object} en {school}"
+  reportDisplayTitleWithoutObject: "tous {subject} en {school}"
+  reportResultsExceedMax: Seuls les {resultsLengthMax} premiers résultats affichés. Téléchargez le rapport pour consulter tous les résultats.
+  reportTitle: Titre du Rapport
+  reports: Rapports
+  required: Requis
+  results: Resultats
+  resultsCount: "{count, plural, =1 {1 résultat} other {# résultats}}"
+  resultsSummary: Résumé des résultats
+  returnToPreviousPage: Retour à la page précédente
+  root: Root
+  run: Exécuter
+  runReport: exécuter le rapport
+  sampleFile: Fichier échantillon
+  saturday: Samedi
+  save: Enregistrer
+  saved: Nouvel utilisateur enregistré avec succès
+  savedSuccessfully: enregistré avec succès
+  schedule: Prévoir
+  scheduled: Prevu
+  scheduledSuccessfully: Faire à prévu réussi
+  scheduling: Planification
+  school: Écôle
+  schoolName: "Nom de l'école"
+  schoolSessionTypeVocabulariesVisualizationNoMapping: Ce type de session ne correspond à aucun terme de vocabulaire de cette école.
+  schoolSessionTypeVocabularyVisualizationNoMapping: Ce type de session ne correspond pas aux termes de ce vocabulaire.
+  schoolTitlePlaceholder: Ajoutez titre par ce écôle
+  schools: Écôles
+  search: Rechercher
+  searchDirectory: Consultez le répertoire pour les utilisateurs nouvels
+  searchForIliosUsers: Trouver des utilisateurs...
+  searchMesh: Rechercher MeSH
+  searchPlaceholder: "Trouver matériels d'étude"
+  searchTheCurriculum: Rechercher le curriculum
+  searchUsers: Rechercher des utilisateurs
+  secondaryCohorts: Cohortes Secondaires
+  select: Sélectionnez
+  selectAcademicYear: Choisissez l’année scolaire
+  selectAllOrNone: Sélectionner tout ou aucun
+  selectCohortsToAttach: "Choisissez le cohorte d'étudiants que vous voulez attacher au cours nouveau"
+  selectCourse: Choisi cours
+  selectCoursesToRunReport: Select des cours d'éxecuter rapport
+  selectCurriculumReportType: Select le type du rapport des programmes d'études
+  selectPolite: (veuillez en sélectionner un)
+  selectUser: "Choisi l'utilisateur"
+  selectVocabulary: Choisi Vocabulaire
+  selectedInstructorGroups: Groupes d’Instructeurs Selectionées
+  selectedInstructors: Instructeurs Selectionées
+  selectedLearnerGroups: Groupes d’Étudiants Selectionées
+  selectedLearners: Étudiants Selectionées
+  selectedMeshFor: "MeSH sélectionné pour: {title}"
+  session: Séance
+  sessionAttributes: Attributs de Séance
+  sessionLearningMaterials: "Matériels d'Étude de la Séance"
+  sessionObjective: Objectif de Séance
+  sessionObjectives: Objectifs de séance
+  sessionObjectivesReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque objectif de séance est listée avec des instructeurs et cours données."
+  sessionObjectivesReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque objectif de séance est listée avec des instructeurs et cours données."
+  sessionOfferings: Offres de séance
+  sessionOfferingsReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque offre de séance est listée avec des instructeurs, groupes d'étudiants, et cours données."
+  sessionOfferingsReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque offre de séance est listée avec des instructeurs, groupes d'étudiants, et cours données."
+  sessionTerm: Terme de Séance
+  sessionTerms: Termes de Séance
+  sessionTitle: Titre de Séance
+  sessionTitleFilterPlaceholder: "Filtre par titre, genre, ou statut"
+  sessionTitlePlaceholder: Ajoutez titre par ce séance
+  sessionType: Type de Séance
+  sessionTypeTitlePlaceholder: Ajoutez un titre pour ce type de session
+  sessionTypes: Types de Séance
+  sessionTypesFor: "Types de Séance par {subject}"
+  sessions: Séances
+  showAllMyActivities: Afficher toutes mes activités
+  showCalendar: Afficher Calendrier
+  showFilters: Montrez les Filtres
+  showLearnerGroupEvents: "Montrez tous les événements pour les groupes d'étudiants affectés"
+  showLess: Afficher moins
+  showMore: Afficher plus
+  showNotesToStudents: Afficher notes aux étudiantes
+  showOnlyMyAdminActivities: Afficher uniquement mes activités d'administrateur
+  showOnlyMyInstructorActivities: Afficher uniquement mes activités d'instructeur
+  showOnlyMyLearnerActivities: Afficher uniquement mes activités d'apprenant
+  showSessionEvents: "Montrez tous les autres '<em>'{sessionTitle}'</em>' événements"
+  showSubgroupEvents: Afficher les événements pour tous les sous-groupes
+  singleGroup: Seul groupe
+  skipToMainContent: passer au contenu principal de la page
+  smallGroups: Groupes Particulaires
+  sortMaterials: Trier les matériaux
+  sortObjectives: Trier les objectifs
+  specialAttireIsRequired: "Vêtements particuliers est requis"
+  specialAttireRequired: Vêtements particuliers requis
+  specialEquipment: Équipage particulier
+  specialEquipmentIsRequired: "Équipage particulier est requis"
+  specialEquipmentRequired: Équipage particulier requis
+  start: Commencer
+  startDate: Jour Commencer
+  startOver: recommencer
+  startTime: Heure Commencer
+  starts: Commencer
+  stateOrProvince: État ou province
+  status: Statut
+  statusCode: "Code d'état"
+  street: Rue
+  strong: Fort
+  student: Étudiant
+  studentAdvisor: Camarade-Conseil
+  studentAdvisorCount: "Il y a {count, plural, =1 {une camarade-conseil} other {# camarades-conseil}}"
+  studentAdvisors: Camarades-Conseil
+  subCompetencyCount: "{count, plural, =1 {Il y a 1 sous-subcompétence} other {Il y a de # sous-subcompétences}}"
+  subTerms: Sous-termes
+  subgroupName: nom de sous-groupe
+  subgroups: Sous-groupes
+  subjectReports: Rapports Pédagogiques
+  successfullyInvalidatedTokens: Tous les jetons existant ont été invalidés avec succès.
+  successfullyRemovedTerm: Le terme soit correctement supprimé
+  summary: Résumé
+  sunday: Dimanche
+  supplementalCurriculum: Curriculum complémentaire
+  system: Système
+  taggedTerms: Termes Marqueés
+  taggedTermsReportSummary: "rapport de {courseCount, plural, one {un cours} other {# cours}}. Chaque ensemble de termes est listée avec cours données."
+  taggedTermsReportSummaryMultiSchool: "rapport de {courseCount, plural, one {un cours} other {# cours}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque ensemble de termes est listée avec cours données."
+  targetCourse: Cours Cible
+  taughtBy: "Dispensé à {instructors}"
+  term: Terme
+  termCount: "{count, plural, =1 {1 on a des termes de vocabulaire} other {# ont des termes de vocabulaire}}"
+  termXappliedToYSessionsWithSessionTypeZ: 'Le terme "{term}" du vocabulaire "{vocabulary}" s''applique à {sessionsCount, plural, =1 {1 session} other {# sessions}} avec le type de session "{sessionType}".'
+  terms: Termes
+  termsBySessionType: Termes par Type de Seance
+  termsManageTitle: Manager des Termes
+  text: Texte
+  themePickerExplanation: "Choisissez l’apparence d’Ilios. Le mode Clair utilise un arrière-plan lumineux, tandis que le mode Sombre utilise des couleurs plus sombres pour un meilleur confort dans les environnements peu éclairés. Sélectionnez Système pour adapter automatiquement l’apparence d’Ilios au mode clair ou sombre actuellement utilisé par votre appareil."
+  themes: Thèmes
+  thereAreXTerms: "{count, plural, =1 {Il y a 1 terme} other {Il y a # termes}}"
+  thereAreXTypes: "{count, plural, =1 {Il y a 1 type} other {Il y a # types}}"
+  thisReportIsNoLongerAvailable: "Ce rapport n'est plus disponsible."
+  thisTermHasSubTerms: Ce terme a des sous-termes.
+  thursday: Jeudi
+  time: Temps
+  timedRelease: Période Limitée
+  timedReleaseAddEndDate: Ajouter la date limite
+  timedReleaseAddStartDate: Ajouter la date de début
+  timedReleaseClearEndDate: Supprimer la date limite
+  timedReleaseClearStartDate: Supprimer la date de début
+  timedReleaseNoSchedule: Disponible immédiatement quand publié
+  timedReleaseOnlyEndDate: "Disponible avant {endDate}"
+  timedReleaseOnlyStartDate: "Disponible après {startDate}"
+  timedReleaseStartAndEndDate: "Disponible de {startDate} jusqu'à {endDate}"
+  timezone: Fuseau horaire
+  title: Tître
+  today: "Aujourd'hui"
+  tokenInfo: "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à {apiDocsLink}."
+  tooManyResults: "Votre recherche présente plus que les {count} resultats. Pour meilleurs de resultats, essayez votre recherche encore avec plus termes."
+  topPagination: Pagination supérieure
+  totalErrors: "{count, plural, =1 {Il y a une erreur} other {Il y a # erreurs}}"
+  totalIlmTime: "Durée totale par ILM {minutes} Minutes"
+  totalInstructionalTime: "Durée d'enseignement totale {minutes} Minutes"
+  tryHarder: Faire un effort
+  tuesday: Mardi
+  type: Type
+  unPublishCourse: Faire à Dépublier Cours
+  unPublishSession: Faire à Dépublier Session
+  unPublishedSessions: "Sessiones Non Publiées: à examiner"
+  unPublishedSuccessfully: Faire à Dépublier réussi
+  unableToReconnect: Ne pouver reconnecter!
+  unableToSyncUser: "Incapable de syncroniser le utilisateur de répertoire, veuillez vous assurer le campus ID soit exacte."
+  unassigned: Non attribuée
+  unassignedStudentsConfirmation: "{count, plural, =1 {Attribuez 1 l’utilisateur sélectionné à} other {Attribuez # utilisateurs sélectionnés à}}"
+  unassignedStudentsSummary: "{count, plural, =1 {Il y a un étudiant qui a besoin affectation à une cohorte.} other {Il y a # étudiants qui ont besoin affectation à une cohorte.}}"
+  unassignedStudentsSummaryTitle: Étudiants qui ont besoin affectation à une cohorte
+  universalLocator: Localisateur universel
+  unlinkedObjectives: Ce cours comprend des objectifs non liés
+  unlock: Débloquer
+  unlockCourse: Débloquer le cours
+  unsupportedBrowserFailure: "Votre navigateur n'est pas officiellement soutenu par Ilios et ne peut pas compléter cette action. Essayez S'il vous plaît d'utiliser de nouveau un navigateur à jour."
+  unusedObjectives: Objectifs non Utilisés
+  update: mettre à jour
+  updateNow: Actualiser affichage
+  updatePending: Mise à jour en suspens
+  updateUserFromDirectory: Mettez à jour cet enregistrement utilisateur de la répertoire de campus
+  uploadDate: Date de dépôt
+  uploadGroupAssignments: téléversez travaux des groupes
+  uploadUsers: "Fournir fichier de donnée utilisateurs (csv, tsv, txt)"
+  uploadedGroup: groupe a été téléversée
+  url: URL
+  userExistsInGroupHierarchy: "L'utilisateur existe déjà dans le groupe de niveau supérieur {groupTitle} ou dans l'un de ses sous-groupes."
+  userExistsMultipleTimesInUpload: Cet utilisateur existe déjà dans le téléchargement.
+  userMenu: Menu utilisateur
+  userNotAddableFromDirectory: "Cette utilisateur manque les informations requises, et ne peut pas être ajouté"
+  userNotInGroupCohort: "utilisateur introuvable dans cette groupe de cohorte: {cohortTitle}"
+  userRole: "Rôle d'utilisateur"
+  username: "Nom d'utilisateur"
+  users: Utilisateurs
+  usersSelected: "{count, plural, =1 {1 utilisateur sélectionné} other {# utilisateurs sélectionnés}}"
+  validUntil: Quand ce jeton devrais arrêter de travailler?
+  validUsers: utilisateurs valides
+  view: Vue
+  viewAll: Voir Tous
+  virtualLearningLink: Address d’Étude Virtuel
+  virtualSessionLink: Lien de Séance Virtuelle
+  visibleToStudents: Visible pour les étudiants
+  visualizations: Visualisations
+  visualizeCourseObjectives: "Visualiser les objectifs du cours "
+  vocabularies: Vocabulaires
+  vocabulariesBySessionType: Vocabulaires par Type de Seance
+  vocabulary: Vocabulaire
+  vocabularyTerms: Termes Vocabulaire
+  vocabularyTermsFor: "Termes Vocabulaire par {subject}"
+  waitSaving: Travaille dessus... un moment...
+  weak: Faible
+  wednesday: Mercredi
+  week: Semaine
+  weekAtAGlance: "Semaine d'un coup d'œil"
+  weekOf: "Semaine de {date}"
+  weeks: Semaines
+  when: Quand
+  whichIs: qui est
+  whitecoatsSlashSpecialAttire: Blouses blanches / vêtements particuliers
+  xTermsFromVocabYusedWithSessionTypeZ: '{termsCount, plural, =1 {1 term} other {# termes}} du vocabulaire "{vocabulary}" {termsCount, plural, =1 {est appliqué} other {sont appliqués}} à {sessionsCount, plural, =1 {1 session} other {# sessions}} avec le type de session "{sessionType}".'
+  year: Année
+  yes: Oui
+  yesPopulateGroup: Oui!  Ajoutez la cohorte entière à mon nouveau groupe
+  zipCode: Code postal
+errors:
+  accepted: "{description} doit être accepté"
+  after: "{description} doit être après {after}"
+  agreementRequired: Entente requise pour le téléchargement
+  agreementRequiredOrRationale: Entente ou autre justification requise pour le téléchargement
+  before: "{description} doit être avant {before}"
+  blank: "{description} ne doit pas être blanc"
+  collection: "{description} doit être un collection"
+  confirmation: "{description} ne correspond pas de {on}"
+  date: "{description} doit être une date valide"
+  description: Ce champ
+  duplicateUsername: "Ce nom d'utilisateur est déjà pris par un autre compte utilisateur."
+  email: "{description} doit être une e-mail valide"
+  empty: "{description} ne doit pas être vide"
+  equalTo: "{description} doit être égale à {is}"
+  even: "{description} doit être une chiffre pair"
+  exclusion: "{description}est reservé"
+  greaterThan: "{description} doit être supérieure à {gt}"
+  greaterThanOrEqualTo: "{description} doit être supérieure ou ègale à {gte}"
+  inclusion: "{description} ne figure pas dans la liste"
+  invalid: "{description} est invalide"
+  invalidAuthentication: "Vous avez été déconnecté en raison d'une authentification invalide."
+  invalidChangeAlertRecipients: "Cette liste de destinataires d'alertes de changement contient des adresses e-mail invalides."
+  lessThan: "{description} doit être inférieure à {lt}"
+  lessThanOrEqualTo: "{description} doit être supérieure ou inférieure à {lte}"
+  minimum: "{description} doit être supérieur ou égal à {min}"
+  missingFile: Fichier manquant
+  notANumber: "{description} doit contenir une valeur numérique"
+  notAnInteger: "{description} doit être un entier"
+  odd: "{description} doit étre une chiffre impair"
+  onOrAfter: "{description} doit être sur ou après {onOrAfter}"
+  onOrBefore: "{description} doit être en ou avant {onOrBefore}"
+  otherThan: "{description} doit être une valeur autre de {value}"
+  phone: "{description} doit être une téléphone valide"
+  positive: "{description} doit être une chiffre positif"
+  present: "{description} doit rester vide"
+  reportMissingAcademicYear: Année Scolaire requis
+  reportMissingCompetency: Compétence requis
+  reportMissingCourse: Cours is requis
+  reportMissingInstructor: Instructeur requis
+  reportMissingInstructorGroup: Groupe des Instructeurs requis
+  reportMissingLearningMaterial: "Matériel d'Étude requis"
+  reportMissingMeshTerm: terme de MeSH requis
+  reportMissingObjectForCompetency: connexion requis quand `compétence` est le sujet
+  reportMissingObjectForInstructor: connexion requis quand `instructeur` est le sujet
+  reportMissingObjectForInstructorGroup: connexion requis quand `groupe des instructeurs` est le sujet
+  reportMissingObjectForMeshTerm: connexion requis quand `terme de MeSH` est le sujet
+  reportMissingObjectForProgram: connexion requis quand `diplôme` est le sujet
+  reportMissingObjectForSessionType: connexion requis quand `type de Seance` est le sujet
+  reportMissingObjectForTerm: connexion requis quand `terme` est le sujet
+  reportMissingProgram: Diplôme requis
+  reportMissingProgramYear: Année Diplôme requis
+  reportMissingSession: Seance requis
+  reportMissingSessionType: Type de Seance requis
+  reportMissingTerm: Terme requis
+  required: "{description} est obligatoire"
+  singular: "{description} ne doit pas être un collection"
+  tooLong: "{description} est trop long (maximum de {max} {max, plural, =1 {caractère} other {caractères}})"
+  tooShort: "{description} est trop court (minimum de {min} {min, plural, =1 {caractère} other {caractères}})"
+  url: "{description} doit être une URL valide"
+  wrongDateFormat: "{description} doit être en format de {format}"
+  wrongLength: "{description} n’est pas à la bonne longueur (soit ainsi {is} {is, plural, =1 {caractère} other {caractères}})"
