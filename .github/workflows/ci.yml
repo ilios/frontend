@@ -40,7 +40,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     needs: [lint]
     steps:
       - uses: actions/checkout@v7
@@ -57,7 +57,7 @@ jobs:
   test-dark:
     name: Test in Darkmode
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     needs: [lint]
     steps:
       - uses: actions/checkout@v7
