@@ -1,7 +1,6 @@
 import { currentURL, currentRouteName } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'frontend/tests/helpers';
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/programs';
 import detailPage from 'frontend/tests/pages/program';
 

@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'frontend/tests/helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
 import { currentURL } from '@ember/test-helpers';
 import page from 'frontend/tests/pages/course';
 import pubcheckPage from 'frontend/tests/pages/course-publication-check';

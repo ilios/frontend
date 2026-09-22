@@ -2,8 +2,7 @@ import { currentURL, currentRouteName } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
 import page from 'frontend/tests/pages/instructor-groups';
-import { setupAuthentication } from 'frontend/tests/helpers';
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 
 module('Acceptance | Instructor Groups', function (hooks) {
   setupApplicationTest(hooks);

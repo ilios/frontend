@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'frontend/tests/msw';
-import { setupAuthentication } from 'frontend/tests/helpers';
 import { component } from 'frontend/tests/pages/components/reports/subject';
 import Subject from 'frontend/components/reports/subject';
 import noop from 'frontend/helpers/noop';

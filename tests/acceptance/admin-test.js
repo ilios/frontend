@@ -1,9 +1,8 @@
 import { click, fillIn, currentURL, triggerEvent, visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
 const url = '/admin';
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 
 module('Acceptance | Admin', function (hooks) {
   setupApplicationTest(hooks);

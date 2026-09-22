@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/course';
 
 module('Acceptance | Course - Competencies', function (hooks) {

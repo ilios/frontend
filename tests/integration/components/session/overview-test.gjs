@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
 import { settled, render } from '@ember/test-helpers';
 import { setupMSW } from 'frontend/tests/msw';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
 import { component } from 'frontend/tests/pages/components/session/overview';
 import Overview from 'frontend/components/session/overview';
 

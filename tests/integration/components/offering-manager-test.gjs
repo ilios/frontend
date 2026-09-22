@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'frontend/tests/helpers';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupAuthentication, setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';

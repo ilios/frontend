@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
-import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication } from 'frontend/tests/helpers';
 import ENV from 'frontend/config/environment';
 import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
 const { version } = ENV.APP;

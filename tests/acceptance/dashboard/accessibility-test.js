@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
 import { visit, currentURL } from '@ember/test-helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication } from 'frontend/tests/helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupAuthentication } from 'frontend/tests/helpers';
 
 module('Acceptance | dashboard accessibility', function (hooks) {
   setupApplicationTest(hooks);

@@ -39,9 +39,9 @@ module('Integration | Helper | intersect', function (hooks) {
       </template>,
     );
     // eslint-disable-next-line ember/no-runloop
-    run(() => this.get('array2').pushObject('bar'));
+    run(() => this.array2.pushObject('bar'));
     // eslint-disable-next-line ember/no-runloop
-    run(() => this.get('array3').pushObject('bar'));
+    run(() => this.array3.pushObject('bar'));
 
     assert.dom().hasText('foobar', 'bar is added');
   });

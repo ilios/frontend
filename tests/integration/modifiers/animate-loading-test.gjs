@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, setPreferReducedMotion } from 'frontend/tests/helpers';
 import { render, waitUntil } from '@ember/test-helpers';
 import animateLoading from 'frontend/modifiers/animate-loading';
-import { setPreferReducedMotion } from 'frontend/tests/helpers';
 
 module('Integration | Modifier | animate-loading', function (hooks) {
   setupRenderingTest(hooks);

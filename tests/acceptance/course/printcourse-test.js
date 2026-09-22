@@ -1,7 +1,6 @@
 import { find, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'frontend/tests/helpers';
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
 
 module('Acceptance | Course - Print Course', function (hooks) {

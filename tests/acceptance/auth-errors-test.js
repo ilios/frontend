@@ -1,8 +1,7 @@
 import { visit, currentRouteName, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { HttpResponse } from 'msw';
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 
 module('Acceptance | Auth Errors', function (hooks) {
   setupApplicationTest(hooks);

@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
 
-import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/course';
 
 module('Acceptance | Course with no cohorts - Objective Parents', function (hooks) {

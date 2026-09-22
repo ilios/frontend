@@ -48,11 +48,7 @@ module('Integration | Helper | reverse', function (hooks) {
     );
 
     assert.dom().hasText('bazbarfoo', 'array is reversed');
-    assert.deepEqual(
-      this.get('array'),
-      ['foo', 'bar', 'baz'],
-      'the original array is not reversed',
-    );
+    assert.deepEqual(this.array, ['foo', 'bar', 'baz'], 'the original array is not reversed');
   });
 
   test('It safely handles non-array values', async function (assert) {

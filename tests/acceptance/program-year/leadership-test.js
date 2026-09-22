@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot, setupAuthentication } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program-year';
 
 module('Acceptance | Program Year - Leadership', function (hooks) {

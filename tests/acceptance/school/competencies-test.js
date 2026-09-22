@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot, setupAuthentication } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/school';
 
 module('Acceptance | School - Competencies', function (hooks) {

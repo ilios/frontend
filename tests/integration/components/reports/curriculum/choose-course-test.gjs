@@ -1,7 +1,11 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import {
+  setupRenderingTest,
+  setupAuthentication,
+  freezeDateAt,
+  unfreezeDate,
+} from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupAuthentication, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/choose-course';

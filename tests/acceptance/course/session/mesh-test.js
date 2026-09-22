@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
 
-import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/session';
 
 module('Acceptance | Session - Mesh Terms', function (hooks) {

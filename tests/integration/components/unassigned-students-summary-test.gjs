@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'frontend/tests/msw';
-import { setupAuthentication } from 'frontend/tests/helpers';
 import { component } from 'frontend/tests/pages/components/unassigned-students-summary';
 import UnassignedStudentsSummary from 'frontend/components/unassigned-students-summary';
 import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';

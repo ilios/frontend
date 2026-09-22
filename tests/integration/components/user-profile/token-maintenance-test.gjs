@@ -1,11 +1,10 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime, Duration } from 'luxon';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/user-profile/token-maintenance';
-import { freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import TokenMaintenance from 'frontend/components/user-profile/token-maintenance';
 import noop from 'frontend/helpers/noop';
 

@@ -1,6 +1,10 @@
 import { module, test } from 'qunit';
-import { setupAuthentication, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import {
+  setupAuthentication,
+  freezeDateAt,
+  unfreezeDate,
+  setupApplicationTest,
+} from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/weeklyevents';
 import { DateTime } from 'luxon';
 

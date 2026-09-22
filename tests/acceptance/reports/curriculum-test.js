@@ -1,8 +1,7 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import page from 'frontend/tests/pages/reports';
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import { setupAuthentication } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot, setupAuthentication } from 'frontend/tests/helpers';
 import currentAcademicYear from 'frontend/utils/current-academic-year';
 import { graphQL } from 'frontend/tests/helpers/curriculum-report';
 

@@ -45,7 +45,7 @@ module('Unit | Utility | is equal', function () {
       // eslint-disable-next-line ember/no-classic-classes
       firstValue: EmberObject.extend({
         isEqual(value) {
-          return this.get('value') === value;
+          return this.value === value;
         },
       }).create({ value: 10 }),
       secondValue: 10,
@@ -58,7 +58,7 @@ module('Unit | Utility | is equal', function () {
       // eslint-disable-next-line ember/no-classic-classes
       secondValue: EmberObject.extend({
         isEqual(value) {
-          return this.get('value') === value;
+          return this.value === value;
         },
       }).create({ value: 10 }),
       useDeepEqual: false,

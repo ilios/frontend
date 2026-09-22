@@ -1,10 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/user-profile-permissions';
-import { freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import UserProfilePermissions from 'frontend/components/user-profile-permissions';
 import noop from 'frontend/helpers/noop';
