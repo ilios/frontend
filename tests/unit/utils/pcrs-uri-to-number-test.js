@@ -1,4 +1,4 @@
-import pcrsUriToNumber from '../../../utils/pcrs-uri-to-number';
+import pcrsUriToNumber from 'frontend/utils/pcrs-uri-to-number';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | pcrs-uri-to-number', function () {

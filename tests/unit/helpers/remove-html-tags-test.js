@@ -1,4 +1,4 @@
-import { removeHtmlTags } from '../../../helpers/remove-html-tags';
+import { removeHtmlTags } from 'frontend/helpers/remove-html-tags';
 import { module, test } from 'qunit';
 
 module('Unit | Helper | remove html tags', function () {
