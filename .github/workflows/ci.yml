@@ -172,7 +172,7 @@ jobs:
           done
       - name: Capture Screenshots in Darkmode
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
-        run: test:darkmode-screenshots
+        run: pnpm run test:darkmode-screenshots
       - name: Rename Darkmode screenshots
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
         run: |
