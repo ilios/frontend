@@ -472,8 +472,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1)
       ember-simple-auth:
-        specifier: ~8.3.1
-        version: 8.3.1(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(ember-source@6.10.1(@glimmer/component@2.1.1(supports-color@8.1.1))(rsvp@4.8.5)(supports-color@8.1.1))(supports-color@8.1.1)
+        specifier: ~8.4.1
+        version: 8.4.1(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(ember-source@6.10.1(@glimmer/component@2.1.1(supports-color@8.1.1))(rsvp@4.8.5)(supports-color@8.1.1))(supports-color@8.1.1)
       ember-simple-charts:
         specifier: 12.2.2
         version: 12.2.2(@babel/core@7.29.7(supports-color@8.1.1))(ember-source@6.10.1(@glimmer/component@2.1.1(supports-color@8.1.1))(rsvp@4.8.5)(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.111.1(clean-css@5.3.3)(csso@4.2.0)(postcss@8.5.28)(uglify-js@3.19.3))
@@ -4492,8 +4492,8 @@ packages:
   ember-set-helper@3.1.0:
     resolution: {integrity: sha512-5BTcvqktYjpDbi1HRaSKjuIZsSioilWczDDY3AevwbxoEiasfQMLuXFJkiCKm4aW34OXz652Upo7mumCVXJKOw==}
 
-  ember-simple-auth@8.3.1:
-    resolution: {integrity: sha512-n0nKTJwvLC3Aoz29mWu9SJW6uKP8/zY5kUU1Akbml4HFXaTIMQP6zMLfqEcxpUd90tIDXflPN+gu1++vI1qOfg==}
+  ember-simple-auth@8.4.1:
+    resolution: {integrity: sha512-qyCg9pcS3BVrdPO4g7MPLrW8Sna+5HYrqqsND5kRsUdoJ8KXpZl+Syc94X+pqCFx6U929v+svJfzmBU3z51F3Q==}
     peerDependencies:
       '@ember/test-helpers': '>=4 || >= 3 || > 2.7'
       ember-source: '>=6.0 || >=4.0'
@@ -14339,7 +14339,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-simple-auth@8.3.1(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(ember-source@6.10.1(@glimmer/component@2.1.1(supports-color@8.1.1))(rsvp@4.8.5)(supports-color@8.1.1))(supports-color@8.1.1):
+  ember-simple-auth@8.4.1(@ember/test-helpers@5.4.3(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(ember-source@6.10.1(@glimmer/component@2.1.1(supports-color@8.1.1))(rsvp@4.8.5)(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       '@ember/test-waiters': 4.1.2(supports-color@8.1.1)
       '@embroider/addon-shim': 1.10.3(supports-color@8.1.1)
