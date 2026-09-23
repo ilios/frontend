@@ -1,4 +1,4 @@
-import randomString from '../../../utils/random-string';
+import randomString from 'frontend/utils/random-string';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | random string', function () {

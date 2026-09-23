@@ -1,4 +1,4 @@
-import countDigits from '../../../utils/count-digits';
+import countDigits from 'frontend/utils/count-digits';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | count digits', function () {
