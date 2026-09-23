@@ -1,6 +1,6 @@
 import sortCohorts from 'frontend/utils/sort-cohorts';
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 
 import { setupMSW } from 'frontend/tests/msw';
 

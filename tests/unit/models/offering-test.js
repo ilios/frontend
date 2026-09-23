@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest, waitForResource } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
-import { waitForResource } from 'frontend/tests/helpers';
 
 module('Unit | Model | Offering', function (hooks) {
   setupTest(hooks);

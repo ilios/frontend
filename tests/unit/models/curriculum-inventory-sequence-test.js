@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 
 module('Unit | Model | CurriculumInventorySequence', function (hooks) {
   setupTest(hooks);
