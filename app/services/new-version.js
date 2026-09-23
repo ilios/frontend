@@ -10,7 +10,7 @@ export default class NewVersionService extends Service {
   @tracked latestVersion = undefined;
 
   get currentVersion() {
-    return config.newVersion.currentVersion;
+    return config.APP.VERSION;
   }
 
   get isNewVersionAvailable() {
@@ -18,7 +18,7 @@ export default class NewVersionService extends Service {
   }
 
   get url() {
-    return config.rootURL + config.newVersion.versionFile;
+    return config.rootURL + `VERSION.txt`;
   }
 
   constructor() {

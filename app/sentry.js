@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/ember';
-import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
 import { getValueFromHtml } from './utils/html-server-variables';
 
 function startSentry(config) {
@@ -9,7 +8,7 @@ function startSentry(config) {
   Sentry.init({
     dsn: captureErrors ? DSN : null,
     environment,
-    release: `v${config.APP.version.match(versionRegExp)[0]}`,
+    release: `v${config.APP.VERSION}`,
     tracesSampleRate: 0.25,
   });
 }
