@@ -15,10 +15,14 @@ export default class SchoolCompetenciesManagerComponent extends Component {
     if (!this.args.competencies) {
       return [];
     }
-    const domains = this.args.competencies.filter((competency) => {
+
+    return this.args.competencies.filter((competency) => {
       return !competency.belongsTo('parent').id();
     });
-    const objs = uniqueValues(domains).map((domain) => {
+  }
+
+  get filteredDomains() {
+    return uniqueValues(this.domains).map((domain) => {
       if (!domain.id) {
         return {
           domain,
@@ -33,8 +37,10 @@ export default class SchoolCompetenciesManagerComponent extends Component {
         competencies: sortBy(domainCompetencies, 'title'),
       };
     });
+  }
 
-    return sortBy(objs, 'domain.title');
+  get sortedDomains() {
+    return sortBy(this.filteredDomains, 'domain.title');
   }
 
   @action
@@ -43,7 +49,7 @@ export default class SchoolCompetenciesManagerComponent extends Component {
   }
   <template>
     <div class="school-competencies-manager" data-test-school-competencies-manager ...attributes>
-      {{#each this.domains as |obj|}}
+      {{#each this.sortedDomains as |obj|}}
         <div class="domain" data-test-domain>
           <div class="block" data-test-domain-details>
             <CompetencyTitleEditor @competency={{obj.domain}} @canUpdate={{@canUpdate}} />
