@@ -1,7 +1,11 @@
 #ilios-loading-error {
   align-items: center;
-  background-color: rgba(17, 17, 17, 0.47);
+  background-color: light-dark(
+    var(--slightly-transparent-black),
+    var(--very-transparent-black)
+  );
   border: none;
+  color: light-dark(var(--black), var(--white));
   display: flex;
   height: 100%;
   position: fixed;
@@ -10,7 +14,7 @@
   z-index: 5;
 
   #ilios-loading-error-content {
-    background-color: white;
+    background-color: light-dark(var(--white), var(--black));
     bottom: 20%;
     display: flex;
     flex-direction: column;
@@ -27,7 +31,7 @@
     }
 
     .supported-browsers {
-      border: 1px solid blue;
+      border: 1px solid light-dark(var(--blue), var(--light-blue));
       margin: 1rem 0;
       padding: 1rem 2rem;
     }
