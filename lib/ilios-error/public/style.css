@@ -15,14 +15,14 @@
 
   #ilios-loading-error-content {
     background-color: light-dark(var(--white), var(--black));
-    bottom: 20%;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    max-width: 90%;
+    max-height: 90vh;
+    max-width: 90vw;
+    overflow: auto;
     padding: 1em;
     position: sticky;
-    width: 100%;
     z-index: 5;
 
     h1,
@@ -41,11 +41,15 @@
       flex-wrap: wrap;
       justify-content: space-evenly;
       list-style-type: none;
+      padding-inline-start: 0;
     }
 
     fieldset {
       pre {
-        white-space: break-spaces;
+        max-height: 100%;
+        min-height: 0;
+        overflow: auto;
+        white-space: normal;
       }
     }
 
