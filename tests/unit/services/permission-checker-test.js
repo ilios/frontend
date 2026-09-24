@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 
 module('Unit | Service | permission-checker', function (hooks) {

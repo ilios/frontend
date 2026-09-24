@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { DateTime } from 'luxon';
 import Event from 'frontend/classes/event';

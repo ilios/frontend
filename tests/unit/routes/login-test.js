@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 import Service from '@ember/service';
 
 module('Unit | Route | login', function (hooks) {

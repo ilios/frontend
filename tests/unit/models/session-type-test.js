@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
-import { waitForResource } from 'frontend/tests/helpers';
+import { setupTest, waitForResource } from 'frontend/tests/helpers';
 
 module('Unit | Model | SessionType', function (hooks) {
   setupTest(hooks);

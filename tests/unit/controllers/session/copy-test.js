@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 import Controller from 'frontend/controllers/session/copy';
 
 module('Unit | Controller | session/copy', function (hooks) {

@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 
 module('Unit | Route | course-visualize-session-types', function (hooks) {
   setupTest(hooks);

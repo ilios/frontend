@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
 import { setupMSW } from 'frontend/tests/msw';
 

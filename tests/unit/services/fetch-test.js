@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 

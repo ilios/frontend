@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 import { singularize, pluralize } from 'ember-inflector';
 
 module('Unit | Model | AamcPcrs', function (hooks) {

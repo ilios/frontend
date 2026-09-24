@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'frontend/tests/helpers';
 import Controller from 'frontend/controllers/course-materials';
 
 module('Unit | Controller | course-materials', function (hooks) {
