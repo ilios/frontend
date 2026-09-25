@@ -6,7 +6,11 @@ import UserStatus from '../user-status';
 
 <template>
   <div
-    class="learner-group-instructors-list"
+    class="learner-group-instructors-list{{if
+        @hasSavedInstructorsRecently
+        ' has-saved'
+        ' has-not-saved'
+      }}"
     data-test-learner-group-instructors-list
     ...attributes
   >
