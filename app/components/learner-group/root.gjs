@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import pad from 'pad';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueValues } from '../../utils/array-helpers';
@@ -60,6 +60,8 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked totalGroupsToSave = 0;
   @tracked isManagingInstructors = false;
   @tracked filter = '';
+  @tracked hasSavedInstructorsRecently = false;
+
   allDescendantUsersCache = [];
 
   get location() {
@@ -299,7 +301,10 @@ export default class LearnerGroupRootComponent extends Component {
     this.args.learnerGroup.set('instructors', newInstructors);
     this.args.learnerGroup.set('instructorGroups', newInstructorGroups);
     await this.args.learnerGroup.save();
+    this.hasSavedInstructorsRecently = true;
     this.isManagingInstructors = false;
+    await timeout(500);
+    this.hasSavedInstructorsRecently = false;
   });
 
   @cached
@@ -633,12 +638,14 @@ export default class LearnerGroupRootComponent extends Component {
               @availableInstructorGroups={{this.availableInstructorGroups}}
               @save={{perform this.saveInstructors}}
               @cancel={{set this "isManagingInstructors" false}}
+              @hasSavedInstructorsRecently={{this.hasSavedInstructorsRecently}}
             />
           {{else}}
             <InstructorsList
               @learnerGroup={{@learnerGroup}}
               @canUpdate={{@canUpdate}}
               @manage={{set this "isManagingInstructors" true}}
+              @hasSavedInstructorsRecently={{this.hasSavedInstructorsRecently}}
             />
           {{/if}}
           <div class="learner-group-overview-actions" data-test-overview-actions>
