@@ -8,6 +8,8 @@ import { LinkTo } from '@ember/routing';
 import IliosNavigation from 'frontend/components/ilios-navigation';
 import ErrorDisplay from 'frontend/components/error-display';
 import FlashMessages from 'frontend/components/flash-messages';
+import set from 'ember-set-helper/helpers/set';
+
 <template>
   {{pageTitle (t "general.ilios") separator=" " front=true}}
   <div id="ilios">
@@ -35,8 +37,11 @@ import FlashMessages from 'frontend/components/flash-messages';
         {{/if}}
       {{/if}}
       <main id="main">
-        {{#if @controller.showErrorDisplay}}
-          <ErrorDisplay @errors={{@controller.errors}} @clearErrors={{@controller.clearErrors}} />
+        {{#if @controller.applicationError}}
+          <ErrorDisplay
+            @error={{@controller.applicationError}}
+            @clearError={{set @controller "applicationError" null}}
+          />
         {{else}}
           {{outlet}}
         {{/if}}
