@@ -3,7 +3,11 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 <template>
   <div
-    class="school-institutional-information-details"
+    class="school-institutional-information-details{{if
+        @hasSavedRecently
+        ' has-saved'
+        ' has-not-saved'
+      }}"
     data-test-school-institutional-information-details
     ...attributes
   >

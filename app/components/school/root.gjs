@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
@@ -37,8 +37,10 @@ import focus from '../../modifiers/focus';
 export default class SchoolRootComponent extends Component {
   @service flashMessages;
   @service intl;
+
   @tracked title;
   @tracked newSavedSessionType;
+  @tracked hasSavedInfoRecently = false;
 
   constructor() {
     super(...arguments);
@@ -109,6 +111,10 @@ export default class SchoolRootComponent extends Component {
     }
     await institution.save();
     this.args.setSchoolManageInstitutionalInformation(false);
+
+    this.hasSavedInfoRecently = true;
+    await timeout(500);
+    this.hasSavedInfoRecently = false;
   }
 
   @action
@@ -289,6 +295,7 @@ export default class SchoolRootComponent extends Component {
             @canUpdate={{@canUpdateSchool}}
             @manage={{@setSchoolManageInstitutionalInformation}}
             @school={{@school}}
+            @hasSavedRecently={{this.hasSavedInfoRecently}}
           />
         {{/if}}
       </div>
