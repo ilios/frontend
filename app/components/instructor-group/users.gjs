@@ -16,6 +16,7 @@ import BigSaveCancelButtons from '../big-save-cancel-buttons';
 export default class InstructorGroupUsersComponent extends Component {
   @tracked usersBuffer = [];
   @tracked isManaging = false;
+  @tracked hasSavedRecently = false;
 
   @cached
   get usersData() {
@@ -45,9 +46,16 @@ export default class InstructorGroupUsersComponent extends Component {
     this.args.instructorGroup.set('users', this.usersBuffer);
     await this.args.instructorGroup.save();
     this.isManaging = false;
+    this.hasSavedRecently = true;
+    await timeout(500);
+    this.hasSavedRecently = false;
   });
   <template>
-    <section class="instructor-group-users" data-test-instructor-group-users ...attributes>
+    <section
+      class="instructor-group-users{{if this.hasSavedRecently ' has-saved' ' has-not-saved'}}"
+      data-test-instructor-group-users
+      ...attributes
+    >
       <div class="instructor-group-users-header" data-test-header>
         <h2 class="title" data-test-title>
           {{#if this.isManaging}}
