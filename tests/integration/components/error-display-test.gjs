@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 import ErrorDisplay from 'frontend/components/error-display';
 import noop from 'frontend/helpers/noop';
@@ -7,58 +7,60 @@ import noop from 'frontend/helpers/noop';
 module('Integration | Component | error display', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('the detail link toggles properly', async function (assert) {
-    const errors = [
-      {
-        mainMessage: 'this is an error',
-      },
-    ];
-
-    this.set('errors', errors);
+  test('renders and is accessible', async function (assert) {
+    this.set('error', {
+      message: 'this is an error',
+      statusCode: 500,
+    });
     await render(
-      <template><ErrorDisplay @errors={{this.errors}} @clearErrors={{(noop)}} /></template>,
+      <template><ErrorDisplay @error={{this.error}} @clearError={{(noop)}} /></template>,
+    );
+
+    assert.dom('[data-test-main-message]').hasText('Error');
+    assert.dom('[data-test-status-code]').hasText('Status Code: 500');
+    assert.dom('[data-test-message]').hasText('this is an error');
+    await takeComponentScreenshot(assert);
+  });
+
+  test('the detail link toggles properly', async function (assert) {
+    this.set('error', {
+      message: 'this is an error',
+    });
+    await render(
+      <template><ErrorDisplay @error={{this.error}} @clearError={{(noop)}} /></template>,
     );
 
     assert.dom('.error-detail-action').hasText('Hide Details');
-    assert.dom('.timestamp').includesText(new Intl.DateTimeFormat('en-US').format(new Date()));
-
     await click('.error-detail-action');
-
     assert.dom('.error-detail-action').hasText('Show Details');
+    await takeComponentScreenshot(assert);
   });
 
-  test('404 error works', async function (assert) {
-    const errors = [
-      {
-        statusCode: '404',
-      },
-    ];
-
-    this.set('errors', errors);
+  test('Renders nice title if we get it', async function (assert) {
+    this.set('error', {
+      message: 'this is an error',
+      errors: [{ title: 'a nice message' }],
+    });
     await render(
-      <template><ErrorDisplay @errors={{this.errors}} @clearErrors={{(noop)}} /></template>,
+      <template><ErrorDisplay @error={{this.error}} @clearError={{(noop)}} /></template>,
     );
-
-    assert.dom('.error-main').includesText('Rats!');
+    assert.dom('[data-test-main-message]').hasText('a nice message');
+    assert.dom('[data-test-status-code]').doesNotExist();
+    assert.dom('[data-test-message]').hasText('this is an error');
+    await takeComponentScreenshot(assert);
   });
 
   test('clicking clear button fires action', async function (assert) {
-    const errors = [
-      {
-        mainMessage: 'this is an error',
-      },
-    ];
-
-    this.set('errors', errors);
-    this.set('clearErrors', () => {
-      assert.step('clearErrors called');
+    this.set('error', {
+      message: 'this is an error',
+    });
+    this.set('clearError', () => {
+      assert.step('clearError called');
     });
     await render(
-      <template>
-        <ErrorDisplay @errors={{this.errors}} @clearErrors={{this.clearErrors}} />
-      </template>,
+      <template><ErrorDisplay @error={{this.error}} @clearError={{this.clearError}} /></template>,
     );
-    await click('.clear-errors button');
-    assert.verifySteps(['clearErrors called']);
+    await click('.clear-error button');
+    assert.verifySteps(['clearError called']);
   });
 });
