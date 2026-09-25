@@ -47,17 +47,4 @@
   .large-component {
     grid-column: 1 / -1;
   }
-
-  .has-saved {
-    background-color: light-dark(
-      var(--transparent-green),
-      var(--transparent-green)
-    );
-    transition: background-color 0.5s ease-out;
-  }
-
-  .has-not-saved {
-    background-color: transparent;
-    transition: background-color 1s ease-in;
-  }
 }
