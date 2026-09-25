@@ -3,6 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { modifier } from 'ember-modifier';
+import set from 'ember-set-helper/helpers/set';
 import LoadingSpinner from './loading-spinner';
 import UserProfileBioDetails from './user-profile-bio-details';
 import UserProfileBioManager from './user-profile-bio-manager';
@@ -64,6 +65,7 @@ export default class UserProfileBioComponent extends Component {
             @userAuthentication={{this.userAuthentication}}
             @setIsManaging={{@setIsManaging}}
             @canEditUsernameAndPassword={{this.canEditUsernameAndPassword}}
+            @setSavedRecently={{set this "hasSavedRecently"}}
           />
         {{else}}
           <UserProfileBioDetails

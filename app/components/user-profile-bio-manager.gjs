@@ -245,7 +245,10 @@ export default class UserProfileBioManagerComponent extends Component {
     const pendingUpdates = await user.pendingUserUpdates;
     await Promise.all(pendingUpdates.map((update) => update.destroyRecord()));
     await timeout(500);
+    this.args.setSavedRecently(true);
+    await timeout(500);
     this.cancel();
+    this.args.setSavedRecently(false);
   });
 
   directorySync = task({ drop: true }, async () => {
