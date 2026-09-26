@@ -53,7 +53,13 @@ export default class SchoolCompetenciesManagerComponent extends Component {
         <div class="domain" data-test-domain>
           <div class="block" data-test-domain-details>
             <CompetencyTitleEditor @competency={{obj.domain}} @canUpdate={{@canUpdate}} />
-            {{#if (eq obj.competencies.length 0)}}
+            {{#if
+              (and
+                @canDelete
+                (eq obj.domain.programYearObjectives.length 0)
+                (eq obj.competencies.length 0)
+              )
+            }}
               <button
                 type="button"
                 class="link-button delete-button"
