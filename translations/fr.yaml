@@ -86,7 +86,7 @@ general:
   canNotDeleteProgramYearObjective: "Ce objectif de année de programme ne peut pas être supprimé car il est associé à un cours ou vous n'en avez pas la permission."
   canNotDeleteReport: "Ce rapport ne peut pas être supprimé car il est encore en cours de chargement."
   canNotDeleteSchoolCompetency: "Cette compétence ne peut pas être supprimée car elle est liée à au moins un objectif annuel du programme, ou vous n'en avez pas la permission."
-  canNotDeleteSchoolCompetencyDomain: "Ce domaine de compétences ne peut pas être supprimé car des compétences y sont associées."
+  canNotDeleteSchoolCompetencyDomain: "Ce domaine de compétences ne peut pas être supprimé car des compétences y sont associées, est liée à au moins un objectif annuel du programme, ou vous n'en avez pas la permission."
   canNotDeleteSchoolSessionType: "Ce type de séances ne peut pas être supprimé car vous n'en avez pas la permission."
   canNotDeleteSchoolVocabulary: "Ce vocabulaire ne peut pas être supprimé car il contient au moins un terme, ou vous n'en avez pas la permission."
   canNotDeleteSchoolVocabularyTerm: "Ce terme de vocabulaire ne peut pas être supprimé car il comporte au moins un sous-terme, une association, ou vous n'en avez pas la permission."
