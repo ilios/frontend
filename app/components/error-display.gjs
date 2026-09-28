@@ -1,103 +1,68 @@
 import Component from '@glimmer/component';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import NotFound from './not-found';
 import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
 import formatTime from 'ember-intl/helpers/format-time';
-import { faRotate } from '@fortawesome/free-solid-svg-icons';
 
 export default class ErrorDisplayComponent extends Component {
-  @tracked isOffline = !navigator.onLine;
+  @service intl;
   @tracked showDetails = true;
+
   now = new Date();
 
-  get is404() {
-    if (this.args.errors.length) {
-      return this.args.errors[0].statusCode === '404';
+  /**
+   * Ember data gives us a nice error title, if we find other
+   * error producers that do this we can add them here as well.
+   **/
+  get mainMessage() {
+    if (this.args.error.errors?.[0]?.title) {
+      return this.args.error.errors[0]?.title;
     }
-    return false;
-  }
-  refresh() {
-    window.location.reload();
-  }
-  <template>
-    <div class="error-display" ...attributes>
-      <div class="error-main">
-        {{#if this.isOffline}}
-          <h2>
-            {{t "general.connectionLost"}}
-          </h2>
-          <p class="clear-errors">
-            <button type="button" {{on "click" this.refresh}}>
-              <FaIcon @icon={{faRotate}} />
-              {{t "general.reconnectNow"}}
-            </button>
-          </p>
-        {{else if this.is404}}
-          <NotFound />
-        {{else}}
-          <h2>
-            {{t "general.errorDisplayMessage"}}
-          </h2>
-          <p class="clear-errors">
-            <button type="button" {{on "click" @clearErrors}}>
-              {{t "general.clearErrors"}}
-            </button>
-            <button
-              type="button"
-              class="error-detail-action"
-              {{on "click" (set this "showDetails" (not this.showDetails))}}
-            >
-              {{t (if this.showDetails "general.collapseDetails" "general.expandDetails")}}
-            </button>
-          </p>
 
-          {{#if this.showDetails}}
-            <div class="timestamp">
-              {{formatTime
-                this.now
-                year="numeric"
-                month="numeric"
-                day="numeric"
-                hour="numeric"
-                second="numeric"
-                minute="numeric"
-                timeZoneName="short"
-              }}
-            </div>
-            <div class="error-detail">
-              <h3 class="error-total">
-                {{t "general.totalErrors" count=@errors.length}}
-              </h3>
-              {{#each @errors as |error|}}
-                <div class="error-details">
-                  <h4 class="error-main-message">
-                    {{error.mainMessage}}
-                  </h4>
-                  {{#if error.statusCode}}
-                    <span class="error-status-code">
-                      {{t "general.statusCode"}}:
-                      {{error.statusCode}}
-                    </span>
-                  {{/if}}
-                  {{#if error.message}}
-                    <span class="error-message">
-                      {{t "general.message"}}:
-                      {{error.message}}
-                    </span>
-                  {{/if}}
-                  <pre class="error-stack">
-                {{error.stack}}
-              </pre>
-                </div>
-              {{/each}}
-            </div>
+    return this.intl.t('general.error');
+  }
+
+  <template>
+    <div class="error-display main-section" ...attributes>
+      <h2>
+        {{t "general.errorDisplayMessage"}}
+      </h2>
+      <p class="clear-error">
+        <button type="button" {{on "click" @clearError}}>
+          {{t "general.clearErrors"}}
+        </button>
+        <button
+          type="button"
+          class="error-detail-action"
+          {{on "click" (set this "showDetails" (not this.showDetails))}}
+        >
+          {{t (if this.showDetails "general.collapseDetails" "general.expandDetails")}}
+        </button>
+      </p>
+
+      {{#if this.showDetails}}
+        <p class="timestamp">{{formatTime this.now}}</p>
+        <div class="error-detail">
+          <h3 class="error-main-message" data-test-main-message>
+            {{this.mainMessage}}
+          </h3>
+          {{#if @error.statusCode}}
+            <span class="error-status-code" data-test-status-code>
+              {{t "general.statusCode"}}:
+              {{@error.statusCode}}
+            </span>
           {{/if}}
-        {{/if}}
-      </div>
+          {{#if @error.message}}
+            <h4>{{t "general.message"}}</h4>
+            <p class="error-message" data-test-message>
+              {{@error.message}}
+            </p>
+          {{/if}}
+        </div>
+      {{/if}}
     </div>
   </template>
 }
