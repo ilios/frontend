@@ -18,9 +18,6 @@ module.exports = function (environment) {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
     },
-    sentry: {
-      dsn: 'https://ded7a44cf4084601a2fb468484bbe3ed@sentry.io/1311608',
-    },
     noScript: {
       placeIn: 'body-footer',
     },
