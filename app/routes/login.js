@@ -1,7 +1,6 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import EmberConfig from 'frontend/config/environment';
 
 export default class LoginRoute extends Route {
   @service currentUser;
@@ -85,11 +84,9 @@ export default class LoginRoute extends Route {
     const response = await this.fetch.getJsonFromApiHost(loginUrl);
     const status = response.status;
     if (status === 'redirect') {
-      let shibbolethLoginUrl = await this.iliosConfig.itemFromConfig('loginUrl');
-      if (EmberConfig.redirectAfterShibLogin) {
-        const attemptedRoute = encodeURIComponent(window.location.href);
-        shibbolethLoginUrl += '?target=' + attemptedRoute;
-      }
+      const attemptedRoute = encodeURIComponent(window.location.href);
+      const shibbolethLoginUrl =
+        (await this.iliosConfig.itemFromConfig('loginUrl')) + '?target=' + attemptedRoute;
       await new Promise(() => {
         //this promise never resolves so we don't render anything before the redirect
         window.location.replace(shibbolethLoginUrl);

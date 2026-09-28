@@ -10,7 +10,6 @@ module.exports = function (environment) {
     environment,
     rootURL: '/',
     locationType: 'history',
-    redirectAfterShibLogin: true,
     apiVersion: API_VERSION,
     i18n: {
       defaultLocale: 'en',
@@ -52,7 +51,6 @@ module.exports = function (environment) {
     ENV.APP.LOG_TRANSITIONS = !!process.env.LOG_TRANSITIONS;
     ENV.APP.LOG_TRANSITIONS_INTERNAL = !!process.env.LOG_TRANSITIONS_INTERNAL;
     ENV.APP.LOG_VIEW_LOOKUPS = !!process.env.LOG_VIEW_LOOKUPS;
-    ENV.redirectAfterShibLogin = false;
 
     //put ember concurrency tasks into debug mode to make errors much easier to spot
     ENV.EmberENV.DEBUG_TASKS = true;
