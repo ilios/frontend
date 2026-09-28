@@ -49,10 +49,7 @@
   }
 
   .has-saved {
-    background-color: light-dark(
-      var(--transparent-green),
-      var(--transparent-green)
-    );
+    background-color: light-dark(var(--transparent-green), var(--transparent-green));
     transition: background-color 0.5s ease-out;
   }
 

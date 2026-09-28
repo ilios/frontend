@@ -7,7 +7,6 @@ import { component } from 'frontend/tests/pages/components/course/back-to-course
 module('Integration | Component | course/back-to-courses', function (hooks) {
   setupRenderingTest(hooks);
 
-
   test('it renders', async function (assert) {
     await render(<template><BackToCourses /></template>);
     assert.strictEqual(component.text, 'Back to Courses List');

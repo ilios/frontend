@@ -29,10 +29,7 @@
       }
 
       &.synced-from-directory input {
-        background-color: light-dark(
-          var(--transparent-green),
-          var(--transparent-green)
-        );
+        background-color: light-dark(var(--transparent-green), var(--transparent-green));
         transition: background-color 500ms ease;
       }
     }

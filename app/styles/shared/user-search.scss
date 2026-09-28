@@ -38,10 +38,7 @@
     a,
     &.clickable {
       &:hover {
-        background-color: light-dark(
-          var(--lightest-blue),
-          var(--lightest-blue)
-        );
+        background-color: light-dark(var(--lightest-blue), var(--lightest-blue));
       }
     }
 

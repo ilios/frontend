@@ -52,10 +52,7 @@
       background-color: light-dark(var(--lighter-blue), var(--grey));
     }
     &.was-updated {
-      background-color: light-dark(
-        var(--transparent-green),
-        var(--transparent-green)
-      );
+      background-color: light-dark(var(--transparent-green), var(--transparent-green));
     }
     .room {
       overflow-wrap: anywhere;

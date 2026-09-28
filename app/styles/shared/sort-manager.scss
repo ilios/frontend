@@ -30,10 +30,7 @@
       vertical-align: middle;
 
       &:hover {
-        background-color: light-dark(
-          var(--super-light-grey),
-          var(--light-grey)
-        );
+        background-color: light-dark(var(--super-light-grey), var(--light-grey));
       }
 
       svg {
@@ -69,8 +66,7 @@
         padding: 0.3rem 1rem 1rem 1rem;
       }
       &.dragged-below {
-        border-bottom: 0.7rem solid
-          light-dark(var(--orange), var(--dark-orange));
+        border-bottom: 0.7rem solid light-dark(var(--orange), var(--dark-orange));
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         padding: 1rem 1rem 0.3rem 1rem;

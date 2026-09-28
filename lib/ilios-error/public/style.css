@@ -1,9 +1,6 @@
 #ilios-loading-error {
   align-items: center;
-  background-color: light-dark(
-    var(--slightly-transparent-black),
-    var(--very-transparent-black)
-  );
+  background-color: light-dark(var(--slightly-transparent-black), var(--very-transparent-black));
   border: none;
   color: light-dark(var(--black), var(--white));
   display: flex;
