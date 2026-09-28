@@ -11,9 +11,6 @@ module.exports = function (environment) {
     rootURL: '/',
     locationType: 'history',
     apiVersion: API_VERSION,
-    i18n: {
-      defaultLocale: 'en',
-    },
     fontawesome: {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
