@@ -1,4 +1,4 @@
-import { collection, clickable, create, isVisible } from 'ember-cli-page-object';
+import { collection, clickable, create, property } from 'ember-cli-page-object';
 import editor from './competency-title-editor';
 import newCompetency from './new-competency';
 
@@ -10,10 +10,10 @@ const definition = {
       editor,
     },
     remove: clickable('[data-test-remove-domain]'),
-    isRemovable: isVisible('[data-test-remove-domain]'),
+    removeDisabled: property('disabled', null, { scope: '[data-test-remove-domain]' }),
     competencies: collection('[data-test-competency]', {
       remove: clickable('[data-test-remove-competency]'),
-      isRemovable: isVisible('[data-test-remove-competency]'),
+      removeDisabled: property('disabled', null, { scope: '[data-test-remove-competency]' }),
       editor,
     }),
     newCompetency,

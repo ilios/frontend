@@ -51,9 +51,9 @@ module('Integration | Component | school/competencies-manager', function (hooks)
     assert.strictEqual(component.domains[0].competencies.length, 2);
     assert.strictEqual(component.domains[0].competencies[0].editor.text, 'competency1');
     assert.strictEqual(component.domains[0].competencies[1].editor.text, 'competency2');
-    assert.notOk(component.domains[0].isRemovable);
-    assert.notOk(component.domains[0].competencies[0].isRemovable);
-    assert.ok(component.domains[0].competencies[1].isRemovable);
+    assert.ok(component.domains[0].removeDisabled);
+    assert.ok(component.domains[0].competencies[0].removeDisabled);
+    assert.notOk(component.domains[0].competencies[1].removeDisabled);
   });
 
   test('delete domain', async function (assert) {
@@ -81,6 +81,7 @@ module('Integration | Component | school/competencies-manager', function (hooks)
       </template>,
     );
 
+    assert.notOk(component.domains[0].removeDisabled);
     await component.domains[0].remove();
     assert.verifySteps(['remove called']);
   });
@@ -117,6 +118,45 @@ module('Integration | Component | school/competencies-manager', function (hooks)
     assert.verifySteps(['add called']);
   });
 
+  test('delete competency', async function (assert) {
+    const domain = await this.server.create('competency', { title: 'domain 0' });
+    const competency = await this.server.create('competency', {
+      title: 'competency 0',
+      parent: domain,
+    });
+    const domainModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain.id);
+    const competencyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', competency.id);
+    const competencies = [domainModel, competencyModel];
+    this.set('competencies', competencies);
+    this.set('remove', (what) => {
+      assert.step('remove called');
+      assert.strictEqual(what, competencyModel);
+    });
+
+    await render(
+      <template>
+        <CompetenciesManager
+          @canUpdate={{true}}
+          @canDelete={{true}}
+          @canCreate={{true}}
+          @add={{(noop)}}
+          @remove={{this.remove}}
+          @competencies={{this.competencies}}
+        />
+      </template>,
+    );
+
+    // await this.pauseTest();
+
+    assert.notOk(component.domains[0].competencies[0].removeDisabled);
+    await component.domains[0].competencies[0].remove();
+    assert.verifySteps(['remove called']);
+  });
+
   test('add competency', async function (assert) {
     const newTitle = 'new c';
     const domain = await this.server.create('competency', { title: 'domain1' });
@@ -147,5 +187,64 @@ module('Integration | Component | school/competencies-manager', function (hooks)
     await component.domains[0].newCompetency.title.set(newTitle);
     await component.domains[0].newCompetency.save();
     assert.verifySteps(['add called']);
+  });
+
+  test('domain deletion disabled because sub-competencies', async function (assert) {
+    const domain = await this.server.create('competency', { title: 'domain 0' });
+    const competency = await this.server.create('competency', {
+      title: 'competency 0',
+      parent: domain,
+    });
+    const domainModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain.id);
+    const competencyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', competency.id);
+    const competencies = [domainModel, competencyModel];
+    this.set('competencies', competencies);
+
+    await render(
+      <template>
+        <CompetenciesManager
+          @canUpdate={{true}}
+          @canDelete={{true}}
+          @canCreate={{true}}
+          @add={{(noop)}}
+          @remove={{(noop)}}
+          @competencies={{this.competencies}}
+        />
+      </template>,
+    );
+
+    assert.ok(component.domains[0].removeDisabled);
+  });
+
+  test('domain deletion disabled because domain linked to program year objectives', async function (assert) {
+    const programYearObjectives = await this.server.createList('program-year-objective', 3);
+    const domain = await this.server.create('competency', {
+      title: 'domain 0',
+      programYearObjectives,
+    });
+    const domainModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain.id);
+    const competencies = [domainModel];
+
+    this.set('competencies', competencies);
+    await render(
+      <template>
+        <CompetenciesManager
+          @canUpdate={{true}}
+          @canDelete={{true}}
+          @canCreate={{true}}
+          @add={{(noop)}}
+          @remove={{(noop)}}
+          @competencies={{this.competencies}}
+        />
+      </template>,
+    );
+
+    assert.ok(component.domains[0].removeDisabled);
   });
 });
