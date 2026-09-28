@@ -33,7 +33,7 @@ import LearnerSelectionManager from './learner-selection-manager';
 import SaveButton from './save-button';
 import YupValidations from '../classes/yup-validations';
 import YupValidationMessage from './yup-validation-message';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faUndo } from '@fortawesome/free-solid-svg-icons';
 import scrollIntoView from '../modifiers/scroll-into-view';
 
 const DEBOUNCE_DELAY = 600;
@@ -762,7 +762,7 @@ export default class OfferingFormComponent extends Component {
                         type="button"
                         {{on "click" (set this "isEditingTimezone" false)}}
                       >
-                        <FaIcon @icon={{faXmark}} />
+                        <FaIcon @icon={{faUndo}} />
                       </button>
                     </span>
                   </div>
