@@ -66,10 +66,7 @@
       padding: 0.2em 0.4em 0.2em 0.6em;
 
       &:hover {
-        background-color: light-dark(
-          var(--super-light-grey),
-          var(--light-grey)
-        );
+        background-color: light-dark(var(--super-light-grey), var(--light-grey));
       }
     }
   }

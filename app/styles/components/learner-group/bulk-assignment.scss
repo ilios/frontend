@@ -50,10 +50,7 @@
       }
 
       &.matched {
-        background-color: light-dark(
-          var(--transparent-green),
-          var(--transparent-green)
-        );
+        background-color: light-dark(var(--transparent-green), var(--transparent-green));
       }
     }
   }

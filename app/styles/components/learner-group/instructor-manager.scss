@@ -81,10 +81,7 @@
 
     .removable-instructor-group {
       & > span {
-        background-color: light-dark(
-          var(--lightest-grey),
-          var(--lightest-grey)
-        );
+        background-color: light-dark(var(--lightest-grey), var(--lightest-grey));
         border-radius: 4px;
         cursor: pointer;
         font-weight: 600;

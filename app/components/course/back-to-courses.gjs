@@ -4,7 +4,6 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 
 export default class CourseBackToCoursesComponent extends Component {
-
   get year() {
     return this.args.course?.year;
   }
