@@ -12,12 +12,6 @@ module.exports = function (environment) {
     locationType: 'history',
     redirectAfterShibLogin: true,
     apiVersion: API_VERSION,
-    flashMessageDefaults: {
-      timeout: 3000,
-      extendedTimeout: 1000,
-      types: ['success', 'warning', 'info', 'alert'],
-      injectionFactories: [],
-    },
     i18n: {
       defaultLocale: 'en',
     },
@@ -73,8 +67,6 @@ module.exports = function (environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.flashMessageDefaults.timeout = 100;
-    ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.apiHost = '';
     ENV.apiNameSpace = 'api';
     ENV.disableServiceWorker = true;
