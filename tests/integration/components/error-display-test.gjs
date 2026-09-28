@@ -1,11 +1,24 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
+import {
+  setupRenderingTest,
+  freezeDateAt,
+  unfreezeDate,
+  takeComponentScreenshot,
+} from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 import ErrorDisplay from 'frontend/components/error-display';
 import noop from 'frontend/helpers/noop';
 
 module('Integration | Component | error display', function (hooks) {
   setupRenderingTest(hooks);
+
+  hooks.beforeEach(async function () {
+    freezeDateAt(new Date('9/28/2026'));
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
+  });
 
   test('renders and is accessible', async function (assert) {
     this.set('error', {
