@@ -70,6 +70,7 @@ general:
   bad: Bad
   badCredentials: Incorrect username or password
   beforeOrAfterMidday: Before or after midday
+  biography: Biography
   bottomPagination: Bottom pagination
   calendar: Calendar
   campusId: Campus ID
