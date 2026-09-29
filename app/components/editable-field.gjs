@@ -8,7 +8,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import { faPenToSquare, faXmark, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faUndo, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default class EditableFieldComponent extends Component {
   @tracked isEditing = false;
@@ -96,7 +96,7 @@ export default class EditableFieldComponent extends Component {
                 {{on "click" (perform this.closeEditor)}}
                 data-test-cancel
               >
-                <FaIcon @icon={{faXmark}} />
+                <FaIcon @icon={{faUndo}} />
               </button>
             </span>
           </span>
