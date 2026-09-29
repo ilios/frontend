@@ -108,21 +108,27 @@ export default class UserProfileRolesComponent extends Component {
       data-test-user-profile-roles
       ...attributes
     >
-      <div class="actions">
-        {{#if @isManaging}}
-          <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} />
-        {{else if @isManageable}}
-          <button
-            aria-label={{t "general.manage"}}
-            type="button"
-            class="manage"
-            data-test-manage
-            {{on "click" (fn @setIsManaging true)}}
-          >
-            <FaIcon @icon={{faPenToSquare}} />
-          </button>
-        {{/if}}
+      <div class="user-profile-roles-header">
+        <h2 class="title" data-test-title>
+          {{t "general.roles"}}
+        </h2>
+        <div class="actions">
+          {{#if @isManaging}}
+            <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} />
+          {{else if @isManageable}}
+            <button
+              aria-label={{t "general.manage"}}
+              type="button"
+              class="manage"
+              data-test-manage
+              {{on "click" (fn @setIsManaging true)}}
+            >
+              <FaIcon @icon={{faPenToSquare}} />
+            </button>
+          {{/if}}
+        </div>
       </div>
+
       <div class="form">
         <div class="item" data-test-student>
           <label>
