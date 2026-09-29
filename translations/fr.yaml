@@ -71,6 +71,7 @@ general:
   bad: Mal
   badCredentials: "Nom d'utilisateur ou mot de passe incorrect"
   beforeOrAfterMidday: Avant ou après midi
+  biography: Biographie
   bottomPagination: Pagination en bas
   calendar: Calendrier
   campusId: Campus ID
