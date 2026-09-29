@@ -22,10 +22,6 @@
   }
 
   .form {
-    grid-template-columns: 1fr;
-
-    .item {
-      min-height: auto;
-    }
+    padding: 1em 0 0;
   }
 }
