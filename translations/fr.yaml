@@ -588,6 +588,7 @@ general:
   resultsCount: "{count, plural, =1 {1 résultat} other {# résultats}}"
   resultsSummary: Résumé des résultats
   returnToPreviousPage: Retour à la page précédente
+  roles: Rôles
   root: Root
   run: Exécuter
   runReport: exécuter le rapport
