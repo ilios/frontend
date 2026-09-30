@@ -86,8 +86,6 @@ export default class SchoolEmailsEditorComponent extends Component {
     }
     this.validations.clearErrorDisplay();
     await this.args.save(this.administratorEmail, this.changeAlertRecipientsFormatted);
-
-    this.args.cancel();
   });
 
   saveOrCancel = task({ drop: true }, async (event) => {

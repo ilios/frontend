@@ -2,7 +2,11 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 <template>
-  <section class="school-emails" data-test-school-emails ...attributes>
+  <section
+    class="school-emails{{if @hasSavedRecently ' has-saved' ' has-not-saved'}}"
+    data-test-school-emails
+    ...attributes
+  >
     <div class="header">
       <div class="title" data-test-title>{{t "general.emails"}}</div>
       <div class="actions">

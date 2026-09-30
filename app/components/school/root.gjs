@@ -40,6 +40,7 @@ export default class SchoolRootComponent extends Component {
 
   @tracked title;
   @tracked newSavedSessionType;
+  @tracked hasSavedEmailsRecently = false;
   @tracked hasSavedInfoRecently = false;
 
   constructor() {
@@ -122,6 +123,11 @@ export default class SchoolRootComponent extends Component {
     this.args.school.changeAlertRecipients = changeAlertRecipients;
     this.args.school.iliosAdministratorEmail = administratorEmail;
     await this.args.school.save();
+    this.args.setSchoolManageEmails(false);
+
+    this.hasSavedEmailsRecently = true;
+    await timeout(500);
+    this.hasSavedEmailsRecently = false;
   }
   <template>
     {{pageTitle " | " this.title prepend=false}}
@@ -279,6 +285,7 @@ export default class SchoolRootComponent extends Component {
             @canUpdate={{@canUpdateSchool}}
             @manage={{@setSchoolManageEmails}}
             @school={{@school}}
+            @hasSavedRecently={{this.hasSavedEmailsRecently}}
           />
         {{/if}}
         {{#if @schoolManageInstitutionalInformation}}
