@@ -85,6 +85,7 @@ export default class CourseObjectiveListItemComponent extends Component {
     this.validations.removeErrorDisplayFor('descriptionWithoutMarkup');
     this.args.courseObjective.set('title', this.description);
     await this.args.courseObjective.save();
+    this.highlightSave.perform();
   });
 
   manageParents = task({ drop: true }, async () => {
