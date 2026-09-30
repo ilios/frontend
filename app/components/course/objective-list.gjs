@@ -24,11 +24,6 @@ export default class CourseObjectiveListComponent extends Component {
     return new TrackedAsyncData(this.args.course.courseObjectives);
   }
 
-  @cached
-  get courseCohortsAsyncData() {
-    return new TrackedAsyncData(this.args.course.cohorts);
-  }
-
   get courseObjectivesAsync() {
     return this.courseObjectivesAsyncData.isResolved ? this.courseObjectivesAsyncData.value : null;
   }
@@ -41,16 +36,23 @@ export default class CourseObjectiveListComponent extends Component {
     return undefined;
   }
 
+  get courseObjectivesCount() {
+    return this.courseObjectives
+      ? this.courseObjectives.length
+      : this.args.course.hasMany('courseObjectives').ids().length;
+  }
+
+  @cached
+  get courseCohortsAsyncData() {
+    return new TrackedAsyncData(this.args.course.cohorts);
+  }
+
   get courseCohortsAsync() {
     return this.courseCohortsAsyncData.isResolved ? this.courseCohortsAsyncData.value : null;
   }
 
   get courseCohorts() {
-    if (this.courseCohortsAsync) {
-      return this.courseCohortsAsync;
-    }
-
-    return [];
+    return this.courseCohortsAsync ?? [];
   }
 
   @cached
@@ -60,18 +62,6 @@ export default class CourseObjectiveListComponent extends Component {
 
   get cohortObjectives() {
     return this.cohortObjectivesData.isResolved ? this.cohortObjectivesData.value : [];
-  }
-
-  get cohortObjectivesLoaded() {
-    return this.cohortObjectivesData.isResolved;
-  }
-
-  get courseObjectiveCount() {
-    if (this.courseObjectives) {
-      return this.courseObjectives.length;
-    }
-
-    return this.args.course.hasMany('courseObjectives').ids().length;
   }
 
   async getCohortObjectives(cohorts, intl) {
@@ -133,8 +123,8 @@ export default class CourseObjectiveListComponent extends Component {
         <ObjectiveSortManager @subject={{@course}} @close={{set this "isSorting" false}} />
       {{/if}}
 
-      {{#if (and this.courseObjectiveCount (not this.isSorting))}}
-        {{#if (and @editable (gt this.courseObjectiveCount 1))}}
+      {{#if (and this.courseObjectivesCount (not this.isSorting))}}
+        {{#if (and @editable (gt this.courseObjectivesCount 1))}}
           <button
             class="sort-button"
             type="button"
@@ -158,7 +148,7 @@ export default class CourseObjectiveListComponent extends Component {
             <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
           {{/if}}
         </div>
-        {{#if (and (isArray this.courseObjectives) this.cohortObjectivesLoaded)}}
+        {{#if (and (isArray this.courseObjectives) this.cohortObjectivesData.isResolved)}}
           {{#each this.courseObjectives as |courseObjective|}}
             <ObjectiveListItem
               @courseObjective={{courseObjective}}
@@ -170,7 +160,7 @@ export default class CourseObjectiveListComponent extends Component {
             />
           {{/each}}
         {{else}}
-          <ObjectiveListLoading @count={{this.courseObjectiveCount}} @showMeSH={{@showMeSH}} />
+          <ObjectiveListLoading @count={{this.courseObjectivesCount}} @showMeSH={{@showMeSH}} />
         {{/if}}
       {{/if}}
     </div>
