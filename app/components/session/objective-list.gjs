@@ -18,28 +18,29 @@ export default class SessionObjectiveListComponent extends Component {
     return new TrackedAsyncData(this.args.session.course);
   }
 
-  @cached
-  get courseObjectivesData() {
-    return new TrackedAsyncData(this.course?.courseObjectives);
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
   }
 
   @cached
-  get sessionObjectivesData() {
-    return new TrackedAsyncData(this.args.session.sortedSessionObjectives);
-  }
-  get course() {
-    return this.courseData.isResolved ? this.courseData.value : null;
+  get courseObjectivesData() {
+    return new TrackedAsyncData(this.course?.courseObjectives);
   }
 
   get courseObjectives() {
     return this.courseObjectivesData.isResolved ? this.courseObjectivesData.value : null;
   }
 
+  @cached
+  get sessionObjectivesData() {
+    return new TrackedAsyncData(this.args.session.sortedSessionObjectives);
+  }
+
   get sessionObjectives() {
     return this.sessionObjectivesData.isResolved ? this.sessionObjectivesData.value : null;
   }
 
-  get sessionObjectiveCount() {
+  get sessionObjectivesCount() {
     return this.sessionObjectives?.length ?? 0;
   }
   <template>
