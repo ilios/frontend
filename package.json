@@ -76,7 +76,7 @@
     "axe-core": "^4.13.0",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
-    "browserslist": "^4.29.0",
+    "browserslist": "^4.29.1",
     "caniuse-db": "^1.0.30001810",
     "color": "^5.0.3",
     "ember-a11y-refocus": "^5.2.1",
