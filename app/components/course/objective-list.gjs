@@ -29,8 +29,10 @@ export default class CourseObjectiveListComponent extends Component {
   }
 
   get courseObjectives() {
-    if (this.courseObjectivesAsync) {
-      return this.courseObjectivesAsync.toSorted(sortableByPosition);
+    const objectives =
+      this.courseObjectivesAsync ?? this.args.course.hasMany('courseObjectives').value();
+    if (objectives) {
+      return objectives.toSorted(sortableByPosition);
     }
 
     return undefined;
