@@ -168,6 +168,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
           @userAuthentication={{authenticationModel}}
           @setIsManaging={{(noop)}}
           @canEditUsernameAndPassword={{false}}
+          @setSavedRecently={{(noop)}}
         />
       </template>,
     );
@@ -235,6 +236,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
           @userAuthentication={{authenticationModel}}
           @setIsManaging={{(noop)}}
           @canEditUsernameAndPassword={{true}}
+          @setSavedRecently={{(noop)}}
         />
       </template>,
     );
@@ -296,6 +298,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
           @userAuthentication={{authenticationModel}}
           @setIsManaging={{(noop)}}
           @canEditUsernameAndPassword={{true}}
+          @setSavedRecently={{(noop)}}
         />
       </template>,
     );
@@ -589,7 +592,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.user.username = this.authentication.username;
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @setSavedRecently={{(noop)}}
+        />
+      </template>,
     );
 
     assert.strictEqual(
@@ -608,7 +617,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.user.username = this.authentication.username;
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @setSavedRecently={{(noop)}}
+        />
+      </template>,
     );
 
     assert.strictEqual(component.displayName.value, 'Best Name', 'display name has value');
@@ -623,7 +638,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.user.username = this.authentication.username;
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @setSavedRecently={{(noop)}}
+        />
+      </template>,
     );
 
     assert.strictEqual(component.pronouns.value, 'they/them/tay', 'pronouns have value');
@@ -644,6 +665,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
           @user={{this.user}}
           @setIsManaging={{(noop)}}
           @canEditUsernameAndPassword={{true}}
+          @setSavedRecently={{(noop)}}
         />
       </template>,
     );
