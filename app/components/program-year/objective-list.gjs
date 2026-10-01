@@ -51,14 +51,25 @@ export default class ProgramYearObjectiveListComponent extends Component {
   }
 
   @cached
-  get programYearObjectivesData() {
+  get programYearObjectivesAsyncData() {
     return new TrackedAsyncData(this.args.programYear.programYearObjectives);
   }
 
-  get sortedProgramYearObjectives() {
-    return this.programYearObjectivesData.isResolved
-      ? this.programYearObjectivesData.value.toSorted(sortableByPosition)
-      : [];
+  get programYearObjectivesAsync() {
+    return this.programYearObjectivesAsyncData.isResolved
+      ? this.programYearObjectivesAsyncData.value
+      : null;
+  }
+
+  get programYearObjectives() {
+    const objectives =
+      this.programYearObjectivesAsync ??
+      this.args.programYear.hasMany('programYearObjectives').value();
+    if (objectives) {
+      return objectives.toSorted(sortableByPosition);
+    }
+
+    return [];
   }
 
   get programYearObjectiveCount() {
@@ -153,7 +164,7 @@ export default class ProgramYearObjectiveListComponent extends Component {
           <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
         </div>
         {{#if (isArray this.domainTrees)}}
-          {{#each this.sortedProgramYearObjectives as |programYearObjective|}}
+          {{#each this.programYearObjectives as |programYearObjective|}}
             <ObjectiveListItem
               @programYearObjective={{programYearObjective}}
               @editable={{@editable}}
