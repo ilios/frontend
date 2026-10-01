@@ -84,6 +84,7 @@ export default class SessionObjectiveListItemComponent extends Component {
     this.validations.removeErrorDisplayFor('descriptionWithoutMarkup');
     this.args.sessionObjective.set('title', this.description);
     await this.args.sessionObjective.save();
+    this.highlightSave.perform();
   });
 
   manageParents = task({ drop: true }, async () => {

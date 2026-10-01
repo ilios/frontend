@@ -32,12 +32,24 @@ export default class SessionObjectiveListComponent extends Component {
   }
 
   @cached
-  get sessionObjectivesData() {
+  get sessionObjectivesAsyncData() {
     return new TrackedAsyncData(this.args.session.sortedSessionObjectives);
   }
 
+  get sessionObjectivesAsync() {
+    return this.sessionObjectivesAsyncData.isResolved
+      ? this.sessionObjectivesAsyncData.value
+      : null;
+  }
+
   get sessionObjectives() {
-    return this.sessionObjectivesData.isResolved ? this.sessionObjectivesData.value : null;
+    const objectives =
+      this.sessionObjectivesAsync ?? this.args.session.hasMany('sessionObjectives').value();
+    if (objectives) {
+      return objectives;
+    }
+
+    return undefined;
   }
 
   get sessionObjectivesCount() {
@@ -49,8 +61,8 @@ export default class SessionObjectiveListComponent extends Component {
         <ObjectiveSortManager @subject={{@session}} @close={{set this "isSorting" false}} />
       {{/if}}
 
-      {{#if (and this.sessionObjectiveCount (not this.isSorting))}}
-        {{#if (and @editable (gt this.sessionObjectiveCount 1))}}
+      {{#if (and this.sessionObjectivesCount (not this.isSorting))}}
+        {{#if (and @editable (gt this.sessionObjectivesCount 1))}}
           <button
             class="sort-button"
             type="button"
@@ -86,7 +98,7 @@ export default class SessionObjectiveListComponent extends Component {
             />
           {{/each}}
         {{else}}
-          <ObjectiveListLoading @count={{this.sessionObjectiveCount}} @showMeSH={{@showMeSH}} />
+          <ObjectiveListLoading @count={{this.sessionObjectivesCount}} @showMeSH={{@showMeSH}} />
         {{/if}}
       {{/if}}
     </div>
