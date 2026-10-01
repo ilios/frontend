@@ -2,8 +2,7 @@
 
 .reports-switcher {
   display: flex;
-  justify-content: center;
-  margin: 1em;
+  margin: 0.5em;
 
   a {
     background-color: light-dark(var(--white), var(--dark-grey));
