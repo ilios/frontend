@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { LinkTo } from '@ember/routing';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
@@ -71,6 +72,12 @@ export default class ReportsSubjectHeaderComponent extends Component {
   }
   <template>
     {{pageTitle " | " this.reportTitle prepend=false}}
+
+    <div class="backtolink">
+      <LinkTo @route="reports.subjects" data-test-back-to-subject-reports>
+        {{t "general.backToSubjectReports"}}
+      </LinkTo>
+    </div>
 
     <div class="reports-subject-header" data-test-reports-subject-header>
       {{#if (and @report this.reportTitleData.isResolved)}}

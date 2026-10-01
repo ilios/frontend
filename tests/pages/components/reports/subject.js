@@ -14,7 +14,8 @@ import copy from './subject-copy';
 const definition = {
   scope: '[data-test-reports-subject]',
   backToReports: {
-    scope: '[data-test-back-to-reports]',
+    scope: '[data-test-back-to-subject-reports]',
+    click: clickable(),
   },
   title: {
     scope: '[data-test-report-title]',
