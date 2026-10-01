@@ -2,6 +2,8 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/reports-subject';
+import { component as subject } from 'frontend/tests/pages/components/reports/subject';
+import { component as switcher } from 'frontend/tests/pages/components/reports/switcher';
 
 module('Acceptance | Reports - Subject Report', function (hooks) {
   setupApplicationTest(hooks);
@@ -88,6 +90,14 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     this.server.post('/api/graphql', async () => this.getReportData(['1', '2']));
   });
 
+  test('back to subject reports link works', async function (assert) {
+    await page.visit({ reportId: this.courseReport.id });
+
+    await subject.backToReports.click();
+
+    assert.strictEqual(currentURL(), '/reports/subjects');
+  });
+
   test('course report works', async function (assert) {
     this.server.post('/api/graphql', async () => {
       assert.step('API called');
@@ -96,6 +106,11 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     await page.visit({ reportId: this.courseReport.id });
     await takeScreenshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/1');
+
+    assert.notOk(switcher.curriculum.isActive);
+    assert.ok(switcher.subject.isActive);
+
+    assert.strictEqual(page.report.backToReports.text, 'Back to Subject Reports');
     assert.strictEqual(page.report.title.text, 'my report 0');
     assert.strictEqual(page.report.results.length, 1);
     assert.strictEqual(page.report.results[0].text, 'course 0: session 0');
@@ -106,6 +121,10 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     await page.visit({ reportId: this.termReport.id });
     await takeScreenshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/2');
+
+    assert.notOk(switcher.curriculum.isActive);
+    assert.ok(switcher.subject.isActive);
+
     assert.strictEqual(page.report.title.text, 'All Sessions for Term term 0 in school 0');
     assert.strictEqual(
       page.report.description,

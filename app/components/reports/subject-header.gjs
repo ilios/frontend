@@ -74,7 +74,7 @@ export default class ReportsSubjectHeaderComponent extends Component {
     {{pageTitle " | " this.reportTitle prepend=false}}
 
     <div class="backtolink">
-      <LinkTo @route="reports.subjects" data-test-back-link>
+      <LinkTo @route="reports.subjects" data-test-back-to-subject-reports>
         {{t "general.backToSubjectReports"}}
       </LinkTo>
     </div>
