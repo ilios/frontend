@@ -212,7 +212,7 @@ export default class NewUserComponent extends Component {
       }
     }
 
-    return this.currentSchoolCohorts.reverse()[0];
+    return findById(this.currentSchoolCohorts, this.cohorts.toReversed()[0]?.id);
   }
 
   async isUsernameTaken(username) {
