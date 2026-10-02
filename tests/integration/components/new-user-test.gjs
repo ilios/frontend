@@ -325,4 +325,62 @@ module('Integration | Component | new user', function (hooks) {
     assert.strictEqual(Number((await newUser.school).id), 2);
     assert.verifySteps(['transitionToUser called']);
   });
+
+  test('assign new student to default selected cohort ilios/ilios#6727', async function (assert) {
+    await this.server.create('user-role', {
+      id: 4,
+      title: 'Student',
+    });
+    const program = await this.server.create('program', { school: this.schools[0] });
+    const cohorts = [];
+    const aDecadeAgo = new Date().getFullYear() - 10;
+    for (let i = 0; i < 10; i++) {
+      const programYear = await this.server.create('program-year', {
+        program,
+        startYear: aDecadeAgo + i,
+      });
+      cohorts.push(await this.server.create('cohort', { programYear }));
+    }
+
+    //load all created data into the store
+    await this.owner.lookup('service:store').findAll('program');
+    await this.owner.lookup('service:store').findAll('program-year');
+    await this.owner.lookup('service:store').findAll('cohort');
+    this.set('transitionToUser', (userId) => {
+      assert.step('transitionToUser called');
+      assert.strictEqual(Number(userId), 2);
+    });
+    await render(
+      <template>
+        <NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />
+      </template>,
+    );
+    await component.clickChoiceButtons.secondButton.click();
+
+    assert.strictEqual(component.cohort.options.length, 4);
+    assert.strictEqual(component.cohort.value, '10');
+    assert.strictEqual(component.cohort.options[0].value, '7');
+    assert.strictEqual(component.cohort.options[0].text, 'program 0 cohort 6');
+    assert.strictEqual(component.cohort.options[1].value, '8');
+    assert.strictEqual(component.cohort.options[1].text, 'program 0 cohort 7');
+    assert.strictEqual(component.cohort.options[2].value, '9');
+    assert.strictEqual(component.cohort.options[2].text, 'program 0 cohort 8');
+    assert.strictEqual(component.cohort.options[3].value, '10');
+    assert.strictEqual(component.cohort.options[3].text, 'program 0 cohort 9');
+    await component.firstName.set('first');
+    await component.middleName.set('middle');
+    await component.lastName.set('last');
+    await component.campusId.set('campusid');
+    await component.otherId.set('otherid');
+    await component.phone.set('phone');
+    await component.email.set('test@test.com');
+    await component.username.set('user123');
+    await component.password.set('password123');
+    await component.submit();
+
+    const newUser = await this.owner.lookup('service:store').findRecord('user', 2);
+    const primaryCohort = await newUser.primaryCohort;
+    assert.strictEqual(Number(primaryCohort.id), 10);
+    assert.verifySteps(['transitionToUser called']);
+  });
 });
