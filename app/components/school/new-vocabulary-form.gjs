@@ -8,6 +8,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import focus from '../../modifiers/focus';
 import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
@@ -16,7 +17,6 @@ import LoadingSpinner from '../loading-spinner';
 
 export default class SchoolNewVocabularyFormComponent extends Component {
   @service intl;
-  @service store;
   @tracked title;
 
   validations = new YupValidations(this, {
@@ -47,20 +47,20 @@ export default class SchoolNewVocabularyFormComponent extends Component {
     return this.schoolVocabulariesData.value.map(({ title }) => title);
   }
 
-  saveNew = task({ drop: true }, async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    await this.args.save.linked().perform(this.title, this.args.school, true);
+    await this.args.save(this.title, this.args.school, true);
     this.validations.clearErrorDisplay();
   });
 
   saveOrCancel = task({ drop: true }, async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
-      await this.saveNew.perform();
+      await this.save.perform();
       return;
     }
     if (27 === keyCode) {
@@ -70,6 +70,9 @@ export default class SchoolNewVocabularyFormComponent extends Component {
   <template>
     {{#let (uniqueId) as |templateId|}}
       <div class="school-new-vocabulary-form" data-test-school-new-vocabulary-form ...attributes>
+        <div class="title">
+          <h3>{{t "general.newVocabulary"}}</h3>
+        </div>
         <div class="form">
           <div class="item" data-test-title>
             <label for="title-{{templateId}}">
@@ -79,6 +82,8 @@ export default class SchoolNewVocabularyFormComponent extends Component {
               id="title-{{templateId}}"
               type="text"
               value={{this.title}}
+              placeholder={{t "general.vocabularyPlaceholder"}}
+              {{focus}}
               {{on "input" (pick "target.value" (set this "title"))}}
               {{on "keyup" (perform this.saveOrCancel)}}
               {{this.validations.attach "title"}}
@@ -94,9 +99,9 @@ export default class SchoolNewVocabularyFormComponent extends Component {
               type="button"
               class="done text"
               data-test-submit
-              {{on "click" (perform this.saveNew)}}
+              {{on "click" (perform this.save)}}
             >
-              {{#if this.saveNew.isRunning}}
+              {{#if this.save.isRunning}}
                 <LoadingSpinner />
               {{else}}
                 {{t "general.done"}}

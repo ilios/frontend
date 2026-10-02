@@ -80,17 +80,11 @@ module('Integration | Component | school/new-vocabulary-form', function (hooks) 
   test('save', async function (assert) {
     const newTitle = 'New Vocabulary';
     this.set('school', this.schoolModel);
-    this.set('save', {
-      linked() {
-        return {
-          perform: (title, school, active) => {
-            assert.step('save.linked.perform called');
-            assert.strictEqual(title, newTitle);
-            assert.strictEqual(parseInt(school.id, 10), 1);
-            assert.true(active);
-          },
-        };
-      },
+    this.set('save', async (title, school, active) => {
+      assert.step('save called');
+      assert.strictEqual(title, newTitle);
+      assert.strictEqual(parseInt(school.id, 10), 1);
+      assert.true(active);
     });
     await render(
       <template>
@@ -99,6 +93,6 @@ module('Integration | Component | school/new-vocabulary-form', function (hooks) 
     );
     await component.title.set(newTitle);
     await component.submit.click();
-    assert.verifySteps(['save.linked.perform called']);
+    assert.verifySteps(['save called']);
   });
 });

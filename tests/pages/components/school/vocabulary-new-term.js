@@ -1,9 +1,17 @@
 import { clickable, create, isPresent, fillable, text } from 'ember-cli-page-object';
+import yesNoToggle from 'frontend/tests/pages/components/toggle-yesno';
 
 const definition = {
   scope: '[data-test-school-vocabulary-new-term]',
-  setTitle: fillable('input'),
-  save: clickable('.save'),
+  title: text('[data-test-vocabulary-new-term-title]'),
+  setTitle: fillable('[data-test-vocabulary-term-title] input'),
+  isActive: {
+    scope: '[data-test-vocabulary-term-is-active]',
+    yesNoToggle,
+  },
+  setDescription: fillable('[data-test-vocabulary-term-description] textarea'),
+  save: clickable('[data-test-submit]'),
+  cancel: clickable('[data-test-cancel]'),
   hasError: isPresent('[data-test-title-validation-error-message]'),
   errorMessage: text('[data-test-title-validation-error-message]'),
 };

@@ -1,57 +1,51 @@
 @use "../../mixins" as m;
 
 .school-vocabulary-manager {
-  .breadcrumbs {
-    margin: 0.8rem 0;
+  .back-to-vocabularies {
+    margin-bottom: 1em;
   }
 
-  .school-vocabulary-manager-title {
+  .school-vocabulary-header {
     align-items: baseline;
     display: flex;
-    margin-bottom: 1rem;
-
-    label {
-      @include m.ilios-label;
-      @include m.ilios-heading-h4;
-    }
 
     .editinplace {
-      @include m.ilios-heading-h4;
-      margin-left: 0.5rem;
-    }
-
-    .term-totals {
-      padding-left: 0.5rem;
+      @include m.ilios-heading-h5;
     }
   }
 
-  .terms-title {
-    @include m.ilios-heading-h5;
+  .school-vocabulary-terms-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    .title {
+      @include m.ilios-heading-h5;
+    }
+
+    .actions {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+
+      .terms-filter {
+        @include m.ilios-input;
+        margin: 0.5rem 0;
+      }
+    }
+  }
+
+  .saved-result {
+    border: 1px solid light-dark(var(--green), var(--green));
+    display: flex;
+    gap: 0.25rem;
+    margin: 0.5rem 0 0;
+    padding: 0.5rem;
   }
 
   .terms {
-    background-color: light-dark(var(--white), var(--dark-grey));
-    border: 1px solid light-dark(var(--light-blue), var(--blue));
-    height: 10rem;
-    margin-bottom: 1rem;
+    max-height: 35rem;
     overflow-y: scroll;
-    padding: 0.5rem;
-    width: 80%;
-
-    .saved-result {
-      border: 1px solid light-dark(var(--green), var(--green));
-      display: flex;
-      gap: 0.25rem;
-      margin: 1rem;
-      padding: 1rem;
-    }
-
-    ul {
-      @include m.ilios-selectable-list;
-
-      em {
-        color: light-dark(var(--red), var(--lighter-red));
-      }
-    }
   }
 }
