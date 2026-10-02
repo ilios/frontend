@@ -256,8 +256,10 @@
 @forward "components/school/vocabularies-expanded";
 @forward "components/school/vocabularies-list";
 @forward "components/school/vocabulary-manager";
+@forward "components/school/vocabulary-edit-term";
 @forward "components/school/vocabulary-new-term";
-@forward "components/school/vocabulary-term-manager";
+@forward "components/school/vocabulary-terms-list";
+@forward "components/school/vocabulary-terms-list-item";
 
 @forward "components/schools/root";
 

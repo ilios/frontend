@@ -1,11 +1,14 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
 import { filterBy, mapBy, sortBy } from '../../utils/array-helpers';
-import { task } from 'ember-concurrency';
+import { isPresent } from '@ember/utils';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { uniqueId, fn, array } from '@ember/helper';
+import { filter } from 'rsvp';
+import { fn, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import EditableField from '../editable-field';
@@ -14,18 +17,24 @@ import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import VocabularyNewTerm from './vocabulary-new-term';
+import VocabularyTermsList from './vocabulary-terms-list';
 import YupValidationMessage from '../yup-validation-message';
 import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
 import focus from '../../modifiers/focus';
-import Breadcrumbs from '../breadcrumbs';
-import { faAsterisk, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
+import escapeRegExp from '../../utils/escape-reg-exp';
+import { not } from 'ember-truth-helpers';
+import ExpandCollapseButton from '../expand-collapse-button';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabularyManagerComponent extends Component {
   @service store;
   @service intl;
+  @service flashMessages;
   @tracked titleBuffer;
   @tracked newTerm;
+  @tracked showNewTermForm = false;
+  @tracked termFilter = '';
 
   validations = new YupValidations(this, {
     title: string()
@@ -62,7 +71,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
     return this.termsData.isResolved ? this.termsData.value : [];
   }
 
-  get sortedTerms() {
+  get sortedTopLevelTerms() {
     if (!this.terms.length) {
       return [];
     }
@@ -70,6 +79,30 @@ export default class SchoolVocabularyManagerComponent extends Component {
       filterBy(filterBy(filterBy(this.terms, 'isTopLevel'), 'isNew', false), 'isDeleted', false),
       'title',
     );
+  }
+
+  @cached
+  get filteredTopLevelTermsData() {
+    return new TrackedAsyncData(
+      this.getFilteredTopLevelTerms(this.sortedTopLevelTerms, this.termFilter),
+    );
+  }
+
+  get filteredTopLevelTerms() {
+    return this.filteredTopLevelTermsData.isResolved
+      ? this.filteredTopLevelTermsData.value
+      : this.sortedTopLevelTerms;
+  }
+
+  async getFilteredTopLevelTerms(terms, termFilter) {
+    if (!termFilter) {
+      return terms;
+    }
+    const exp = new RegExp(termFilter, 'gi');
+    return await filter(terms, async (term) => {
+      const searchString = await term.getTitleWithDescendantTitles();
+      return searchString.match(exp);
+    });
   }
 
   get title() {
@@ -95,34 +128,53 @@ export default class SchoolVocabularyManagerComponent extends Component {
   }
 
   @action
-  async createTerm(title) {
+  async createTerm(parent, title, description, isActive) {
     const term = this.store.createRecord('term', {
-      title: title,
+      title,
+      description,
       vocabulary: this.args.vocabulary,
-      active: true,
+      active: isActive,
+      ...(parent ? { parent } : {}),
     });
     this.newTerm = await term.save();
+    this.showNewTermForm = false;
   }
 
+  deleteTerm = task({ drop: true }, async (term) => {
+    const parent = await term.parent;
+    term.deleteRecord();
+    if (parent) {
+      const siblings = await parent.children;
+      siblings.splice(siblings.indexOf(term), 1);
+      parent.set('children', siblings);
+    }
+    await term.save();
+    this.flashMessages.success(this.intl.t('general.successfullyRemovedTerm'));
+  });
+
+  setTermFilter = task({ restartable: true }, async (termFilter) => {
+    const clean = escapeRegExp(termFilter);
+    if (isPresent(clean)) {
+      await timeout(250);
+    }
+    this.termFilter = clean;
+  });
+
   <template>
-    {{#let (uniqueId) as |templateId|}}
-      <div class="school-vocabulary-manager" data-test-school-vocabulary-manager attributes...>
+    <div class="school-vocabulary-manager" data-test-school-vocabulary-manager ...attributes>
 
-        <Breadcrumbs @paths={{array}} @rootTitle={{@vocabulary.title}}>
-          <button
-            class="crumb"
-            type="button"
-            data-test-crumb
-            {{on "click" (fn @manageVocabulary null)}}
-          >
-            {{t "general.allVocabularies"}}
-          </button>
-        </Breadcrumbs>
+      <div class="back-to-vocabularies" data-test-back-to-vocabularies>
+        <LinkTo
+          @route="school"
+          @model={{@vocabulary.school}}
+          @query={{hash schoolManagedVocabulary=null schoolVocabularyDetails=true}}
+        >
+          {{t "general.backToVocabularies"}}
+        </LinkTo>
+      </div>
 
-        <div class="school-vocabulary-manager-title" data-test-title>
-          <label for="title-{{templateId}}">
-            {{t "general.title"}}:
-          </label>
+      <div class="school-vocabulary-header" data-test-vocabulary-header>
+        <span class="title" data-test-vocabulary-title>
           {{#if @canUpdate}}
             <EditableField
               @value={{if this.title this.title (t "general.clickToEdit")}}
@@ -131,9 +183,9 @@ export default class SchoolVocabularyManagerComponent extends Component {
               as |keyboard isSaving|
             >
               <input
-                id="title-{{templateId}}"
                 type="text"
                 value={{this.title}}
+                aria-label={{t "general.vocabularyTitle"}}
                 disabled={{isSaving}}
                 {{on "input" (pick "target.value" (set this "titleBuffer"))}}
                 {{this.validations.attach "title"}}
@@ -149,56 +201,75 @@ export default class SchoolVocabularyManagerComponent extends Component {
           {{else}}
             {{this.title}}
           {{/if}}
-          <span class="term-totals">({{t "general.countTotal" total=this.terms.length}})</span>
+        </span>
+      </div>
+
+      {{#if this.newTerm}}
+        <div class="saved-result">
+          <button class="link-button" type="button" {{on "click" (fn @manageTerm this.newTerm.id)}}>
+            <FaIcon @icon={{faSquareUpRight}} />
+            {{this.newTerm.title}}
+          </button>
+          {{t "general.savedSuccessfully"}}
         </div>
-        <h3 class="terms-title">
-          {{t "general.terms"}}:
-        </h3>
-        <div class="terms" data-test-terms>
-          {{#if this.newTerm}}
-            <div class="saved-result">
-              <button
-                class="link-button"
-                type="button"
-                {{on "click" (fn @manageTerm this.newTerm.id)}}
-              >
-                <FaIcon @icon={{faSquareUpRight}} />
-                {{this.newTerm.title}}
-              </button>
-              {{t "general.savedSuccessfully"}}
-            </div>
+      {{/if}}
+
+      <div class="school-vocabulary-terms-header" data-test-vocabulary-terms-header>
+        <div class="title" data-test-vocabulary-terms-title>
+          {{t "general.terms"}}
+          {{#if this.termsData.isResolved}}
+            ({{t "general.countTotal" total=this.terms.length}})
+          {{/if}}
+        </div>
+
+        <div class="actions">
+          {{#if this.terms.length}}
+            <input
+              class="terms-filter"
+              aria-label={{t "general.filterPlaceholder"}}
+              autocomplete="off"
+              type="search"
+              value={{this.termFilter}}
+              placeholder={{t "general.filterPlaceholder"}}
+              {{on "input" (perform this.setTermFilter value="target.value")}}
+              data-test-filter
+            />
           {{/if}}
           {{#if @canCreate}}
-            <VocabularyNewTerm @createTerm={{this.createTerm}} @vocabulary={{@vocabulary}} />
+            <ExpandCollapseButton
+              @value={{this.showNewTermForm}}
+              @action={{set this "showNewTermForm" (not this.showNewTermForm)}}
+              @expandButtonLabel={{t "general.newTerm"}}
+              @collapseButtonLabel={{t "general.close"}}
+              title={{t "general.addTerm"}}
+            />
           {{/if}}
-          <ul data-test-term-list>
-            {{#each this.sortedTerms as |term|}}
-              <li>
-                <button
-                  class="link-button"
-                  type="button"
-                  data-test-term
-                  {{on "click" (fn @manageTerm term.id)}}
-                >
-                  {{term.title}}
-                  {{#if term.hasChildren}}
-                    <FaIcon
-                      @icon={{faAsterisk}}
-                      data-test-has-children
-                      @title={{t "general.thisTermHasSubTerms"}}
-                    />
-                  {{/if}}
-                  {{#unless term.active}}
-                    <em>
-                      ({{t "general.inactive"}})
-                    </em>
-                  {{/unless}}
-                </button>
-              </li>
-            {{/each}}
-          </ul>
         </div>
       </div>
-    {{/let}}
+
+      {{#if this.showNewTermForm}}
+        <VocabularyNewTerm
+          @createTerm={{fn this.createTerm null}}
+          @vocabulary={{@vocabulary}}
+          @cancel={{set this "showNewTermForm" false}}
+        />
+      {{/if}}
+
+      {{#if this.filteredTopLevelTerms.length}}
+        <div class="terms" data-test-terms>
+          <VocabularyTermsList
+            @terms={{this.filteredTopLevelTerms}}
+            @termFilter={{this.termFilter}}
+            @manageTerm={{@manageTerm}}
+            @createTerm={{this.createTerm}}
+            @deleteTerm={{this.deleteTerm}}
+            @canCreate={{@canCreate}}
+            @canUpdate={{@canUpdate}}
+            @canDelete={{@canDelete}}
+          />
+        </div>
+      {{/if}}
+
+    </div>
   </template>
 }

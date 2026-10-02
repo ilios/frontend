@@ -1,0 +1,9 @@
+@use "../../mixins" as m;
+
+.school-vocabulary-terms-list {
+  @include m.ilios-list-reset;
+
+  li {
+    margin-bottom: 0;
+  }
+}

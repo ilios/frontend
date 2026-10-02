@@ -10,7 +10,90 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
+  test('it renders', async function (assert) {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const newTitle = 'new term';
+    const newDescription = 'a description';
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('createTerm', (title, description, isActive) => {
+      assert.step('createTerm called');
+      assert.strictEqual(title, newTitle);
+      assert.strictEqual(description, newDescription);
+      assert.true(isActive);
+    });
+    await render(
+      <template>
+        <VocabularyNewTerm
+          @vocabulary={{this.vocabulary}}
+          @createTerm={{this.createTerm}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.header, 'New Term');
+    assert.strictEqual(component.isActive.yesNoToggle.checked, 'true');
+  });
+
   test('add term', async function (assert) {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const newTitle = 'new term';
+    const newDescription = 'a description';
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('createTerm', (title, description, isActive) => {
+      assert.step('createTerm called');
+      assert.strictEqual(title, newTitle);
+      assert.strictEqual(description, newDescription);
+      assert.true(isActive);
+    });
+    await render(
+      <template>
+        <VocabularyNewTerm
+          @vocabulary={{this.vocabulary}}
+          @createTerm={{this.createTerm}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+
+    await component.setTitle(newTitle);
+    await component.setDescription(newDescription);
+    await component.save();
+    assert.verifySteps(['createTerm called']);
+  });
+
+  test('active defaults to true', async function (assert) {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+
+    this.set('vocabulary', vocabularyModel);
+    await render(
+      <template>
+        <VocabularyNewTerm
+          @vocabulary={{this.vocabulary}}
+          @createTerm={{(noop)}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.isActive.yesNoToggle.checked, 'true');
+  });
+
+  test('toggle active', async function (assert) {
     const school = await this.server.create('school');
     const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
@@ -19,22 +102,27 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
     const newTitle = 'new term';
 
     this.set('vocabulary', vocabularyModel);
-    this.set('createTerm', (title) => {
+    this.set('createTerm', (title, description, isActive) => {
       assert.step('createTerm called');
-      assert.strictEqual(newTitle, title);
+      assert.false(isActive);
     });
     await render(
       <template>
-        <VocabularyNewTerm @vocabulary={{this.vocabulary}} @createTerm={{this.createTerm}} />
+        <VocabularyNewTerm
+          @vocabulary={{this.vocabulary}}
+          @createTerm={{this.createTerm}}
+          @cancel={{(noop)}}
+        />
       </template>,
     );
 
+    await component.isActive.yesNoToggle.handle.click();
     await component.setTitle(newTitle);
     await component.save();
     assert.verifySteps(['createTerm called']);
   });
 
-  test("can't add term with empty title", async function (assert) {
+  test('cannot add term with empty title', async function (assert) {
     const school = await this.server.create('school');
     const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
@@ -44,7 +132,11 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
     this.set('vocabulary', vocabularyModel);
     await render(
       <template>
-        <VocabularyNewTerm @vocabulary={{this.vocabulary}} @createTerm={{true}} />
+        <VocabularyNewTerm
+          @vocabulary={{this.vocabulary}}
+          @createTerm={{true}}
+          @cancel={{(noop)}}
+        />
       </template>,
     );
 
@@ -55,7 +147,7 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
     assert.strictEqual(component.errorMessage, 'Term can not be blank');
   });
 
-  test("can't add term with long title", async function (assert) {
+  test('cannot add term with long title', async function (assert) {
     const school = await this.server.create('school');
     const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
@@ -65,7 +157,11 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
     this.set('vocabulary', vocabularyModel);
     await render(
       <template>
-        <VocabularyNewTerm @vocabulary={{this.vocabulary}} @createTerm={{true}} />
+        <VocabularyNewTerm
+          @vocabulary={{this.vocabulary}}
+          @createTerm={{true}}
+          @cancel={{(noop)}}
+        />
       </template>,
     );
 
@@ -76,7 +172,7 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
     assert.strictEqual(component.errorMessage, 'Term is too long (maximum is 200 characters)');
   });
 
-  test("can't add top-level term with duplicate title", async function (assert) {
+  test('cannot add top-level term with duplicate title', async function (assert) {
     const title = 'Aardvark';
     const school = await this.server.create('school');
     const vocabulary = await this.server.create('vocabulary', { school });
@@ -91,7 +187,11 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
     this.set('vocabulary', vocabularyModel);
     await render(
       <template>
-        <VocabularyNewTerm @vocabulary={{this.vocabulary}} @createTerm={{(noop)}} />
+        <VocabularyNewTerm
+          @vocabulary={{this.vocabulary}}
+          @createTerm={{(noop)}}
+          @cancel={{(noop)}}
+        />
       </template>,
     );
 
@@ -102,7 +202,7 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
     assert.strictEqual(component.errorMessage, 'Term is a duplicate');
   });
 
-  test("can't add nested term with duplicate title", async function (assert) {
+  test('cannot add nested term with duplicate title', async function (assert) {
     const title = 'duplicate title';
     const vocabulary = await this.server.create('vocabulary');
     const term = await this.server.create('term', {
@@ -127,6 +227,7 @@ module('Integration | Component | school/vocabulary-new-term', function (hooks) 
           @vocabulary={{this.vocabulary}}
           @term={{this.term}}
           @createTerm={{(noop)}}
+          @cancel={{(noop)}}
         />
       </template>,
     );

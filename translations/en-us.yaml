@@ -18,6 +18,8 @@ general:
   add: Add
   addCohort: Add Cohort
   addNew: Add New
+  addSubTerm: Add Sub-term
+  addTerm: Add Term
   admin: Admin
   administrator: Administrator
   administratorCount: "There {count, plural, =1 {is 1 administrator} other {are # administrators}}"
@@ -31,7 +33,6 @@ general:
   allMaterials: All Materials
   allOtherMembers: "All other members of {topLevelGroupTitle}"
   allSchools: All Schools
-  allVocabularies: All Vocabularies
   allWeeks: All Weeks
   anything: Anything
   apiVersionMismatch: API Version Mismatch
@@ -111,7 +112,6 @@ general:
   clearErrors: Clear Errors and Return to Ilios
   clearFilters: Clear Filters
   clerkshipType: Clerkship Type
-  clickToAddTermDescription: Click to add descriptive notes
   clickToEdit: Click to edit
   close: Close
   cohort: Cohort
@@ -137,6 +137,7 @@ general:
   confirmRemoveSession: Are you sure you want to delete this session? This action cannot be undone.
   confirmRemoveSessionOffering: "Are you sure you want to delete this offering with {learnerGroupCount} learner groups? This action cannot be undone."
   confirmRemoveSessionType: Are you sure you want to delete this session type? This action cannot be undone.
+  confirmRemoveTerm: Are you sure you want to delete this term? This action cannot be undone.
   confirmRemoveVocabulary: Are you sure you want to delete this vocabulary? This action cannot be undone.
   connectionLost: Connection Lost.
   contentAuthor: Content Author
@@ -241,6 +242,7 @@ general:
   durationInYears: Duration (in Years)
   durationMinutes: "{count, plural, =1 {1 minute} other {# minutes}}"
   edit: Edit
+  editTerm: Edit Term
   email: Email
   emails: Emails
   enabled: Enabled
@@ -469,6 +471,8 @@ general:
   newSchool: New School
   newSession: New Session
   newSessionType: New Session Type
+  newSubTerm: New Sub-term
+  newTerm: New Term
   newToken: New Token
   newUpdates: new updates
   newUser: New User
@@ -685,7 +689,6 @@ general:
   studentAdvisorCount: "There {count, plural, =1 {is 1 student advisor} other {are # student advisors}}"
   studentAdvisors: Student Advisors
   subCompetencyCount: "{count, plural, =1 {There is 1 subcompetency} other {There are # subcompetencies}}"
-  subTerms: Sub-terms
   subgroupName: Subgroup Name
   subgroups: Subgroups
   subjectReports: Subject Reports
@@ -712,7 +715,6 @@ general:
   thereAreXTerms: "{count, plural, =1 {There is 1 term} other {There are # terms}}"
   thereAreXTypes: "{count, plural, =1 {There is 1 type} other {There are # types}}"
   thisReportIsNoLongerAvailable: This report is no longer available.
-  thisTermHasSubTerms: This term has sub-terms.
   thursday: Thursday
   time: Time
   timedRelease: Timed Release
@@ -781,8 +783,11 @@ general:
   vocabularies: Vocabularies
   vocabulariesBySessionType: Vocabularies by Session Type
   vocabulary: Vocabulary
+  vocabularyPlaceholder: Enter a title for this vocabulary
+  vocabularyTermPlaceholder: Enter a title for this vocabulary term
   vocabularyTerms: Vocabulary Terms
   vocabularyTermsFor: "Vocabulary Terms for {subject}"
+  vocabularyTitle: Vocabulary Title
   waitSaving: saving... one moment...
   weak: Weak
   wednesday: Wednesday

@@ -1,6 +1,6 @@
 @use "../../mixins" as m;
 
-.school-vocabulary-new-term {
+.school-vocabulary-edit-term {
   background-color: light-dark(var(--white), var(--dark-grey));
   border: 1px light-dark(var(--black), var(--white)) solid;
   border-bottom-left-radius: 4px;

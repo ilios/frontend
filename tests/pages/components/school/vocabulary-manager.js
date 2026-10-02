@@ -1,24 +1,30 @@
-import { clickable, create, collection, isPresent, fillable, text } from 'ember-cli-page-object';
+import { clickable, create, isPresent, isVisible, fillable, text } from 'ember-cli-page-object';
 import newTermForm from './vocabulary-new-term';
-import breadcrumbs from 'frontend/tests/pages/components/breadcrumbs';
+import termsList from './vocabulary-terms-list';
 
 const definition = {
   scope: '[data-test-school-vocabulary-manager]',
-  title: text('[data-test-title]'),
-  editTitle: clickable('[data-test-title] [data-test-edit]'),
-  changeTitle: fillable('[data-test-title] input'),
-  saveTitle: clickable('[data-test-title] .done'),
-  cancelTitleChanges: clickable('[data-test-title] .cancel'),
+  backToVocabularies: clickable('[data-test-back-to-vocabularies] a'),
+  vocabularyTitle: {
+    scope: '[data-test-vocabulary-title]',
+    text: text(),
+    edit: clickable('[data-test-edit]'),
+    change: fillable('input'),
+    save: clickable('.done'),
+    cancelChanges: clickable('.cancel'),
+  },
   hasError: isPresent('[data-test-title-validation-error-message]'),
   error: text('[data-test-title-validation-error-message]'),
-  breadcrumbs,
+  vocabularyTermsTitle: {
+    scope: '[data-test-vocabulary-terms-title]',
+    text: text(),
+  },
+  toggleNewVocabularyTermForm: clickable('[data-test-expand-collapse-button] button'),
+  toggleNewVocabularyTermFormExists: isVisible('[data-test-expand-collapse-button]'),
+  newTermForm,
   terms: {
     scope: '[data-test-terms]',
-    list: collection('[data-test-term-list] [data-test-term]', {
-      title: text(),
-      hasChildren: isPresent('[data-test-has-children]'),
-    }),
-    newTermForm,
+    termsList,
   },
 };
 
