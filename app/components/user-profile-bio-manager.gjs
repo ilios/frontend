@@ -303,8 +303,13 @@ export default class UserProfileBioManagerComponent extends Component {
   });
   <template>
     <div class="user-profile-bio-manager" data-test-user-profile-bio-manager ...attributes>
-      <div class="actions">
-        <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} />
+      <div class="user-profile-bio-header">
+        <h2 class="title" data-test-title>
+          {{t "general.biography"}}
+        </h2>
+        <div class="actions">
+          <BigSaveCancelButtons @save={{this.save}} @cancel={{this.cancel}} />
+        </div>
       </div>
 
       {{#unless @userAuthentication.username}}

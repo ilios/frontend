@@ -70,6 +70,7 @@ general:
   bad: Mal
   badCredentials: "Nom d'utilisateur ou mot de passe incorrect"
   beforeOrAfterMidday: Avant ou après midi
+  biography: Biographie
   bottomPagination: Pagination en bas
   calendar: Calendrier
   campusId: Campus ID
@@ -586,6 +587,7 @@ general:
   resultsCount: "{count, plural, =1 {1 résultat} other {# résultats}}"
   resultsSummary: Résumé des résultats
   returnToPreviousPage: Retour à la page précédente
+  roles: Rôles
   root: Root
   run: Exécuter
   runReport: exécuter le rapport

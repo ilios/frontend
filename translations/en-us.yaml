@@ -70,6 +70,7 @@ general:
   bad: Bad
   badCredentials: Incorrect username or password
   beforeOrAfterMidday: Before or after midday
+  biography: Biography
   bottomPagination: Bottom pagination
   calendar: Calendar
   campusId: Campus ID
@@ -586,6 +587,7 @@ general:
   resultsCount: "{count, plural, =1 {1 result} other {# results}}"
   resultsSummary: Results Summary
   returnToPreviousPage: Return to Previous Page
+  roles: Roles
   root: Root
   run: Run
   runReport: Run Report
