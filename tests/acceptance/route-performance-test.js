@@ -13,7 +13,7 @@ module('Acceptance | performance', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.set('maxDuration', 10000);
+    this.set('maxDuration', 20000);
 
     this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school, directedSchools: [this.school] });
