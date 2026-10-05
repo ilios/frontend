@@ -2,6 +2,10 @@
 
 .reports-subject {
   .content-container {
+    .backtolink {
+      margin: 0.5rem 0 1rem;
+    }
+
     .report-results {
       @include m.ilios-list-reset;
 
