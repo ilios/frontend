@@ -3,10 +3,10 @@ import { getValueFromHtml } from './utils/html-server-variables';
 
 function startSentry(config) {
   const [captureErrors, environment] = errorCaptureConfig(config);
-  const DSN = config.sentry.dsn;
+  const dsn = 'https://ded7a44cf4084601a2fb468484bbe3ed@sentry.io/1311608';
 
   Sentry.init({
-    dsn: captureErrors ? DSN : null,
+    dsn: captureErrors ? dsn : null,
     environment,
     release: `v${config.APP.VERSION}`,
     tracesSampleRate: 0.25,

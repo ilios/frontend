@@ -10,23 +10,10 @@ module.exports = function (environment) {
     environment,
     rootURL: '/',
     locationType: 'history',
-    redirectAfterShibLogin: true,
     apiVersion: API_VERSION,
-    flashMessageDefaults: {
-      timeout: 3000,
-      extendedTimeout: 1000,
-      types: ['success', 'warning', 'info', 'alert'],
-      injectionFactories: [],
-    },
-    i18n: {
-      defaultLocale: 'en',
-    },
     fontawesome: {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
-    },
-    sentry: {
-      dsn: 'https://ded7a44cf4084601a2fb468484bbe3ed@sentry.io/1311608',
     },
     noScript: {
       placeIn: 'body-footer',
@@ -58,10 +45,6 @@ module.exports = function (environment) {
     ENV.APP.LOG_TRANSITIONS = !!process.env.LOG_TRANSITIONS;
     ENV.APP.LOG_TRANSITIONS_INTERNAL = !!process.env.LOG_TRANSITIONS_INTERNAL;
     ENV.APP.LOG_VIEW_LOOKUPS = !!process.env.LOG_VIEW_LOOKUPS;
-    ENV.redirectAfterShibLogin = false;
-
-    //put ember concurrency tasks into debug mode to make errors much easier to spot
-    ENV.EmberENV.DEBUG_TASKS = true;
   }
 
   if (environment === 'test') {
@@ -73,8 +56,6 @@ module.exports = function (environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.flashMessageDefaults.timeout = 100;
-    ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.apiHost = '';
     ENV.apiNameSpace = 'api';
     ENV.disableServiceWorker = true;
