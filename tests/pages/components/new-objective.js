@@ -1,5 +1,5 @@
 import { clickable, create, isPresent, text } from 'ember-cli-page-object';
-import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'frontend/tests/helpers';
+import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from '../helpers';
 
 const definition = {
   title: text('[data-test-title]'),

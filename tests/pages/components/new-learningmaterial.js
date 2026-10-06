@@ -1,5 +1,5 @@
 import { attribute, clickable, create, fillable, isPresent } from 'ember-cli-page-object';
-import { pageObjectFillInQuillEditor } from 'frontend/tests/helpers';
+import { pageObjectFillInQuillEditor } from '../helpers';
 import userNameInfo from './user-name-info';
 
 const definition = {

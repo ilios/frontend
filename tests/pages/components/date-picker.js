@@ -1,5 +1,5 @@
 import { create } from 'ember-cli-page-object';
-import { flatpickrDatePicker, flatpickrDateValue } from 'frontend/tests/helpers';
+import { flatpickrDatePicker, flatpickrDateValue } from '../helpers';
 
 const definition = {
   scope: '[data-test-date-picker]',

@@ -1,5 +1,5 @@
 import { clickable, create, text, value } from 'ember-cli-page-object';
-import { flatpickrDatePicker } from 'frontend/tests/helpers';
+import { flatpickrDatePicker } from '../../helpers';
 import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
 
 const definition = {
