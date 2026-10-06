@@ -1,5 +1,5 @@
 import { clickable, create, hasClass, isPresent, isVisible, text } from 'ember-cli-page-object';
-import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'frontend/tests/helpers';
+import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from '../../helpers';
 import meshManager from './manage-objective-descriptors';
 import competencyManager from './manage-objective-competency';
 import meshDescriptors from './objective-list-item-descriptors';

@@ -1,5 +1,5 @@
 import { clickable, collection, create, isVisible, text, value } from 'ember-cli-page-object';
-import { flatpickrDatePicker } from 'frontend/tests/helpers';
+import { flatpickrDatePicker } from '../helpers';
 import themeChooser from './user-profile/theme-chooser';
 
 const definition = {

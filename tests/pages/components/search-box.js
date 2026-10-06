@@ -1,5 +1,5 @@
 import { attribute, create, clickable, fillable, triggerable, value } from 'ember-cli-page-object';
-import { hasFocus } from 'frontend/tests/helpers';
+import { hasFocus } from '../helpers';
 
 const definition = {
   scope: '[data-test-search-box]',

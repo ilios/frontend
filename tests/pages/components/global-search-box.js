@@ -1,5 +1,5 @@
 import { clickable, create, fillable, triggerable, value } from 'ember-cli-page-object';
-import { hasFocus } from 'frontend/tests/helpers';
+import { hasFocus } from '../helpers';
 
 const definition = {
   scope: '[data-test-global-search-box]',

@@ -9,7 +9,7 @@ import {
 } from 'ember-cli-page-object';
 import userNameInfo from 'frontend/tests/pages/components/user-name-info';
 import userStatus from 'frontend/tests/pages/components/user-status';
-import { scrollTo, isInView } from 'frontend/tests/helpers';
+import { scrollTo, isInView } from '../../helpers';
 
 const definition = {
   scope: '[data-test-learner-group-cohort-user-manager]',

@@ -8,7 +8,7 @@ import {
   property,
   text,
 } from 'ember-cli-page-object';
-import { hasFocus } from 'frontend/tests/helpers';
+import { hasFocus } from '../../helpers';
 import list from './list';
 import newCourse from './new';
 
