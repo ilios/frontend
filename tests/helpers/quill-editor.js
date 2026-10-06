@@ -2,11 +2,11 @@ import { findOne } from 'ember-cli-page-object/extend';
 import { loadQuillEditor } from 'frontend/utils/load-quill-editor';
 import { later } from '@ember/runloop';
 
-export async function fillInQuillEditor(element, html) {
+async function fillInQuillEditor(element, html) {
   const editor = await getEditorInstance(element);
   editor.setContents(editor.clipboard.convert({ html }));
 }
-export async function quillEditorValue(element) {
+async function quillEditorValue(element) {
   const editor = await getEditorInstance(element);
   // easiest way to get the HTML in an editor, maintain multiple spaces, and make sure it's empty empty, as Quill leaves `<p><br></p>` even if the editor is "empty"
   // not using editor.getContents() as it returns custom Delta object that doesn't actually have the HTML markup: https://quilljs.com/docs/api#getcontents

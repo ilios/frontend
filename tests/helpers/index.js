@@ -65,12 +65,7 @@ export { default as waitForResource } from './wait-for-resource';
 export { freezeDateAt, unfreezeDate } from './mockdate';
 export { flatpickrDatePicker, flatpickrDateValue } from './flatpickr-date-picker';
 export { default as setPreferReducedMotion } from './set-prefer-reduced-motion';
-export {
-  fillInQuillEditor,
-  quillEditorValue,
-  pageObjectFillInQuillEditor,
-  pageObjectQuillEditorValue,
-} from './quill-editor';
+export { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from './quill-editor';
 export { hasFocus } from './has-focus';
 export { focusedText } from './focused-text';
 export { keyOnFocus } from './key-on-focus';
