@@ -71,7 +71,6 @@ general:
   bad: Mal
   badCredentials: "Nom d'utilisateur ou mot de passe incorrect"
   beforeOrAfterMidday: Avant ou après midi
-  biography: Biographie
   bottomPagination: Pagination en bas
   calendar: Calendrier
   campusId: Campus ID
@@ -541,6 +540,7 @@ general:
   primaryCohort: Cohorte Première
   primarySchool: École Première
   printSummary: Empreinte Résumé
+  profile: Profil
   program: Diplôme
   programAndCohort: Diplôme et Cohortes
   programCohorts: Cohortes

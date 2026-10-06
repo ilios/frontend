@@ -71,7 +71,6 @@ general:
   bad: Malo
   badCredentials: Incorrecta contraseña o nombre de usuario
   beforeOrAfterMidday: Antes o después del mediodía
-  biography: Biografía
   bottomPagination: Paginación inferior
   calendar: Calendario
   campusId: Campus ID
@@ -541,6 +540,7 @@ general:
   primaryCohort: Clase de la Graduación Principal
   primarySchool: Escuela Primaria
   printSummary: Sumario Printado
+  profile: Perfil
   program: Programa
   programAndCohort: Programa / Clase de La Graduación
   programCohorts: Clases de La Graduación

@@ -71,7 +71,6 @@ general:
   bad: Bad
   badCredentials: Incorrect username or password
   beforeOrAfterMidday: Before or after midday
-  biography: Biography
   bottomPagination: Bottom pagination
   calendar: Calendar
   campusId: Campus ID
@@ -541,6 +540,7 @@ general:
   primaryCohort: Primary Cohort
   primarySchool: Primary School
   printSummary: Print Summary
+  profile: Profile
   program: Program
   programAndCohort: Program / Cohort
   programCohorts: Program Cohorts

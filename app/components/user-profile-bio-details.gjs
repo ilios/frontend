@@ -7,7 +7,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
   <div class="user-profile-bio-details" data-test-user-profile-bio-details ...attributes>
     <div class="user-profile-bio-header">
       <h2 class="title" data-test-title>
-        {{t "general.biography"}}
+        {{t "general.profile"}}
       </h2>
       <div class="actions">
         {{#if @isManageable}}
