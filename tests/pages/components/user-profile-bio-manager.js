@@ -17,6 +17,7 @@ const definition = {
   syncWithDirectory: {
     scope: '[data-test-directory-sync]',
   },
+  title: text('[data-test-title]'),
   school: text('[data-test-school]'),
   firstName: {
     scope: '[data-test-firstname]',

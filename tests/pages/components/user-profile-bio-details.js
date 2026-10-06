@@ -4,6 +4,7 @@ const definition = {
   scope: '[data-test-user-profile-bio-details]',
   manage: clickable('[data-test-manage]'),
   school: text('[data-test-school]'),
+  title: text('[data-test-title]'),
   firstName: {
     scope: '[data-test-firstname]',
     label: text('label'),
