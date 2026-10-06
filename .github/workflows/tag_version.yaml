@@ -38,18 +38,16 @@ jobs:
           git config user.name Zorgbort
           git config user.email info@iliosproject.org
       - name: Increment Package Versions
-        run: |
-          pnpx versionup --level ${{ github.event.inputs.releaseType }} --path packages/frontend
-          pnpx versionup --level ${{ github.event.inputs.releaseType }} --path packages/lti-dashboard
+        run: pnpx versionup --level ${{ github.event.inputs.releaseType }}
       - name: Format Package JSON
         run: pnpm format
       - run: |
-          NEW_TAG=`node -p "require('./packages/frontend/package.json').version"`
+          NEW_TAG=`node -p "require('./package.json').version"`
           echo ${NEW_TAG}
           echo "new_tag=${NEW_TAG}" >> $GITHUB_ENV
       - name: Tag Version
         run: |
-          git add packages/frontend/package.json packages/lti-dashboard/package.json
+          git add package.json
           git commit -m "${{env.new_tag}}"
           git tag v${{env.new_tag}} -m "Tagging the v${{env.new_tag}} ${{ github.event.inputs.releaseType }} release"
       - name: Push Changes Tag Commit
