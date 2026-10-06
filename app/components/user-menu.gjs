@@ -32,7 +32,7 @@ export default class UserMenuComponent extends Component {
 
   focusFirstLink = task(async () => {
     await timeout(1);
-    document.querySelector('.user-menu .menu a:first-of-type').focus();
+    document.querySelector('.user-menu .menu a:first-of-type')?.focus();
   });
 
   @action

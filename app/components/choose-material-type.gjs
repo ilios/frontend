@@ -14,7 +14,7 @@ export default class ChooseMaterialTypeComponent extends Component {
 
   focusFirstLink = task(async (item) => {
     await timeout(1);
-    item.querySelector('.menu button:first-of-type').focus();
+    item.querySelector('.menu button:first-of-type')?.focus();
   });
 
   handleArrowUp(item) {
