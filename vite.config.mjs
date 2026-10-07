@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { extensions, classicEmberSupport, ember } from '@embroider/vite';
 import { babel } from '@rollup/plugin-babel';
+import noscript from './lib/noscript.mjs';
 import loadingAnimation from './lib/loading-animation.mjs';
 import errorHandler from './lib/error-handler.mjs';
 import newVersion from './lib/new-version.mjs';
@@ -15,6 +16,7 @@ export default defineConfig({
       babelHelpers: 'runtime',
       extensions,
     }),
+    noscript(),
     loadingAnimation(),
     errorHandler(),
     newVersion(),

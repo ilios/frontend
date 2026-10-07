@@ -15,9 +15,6 @@ module.exports = function (environment) {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
     },
-    noScript: {
-      placeIn: 'body-footer',
-    },
     disableServiceWorker: [true, 'true'].includes(process.env.SW_DISABLED),
     apiNameSpace: process.env.ILIOS_FRONTEND_API_NAMESPACE ?? 'api/v3',
     apiHost: process.env.ILIOS_FRONTEND_API_HOST ?? false,
