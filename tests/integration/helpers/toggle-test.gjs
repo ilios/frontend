@@ -5,6 +5,7 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 import { on } from '@ember/modifier';
 import toggle from 'frontend/helpers/toggle';
+import t from 'ember-intl/helpers/t';
 
 module('Integration | Helper | toggle', function (hooks) {
   setupRenderingTest(hooks);
@@ -14,13 +15,13 @@ module('Integration | Helper | toggle', function (hooks) {
     await render(
       <template>
         <button type="button" {{on "click" (toggle "isExpanded" this)}}>
-          {{if this.isExpanded "I am expanded" "I am not"}}
+          {{if this.isExpanded (t "general.active") (t "general.inactive")}}
         </button>
       </template>,
     );
     await click('button');
 
-    assert.dom().hasText('I am expanded', 'should be expanded');
+    assert.dom().hasText('Active', 'should be expanded');
   });
 
   test('it rotates between values', async function (assert) {
