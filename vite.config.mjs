@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { extensions, classicEmberSupport, ember } from '@embroider/vite';
 import { babel } from '@rollup/plugin-babel';
+import newVersion from './lib/new-version.mjs';
 import { loadTranslations } from '@ember-intl/vite';
 
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
       babelHelpers: 'runtime',
       extensions,
     }),
+    newVersion(),
     loadTranslations(),
   ],
 });

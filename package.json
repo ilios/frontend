@@ -83,7 +83,6 @@
     "@zumer/snapdom": "^2.24.18",
     "axe-core": "~4.13.0",
     "babel-plugin-ember-template-compilation": "^3.1.0",
-    "broccoli-file-creator": "^2.1.1",
     "browserslist": "^4.29.3",
     "caniuse-db": "^1.0.30001814",
     "color": "^5.0.3",
