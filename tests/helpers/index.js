@@ -6,6 +6,9 @@ import {
 import { setupMSW } from 'frontend/tests/msw';
 import { setupIntl } from 'ember-intl/test-support';
 import { setRunOptions } from 'ember-a11y-testing/test-support';
+import translationsForEnUs from 'virtual:ember-intl/translations/en-us';
+import translationsForEs from 'virtual:ember-intl/translations/es';
+import translationsForFr from 'virtual:ember-intl/translations/fr';
 
 // This file exists to provide wrappers around ember-qunit's
 // test setup functions. This way, you can easily extend the setup that is
@@ -35,6 +38,13 @@ function setupRenderingTest(hooks, options) {
   setupIntl(hooks, 'en-us'); // ember-intl
 
   // Additional setup for rendering tests can be done here.
+  hooks.beforeEach(function () {
+    const intl = this.owner.lookup('service:intl');
+
+    intl.addTranslations('en-us', translationsForEnUs);
+    intl.addTranslations('es', translationsForEs);
+    intl.addTranslations('fr', translationsForFr);
+  });
 
   /**
    * These tests are run in issolation without a full application shell, so many items
@@ -55,6 +65,13 @@ function setupTest(hooks, options) {
   upstreamSetupTest(hooks, options);
 
   // Additional setup for unit tests can be done here.
+  hooks.beforeEach(function () {
+    const intl = this.owner.lookup('service:intl');
+
+    intl.addTranslations('en-us', translationsForEnUs);
+    intl.addTranslations('es', translationsForEs);
+    intl.addTranslations('fr', translationsForFr);
+  });
 }
 
 export { setupApplicationTest, setupRenderingTest, setupTest };
