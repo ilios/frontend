@@ -1,5 +1,6 @@
+@use "normalize.css/normalize.css";
 @use "fonts";
 @use "shared";
 @use "components";
 @use "layout/layout";
-@use "navigation-narrator.css"; //ember-a11y-refocus
+@use "ember-a11y-refocus/styles/navigation-narrator.css";

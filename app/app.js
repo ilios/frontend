@@ -6,6 +6,7 @@ import loadInitializers from 'ember-load-initializers';
 import config from 'frontend/config/environment';
 import { startSentry } from './sentry';
 import './utils/setup-fontawesome';
+import './styles/app.scss';
 import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
 import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
 import './inflector';

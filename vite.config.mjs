@@ -8,6 +8,12 @@ import newVersion from './lib/new-version.mjs';
 import { loadTranslations } from '@ember-intl/vite';
 
 export default defineConfig({
+  css: {
+    devSourcemap: true,
+  },
+  build: {
+    sourcemap: true,
+  },
   plugins: [
     classicEmberSupport(),
     ember(),

@@ -1,6 +1,7 @@
 @use "mixins/media";
 
-@forward "fonts/nunito";
+@use "@fontsource-variable/nunito/index.css";
+@use "@fontsource-variable/nunito/wght-italic.css";
 
 /* stylelint-disable property-disallowed-list */
 :root {

@@ -402,9 +402,6 @@ importers:
       ember-cli-page-object:
         specifier: ^2.3.2
         version: 2.3.2(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2)
-      ember-cli-sass:
-        specifier: ^11.0.1
-        version: 11.0.1(supports-color@10.2.2)
       ember-click-outside:
         specifier: ^6.1.1
         version: 6.1.1(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2)
@@ -2953,10 +2950,6 @@ packages:
     resolution: {integrity: sha512-a4zUsWtA1uns1K7p9rExYVYG99rdKeGRymW0qOCNkvDPHQxVi3yVyJHhQbM3EZwdt2E0mnhr5e0c/bPpJ7p3Wg==}
     engines: {node: 10.* || >= 12.*}
 
-  broccoli-sass-source-maps@4.3.0:
-    resolution: {integrity: sha512-t/YEueiFAOboCERQsH6J9RmifEDkqkoFjIB6owIeilpSbhJbNXj0FfzWcXnG/ahKYByHE4g3H7agHr2mtlJdDw==}
-    engines: {node: '>=10.24.1'}
-
   broccoli-slow-trees@3.1.0:
     resolution: {integrity: sha512-FRI7mRTk2wjIDrdNJd6znS7Kmmne4VkAkl8Ix1R/VoePFMD0g0tEl671xswzFqaRjpT9Qu+CC4hdXDLDJBuzMw==}
 
@@ -4031,10 +4024,6 @@ packages:
     resolution: {integrity: sha512-Jb2zbE5Kfe56Nf4IpdaQ10zZ72p/RyLdgE5j5/lKG3I94QHlq+7AkAd18nPpb5OUeRUT13yQTAYpU+MbjpKTtg==}
     engines: {node: 16.* || >= 18}
 
-  ember-cli-sass@11.0.1:
-    resolution: {integrity: sha512-RMlFPMK4kaB+67seF/IIoY3EC4rRd+L58q+lyElrxB3FcQTgph/qmGwtqf9Up7m3SDbPiA7cccCOSmgReMgCXA==}
-    engines: {node: '>= 10.*'}
-
   ember-cli-string-utils@1.1.0:
     resolution: {integrity: sha512-PlJt4fUDyBrC/0X+4cOpaGCiMawaaB//qD85AXmDRikxhxVzfVdpuoec02HSiTGTTB85qCIzWBIh8lDOiMyyFg==}
 
@@ -4047,10 +4036,6 @@ packages:
   ember-cli-typescript@5.3.0:
     resolution: {integrity: sha512-gFA+ZwmsvvFwo2Jz/B9GMduEn+fPoGb69qWGP0Tp3+Tu5xypDtIKVSZ5086I3Cr19cLXD4HkrOR3YQvdUKzAkQ==}
     engines: {node: '>= 12.*'}
-
-  ember-cli-version-checker@2.2.0:
-    resolution: {integrity: sha512-G+KtYIVlSOWGcNaTFHk76xR4GdzDLzAS4uxZUKdASuFX0KJE43C6DaqL+y3VTpUFLI2FIkAS6HZ4I1YBi+S3hg==}
-    engines: {node: '>= 4'}
 
   ember-cli-version-checker@4.1.1:
     resolution: {integrity: sha512-bzEWsTMXUGEJfxcAGWPe6kI7oHEGD3jaxUWDYPTqzqGhNkgPwXTBgoWs9zG1RaSMaOPFnloWuxRcoHi4TrYS3Q==}
@@ -5306,9 +5291,6 @@ packages:
   imurmurhash@0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
     engines: {node: '>=0.8.19'}
-
-  include-path-searcher@0.1.0:
-    resolution: {integrity: sha512-KlpXnsZOrBGo4PPKqPFi3Ft6dcRyh8fTaqgzqDRi8jKAsngJEWWOxeFIWC8EfZtXKaZqlsNf9XRwcQ49DVgl/g==}
 
   infer-owner@1.0.4:
     resolution: {integrity: sha512-IClj+Xz94+d7irH5qRyfJonOdfTzuDaifE6ZPWfx0N0+/ATZCbuTPq2prFl526urkQd90WyUKIh1DfBQ2hMz9A==}
@@ -11615,14 +11597,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  broccoli-sass-source-maps@4.3.0(supports-color@10.2.2):
-    dependencies:
-      broccoli-caching-writer: 3.1.0(supports-color@10.2.2)
-      include-path-searcher: 0.1.0
-      rsvp: 4.8.5
-    transitivePeerDependencies:
-      - supports-color
-
   broccoli-slow-trees@3.1.0:
     dependencies:
       heimdalljs: 0.2.6
@@ -12954,15 +12928,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-sass@11.0.1(supports-color@10.2.2):
-    dependencies:
-      broccoli-funnel: 2.0.2(supports-color@10.2.2)
-      broccoli-merge-trees: 3.0.2(supports-color@10.2.2)
-      broccoli-sass-source-maps: 4.3.0(supports-color@10.2.2)
-      ember-cli-version-checker: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-
   ember-cli-string-utils@1.1.0: {}
 
   ember-cli-test-info@1.0.0:
@@ -12990,11 +12955,6 @@ snapshots:
       walk-sync: 2.2.0
     transitivePeerDependencies:
       - supports-color
-
-  ember-cli-version-checker@2.2.0:
-    dependencies:
-      resolve: 1.22.12
-      semver: 5.7.2
 
   ember-cli-version-checker@4.1.1(supports-color@10.2.2):
     dependencies:
@@ -14827,8 +14787,6 @@ snapshots:
   import-meta-resolve@4.2.0: {}
 
   imurmurhash@0.1.4: {}
-
-  include-path-searcher@0.1.0: {}
 
   infer-owner@1.0.4: {}
 

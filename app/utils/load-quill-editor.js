@@ -2,6 +2,7 @@ export async function loadQuillEditor() {
   const { default: QuillEditor } = await import('quill');
   const undoIcon = await import('quill/assets/icons/undo.svg');
   const redoIcon = await import('quill/assets/icons/redo.svg');
+  await import('quill/dist/quill.snow.css');
 
   // Quill doesn't include redo/undo icons by default,
   // so have to hack in from `quill/assets/icons/[undo|redo].svg`
