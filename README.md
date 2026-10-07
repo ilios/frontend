@@ -60,8 +60,8 @@ Make use of the many generators for code, try `pnpm ember help generate` for mor
 
 ### Building
 
-- `pnpm exec ember build` (development)
-- `pnpm exec ember build --environment production` (production)
+- `pnpm run build` (development)
+- `pnpm run build --environment production` (production)
 
 ## Further Reading / Useful Links
 
