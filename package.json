@@ -15,7 +15,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "STRIP_TEST_SELECTORS=true vite build",
     "format": "prettier . --cache --write",
     "lint": "pnpm --parallel run \"/^lint:(css|hbs|js|intl)$/\"",
     "lint:css": "stylelint \"**/*.css\"",
@@ -129,7 +129,6 @@
     "ember-simple-charts": "12.2.2",
     "ember-source": "~6.12.0",
     "ember-template-lint": "^7.9.3",
-    "ember-test-selectors": "^7.1.0",
     "ember-truth-helpers": "^5.0.0",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
@@ -155,6 +154,7 @@
     "qunit-dom": "^3.5.0",
     "sanitize-html": "^2.18.0",
     "sass": "^1.105.1",
+    "strip-test-selectors": "^0.1.0",
     "striptags": "^3.2.0",
     "stylelint": "^17.16.0",
     "stylelint-config-recommended-scss": "^17.0.1",

@@ -13,7 +13,10 @@ export default {
           'ember-cli-htmlbars-inline-precompile',
           'htmlbars-inline-precompile',
         ],
-        transforms: [...templateCompatSupport()],
+        transforms: [
+          ...templateCompatSupport(),
+          ...(process.env.STRIP_TEST_SELECTORS ? ['strip-test-selectors'] : []),
+        ],
       },
     ],
     [
