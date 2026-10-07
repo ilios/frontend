@@ -21,27 +21,28 @@ module.exports = function (environment) {
     errorCaptureEnabled:
       process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENABLED ?? environment === 'production',
     errorCaptureEnvironment: process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENVIRONMENT ?? environment,
+
     EmberENV: {
+      EXTEND_PROTOTYPES: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
       },
-      EXTEND_PROTOTYPES: {
-        Array: false,
-      },
     },
 
     APP: {
+      // Here you can pass flags/options to your application instance
+      // when it is created
       VERSION: version,
     },
   };
 
   if (environment === 'development') {
-    ENV.APP.LOG_RESOLVER = !!process.env.LOG_RESOLVER;
-    ENV.APP.LOG_ACTIVE_GENERATION = !!process.env.LOG_ACTIVE_GENERATION;
-    ENV.APP.LOG_TRANSITIONS = !!process.env.LOG_TRANSITIONS;
-    ENV.APP.LOG_TRANSITIONS_INTERNAL = !!process.env.LOG_TRANSITIONS_INTERNAL;
-    ENV.APP.LOG_VIEW_LOOKUPS = !!process.env.LOG_VIEW_LOOKUPS;
+    // ENV.APP.LOG_RESOLVER = true;
+    // ENV.APP.LOG_ACTIVE_GENERATION = true;
+    // ENV.APP.LOG_TRANSITIONS = true;
+    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    // ENV.APP.LOG_VIEW_LOOKUPS = true;
   }
 
   if (environment === 'test') {
@@ -53,11 +54,15 @@ module.exports = function (environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.autoboot = false;
+
     ENV.apiHost = '';
     ENV.apiNameSpace = 'api';
     ENV.disableServiceWorker = true;
+  }
 
-    ENV.APP.autoboot = false;
+  if (environment === 'production') {
+    // here you can enable a production-specific feature
   }
 
   return ENV;
