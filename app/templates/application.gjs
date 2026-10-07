@@ -9,6 +9,8 @@ import IliosNavigation from 'frontend/components/ilios-navigation';
 import ErrorDisplay from 'frontend/components/error-display';
 import FlashMessages from 'frontend/components/flash-messages';
 import set from 'ember-set-helper/helpers/set';
+import IliosLogo from 'frontend/images/ilios-logo.svg';
+import Sunburst from 'frontend/images/sunburst.svg';
 
 <template>
   {{pageTitle (t "general.ilios") separator=" " front=true}}
@@ -22,12 +24,8 @@ import set from 'ember-set-helper/helpers/set';
         <div class="ilios-logo">
           <LinkTo @route="dashboard" title={{t "general.dashboard"}}>
             <picture>
-              <source
-                srcset="/assets/images/ilios-logo.svg"
-                media="(min-width: 400px)"
-                alt={{t "general.logo"}}
-              />
-              <img src="/assets/images/sunburst.svg" alt={{t "general.logo"}} />
+              <source srcset={{IliosLogo}} media="(min-width: 400px)" alt={{t "general.logo"}} />
+              <img src={{Sunburst}} alt={{t "general.logo"}} />
             </picture>
 
           </LinkTo>
