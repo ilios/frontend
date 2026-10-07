@@ -26,12 +26,12 @@ You will need the following things properly installed on your computer.
 
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/)
-- [PNPM](https://pnpm.io)
-- [Ember CLI](https://cli.emberjs.com/release/)
+- [pnpm](https://pnpm.io/)
+- [Firefox](https://www.firefox.com/)
 
 ### Installation
 
-- `git clone git@github.com:ilios/frontend.git`
+- `git clone https://github.com/ilios/frontend.git`
 - `cd frontend`
 - `pnpm install`
 
@@ -43,23 +43,20 @@ or you can add it to the CLI when you start the server.
 
 - `ILIOS_FRONTEND_API_HOST=https://demo.iliosproject.org pnpm start`
 - Visit your app at [http://localhost:4200](http://localhost:4200).
-- Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
+- Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests)
 
 ### Code Generators
 
-Make use of the many generators for code, try `ember help generate` for more details
+Make use of the many generators for code, try `pnpm ember help generate` for more details
 
 ### Running Tests
 
 - `pnpm test`
-- `pnpm test --server`
 
 ### Linting
 
-- `pnpm run lint:hbs`
-- `pnpm run lint:css`
-- `pnpm run lint:js`
-- `pnpm run lint:js --fix`
+- `pnpm lint`
+- `pnpm lint:fix`
 
 ### Building
 
@@ -69,8 +66,8 @@ Make use of the many generators for code, try `ember help generate` for more det
 ## Further Reading / Useful Links
 
 - [ember.js](https://emberjs.com/)
-- [ember-cli](https://cli.emberjs.com/release/)
 - [Ilios User Guide](https://www.gitbook.com/book/iliosproject/ilios-user-guide/details)
+- [Vite](https://vite.dev)
 - Development Browser Extensions
   - [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   - [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
