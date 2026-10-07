@@ -23,7 +23,7 @@ module('Integration | Helper | object-at', function (hooks) {
     this.set('array', ['apples', 'oranges', 'bananas']);
     this.set('index', 5);
 
-    await render(<template>{{if (objectAt this.index this.array) "true" "false"}}</template>);
+    await render(<template>{{if (objectAt this.index this.array) true false}}</template>);
 
     assert.dom().hasText('false', 'the returned value is falsey');
   });
