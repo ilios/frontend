@@ -35,8 +35,8 @@
     "deploy:test": "ember deploy development",
     "deploy:pr-preview": "ember deploy pr-preview",
     "postinstall": "msw init public --no-save",
-    "test:screenshots": "pnpm run test --config-file=testem/screenshots-config.js",
-    "test:darkmode-screenshots": "pnpm run test  --config-file=testem/screenshots-darkmode-config.js",
+    "test:screenshots": "pnpm run test --config-file=testem/screenshots-config.cjs",
+    "test:darkmode-screenshots": "pnpm run test  --config-file=testem/screenshots-darkmode-config.cjs",
     "prepare": "husky"
   },
   "devDependencies": {

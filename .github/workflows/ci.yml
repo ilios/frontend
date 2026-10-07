@@ -52,7 +52,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Run Tests
-        run: pnpm run test --write-execution-file --config-file=testem/light-mode-config.js
+        run: pnpm run test --write-execution-file --config-file=testem/light-mode-config.cjs
 
   test-dark:
     name: Test in Darkmode
@@ -69,7 +69,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Run Tests
-        run: pnpm run test --write-execution-file --config-file=testem/dark-mode-config.js
+        run: pnpm run test --write-execution-file --config-file=testem/dark-mode-config.cjs
 
   build:
     name: Build

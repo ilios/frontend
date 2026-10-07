@@ -1,7 +1,7 @@
 'use strict';
 
-const base = require('./base');
-const storeFirefoxPreferences = require('./firefox-preferences');
+const base = require('./base.cjs');
+const storeFirefoxPreferences = require('./firefox-preferences.cjs');
 
 const firefoxUserJsPath = storeFirefoxPreferences([
   ['layout.css.prefers-color-scheme.content-override', 0],
