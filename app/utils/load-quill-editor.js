@@ -1,7 +1,8 @@
 export async function loadQuillEditor() {
   const { default: QuillEditor } = await import('quill');
-  const undoIcon = await import('quill/assets/icons/undo.svg');
-  const redoIcon = await import('quill/assets/icons/redo.svg');
+  //import ?raw to ensure vite doesn't try and inline the svg content
+  const undoIcon = await import('quill/assets/icons/undo.svg?raw');
+  const redoIcon = await import('quill/assets/icons/redo.svg?raw');
   await import('quill/dist/quill.snow.css');
 
   // Quill doesn't include redo/undo icons by default,
