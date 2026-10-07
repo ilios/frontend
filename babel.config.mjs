@@ -1,6 +1,7 @@
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { babelCompatSupport, templateCompatSupport } from '@embroider/compat/babel';
+import qunitNiceErrors from 'ember-qunit-nice-errors';
 
 export default {
   plugins: [
@@ -32,6 +33,8 @@ export default {
       },
     ],
     ...babelCompatSupport(),
+    'ember-concurrency/async-arrow-task-transform',
+    qunitNiceErrors,
   ],
 
   generatorOpts: {
