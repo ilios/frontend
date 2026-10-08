@@ -38,6 +38,8 @@ module.exports = function (deployTarget) {
         jsonBlueprint.link.attributes.push('type');
         jsonBlueprint.link.attributes.push('as');
         jsonBlueprint.link.attributes.push('crossorigin');
+        jsonBlueprint.script.includeContent = true;
+        jsonBlueprint.script.attributes.push('type');
         jsonBlueprint.style = {
           selector: 'style',
           attributes: ['type'],
