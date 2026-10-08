@@ -68,4 +68,6 @@ jobs:
       - name: Safari Version
         run: /usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" /Applications/Safari.app/Contents/Info.plist
       - name: test
-        run: pnpm exec ember exam --split=4 --partition=${{ matrix.partition }} --launch=SafariApplescript
+        env:
+          EMBER_EXAM_CONCURRENCY: 1
+        run: pnpm run test --split=4 --partition=${{ matrix.partition }} --launch=SafariApplescript

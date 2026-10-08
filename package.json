@@ -30,6 +30,7 @@
     "deploy:production": "ember deploy production --activate",
     "deploy:staging": "ember deploy staging --activate",
     "deploy:test": "ember deploy development",
+    "deploy:pr-preview": "ember deploy pr-preview",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "msw init public --no-save",
     "test:screenshots": "pnpm exec ember exam --parallel=${EMBER_EXAM_CONCURRENCY:-8} --load-balance --config-file=testem/screenshots-config.js",
