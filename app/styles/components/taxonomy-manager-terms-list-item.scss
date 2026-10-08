@@ -11,6 +11,13 @@
 
   &.selected {
     background-color: light-dark(var(--lightest-grey), var(--grey));
+
+    &:focus,
+    &:hover {
+      background-color: light-dark(var(--lightest-red), var(--dark-red));
+      border-color: light-dark(var(--red), var(--red));
+      outline-color: light-dark(var(--red), var(--red));
+    }
   }
 
   .actions {
