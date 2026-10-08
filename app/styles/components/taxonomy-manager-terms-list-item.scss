@@ -5,12 +5,20 @@
 
   &:focus,
   &:hover {
-    background-color: light-dark(var(--lightest-grey), var(--grey));
-    border: 1px var(--black) solid;
+    background-color: light-dark(var(--bright-green), var(--dark-green));
+    border: 1px light-dark(var(--green), var(--light-green)) solid;
+    outline-color: light-dark(var(--green), var(--light-green));
   }
 
   &.selected {
     background-color: light-dark(var(--lightest-grey), var(--grey));
+
+    &:focus,
+    &:hover {
+      background-color: light-dark(var(--lightest-red), var(--dark-red));
+      border-color: light-dark(var(--red), var(--light-red));
+      outline-color: light-dark(var(--red), var(--light-red));
+    }
   }
 
   .actions {
@@ -25,7 +33,6 @@
   margin-top: 5px;
   padding: 0.2em 0.4em 0.2em 0.6em;
   text-align: left;
-  vertical-align: middle;
   width: 100%;
 
   &:not(.taxonomy-manager-terms-list-item-button) {

@@ -75,7 +75,7 @@ export default class SelectableTermsListItemComponent extends Component {
         {{/if}}
         <span class="actions">
           {{#if this.isSelected}}
-            <FaIcon @icon={{faXmark}} data-test-remove />
+            <FaIcon @icon={{faXmark}} class="remove" data-test-remove />
           {{else}}
             <FaIcon @icon={{faPlus}} class="add" data-test-add />
           {{/if}}
