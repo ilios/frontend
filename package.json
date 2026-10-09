@@ -80,7 +80,7 @@
     "@warp-drive/build-config": "5.9.1",
     "@warp-drive/core-types": "5.9.1",
     "@warp-drive/ember": "5.9.1",
-    "@zumer/snapdom": "^2.24.18",
+    "@zumer/snapdom": "^3.3.0",
     "axe-core": "~4.13.0",
     "babel-plugin-ember-template-compilation": "^3.1.0",
     "browserslist": "^4.29.3",
