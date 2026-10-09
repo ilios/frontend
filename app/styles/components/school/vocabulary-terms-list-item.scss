@@ -1,0 +1,82 @@
+@use "../../mixins" as m;
+
+.school-vocabulary-terms-list-item-button {
+  @include m.ilios-button-reset;
+
+  &:hover {
+    background-color: light-dark(var(--lightest-grey), var(--grey));
+    border-color: light-dark(var(--black), var(--white));
+  }
+
+  .actions {
+    float: right;
+  }
+}
+
+.school-vocabulary-terms-list-item {
+  border: 1px var(--lightest-grey) solid;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 5px;
+  padding: 0.2em 0.4em 0.2em 0.6em;
+  text-align: left;
+  width: 100%;
+
+  &.selected {
+    background-color: light-dark(var(--lightest-grey), var(--grey));
+    border-color: light-dark(var(--black), var(--white));
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &.confirm-removal {
+    background-color: light-dark(var(--lightest-red), var(--dark-red));
+    border-color: light-dark(var(--red), var(--red));
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .term-title {
+    text-align: left;
+
+    .inactive {
+      color: light-dark(var(--red), var(--lighter-red));
+    }
+  }
+
+  .school-vocabulary-new-term {
+    clear: both;
+    margin-top: 0.5em;
+  }
+}
+
+.confirm-message {
+  background-color: light-dark(var(--lightest-red), var(--dark-red));
+  border: 1px light-dark(var(--red), var(--red)) solid;
+  border-radius: 4px;
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  color: light-dark(var(--red), var(--lightest-red));
+  clear: both;
+  font-weight: 600;
+  padding: 0.5em;
+  text-align: center;
+
+  .confirm-buttons {
+    padding-bottom: 1.1em;
+    padding-top: 1.1em;
+  }
+
+  .remove:not(.disabled) {
+    background-color: light-dark(var(--white), var(--dark-grey));
+    color: light-dark(var(--red), var(--lighter-red));
+
+    &:hover {
+      background-color: light-dark(var(--light-red), var(--red));
+      color: light-dark(var(--white), var(--lightest-red));
+    }
+  }
+}

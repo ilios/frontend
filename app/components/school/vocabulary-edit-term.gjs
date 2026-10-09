@@ -1,13 +1,12 @@
 import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { uniqueId } from '@ember/helper';
+import { and, not } from 'ember-truth-helpers';
 import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
@@ -16,40 +15,47 @@ import LoadingSpinner from '../loading-spinner';
 import YupValidationMessage from '../yup-validation-message';
 import ToggleYesno from '../toggle-yesno';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-export default class SchoolVocabularyNewTermComponent extends Component {
-  @service store;
-  @service intl;
-  @tracked title;
-  @tracked isActive = true;
-  @tracked description = '';
+export default class SchoolVocabularyEditTermComponent extends Component {
+  @tracked titleBuffer;
+  @tracked descriptionBuffer;
+  @tracked isActiveBuffer;
 
   validations = new YupValidations(this, {
     title: string()
+      .ensure()
+      .trim()
       .required()
       .max(200)
       .test(
-        'is-title-unique',
-        (d) => {
-          return {
-            path: d.path,
-            messageKey: 'errors.exclusion',
-          };
+        'term-title-uniqueness',
+        (d) => ({ path: d.path, messageKey: 'errors.exclusion' }),
+        async (value) => {
+          let terms;
+          if (this.args.term.isTopLevel) {
+            const vocab = await this.args.term.vocabulary;
+            terms = await vocab.getTopLevelTerms();
+          } else {
+            const parent = await this.args.term.parent;
+            terms = await parent.children;
+          }
+          return !terms.filter((term) => term.id !== this.args.term.id && term.title === value)
+            .length;
         },
-        (value) => value == null || !this.existingTitles.includes(value),
       ),
   });
 
-  @cached
-  get termData() {
-    return new TrackedAsyncData(
-      this.args.term ? this.args.term.children : this.args.vocabulary.getTopLevelTerms(),
-    );
+  get title() {
+    return this.titleBuffer ?? this.args.term.title;
   }
 
-  get existingTitles() {
-    return this.termData.isResolved ? this.termData.value.map(({ title }) => title) : [];
+  get description() {
+    return this.descriptionBuffer ?? this.args.term.description;
+  }
+
+  get isActive() {
+    return this.isActiveBuffer ?? this.args.term.active;
   }
 
   save = task({ drop: true }, async () => {
@@ -59,51 +65,65 @@ export default class SchoolVocabularyNewTermComponent extends Component {
       return false;
     }
     this.validations.clearErrorDisplay();
-    await this.args.createTerm(this.title, this.description, this.isActive);
-    this.title = null;
-    this.isActive = true;
-    this.description = '';
+    this.args.term.title = this.title;
+    this.args.term.active = this.isActive;
+    this.args.term.description = this.description;
+    await this.args.term.save();
+    this.args.cancel();
   });
 
-  saveOnEnter = task({ drop: true }, async (event) => {
-    const keyCode = event.keyCode;
-    if (13 === keyCode) {
-      await this.save.perform();
-    }
-  });
   <template>
     {{#let (uniqueId) as |templateId|}}
-      <div class="school-vocabulary-new-term" data-test-school-vocabulary-new-term>
+      <div class="school-vocabulary-edit-term" data-test-school-vocabulary-edit-term>
         <div class="header">
-          <div class="title" data-test-vocabulary-new-term-title>
+          <div class="title" data-test-vocabulary-edit-term-title>
             <h3>
-              {{#if @term}}
-                {{t "general.newSubTerm"}}
-              {{else}}
-                {{t "general.newTerm"}}
-              {{/if}}
+              {{t "general.editTerm"}}
             </h3>
           </div>
 
           <span class="actions">
-            {{#if @canUpdate}}
+            {{#if @canCreate}}
               <button
-                class="link-button edit-term{{if @showRemovalConfirmation ' disabled'}}"
+                class="link-button add-button"
                 type="button"
-                disabled={{@showRemovalConfirmation}}
-                data-test-edit-term
-                title={{if
-                  @showRemovalConfirmation
-                  (t "general.disabledByConfirmation")
-                  (t "general.editTerm")
-                }}
-                {{on "click" @toggleEditTermForm}}
+                data-test-add-sub-term
+                title={{t "general.addSubTerm"}}
+                {{on "click" @toggleAddSubTermForm}}
               >
-                <FaIcon
-                  @icon={{faPenToSquare}}
-                  class={{if @showRemovalConfirmation "disabled" "enabled edit"}}
-                />
+                <FaIcon @icon={{faPlus}} class="enabled" />
               </button>
+            {{/if}}
+            {{#if @canDelete}}
+              {{#if (and (not @term.hasChildren) (not @term.hasAssociations))}}
+                <button
+                  class="link-button delete-button{{if @termDeleteDisabled ' disabled'}}"
+                  type="button"
+                  disabled={{@termDeleteDisabled}}
+                  data-test-delete
+                  title={{if
+                    @showRemovalConfirmation
+                    (t "general.disabledByConfirmation")
+                    (t "general.remove")
+                  }}
+                  {{on "click" @confirmRemoval}}
+                >
+                  <FaIcon
+                    @icon={{faTrash}}
+                    class={{if @termDeleteDisabled "disabled" "enabled remove"}}
+                  />
+                </button>
+              {{else}}
+                <button
+                  type="button"
+                  class="link-button delete-button disabled"
+                  title={{t "general.canNotDeleteSchoolVocabularyTerm"}}
+                  disabled
+                  data-test-delete
+                >
+                  <FaIcon @icon={{faTrash}} class="disabled" />
+                </button>
+              {{/if}}
             {{/if}}
           </span>
         </div>
@@ -117,11 +137,9 @@ export default class SchoolVocabularyNewTermComponent extends Component {
               id="title-{{templateId}}"
               type="text"
               value={{this.title}}
-              placeholder={{t "general.vocabularyTermPlaceholder"}}
               disabled={{this.save.isRunning}}
               {{focus}}
-              {{on "input" (pick "target.value" (set this "title"))}}
-              {{on "keyup" (perform this.saveOnEnter)}}
+              {{on "input" (pick "target.value" (set this "titleBuffer"))}}
               {{this.validations.attach "title"}}
             />
             <YupValidationMessage
@@ -137,7 +155,7 @@ export default class SchoolVocabularyNewTermComponent extends Component {
             </label>
             <ToggleYesno
               @yes={{this.isActive}}
-              @toggle={{set this "isActive"}}
+              @toggle={{set this "isActiveBuffer"}}
               @disabled={{this.save.isRunning}}
             />
           </div>
@@ -149,7 +167,7 @@ export default class SchoolVocabularyNewTermComponent extends Component {
             <textarea
               id="description-{{templateId}}"
               disabled={{this.save.isRunning}}
-              {{on "input" (pick "target.value" (set this "description"))}}
+              {{on "input" (pick "target.value" (set this "descriptionBuffer"))}}
             >{{this.description}}</textarea>
           </div>
 
@@ -164,7 +182,7 @@ export default class SchoolVocabularyNewTermComponent extends Component {
               {{#if this.save.isRunning}}
                 <LoadingSpinner />
               {{else}}
-                {{t "general.add"}}
+                {{t "general.save"}}
               {{/if}}
             </button>
             <button type="button" class="cancel text" {{on "click" @cancel}} data-test-cancel>

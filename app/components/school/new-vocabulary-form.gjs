@@ -8,6 +8,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import focus from '../../modifiers/focus';
 import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
@@ -53,7 +54,7 @@ export default class SchoolNewVocabularyFormComponent extends Component {
     if (!isValid) {
       return false;
     }
-    await this.args.save.linked().perform(this.title, this.args.school, true);
+    await this.args.save.unlinked().perform(this.title, this.args.school, true);
     this.validations.clearErrorDisplay();
   });
 
@@ -70,6 +71,9 @@ export default class SchoolNewVocabularyFormComponent extends Component {
   <template>
     {{#let (uniqueId) as |templateId|}}
       <div class="school-new-vocabulary-form" data-test-school-new-vocabulary-form ...attributes>
+        <div class="title">
+          <h3>{{t "general.newVocabulary"}}</h3>
+        </div>
         <div class="form">
           <div class="item" data-test-title>
             <label for="title-{{templateId}}">
@@ -79,6 +83,8 @@ export default class SchoolNewVocabularyFormComponent extends Component {
               id="title-{{templateId}}"
               type="text"
               value={{this.title}}
+              placeholder={{t "general.vocabularyPlaceholder"}}
+              {{focus}}
               {{on "input" (pick "target.value" (set this "title"))}}
               {{on "keyup" (perform this.saveOrCancel)}}
               {{this.validations.attach "title"}}

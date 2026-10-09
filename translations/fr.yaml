@@ -18,6 +18,8 @@ general:
   add: Ajouté
   addCohort: Ajouté cohorte
   addNew: Ajouté Neuf
+  addSubTerm: Ajouté Sous-Terme
+  addTerm: Ajouté Terme
   admin: Admin
   administrator: Administrateur
   administratorCount: "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
@@ -31,7 +33,6 @@ general:
   allMaterials: Tous les matériaux
   allOtherMembers: "Tous les autres membres du {topLevelGroupTitle}"
   allSchools: Toutes les écoles
-  allVocabularies: Touts vocabulaires
   allWeeks: Toutes les Semaines
   anything: Quelque chose
   apiVersionMismatch: API  conflit de version
@@ -111,7 +112,6 @@ general:
   clearErrors: Supprîme les Erreurs et Retour à Ilios
   clearFilters: Effacerez les Filtres
   clerkshipType: Genre de Stage
-  clickToAddTermDescription: Cliquez pour ajouter des notices descriptives
   clickToEdit: Clicquez pour modifier
   close: Fermé
   cohort: Cohorte
@@ -137,6 +137,7 @@ general:
   confirmRemoveSession: Êtes vous sûr de vouloir supprimer cette séance? Ça action ne peut pas être défait.
   confirmRemoveSessionOffering: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants? Ça action ne peut pas être défait."
   confirmRemoveSessionType: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
+  confirmRemoveTerm: "Voulez-vous vraiment supprimer ce terme ? Cette action ne peut pas être annulée."
   confirmRemoveVocabulary: Êtes vous sûr de vouloir supprimer cette vocabulaire? Cette action ne peut être annulée.
   connectionLost: Connexion perdu
   contentAuthor: Auteur
@@ -241,6 +242,7 @@ general:
   durationInYears: Durée (en Années)
   durationMinutes: "{count, plural, =1 {1 une minute} other {# minutes}}"
   edit: Edite
+  editTerm: Edite Terme
   email: Email
   emails: Emails
   enabled: Activé
@@ -469,6 +471,8 @@ general:
   newSchool: École nouvelle
   newSession: Session neuf
   newSessionType: Nuevo type de session
+  newSubTerm: Nouveau sous-terme
+  newTerm: Nouveau terme
   newToken: Nouveau jeton
   newUpdates: Nouvelles mises à jour
   newUser: Nouvel utilisateur
@@ -685,7 +689,6 @@ general:
   studentAdvisorCount: "Il y a {count, plural, =1 {une camarade-conseil} other {# camarades-conseil}}"
   studentAdvisors: Camarades-Conseil
   subCompetencyCount: "{count, plural, =1 {Il y a 1 sous-subcompétence} other {Il y a de # sous-subcompétences}}"
-  subTerms: Sous-termes
   subgroupName: nom de sous-groupe
   subgroups: Sous-groupes
   subjectReports: Rapports Pédagogiques
@@ -712,7 +715,6 @@ general:
   thereAreXTerms: "{count, plural, =1 {Il y a 1 terme} other {Il y a # termes}}"
   thereAreXTypes: "{count, plural, =1 {Il y a 1 type} other {Il y a # types}}"
   thisReportIsNoLongerAvailable: "Ce rapport n'est plus disponsible."
-  thisTermHasSubTerms: Ce terme a des sous-termes.
   thursday: Jeudi
   time: Temps
   timedRelease: Période Limitée
@@ -781,8 +783,11 @@ general:
   vocabularies: Vocabulaires
   vocabulariesBySessionType: Vocabulaires par Type de Seance
   vocabulary: Vocabulaire
+  vocabularyPlaceholder: Ajoutez un titre pour ce vocabulaire
+  vocabularyTermPlaceholder: Ajoutez un titre pour ce terme vocabulaire
   vocabularyTerms: Termes Vocabulaire
   vocabularyTermsFor: "Termes Vocabulaire par {subject}"
+  vocabularyTitle: Titre de vocabulaire
   waitSaving: Travaille dessus... un moment...
   weak: Faible
   wednesday: Mercredi

@@ -81,10 +81,10 @@ module('Integration | Component | school/new-vocabulary-form', function (hooks) 
     const newTitle = 'New Vocabulary';
     this.set('school', this.schoolModel);
     this.set('save', {
-      linked() {
+      unlinked() {
         return {
           perform: (title, school, active) => {
-            assert.step('save.linked.perform called');
+            assert.step('save.unlinked.perform called');
             assert.strictEqual(title, newTitle);
             assert.strictEqual(parseInt(school.id, 10), 1);
             assert.true(active);
@@ -99,6 +99,6 @@ module('Integration | Component | school/new-vocabulary-form', function (hooks) 
     );
     await component.title.set(newTitle);
     await component.submit.click();
-    assert.verifySteps(['save.linked.perform called']);
+    assert.verifySteps(['save.unlinked.perform called']);
   });
 });
