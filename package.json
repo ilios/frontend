@@ -76,7 +76,7 @@
     "@msw/data": "^1.1.8",
     "@popperjs/core": "^2.11.8",
     "@rollup/plugin-babel": "^7.0.0",
-    "@sentry/ember": "^10.76.1",
+    "@sentry/ember": "^11.4.0",
     "@warp-drive/build-config": "5.9.1",
     "@warp-drive/core-types": "5.9.1",
     "@warp-drive/ember": "5.9.1",
