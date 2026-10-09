@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "49.1.0",
+  "version": "50.0.0",
   "private": true,
   "description": "Curriculum Management System for the Health Professions",
   "repository": "https://github.com/ilios/frontend",
