@@ -1,9 +1,15 @@
 'use strict';
 
-const base = require('./testem/base');
+const base = require('./base.cjs');
+const storeFirefoxPreferences = require('./firefox-preferences.cjs');
+
+const firefoxUserJsPath = storeFirefoxPreferences([
+  ['layout.css.prefers-color-scheme.content-override', 0],
+]);
 
 module.exports = {
   ...base,
+  firefox_user_js: firefoxUserJsPath,
   launchers: {
     SafariApplescript: {
       protocol: 'browser',

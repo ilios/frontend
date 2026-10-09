@@ -3,6 +3,9 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
 import { launchWorker } from '../utils/launch-worker';
+import translationsForEnUs from 'virtual:ember-intl/translations/en-us';
+import translationsForEs from 'virtual:ember-intl/translations/es';
+import translationsForFr from 'virtual:ember-intl/translations/fr';
 
 export default class AuthenticatedRoute extends Route {
   @service currentUser;
@@ -17,6 +20,7 @@ export default class AuthenticatedRoute extends Route {
 
   async beforeModel(transition) {
     await launchWorker();
+    this.#loadTranslations();
     await this.session.setup(transition.targetName === 'lti-login');
     // We need a default locale, preferences will always return something
     this.intl.setLocale(this.preferences.locale);
@@ -53,5 +57,11 @@ export default class AuthenticatedRoute extends Route {
     if (this.currentUser.currentUserId) {
       Sentry.setUser({ id: this.currentUser.currentUserId });
     }
+  }
+
+  #loadTranslations() {
+    this.intl.addTranslations('en-us', translationsForEnUs);
+    this.intl.addTranslations('es', translationsForEs);
+    this.intl.addTranslations('fr', translationsForFr);
   }
 }

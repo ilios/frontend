@@ -1,0 +1,16 @@
+/* stylelint-disable property-disallowed-list */
+noscript {
+  p {
+    background-color: light-dark(hsl(0, 0%, 98%), hsl(345, 6%, 13%));
+    border: 2px dashed hsl(30, 100%, 40%);
+    color: light-dark(hsl(345, 6%, 13%), hsl(0, 0%, 98%));
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 2rem;
+    padding: 2rem;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}

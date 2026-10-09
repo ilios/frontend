@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+export default {
   plugins: ['stylelint-scales'],
   extends: ['stylelint-config-recommended-scss'],
   rules: {

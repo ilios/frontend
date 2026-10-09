@@ -1,9 +1,9 @@
 /* eslint camelcase: 0 */
 'use strict';
 
-const base = require('./base');
-const createDownloadDirectory = require('./create-download-directory');
-const storeFirefoxPreferences = require('./firefox-preferences');
+const base = require('./base.cjs');
+const createDownloadDirectory = require('./create-download-directory.cjs');
+const storeFirefoxPreferences = require('./firefox-preferences.cjs');
 
 const downloadDir = createDownloadDirectory();
 

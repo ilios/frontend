@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import t from 'ember-intl/helpers/t';
 import datePicker from '../modifiers/date-picker';
 import focus from '../modifiers/focus';
+import 'flatpickr/dist/flatpickr.css';
 
 export default class DatePickerComponent extends Component {
   @service intl;
