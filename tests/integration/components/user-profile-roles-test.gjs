@@ -28,6 +28,7 @@ module('Integration | Component | user profile roles', function (hooks) {
     this.set('user', userModel);
     await render(<template><UserProfileRoles @user={{this.user}} /></template>);
 
+    assert.strictEqual(component.title, 'Roles');
     assert.strictEqual(component.student.value, 'Yes');
     assert.strictEqual(component.formerStudent.value, 'No');
     assert.strictEqual(component.enabled.value, 'Yes');

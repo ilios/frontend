@@ -5,18 +5,23 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="user-profile-bio-details" data-test-user-profile-bio-details ...attributes>
-    <div class="actions">
-      {{#if @isManageable}}
-        <button
-          aria-label={{t "general.manage"}}
-          type="button"
-          class="manage"
-          {{on "click" (fn @setIsManaging true)}}
-          data-test-manage
-        >
-          <FaIcon @icon={{faPenToSquare}} />
-        </button>
-      {{/if}}
+    <div class="user-profile-bio-header">
+      <h2 class="title" data-test-title>
+        {{t "general.profile"}}
+      </h2>
+      <div class="actions">
+        {{#if @isManageable}}
+          <button
+            aria-label={{t "general.manage"}}
+            type="button"
+            class="manage"
+            {{on "click" (fn @setIsManaging true)}}
+            data-test-manage
+          >
+            <FaIcon @icon={{faPenToSquare}} />
+          </button>
+        {{/if}}
+      </div>
     </div>
 
     {{#unless @userAuthentication.username}}

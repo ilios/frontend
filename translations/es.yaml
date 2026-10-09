@@ -540,6 +540,7 @@ general:
   primaryCohort: Clase de la Graduación Principal
   primarySchool: Escuela Primaria
   printSummary: Sumario Printado
+  profile: Perfil
   program: Programa
   programAndCohort: Programa / Clase de La Graduación
   programCohorts: Clases de La Graduación
@@ -587,6 +588,7 @@ general:
   resultsCount: "{count, plural, =1 {1 resultado} other {# resultados}}"
   resultsSummary: Resumen de Resultados
   returnToPreviousPage: Volver a la Página Anterior
+  roles: Roles
   root: Root
   run: Ejecutar
   runReport: Ejecutar Informe
