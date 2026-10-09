@@ -13,9 +13,17 @@ jobs:
   remove-approval:
     if: contains(github.event.pull_request.labels.*.name, 'approve visual diff')
     runs-on: ubuntu-latest
-
     steps:
       - name: Remove Label
         run: gh pr edit ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --remove-label "approve visual diff"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  remove-safe:
+    if: contains(github.event.pull_request.labels.*.name, 'safe to deploy')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove Label
+        run: gh pr edit ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --remove-label "safe to deploy"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
