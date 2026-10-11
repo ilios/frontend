@@ -8,6 +8,7 @@ const definition = {
   manage: {
     scope: '[data-test-manage]',
   },
+  title: text('[data-test-title]'),
   student: {
     scope: '[data-test-student]',
     label: text('label'),

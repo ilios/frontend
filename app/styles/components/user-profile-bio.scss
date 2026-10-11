@@ -1,15 +1,24 @@
 @use "../mixins" as m;
 
 .user-profile-bio {
+  .user-profile-bio-header {
+    @include m.detail-container-header;
+
+    h2 {
+      @include m.ilios-heading-h3;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
   label {
     @include m.ilios-label;
   }
 
-  .actions {
-    @include m.detail-container-actions;
-  }
-
   .error {
+    padding-top: 1em;
     text-align: center;
   }
 
@@ -29,7 +38,10 @@
       }
 
       &.synced-from-directory input {
-        background-color: light-dark(var(--transparent-green), var(--transparent-green));
+        background-color: light-dark(
+          var(--transparent-green),
+          var(--transparent-green)
+        );
         transition: background-color 500ms ease;
       }
     }

@@ -1,6 +1,18 @@
 @use "../mixins" as m;
 
 .user-profile-roles {
+  .user-profile-roles-header {
+    @include m.detail-container-header;
+
+    h2 {
+      @include m.ilios-heading-h3;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
   label {
     @include m.ilios-label;
   }
@@ -9,15 +21,7 @@
     border-top: 0.5px solid light-dark(var(--black), var(--grey));
   }
 
-  .actions {
-    @include m.detail-container-actions;
-  }
-
   .form {
-    grid-template-columns: 1fr;
-
-    .item {
-      min-height: auto;
-    }
+    padding: 1em 0 0;
   }
 }

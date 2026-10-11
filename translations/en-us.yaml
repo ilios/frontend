@@ -540,6 +540,7 @@ general:
   primaryCohort: Primary Cohort
   primarySchool: Primary School
   printSummary: Print Summary
+  profile: Profile
   program: Program
   programAndCohort: Program / Cohort
   programCohorts: Program Cohorts
@@ -587,6 +588,7 @@ general:
   resultsCount: "{count, plural, =1 {1 result} other {# results}}"
   resultsSummary: Results Summary
   returnToPreviousPage: Return to Previous Page
+  roles: Roles
   root: Root
   run: Run
   runReport: Run Report

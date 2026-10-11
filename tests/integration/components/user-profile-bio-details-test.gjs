@@ -56,6 +56,7 @@ module('Integration | Component | user profile bio details', function (hooks) {
       </template>,
     );
 
+    assert.strictEqual(component.title, 'Profile');
     assert.strictEqual(
       component.school,
       `Primary School: ${schoolModel.title}`,
@@ -137,6 +138,7 @@ module('Integration | Component | user profile bio details', function (hooks) {
       </template>,
     );
 
+    assert.strictEqual(component.title, 'Profile');
     assert.strictEqual(
       component.school,
       `Primary School: ${schoolModel.title}`,
