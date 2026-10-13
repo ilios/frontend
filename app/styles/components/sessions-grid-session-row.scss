@@ -1,7 +1,7 @@
 @use "../mixins" as m;
 
 .sessions-grid-session-row {
-  padding: 0.25rem 0;
+  padding: 0.25rem;
 
   .expand-collapse-control {
     justify-content: flex-start;
