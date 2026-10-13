@@ -1,6 +1,6 @@
-@use "ilios-heading";
+@use "../mixins/ilios-heading";
 
-@mixin ilios-fieldset {
+.ilios-fieldset {
   border: 1px solid light-dark(var(--light-blue), var(--blue));
   border-radius: 10px;
 
