@@ -427,8 +427,8 @@ importers:
         specifier: ^9.1.0
         version: 9.3.0(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2)
       ember-keyboard:
-        specifier: ^9.0.4
-        version: 9.0.4(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2)
+        specifier: ^10.0.0
+        version: 10.0.0(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(ember-modifier@4.3.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2)
       ember-load-initializers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.12.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))
@@ -4204,10 +4204,11 @@ packages:
       '@ember/test-helpers':
         optional: true
 
-  ember-keyboard@9.0.4:
-    resolution: {integrity: sha512-lReOVCwvPt8aTLynuyh1rVoZx9LITqcwdCiUltGMkoJNyuE8snuGMIEpEj3RtiPLWm0UCnTfod8bjEqOoEEFtA==}
+  ember-keyboard@10.0.0:
+    resolution: {integrity: sha512-XSJ4FAXfKE1FRdeWf4+kAJdHSoOOTWXAE4UiciKElkhSAjUZvvCm4Hune6s6dGL20qM6bS4g3F6MhhwWh8TeSw==}
     peerDependencies:
       '@ember/test-helpers': ^2.6.0 || ^3.0.0 || >= 4.0.0
+      ember-modifier: ^2.1.2 || ^3.1.0 || ^4.0.0
     peerDependenciesMeta:
       '@ember/test-helpers':
         optional: true
@@ -13405,9 +13406,10 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-keyboard@9.0.4(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2):
+  ember-keyboard@10.0.0(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(ember-modifier@4.3.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2):
     dependencies:
       '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
+      decorator-transforms: 2.4.0(@babel/core@7.29.7(supports-color@10.2.2))
       ember-modifier: 4.3.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2)
     optionalDependencies:
       '@ember/test-helpers': 5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2)
