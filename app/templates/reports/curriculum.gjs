@@ -3,6 +3,7 @@ import t from 'ember-intl/helpers/t';
 import Curriculum from 'frontend/components/reports/curriculum';
 import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
+import perform from 'ember-concurrency/helpers/perform';
 <template>
   {{pageTitle (t "general.curriculumReports")}}
   <Curriculum
@@ -16,5 +17,7 @@ import { fn } from '@ember/helper';
     @run={{fn (set @controller "run") true}}
     @stop={{fn (set @controller "run") false}}
     @showReportResults={{@controller.run}}
+    @titleFilter={{@controller.titleFilter}}
+    @changeTitleFilter={{fn (perform @controller.changeTitleFilter)}}
   />
 </template>
