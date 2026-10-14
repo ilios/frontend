@@ -21,6 +21,7 @@ const definition = {
     }),
     value: property('value', 'select'),
   },
+  setFilter: fillable('[data-test-title-filter]'),
   years: collection('[data-test-year]', {
     title: text('[data-test-expand]'),
     toggle: clickable('[data-test-expand]'),

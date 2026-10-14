@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
+import { task, timeout } from 'ember-concurrency';
 import currentAcademicYear from '../../utils/current-academic-year';
 
 export default class ReportsCurriculumController extends Controller {
@@ -9,6 +10,7 @@ export default class ReportsCurriculumController extends Controller {
   @tracked years = String(currentAcademicYear());
   @tracked report = null;
   @tracked run = false;
+  @tracked titleFilter = null;
 
   get selectedCourseIds() {
     return this.courses?.split('-') ?? [];
@@ -34,4 +36,10 @@ export default class ReportsCurriculumController extends Controller {
       this.years = years.join('-');
     }
   };
+
+  changeTitleFilter = task({ restartable: true }, async (value) => {
+    this.titleFilter = value;
+    await timeout(250);
+    return value;
+  });
 }
