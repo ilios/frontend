@@ -331,8 +331,8 @@ importers:
         specifier: ^2.24.18
         version: 2.24.18
       axe-core:
-        specifier: ~4.13.0
-        version: 4.13.0
+        specifier: ~4.14.0
+        version: 4.14.0
       babel-plugin-ember-template-compilation:
         specifier: ^3.1.0
         version: 3.1.0
@@ -353,7 +353,7 @@ importers:
         version: 5.2.1(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2)
       ember-a11y-testing:
         specifier: ^8.0.1
-        version: 8.0.1(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(@ember/test-waiters@4.1.2(supports-color@10.2.2))(axe-core@4.13.0)(qunit@2.26.0)(supports-color@10.2.2)
+        version: 8.0.1(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(@ember/test-waiters@4.1.2(supports-color@10.2.2))(axe-core@4.14.0)(qunit@2.26.0)(supports-color@10.2.2)
       ember-async-data:
         specifier: ^2.0.1
         version: 2.0.1(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2)
@@ -2701,8 +2701,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axe-core@4.13.0:
-    resolution: {integrity: sha512-UzGt8zg7Ny8djbYMhxl2zuEevVa7r2gJjYY5Lwr1xM7+XU2nd6CkIWFTVcCIbAP63vSz71NaVyyuSk9lHKcy0A==}
+  axe-core@4.14.0:
+    resolution: {integrity: sha512-9WTZxEjsZ7b13TH8JPmbV2z8CHbl80/2hm3XPEG4JgNdQLK81IBRXmSxHfMAOkSqQeRxT/0dwNDz2GOm3zzpcQ==}
     engines: {node: '>=4'}
 
   babel-code-frame@6.26.0:
@@ -11148,7 +11148,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axe-core@4.13.0: {}
+  axe-core@4.14.0: {}
 
   babel-code-frame@6.26.0:
     dependencies:
@@ -12678,12 +12678,12 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-a11y-testing@8.0.1(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(@ember/test-waiters@4.1.2(supports-color@10.2.2))(axe-core@4.13.0)(qunit@2.26.0)(supports-color@10.2.2):
+  ember-a11y-testing@8.0.1(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(@ember/test-waiters@4.1.2(supports-color@10.2.2))(axe-core@4.14.0)(qunit@2.26.0)(supports-color@10.2.2):
     dependencies:
       '@ember/test-helpers': 5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2)
       '@ember/test-waiters': 4.1.2(supports-color@10.2.2)
       '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
-      axe-core: 4.13.0
+      axe-core: 4.14.0
       decorator-transforms: 2.4.0(@babel/core@7.29.7(supports-color@10.2.2))
     optionalDependencies:
       qunit: 2.26.0
