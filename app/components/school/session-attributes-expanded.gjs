@@ -78,8 +78,8 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
       showSessionSpecialAttireRequired: this.showSessionSpecialAttireRequired,
       showSessionSpecialEquipmentRequired: this.showSessionSpecialEquipmentRequired,
     };
-    this.resetFlipped(); //reset before we save, otherwise there will be a flash of the old values
     await this.args.saveAll(all);
+    this.resetFlipped(); //reset after we save, otherwise there will be a flash of the old values
   });
   <template>
     <section
