@@ -9,7 +9,7 @@
   padding: 0;
 
   .title {
-    @include m.detail-container-title-style;
+    @include m.detail-container-title;
     background-color: light-dark(var(--white), var(--black));
     height: 2.1rem;
     margin: 0 0.5rem;

@@ -13,10 +13,6 @@
   }
 }
 
-@mixin detail-container-title-style() {
-  @include ilios-heading.ilios-heading-h5;
-}
-
 @mixin detail-container-header() {
   align-items: center;
   display: flex;
@@ -29,7 +25,7 @@
 }
 
 @mixin detail-container-title() {
-  @include detail-container-title-style;
+  @include ilios-heading.ilios-heading-h5;
 }
 
 @mixin detail-container-actions() {
