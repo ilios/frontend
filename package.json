@@ -43,7 +43,7 @@
     "@babel/core": "^7.29.0",
     "@babel/eslint-parser": "^7.28.6",
     "@babel/plugin-transform-runtime": "^7.29.0",
-    "@babel/runtime": "^7.29.2",
+    "@babel/runtime": "^8.0.7",
     "@ember-data/adapter": "5.9.1",
     "@ember-data/json-api": "5.9.1",
     "@ember-data/legacy-compat": "5.9.1",
