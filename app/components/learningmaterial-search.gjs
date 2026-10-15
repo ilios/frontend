@@ -23,8 +23,10 @@ export default class LearningmaterialSearchComponent extends Component {
   @tracked searchResultsPerPage = 50;
   @tracked hasMoreSearchResults = false;
   @tracked searchReturned = false;
+  @tracked showResults = false;
 
   search = task({ restartable: true }, async (query) => {
+    this.showResults = true;
     if (query.trim() === '') {
       this.searchReturned = false;
       this.searchPage = 1;
@@ -61,6 +63,20 @@ export default class LearningmaterialSearchComponent extends Component {
     this.query = '';
   }
 
+  @action
+  focus() {
+    this.showResults = true;
+  }
+
+  @action
+  focusOut(event) {
+    const newFocus = event.relatedTarget;
+
+    if (!event.currentTarget.contains(newFocus)) {
+      this.showResults = false;
+    }
+  }
+
   searchMore = task({ drop: true }, async () => {
     const results = await this.store.query('learning-material', {
       q: this.query,
@@ -88,92 +104,99 @@ export default class LearningmaterialSearchComponent extends Component {
     element.style.width = `${element.previousElementSibling.clientWidth}px`;
   });
   <template>
-    <div class="learningmaterial-search" data-test-learningmaterial-search>
+    <div
+      class="learningmaterial-search"
+      {{on "focusout" this.focusOut}}
+      data-test-learningmaterial-search
+    >
       <SearchBox
         placeholder={{t "general.searchPlaceholder"}}
         @liveSearch={{true}}
         @search={{perform this.search}}
         @clear={{this.clear}}
+        @focus={{this.focus}}
       />
-      {{#if this.search.isRunning}}
-        <ul class="lm-search-results" {{this.resultsAppear}}>
-          <li>
-            {{t "general.currentlySearchingPrompt"}}
-          </li>
-        </ul>
-      {{else if this.searchResults.length}}
-        <ul class="lm-search-results" {{this.resultsAppear}}>
-          {{#each this.searchResults as |learningMaterial|}}
-            <li class={{if (includes learningMaterial.id @currentMaterialIds) "disabled"}}>
-              <button
-                class="result"
-                type="button"
-                {{on "click" (perform this.addLearningMaterial learningMaterial)}}
-              >
-                <div class="learning-material-title">
-                  <LmTypeIcon
-                    @type={{learningMaterial.type}}
-                    @mimetype={{learningMaterial.mimetype}}
-                  />
-                  <span data-test-title>
-                    {{learningMaterial.title}}
-                  </span>
-                </div>
-                <span class="learning-material-description">
-                  {{! template-lint-disable no-triple-curlies }}
-                  {{{learningMaterial.description}}}
-                </span>
-                {{#if learningMaterial.status.title}}
-                  <span class="learning-material-status">
-                    {{learningMaterial.status.title}}
-                  </span>
-                {{/if}}
-                <ul class="learning-material-properties">
-                  <li>
-                    {{t "general.owner"}}:
-                    {{learningMaterial.owningUser.fullName}}
-                  </li>
-                  {{#if learningMaterial.originalAuthor}}
-                    <li>
-                      {{t "general.contentAuthor"}}:
-                      {{learningMaterial.originalAuthor}}
-                    </li>
-                  {{/if}}
-                  <li>
-                    {{t "general.uploadDate"}}:
-                    {{formatDate
-                      learningMaterial.uploadDate
-                      day="2-digit"
-                      month="2-digit"
-                      year="numeric"
-                    }}
-                  </li>
-                </ul>
-              </button>
-            </li>
-          {{/each}}
-          {{#if this.hasMoreSearchResults}}
+      {{#if this.showResults}}
+        {{#if this.search.isRunning}}
+          <ul class="lm-search-results" {{this.resultsAppear}}>
             <li>
-              <button
-                disabled={{if this.searchMore.isRunning true}}
-                type="button"
-                data-test-show-more
-                {{on "click" (perform this.searchMore)}}
-              >
-                {{#if this.searchMore.isRunning}}
-                  <LoadingSpinner />
-                {{/if}}
-                {{t "general.showMore"}}
-              </button>
+              {{t "general.currentlySearchingPrompt"}}
             </li>
-          {{/if}}
-        </ul>
-      {{else if this.searchReturned}}
-        <ul class="lm-search-results" {{this.resultsAppear}}>
-          <li>
-            {{t "general.noSearchResultsPrompt"}}
-          </li>
-        </ul>
+          </ul>
+        {{else if this.searchResults.length}}
+          <ul class="lm-search-results" {{this.resultsAppear}}>
+            {{#each this.searchResults as |learningMaterial|}}
+              <li class={{if (includes learningMaterial.id @currentMaterialIds) "disabled"}}>
+                <button
+                  class="result"
+                  type="button"
+                  {{on "click" (perform this.addLearningMaterial learningMaterial)}}
+                >
+                  <div class="learning-material-title">
+                    <LmTypeIcon
+                      @type={{learningMaterial.type}}
+                      @mimetype={{learningMaterial.mimetype}}
+                    />
+                    <span data-test-title>
+                      {{learningMaterial.title}}
+                    </span>
+                  </div>
+                  <span class="learning-material-description">
+                    {{! template-lint-disable no-triple-curlies }}
+                    {{{learningMaterial.description}}}
+                  </span>
+                  {{#if learningMaterial.status.title}}
+                    <span class="learning-material-status">
+                      {{learningMaterial.status.title}}
+                    </span>
+                  {{/if}}
+                  <ul class="learning-material-properties">
+                    <li>
+                      {{t "general.owner"}}:
+                      {{learningMaterial.owningUser.fullName}}
+                    </li>
+                    {{#if learningMaterial.originalAuthor}}
+                      <li>
+                        {{t "general.contentAuthor"}}:
+                        {{learningMaterial.originalAuthor}}
+                      </li>
+                    {{/if}}
+                    <li>
+                      {{t "general.uploadDate"}}:
+                      {{formatDate
+                        learningMaterial.uploadDate
+                        day="2-digit"
+                        month="2-digit"
+                        year="numeric"
+                      }}
+                    </li>
+                  </ul>
+                </button>
+              </li>
+            {{/each}}
+            {{#if this.hasMoreSearchResults}}
+              <li>
+                <button
+                  disabled={{if this.searchMore.isRunning true}}
+                  type="button"
+                  data-test-show-more
+                  {{on "click" (perform this.searchMore)}}
+                >
+                  {{#if this.searchMore.isRunning}}
+                    <LoadingSpinner />
+                  {{/if}}
+                  {{t "general.showMore"}}
+                </button>
+              </li>
+            {{/if}}
+          </ul>
+        {{else if this.searchReturned}}
+          <ul class="lm-search-results" {{this.resultsAppear}}>
+            <li>
+              {{t "general.noSearchResultsPrompt"}}
+            </li>
+          </ul>
+        {{/if}}
       {{/if}}
     </div>
   </template>
