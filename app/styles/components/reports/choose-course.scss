@@ -1,9 +1,13 @@
 @use "../../mixins" as m;
 
 .reports-choose-course {
-  .schools {
-    margin: 0 0 1em 0;
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-bottom: 0.5em;
   }
+
   button {
     @include m.ilios-button-reset;
     font-weight: 600;

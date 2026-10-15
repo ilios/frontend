@@ -107,6 +107,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       year: currentAcademicYear() + 1,
     });
     await page.visitCurriculumReports();
+
     assert.strictEqual(currentRouteName(), 'reports.curriculum');
     assert.ok(page.switcher.curriculum.isActive);
     assert.notOk(page.switcher.subject.isActive);
@@ -155,6 +156,61 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     assert.strictEqual(page.curriculum.chooseCourse.years.length, 1);
     assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
     await takeScreenshot(assert, 'school with current year');
+  });
+
+  test('visiting reports with title filter', async function (assert) {
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear() - 1,
+    });
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear(),
+    });
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear() + 1,
+    });
+    await page.visitCurriculumReports({ titleFilter: '2' });
+
+    assert.strictEqual(page.curriculum.chooseCourse.years.length, 1);
+    assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[1].isExpanded);
+    assert.notOk(page.curriculum.chooseCourse.years[2].isExpanded);
+
+    await takeScreenshot(assert);
+  });
+
+  test('filtering reports with title filter', async function (assert) {
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear() - 1,
+    });
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear(),
+    });
+    await this.server.createList('course', 2, {
+      school: this.school,
+      year: currentAcademicYear() + 1,
+    });
+    await page.visitCurriculumReports();
+
+    assert.strictEqual(page.curriculum.chooseCourse.years.length, 3);
+    await page.curriculum.chooseCourse.setFilter('2');
+    assert.strictEqual(page.curriculum.chooseCourse.years.length, 1);
+    await page.curriculum.chooseCourse.setFilter('');
+    assert.strictEqual(page.curriculum.chooseCourse.years.length, 3);
+    await page.curriculum.chooseCourse.setFilter('glaxnorp');
+    assert.strictEqual(page.curriculum.chooseCourse.years.length, 0);
+    await page.curriculum.chooseCourse.setFilter('course');
+    assert.strictEqual(page.curriculum.chooseCourse.years.length, 3);
+    await page.curriculum.chooseCourse.setFilter('course 3');
+    assert.strictEqual(page.curriculum.chooseCourse.years.length, 1);
+    await page.curriculum.chooseCourse.setFilter('');
+    assert.strictEqual(page.curriculum.chooseCourse.years.length, 3);
+
+    await takeScreenshot(assert);
   });
 
   test('run session objectives report, single school', async function (assert) {

@@ -143,6 +143,8 @@ export default class ReportsCurriculumComponent extends Component {
           @add={{this.pickCourse}}
           @remove={{this.removeCourse}}
           @removeAll={{this.removeAll}}
+          @titleFilter={{@titleFilter}}
+          @changeTitleFilter={{@changeTitleFilter}}
         />
       {{/if}}
     </div>

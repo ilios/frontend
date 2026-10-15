@@ -85,6 +85,27 @@ export default class ReportsCurriculumChooseCourseComponent extends Component {
     });
   }
 
+  get coursesFilteredByTitle() {
+    if (!this.args.titleFilter) {
+      return this.selectedSchoolYears;
+    }
+    const title = this.args.titleFilter.trim().toLowerCase() ?? '';
+    return this.selectedSchoolYears
+      .map((year) => ({
+        ...year,
+        courses: year.courses.filter((course) => {
+          return (
+            course.title?.trim().toLowerCase().includes(title) ||
+            course.externalId?.trim().toLowerCase().includes(title) ||
+            `${course.title?.trim().toLowerCase()} (${course.externalId
+              ?.trim()
+              .toLowerCase()})`.includes(title)
+          );
+        }),
+      }))
+      .filter((year) => year.courses.length);
+  }
+
   toggleYear = (year, isExpanded) => {
     if (isExpanded) {
       this.args.setExpandedYears(this.args.expandedYears.filter((y) => Number(y) !== year));
@@ -102,22 +123,35 @@ export default class ReportsCurriculumChooseCourseComponent extends Component {
   };
   <template>
     <div class="reports-choose-course" data-test-reports-curriculum-choose-course>
-      <div class="schools" data-test-schools>
-        <FaIcon @icon={{faBuildingColumns}} />
-        {{#if (gt this.filteredSchools.length 1)}}
-          <select
-            aria-label={{t "general.filterBySchool"}}
-            {{on "change" (pick "target.value" (set this "selectedSchoolId"))}}
-          >
-            {{#each (sortBy "title" this.filteredSchools) as |school|}}
-              <option value={{school.id}} selected={{eq school.id this.bestSelectedSchoolId}}>
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{this.selectedSchool.title}}
-        {{/if}}
+      <div class="actions">
+        <div class="schools" data-test-schools>
+          <FaIcon @icon={{faBuildingColumns}} />
+          {{#if (gt this.filteredSchools.length 1)}}
+            <select
+              aria-label={{t "general.filterBySchool"}}
+              {{on "change" (pick "target.value" (set this "selectedSchoolId"))}}
+            >
+              {{#each (sortBy "title" this.filteredSchools) as |school|}}
+                <option value={{school.id}} selected={{eq school.id this.bestSelectedSchoolId}}>
+                  {{school.title}}
+                </option>
+              {{/each}}
+            </select>
+          {{else}}
+            {{this.selectedSchool.title}}
+          {{/if}}
+        </div>
+
+        <div class="titlefilter">
+          <input
+            value={{@titleFilter}}
+            {{on "input" (pick "target.value" @changeTitleFilter)}}
+            aria-label={{t "general.courseTitleFilterPlaceholder"}}
+            placeholder={{t "general.courseTitleFilterPlaceholder"}}
+            data-test-title-filter
+          />
+        </div>
+
         {{#if @selectedCourseIds.length}}
           <button
             type="button"
@@ -130,7 +164,8 @@ export default class ReportsCurriculumChooseCourseComponent extends Component {
           </button>
         {{/if}}
       </div>
-      {{#each this.selectedSchoolYears as |y|}}
+
+      {{#each this.coursesFilteredByTitle as |y|}}
         <ul class="year{{if y.isExpanded ' expanded' ' collapsed'}}" data-test-year>
           <li>
             <input
