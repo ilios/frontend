@@ -65,7 +65,7 @@ export default class DetailLearnerGroupsListComponent extends Component {
       {{#if this.isLoaded}}
         {{#each this.trees as |tree|}}
           <div class="trees" data-test-trees>
-            <fieldset data-test-tree>
+            <fieldset class="ilios-fieldset" data-test-tree>
               <legend>
                 {{tree.cohort.programYear.program.title}}
                 {{tree.cohort.title}}

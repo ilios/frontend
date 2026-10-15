@@ -383,7 +383,7 @@ export default class SessionOverviewComponent extends Component {
                 </span>
               </div>
               <fieldset
-                class="session-attributes{{unless this.showAttributes ' hidden'}}"
+                class="session-attributes ilios-fieldset{{unless this.showAttributes ' hidden'}}"
                 data-test-attributes
               >
                 <legend>{{t "general.sessionAttributes"}}</legend>
