@@ -40,7 +40,7 @@ export default class SessionService extends ESASessionService {
   }
 
   async handleInvalidation() {
-    Sentry.getCurrentScope().clear();
+    Sentry.setUser(null);
     if (config.environment !== 'test') {
       const logoutUrl = '/auth/logout';
       return this.fetch.getJsonFromApiHost(logoutUrl).then((response) => {
