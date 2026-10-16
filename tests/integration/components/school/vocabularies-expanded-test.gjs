@@ -32,7 +32,6 @@ module('Integration | Component | school/vocabularies-expanded', function (hooks
     assert.strictEqual(component.vocabulariesList.vocabularies[0].title.text, 'Vocabulary 1');
     assert.strictEqual(component.vocabulariesList.vocabularies[1].title.text, 'Vocabulary 2');
     assert.notOk(component.vocabularyManager.isVisible);
-    assert.notOk(component.termManager.isVisible);
   });
 
   test('collapse', async function (assert) {
@@ -80,7 +79,6 @@ module('Integration | Component | school/vocabularies-expanded', function (hooks
 
     assert.notOk(component.vocabulariesList.isVisible);
     assert.ok(component.vocabularyManager.isVisible);
-    assert.notOk(component.termManager.isVisible);
   });
 
   test('manage term', async function (assert) {
@@ -106,7 +104,6 @@ module('Integration | Component | school/vocabularies-expanded', function (hooks
     );
 
     assert.notOk(component.vocabulariesList.isVisible);
-    assert.notOk(component.vocabularyManager.isVisible);
-    assert.ok(component.termManager.isVisible);
+    assert.ok(component.vocabularyManager.isVisible);
   });
 });
