@@ -70,20 +70,6 @@ export default class SearchBoxComponent extends Component {
     }
   }
 
-  @action
-  focus() {
-    if (this.args.focus) {
-      this.args.focus();
-    }
-  }
-
-  @action
-  focusOut() {
-    if (this.args.focusout) {
-      this.args.focusout();
-    }
-  }
-
   searchTask = task({ restartable: true }, async () => {
     this.moveFocus();
     await timeout(DEBOUNCE_TIMEOUT);
@@ -101,8 +87,7 @@ export default class SearchBoxComponent extends Component {
         maxlength={{this.maxlength}}
         {{on "input" this.update}}
         {{on "keyup" this.keyUp}}
-        {{on "focus" this.focus}}
-        {{on "focusout" this.focusOut}}
+        ...attributes
       />
       <button
         aria-label={{t "general.search"}}

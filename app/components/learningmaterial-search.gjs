@@ -114,7 +114,7 @@ export default class LearningmaterialSearchComponent extends Component {
         @liveSearch={{true}}
         @search={{perform this.search}}
         @clear={{this.clear}}
-        @focus={{this.focus}}
+        {{on "focus" this.focus}}
       />
       {{#if this.showResults}}
         {{#if this.search.isRunning}}
