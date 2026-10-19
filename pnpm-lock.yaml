@@ -441,9 +441,6 @@ importers:
       ember-page-title:
         specifier: ^9.0.3
         version: 9.0.3(supports-color@10.2.2)
-      ember-popper-modifier:
-        specifier: ^4.1.1
-        version: 4.1.1(ember-source@6.12.1(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2)(webpack@5.112.0(lightningcss@1.33.0)(postcss@8.5.30)(uglify-js@3.19.3))
       ember-primitives:
         specifier: ^0.62.0
         version: 0.62.0(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(@ember/test-waiters@4.1.2(supports-color@10.2.2))(@glimmer/component@2.1.1(supports-color@10.2.2))(ember-modifier@4.3.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(ember-resources@7.1.0(@glimmer/component@2.1.1(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2)
@@ -4215,12 +4212,6 @@ packages:
   ember-page-title@9.0.3:
     resolution: {integrity: sha512-fedRHUsvq8tIZgOii8jTrfAyeq+la/9H5eAzhNNwEyzo7nDMmqK2SxsyBUGXprd8fOacsPabLlzlucMi/4mUpA==}
     engines: {node: 16.* || >= 18}
-
-  ember-popper-modifier@4.1.1:
-    resolution: {integrity: sha512-HntWV/ICZZ8qcAnw4HOwEieDekVZiMaG2HvEJj+g8VDGly1EJDItJ1uANZiYpf0vrBFP70VEroI1IhvCD6yx1A==}
-    engines: {node: 18.* || >= 20}
-    peerDependencies:
-      ember-source: '>= 4.8.0'
 
   ember-primitives@0.62.0:
     resolution: {integrity: sha512-olo9BdIyXkKleEKjQGq6Ya94iM7+Dr6TtT4+QLFyAzFQtHTENgy5rbEqFnbjw4qQmnibXR2s+jXxSDyPAQczhA==}
@@ -13405,20 +13396,6 @@ snapshots:
       '@simple-dom/document': 1.4.0
     transitivePeerDependencies:
       - supports-color
-
-  ember-popper-modifier@4.1.1(ember-source@6.12.1(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2)(webpack@5.112.0(lightningcss@1.33.0)(postcss@8.5.30)(uglify-js@3.19.3)):
-    dependencies:
-      '@babel/core': 7.29.7(supports-color@10.2.2)
-      '@popperjs/core': 2.11.8
-      ember-auto-import: 2.13.1(supports-color@10.2.2)(webpack@5.112.0(lightningcss@1.33.0)(postcss@8.5.30)(uglify-js@3.19.3))
-      ember-cli-babel: 8.3.2(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2)
-      ember-cli-htmlbars: 6.3.0(supports-color@10.2.2)
-      ember-modifier: 4.3.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2)
-      ember-source: 6.12.1(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2)
-    transitivePeerDependencies:
-      - '@glint/template'
-      - supports-color
-      - webpack
 
   ember-primitives@0.62.0(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-helpers@5.7.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(@ember/test-waiters@4.1.2(supports-color@10.2.2))(@glimmer/component@2.1.1(supports-color@10.2.2))(ember-modifier@4.3.0(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(ember-resources@7.1.0(@glimmer/component@2.1.1(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2):
     dependencies:
