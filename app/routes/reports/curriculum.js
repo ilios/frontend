@@ -14,6 +14,9 @@ export default class ReportsCurriculumRoute extends Route {
     years: {
       replace: true,
     },
+    titleFilter: {
+      replace: true,
+    },
   };
 
   beforeModel(transition) {

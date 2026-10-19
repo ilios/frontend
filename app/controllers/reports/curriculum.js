@@ -9,6 +9,7 @@ export default class ReportsCurriculumController extends Controller {
   @tracked years = String(currentAcademicYear());
   @tracked report = null;
   @tracked run = false;
+  @tracked titleFilter = null;
 
   get selectedCourseIds() {
     return this.courses?.split('-') ?? [];

@@ -16,5 +16,7 @@ import { fn } from '@ember/helper';
     @run={{fn (set @controller "run") true}}
     @stop={{fn (set @controller "run") false}}
     @showReportResults={{@controller.run}}
+    @titleFilter={{@controller.titleFilter}}
+    @changeTitleFilter={{set @controller "titleFilter"}}
   />
 </template>
