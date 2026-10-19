@@ -10,7 +10,7 @@ import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import LoadingSpinner from '../loading-spinner';
 import includes from '../../helpers/includes';
-import inViewport from 'ember-in-viewport/modifiers/in-viewport';
+import inViewport from '../../modifiers/in-viewport';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -174,7 +174,6 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
               {{inViewport
                 onEnter=(fn this.addYearInView year.year)
                 onExit=(fn this.removeYearInView year.year)
-                viewportSpy=true
               }}
               data-test-year
             >
@@ -184,7 +183,6 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
                 {{inViewport
                   onEnter=(fn this.addTitleInView year.year)
                   onExit=(fn this.removeTitleInView year.year)
-                  viewportSpy=true
                 }}
               >
                 <button

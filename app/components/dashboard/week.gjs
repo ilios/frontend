@@ -6,7 +6,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { LinkTo } from '@ember/routing';
 import { fn, hash } from '@ember/helper';
-import inViewport from 'ember-in-viewport/modifiers/in-viewport';
+import inViewport from '../../modifiers/in-viewport';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import WeekGlance from '../week-glance';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
@@ -65,7 +65,6 @@ export default class DashboardWeekComponent extends Component {
           {{inViewport
             onExit=(fn this.toggleBackToTop true)
             onEnter=(fn this.toggleBackToTop false)
-            viewportSpy=true
           }}
           data-test-weekly-link
         >
