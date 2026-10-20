@@ -98,8 +98,8 @@
     }
 
     .toggle:hover {
-      border-color: light-dark(var(--lighter-grey), var(--lightest-grey));
-      color: light-dark(var(--lighter-grey), var(--lightest-grey));
+      border-color: light-dark(var(--black), var(--lightest-grey));
+      color: light-dark(var(--black), var(--lightest-grey));
     }
   }
 
