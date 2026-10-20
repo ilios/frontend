@@ -328,8 +328,8 @@ importers:
         specifier: 5.9.1
         version: 5.9.1(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-waiters@4.1.2(supports-color@10.2.2))(supports-color@10.2.2)
       '@zumer/snapdom':
-        specifier: ^2.24.18
-        version: 2.24.18
+        specifier: ^3.3.4
+        version: 3.3.5
       axe-core:
         specifier: ~4.13.0
         version: 4.13.0
@@ -2456,8 +2456,8 @@ packages:
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
 
-  '@zumer/snapdom@2.24.18':
-    resolution: {integrity: sha512-wMw8lNY5l0pyarAv8jbe5ayOmrR2OUnK5KLtCwuhcLhFv88d2Y38Sertb+d9pn5g20Cet4eLCRXd3yFHcWiDIQ==}
+  '@zumer/snapdom@3.3.5':
+    resolution: {integrity: sha512-ACq+jJUArjoOEA36A5Ck0f9UQZ+K2Sty4CRX2LXd1TZHVZTvjISvXg/PTb54Fujjq8EgzjpoTR1s79zKm/TB/A==}
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -8183,8 +8183,8 @@ packages:
   watchpack@1.7.5:
     resolution: {integrity: sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==}
 
-  watchpack@2.6.3:
-    resolution: {integrity: sha512-s3NZy0QpTY9qGqzc0wtz4qI28z3+5qKbbAec4MV4G9N3CfgZ9wgvQRr0cl2jh/tqkWG1NWHkmVMHZpCamev5Wg==}
+  watchpack@2.6.1:
+    resolution: {integrity: sha512-8mk/LnXpQAiM2xKZhTkxikwly5GhL2Z+DWiLTkMa/E1Nfv9zURhHgiFyWvM4BWqW+LjIgL2AIS7JntEUx6v3vQ==}
     engines: {node: '>=10.13.0'}
 
   wcwidth@1.0.1:
@@ -10884,7 +10884,7 @@ snapshots:
 
   '@xtuc/long@4.2.2': {}
 
-  '@zumer/snapdom@2.24.18': {}
+  '@zumer/snapdom@3.3.5': {}
 
   abbrev@1.1.1: {}
 
@@ -18005,7 +18005,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  watchpack@2.6.3:
+  watchpack@2.6.1:
     dependencies:
       graceful-fs: 4.2.11
 
@@ -18067,7 +18067,7 @@ snapshots:
       minimizer-webpack-plugin: 5.13.0(lightningcss@1.33.0)(postcss@8.5.30)(uglify-js@3.19.3)(webpack@5.112.0(lightningcss@1.33.0)(postcss@8.5.30)(uglify-js@3.19.3))
       schema-utils: 4.6.0
       tapable: 2.3.3
-      watchpack: 2.6.3
+      watchpack: 2.6.1
       webpack-sources: 3.6.0
     transitivePeerDependencies:
       - '@minify-html/node'
