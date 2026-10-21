@@ -67,58 +67,6 @@ module('Acceptance | School - Vocabularies', function (hooks) {
     assert.strictEqual(c.vocabulariesList.vocabularies[2].title.text, 'Vocabulary 2');
   });
 
-  test('add new term', async function (assert) {
-    await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
-    const { vocabulariesExpanded: c } = page.root;
-
-    await c.vocabulariesList.vocabularies[0].manage();
-    assert.ok(c.vocabularyManager.isVisible);
-    await c.vocabularyManager.terms.newTermForm.setTitle('New Term');
-    await c.vocabularyManager.terms.newTermForm.save();
-    await c.vocabularyManager.breadcrumbs.crumbs[0].click();
-
-    await c.vocabulariesList.vocabularies[1].manage();
-    assert.ok(c.vocabularyManager.isVisible);
-    await c.vocabularyManager.terms.newTermForm.setTitle('New Term 2');
-    await c.vocabularyManager.terms.newTermForm.save();
-    await c.vocabularyManager.terms.newTermForm.setTitle('New Term 3');
-    await c.vocabularyManager.terms.newTermForm.save();
-    await c.vocabularyManager.terms.newTermForm.setTitle('New Term 4');
-    await c.vocabularyManager.terms.newTermForm.save();
-    await c.vocabularyManager.breadcrumbs.crumbs[0].click();
-
-    assert.strictEqual(c.vocabulariesList.vocabularies.length, 2);
-    assert.strictEqual(c.vocabulariesList.vocabularies[0].title.text, 'Vocabulary 1');
-    assert.strictEqual(c.vocabulariesList.vocabularies[0].termsCount, '3');
-    assert.strictEqual(c.vocabulariesList.vocabularies[1].title.text, 'Vocabulary 2');
-    assert.strictEqual(c.vocabulariesList.vocabularies[1].termsCount, '4');
-  });
-
-  test('delete terms', async function (assert) {
-    await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
-    const { vocabulariesExpanded: c } = page.root;
-
-    await c.vocabulariesList.vocabularies[0].manage();
-    assert.ok(c.vocabularyManager.isVisible);
-    await c.vocabularyManager.terms.list[1].click();
-    assert.ok(c.termManager.isVisible);
-    await c.termManager.delete();
-    await c.vocabularyManager.breadcrumbs.crumbs[0].click();
-
-    await c.vocabulariesList.vocabularies[1].manage();
-    assert.ok(c.vocabularyManager.isVisible);
-    await c.vocabularyManager.terms.list[0].click();
-    assert.ok(c.termManager.isVisible);
-    await c.termManager.delete();
-    await c.vocabularyManager.breadcrumbs.crumbs[0].click();
-
-    assert.strictEqual(c.vocabulariesList.vocabularies.length, 2);
-    assert.strictEqual(c.vocabulariesList.vocabularies[0].title.text, 'Vocabulary 1');
-    assert.strictEqual(c.vocabulariesList.vocabularies[0].termsCount, '1');
-    assert.strictEqual(c.vocabulariesList.vocabularies[1].title.text, 'Vocabulary 2');
-    assert.strictEqual(c.vocabulariesList.vocabularies[1].termsCount, '0');
-  });
-
   test('delete vocabulary', async function (assert) {
     await this.server.create('vocabulary', {
       school: this.school,

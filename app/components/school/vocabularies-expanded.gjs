@@ -2,8 +2,6 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import { findById } from '../../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
@@ -12,7 +10,6 @@ import { and, not } from 'ember-truth-helpers';
 import ExpandCollapseButton from '../expand-collapse-button';
 import { fn } from '@ember/helper';
 import NewVocabularyForm from './new-vocabulary-form';
-import VocabularyTermManager from './vocabulary-term-manager';
 import VocabularyManager from './vocabulary-manager';
 import VocabulariesList from './vocabularies-list';
 import LoadingSpinner from '../loading-spinner';
@@ -73,22 +70,6 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
     return vocabulary;
   }
 
-  get managedTerm() {
-    if (
-      !this.schoolVocabularies.length ||
-      !this.args.managedVocabularyId ||
-      !this.args.managedTermId
-    ) {
-      return null;
-    }
-
-    const { terms } = this.schoolVocabularies.find(({ vocabulary }) => {
-      return Number(this.args.managedVocabularyId) === Number(vocabulary.id);
-    });
-
-    return findById(terms, this.args.managedTermId);
-  }
-
   @action
   doCollapse() {
     if (this.isCollapsible && this.schoolVocabularies.length) {
@@ -98,15 +79,15 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
     }
   }
 
-  saveNewVocabulary = task({ drop: true }, async (title, school, active) => {
-    const vocabulary = this.store.createRecord('vocabulary', {
+  saveNewVocabulary = async (title, school, active) => {
+    const vocabulary = await this.store.createRecord('vocabulary', {
       title,
       school,
       active,
     });
     this.args.setSchoolNewVocabulary(null);
     await vocabulary.save();
-  });
+  };
   <template>
     <section
       class="school-vocabularies-expanded"
@@ -153,23 +134,14 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
               @save={{this.saveNewVocabulary}}
             />
           {{/if}}
-          {{#if this.managedTerm}}
-            <VocabularyTermManager
-              @vocabulary={{this.managedVocabulary}}
-              @term={{this.managedTerm}}
-              @manageTerm={{@setSchoolManagedVocabularyTerm}}
-              @manageVocabulary={{@setSchoolManagedVocabulary}}
-              @canUpdate={{@canUpdateTerm}}
-              @canDelete={{@canDeleteTerm}}
-              @canCreate={{@canCreateTerm}}
-            />
-          {{else if this.managedVocabulary}}
+          {{#if this.managedVocabulary}}
             <VocabularyManager
               @vocabulary={{this.managedVocabulary}}
               @manageTerm={{@setSchoolManagedVocabularyTerm}}
               @manageVocabulary={{@setSchoolManagedVocabulary}}
               @canUpdate={{@canUpdateVocabulary}}
               @canCreate={{@canCreateTerm}}
+              @canDelete={{@canDeleteTerm}}
             />
           {{else}}
             <VocabulariesList
