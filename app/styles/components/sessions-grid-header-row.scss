@@ -14,10 +14,12 @@
   }
 
   .sortable-heading {
-    padding: 0.5rem 0;
+    padding: 0.5rem 0.25rem;
   }
 
   .expand-collapse-control {
+    padding: 0 0.25rem;
+
     button {
       color: light-dark(var(--white), var(--black));
     }
