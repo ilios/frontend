@@ -98,9 +98,13 @@ export default class UserProfileCohortsComponent extends Component {
       return [];
     }
 
-    const cohorts = [...this.cohortsData.value, ...this.cohortsToAdd].filter(
-      (c) => !this.cohortsToRemove.includes(c),
-    );
+    const cohorts = [...this.cohortsData.value, ...this.cohortsToAdd].reduce((list, c) => {
+      if (!this.cohortsToRemove.includes(c) && !list.includes(c)) {
+        list.push(c);
+      }
+
+      return list;
+    }, []);
 
     if (!this.currentPrimaryCohort) {
       return cohorts;
