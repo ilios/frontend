@@ -5,7 +5,7 @@
 
   button {
     background-color: transparent;
-    border-radius: 0.2rem;
+    border-radius: 0;
     font-weight: 400;
     padding: 0.25rem 0.5rem;
   }
@@ -98,8 +98,8 @@
     }
 
     .toggle:hover {
-      border-color: light-dark(var(--lighter-grey), var(--lightest-grey));
-      color: light-dark(var(--lighter-grey), var(--lightest-grey));
+      border-color: light-dark(var(--black), var(--lightest-grey));
+      color: light-dark(var(--black), var(--lightest-grey));
     }
   }
 
