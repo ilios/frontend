@@ -87,6 +87,7 @@ export default class SearchBoxComponent extends Component {
         maxlength={{this.maxlength}}
         {{on "input" this.update}}
         {{on "keyup" this.keyUp}}
+        ...attributes
       />
       <button
         aria-label={{t "general.search"}}
