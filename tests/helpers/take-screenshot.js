@@ -43,8 +43,8 @@ async function snap(element, filename, options) {
   const snapOptions = Object.assign(
     {
       placeholders: false,
-      embedFonts: true,
-      height: 1000,
+      reconcile: true,
+      fast: false,
       exclude: ['.ilios-logo picture', '.ilios-footer .version'],
     },
     options,
