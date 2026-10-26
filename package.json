@@ -84,7 +84,7 @@
     "axe-core": "~4.13.0",
     "babel-plugin-ember-template-compilation": "^3.1.0",
     "browserslist": "^4.29.3",
-    "caniuse-db": "^1.0.30001814",
+    "caniuse-db": "^1.0.30001819",
     "color": "^5.0.3",
     "decorator-transforms": "^2.3.1",
     "ember-a11y-refocus": "^5.2.1",
