@@ -328,8 +328,8 @@ importers:
         specifier: 5.9.1
         version: 5.9.1(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-waiters@4.1.2(supports-color@10.2.2))(supports-color@10.2.2)
       '@zumer/snapdom':
-        specifier: 3.3.6
-        version: 3.3.6
+        specifier: 3.3.7
+        version: 3.3.7
       axe-core:
         specifier: ~4.13.0
         version: 4.13.0
@@ -2448,8 +2448,8 @@ packages:
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
 
-  '@zumer/snapdom@3.3.6':
-    resolution: {integrity: sha512-Ynxm2UJz6/diX/M2Xi9R5xqAgg/MrfsiEVJqAjUzcDI1kwnlfK+3F2tiP3BQJWgRouuYjT07cxeSYs31zgR2GA==}
+  '@zumer/snapdom@3.3.7':
+    resolution: {integrity: sha512-32gUTSVJ8wCRLjJO2FiHhDGq5W6Z8bs7oMdKLF3LnBvsr6DOEEQtshOQ5QIV2hTszhBruo97st1CriS4ytXrOA==}
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -10834,7 +10834,7 @@ snapshots:
 
   '@xtuc/long@4.2.2': {}
 
-  '@zumer/snapdom@3.3.6': {}
+  '@zumer/snapdom@3.3.7': {}
 
   abbrev@1.1.1: {}
 
