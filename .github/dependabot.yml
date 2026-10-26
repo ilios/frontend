@@ -32,6 +32,8 @@ updates:
           - "stylelint"
           - "stylelint-*"
     ignore:
+      - dependency-name: "@fortawesome/*"
+        versions: [ "7" ]
       - dependency-name: "@babel/core"
       - dependency-name: "@babel/eslint-parser"
       - dependency-name: "@babel/plugin-transform-runtime"
