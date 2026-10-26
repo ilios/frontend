@@ -328,7 +328,7 @@ importers:
         specifier: 5.9.1
         version: 5.9.1(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-waiters@4.1.2(supports-color@10.2.2))(supports-color@10.2.2)
       '@zumer/snapdom':
-        specifier: ^3.3.4
+        specifier: 3.3.6
         version: 3.3.6
       axe-core:
         specifier: ~4.13.0
