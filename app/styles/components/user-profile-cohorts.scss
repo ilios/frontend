@@ -53,7 +53,10 @@
 
     .schoolsfilter {
       float: left;
-      margin-left: 3rem;
+
+      select {
+        margin-right: 0.25rem;
+      }
     }
   }
 }
