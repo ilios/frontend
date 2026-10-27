@@ -22,6 +22,7 @@ const definition = {
   visit: clickable('span:nth-of-type(2) a'),
   type: text('span', { at: 2 }),
   groupCount: text('span', { at: 3 }),
+  groupTitles: attribute('title', 'span', { at: 3 }),
   objectiveCount: text('span', { at: 4 }),
   termCount: text('span', { at: 5 }),
   firstOffering: text('span', { at: 6 }),

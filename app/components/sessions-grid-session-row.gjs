@@ -24,6 +24,7 @@ import {
 export default class SessionsGridSessionRowComponent extends Component {
   @service permissionChecker;
   @service intl;
+  groupTitlesMaxLength = 500;
 
   @cached
   get canDeleteData() {
@@ -58,6 +59,16 @@ export default class SessionsGridSessionRowComponent extends Component {
       .sort()
       .join(', ');
     return `${this.intl.t('general.prerequisites')}: ${titles}`;
+  }
+
+  @cached
+  get learnerGroupsList() {
+    let list = this.args.session.associatedLearnerGroups.map((lg) => lg.title).join(', ');
+
+    if (this.groupTitlesMaxLength < list.length) {
+      list = list.substring(0, this.groupTitlesMaxLength) + '...';
+    }
+    return list;
   }
   <template>
     <div
@@ -106,7 +117,7 @@ export default class SessionsGridSessionRowComponent extends Component {
       <span class="session-grid-type">
         {{@session.sessionType.title}}
       </span>
-      <span class="session-grid-groups">
+      <span class="session-grid-groups" title={{this.learnerGroupsList}}>
         {{@session.learnerGroupCount}}
       </span>
       <span class="session-grid-objectives">
