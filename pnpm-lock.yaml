@@ -328,8 +328,8 @@ importers:
         specifier: 5.9.1
         version: 5.9.1(@babel/core@7.29.7(supports-color@10.2.2))(@ember/test-waiters@4.1.2)(supports-color@10.2.2)
       '@zumer/snapdom':
-        specifier: 3.3.7
-        version: 3.3.7
+        specifier: 3.4.0
+        version: 3.4.0
       axe-core:
         specifier: ~4.13.0
         version: 4.13.0
@@ -560,7 +560,7 @@ importers:
         version: 5.0.0(postcss@8.5.31)
       stylelint-scss:
         specifier: ^7.3.0
-        version: 7.4.0(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
+        version: 7.3.0(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
       testem:
         specifier: ^3.19.1
         version: 3.21.3(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.10)(supports-color@10.2.2)(underscore@1.13.8)
@@ -2432,8 +2432,8 @@ packages:
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
 
-  '@zumer/snapdom@3.3.7':
-    resolution: {integrity: sha512-32gUTSVJ8wCRLjJO2FiHhDGq5W6Z8bs7oMdKLF3LnBvsr6DOEEQtshOQ5QIV2hTszhBruo97st1CriS4ytXrOA==}
+  '@zumer/snapdom@3.4.0':
+    resolution: {integrity: sha512-V+hMcFtsZmFCiqzwZjTOFvEDtaz+Bt6Tp4qpftQPcxjIFdziYVXdpovs33mCxrFys0sixAeWc9q6QkSR4Vv8cQ==}
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -7588,8 +7588,8 @@ packages:
     resolution: {integrity: sha512-bdeA0ZcVSQunLfqk+x/MpQeyBYXdw5EUb0sH4zG3x55tjbYnd5oyfgJXTF96FRXbrSjSOAOx4QiSUlLS7V1btw==}
     engines: {node: '>=18'}
 
-  stylelint-scss@7.4.0:
-    resolution: {integrity: sha512-OvN+AestcvtB/IFvde1kpFLq2mpIsPaeB8E+Cjlxu7qjf0ja7NCoTrDW97tuNeXFlYGUdwqGq5cXaByLpNwuxA==}
+  stylelint-scss@7.3.0:
+    resolution: {integrity: sha512-FBz075AUFoEJ1WQKsgsRr6EJKcjy7jxQjV8xsAqbPcnhNiXnJ7C489vqUyDZccBy1GorewlshERkaMuCyOKXaw==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       stylelint: ^16.8.2 || ^17.0.0
@@ -10775,7 +10775,7 @@ snapshots:
 
   '@xtuc/long@4.2.2': {}
 
-  '@zumer/snapdom@3.3.7': {}
+  '@zumer/snapdom@3.4.0': {}
 
   abbrev@1.1.1: {}
 
@@ -17008,7 +17008,7 @@ snapshots:
       postcss-scss: 4.0.9(postcss@8.5.31)
       stylelint: 17.16.0(supports-color@10.2.2)(typescript@6.0.3)
       stylelint-config-recommended: 18.0.0(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
-      stylelint-scss: 7.4.0(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
+      stylelint-scss: 7.3.0(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
     optionalDependencies:
       postcss: 8.5.31
 
@@ -17027,7 +17027,7 @@ snapshots:
     transitivePeerDependencies:
       - postcss
 
-  stylelint-scss@7.4.0(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3)):
+  stylelint-scss@7.3.0(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3)):
     dependencies:
       '@csstools/css-calc': 3.4.3(@csstools/css-parser-algorithms@4.0.2(@csstools/css-tokenizer@4.0.2))(@csstools/css-tokenizer@4.0.2)
       '@csstools/css-parser-algorithms': 4.0.2(@csstools/css-tokenizer@4.0.2)
