@@ -564,9 +564,6 @@ importers:
       testem:
         specifier: ^3.19.1
         version: 3.21.3(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.10)(supports-color@10.2.2)(underscore@1.13.8)
-      testem-failure-only-reporter:
-        specifier: ^1.0.0
-        version: 1.0.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.10)(supports-color@10.2.2)(underscore@1.13.8)
       tracked-built-ins:
         specifier: ^4.1.2
         version: 4.1.2(@babel/core@7.29.7(supports-color@10.2.2))
@@ -7698,9 +7695,6 @@ packages:
     resolution: {integrity: sha512-bWnjSNscmuI+GJze6ZupnHP8G/cTcsJF+bXCeQknk2SHQsgbNJnLrqiH9jZ2W4STPVXH2mDKKRX3iwPhc9Cn/Q==}
     engines: {node: '>=10'}
     hasBin: true
-
-  testem-failure-only-reporter@1.0.0:
-    resolution: {integrity: sha512-G3fC1FSW/mI2ElrzaJfGEtTHBB7U1IFimwC1oIpUc1+wYsgw+2tCUV1t+cB/dsBbryq4Cbe1NQ397fJ2maCs7g==}
 
   testem@3.21.3:
     resolution: {integrity: sha512-vZTaZajvrWjRnImBGGrkdFlGNqM9Llg9xdvYL7Yrb2BSzIjlZjV+7pc3FJTgagNgJaNsatp4s/Wtam5MSQrFvg==}
@@ -17202,60 +17196,6 @@ snapshots:
       acorn: 8.19.0
       commander: 2.20.3
       source-map-support: 0.5.21
-
-  testem-failure-only-reporter@1.0.0(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.10)(supports-color@10.2.2)(underscore@1.13.8):
-    dependencies:
-      testem: 3.21.3(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.10)(supports-color@10.2.2)(underscore@1.13.8)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - arc-templates
-      - atpl
-      - bracket-template
-      - bufferutil
-      - coffee-script
-      - dot
-      - dust
-      - dustjs-helpers
-      - dustjs-linkedin
-      - eco
-      - ect
-      - ejs
-      - haml-coffee
-      - hamlet
-      - hamljs
-      - handlebars
-      - hogan.js
-      - htmling
-      - jazz
-      - jqtpl
-      - just
-      - liquid-node
-      - liquor
-      - mote
-      - nunjucks
-      - plates
-      - pug
-      - qejs
-      - ractive
-      - react
-      - react-dom
-      - slm
-      - supports-color
-      - swig
-      - swig-templates
-      - teacup
-      - templayed
-      - then-pug
-      - tinyliquid
-      - toffee
-      - twig
-      - twing
-      - underscore
-      - utf-8-validate
-      - vash
-      - velocityjs
-      - walrus
-      - whiskers
 
   testem@3.21.3(@babel/core@7.29.7(supports-color@10.2.2))(ejs@3.1.10)(handlebars@4.7.10)(supports-color@10.2.2)(underscore@1.13.8):
     dependencies:

@@ -159,7 +159,6 @@
     "stylelint-scales": "^5.0.0",
     "stylelint-scss": "^7.3.0",
     "testem": "^3.19.1",
-    "testem-failure-only-reporter": "^1.0.0",
     "tracked-built-ins": "^4.1.2",
     "validator": "^13.15.35",
     "vite": "^8.0.10",
