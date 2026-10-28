@@ -1,6 +1,6 @@
 'use strict';
 
-const FailureOnlyReporter = require('testem-failure-only-reporter');
+const RadReporter = require('./rad-reporter.cjs');
 
 module.exports = {
   test_page: 'tests/index.html?hidepassed&enableA11yAudit',
@@ -10,7 +10,7 @@ module.exports = {
   browser_disconnect_timeout: 300,
   browser_start_timeout: 120,
   parallel: process.env.EMBER_EXAM_SPLIT_COUNT || -1,
-  reporter: FailureOnlyReporter,
+  reporter: RadReporter,
   browser_args: {
     Chrome: {
       ci: [
