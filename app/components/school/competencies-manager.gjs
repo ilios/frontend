@@ -74,14 +74,11 @@ export default class SchoolCompetenciesManagerComponent extends Component {
                 type="button"
                 class="link-button delete-button"
                 aria-label={{t "general.remove"}}
+                title={{t "general.canNotDeleteSchoolCompetencyDomain"}}
                 disabled
                 data-test-remove-domain
               >
-                <FaIcon
-                  @icon={{faTrash}}
-                  @title={{t "general.canNotDeleteSchoolCompetencyDomain"}}
-                  class="disabled"
-                />
+                <FaIcon @icon={{faTrash}} class="disabled" />
               </button>
             {{/if}}
           </div>
@@ -104,14 +101,11 @@ export default class SchoolCompetenciesManagerComponent extends Component {
                     type="button"
                     class="link-button delete-button"
                     aria-label={{t "general.remove"}}
+                    title={{t "general.canNotDeleteSchoolCompetency"}}
                     disabled
                     data-test-remove-competency
                   >
-                    <FaIcon
-                      @icon={{faTrash}}
-                      @title={{t "general.canNotDeleteSchoolCompetency"}}
-                      class="disabled"
-                    />
+                    <FaIcon @icon={{faTrash}} class="disabled" />
                   </button>
                 {{/if}}
               </li>

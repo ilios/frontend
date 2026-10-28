@@ -205,7 +205,6 @@ export default class ReportsCurriculumHeaderComponent extends Component {
           <CopyButton
             @getClipboardText={{this.getReportUrl}}
             @success={{perform this.textCopied}}
-            aria-label={{t "general.copyCurriculumReportUrlTooltip"}}
             id={{this.copyButtonId}}
             {{mouseHoverToggle (set this "showCopyTooltip")}}
           >
