@@ -95,11 +95,6 @@ export default class WeekGlanceEventComponent extends Component {
             id={{concat "event" @event.slug "link"}}
             @route="events"
             @model={{@event.slug}}
-            aria-labelledby="{{concat 'event' @event.slug 'title'}} {{concat
-              'event'
-              @event.slug
-              'date'
-            }} {{concat 'event' @event.slug 'link'}}"
           >{{@event.name}}</LinkTo>
         </span>
         <span id={{concat "event" @event.slug "date"}} class="date" data-test-date>

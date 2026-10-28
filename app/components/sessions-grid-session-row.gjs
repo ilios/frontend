@@ -84,13 +84,11 @@ export default class SessionsGridSessionRowComponent extends Component {
             disabled={{if (eq @session.offeringCount 0) "disabled"}}
             type="button"
             aria-label={{t "general.close"}}
+            title={{if (eq @session.offeringCount 0) (t "general.noOfferings")}}
             data-test-expand
             {{on "click" (fn @expandSession @session)}}
           >
-            <FaIcon
-              @icon={{faCaretRight}}
-              @title={{if (eq @session.offeringCount 0) (t "general.noOfferings")}}
-            />
+            <FaIcon @icon={{faCaretRight}} />
           </button>
         {{/if}}
       </span>

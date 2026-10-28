@@ -16,7 +16,7 @@ const definition = {
   isCollapsed: isVisible('[data-test-expand-collapse-control] [data-test-expand]'),
   isExpanded: isVisible('[data-test-expand-collapse-control] [data-test-collapse]'),
   canExpand: notHasClass('disabled', '[data-test-expand-collapse-control] [data-test-expand]'),
-  expandTitle: text('[data-test-expand-collapse-control] title'),
+  expandTitle: attribute('title', '[data-test-expand-collapse-control] button'),
   title: text('span', { at: 1 }),
   titleAriaLabel: attribute('aria-label', 'span:nth-of-type(2) a'),
   visit: clickable('span:nth-of-type(2) a'),
