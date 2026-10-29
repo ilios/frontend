@@ -70,7 +70,7 @@ jobs:
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: 26
           cache: pnpm
       - name: Install Dependencies
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
@@ -154,7 +154,7 @@ jobs:
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: 26
           cache: pnpm
       - name: Install Dependencies
         if: steps.screenshot-cache.outputs.cache-hit != 'true'
@@ -224,7 +224,7 @@ jobs:
             candidate-frontend
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: 26
       - run: |
           mkdir -p ./results
           echo ${{ github.event.pull_request.number }} > ./results/pr_number
