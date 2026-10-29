@@ -35,6 +35,9 @@ general:
   allSchools: All Schools
   allWeeks: All Weeks
   anything: Anything
+  apiConnected: API Connected
+  apiNotConnected: Not Connected to API.
+  apiReconnecting: Trying again in {counter}s...
   apiVersionMismatch: API Version Mismatch
   apiVersionMismatchDetails: "This is usually a temporary error in your browser; Ilios is in read-only mode until it is resolved. If updating does not help, please notify an administrator or technical owner of the system regarding this error. You may also wish to try a different browser."
   assessment: Assessment
