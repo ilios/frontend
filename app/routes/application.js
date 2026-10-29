@@ -28,9 +28,9 @@ export default class AuthenticatedRoute extends Route {
       await this.preferences.setup();
       //reset the locale, in case we had saved data that differed from local cache of defaults
       this.intl.setLocale(this.preferences.locale);
-      window.document.documentElement.dataset.theme = this.preferences.theme;
     }
 
+    window.document.documentElement.dataset.theme = this.preferences.theme;
     window.document.querySelector('html').setAttribute('lang', this.intl.primaryLocale);
   }
 
