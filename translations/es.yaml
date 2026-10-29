@@ -35,7 +35,6 @@ general:
   allSchools: Todas las Escuelas
   allWeeks: Todas las Semanas
   anything: Caulquier Cosa
-  apiConnected: API Conectada
   apiNotConnected: No conectado a la API.
   apiReconnecting: Intentado de nuevo en {counter}s...
   apiVersionMismatch: Incompatibilidad de versión de API

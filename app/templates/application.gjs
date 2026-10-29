@@ -3,7 +3,6 @@ import t from 'ember-intl/helpers/t';
 import ConnectionStatus from 'frontend/components/connection-status';
 import ApiVersionNotice from '../components/api-version-notice';
 import UpdateNotification from 'frontend/components/update-notification';
-import HeartbeatNotification from 'frontend/components/heartbeat-notification';
 import IliosHeader from 'frontend/components/ilios-header';
 import { LinkTo } from '@ember/routing';
 import IliosNavigation from 'frontend/components/ilios-navigation';
@@ -19,9 +18,6 @@ import Sunburst from 'frontend/images/sunburst.svg';
     <ConnectionStatus />
     <ApiVersionNotice />
     <UpdateNotification />
-    {{#if @controller.session.isAuthenticated}}
-      <HeartbeatNotification />
-    {{/if}}
     <div class="application-wrapper{{if @controller.hasNavigation ' show-navigation'}}">
       {{#if @controller.useFullLayout}}
         <IliosHeader />
