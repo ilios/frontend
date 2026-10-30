@@ -3,6 +3,10 @@
 @mixin ilios-textarea {
   @include ilios-input.ilios-input;
   display: inline-block;
-  height: 20vh;
+  field-sizing: content;
+  height: auto;
+  max-height: 10lh;
+  min-height: 2.5lh;
+  resize: vertical;
   width: 40vw;
 }
