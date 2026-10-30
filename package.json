@@ -167,7 +167,7 @@
     "zxcvbn": "^4.4.2"
   },
   "engines": {
-    "node": ">= 24"
+    "node": ">= 26"
   },
   "ember": {
     "edition": "octane"
