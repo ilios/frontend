@@ -171,10 +171,13 @@ export default class HtmlEditorComponent extends Component {
 
   @action
   async saveOnEnter(event) {
-    // don't send an actual Enter/Return to Quill
-    event.preventDefault();
+    // don't send an actual Enter/Return to Quill if in popup
+    const popup = document.querySelector(`#${this.popupId}`);
+    if (popup.classList.contains('ql-active')) {
+      event.preventDefault();
 
-    await this.addLink.perform();
+      await this.addLink.perform();
+    }
   }
 
   @action
