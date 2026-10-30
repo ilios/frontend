@@ -11,6 +11,7 @@ import { eq } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
 import toggle from '../helpers/toggle';
 import { faCircleExclamation, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import config from 'frontend/config/environment';
 
 export default class ConnectionStatusComponent extends Component {
   @tracked isOnline = true;
@@ -52,9 +53,7 @@ export default class ConnectionStatusComponent extends Component {
   }
 
   get apiUrl() {
-    const codes = [200, 503];
-    const code = codes[this.index];
-    return `https://dave.neb.host?http_code=${code}`;
+    return config.rootURL + 'VERSION.txt';
   }
 
   @action
@@ -84,10 +83,20 @@ export default class ConnectionStatusComponent extends Component {
     if (this.isOnline) {
       try {
         const response = await fetch(this.apiUrl);
-        const payload = await response.json();
-        this.latestApiCode = payload.status ?? undefined;
-        this.latestApiMessage = payload.message ?? undefined;
-        this.index = this.index == 0 ? 1 : 0;
+        // to test a failing API, use the following line instead
+        // const response = new Response('', { status: 503, statusText: 'API Unavailable' });
+
+        this.latestApiCode = response.status ?? undefined;
+        this.latestApiMessage = response.statusText ?? undefined;
+
+        if (!response.ok) {
+          this.isConnectedToApi = false;
+          throw new Error(response.statusText);
+        }
+
+        const payload = await response.text();
+        this.latestApiMessage = payload ?? undefined;
+        this.isConnectedToApi = true;
       } catch (e) {
         this.onApiCheckError(e);
       } finally {
@@ -139,10 +148,10 @@ export default class ConnectionStatusComponent extends Component {
     this.reconnect.perform();
   });
   <template>
-    <div class="connection-status" test-data-connection-status>
+    <div class="connection-status" aria-hidden={{this.isOnline}} test-data-connection-status>
       {{#if this.isOnline}}
         <div
-          class="api-connection-status{{if (eq this.latestApiCode 503) ' critical-notice'}}"
+          class="api-connection-status"
           aria-hidden={{this.isConnectedToApi}}
           data-test-api-connection-status
         >
@@ -164,7 +173,6 @@ export default class ConnectionStatusComponent extends Component {
       {{else}}
         <div
           class="network-connection-status critical-notice{{unless this.isOnline ' offline'}}"
-          aria-hidden={{this.isOnline}}
           data-test-network-connection-status
         >
           {{#if this.unableToReconnect}}

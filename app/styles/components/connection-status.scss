@@ -58,7 +58,7 @@
   }
 
   .api-connection-status {
-    background-color: light-dark(var(--blue), var(--bright-blue));
+    background-color: light-dark(var(--red), var(--light-red));
     width: 100%;
 
     .message {
@@ -69,19 +69,12 @@
       padding: 0.25rem 0.5rem;
 
       details {
-        align-items: center;
         display: flex;
         flex-direction: column;
 
         summary {
           cursor: pointer;
         }
-      }
-    }
-
-    &.critical-notice {
-      .message {
-        background-color: light-dark(var(--red), var(--light-red));
       }
     }
 
