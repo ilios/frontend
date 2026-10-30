@@ -163,6 +163,11 @@ export default class HtmlEditorComponent extends Component {
     return DEFAULT_URL_VALUE;
   }
 
+  get activeLinkPopup() {
+    const popup = document.querySelector(`#${this.popupId}`);
+    return popup.classList.contains('ql-active');
+  }
+
   @action
   clearPopupValues() {
     this.popupUrlValue = '';
@@ -171,16 +176,17 @@ export default class HtmlEditorComponent extends Component {
 
   @action
   async saveOnEnter(event) {
-    // don't send an actual Enter/Return to Quill
-    event.preventDefault();
+    // don't send an actual Enter/Return to Quill if in popup
+    if (this.activeLinkPopup) {
+      event.preventDefault();
 
-    await this.addLink.perform();
+      await this.addLink.perform();
+    }
   }
 
   @action
   onEscapeKey() {
-    const popup = document.querySelector(`#${this.popupId}`);
-    if (popup.classList.contains('ql-active')) {
+    if (this.activeLinkPopup) {
       this.togglePopup();
     }
   }
