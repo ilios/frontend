@@ -1,57 +1,87 @@
 @use "../mixins" as m;
 
 .connection-status {
-  display: none;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
+  .network-connection-status {
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
 
-  &.critical-notice {
-    background-color: light-dark(var(--dark-yellow), var(--dark-yellow));
-    color: light-dark(var(--black), var(--black));
-    min-height: 2.5rem;
-  }
-
-  &.offline {
-    display: flex;
-
-    @include m.for-tablet-and-up {
-      flex-direction: row;
+    &.critical-notice {
+      background-color: light-dark(var(--dark-yellow), var(--dark-yellow));
+      color: light-dark(var(--black), var(--black));
+      min-height: 2.5rem;
     }
-  }
 
-  p {
-    margin: 0 0.25rem;
-
-    &.unable-to-reconnect {
-      margin: auto;
+    &.offline {
+      display: flex;
 
       @include m.for-tablet-and-up {
-        margin: 0 auto;
+        flex-direction: row;
       }
     }
-  }
 
-  .buttons {
-    display: inline-block;
+    p {
+      margin: 0 0.25rem;
 
-    @include m.for-tablet-and-up {
-      height: 2.5rem;
-      align-self: flex-end;
+      &.unable-to-reconnect {
+        margin: auto;
+
+        @include m.for-tablet-and-up {
+          margin: 0 auto;
+        }
+      }
     }
 
-    button {
-      background-color: light-dark(var(--black), var(--black));
-      border: 0;
-      border-radius: 0;
-      color: light-dark(var(--white), var(--white));
+    .buttons {
       display: inline-block;
-      padding: 0.25rem;
 
       @include m.for-tablet-and-up {
-        margin-left: 0.25rem;
-        height: 100%;
+        height: 2.5rem;
+        align-self: flex-end;
       }
+
+      button {
+        background-color: light-dark(var(--black), var(--black));
+        border: 0;
+        border-radius: 0;
+        color: light-dark(var(--white), var(--white));
+        display: inline-block;
+        padding: 0.25rem;
+
+        @include m.for-tablet-and-up {
+          margin-left: 0.25rem;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .api-connection-status {
+    background-color: light-dark(var(--red), var(--light-red));
+    width: 100%;
+
+    .message {
+      align-items: center;
+      color: light-dark(var(--white), var(--black));
+      display: flex;
+      min-height: 2.5rem;
+      padding: 0.25rem 0.5rem;
+
+      details {
+        display: flex;
+        flex-direction: column;
+
+        summary {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .not-connected {
+      display: inline-block;
+      font-weight: 700;
+      margin-right: 0.25em;
     }
   }
 }

@@ -35,6 +35,8 @@ general:
   allSchools: Todas las Escuelas
   allWeeks: Todas las Semanas
   anything: Caulquier Cosa
+  apiNotConnected: No conectado a la API.
+  apiReconnecting: Intentado de nuevo en {counter}s...
   apiVersionMismatch: Incompatibilidad de versión de API
   apiVersionMismatchDetails: "Por lo general, se trata de un error temporal de su navegador; Ilios está en modo de solo lectura hasta que se resuelva. Si la actualización no soluciona el problema, notifique a un administrador o al propietario técnico del sistema sobre este error. También puede probar con otro navegador."
   assessment: Evaluación
