@@ -27,10 +27,6 @@
 
     .item {
       @include m.ilios-form-item;
-
-      textarea {
-        max-height: 4rem;
-      }
     }
 
     .buttons {
