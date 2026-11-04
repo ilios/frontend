@@ -70,7 +70,7 @@ export default class EditableFieldComponent extends Component {
     >
       <span class="content">
         {{#if this.isEditing}}
-          <span class="editor{{if @bigButtonStyle ' big-buttons'}}">
+          <span class="editor{{if @bigButtonStyle ' big-buttons'}}" data-test-editor>
             {{yield
               this.keyboard
               this.saveData.isRunning
