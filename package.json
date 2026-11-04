@@ -100,7 +100,7 @@
     "ember-cli-deploy-display-revisions": "^3.0.0",
     "ember-cli-deploy-gzip": "^3.0.0",
     "ember-cli-deploy-json-config": "^1.0.1",
-    "ember-cli-deploy-revision-data": "^3.0.0",
+    "ember-cli-deploy-revision-data": "^4.0.0",
     "ember-cli-deploy-s3-index": "^4.0.3",
     "ember-cli-deprecation-workflow": "^3.4.0",
     "ember-cli-flash": "^7.0.0",
