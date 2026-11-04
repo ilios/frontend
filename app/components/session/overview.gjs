@@ -513,6 +513,7 @@ export default class SessionOverviewComponent extends Component {
                       @save={{perform this.saveDescription}}
                       @close={{this.revertDescriptionChanges}}
                       @clickPrompt={{t "general.clickToEdit"}}
+                      @bigButtonStyle={{true}}
                     >
                       <:default>
                         <HtmlEditor
@@ -551,6 +552,7 @@ export default class SessionOverviewComponent extends Component {
                       @save={{perform this.saveInstructionalNotes}}
                       @close={{this.revertInstructionalNotesChanges}}
                       @clickPrompt={{t "general.clickToEdit"}}
+                      @bigButtonStyle={{true}}
                     >
                       <:default>
                         <HtmlEditor

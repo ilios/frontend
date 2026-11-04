@@ -83,7 +83,7 @@ export default class EditableFieldComponent extends Component {
                   <div class="buttons">
                     <SaveButton
                       class="done text"
-                      @isSaving={{this.saveData.isRunning}}
+                      @isSaving={{@isSaveDisabled}}
                       {{on "click" (perform this.saveData)}}
                     >
                       {{t "general.save"}}
@@ -93,6 +93,7 @@ export default class EditableFieldComponent extends Component {
                       type="button"
                       disabled={{this.saveData.isRunning}}
                       {{on "click" (perform this.closeEditor)}}
+                      data-test-cancel
                     >
                       {{t "general.cancel"}}
                     </button>
