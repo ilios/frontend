@@ -56,5 +56,17 @@
         }
       }
     }
+
+    &.big-buttons {
+      display: block;
+
+      .form {
+        @include m.ilios-form;
+
+        .buttons {
+          @include m.ilios-form-buttons;
+        }
+      }
+    }
   }
 }
