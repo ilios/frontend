@@ -3,6 +3,7 @@ import {
   clickable,
   count,
   create,
+  hasClass,
   isVisible,
   text,
   triggerable,
@@ -14,6 +15,10 @@ const definition = {
   scope: '[data-test-editable-field]',
   value: text(),
   hasEditIcon: isVisible('[data-test-edit-icon]'),
+  editor: {
+    scope: '[data-test-editor]',
+    hasBigButtons: hasClass('big-buttons'),
+  },
   editable: {
     scope: '[data-test-edit]',
     edit: clickable(),
