@@ -388,8 +388,8 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
       ember-cli-deploy-revision-data:
-        specifier: ^3.0.0
-        version: 3.0.0(supports-color@10.2.2)
+        specifier: ^4.0.0
+        version: 4.0.0(supports-color@10.2.2)
       ember-cli-deploy-s3-index:
         specifier: ^4.0.3
         version: 4.0.4
@@ -2191,8 +2191,8 @@ packages:
   '@simple-git/args-pathspec@1.0.4':
     resolution: {integrity: sha512-EtMX6XjRWSastG2SdkmSQByPtJ9dx/NIjnHbpQPCYt62j4RmSx5rgLTGpw0YCjF5h191gZOmBfheOT23cRSFdw==}
 
-  '@simple-git/argv-parser@1.1.1':
-    resolution: {integrity: sha512-Q9lBcfQ+VQCpQqGJFHe5yooOS5hGdLFFbJ5R+R5aDsnkPCahtn1hSkMcORX65J2Z5lxSkD0lQorMsncuBQxYUw==}
+  '@simple-git/argv-parser@2.0.1':
+    resolution: {integrity: sha512-M++IaVWrN+vYalilOHfwvT2IL3wYZtVEBQpmX6DLSOJLtxbZ+SUeIDE3IiPogzhPACLajwtxfa5rp+ZX1FczzQ==}
 
   '@sindresorhus/merge-streams@4.0.0':
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
@@ -3972,9 +3972,9 @@ packages:
     resolution: {integrity: sha512-CLCvKFKudR0AKmo6EMKlC/jf/Qh7zj0qpV9bC6dyz2W+DRX0T4NXN/BwX5Shi4VpFQQujXzGNUogWRpNHGPdEg==}
     engines: {node: '>=0.4.0'}
 
-  ember-cli-deploy-revision-data@3.0.0:
-    resolution: {integrity: sha512-Sas5fenzGeflGjGCDDRfbDGJZbgEQ+3yUFncFvh+Y2Qv1u3nT0boDO+S33FjbJf3zRuHqZHY+Z+Joi4fed10jg==}
-    engines: {node: 14.x || 16.x || 18.x || >= 20}
+  ember-cli-deploy-revision-data@4.0.0:
+    resolution: {integrity: sha512-1I8IFPcoowiTCDKHtv9LVA6MTNe63x1S1CKiu1pM5WrpgF3g8gSfJie1sXAhYGRBaxBzRWZ/lNsbEvnI81Ormg==}
+    engines: {node: '>= 20'}
 
   ember-cli-deploy-s3-index@4.0.4:
     resolution: {integrity: sha512-rRX0JPCvcp+StMcWIpuNh+1sDrTjv9LJDxUTXF4atSurt9Sq5eVGTLnO05CcRsq/sriutvliVgBET+TwINfPtw==}
@@ -7312,8 +7312,8 @@ packages:
   silent-error@1.1.1:
     resolution: {integrity: sha512-n4iEKyNcg4v6/jpb3c0/iyH2G1nzUNl7Gpqtn/mHIJK9S/q/7MCfoO4rwVOoO59qPFIc0hVHvMbiOJ0NdtxKKw==}
 
-  simple-git@3.36.0:
-    resolution: {integrity: sha512-cGQjLjK8bxJw4QuYT7gxHw3/IouVESbhahSsHrX97MzCL1gu2u7oy38W6L2ZIGECEfIBG4BabsWDPjBxJENv9Q==}
+  simple-git@4.0.2:
+    resolution: {integrity: sha512-l0sIsv9VrPwovKELFDBOj/lhmIcbMvxBk2B+hRhsMM4/VL3gKtuZvYnBNixVo+N/0HnqQx2cBdLvxnAbygHpqA==}
 
   simple-html-tokenizer@0.5.11:
     resolution: {integrity: sha512-C2WEK/Z3HoSFbYq8tI7ni3eOo/NneSPRoPpcM7WdLjFOArFuyXEjAoCdOC3DgMfRyziZQ1hCNR4mrNdWEvD0og==}
@@ -10438,7 +10438,7 @@ snapshots:
 
   '@simple-git/args-pathspec@1.0.4': {}
 
-  '@simple-git/argv-parser@1.1.1':
+  '@simple-git/argv-parser@2.0.1':
     dependencies:
       '@simple-git/args-pathspec': 1.0.4
 
@@ -12766,15 +12766,15 @@ snapshots:
 
   ember-cli-deploy-progress@1.3.0: {}
 
-  ember-cli-deploy-revision-data@3.0.0(supports-color@10.2.2):
+  ember-cli-deploy-revision-data@4.0.0(supports-color@10.2.2):
     dependencies:
       chalk: 4.1.2
       core-object: 3.1.5
       ember-cli-deploy-plugin: 0.2.9
       git-repo-info: 2.1.1
-      minimatch: 3.1.5
+      minimatch: 10.2.6
       rsvp: 4.8.5
-      simple-git: 3.36.0(supports-color@10.2.2)
+      simple-git: 4.0.2(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -16710,12 +16710,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  simple-git@3.36.0(supports-color@10.2.2):
+  simple-git@4.0.2(supports-color@10.2.2):
     dependencies:
       '@kwsites/file-exists': 1.1.1(supports-color@10.2.2)
       '@kwsites/promise-deferred': 1.1.1
       '@simple-git/args-pathspec': 1.0.4
-      '@simple-git/argv-parser': 1.1.1
+      '@simple-git/argv-parser': 2.0.1
       debug: 4.4.3(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
