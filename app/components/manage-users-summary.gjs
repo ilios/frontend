@@ -15,7 +15,7 @@ import pick from '../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
 import onKey from 'ember-keyboard/modifiers/on-key';
-import { eq } from 'ember-truth-helpers';
+import { eq, and, not } from 'ember-truth-helpers';
 import UserStatus from './user-status';
 import scrollIntoView from '../utils/scroll-into-view';
 
@@ -32,6 +32,7 @@ export default class ManageUsersSummaryComponent extends Component {
 
   @tracked searchValue;
   @tracked activeUserId;
+  @tracked searchEnabled = true;
 
   userSearchTypeData = new TrackedAsyncData(this.iliosConfig.getUserSearchType());
 
@@ -204,8 +205,8 @@ export default class ManageUsersSummaryComponent extends Component {
         },
       ];
     }
-    const searchEnabled = await this.iliosConfig.getSearchEnabled();
-    const searchResults = searchEnabled ? await this.indexSearch(q) : await this.apiSearch(q);
+    this.searchEnabled = await this.iliosConfig.getSearchEnabled();
+    const searchResults = this.searchEnabled ? await this.indexSearch(q) : await this.apiSearch(q);
 
     if (searchResults.length === 0) {
       return [
@@ -311,18 +312,9 @@ export default class ManageUsersSummaryComponent extends Component {
                   {{result.text}}
                 </li>
               {{/if}}
-              {{#if (eq result.type "summary")}}
+              {{#if (and (eq result.type "summary") (not this.searchEnabled))}}
                 <li class="summary">
                   {{result.text}}
-                  {{#if result.showLinkToAll}}
-                    <LinkTo
-                      @route="users"
-                      @query={{hash filter=this.searchValue}}
-                      data-test-view-all-results
-                    >
-                      {{t "general.viewAll"}}
-                    </LinkTo>
-                  {{/if}}
                 </li>
               {{/if}}
               {{#if (eq result.type "user")}}
