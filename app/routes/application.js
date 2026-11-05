@@ -24,9 +24,11 @@ export default class AuthenticatedRoute extends Route {
     await this.session.setup(transition.targetName === 'lti-login');
     // We need a default locale, preferences will always return something
     this.intl.setLocale(this.preferences.locale);
+    //load the theme, preferences will always return something
+    window.document.documentElement.dataset.theme = this.preferences.theme;
     if (this.currentUser.currentUserId) {
       await this.preferences.setup();
-      //reset the locale, in case we had saved data that differed from local cache of defaults
+      //reset the locale and theme, in case we had saved data that differed from local cache of defaults
       this.intl.setLocale(this.preferences.locale);
       window.document.documentElement.dataset.theme = this.preferences.theme;
     }
