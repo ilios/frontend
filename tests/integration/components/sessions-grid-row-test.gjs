@@ -57,6 +57,10 @@ module('Integration | Component | sessions-grid-session-row', function (hooks) {
     assert.strictEqual(component.title, 'session 0');
     assert.strictEqual(component.type, 'session type 0');
     assert.strictEqual(component.groupCount, '5');
+    assert.strictEqual(
+      component.groupTitles,
+      'learner group 0, learner group 1, learner group 2, learner group 3, learner group 4',
+    );
     assert.strictEqual(component.objectiveCount, '3');
     assert.strictEqual(component.termCount, '2');
     assert.strictEqual(component.offeringCount, '2');
@@ -91,6 +95,66 @@ module('Integration | Component | sessions-grid-session-row', function (hooks) {
       </template>,
     );
     assert.ok(component.isExpanded);
+  });
+
+  test('it renders groupTitles tooltip with a lot of groups', async function (assert) {
+    const date = DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 });
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
+    await this.server.create('session-type', { sessions: [session] });
+    await this.server.createList('term', 2, { sessions: [session] });
+    await this.server.createList('session-objective', 3, { session });
+    const offering1 = await this.server.create('offering', {
+      session,
+      startDate: date.toISO(),
+    });
+    const offering2 = await this.server.create('offering', {
+      session,
+      startDate: date.plus({ hour: 1 }).toISO(),
+    });
+    await this.server.create('learner-group', { offerings: [offering1] });
+    await this.server.createList('learner-group', 30, { offerings: [offering2] });
+    const ilmSession = await this.server.create('ilm-session', {
+      id: 1,
+      session,
+      dueDate: date.toISO(),
+    });
+    await this.server.create('learner-group', { ilmSessions: [ilmSession] });
+    const model = await this.owner.lookup('service:store').findRecord('session', session.id);
+    this.set('session', model);
+    await render(
+      <template>
+        <SessionsGridSessionRow
+          @session={{this.session}}
+          @confirmDelete={{(noop)}}
+          @closeSession={{(noop)}}
+          @expandSession={{(noop)}}
+          @expandedSessionIds={{(array)}}
+        />
+      </template>,
+    );
+    assert.ok(component.isCollapsed);
+    assert.strictEqual(component.title, 'session 0');
+    assert.strictEqual(component.type, 'session type 0');
+    assert.strictEqual(component.groupCount, '32');
+    assert.strictEqual(
+      component.groupTitles,
+      'learner group 0, learner group 1, learner group 10, learner group 11, learner group 12, learner group 13, learner group 14, learner group 15, learner group 16, learner group 17, learner group 18, learner group 19, learner group 2, learner group 20, learner group 21, learner group 22, learner group 23, learner group 24, learner group 25, learner group 26, learner group 27, learner group 28, learner group 29, learner group 3, learner group 30, learner group 31, learner group 4, learner group 5, le...',
+    );
+    assert.strictEqual(component.objectiveCount, '3');
+    assert.strictEqual(component.termCount, '2');
+    assert.strictEqual(component.offeringCount, '2');
+    assert.notOk(component.hasInstructionalNotes);
+    assert.notOk(component.hasPrerequisites);
+    assert.strictEqual(
+      component.firstOffering,
+      'ILM: Due By ' +
+        this.intl.formatDate(date.toJSDate(), {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric',
+        }),
+    );
   });
 
   test('confirmDelete fires', async function (assert) {
