@@ -360,6 +360,14 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const groups = await waitForResource(learnerGroup, 'allParents');
     assert.strictEqual(groups.length, 0);
 
+    // Tree structure (called on subGroup1):
+    //   subGroup1 (id=2) — HAS user1
+    //     subGroup2 (id=3) — HAS user1
+    //       subGroup3 (id=4) — no user1
+    //     subGroup4 (id=5) — HAS user1
+    //       subGroup5 (id=6) — no user1
+    //         subGroup6 (id=7) — HAS user1
+    //
     const subGroup1 = this.store.createRecord('learner-group', {
       id: '2',
       parent: learnerGroup,
@@ -373,31 +381,44 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const subGroup3 = this.store.createRecord('learner-group', {
       id: '4',
       parent: subGroup2,
-      users: [user1],
     });
     const subGroup4 = this.store.createRecord('learner-group', {
       id: '5',
       parent: subGroup1,
+      users: [user1],
+    });
+    const subGroup5 = this.store.createRecord('learner-group', {
+      id: '6',
+      parent: subGroup4,
+    });
+    const subGroup6 = this.store.createRecord('learner-group', {
+      id: '7',
+      parent: subGroup5,
+      users: [user1],
     });
 
     assert.ok((await learnerGroup.users).includes(user1));
     assert.ok((await subGroup1.users).includes(user1));
     assert.ok((await subGroup2.users).includes(user1));
-    assert.ok((await subGroup3.users).includes(user1));
-    assert.notOk((await subGroup4.users).includes(user1));
+    assert.notOk((await subGroup3.users).includes(user1));
+    assert.ok((await subGroup4.users).includes(user1));
+    assert.notOk((await subGroup5.users).includes(user1));
+    assert.ok((await subGroup6.users).includes(user1));
 
     const groupsToRemove = await subGroup1.removeUserFromGroupAndAllDescendants(user1);
-    assert.strictEqual(groupsToRemove.length, 4);
+    assert.strictEqual(groupsToRemove.length, 4, 'only groups that had the user are returned');
     assert.deepEqual(
       groupsToRemove.map(({ id }) => id),
-      ['4', '5', '3', '2'],
-      'groups are removed in the correct order',
+      ['7', '5', '3', '2'],
+      'returned groups are in deepest-first order, skipping the intermediate groups that never had the user',
     );
     assert.ok((await learnerGroup.users).includes(user1));
     assert.notOk((await subGroup1.users).includes(user1));
     assert.notOk((await subGroup2.users).includes(user1));
     assert.notOk((await subGroup3.users).includes(user1));
     assert.notOk((await subGroup4.users).includes(user1));
+    assert.notOk((await subGroup5.users).includes(user1));
+    assert.notOk((await subGroup6.users).includes(user1));
   });
 
   test('check addUserToGroupAndAllParents', async function (assert) {

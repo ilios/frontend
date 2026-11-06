@@ -443,21 +443,24 @@ export default class LearnerGroup extends Model {
   }
 
   /**
-   * Takes a user out of  a group and then traverses child groups recursively
-   * to remove the user from them as well and returns the entire tree for saving.
+   * 1. Remove user from learner group
+   * 2. Traverse all child groups; remove user from each
+   * 3. Return groups with no change for saving
    */
   async removeUserFromGroupAndAllDescendants({ id: userId }) {
     const allDescendants = await this.getAllDescendants();
     const groups = [this, ...allDescendants].reverse();
-    return await Promise.all(
+    const groupsWithUserRemoved = [];
+    await Promise.all(
       groups.map(async (group) => {
         if (group.hasMany('users').ids().includes(userId)) {
           group.users = (await group.users).filter(({ id }) => id !== userId);
+          groupsWithUserRemoved.push(group);
         }
-
-        return group;
       }),
     );
+    // return only groups with changes to avoid unnecessary model saves
+    return groupsWithUserRemoved;
   }
 
   async getAllParents() {
