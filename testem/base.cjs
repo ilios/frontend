@@ -4,6 +4,7 @@ const RadReporter = require('./rad-reporter.cjs');
 
 module.exports = {
   test_page: 'tests/index.html?hidepassed&enableA11yAudit',
+  cwd: 'dist',
   disable_watching: true,
   launch_in_ci: ['Firefox'],
   launch_in_dev: ['Firefox'],
