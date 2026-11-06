@@ -283,7 +283,7 @@ export default class ManageUsersSummaryComponent extends Component {
           {{/if}}
         </div>
       </div>
-      <div class="user-search">
+      <div class="user-search" data-test-user-search>
         <input
           autocomplete="name"
           type="search"
@@ -300,7 +300,10 @@ export default class ManageUsersSummaryComponent extends Component {
           {{onKey "ArrowUp" this.onArrowKey}}
           {{onKey "ArrowDown" this.onArrowKey}}
         />
-        <ul class="results user-search-results{{if this.shouldHideResults ' hidden'}}">
+        <ul
+          class="results user-search-results{{if this.shouldHideResults ' hidden'}}"
+          data-test-results
+        >
           {{#if this.searchForUsers.isRunning}}
             <li>
               {{t "general.currentlySearchingPrompt"}}
@@ -313,7 +316,7 @@ export default class ManageUsersSummaryComponent extends Component {
                 </li>
               {{/if}}
               {{#if (and (eq result.type "summary") (not this.searchEnabled))}}
-                <li class="summary">
+                <li class="summary" data-test-summary>
                   {{result.text}}
                 </li>
               {{/if}}
@@ -326,11 +329,11 @@ export default class ManageUsersSummaryComponent extends Component {
                     data-userid={{result.user.id}}
                     {{on "click" (perform this.clickUser result.user)}}
                   >
-                    <span class="name">
+                    <span class="name" data-test-name>
                       {{result.user.fullName}}
                       <UserStatus @user={{result.user}} />
                     </span>
-                    <span class="email">
+                    <span class="email" data-test-email>
                       {{result.user.email}}
                     </span>
                   </button>
