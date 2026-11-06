@@ -205,6 +205,7 @@ export default class SessionObjectiveListItemComponent extends Component {
               @value={{this.description}}
               @save={{perform this.saveDescriptionChanges}}
               @close={{this.revertDescriptionChanges}}
+              @bigButtonStyle={{true}}
             >
               <:default>
                 <HtmlEditor

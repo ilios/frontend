@@ -222,6 +222,7 @@ export default class CourseObjectiveListItemComponent extends Component {
               @value={{this.description}}
               @save={{perform this.saveDescriptionChanges}}
               @close={{this.revertDescriptionChanges}}
+              @bigButtonStyle={{true}}
             >
               <:default>
                 <HtmlEditor
