@@ -20,12 +20,6 @@
     li {
       border-bottom: 1px solid light-dark(var(--lightest-grey), var(--grey));
 
-      &.active,
-      &:hover {
-        background-color: light-dark(var(--lightest-blue), var(--dark-grey));
-        cursor: pointer;
-      }
-
       &.inactive {
         color: light-dark(var(--grey), var(--lighter-grey));
         cursor: default;

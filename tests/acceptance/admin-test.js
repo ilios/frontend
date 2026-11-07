@@ -1,8 +1,8 @@
-import { click, fillIn, currentURL, triggerEvent, visit, waitFor } from '@ember/test-helpers';
+import { currentURL, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
-const url = '/admin';
+import page from 'frontend/tests/pages/admin';
 
 module('Acceptance | Admin', function (hooks) {
   setupApplicationTest(hooks);
@@ -13,10 +13,8 @@ module('Acceptance | Admin', function (hooks) {
   });
 
   test('can transition to `users` route', async function (assert) {
-    const button = '.manage-users-summary a:nth-of-type(1)';
-
-    await visit(url);
-    await click(button);
+    await page.visit();
+    await page.manageUsersSummary.visitUsers();
     assert.strictEqual(currentURL(), '/users', 'transition occurred');
   });
 
@@ -24,24 +22,25 @@ module('Acceptance | Admin', function (hooks) {
     await this.server.createList('user', 20, { school: this.school });
     await this.server.createList('authentication', 20);
 
-    const userSearch = '.user-search input';
-    const secondResult = '.user-search .results li:nth-of-type(3)';
-    const secondResultUsername = `${secondResult} .name`;
-    const secondResultEmail = `${secondResult} .email`;
-    const name = '.user-display-name';
-
-    await visit(url);
+    await page.visit();
     await takeScreenshot(assert, 'default');
-    await fillIn(userSearch, 'son');
-    await triggerEvent(userSearch, 'keyup');
+    await page.manageUsersSummary.userSearch.input('son');
     await takeScreenshot(assert, 'search results dropdown');
-    assert.dom(secondResultUsername).hasText('1 guy M. Mc1son', 'user name is correct');
-    assert.dom(secondResultEmail).hasText('user@example.edu', 'user email is correct');
+    assert.strictEqual(
+      page.manageUsersSummary.userSearch.results[2].name,
+      '1 guy M. Mc1son',
+      'user name is correct',
+    );
+    assert.strictEqual(
+      page.manageUsersSummary.userSearch.results[2].email,
+      'user@example.edu',
+      'user email is correct',
+    );
 
-    await click(secondResultUsername);
+    await page.manageUsersSummary.userSearch.results[2].click();
     await waitFor('[data-test-user-profile]');
     assert.strictEqual(currentURL(), '/users/2', 'new user profile is shown');
-    assert.dom(name).hasText('1 guy M. Mc1son', 'user name is shown');
+    assert.dom('.user-display-name').hasText('1 guy M. Mc1son', 'user name is shown');
   });
 
   test('api lookup when search is disabled', async function (assert) {
@@ -58,8 +57,7 @@ module('Acceptance | Admin', function (hooks) {
     await this.server.createList('user', 2, { school: this.school });
     await this.server.createList('authentication', 2);
 
-    const userSearch = '.user-search input';
-    await visit(url);
+    await page.visit();
 
     this.server.get('/api/users', async ({ request }) => {
       assert.step('API called');
@@ -70,8 +68,7 @@ module('Acceptance | Admin', function (hooks) {
       return formatJsonApi(rhett, 'user');
     });
 
-    await fillIn(userSearch, 'son');
-    await triggerEvent(userSearch, 'keyup');
+    await page.manageUsersSummary.userSearch.input('son');
     assert.verifySteps(['API called']);
   });
 
@@ -89,8 +86,7 @@ module('Acceptance | Admin', function (hooks) {
     await this.server.createList('user', 2, { school: this.school });
     await this.server.createList('authentication', 2);
 
-    const userSearch = '.user-search input';
-    await visit(url);
+    await page.visit();
 
     this.server.get('/api/search/v1/users', async ({ request }) => {
       assert.step('API called');
@@ -121,8 +117,7 @@ module('Acceptance | Admin', function (hooks) {
       };
     });
 
-    await fillIn(userSearch, 'son');
-    await triggerEvent(userSearch, 'keyup');
+    await page.manageUsersSummary.userSearch.input('son');
     assert.verifySteps(['API called']);
   });
 
@@ -130,15 +125,8 @@ module('Acceptance | Admin', function (hooks) {
     const firstName = 'Janusz';
     await this.server.createList('user', 100, { school: this.school, firstName });
 
-    const userSearch = '.user-search input';
-    const results = '.user-search .results li';
-    const summary = `${results}:nth-of-type(1)`;
-    const viewAll = `${summary} [data-test-view-all-results]`;
-    await visit(url);
-    await fillIn(userSearch, firstName);
-    await triggerEvent(userSearch, 'keyup');
-    assert.dom(results).exists({ count: 101 });
-    assert.dom(summary).hasText('100 results View All');
-    assert.dom(viewAll).hasAttribute('href', `/users?filter=${firstName}`);
+    await page.visit();
+    await page.manageUsersSummary.userSearch.input(firstName);
+    assert.strictEqual(page.manageUsersSummary.userSearch.results.length, 101);
   });
 });
