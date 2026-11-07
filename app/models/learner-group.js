@@ -445,7 +445,7 @@ export default class LearnerGroup extends Model {
   /**
    * 1. Remove user from learner group
    * 2. Traverse all child groups; remove user from each
-   * 3. Return groups with no change for saving
+   * 3. Return only groups with changes for saving
    */
   async removeUserFromGroupAndAllDescendants({ id: userId }) {
     const allDescendants = await this.getAllDescendants();
