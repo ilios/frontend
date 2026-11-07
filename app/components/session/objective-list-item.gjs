@@ -5,9 +5,8 @@ import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { and, not } from 'ember-truth-helpers';
-import EditableField from '../editable-field';
+import EditableTextarea from '../editable-textarea';
 import perform from 'ember-concurrency/helpers/perform';
-import HtmlEditor from '../html-editor';
 import FadeText from '../fade-text';
 import ObjectiveListItemParents from './objective-list-item-parents';
 import ObjectiveListItemTerms from '../objective-list-item-terms';
@@ -201,18 +200,13 @@ export default class SessionObjectiveListItemComponent extends Component {
           as |ft|
         >
           {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
-            <EditableField
+            <EditableTextarea
               @value={{this.description}}
+              @update={{this.changeDescription}}
               @save={{perform this.saveDescriptionChanges}}
               @close={{this.revertDescriptionChanges}}
-              @bigButtonStyle={{true}}
             >
               <:default>
-                <HtmlEditor
-                  @content={{this.description}}
-                  @update={{this.changeDescription}}
-                  @autofocus={{true}}
-                />
                 <YupValidationMessage
                   @description={{t "general.description"}}
                   @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
@@ -225,7 +219,7 @@ export default class SessionObjectiveListItemComponent extends Component {
               <:postValue>
                 {{ft.controls}}
               </:postValue>
-            </EditableField>
+            </EditableTextarea>
           {{else}}
             {{ft.text preserveLinks=true}}
             {{ft.controls}}

@@ -9,7 +9,6 @@ import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import { faPenToSquare, faUndo, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
-import SaveButton from './save-button';
 
 export default class EditableFieldComponent extends Component {
   @tracked isEditing = false;
@@ -70,7 +69,7 @@ export default class EditableFieldComponent extends Component {
     >
       <span class="content">
         {{#if this.isEditing}}
-          <span class="editor{{if @bigButtonStyle ' big-buttons'}}" data-test-editor>
+          <span class="editor" data-test-editor>
             {{yield
               this.keyboard
               this.saveData.isRunning
@@ -78,50 +77,27 @@ export default class EditableFieldComponent extends Component {
               (perform this.closeEditor)
             }}
             <span class="actions">
-              {{#if @bigButtonStyle}}
-                <div class="form">
-                  <div class="buttons">
-                    <SaveButton
-                      class="done text"
-                      @isSaving={{@isSaveDisabled}}
-                      {{on "click" (perform this.saveData)}}
-                    >
-                      {{t "general.save"}}
-                    </SaveButton>
-                    <button
-                      class="cancel text"
-                      type="button"
-                      disabled={{this.saveData.isRunning}}
-                      {{on "click" (perform this.closeEditor)}}
-                      data-test-cancel
-                    >
-                      {{t "general.cancel"}}
-                    </button>
-                  </div>
-                </div>
-              {{else}}
-                <button
-                  disabled={{@isSaveDisabled}}
-                  type="button"
-                  class="done"
-                  title={{t "general.save"}}
-                  {{on "click" (perform this.saveData)}}
-                >
-                  <FaIcon
-                    @icon={{if this.saveData.isRunning faSpinner faCheck}}
-                    @spin={{this.saveData.isRunning}}
-                  />
-                </button>
-                <button
-                  class="cancel"
-                  type="button"
-                  title={{t "general.cancel"}}
-                  {{on "click" (perform this.closeEditor)}}
-                  data-test-cancel
-                >
-                  <FaIcon @icon={{faUndo}} />
-                </button>
-              {{/if}}
+              <button
+                disabled={{@isSaveDisabled}}
+                type="button"
+                class="done"
+                title={{t "general.save"}}
+                {{on "click" (perform this.saveData)}}
+              >
+                <FaIcon
+                  @icon={{if this.saveData.isRunning faSpinner faCheck}}
+                  @spin={{this.saveData.isRunning}}
+                />
+              </button>
+              <button
+                class="cancel"
+                type="button"
+                title={{t "general.cancel"}}
+                {{on "click" (perform this.closeEditor)}}
+                data-test-cancel
+              >
+                <FaIcon @icon={{faUndo}} />
+              </button>
             </span>
           </span>
         {{else}}

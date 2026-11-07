@@ -24,18 +24,6 @@ module('Integration | Component | editable field', function (hooks) {
     assert.strictEqual(component.value, 'click me!');
   });
 
-  test('it renders regular save/cancel buttons', async function (assert) {
-    await render(<template><EditableField /></template>);
-    await component.editable.edit();
-    assert.notOk(component.editor.hasBigButtons);
-  });
-
-  test('it renders bigButtonStyle save/cancel buttons', async function (assert) {
-    await render(<template><EditableField @bigButtonStyle={{true}} /></template>);
-    await component.editable.edit();
-    assert.ok(component.editor.hasBigButtons);
-  });
-
   test('it renders content', async function (assert) {
     this.set('content', 'template block text');
     await render(
