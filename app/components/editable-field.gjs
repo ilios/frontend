@@ -69,7 +69,7 @@ export default class EditableFieldComponent extends Component {
     >
       <span class="content">
         {{#if this.isEditing}}
-          <span class="editor">
+          <span class="editor" data-test-editor>
             {{yield
               this.keyboard
               this.saveData.isRunning

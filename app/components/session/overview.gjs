@@ -15,6 +15,7 @@ import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import { LinkTo } from '@ember/routing';
 import EditableField from '../editable-field';
+import EditableTextarea from '../editable-textarea';
 import { on } from '@ember/modifier';
 import { eq, notEq } from 'ember-truth-helpers';
 import Ilm from './ilm';
@@ -22,7 +23,6 @@ import PostrequisiteEditor from './postrequisite-editor';
 import toggle from '../../helpers/toggle';
 import sub_ from 'ember-math-helpers/helpers/sub';
 import perform from 'ember-concurrency/helpers/perform';
-import HtmlEditor from '../html-editor';
 import YupValidationMessage from '../yup-validation-message';
 import join from '../../helpers/join';
 import mapBy from '../../helpers/map-by';
@@ -507,19 +507,15 @@ export default class SessionOverviewComponent extends Component {
                 <label>{{t "general.description"}}:</label>
                 <FadeText @text={{this.description}} as |ft|>
                   {{#if @editable}}
-                    <EditableField
+                    <EditableTextarea
                       @value={{this.description}}
+                      @update={{this.changeDescription}}
                       @isSaveDisabled={{this.validations.errors.description}}
                       @save={{perform this.saveDescription}}
                       @close={{this.revertDescriptionChanges}}
                       @clickPrompt={{t "general.clickToEdit"}}
                     >
                       <:default>
-                        <HtmlEditor
-                          @content={{this.description}}
-                          @update={{this.changeDescription}}
-                          @autofocus={{true}}
-                        />
                         <YupValidationMessage
                           @description={{t "general.description"}}
                           @validationErrors={{this.validations.errors.description}}
@@ -531,7 +527,7 @@ export default class SessionOverviewComponent extends Component {
                       <:postValue>
                         {{ft.controls}}
                       </:postValue>
-                    </EditableField>
+                    </EditableTextarea>
                   {{else}}
                     {{ft.text preserveLinks=true}}
                     {{ft.controls}}
@@ -545,19 +541,15 @@ export default class SessionOverviewComponent extends Component {
                 <label>{{t "general.instructionalNotes"}}:</label>
                 <FadeText @text={{this.instructionalNotes}} as |ft|>
                   {{#if @editable}}
-                    <EditableField
+                    <EditableTextarea
                       @value={{this.instructionalNotes}}
+                      @update={{this.changeInstructionalNotes}}
                       @isSaveDisabled={{this.validations.errors.instructionalNotes}}
                       @save={{perform this.saveInstructionalNotes}}
                       @close={{this.revertInstructionalNotesChanges}}
                       @clickPrompt={{t "general.clickToEdit"}}
                     >
                       <:default>
-                        <HtmlEditor
-                          @content={{this.instructionalNotes}}
-                          @update={{this.changeInstructionalNotes}}
-                          @autofocus={{true}}
-                        />
                         <YupValidationMessage
                           @description={{t "general.instructionalNotes"}}
                           @validationErrors={{this.validations.errors.instructionalNotes}}
@@ -569,7 +561,7 @@ export default class SessionOverviewComponent extends Component {
                       <:postValue>
                         {{ft.controls}}
                       </:postValue>
-                    </EditableField>
+                    </EditableTextarea>
                   {{else}}
                     {{ft.text preserveLinks=true}}
                     {{ft.controls}}

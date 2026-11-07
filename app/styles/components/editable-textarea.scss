@@ -1,0 +1,14 @@
+@use "../mixins" as m;
+
+.editor {
+  @include m.ilios-form-error;
+  display: block;
+
+  .form {
+    @include m.ilios-form;
+
+    .buttons {
+      @include m.ilios-form-buttons;
+    }
+  }
+}
