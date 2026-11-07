@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render, settled } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/objective-list-item';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -72,6 +72,30 @@ module('Integration | Component | program-year/objective-list-item', function (h
     assert.ok(component.canBeRemoved);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('can change description', async function (assert) {
+    this.set('programYearObjective', this.model);
+    await render(
+      <template>
+        <ObjectiveListItem
+          @programYearObjective={{this.programYearObjective}}
+          @editable={{true}}
+          @domainTrees={{(array)}}
+          @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
+          @showMeSH={{true}}
+        />
+      </template>,
+    );
+    const newDescription = 'Snaggletooth Snaps Tooth';
+    assert.strictEqual(component.description.text, 'program-year objective 0');
+    await component.description.openEditor();
+    await takeComponentScreenshot(assert);
+    await component.description.edit(newDescription);
+    await component.description.save();
+    assert.strictEqual(component.description.text, newDescription);
   });
 
   test('can change title', async function (assert) {
@@ -272,6 +296,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
     );
     await component.description.openEditor();
     assert.notOk(component.description.hasError);
+    await takeComponentScreenshot(assert);
     await component.description.edit('a');
     await settled();
     assert.strictEqual(
