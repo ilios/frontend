@@ -17,6 +17,7 @@ import mapBy0 from '../helpers/map-by';
 import perform from 'ember-concurrency/helpers/perform';
 import focus from '../modifiers/focus';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import onKey from 'ember-keyboard/modifiers/on-key';
 
 const DEBOUNCE_TIMEOUT = 250;
 const MIN_INPUT = 3;
@@ -63,13 +64,6 @@ export default class MeshManagerComponent extends Component {
       return;
     }
     this.args.add(term);
-  }
-
-  @action
-  keyUp({ key }) {
-    if ('Escape' === key) {
-      this.clear();
-    }
   }
 
   @action
@@ -176,7 +170,7 @@ export default class MeshManagerComponent extends Component {
               value={{this.query}}
               placeholder={{t "general.search"}}
               {{on "input" this.update}}
-              {{on "keyup" this.keyUp}}
+              {{onKey 'Escape' this.clear event='keyup'}}
             />
           </div>
         {{/if}}
