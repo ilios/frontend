@@ -32,13 +32,18 @@ export default class ManageUsersSummaryComponent extends Component {
 
   @tracked searchValue;
   @tracked activeUserId;
-  @tracked searchEnabled = true;
 
+  searchEnabledData = new TrackedAsyncData(this.iliosConfig.getSearchEnabled());
   userSearchTypeData = new TrackedAsyncData(this.iliosConfig.getUserSearchType());
 
   scrollOpts = {
     block: 'nearest',
   };
+
+  @cached
+  get searchEnabled() {
+    return this.searchEnabledData.isResolved ? this.searchEnabledData.value : null;
+  }
 
   @cached
   get userSearchType() {
@@ -205,7 +210,6 @@ export default class ManageUsersSummaryComponent extends Component {
         },
       ];
     }
-    this.searchEnabled = await this.iliosConfig.getSearchEnabled();
     const searchResults = this.searchEnabled ? await this.indexSearch(q) : await this.apiSearch(q);
 
     if (searchResults.length === 0) {
