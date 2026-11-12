@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/school/session-attributes-expanded';
 import SessionAttributesExpanded from 'frontend/components/school/session-attributes-expanded';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/school/session-attributes-expanded';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/session-attributes-expanded', function (hooks) {
   setupRenderingTest(hooks);

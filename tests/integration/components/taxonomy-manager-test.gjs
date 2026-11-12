@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/taxonomy-manager';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import TaxonomyManager from 'frontend/components/taxonomy-manager';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
-import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/taxonomy-manager';
+import { module, test } from 'qunit';
 
 module('Integration | Component | taxonomy manager', function (hooks) {
   setupRenderingTest(hooks);

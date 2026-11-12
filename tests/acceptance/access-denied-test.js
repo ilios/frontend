@@ -1,6 +1,6 @@
 import { currentURL, visit } from '@ember/test-helpers';
+import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
 
 module('Acceptance | Access Denied', function (hooks) {
   setupApplicationTest(hooks);

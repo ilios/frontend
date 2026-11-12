@@ -1,10 +1,11 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
 import { eq } from 'ember-truth-helpers';
-import { guidFor } from '@ember/object/internals';
+
 import focus from '../modifiers/focus';
 import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
 import IliosTooltip from './ilios-tooltip';

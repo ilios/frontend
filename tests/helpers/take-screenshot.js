@@ -1,7 +1,8 @@
-import { snapdom } from '@zumer/snapdom';
-import { getUniqueName } from './screenshot-name';
-import { waitForPromise } from '@ember/test-waiters';
 import { settled } from '@ember/test-helpers';
+import { waitForPromise } from '@ember/test-waiters';
+import { snapdom } from '@zumer/snapdom';
+
+import { getUniqueName } from './screenshot-name';
 
 let shouldTakeScreenshotsCache;
 

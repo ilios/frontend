@@ -1,9 +1,10 @@
 import { collection, create, fillable, property } from 'ember-cli-page-object';
+
 import toggle from '../toggle-buttons';
-import userContextFilter from './user-context-filter';
+import calendar from './../ilios-calendar';
 import filters from './calendar-filters';
 import filterTags from './filter-tags';
-import calendar from './../ilios-calendar';
+import userContextFilter from './user-context-filter';
 
 const definition = {
   scope: '[data-test-dashboard-calendar]',

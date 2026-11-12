@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
 import { action } from '@ember/object';
-import OfferingDateBlock from '../utils/offering-date-block';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { sortBy } from '../utils/array-helpers';
 import formatDate from 'ember-intl/helpers/format-date';
 import t from 'ember-intl/helpers/t';
-import SessionOfferingsTimeBlockOfferings from './session-offerings-time-block-offerings';
+
+import { sortBy } from '../utils/array-helpers';
+import OfferingDateBlock from '../utils/offering-date-block';
 import LoadingSpinner from './loading-spinner';
+import SessionOfferingsTimeBlockOfferings from './session-offerings-time-block-offerings';
 
 export default class SessionOfferingsListComponent extends Component {
   @service store;

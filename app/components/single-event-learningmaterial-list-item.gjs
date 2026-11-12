@@ -1,12 +1,13 @@
-import { uniqueId, concat } from '@ember/helper';
+import { concat,uniqueId } from '@ember/helper';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faDownload, faSquarePen } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
+import { eq, not } from 'ember-truth-helpers';
+
+import filesize from '../helpers/filesize';
+import LmIcons from './lm-icons';
 import TimedReleaseSchedule from './timed-release-schedule';
 import UserMaterialStatus from './user-material-status';
-import { eq, not } from 'ember-truth-helpers';
-import LmIcons from './lm-icons';
-import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import filesize from '../helpers/filesize';
-import { faDownload, faSquarePen } from '@fortawesome/free-solid-svg-icons';
 <template>
   <li
     class="single-event-learningmaterial-item"

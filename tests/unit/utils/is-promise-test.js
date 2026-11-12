@@ -1,7 +1,7 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
-import { resolve, Promise } from 'rsvp';
 import isPromise from 'frontend/utils/is-promise';
 import { module, test } from 'qunit';
+import { Promise,resolve } from 'rsvp';
 
 module('Unit | Utility | is-promise', function () {
   let testData = [

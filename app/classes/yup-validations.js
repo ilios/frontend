@@ -1,8 +1,8 @@
-import { tracked } from '@glimmer/tracking';
 import { getProperties } from '@ember/object';
-import { object, setLocale } from 'yup';
+import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
+import { object, setLocale } from 'yup';
 
 const DEBOUNCE_MS = 100;
 

@@ -1,9 +1,10 @@
-import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import sortableByPosition from '../utils/sortable-by-position';
-import { TrackedAsyncData } from 'ember-async-data';
+import Model, { attr,belongsTo, hasMany } from '@ember-data/model';
 import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
+
 import { sortBy, uniqueValues } from '../utils/array-helpers';
+import sortableByPosition from '../utils/sortable-by-position';
 
 export default class Course extends Model {
   @attr('string')

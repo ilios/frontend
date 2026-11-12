@@ -1,18 +1,19 @@
+import { uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { action } from '@ember/object';
-import { uniqueId } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import focus from '../../modifiers/focus';
-import pick from '../../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from '../loading-spinner';
-import YupValidations from '../../classes/yup-validations';
-import YupValidationMessage from '../yup-validation-message';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
 import { number } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
+import focus from '../../modifiers/focus';
+import LoadingSpinner from '../loading-spinner';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class LearnerGroupNewMultipleComponent extends Component {
   @tracked numberOfGroups;

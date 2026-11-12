@@ -1,4 +1,5 @@
 import { clickable, collection, create, isVisible, text } from 'ember-cli-page-object';
+
 import search from './search-box';
 
 const definition = {

@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
+import config from 'frontend/config/environment';
 import { setupTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { HttpResponse } from 'msw';
-import config from 'frontend/config/environment';
+import { module, test } from 'qunit';
 
 module('Unit | Service | new-version', function (hooks) {
   setupTest(hooks);

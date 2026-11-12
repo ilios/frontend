@@ -1,8 +1,8 @@
 import {
   attribute,
   clickable,
-  create,
   collection,
+  create,
   fillable,
   isPresent,
   text,

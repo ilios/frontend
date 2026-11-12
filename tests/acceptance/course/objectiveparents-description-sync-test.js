@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { waitFor } from '@ember/test-helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/course';
+import { module, test } from 'qunit';
 
 module('Acceptance | Course - Objective Parents - Faded Status Sync', function (hooks) {
   setupApplicationTest(hooks);

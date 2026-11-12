@@ -1,163 +1,163 @@
 import {
-  schema as aamcMethod,
   relationships as aamcMethodRelationships,
+  schema as aamcMethod,
 } from './models/aamc-method.js';
-import { schema as aamcPcrs, relationships as aamcPcrsRelationships } from './models/aamc-pcrs.js';
+import { relationships as aamcPcrsRelationships,schema as aamcPcrs } from './models/aamc-pcrs.js';
 import {
-  schema as aamcResourceType,
   relationships as aamcResourceTypeRelationships,
+  schema as aamcResourceType,
 } from './models/aamc-resource-type.js';
 import {
-  schema as academicYear,
   relationships as academicYearRelationships,
+  schema as academicYear,
 } from './models/academic-year.js';
 import {
-  schema as assessmentOption,
   relationships as assessmentOptionRelationships,
+  schema as assessmentOption,
 } from './models/assessment-option.js';
 import {
-  schema as authentication,
   relationships as authenticationRelationships,
+  schema as authentication,
 } from './models/authentication.js';
-import { schema as cohort, relationships as cohortRelationships } from './models/cohort.js';
+import { relationships as cohortRelationships,schema as cohort } from './models/cohort.js';
 import {
-  schema as competency,
   relationships as competencyRelationships,
+  schema as competency,
 } from './models/competency.js';
+import { relationships as courseRelationships,schema as course } from './models/course.js';
 import {
-  schema as courseClerkshipType,
   relationships as courseClerkshipTypeRelationships,
+  schema as courseClerkshipType,
 } from './models/course-clerkship-type.js';
 import {
-  schema as courseLearningMaterial,
   relationships as courseLearningMaterialRelationships,
+  schema as courseLearningMaterial,
 } from './models/course-learning-material.js';
 import {
-  schema as courseObjective,
   relationships as courseObjectiveRelationships,
+  schema as courseObjective,
 } from './models/course-objective.js';
-import { schema as course, relationships as courseRelationships } from './models/course.js';
 import {
-  schema as curriculumInventoryAcademicLevel,
   relationships as curriculumInventoryAcademicLevelRelationships,
+  schema as curriculumInventoryAcademicLevel,
 } from './models/curriculum-inventory-academic-level.js';
 import {
-  schema as curriculumInventoryExport,
   relationships as curriculumInventoryExportRelationships,
+  schema as curriculumInventoryExport,
 } from './models/curriculum-inventory-export.js';
 import {
-  schema as curriculumInventoryInstitution,
   relationships as curriculumInventoryInstitutionRelationships,
+  schema as curriculumInventoryInstitution,
 } from './models/curriculum-inventory-institution.js';
 import {
-  schema as curriculumInventoryReport,
   relationships as curriculumInventoryReportRelationships,
+  schema as curriculumInventoryReport,
 } from './models/curriculum-inventory-report.js';
 import {
-  schema as curriculumInventorySequenceBlock,
-  relationships as curriculumInventorySequenceBlockRelationships,
-} from './models/curriculum-inventory-sequence-block.js';
-import {
-  schema as curriculumInventorySequence,
   relationships as curriculumInventorySequenceRelationships,
+  schema as curriculumInventorySequence,
 } from './models/curriculum-inventory-sequence.js';
 import {
-  schema as ilmSession,
+  relationships as curriculumInventorySequenceBlockRelationships,
+  schema as curriculumInventorySequenceBlock,
+} from './models/curriculum-inventory-sequence-block.js';
+import {
   relationships as ilmSessionRelationships,
+  schema as ilmSession,
 } from './models/ilm-session.js';
 import {
-  schema as ingestionException,
   relationships as ingestionExceptionRelationships,
+  schema as ingestionException,
 } from './models/ingestion-exception.js';
 import {
-  schema as instructorGroup,
   relationships as instructorGroupRelationships,
+  schema as instructorGroup,
 } from './models/instructor-group.js';
 import {
-  schema as learnerGroup,
   relationships as learnerGroupRelationships,
+  schema as learnerGroup,
 } from './models/learner-group.js';
 import {
-  schema as learningMaterialStatus,
-  relationships as learningMaterialStatusRelationships,
-} from './models/learning-material-status.js';
-import {
-  schema as learningMaterialUserRole,
-  relationships as learningMaterialUserRoleRelationships,
-} from './models/learning-material-user-role.js';
-import {
-  schema as learningMaterial,
   relationships as learningMaterialRelationships,
+  schema as learningMaterial,
 } from './models/learning-material.js';
 import {
-  schema as meshConcept,
+  relationships as learningMaterialStatusRelationships,
+  schema as learningMaterialStatus,
+} from './models/learning-material-status.js';
+import {
+  relationships as learningMaterialUserRoleRelationships,
+  schema as learningMaterialUserRole,
+} from './models/learning-material-user-role.js';
+import {
   relationships as meshConceptRelationships,
+  schema as meshConcept,
 } from './models/mesh-concept.js';
 import {
-  schema as meshDescriptor,
   relationships as meshDescriptorRelationships,
+  schema as meshDescriptor,
 } from './models/mesh-descriptor.js';
 import {
-  schema as meshPreviousIndexing,
   relationships as meshPreviousIndexingRelationships,
+  schema as meshPreviousIndexing,
 } from './models/mesh-previous-indexing.js';
 import {
-  schema as meshQualifier,
   relationships as meshQualifierRelationships,
+  schema as meshQualifier,
 } from './models/mesh-qualifier.js';
-import { schema as meshTerm, relationships as meshTermRelationships } from './models/mesh-term.js';
-import { schema as meshTree, relationships as meshTreeRelationships } from './models/mesh-tree.js';
-import { schema as offering, relationships as offeringRelationships } from './models/offering.js';
+import { relationships as meshTermRelationships,schema as meshTerm } from './models/mesh-term.js';
+import { relationships as meshTreeRelationships,schema as meshTree } from './models/mesh-tree.js';
+import { relationships as offeringRelationships,schema as offering } from './models/offering.js';
 import {
-  schema as pendingUserUpdate,
   relationships as pendingUserUpdateRelationships,
+  schema as pendingUserUpdate,
 } from './models/pending-user-update.js';
+import { relationships as programRelationships,schema as program } from './models/program.js';
 import {
-  schema as programYearObjective,
-  relationships as programYearObjectiveRelationships,
-} from './models/program-year-objective.js';
-import {
-  schema as programYear,
   relationships as programYearRelationships,
+  schema as programYear,
 } from './models/program-year.js';
-import { schema as program, relationships as programRelationships } from './models/program.js';
-import { schema as report, relationships as reportRelationships } from './models/report.js';
 import {
-  schema as schoolConfig,
+  relationships as programYearObjectiveRelationships,
+  schema as programYearObjective,
+} from './models/program-year-objective.js';
+import { relationships as reportRelationships,schema as report } from './models/report.js';
+import { relationships as schoolRelationships,schema as school } from './models/school.js';
+import {
   relationships as schoolConfigRelationships,
+  schema as schoolConfig,
 } from './models/school-config.js';
-import { schema as school, relationships as schoolRelationships } from './models/school.js';
 import {
-  schema as schoolevent,
   relationships as schooleventRelationships,
+  schema as schoolevent,
 } from './models/schoolevent.js';
+import { relationships as sessionRelationships,schema as session } from './models/session.js';
 import {
-  schema as sessionLearningMaterial,
   relationships as sessionLearningMaterialRelationships,
+  schema as sessionLearningMaterial,
 } from './models/session-learning-material.js';
 import {
-  schema as sessionObjective,
   relationships as sessionObjectiveRelationships,
+  schema as sessionObjective,
 } from './models/session-objective.js';
 import {
-  schema as sessionType,
   relationships as sessionTypeRelationships,
+  schema as sessionType,
 } from './models/session-type.js';
-import { schema as session, relationships as sessionRelationships } from './models/session.js';
-import { schema as term, relationships as termRelationships } from './models/term.js';
-import { schema as userRole, relationships as userRoleRelationships } from './models/user-role.js';
+import { relationships as termRelationships,schema as term } from './models/term.js';
+import { relationships as userRelationships,schema as user } from './models/user.js';
+import { relationships as userRoleRelationships,schema as userRole } from './models/user-role.js';
 import {
-  schema as userSessionMaterialStatus,
   relationships as userSessionMaterialStatusRelationships,
+  schema as userSessionMaterialStatus,
 } from './models/user-session-material-status.js';
-import { schema as user, relationships as userRelationships } from './models/user.js';
 import {
-  schema as userevent,
   relationships as usereventRelationships,
+  schema as userevent,
 } from './models/userevent.js';
 import {
-  schema as vocabulary,
   relationships as vocabularyRelationships,
+  schema as vocabulary,
 } from './models/vocabulary.js';
 
 const schemas = {
@@ -266,4 +266,4 @@ const relationships = {
   vocabulary: vocabularyRelationships,
 };
 
-export { schemas, relationships };
+export { relationships,schemas };

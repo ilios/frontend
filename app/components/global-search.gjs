@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import GlobalSearchBox from './global-search-box';
-import { and, gt, not } from 'ember-truth-helpers';
-import t from 'ember-intl/helpers/t';
-import CourseSearchResult from './course-search-result';
-import { on } from '@ember/modifier';
-import add from 'ember-math-helpers/helpers/add';
 import { fn } from '@ember/helper';
-import includes from '../helpers/includes';
-import PaginationLinks from './pagination-links';
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import add from 'ember-math-helpers/helpers/add';
 import { modifier } from 'ember-modifier';
+import { and, gt, not } from 'ember-truth-helpers';
+
+import includes from '../helpers/includes';
+import CourseSearchResult from './course-search-result';
+import GlobalSearchBox from './global-search-box';
 import LoadingSpinner from './loading-spinner';
+import PaginationLinks from './pagination-links';
 
 const COURSES_PER_PAGE = 10;
 

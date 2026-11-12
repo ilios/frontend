@@ -1,15 +1,17 @@
 import '@warp-drive/ember/install';
-import Application from '@ember/application';
-import compatModules from '@embroider/virtual/compat-modules';
-import Resolver from 'ember-resolver';
-import loadInitializers from 'ember-load-initializers';
-import config from 'frontend/config/environment';
-import { startSentry } from './sentry';
 import './utils/setup-fontawesome';
 import './styles/app.scss';
-import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
-import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
 import './inflector';
+
+import Application from '@ember/application';
+import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
+import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
+import compatModules from '@embroider/virtual/compat-modules';
+import loadInitializers from 'ember-load-initializers';
+import Resolver from 'ember-resolver';
+import config from 'frontend/config/environment';
+
+import { startSentry } from './sentry';
 
 if (macroCondition(isDevelopingApp())) {
   importSync('./deprecation-workflow');

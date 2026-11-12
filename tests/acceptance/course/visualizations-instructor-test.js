@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
 import { currentURL, waitFor } from '@ember/test-helpers';
-import { setupApplicationTest, takeScreenshot, setupAuthentication } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/course-visualizations-instructor';
+import { module, test } from 'qunit';
 
 module('Acceptance | course visualizations - instructor', function (hooks) {
   setupApplicationTest(hooks);

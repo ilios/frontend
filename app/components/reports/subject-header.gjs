@@ -1,26 +1,27 @@
-import Component from '@glimmer/component';
-import { LinkTo } from '@ember/routing';
-import { cached, tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
-import { and } from 'ember-truth-helpers';
-import EditableField from '../editable-field';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import { pageTitle } from 'ember-page-title';
-import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
+import { and } from 'ember-truth-helpers';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
+import focus from '../../modifiers/focus';
+import EditableField from '../editable-field';
 import YupValidationMessage from '../yup-validation-message';
 import SubjectCopy from './subject-copy';
+import SubjectDescription from './subject-description';
 import SubjectDownload from './subject-download';
 import SubjectYearFilter from './subject-year-filter';
-import SubjectDescription from './subject-description';
-import focus from '../../modifiers/focus';
 
 export default class ReportsSubjectHeaderComponent extends Component {
   @service router;

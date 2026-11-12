@@ -1,9 +1,10 @@
+import { isTesting } from '@embroider/macros';
 import Component from '@glimmer/component';
+import formatDate from 'ember-intl/helpers/format-date';
 import t from 'ember-intl/helpers/t';
+
 import repeat from '../../helpers/repeat';
 import truncate from '../../helpers/truncate';
-import formatDate from 'ember-intl/helpers/format-date';
-import { isTesting } from '@embroider/macros';
 
 export default class CourseLoadingListComponent extends Component {
   get rows() {

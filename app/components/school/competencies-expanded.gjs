@@ -1,19 +1,20 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
-import { filterBy, uniqueValues } from '../../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
-import CompetenciesManager from './competencies-manager';
-import CompetenciesList from './competencies-list';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
+import { or } from 'ember-truth-helpers';
+
+import { filterBy, uniqueValues } from '../../utils/array-helpers';
 import BigSaveCancelButtons from '../big-save-cancel-buttons';
+import CompetenciesList from './competencies-list';
+import CompetenciesManager from './competencies-manager';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;

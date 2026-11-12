@@ -1,12 +1,13 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { uniqueId } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import pick from '../helpers/pick';
-import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import { faBackwardFast, faForwardFast, faPlay } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
+import isEqual from 'ember-truth-helpers/helpers/is-equal';
+
+import pick from '../helpers/pick';
 
 export default class PagedlistControlsComponent extends Component {
   get offset() {

@@ -1,4 +1,5 @@
 import { attribute, clickable, create, hasClass } from 'ember-cli-page-object';
+
 import { hasFocus } from '../helpers';
 
 const definition = {

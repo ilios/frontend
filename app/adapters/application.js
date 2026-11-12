@@ -1,7 +1,7 @@
-import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { service } from '@ember/service';
-import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
+import JSONAPIAdapter from '@ember-data/adapter/json-api';
+import { pluralize } from 'ember-inflector';
 
 export default class IliosAdapter extends JSONAPIAdapter {
   @service flashMessages;

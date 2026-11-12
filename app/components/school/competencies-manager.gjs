@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
+import { and, eq } from 'ember-truth-helpers';
+
 import { sortBy, uniqueValues } from '../../utils/array-helpers';
 import CompetencyTitleEditor from './competency-title-editor';
-import { and, eq } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import NewCompetency from './new-competency';
-import t from 'ember-intl/helpers/t';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesManagerComponent extends Component {
   get domains() {

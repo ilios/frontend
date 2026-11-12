@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
 import TimedReleaseSchedule from 'frontend/components/timed-release-schedule';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 const localeFormatOptions = {
   year: 'numeric',

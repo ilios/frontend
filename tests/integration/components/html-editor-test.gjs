@@ -1,8 +1,8 @@
-import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, triggerKeyEvent } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/html-editor';
 import HtmlEditor from 'frontend/components/html-editor';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/html-editor';
+import { module, skip,test } from 'qunit';
 
 module('Integration | Component | html editor', function (hooks) {
   setupRenderingTest(hooks);

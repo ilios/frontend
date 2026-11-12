@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
-import { task } from 'ember-concurrency';
-import { cached, tracked } from '@glimmer/tracking';
-import sortableByPosition from '../utils/sortable-by-position';
-import { action } from '@ember/object';
-import { TrackedAsyncData } from 'ember-async-data';
-import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
-import LmTypeIcon from './lm-type-icon';
-import capitalize from '../helpers/capitalize';
-import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
+import { eq } from 'ember-truth-helpers';
+
+import capitalize from '../helpers/capitalize';
+import sortableByPosition from '../utils/sortable-by-position';
 import BigSaveCancelButtons from './big-save-cancel-buttons';
+import LmTypeIcon from './lm-type-icon';
 
 export default class LearningMaterialsSortManagerComponent extends Component {
   @tracked sortableObjectList;

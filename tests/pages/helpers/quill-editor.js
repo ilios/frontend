@@ -1,6 +1,6 @@
+import { later } from '@ember/runloop';
 import { findOne } from 'ember-cli-page-object/extend';
 import { loadQuillEditor } from 'frontend/utils/load-quill-editor';
-import { later } from '@ember/runloop';
 
 async function fillInQuillEditor(element, html) {
   const editor = await getEditorInstance(element);

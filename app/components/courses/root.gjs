@@ -1,26 +1,27 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import { DateTime } from 'luxon';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached, tracked } from '@glimmer/tracking';
-import { findById } from '../../utils/array-helpers';
-import { action } from '@ember/object';
-import ToggleButtons from '../toggle-buttons';
-import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBuildingColumns, faCalendar, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { eq, not } from 'ember-truth-helpers';
+import { DateTime } from 'luxon';
+
 import pick from '../../helpers/pick';
 import sortBy from '../../helpers/sort-by';
-import { eq, not } from 'ember-truth-helpers';
+import { findById } from '../../utils/array-helpers';
 import ExpandCollapseButton from '../expand-collapse-button';
-import set from 'ember-set-helper/helpers/set';
-import New from './new';
-import perform from 'ember-concurrency/helpers/perform';
-import { LinkTo } from '@ember/routing';
+import ToggleButtons from '../toggle-buttons';
 import List from './list';
 import LoadingList from './loading-list';
-import { faBuildingColumns, faCalendar, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
+import New from './new';
 
 export default class CoursesRootComponent extends Component {
   @service currentUser;

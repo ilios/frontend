@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import CohortMembers from 'frontend/components/program-year/cohort-members';
 import noop from 'frontend/helpers/noop';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/program-year/cohort-members';
-import CohortMembers from 'frontend/components/program-year/cohort-members';
+import { module, test } from 'qunit';
 
 module('Integration | Component | program-year/cohort-members', function (hooks) {
   setupRenderingTest(hooks);

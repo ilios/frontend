@@ -1,4 +1,4 @@
-import { clickable, create, isPresent, fillable, text, value } from 'ember-cli-page-object';
+import { clickable, create, fillable, isPresent, text, value } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-competency-title-editor]',

@@ -1,4 +1,4 @@
-import { clickable, create, collection, isVisible, property, text } from 'ember-cli-page-object';
+import { clickable, collection, create, isVisible, property, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-vocabularies-list]',

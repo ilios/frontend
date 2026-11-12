@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
+
 import currentAcademicYear from '../../utils/current-academic-year';
 
 export default class ReportsCurriculumController extends Controller {

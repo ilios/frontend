@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
 import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/school';
+import { module, test } from 'qunit';
 
 module('Acceptance | School - Vocabulary Manager', function (hooks) {
   setupApplicationTest(hooks);

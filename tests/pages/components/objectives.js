@@ -1,4 +1,5 @@
 import { clickable, collection, isVisible, property, text } from 'ember-cli-page-object';
+
 import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from '../helpers';
 import meshManager from './mesh-manager';
 

@@ -1,19 +1,20 @@
+import { array } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faLock, faLockOpen, faSquareUpRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { and, not, or } from 'ember-truth-helpers';
-import { LinkTo } from '@ember/routing';
-import { array } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import LoadingSpinner from '../loading-spinner';
-import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
+import { and, not, or } from 'ember-truth-helpers';
+
 import scrollIntoView from '../../modifiers/scroll-into-view';
-import { faLock, faLockOpen, faSquareUpRight, faTrash } from '@fortawesome/free-solid-svg-icons';
+import LoadingSpinner from '../loading-spinner';
 
 export default class ProgramYearListItemComponent extends Component {
   @service permissionChecker;

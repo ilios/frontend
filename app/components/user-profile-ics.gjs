@@ -1,20 +1,21 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import CopyButton from './copy-button';
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faArrowRotateLeft,
   faCopy,
   faPenToSquare,
-  faSpinner,
   faRotate,
+  faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+
+import CopyButton from './copy-button';
 
 export default class UserProfileIcsComponent extends Component {
   @service iliosConfig;

@@ -1,9 +1,9 @@
-import { module, test, skip } from 'qunit';
-import { setupTest, jwtEncode } from 'frontend/tests/helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import { authenticateSession, invalidateSession } from 'ember-simple-auth/test-support';
-import { mapBy } from 'frontend/utils/array-helpers';
+import { jwtEncode,setupTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
+import { mapBy } from 'frontend/utils/array-helpers';
+import { module, skip,test } from 'qunit';
 
 module('Integration | Service | Current User', function (hooks) {
   setupTest(hooks);

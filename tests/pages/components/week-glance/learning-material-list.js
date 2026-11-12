@@ -1,4 +1,5 @@
 import { collection, create, isPresent, text } from 'ember-cli-page-object';
+
 import learningMaterial from './learning-material';
 
 const definition = {

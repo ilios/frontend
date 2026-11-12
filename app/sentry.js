@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/ember';
+
 import { getValueFromHtml } from './utils/html-server-variables';
 
 function startSentry(config) {

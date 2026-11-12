@@ -1,16 +1,17 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { eq } from 'ember-truth-helpers';
+
+import ChooseCourse from './curriculum/choose-course';
 import CourseCompetencies from './curriculum/course-competencies';
+import Header from './curriculum/header';
 import InstructionalTime from './curriculum/instructional-time';
 import LearnerGroups from './curriculum/learner-groups';
 import SessionObjectives from './curriculum/session-objectives';
 import SessionOfferings from './curriculum/session-offerings';
 import TaggedTerms from './curriculum/tagged-terms';
-import Header from './curriculum/header';
-import ChooseCourse from './curriculum/choose-course';
 
 export default class ReportsCurriculumComponent extends Component {
   @service store;

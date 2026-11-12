@@ -1,5 +1,5 @@
-import { FlashMessagesService } from 'ember-cli-flash';
 import { isTesting } from '@embroider/macros';
+import { FlashMessagesService } from 'ember-cli-flash';
 
 /**
  * Extend the service so we can configure it.

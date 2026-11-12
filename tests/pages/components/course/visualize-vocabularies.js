@@ -1,6 +1,7 @@
 import { attribute, create } from 'ember-cli-page-object';
-import vocabulariesChart from './visualize-vocabularies-graph';
+
 import breadcrumbs from '../breadcrumbs';
+import vocabulariesChart from './visualize-vocabularies-graph';
 
 const definition = create({
   scope: '[data-test-course-visualize-vocabularies]',

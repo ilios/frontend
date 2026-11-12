@@ -1,5 +1,6 @@
 import { cached } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
+
 import { sortBy } from '../utils/array-helpers';
 
 /**

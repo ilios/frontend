@@ -1,5 +1,5 @@
-import EmberPageTitleService from 'ember-page-title/services/page-title';
 import { tracked } from '@glimmer/tracking';
+import EmberPageTitleService from 'ember-page-title/services/page-title';
 
 /**
  * Extend the page title service in this documented way

@@ -1,6 +1,7 @@
-import { factoryDefaults } from './factories.js';
-import { db, validateRecordData } from './db.js';
 import { camelize } from '@ember/string';
+
+import { db, validateRecordData } from './db.js';
+import { factoryDefaults } from './factories.js';
 import { getIdentityManager, resetIdentityManagers } from './utils/identity-managers.js';
 
 const factoryCounters = new Map();

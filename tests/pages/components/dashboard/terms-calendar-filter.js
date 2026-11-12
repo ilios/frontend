@@ -1,4 +1,4 @@
-import { collection, clickable, create, property, text } from 'ember-cli-page-object';
+import { clickable, collection, create, property, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-vocabulary-filter]',

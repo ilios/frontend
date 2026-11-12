@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+import formatDate from 'ember-intl/helpers/format-date';
+import mod from 'ember-math-helpers/helpers/mod';
+import { eq } from 'ember-truth-helpers';
+
 import { sortBy } from '../utils/array-helpers';
 import SessionsGridOffering from './sessions-grid-offering';
-import { eq } from 'ember-truth-helpers';
-import mod from 'ember-math-helpers/helpers/mod';
-import formatDate from 'ember-intl/helpers/format-date';
 
 export default class SessionsGridOfferingTableOfferingsComponent extends Component {
   @cached

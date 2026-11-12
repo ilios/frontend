@@ -1,15 +1,16 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
-import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from './loading-spinner';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import SortableHeading from './sortable-heading';
 import { fn } from '@ember/helper';
-import { eq, or } from 'ember-truth-helpers';
-import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import { eq, or } from 'ember-truth-helpers';
+
+import LoadingSpinner from './loading-spinner';
+import SortableHeading from './sortable-heading';
 
 export default class SessionsGridHeaderRow extends Component {
   get sortedAscending() {

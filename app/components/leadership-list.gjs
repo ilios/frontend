@@ -1,9 +1,10 @@
 import t from 'ember-intl/helpers/t';
 import isArray from 'ember-truth-helpers/helpers/is-array';
+
 import sortBy from '../helpers/sort-by';
+import LoadingSpinner from './loading-spinner';
 import UserNameInfo from './user-name-info';
 import UserStatus from './user-status';
-import LoadingSpinner from './loading-spinner';
 <template>
   <div class="leadership-list" data-test-leadership-list>
     <table class="ilios-table ilios-table-colors">

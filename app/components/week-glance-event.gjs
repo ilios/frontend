@@ -1,20 +1,21 @@
-import Component from '@glimmer/component';
-import createTypedLearningMaterialProxy from '../utils/create-typed-learning-material-proxy';
-import { service } from '@ember/service';
 import { concat } from '@ember/helper';
 import { LinkTo } from '@ember/routing';
-import { DateTime } from 'luxon';
-import t from 'ember-intl/helpers/t';
-import formatDate from 'ember-intl/helpers/format-date';
-import OfferingUrlDisplay from './offering-url-display';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import join from '../helpers/join';
-import sortBy from '../helpers/sort-by';
-import TruncateText from './truncate-text';
-import { or } from 'ember-truth-helpers';
-import LearningMaterialList from './week-glance/learning-material-list';
 import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
 import { faCalendarCheck, faCalendarMinus, faFlask } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+import { or } from 'ember-truth-helpers';
+import { DateTime } from 'luxon';
+
+import join from '../helpers/join';
+import sortBy from '../helpers/sort-by';
+import createTypedLearningMaterialProxy from '../utils/create-typed-learning-material-proxy';
+import OfferingUrlDisplay from './offering-url-display';
+import TruncateText from './truncate-text';
+import LearningMaterialList from './week-glance/learning-material-list';
 
 export default class WeekGlanceEventComponent extends Component {
   @service intl;

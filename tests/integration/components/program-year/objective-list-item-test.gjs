@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render, settled } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/program-year/objective-list-item';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupMSW } from 'frontend/tests/msw';
 import ObjectiveListItem from 'frontend/components/program-year/objective-list-item';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/program-year/objective-list-item';
+import { module, test } from 'qunit';
 
 module('Integration | Component | program-year/objective-list-item', function (hooks) {
   setupRenderingTest(hooks);

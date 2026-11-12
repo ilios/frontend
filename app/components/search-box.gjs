@@ -1,15 +1,15 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { isNone } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
-import { service } from '@ember/service';
-import { guidFor } from '@ember/object/internals';
 import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import perform from 'ember-concurrency/helpers/perform';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+import { service } from '@ember/service';
+import { isNone } from '@ember/utils';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 const DEBOUNCE_TIMEOUT = 250;
 
 export default class SearchBoxComponent extends Component {

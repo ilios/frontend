@@ -1,8 +1,9 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import sortCohorts from '../utils/sort-cohorts';
 import t from 'ember-intl/helpers/t';
+
+import sortCohorts from '../utils/sort-cohorts';
 
 export default class UserProfileCohortsDetailsComponent extends Component {
   @cached

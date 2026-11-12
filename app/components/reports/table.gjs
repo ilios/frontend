@@ -1,15 +1,16 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-import SortableTh from '../sortable-th';
-import { eq, or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
-import sortBy from '../../helpers/sort-by';
-import TableRow from './table-row';
-import includes from '../../helpers/includes';
-import scrollIntoView from '../../modifiers/scroll-into-view';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import t from 'ember-intl/helpers/t';
+import { eq, or } from 'ember-truth-helpers';
+
+import includes from '../../helpers/includes';
+import sortBy from '../../helpers/sort-by';
+import scrollIntoView from '../../modifiers/scroll-into-view';
+import SortableTh from '../sortable-th';
+import TableRow from './table-row';
 
 export default class ReportsTableComponent extends Component {
   @tracked reportsForRemovalConfirmation = [];

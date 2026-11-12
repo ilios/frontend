@@ -1,12 +1,12 @@
 import Service from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { module, test } from 'qunit';
-import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import component from 'frontend/tests/pages/components/user-profile/locale-chooser';
+import { tracked } from '@glimmer/tracking';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { setLocale,setupIntl } from 'ember-intl/test-support';
 import LocaleChooser from 'frontend/components/user-profile/locale-chooser';
-import { setupIntl, setLocale } from 'ember-intl/test-support';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
+import component from 'frontend/tests/pages/components/user-profile/locale-chooser';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user-profile/locale-chooser', function (hooks) {
   setupRenderingTest(hooks);

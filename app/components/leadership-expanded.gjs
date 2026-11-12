@@ -1,16 +1,17 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
-import { task, timeout } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { action } from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { fn } from '@ember/helper';
-import LeadershipManager from './leadership-manager';
-import LeadershipList from './leadership-list';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+
 import BigSaveCancelButtons from './big-save-cancel-buttons';
+import LeadershipList from './leadership-list';
+import LeadershipManager from './leadership-manager';
 
 export default class LeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];

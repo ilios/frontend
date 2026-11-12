@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/school/session-attributes-collapsed';
 import SessionAttributesCollapsed from 'frontend/components/school/session-attributes-collapsed';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/school/session-attributes-collapsed';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/session-attributes-collapsed', function (hooks) {
   setupRenderingTest(hooks);

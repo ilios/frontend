@@ -1,19 +1,20 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import ManageUsersSummary from './manage-users-summary';
+import Component from '@glimmer/component';
 import t from 'ember-intl/helpers/t';
-import UserNameInfo from './user-name-info';
-import UserStatus from './user-status';
+import { and, not } from 'ember-truth-helpers';
+
+import ManageUsersSummary from './manage-users-summary';
 import PendingSingleUserUpdate from './pending-single-user-update';
 import ToggleButtons from './toggle-buttons';
-import { and, not } from 'ember-truth-helpers';
-import UserProfileCalendar from './user-profile-calendar';
+import UserNameInfo from './user-name-info';
+import LearnerGroups from './user-profile/learner-groups';
 import UserProfileBio from './user-profile-bio';
-import UserProfileRoles from './user-profile-roles';
+import UserProfileCalendar from './user-profile-calendar';
 import UserProfileCohorts from './user-profile-cohorts';
 import UserProfileIcs from './user-profile-ics';
 import UserProfilePermissions from './user-profile-permissions';
-import LearnerGroups from './user-profile/learner-groups';
+import UserProfileRoles from './user-profile-roles';
+import UserStatus from './user-status';
 
 export default class UserProfileComponent extends Component {
   @service currentUser;

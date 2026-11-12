@@ -1,8 +1,9 @@
-import { http, HttpResponse } from 'msw';
 import { settled } from '@ember/test-helpers';
-import { startMSW } from './start-msw.js';
-import { db } from './db.js';
+import { http, HttpResponse } from 'msw';
+
 import { createModel, createModelList, resetIdCounter } from './create-model.js';
+import { db } from './db.js';
+import { startMSW } from './start-msw.js';
 
 // Drop-in replacement for setupMirage() that maintains the same API
 export function setupMSW(hooks) {

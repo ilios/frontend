@@ -1,4 +1,5 @@
 import { create, text } from 'ember-cli-page-object';
+
 import detailLearnergroupsList from './detail-learnergroups-list';
 
 const definition = {

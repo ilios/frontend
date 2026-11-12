@@ -1,7 +1,8 @@
 import { clickable, create, fillable, isHidden, text } from 'ember-cli-page-object';
+
 import { hasFocus } from '../../helpers';
-import table from './table';
 import newSubject from './new-subject';
+import table from './table';
 
 const definition = {
   filterByTitle: {

@@ -1,7 +1,8 @@
 import { create } from 'ember-cli-page-object';
-import search from './user-search';
-import selectedInstructors from './selected-instructors';
+
 import selectedInstructorGroups from './selected-instructor-groups';
+import selectedInstructors from './selected-instructors';
+import search from './user-search';
 const definition = {
   scope: '[data-test-instructor-selection-manager]',
   search,

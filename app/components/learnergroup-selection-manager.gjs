@@ -1,11 +1,12 @@
+import { fn } from '@ember/helper';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import SelectedLearnerGroups from './selected-learner-groups';
 import t from 'ember-intl/helpers/t';
-import SearchBox from './search-box';
-import { fn } from '@ember/helper';
+
 import sortBy from '../helpers/sort-by';
 import LearnergroupSelectionCohortManager from './learnergroup-selection-cohort-manager';
+import SearchBox from './search-box';
+import SelectedLearnerGroups from './selected-learner-groups';
 
 export default class LearnergroupSelectionManagerComponent extends Component {
   @tracked filter = '';

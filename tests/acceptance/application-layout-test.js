@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Acceptance | Application layout', function (hooks) {
   setupApplicationTest(hooks);

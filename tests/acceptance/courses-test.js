@@ -1,14 +1,14 @@
 import { currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
 import {
-  setupAuthentication,
   freezeDateAt,
-  unfreezeDate,
   setupApplicationTest,
+  setupAuthentication,
   takeScreenshot,
+  unfreezeDate,
 } from 'frontend/tests/helpers';
-import { DateTime } from 'luxon';
 import page from 'frontend/tests/pages/courses';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Acceptance | Courses', function (hooks) {
   setupApplicationTest(hooks);

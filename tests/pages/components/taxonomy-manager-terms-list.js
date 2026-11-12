@@ -1,4 +1,5 @@
 import { collection, create } from 'ember-cli-page-object';
+
 import ListItem from './taxonomy-manager-terms-list-item';
 
 const definition = {

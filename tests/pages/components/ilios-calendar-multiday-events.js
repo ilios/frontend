@@ -1,4 +1,5 @@
 import { collection, create, text } from 'ember-cli-page-object';
+
 import item from './ilios-calendar-multiday-event';
 
 const definition = {

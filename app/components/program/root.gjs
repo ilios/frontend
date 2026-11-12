@@ -1,12 +1,13 @@
+import { fn } from '@ember/helper';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
+import { pageTitle } from 'ember-page-title';
+
+import hasManyLength from '../../helpers/has-many-length';
+import LeadershipCollapsed from '../leadership-collapsed';
+import LeadershipExpanded from '../leadership-expanded';
 import Header from './header';
 import Overview from './overview';
-import LeadershipExpanded from '../leadership-expanded';
-import { fn } from '@ember/helper';
-import { pageTitle } from 'ember-page-title';
-import LeadershipCollapsed from '../leadership-collapsed';
-import hasManyLength from '../../helpers/has-many-length';
 <template>
   {{pageTitle " | " @program.title prepend=false}}
 

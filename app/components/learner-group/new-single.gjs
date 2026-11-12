@@ -1,20 +1,21 @@
+import { uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { action } from '@ember/object';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
-import { uniqueId } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import focus from '../../modifiers/focus';
-import pick from '../../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
-import YupValidationMessage from '../yup-validation-message';
-import toggle from '../../helpers/toggle';
-import { not } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { not } from 'ember-truth-helpers';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
+import toggle from '../../helpers/toggle';
+import focus from '../../modifiers/focus';
 import LoadingSpinner from '../loading-spinner';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class LearnerGroupNewSingleComponent extends Component {
   @tracked title;

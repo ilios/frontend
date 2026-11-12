@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import Service from '@ember/service';
-import { component } from 'frontend/tests/pages/components/learner-group/list-item';
+import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import ListItem from 'frontend/components/learner-group/list-item';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/learner-group/list-item';
+import { module, test } from 'qunit';
 
 module('Integration | Component | learner-group/list-item', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/course/objective-list';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMSW } from 'frontend/tests/msw';
 import ObjectiveList from 'frontend/components/course/objective-list';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/objective-list';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course/objective-list', function (hooks) {
   setupRenderingTest(hooks);

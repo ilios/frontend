@@ -1,8 +1,8 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
-import t from 'ember-intl/helpers/t';
-import SubjectsList from 'frontend/components/reports/subjects-list';
-import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import pageTitle from 'ember-page-title/helpers/page-title';
+import set from 'ember-set-helper/helpers/set';
+import SubjectsList from 'frontend/components/reports/subjects-list';
 <template>
   {{pageTitle (t "general.subjectReports")}}
   <SubjectsList

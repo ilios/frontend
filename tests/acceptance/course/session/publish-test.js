@@ -1,14 +1,14 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { module, test } from 'qunit';
 import {
-  setupAuthentication,
   freezeDateAt,
-  unfreezeDate,
   setupApplicationTest,
+  setupAuthentication,
+  unfreezeDate,
 } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/session';
 import pubcheckPage from 'frontend/tests/pages/session-publication-check';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Acceptance | Session - Publish', function (hooks) {
   setupApplicationTest(hooks);

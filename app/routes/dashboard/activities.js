@@ -1,5 +1,5 @@
-import { service } from '@ember/service';
 import Route from '@ember/routing/route';
+import { service } from '@ember/service';
 
 export default class DashboardActivitiesRoute extends Route {
   @service session;

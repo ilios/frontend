@@ -1,4 +1,5 @@
-import { attribute, create, collection, text, isPresent } from 'ember-cli-page-object';
+import { attribute, collection, create, isPresent,text } from 'ember-cli-page-object';
+
 import ev from './daily-calendar-event';
 
 const definition = {

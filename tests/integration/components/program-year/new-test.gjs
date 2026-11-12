@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/program-year/new';
-import New from 'frontend/components/program-year/new';
 import { array } from '@ember/helper';
+import { render } from '@ember/test-helpers';
+import New from 'frontend/components/program-year/new';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/program-year/new';
+import { module, test } from 'qunit';
 
 module('Integration | Component | program-year/new', function (hooks) {
   setupRenderingTest(hooks);

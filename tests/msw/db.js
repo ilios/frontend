@@ -1,7 +1,8 @@
-import { Collection } from '@msw/data';
-import { schemas, relationships } from './models.js';
-import { z } from 'zod';
 import { camelize } from '@ember/string';
+import { Collection } from '@msw/data';
+import { z } from 'zod';
+
+import { relationships,schemas } from './models.js';
 
 // Almost all of our models has numeric IDs, except MeSH related data points.
 // We'll need to distinguish between those and the rest when creating IDs for our mock models.
@@ -183,9 +184,9 @@ function filterByParam(modelName, record, param, value) {
 // Export all collections as db object for backwards compatibility
 export {
   collections as db,
+  filterByParams,
   getRelatedRecord,
   isRelatedRecord,
-  validateRecordData,
   modelsWithStringIds,
-  filterByParams,
+  validateRecordData,
 };

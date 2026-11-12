@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import UserProfileRoles from 'frontend/components/user-profile-roles';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/user-profile-roles';
-import UserProfileRoles from 'frontend/components/user-profile-roles';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user profile roles', function (hooks) {
   setupRenderingTest(hooks);

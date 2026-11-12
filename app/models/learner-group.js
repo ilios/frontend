@@ -1,8 +1,9 @@
-import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import escapeRegExp from '../utils/escape-reg-exp';
-import { TrackedAsyncData } from 'ember-async-data';
+import Model, { attr,belongsTo, hasMany } from '@ember-data/model';
 import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+
 import { mapBy, uniqueValues } from '../utils/array-helpers';
+import escapeRegExp from '../utils/escape-reg-exp';
 
 export default class LearnerGroup extends Model {
   @attr('string')

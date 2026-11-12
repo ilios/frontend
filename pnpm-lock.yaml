@@ -483,6 +483,9 @@ importers:
       eslint-plugin-qunit:
         specifier: ^8.2.6
         version: 8.2.6(eslint@9.39.5(supports-color@10.2.2))
+      eslint-plugin-simple-import-sort:
+        specifier: ^14.0.0
+        version: 14.0.0(eslint@9.39.5(supports-color@10.2.2))
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -4055,6 +4058,11 @@ packages:
     peerDependencies:
       eslint: '>=8.38.0'
 
+  eslint-plugin-simple-import-sort@14.0.0:
+    resolution: {integrity: sha512-NUJO0+XFCkk+o5EsAJruTgnfMEpeWrPWeJS15UVF60GgXmqz1BJ9/3hzlvG7lkL8Bubzos5cCLptThbFfPnSMQ==}
+    peerDependencies:
+      eslint: '>=5.0.0'
+
   eslint-scope@5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
     engines: {node: '>=8.0.0'}
@@ -6860,6 +6868,7 @@ packages:
 
   tldts-core@7.4.20:
     resolution: {integrity: sha512-C630TWXZCZmLq0F2bW4QqwnaaxCQ/svpAqvJwnC4JvgEM5ohhBnGsEzTLSOXcN+xjz+kEaHS5uoWIw2klnqd0A==}
+    deprecated: Partial release, see https://github.com/remusao/tldts/issues/2735. Use >=7.4.22.
 
   tldts@6.1.86:
     resolution: {integrity: sha512-WMi/OQ2axVTf/ykqCQgXiIct+mSQDFdH2fkwhPwgEwvJ1kSzZRiinb0zF2Xb8u4+OqPChmyI6MEu4EezNJz+FQ==}
@@ -11911,6 +11920,10 @@ snapshots:
       '@eslint-community/eslint-utils': 4.10.1(eslint@9.39.5(supports-color@10.2.2))
       eslint: 9.39.5(supports-color@10.2.2)
       requireindex: 1.2.0
+
+  eslint-plugin-simple-import-sort@14.0.0(eslint@9.39.5(supports-color@10.2.2)):
+    dependencies:
+      eslint: 9.39.5(supports-color@10.2.2)
 
   eslint-scope@5.1.1:
     dependencies:

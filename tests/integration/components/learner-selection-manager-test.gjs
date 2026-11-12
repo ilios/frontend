@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/learner-selection-manager';
-import { setupMSW } from 'frontend/tests/msw';
 import LearnerSelectionManager from 'frontend/components/learner-selection-manager';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/learner-selection-manager';
+import { module, test } from 'qunit';
 
 module('Integration | Component | learner selection manager', function (hooks) {
   setupRenderingTest(hooks);

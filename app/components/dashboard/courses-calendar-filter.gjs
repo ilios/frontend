@@ -1,22 +1,23 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { service } from '@ember/service';
-import { modifier } from 'ember-modifier';
-import { TrackedAsyncData } from 'ember-async-data';
-import { findBy, sortBy } from '../../utils/array-helpers';
-import currentAcademicYear from '../../utils/current-academic-year';
-import t from 'ember-intl/helpers/t';
-import add from 'ember-math-helpers/helpers/add';
-import LoadingSpinner from '../loading-spinner';
-import includes from '../../helpers/includes';
-import inViewport from '../../modifiers/in-viewport';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown,faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import add from 'ember-math-helpers/helpers/add';
+import { modifier } from 'ember-modifier';
+
+import includes from '../../helpers/includes';
 import sortBy0 from '../../helpers/sort-by';
+import inViewport from '../../modifiers/in-viewport';
+import { findBy, sortBy } from '../../utils/array-helpers';
+import currentAcademicYear from '../../utils/current-academic-year';
+import LoadingSpinner from '../loading-spinner';
 import FilterCheckbox from './filter-checkbox';
-import { faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service dataLoader;

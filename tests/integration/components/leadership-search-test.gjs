@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
+import LeadershipSearch from 'frontend/components/leadership-search';
+import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/leadership-search';
-import LeadershipSearch from 'frontend/components/leadership-search';
-import { array } from '@ember/helper';
-import noop from 'frontend/helpers/noop';
+import { module, test } from 'qunit';
 
 module('Integration | Component | leadership-search', function (hooks) {
   setupRenderingTest(hooks);

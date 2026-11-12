@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { sortBy } from 'frontend/utils/array-helpers';
-import { component } from 'frontend/tests/pages/components/program-year/list';
 import List from 'frontend/components/program-year/list';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/program-year/list';
+import { sortBy } from 'frontend/utils/array-helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | program-year/list', function (hooks) {
   setupRenderingTest(hooks);

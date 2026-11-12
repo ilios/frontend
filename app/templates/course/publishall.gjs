@@ -1,7 +1,8 @@
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
-import PublishAllSessions from '../../components/publish-all-sessions';
 import set from 'ember-set-helper/helpers/set';
+
+import PublishAllSessions from '../../components/publish-all-sessions';
 <template>
   <section class="publishall main-section">
     <LinkTo @route="course" @model={{@model}} data-test-back-to-course>

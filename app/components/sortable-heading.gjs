@@ -1,6 +1,5 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faArrowDown19,
@@ -9,6 +8,7 @@ import {
   faArrowDownZA,
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
 
 export default class SortableHeadingComponent extends Component {
   get align() {

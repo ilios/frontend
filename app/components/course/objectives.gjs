@@ -1,20 +1,21 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
-import { action } from '@ember/object';
-import { mapBy } from '../../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
-import VisualizeObjectivesGraph from './visualize-objectives-graph';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+
+import { mapBy } from '../../utils/array-helpers';
 import ExpandCollapseButton from '../expand-collapse-button';
 import NewObjective from '../new-objective';
-import perform from 'ember-concurrency/helpers/perform';
 import ObjectiveList from './objective-list';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import VisualizeObjectivesGraph from './visualize-objectives-graph';
 
 export default class CourseObjectivesComponent extends Component {
   @service store;

@@ -1,13 +1,13 @@
-import { module, test } from 'qunit';
-import {
-  setupRenderingTest,
-  freezeDateAt,
-  unfreezeDate,
-  takeComponentScreenshot,
-} from 'frontend/tests/helpers';
-import { render, click } from '@ember/test-helpers';
+import { click,render } from '@ember/test-helpers';
 import ErrorDisplay from 'frontend/components/error-display';
 import noop from 'frontend/helpers/noop';
+import {
+  freezeDateAt,
+  setupRenderingTest,
+  takeComponentScreenshot,
+  unfreezeDate,
+} from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | error display', function (hooks) {
   setupRenderingTest(hooks);

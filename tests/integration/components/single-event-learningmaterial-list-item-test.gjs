@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
+import SingleEventLearningmaterialListItem from 'frontend/components/single-event-learningmaterial-list-item';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/single-event-learningmaterial-list-item';
 import createTypedLearningMaterialProxy from 'frontend/utils/create-typed-learning-material-proxy';
-import { setupMSW } from 'frontend/tests/msw';
-import Service from '@ember/service';
-import SingleEventLearningmaterialListItem from 'frontend/components/single-event-learningmaterial-list-item';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | single-event-learningmaterial-list-item', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,4 +1,5 @@
 import { attribute, create, hasClass, isPresent, text } from 'ember-cli-page-object';
+
 import status from '../user-material-status';
 
 const definition = {

@@ -1,8 +1,8 @@
-import { HttpResponse } from 'msw';
 import { visit } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import config from 'frontend/config/environment';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { HttpResponse } from 'msw';
+import { module, test } from 'qunit';
 
 module('Acceptance | Update Notification', function (hooks) {
   setupApplicationTest(hooks);

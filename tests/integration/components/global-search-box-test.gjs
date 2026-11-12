@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/global-search-box';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import GlobalSearchBox from 'frontend/components/global-search-box';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/global-search-box';
+import { module, test } from 'qunit';
 
 module('Integration | Component | global search box', function (hooks) {
   setupRenderingTest(hooks);

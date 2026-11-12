@@ -1,12 +1,12 @@
 import {
   attribute,
   clickable,
-  create,
   collection,
-  isPresent,
+  create,
   fillable,
-  value,
+  isPresent,
   text,
+  value,
 } from 'ember-cli-page-object';
 
 const definition = {

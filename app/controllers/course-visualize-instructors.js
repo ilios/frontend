@@ -1,7 +1,8 @@
 import Controller from '@ember/controller';
-import { task, timeout } from 'ember-concurrency';
-import escapeRegExp from '../utils/escape-reg-exp';
 import { set } from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
+
+import escapeRegExp from '../utils/escape-reg-exp';
 
 export default class CourseVisualizeInstructorsController extends Controller {
   queryParams = ['name'];

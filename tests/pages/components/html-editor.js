@@ -5,8 +5,8 @@ import {
   create,
   fillable,
   focusable,
-  isVisible,
   isPresent,
+  isVisible,
   property,
   text,
 } from 'ember-cli-page-object';

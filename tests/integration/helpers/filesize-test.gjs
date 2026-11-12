@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import filesize from 'frontend/helpers/filesize';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('helper:filesize', function (hooks) {
   setupRenderingTest(hooks);

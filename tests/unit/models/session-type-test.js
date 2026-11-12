@@ -1,5 +1,5 @@
-import { module, test } from 'qunit';
 import { setupTest, waitForResource } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Unit | Model | SessionType', function (hooks) {
   setupTest(hooks);

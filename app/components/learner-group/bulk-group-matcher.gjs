@@ -1,12 +1,13 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { isPresent } from '@ember/utils';
-import { findBy } from '../../utils/array-helpers';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { isPresent } from '@ember/utils';
+import Component from '@glimmer/component';
 import t from 'ember-intl/helpers/t';
-import pick from '../../helpers/pick';
 import { eq } from 'ember-truth-helpers';
+
+import pick from '../../helpers/pick';
+import { findBy } from '../../utils/array-helpers';
 
 export default class LearnerGroupBulkGroupMatcherComponent extends Component {
   get matchedGroupId() {

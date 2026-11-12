@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/reports/subject';
 import Subject from 'frontend/components/reports/subject';
 import noop from 'frontend/helpers/noop';
+import { setupAuthentication,setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
+import { component } from 'frontend/tests/pages/components/reports/subject';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/subject', function (hooks) {
   setupRenderingTest(hooks);

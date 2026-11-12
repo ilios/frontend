@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
-import { setupApplicationTest, takeScreenshot, setupAuthentication } from 'frontend/tests/helpers';
-import page from 'frontend/tests/pages/search';
+import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
 import dashboardPage from 'frontend/tests/pages/dashboard';
+import page from 'frontend/tests/pages/search';
 import currentAcademicYear from 'frontend/utils/current-academic-year';
+import { module, test } from 'qunit';
 
 module('Acceptance | search', function (hooks) {
   setupApplicationTest(hooks);

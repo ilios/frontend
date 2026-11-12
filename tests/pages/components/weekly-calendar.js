@@ -1,13 +1,14 @@
 import {
   attribute,
   clickable,
-  create,
   collection,
+  create,
   hasClass,
+  isPresent,
   property,
   text,
-  isPresent,
 } from 'ember-cli-page-object';
+
 import ev from './weekly-calendar-event';
 
 const definition = {

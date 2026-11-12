@@ -1,17 +1,18 @@
-import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import PublicationStatus from './publication-status';
-import t from 'ember-intl/helpers/t';
-import ObjectiveList from './session/objective-list';
-import removeHtmlTags from '../helpers/remove-html-tags';
-import DetailTermsList from './detail-terms-list';
-import sortBy from '../helpers/sort-by';
-import formatDate from 'ember-intl/helpers/format-date';
-import notEq from 'ember-truth-helpers/helpers/not-eq';
-import sub_ from 'ember-math-helpers/helpers/sub';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+import sub_ from 'ember-math-helpers/helpers/sub';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+
+import removeHtmlTags from '../helpers/remove-html-tags';
+import sortBy from '../helpers/sort-by';
+import DetailTermsList from './detail-terms-list';
+import PublicationStatus from './publication-status';
+import ObjectiveList from './session/objective-list';
 
 export default class PrintCourseSessionComponent extends Component {
   @cached

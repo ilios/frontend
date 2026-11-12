@@ -1,4 +1,5 @@
 import t from 'ember-intl/helpers/t';
+
 import DetailLearnergroupsList from './detail-learnergroups-list';
 <template>
   <div class="selected-learner-groups" data-test-selected-learner-groups ...attributes>

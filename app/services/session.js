@@ -1,8 +1,8 @@
-import ESASessionService from 'ember-simple-auth/services/session';
-import config from 'frontend/config/environment';
-import * as Sentry from '@sentry/ember';
 import { service } from '@ember/service';
 import { isTesting } from '@embroider/macros';
+import * as Sentry from '@sentry/ember';
+import ESASessionService from 'ember-simple-auth/services/session';
+import config from 'frontend/config/environment';
 
 export default class SessionService extends ESASessionService {
   @service fetch;

@@ -1,8 +1,9 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
-import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import PrintCourse from '../components/print-course';
+import t from 'ember-intl/helpers/t';
+import pageTitle from 'ember-page-title/helpers/page-title';
 import { and } from 'ember-truth-helpers';
+
+import PrintCourse from '../components/print-course';
 <template>
   {{pageTitle (t "general.courses") " | " @model.title " (" (t "general.printSummary") ")"}}
   <div class="backtolink">

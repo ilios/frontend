@@ -1,7 +1,8 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import LmTypeIcon from './lm-type-icon';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
+
+import LmTypeIcon from './lm-type-icon';
 <template>
   <span class="lm-icons" data-test-lm-icons>
     {{#if @learningMaterial.required}}

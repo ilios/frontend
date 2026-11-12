@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import { setLocale } from 'ember-intl/test-support';
-import { DateTime } from 'luxon';
 import SessionsGridLastUpdated from 'frontend/components/sessions-grid-last-updated';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | sessions-grid-last-updated', function (hooks) {
   setupRenderingTest(hooks);

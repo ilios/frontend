@@ -1,8 +1,9 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+
 import { uniqueValues } from '../../utils/array-helpers';
 import CompetenciesListItemPcrs from './competencies-list-item-pcrs';
 import CompetenciesPcrsMapper from './competencies-pcrs-mapper';

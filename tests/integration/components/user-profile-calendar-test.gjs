@@ -1,11 +1,11 @@
 import EmberObject from '@ember/object';
 import Service from '@ember/service';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, click } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { setupMSW } from 'frontend/tests/msw';
+import { click,render } from '@ember/test-helpers';
 import UserProfileCalendar from 'frontend/components/user-profile-calendar';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user profile calendar', function (hooks) {
   setupRenderingTest(hooks);

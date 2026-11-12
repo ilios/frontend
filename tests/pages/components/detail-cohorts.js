@@ -1,6 +1,7 @@
 import { clickable, create, text } from 'ember-cli-page-object';
-import manager from './detail-cohort-manager';
+
 import list from './detail-cohort-list';
+import manager from './detail-cohort-manager';
 
 const definition = {
   scope: '[data-test-detail-cohorts]',

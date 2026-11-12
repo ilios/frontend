@@ -1,4 +1,4 @@
-import { collection, clickable, create, fillable, property, text } from 'ember-cli-page-object';
+import { clickable, collection, create, fillable, property, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-user-profile-cohorts-manager]',

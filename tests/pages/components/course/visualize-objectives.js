@@ -1,6 +1,7 @@
 import { create, text } from 'ember-cli-page-object';
-import objectivesChart from './visualize-objectives-graph';
+
 import breadcrumbs from '../breadcrumbs';
+import objectivesChart from './visualize-objectives-graph';
 
 const definition = create({
   scope: '[data-test-course-visualize-objectives]',

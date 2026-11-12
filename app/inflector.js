@@ -1,5 +1,5 @@
-import Inflector from 'ember-inflector';
 import { irregular } from '@ember-data/request-utils/string';
+import Inflector from 'ember-inflector';
 irregular('pcrs', 'pcrses');
 irregular('vocabulary', 'vocabularies');
 

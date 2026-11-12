@@ -1,15 +1,16 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-import { guidFor } from '@ember/object/internals';
 import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
-import set from 'ember-set-helper/helpers/set';
-import IliosTooltip from './ilios-tooltip';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
 import { and, or } from 'ember-truth-helpers';
+
+import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
+import IliosTooltip from './ilios-tooltip';
 
 export default class SelectableTermsListItemComponent extends Component {
   @tracked isHovering;

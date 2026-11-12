@@ -1,7 +1,8 @@
 import { currentURL } from '@ember/test-helpers';
-import { test, module } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
+import { module,test } from 'qunit';
+
 import page from '../pages/learner-group';
 import learnerGroupsPage from '../pages/learner-groups';
 

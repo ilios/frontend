@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/detail-learning-materials';
 import DetailLearningMaterials from 'frontend/components/detail-learning-materials';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
+import { component } from 'frontend/tests/pages/components/detail-learning-materials';
+import { module, test } from 'qunit';
 
 module('Integration | Component | detail learning materials', function (hooks) {
   setupRenderingTest(hooks);

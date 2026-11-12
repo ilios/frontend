@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/session-overview-ilm-duedate';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import SessionOverviewIlmDuedate from 'frontend/components/session-overview-ilm-duedate';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/session-overview-ilm-duedate';
 import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | session-overview-ilm-duedate', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
 import { setupTest } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Unit | Service | timezone', function (hooks) {
   setupTest(hooks);

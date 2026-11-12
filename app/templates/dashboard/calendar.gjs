@@ -1,10 +1,11 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
-import t from 'ember-intl/helpers/t';
-import Navigation from '../../components/dashboard/navigation';
-import Calendar from '../../components/dashboard/calendar';
-import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
+import pageTitle from 'ember-page-title/helpers/page-title';
+import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
+
+import Calendar from '../../components/dashboard/calendar';
+import Navigation from '../../components/dashboard/navigation';
 import split from '../../helpers/split';
 <template>
   {{pageTitle " | " (t "general.calendar") prepend=false}}

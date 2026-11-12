@@ -1,15 +1,16 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import Header from './header';
-import noop from '../../../helpers/noop';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
+import random from 'ember-math-helpers/helpers/random';
+
+import noop from '../../../helpers/noop';
 import repeat from '../../../helpers/repeat';
 import truncate from '../../../helpers/truncate';
-import random from 'ember-math-helpers/helpers/random';
-import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Header from './header';
 
 export default class ReportsCurriculumLoadingComponent extends Component {
   @service router;

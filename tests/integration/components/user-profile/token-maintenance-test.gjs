@@ -1,12 +1,12 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
-import { setupRenderingTest, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { DateTime, Duration } from 'luxon';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/user-profile/token-maintenance';
 import TokenMaintenance from 'frontend/components/user-profile/token-maintenance';
 import noop from 'frontend/helpers/noop';
+import { freezeDateAt, setupRenderingTest, unfreezeDate } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/user-profile/token-maintenance';
+import { DateTime, Duration } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user-profile/token-maintenance', function (hooks) {
   setupRenderingTest(hooks);

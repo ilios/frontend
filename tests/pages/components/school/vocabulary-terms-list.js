@@ -1,4 +1,5 @@
-import { create, collection } from 'ember-cli-page-object';
+import { collection,create } from 'ember-cli-page-object';
+
 import listItem from './vocabulary-terms-list-item';
 
 const definition = {

@@ -1,16 +1,17 @@
 import {
   clickable,
-  create,
   collection,
+  create,
   fillable,
-  isVisible,
   isPresent,
+  isVisible,
   text,
   value,
 } from 'ember-cli-page-object';
+
 import list from '../learner-group/list';
-import loading from './loading';
 import newLearnerGroupForm from '../learner-group/new';
+import loading from './loading';
 
 const definition = {
   scope: '[data-test-learner-groups]',

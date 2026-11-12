@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import ManageObjectiveParentsItem from 'frontend/components/course/manage-objective-parents-item';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course/manage-objective-parents-item', function (hooks) {
   setupRenderingTest(hooks);

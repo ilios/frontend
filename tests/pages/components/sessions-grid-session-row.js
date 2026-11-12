@@ -2,11 +2,12 @@ import {
   attribute,
   clickable,
   create,
+  isPresent,
   isVisible,
   notHasClass,
-  isPresent,
   text,
 } from 'ember-cli-page-object';
+
 import publicationStatus from './publication-status';
 
 const definition = {

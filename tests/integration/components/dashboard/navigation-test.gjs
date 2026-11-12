@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMSW } from 'frontend/tests/msw';
+import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/dashboard/navigation';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import Navigation from 'frontend/components/dashboard/navigation';
-import Service from '@ember/service';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/dashboard/navigation';
+import { module, test } from 'qunit';
 
 module('Integration | Component | dashboard/navigation', function (hooks) {
   setupRenderingTest(hooks);

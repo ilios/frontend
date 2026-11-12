@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
-import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { task, timeout } from 'ember-concurrency';
 
 export default class LearnerGroupsController extends Controller {
   queryParams = ['program', 'programYear', 'school', 'filter', 'sortBy'];

@@ -1,4 +1,4 @@
-import { create, collection, isPresent, text } from 'ember-cli-page-object';
+import { collection, create, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-reports-subject-instructor-group]',

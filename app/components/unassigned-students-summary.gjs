@@ -1,19 +1,20 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
-import { findById } from '../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
-import { uniqueId, get, hash } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import { eq, gt } from 'ember-truth-helpers';
+import { get, hash,uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
-import pick from '../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
-import sortBy from '../helpers/sort-by';
 import { LinkTo } from '@ember/routing';
-import LoadingSpinner from './loading-spinner';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faBuildingColumns, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { eq, gt } from 'ember-truth-helpers';
+
+import pick from '../helpers/pick';
+import sortBy from '../helpers/sort-by';
+import { findById } from '../utils/array-helpers';
+import LoadingSpinner from './loading-spinner';
 
 export default class UnassignedStudentsSummaryComponent extends Component {
   @service currentUser;

@@ -1,25 +1,26 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
-import { filter } from 'rsvp';
-import { TrackedAsyncData } from 'ember-async-data';
-import { service } from '@ember/service';
-import { LinkTo } from '@ember/routing';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import ResponsiveTd from '../responsive-td';
-import t from 'ember-intl/helpers/t';
-import { and, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
-import set from 'ember-set-helper/helpers/set';
-import scrollIntoView from '../../modifiers/scroll-into-view';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faArrowRotateLeft,
   faCopy,
   faTrash,
   faUniversalAccess,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { and, not } from 'ember-truth-helpers';
+import { filter } from 'rsvp';
+
+import scrollIntoView from '../../modifiers/scroll-into-view';
+import ResponsiveTd from '../responsive-td';
 
 export default class LearnerGroupListItemComponent extends Component {
   @service permissionChecker;

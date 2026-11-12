@@ -1,8 +1,9 @@
 import { collection, create, text } from 'ember-cli-page-object';
-import manager from './instructor-manager';
+import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
 import userNameInfo from 'frontend/tests/pages/components/user-name-info';
 import userStatus from 'frontend/tests/pages/components/user-status';
-import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
+
+import manager from './instructor-manager';
 
 const definition = {
   scope: '[data-test-instructor-group-users]',

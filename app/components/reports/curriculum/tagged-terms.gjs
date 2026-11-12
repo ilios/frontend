@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
-import PapaParse from 'papaparse';
-import { task, timeout } from 'ember-concurrency';
-import createDownloadFile from '../../../utils/create-download-file';
+import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { chunk } from '../../../utils/array-helpers';
-import Header from './header';
-import noop from '../../../helpers/noop';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import add from 'ember-math-helpers/helpers/add';
 import t from 'ember-intl/helpers/t';
+import add from 'ember-math-helpers/helpers/add';
+import PapaParse from 'papaparse';
+
+import noop from '../../../helpers/noop';
 import sortBy from '../../../helpers/sort-by';
-import { LinkTo } from '@ember/routing';
+import { chunk } from '../../../utils/array-helpers';
+import createDownloadFile from '../../../utils/create-download-file';
+import Header from './header';
 
 export default class ReportsCurriculumTaggedTermsComponent extends Component {
   @service router;

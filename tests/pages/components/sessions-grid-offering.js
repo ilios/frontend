@@ -1,4 +1,5 @@
 import { clickable, create, fillable, isPresent, text, value } from 'ember-cli-page-object';
+
 import offeringForm from './offering-form';
 
 const definition = {

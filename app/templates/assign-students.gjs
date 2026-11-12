@@ -1,8 +1,8 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
-import BackToAdminDashboard from 'frontend/components/back-to-admin-dashboard';
-import Root from 'frontend/components/assign-students/root';
+import pageTitle from 'ember-page-title/helpers/page-title';
 import set from 'ember-set-helper/helpers/set';
+import Root from 'frontend/components/assign-students/root';
+import BackToAdminDashboard from 'frontend/components/back-to-admin-dashboard';
 <template>
   {{pageTitle (t "general.admin") " | " (t "general.unassignedStudentsSummaryTitle")}}
   <BackToAdminDashboard />

@@ -1,4 +1,5 @@
 import { collection, create } from 'ember-cli-page-object';
+
 import checkbox from './filter-checkbox';
 
 const definition = {

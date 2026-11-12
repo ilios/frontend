@@ -1,11 +1,12 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { deprecate } from '@ember/debug';
-import { DateTime } from 'luxon';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
 import isArray from 'ember-truth-helpers/helpers/is-array';
-import WeeklyCalendar from './weekly-calendar';
+import { DateTime } from 'luxon';
+
 import noop from '../helpers/noop';
 import IliosCalendarMultidayEvents from './ilios-calendar-multiday-events';
+import WeeklyCalendar from './weekly-calendar';
 
 export default class IliosCalendarWeekComponent extends Component {
   get date() {

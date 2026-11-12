@@ -1,9 +1,9 @@
-import Component from '@glimmer/component';
-import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
 import { assert } from '@ember/debug';
+import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faSpinner, faCheck, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRotateLeft,faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
 
 export default class BigSaveCancelButtonsComponent extends Component {
   get save() {

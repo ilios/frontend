@@ -1,4 +1,5 @@
 import { collection, create } from 'ember-cli-page-object';
+
 import userNameInfo from './user-name-info';
 const definition = {
   scope: '[data-test-selected-instructor-group-members]',

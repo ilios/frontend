@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
-import { setupTest } from 'frontend/tests/helpers';
 import Controller from 'frontend/controllers/user';
+import { setupTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Unit | Controller | user', function (hooks) {
   setupTest(hooks);

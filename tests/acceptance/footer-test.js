@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
-import { setupApplicationTest, setupAuthentication } from 'frontend/tests/helpers';
 import config from 'frontend/config/environment';
+import { setupApplicationTest, setupAuthentication } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Acceptance | footer', function (hooks) {
   setupApplicationTest(hooks);

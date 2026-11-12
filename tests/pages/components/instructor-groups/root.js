@@ -1,13 +1,14 @@
 import {
   clickable,
-  create,
   collection,
+  create,
   fillable,
   isPresent,
   isVisible,
   text,
   value,
 } from 'ember-cli-page-object';
+
 import list from './list';
 import newInstructorGroupForm from './new';
 

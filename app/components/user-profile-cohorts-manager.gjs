@@ -1,18 +1,8 @@
-import Component from '@glimmer/component';
-import { cached } from '@glimmer/tracking';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { findById } from '../utils/array-helpers';
-import sortCohorts from '../utils/sort-cohorts';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { eq, gt } from 'ember-truth-helpers';
-import pick from '../helpers/pick';
-import sortBy from '../helpers/sort-by';
-import LoadingSpinner from './loading-spinner';
 import {
   faBuildingColumns,
   faPlus,
@@ -20,6 +10,17 @@ import {
   faTurnUp,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import { eq, gt } from 'ember-truth-helpers';
+
+import pick from '../helpers/pick';
+import sortBy from '../helpers/sort-by';
+import { findById } from '../utils/array-helpers';
+import sortCohorts from '../utils/sort-cohorts';
+import LoadingSpinner from './loading-spinner';
 
 export default class UserProfileCohortsManagerComponent extends Component {
   @service currentUser;

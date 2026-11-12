@@ -1,11 +1,12 @@
 import {
-  collection,
   clickable,
+  collection,
   create,
-  isVisible,
   isHidden,
+  isVisible,
   triggerable,
 } from 'ember-cli-page-object';
+
 import { focusedText, keyOnFocus } from '../../helpers';
 
 const definition = {

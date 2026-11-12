@@ -1,15 +1,16 @@
 import { clickable, collection, create, isVisible, text } from 'ember-cli-page-object';
-import objectives from './session/objectives';
-import learningMaterials from './detail-learning-materials';
-import meshTerms from './mesh-terms';
-import taxonomies from './detail-taxonomies';
+
 import collapsedTaxonomies from './collapsed-taxonomies';
-import collapsedObjectives from './session/collapsed-objectives';
-import offeringForm from './offering-form';
-import leadershipCollapsed from './leadership-collapsed';
-import leadershipExpanded from './leadership-expanded';
 import detailInstructors from './detail-instructors';
 import detailLearnersAndLearnerGroups from './detail-learners-and-learner-groups';
+import learningMaterials from './detail-learning-materials';
+import taxonomies from './detail-taxonomies';
+import leadershipCollapsed from './leadership-collapsed';
+import leadershipExpanded from './leadership-expanded';
+import meshTerms from './mesh-terms';
+import offeringForm from './offering-form';
+import collapsedObjectives from './session/collapsed-objectives';
+import objectives from './session/objectives';
 import overview from './session/overview';
 import timeBlockOfferings from './session-offerings-time-block-offerings';
 

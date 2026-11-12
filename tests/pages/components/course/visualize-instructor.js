@@ -1,7 +1,8 @@
 import { create, text } from 'ember-cli-page-object';
-import termsChart from './visualize-instructor-term-graph';
-import sessionTypesChart from './visualize-instructor-session-type-graph';
+
 import breadcrumbs from '../breadcrumbs';
+import sessionTypesChart from './visualize-instructor-session-type-graph';
+import termsChart from './visualize-instructor-term-graph';
 
 const definition = create({
   scope: '[data-test-course-visualize-instructor]',

@@ -1,7 +1,7 @@
 import {
+  clickable,
   collection,
   create,
-  clickable,
   hasClass,
   isHidden,
   isVisible,
@@ -9,9 +9,10 @@ import {
   text,
   triggerable,
 } from 'ember-cli-page-object';
+
+import offeringForm from './offering-form';
 import userNameInfo from './user-name-info';
 import userStatus from './user-status';
-import offeringForm from './offering-form';
 
 const definition = {
   scope: '[data-test-offering-manager]',

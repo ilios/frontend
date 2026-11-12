@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/instructor-selection-manager';
-import { setupMSW } from 'frontend/tests/msw';
 import InstructorSelectionManager from 'frontend/components/instructor-selection-manager';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
+import { component } from 'frontend/tests/pages/components/instructor-selection-manager';
+import { module, test } from 'qunit';
 
 module('Integration | Component | instructor selection manager', function (hooks) {
   setupRenderingTest(hooks);

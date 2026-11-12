@@ -9,12 +9,13 @@ import {
   triggerable,
   value,
 } from 'ember-cli-page-object';
+
+import datePicker from './date-picker';
+import instructorSelectionManager from './instructor-selection-manager';
 import learnerSelectionManager from './learner-selection-manager';
 import learnergroupSelectionManager from './learnergroup-selection-manager';
-import instructorSelectionManager from './instructor-selection-manager';
-import yesNoToggle from './toggle-yesno';
-import datePicker from './date-picker';
 import timePicker from './time-picker';
+import yesNoToggle from './toggle-yesno';
 
 const definition = {
   scope: '[data-test-offering-form]',

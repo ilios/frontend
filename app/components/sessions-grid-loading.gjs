@@ -1,11 +1,12 @@
-import Component from '@glimmer/component';
-import animateLoading from '../modifiers/animate-loading';
-import repeat from '../helpers/repeat';
-import truncate from '../helpers/truncate';
-import random from 'ember-math-helpers/helpers/random';
-import formatDate from 'ember-intl/helpers/format-date';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import formatDate from 'ember-intl/helpers/format-date';
+import random from 'ember-math-helpers/helpers/random';
+
+import repeat from '../helpers/repeat';
+import truncate from '../helpers/truncate';
+import animateLoading from '../modifiers/animate-loading';
 
 export default class SessionsGridLoadingComponent extends Component {
   now = new Date();

@@ -1,4 +1,5 @@
 import { clickable, collection, create, hasClass, property, text } from 'ember-cli-page-object';
+
 import images from './theme-images';
 const definition = {
   scope: '[data-test-user-profile-theme-chooser]',

@@ -1,15 +1,16 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { modifier } from 'ember-modifier';
-import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
-import mouseHoverToggle from '../../modifiers/mouse-hover-toggle';
+import { modifier } from 'ember-modifier';
 import set from 'ember-set-helper/helpers/set';
+
+import mouseHoverToggle from '../../modifiers/mouse-hover-toggle';
 import IliosTooltip from '../ilios-tooltip';
-import VocabularyNewTerm from './vocabulary-new-term';
 import VocabularyEditTerm from './vocabulary-edit-term';
+import VocabularyNewTerm from './vocabulary-new-term';
 
 export default class SchoolVocabularyTermsListItemComponent extends Component {
   @tracked isHovering;

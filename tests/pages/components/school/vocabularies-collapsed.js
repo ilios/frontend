@@ -1,4 +1,4 @@
-import { collection, clickable, create, text } from 'ember-cli-page-object';
+import { clickable, collection, create, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-vocabularies-collapsed]',

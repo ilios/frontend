@@ -1,4 +1,4 @@
-import { create, collection, clickable, fillable, hasClass, text } from 'ember-cli-page-object';
+import { clickable, collection, create, fillable, hasClass, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-session-postrequisite-editor]',

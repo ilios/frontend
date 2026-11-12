@@ -1,15 +1,16 @@
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
-import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import DetailCohortManager from './detail-cohort-manager';
-import DetailCohortList from './detail-cohort-list';
+import t from 'ember-intl/helpers/t';
+import { filter } from 'rsvp';
+
 import BigSaveCancelButtons from './big-save-cancel-buttons';
+import DetailCohortList from './detail-cohort-list';
+import DetailCohortManager from './detail-cohort-manager';
 
 export default class DetailCohortsComponent extends Component {
   @tracked isManaging = false;

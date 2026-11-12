@@ -1,7 +1,8 @@
-import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { sortBy, uniqueValues } from '../utils/array-helpers';
+import Model, { attr,belongsTo, hasMany } from '@ember-data/model';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+
+import { sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class ProgramYearObjective extends Model {
   @attr('string')

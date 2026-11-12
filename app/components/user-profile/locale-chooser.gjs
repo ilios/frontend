@@ -1,12 +1,13 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { findById, uniqueValues } from '../../utils/array-helpers';
-import { isTesting } from '@embroider/macros';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
+import { isTesting } from '@embroider/macros';
+import Component from '@glimmer/component';
 import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import { eq } from 'ember-truth-helpers';
+
+import { findById, uniqueValues } from '../../utils/array-helpers';
 
 export default class LocaleChooserComponent extends Component {
   @service intl;

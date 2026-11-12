@@ -1,8 +1,9 @@
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import load from 'ember-async-data/helpers/load';
+
 import SubjectResults from './subject-results';
 
 export default class ReportsSubjectComponent extends Component {

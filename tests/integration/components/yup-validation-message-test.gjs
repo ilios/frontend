@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
 import YupValidationMessage from 'frontend/components/yup-validation-message';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | yup-validation-message', function (hooks) {
   setupRenderingTest(hooks);

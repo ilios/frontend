@@ -1,13 +1,14 @@
-import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { action } from '@ember/object';
-import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { sortBy } from '../../../../utils/array-helpers';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import isEmpty from 'ember-truth-helpers/helpers/is-empty';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
 import { eq } from 'ember-truth-helpers';
+import isEmpty from 'ember-truth-helpers/helpers/is-empty';
+
+import { sortBy } from '../../../../utils/array-helpers';
 import LoadingSpinner from '../../../loading-spinner';
 
 export default class ReportsSubjectNewProgramComponent extends Component {

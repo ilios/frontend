@@ -1,5 +1,5 @@
-import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { deprecate } from '@ember/debug';
+import Model, { attr,belongsTo, hasMany } from '@ember-data/model';
 
 export default class School extends Model {
   @attr('string')

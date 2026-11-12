@@ -1,10 +1,10 @@
-import Modifier from 'ember-modifier';
 import { registerDestructor } from '@ember/destroyable';
-import flatpickr from 'flatpickr';
-import { French } from 'flatpickr/dist/l10n/fr.js';
-import { Spanish } from 'flatpickr/dist/l10n/es.js';
-import { isTesting } from '@embroider/macros';
 import { service } from '@ember/service';
+import { isTesting } from '@embroider/macros';
+import Modifier from 'ember-modifier';
+import flatpickr from 'flatpickr';
+import { Spanish } from 'flatpickr/dist/l10n/es.js';
+import { French } from 'flatpickr/dist/l10n/fr.js';
 import { DateTime } from 'luxon';
 
 export default class DatePickerModifier extends Modifier {

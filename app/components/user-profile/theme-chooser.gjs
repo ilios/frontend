@@ -1,11 +1,11 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import t from 'ember-intl/helpers/t';
-import { task } from 'ember-concurrency';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import { eq } from 'ember-truth-helpers';
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 import { isTesting } from '@embroider/macros';
+import Component from '@glimmer/component';
+import { task } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
+import { eq } from 'ember-truth-helpers';
 
 import ThemeImages from './theme-images';
 

@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import toggle from '../helpers/toggle';
-import t from 'ember-intl/helpers/t';
-import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretDown, faCaretRight, faDownload } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
+import t from 'ember-intl/helpers/t';
 import DownloadDropdownItem from 'frontend/components/download-dropdown-item';
+
+import toggle from '../helpers/toggle';
 
 export default class DownloadDropdownComponent extends Component {
   @tracked isOpen = false;

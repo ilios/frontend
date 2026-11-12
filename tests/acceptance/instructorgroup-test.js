@@ -1,7 +1,8 @@
-import { currentRouteName, visit, currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { currentRouteName, currentURL,visit } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
+
 import page from '../pages/instructor-group';
 
 const url = '/instructorgroups/1';

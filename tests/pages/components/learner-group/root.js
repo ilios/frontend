@@ -8,19 +8,20 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
-import header from './header';
-import courseAssociations from './course-associations';
-import cohortUserManager from './cohort-user-manager';
-import instructorManager from './instructor-manager';
-import instructorsList from './instructors-list';
-import bulkAssignment from './bulk-assignment';
-import userManager from './user-manager';
-import members from './members';
-import subgroupList from './list';
-import calendar from './calendar';
-import newLearnerGroupForm from './new';
 import toggleButtons from 'frontend/tests/pages/components/toggle-buttons';
 import toggleYesNo from 'frontend/tests/pages/components/toggle-yesno';
+
+import bulkAssignment from './bulk-assignment';
+import calendar from './calendar';
+import cohortUserManager from './cohort-user-manager';
+import courseAssociations from './course-associations';
+import header from './header';
+import instructorManager from './instructor-manager';
+import instructorsList from './instructors-list';
+import subgroupList from './list';
+import members from './members';
+import newLearnerGroupForm from './new';
+import userManager from './user-manager';
 
 const definition = {
   scope: '[data-test-learner-group-root]',

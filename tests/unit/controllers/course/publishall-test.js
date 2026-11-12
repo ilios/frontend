@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
-import { setupTest } from 'frontend/tests/helpers';
 import Controller from 'frontend/controllers/course/publishall';
+import { setupTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Unit | Controller | course/publishall', function (hooks) {
   setupTest(hooks);

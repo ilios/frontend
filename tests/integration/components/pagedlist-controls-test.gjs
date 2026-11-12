@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/pagedlist-controls';
 import PagedlistControls from 'frontend/components/pagedlist-controls';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/pagedlist-controls';
+import { module, test } from 'qunit';
 
 module('Integration | Component | pagedlist controls', function (hooks) {
   setupRenderingTest(hooks);

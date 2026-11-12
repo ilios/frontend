@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import VisualizerProgramYearObjectives from 'frontend/components/visualizer-program-year-objectives';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { module, test } from 'qunit';
 
 module('Integration | Component | visualizer-program-year-objectives', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
 import { setupTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
+import { module, test } from 'qunit';
 
 module('Unit | Model | School', function (hooks) {
   setupTest(hooks);

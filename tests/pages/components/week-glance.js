@@ -1,4 +1,5 @@
 import { collection, create, text } from 'ember-cli-page-object';
+
 import weekGlanceEvent from './week-glance-event';
 
 const definition = {

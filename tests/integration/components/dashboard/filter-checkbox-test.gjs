@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/dashboard/filter-checkbox';
 import FilterCheckbox from 'frontend/components/dashboard/filter-checkbox';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/dashboard/filter-checkbox';
+import { module, test } from 'qunit';
 
 module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
   setupRenderingTest(hooks);

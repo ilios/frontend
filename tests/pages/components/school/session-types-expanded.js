@@ -1,4 +1,5 @@
 import { clickable, create, text } from 'ember-cli-page-object';
+
 import newSessionType from './session-type-form';
 import manager from './session-type-manager';
 import list from './session-types-list';

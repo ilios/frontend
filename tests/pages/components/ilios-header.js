@@ -1,4 +1,5 @@
 import { create, text } from 'ember-cli-page-object';
+
 import searchBox from './global-search-box';
 import userMenu from './user-menu';
 

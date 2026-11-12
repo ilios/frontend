@@ -1,22 +1,23 @@
+import { fn, hash,uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
-import { mapBy } from '../../utils/array-helpers';
-import { uniqueId, fn, hash } from '@ember/helper';
+import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import SortableTh from '../sortable-th';
 import { eq, or } from 'ember-truth-helpers';
-import sortBy from '../../helpers/sort-by';
+
 import includes from '../../helpers/includes';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import sortBy from '../../helpers/sort-by';
+import { mapBy } from '../../utils/array-helpers';
+import LoadingSpinner from '../loading-spinner';
+import SortableTh from '../sortable-th';
 import UserNameInfo from '../user-name-info';
 import UserStatus from '../user-status';
-import { LinkTo } from '@ember/routing';
-import LoadingSpinner from '../loading-spinner';
-import perform from 'ember-concurrency/helpers/perform';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupUserManagerComponent extends Component {
   @tracked selectedGroupUsers = [];

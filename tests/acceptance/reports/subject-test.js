@@ -1,9 +1,9 @@
 import { currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import page from 'frontend/tests/pages/reports-subject';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import { component as subject } from 'frontend/tests/pages/components/reports/subject';
 import { component as switcher } from 'frontend/tests/pages/components/reports/switcher';
+import page from 'frontend/tests/pages/reports-subject';
+import { module, test } from 'qunit';
 
 module('Acceptance | Reports - Subject Report', function (hooks) {
   setupApplicationTest(hooks);

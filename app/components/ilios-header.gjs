@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
+import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { defaultValidator } from 'ember-a11y-refocus';
 import NavigationNarrator from 'ember-a11y-refocus/components/navigation-narrator';
+import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
-import GlobalSearchBox from './global-search-box';
-import UserMenu from './user-menu';
-import UserGuideLink from './user-guide-link';
+
 import currentAcademicYear from '../utils/current-academic-year';
+import GlobalSearchBox from './global-search-box';
+import UserGuideLink from './user-guide-link';
+import UserMenu from './user-menu';
 
 export default class IliosHeaderComponent extends Component {
   @service currentUser;

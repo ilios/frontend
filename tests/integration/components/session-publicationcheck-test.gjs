@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import SessionPublicationcheck from 'frontend/components/session-publicationcheck';
+import { setupAuthentication,setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/session-publicationcheck';
-import SessionPublicationcheck from 'frontend/components/session-publicationcheck';
+import { module, test } from 'qunit';
 
 module('Integration | Component | session-publicationcheck', function (hooks) {
   setupRenderingTest(hooks);

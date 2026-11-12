@@ -1,5 +1,6 @@
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+
 import sortBy from '../../helpers/sort-by';
 import BigSaveCancelButtons from '../big-save-cancel-buttons';
 <template>

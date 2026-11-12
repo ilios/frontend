@@ -1,7 +1,8 @@
-import SessionDetails from '../../components/session-details';
-import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
+import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
+
+import SessionDetails from '../../components/session-details';
 <template>
   <SessionDetails
     @session={{@model}}

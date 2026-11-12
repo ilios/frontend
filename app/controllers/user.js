@@ -1,8 +1,8 @@
 import Controller from '@ember/controller';
 import { service } from '@ember/service';
-import { filter } from 'rsvp';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+import { filter } from 'rsvp';
 
 export default class UserController extends Controller {
   @service store;

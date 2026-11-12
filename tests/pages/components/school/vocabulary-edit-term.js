@@ -1,4 +1,4 @@
-import { clickable, create, isPresent, fillable, property, text } from 'ember-cli-page-object';
+import { clickable, create, fillable, isPresent, property, text } from 'ember-cli-page-object';
 import yesNoToggle from 'frontend/tests/pages/components/toggle-yesno';
 
 const definition = {

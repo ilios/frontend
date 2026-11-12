@@ -1,7 +1,7 @@
-import { visit, currentRouteName } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
+import { currentRouteName,visit } from '@ember/test-helpers';
+import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
 import { HttpResponse } from 'msw';
+import { module, test } from 'qunit';
 
 module('Acceptance | Auth Errors', function (hooks) {
   setupApplicationTest(hooks);

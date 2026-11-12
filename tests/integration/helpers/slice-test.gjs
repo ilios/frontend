@@ -1,9 +1,9 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import slice from 'frontend/helpers/slice';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Helper | slice', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,10 +1,11 @@
-import Component from '@glimmer/component';
+import { fn } from '@ember/helper';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import SortableTh from '../sortable-th';
-import { fn } from '@ember/helper';
-import { eq, or } from 'ember-truth-helpers';
+import Component from '@glimmer/component';
 import t from 'ember-intl/helpers/t';
+import { eq, or } from 'ember-truth-helpers';
+
+import SortableTh from '../sortable-th';
 import ListItem from './list-item';
 
 export default class InstructorGroupsListComponent extends Component {
