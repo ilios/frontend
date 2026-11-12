@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
+import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import t from 'ember-intl/helpers/t';
@@ -26,16 +26,14 @@ export default class EditableTextareaComponent extends Component {
 
   saveData = task({ drop: true }, async () => {
     await timeout(1);
-    const result = await this.args.save();
-    if (result !== false) {
-      this.setIsEditing(false);
-    }
+    await this.args.save();
+    this.isEditing = false;
   });
 
   closeEditor = task({ drop: true }, async () => {
     await timeout(1);
     await this.args.close();
-    this.setIsEditing(false);
+    this.isEditing = false;
   });
 
   @action
@@ -43,13 +41,6 @@ export default class EditableTextareaComponent extends Component {
     this.closeEditor.perform();
   }
 
-  @action
-  setIsEditing(status) {
-    this.isEditing = status;
-    if (this.args.onEditingStatusChange) {
-      this.args.onEditingStatusChange(status);
-    }
-  }
   <template>
     <div data-test-editable-textarea ...attributes>
       <span class="content">
@@ -85,7 +76,7 @@ export default class EditableTextareaComponent extends Component {
             title={{if @showTitle (t "general.edit")}}
             data-test-edit
             type="button"
-            {{on "click" (fn this.setIsEditing true)}}
+            {{on "click" (set this "isEditing" true)}}
           >
             {{#if this.hasVisibleValue}}
               {{#if (has-block "value")}}
