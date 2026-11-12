@@ -2,10 +2,10 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { modifier } from 'ember-modifier';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import perform from 'ember-concurrency/helpers/perform';
+import onKey from 'ember-keyboard/modifiers/on-key';
 import t from 'ember-intl/helpers/t';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
@@ -38,21 +38,10 @@ export default class EditableTextareaComponent extends Component {
     this.setIsEditing(false);
   });
 
-  /*
-   * Modifier we can attach to the editable field elemnts so we can handle saving and closing via enter and escape
-   */
-  keyboard = modifier((element, _, { closeOnEscape = true }) => {
-    this.keyboardHandler = ({ keyCode }) => {
-      if (27 === keyCode && closeOnEscape) {
-        this.closeEditor.perform();
-      }
-    };
-    element.addEventListener('keyup', this.keyboardHandler, { passive: true });
-
-    return () => {
-      element.removeEventListener('keyup', this.keyboardHandler);
-    };
-  });
+  @action
+  onEscapeKey() {
+    this.closeEditor.perform();
+  }
 
   @action
   setIsEditing(status) {
@@ -65,7 +54,7 @@ export default class EditableTextareaComponent extends Component {
     <div data-test-editable-textarea ...attributes>
       <span class="content">
         {{#if this.isEditing}}
-          <span class="editor" data-test-editor {{this.keyboard}}>
+          <span class="editor" data-test-editor {{onKey "Escape" this.onEscapeKey}}>
             <HtmlEditor @content={{@value}} @update={{@update}} @autofocus={{true}} />
             {{yield}}
             <div class="form" data-test-actions>
