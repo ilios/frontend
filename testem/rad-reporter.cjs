@@ -8,7 +8,8 @@ class RadReporter {
     this.passed = 0;
     this.skipped = 0;
     this.todo = 0;
-    this.failedTests = [];
+    this.failedTestIds = [];
+    this.failedTestNames = [];
   }
 
   report(prefix, data) {
@@ -23,7 +24,8 @@ class RadReporter {
       this.todo++;
       this.out.write('T');
     } else {
-      this.failedTests.push(data.originalResultObj.testId);
+      this.failedTestIds.push(data.originalResultObj.testId);
+      this.failedTestNames.push(data.name);
       this.out.write(styleText('red', 'F'));
     }
 
@@ -51,13 +53,15 @@ class RadReporter {
       this.out.write(`${this.todo} test(s) marked todo\n`);
     }
 
-    if (this.failedTests.length === 0) {
+    if (this.failedTestIds.length === 0) {
       return;
     }
 
-    this.out.write(styleText('red', `${this.failedTests.length} test(s) failed\n`));
+    this.out.write(this.failedTestNames.join('\n'));
+    this.out.write('\n');
+    this.out.write(styleText('red', `${this.failedTestIds.length} test(s) failed\n`));
 
-    const query = this.failedTests
+    const query = this.failedTestIds
       .map((testId) => `testId=${encodeURIComponent(testId)}`)
       .join('&');
 
