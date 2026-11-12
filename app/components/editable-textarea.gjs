@@ -61,7 +61,7 @@ export default class EditableTextareaComponent extends Component {
               <div class="buttons">
                 <SaveButton
                   class="done text"
-                  @isSaving={{@isSaveDisabled}}
+                  @isSaving={{this.saveData.isRunning}}
                   {{on "click" (perform this.saveData)}}
                   data-test-save
                 >
