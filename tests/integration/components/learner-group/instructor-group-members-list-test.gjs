@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import InstructorGroupMembersList from 'frontend/components/learner-group/instructor-group-members-list';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/learner-group/instructor-group-members-list';
-import InstructorGroupMembersList from 'frontend/components/learner-group/instructor-group-members-list';
+import { module, test } from 'qunit';
 
 module('Integration | Component | learner-group/instructor-group-members-list', function (hooks) {
   setupRenderingTest(hooks);

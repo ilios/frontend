@@ -1,6 +1,6 @@
-import { service } from '@ember/service';
-import Route from '@ember/routing/route';
 import { action } from '@ember/object';
+import Route from '@ember/routing/route';
+import { service } from '@ember/service';
 
 export default class CourseIndexRoute extends Route {
   @service permissionChecker;

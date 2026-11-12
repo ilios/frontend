@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMSW } from 'frontend/tests/msw';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
 import sortByPosition from 'frontend/helpers/sort-by-position';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { module, test } from 'qunit';
 
 module('Integration | Helper | sort-by-position', function (hooks) {
   setupRenderingTest(hooks);

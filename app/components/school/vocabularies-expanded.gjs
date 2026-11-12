@@ -1,19 +1,20 @@
-import Component from '@glimmer/component';
-import { cached } from '@glimmer/tracking';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { and, not } from 'ember-truth-helpers';
-import ExpandCollapseButton from '../expand-collapse-button';
-import { fn } from '@ember/helper';
-import NewVocabularyForm from './new-vocabulary-form';
-import VocabularyManager from './vocabulary-manager';
-import VocabulariesList from './vocabularies-list';
-import LoadingSpinner from '../loading-spinner';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import { and, not } from 'ember-truth-helpers';
+
+import ExpandCollapseButton from '../expand-collapse-button';
+import LoadingSpinner from '../loading-spinner';
+import NewVocabularyForm from './new-vocabulary-form';
+import VocabulariesList from './vocabularies-list';
+import VocabularyManager from './vocabulary-manager';
 
 export default class SchoolVocabulariesExpandedComponent extends Component {
   @service store;

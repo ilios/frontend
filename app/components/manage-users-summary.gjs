@@ -1,23 +1,24 @@
-import Component from '@glimmer/component';
+import { hash } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
-import { cleanQuery } from '../utils/query-utils';
+import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import { LinkTo } from '@ember/routing';
-import { hash } from '@ember/helper';
-import notEq from 'ember-truth-helpers/helpers/not-eq';
-import { on } from '@ember/modifier';
-import queue from '../helpers/queue';
-import pick from '../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 import onKey from 'ember-keyboard/modifiers/on-key';
-import { eq, and, not } from 'ember-truth-helpers';
-import UserStatus from './user-status';
+import set from 'ember-set-helper/helpers/set';
+import { and, eq, not } from 'ember-truth-helpers';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+
+import pick from '../helpers/pick';
+import queue from '../helpers/queue';
+import { cleanQuery } from '../utils/query-utils';
 import scrollIntoView from '../utils/scroll-into-view';
+import UserStatus from './user-status';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;

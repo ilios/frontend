@@ -1,9 +1,9 @@
-import Component from '@glimmer/component';
+import { concat } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { concat } from '@ember/helper';
+import Component from '@glimmer/component';
 import { eq } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
 
 export default class ToggleButtonsComponent extends Component {
   get uniqueId() {

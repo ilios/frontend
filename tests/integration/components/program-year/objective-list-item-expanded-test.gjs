@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/program-year/objective-list-item-expanded';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupMSW } from 'frontend/tests/msw';
 import ObjectiveListItemExpanded from 'frontend/components/program-year/objective-list-item-expanded';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/program-year/objective-list-item-expanded';
+import { module, test } from 'qunit';
 
 module('Integration | Component | program-year/objective-list-item-expanded', function (hooks) {
   setupRenderingTest(hooks);

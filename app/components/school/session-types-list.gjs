@@ -1,4 +1,5 @@
 import t from 'ember-intl/helpers/t';
+
 import sortBy from '../../helpers/sort-by';
 import SessionTypesListItem from './session-types-list-item';
 <template>

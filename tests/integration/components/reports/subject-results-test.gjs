@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/reports/results';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import SubjectResults from 'frontend/components/reports/subject-results';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/reports/results';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/subject-results', function (hooks) {
   setupRenderingTest(hooks);

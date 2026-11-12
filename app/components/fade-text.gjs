@@ -1,14 +1,14 @@
+import { hash } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { guidFor } from '@ember/object/internals';
+import { htmlSafe } from '@ember/template';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faAnglesDown, faAnglesUp } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { htmlSafe } from '@ember/template';
-import { onResize } from 'ember-primitives/on-resize';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { hash } from '@ember/helper';
 import { TrackedAsyncData } from 'ember-async-data';
-import { guidFor } from '@ember/object/internals';
-import { faAnglesDown, faAnglesUp } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
+import { onResize } from 'ember-primitives/on-resize';
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;

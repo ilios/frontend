@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render, settled } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/user-profile-cohorts-manager';
 import UserProfileCohortsManager from 'frontend/components/user-profile-cohorts-manager';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupAuthentication,setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/user-profile-cohorts-manager';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user-profile-cohorts-manager', function (hooks) {
   setupRenderingTest(hooks);

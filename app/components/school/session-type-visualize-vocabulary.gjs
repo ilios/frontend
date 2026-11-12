@@ -1,6 +1,7 @@
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import { pageTitle } from 'ember-page-title';
+
 import VisualizeSessionTypeVocabularyGraph from './visualize-session-type-vocabulary-graph';
 <template>
   {{pageTitle

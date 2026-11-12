@@ -1,13 +1,14 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import scrollIntoView from '../modifiers/scroll-into-view';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
-import ClickChoiceButtons from './click-choice-buttons';
 import set from 'ember-set-helper/helpers/set';
-import OfferingForm from './offering-form';
 import { not } from 'ember-truth-helpers';
+
+import scrollIntoView from '../modifiers/scroll-into-view';
+import ClickChoiceButtons from './click-choice-buttons';
+import OfferingForm from './offering-form';
 
 export default class NewOfferingComponent extends Component {
   @service store;

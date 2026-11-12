@@ -1,6 +1,6 @@
 import {
-  collection,
   clickable,
+  collection,
   create,
   fillable,
   property,

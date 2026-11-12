@@ -1,6 +1,7 @@
-import { attribute, clickable, create, collection, isPresent, text } from 'ember-cli-page-object';
-import objectiveList from './single-event-objective-list';
+import { attribute, clickable, collection, create, isPresent, text } from 'ember-cli-page-object';
+
 import materials from './single-event-learningmaterial-list';
+import objectiveList from './single-event-objective-list';
 
 const definition = {
   scope: '[data-test-single-event]',

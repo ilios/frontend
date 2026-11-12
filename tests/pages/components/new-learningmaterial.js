@@ -1,4 +1,5 @@
 import { attribute, clickable, create, fillable, isPresent } from 'ember-cli-page-object';
+
 import { pageObjectFillInQuillEditor } from '../helpers';
 import userNameInfo from './user-name-info';
 

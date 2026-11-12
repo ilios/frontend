@@ -1,10 +1,10 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
-import t from 'ember-intl/helpers/t';
-import Root from 'frontend/components/courses/root';
-import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import pageTitle from 'ember-page-title/helpers/page-title';
+import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
+import Root from 'frontend/components/courses/root';
 <template>
   {{pageTitle (t "general.courses")}}
   <Root

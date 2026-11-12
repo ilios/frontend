@@ -1,11 +1,12 @@
 import { clickable, create, hasClass, isPresent, isVisible, text } from 'ember-cli-page-object';
-import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from '../../helpers';
-import meshManager from './manage-objective-descriptors';
-import competencyManager from './manage-objective-competency';
-import meshDescriptors from './objective-list-item-descriptors';
-import competency from './objective-list-item-competency';
-import taxonomyManager from 'frontend/tests/pages/components/taxonomy-manager';
 import selectedTerms from 'frontend/tests/pages/components/objective-list-item-terms';
+import taxonomyManager from 'frontend/tests/pages/components/taxonomy-manager';
+
+import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from '../../helpers';
+import competencyManager from './manage-objective-competency';
+import meshManager from './manage-objective-descriptors';
+import competency from './objective-list-item-competency';
+import meshDescriptors from './objective-list-item-descriptors';
 
 const definition = {
   scope: '[data-test-program-year-objective-list-item]',

@@ -1,7 +1,8 @@
 import { collection, create, text } from 'ember-cli-page-object';
-import selectedLearnerGroups from './selected-learner-groups';
+
 import learnergroupSelectionCohortManager from './learnergroup-selection-cohort-manager';
 import search from './search-box';
+import selectedLearnerGroups from './selected-learner-groups';
 
 const definition = {
   scope: '[data-test-learnergroup-selection-manager]',

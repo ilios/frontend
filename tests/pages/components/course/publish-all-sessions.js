@@ -1,10 +1,10 @@
 import { create, visitable } from 'ember-cli-page-object';
 
-import courseSessions from './sessions';
 import coursePage from '../../sessions';
+import publishAllSessions from '../publish-all-sessions';
 import overview from '../session/overview';
 import details from './details';
-import publishAllSessions from '../publish-all-sessions';
+import courseSessions from './sessions';
 
 export default create({
   visit: visitable('/courses/:courseId/publishall'),

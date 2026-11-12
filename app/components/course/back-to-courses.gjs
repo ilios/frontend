@@ -1,6 +1,6 @@
-import Component from '@glimmer/component';
 import { hash } from '@ember/helper';
 import { LinkTo } from '@ember/routing';
+import Component from '@glimmer/component';
 import t from 'ember-intl/helpers/t';
 
 export default class CourseBackToCoursesComponent extends Component {

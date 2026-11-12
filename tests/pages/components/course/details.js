@@ -1,15 +1,16 @@
 import { clickable, count, create, isVisible } from 'ember-cli-page-object';
-import objectives from './objectives';
-import learningMaterials from '../detail-learning-materials';
-import meshTerms from '../mesh-terms';
-import taxonomies from '../detail-taxonomies';
+
+import collapsedCompetencies from '../collapsed-competencies';
 import collapsedTaxonomies from '../collapsed-taxonomies';
+import learningMaterials from '../detail-learning-materials';
+import taxonomies from '../detail-taxonomies';
 import leadershipCollapsed from '../leadership-collapsed';
 import leadershipExpanded from '../leadership-expanded';
-import collapsedCompetencies from '../collapsed-competencies';
-import overview from './overview';
-import header from './header';
+import meshTerms from '../mesh-terms';
 import detailCohorts from './../detail-cohorts';
+import header from './header';
+import objectives from './objectives';
+import overview from './overview';
 
 export default create({
   scope: '[data-test-ilios-course-details]',

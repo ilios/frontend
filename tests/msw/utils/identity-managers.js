@@ -1,5 +1,5 @@
-import { IdentityManager } from './identity-manager.js';
 import { modelsWithStringIds } from '../db.js';
+import { IdentityManager } from './identity-manager.js';
 
 const identityManagers = new Map();
 
@@ -15,4 +15,4 @@ function resetIdentityManagers() {
   identityManagers.forEach((idm) => idm.reset());
 }
 
-export { resetIdentityManagers, getIdentityManager };
+export { getIdentityManager,resetIdentityManagers };

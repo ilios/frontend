@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import set from 'ember-set-helper/helpers/set';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import pick from '../helpers/pick';
-import onKey from 'ember-keyboard/modifiers/on-key';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import t from 'ember-intl/helpers/t';
+import onKey from 'ember-keyboard/modifiers/on-key';
+import set from 'ember-set-helper/helpers/set';
+
+import pick from '../helpers/pick';
 
 export default class GlobalSearchBoxComponent extends Component {
   @service router;

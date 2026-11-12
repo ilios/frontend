@@ -1,11 +1,11 @@
 import {
   attribute,
   clickable,
-  create,
   collection,
+  create,
+  fillable,
   isPresent,
   isVisible,
-  fillable,
   property,
   text,
 } from 'ember-cli-page-object';

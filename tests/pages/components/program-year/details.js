@@ -1,12 +1,13 @@
 import { create } from 'ember-cli-page-object';
-import objectives from './objectives';
+import collapsedTaxonomies from 'frontend/tests/pages/components/collapsed-taxonomies';
+import detailTaxonomies from 'frontend/tests/pages/components/detail-taxonomies';
+import collapsedLeadership from 'frontend/tests/pages/components/leadership-collapsed';
+import expandedLeadership from 'frontend/tests/pages/components/leadership-expanded';
+
+import cohortMembers from './cohort-members';
 import competencies from './competencies';
 import courseAssociations from './course-associations';
-import cohortMembers from './cohort-members';
-import expandedLeadership from 'frontend/tests/pages/components/leadership-expanded';
-import detailTaxonomies from 'frontend/tests/pages/components/detail-taxonomies';
-import collapsedTaxonomies from 'frontend/tests/pages/components/collapsed-taxonomies';
-import collapsedLeadership from 'frontend/tests/pages/components/leadership-collapsed';
+import objectives from './objectives';
 
 const definition = {
   scope: '[data-test-program-year-details]',

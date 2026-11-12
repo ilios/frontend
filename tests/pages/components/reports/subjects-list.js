@@ -1,4 +1,5 @@
 import { create } from 'ember-cli-page-object';
+
 import list from './list';
 import results from './results';
 import runSubject from './run-subject';

@@ -1,20 +1,21 @@
-import Component from '@glimmer/component';
+import { on } from '@ember/modifier';
 import { service } from '@ember/service';
+import { isPresent } from '@ember/utils';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCopy, faXmark } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { or } from 'ember-truth-helpers';
-import { isPresent } from '@ember/utils';
 import { DateTime } from 'luxon';
-import { task, timeout } from 'ember-concurrency';
-import CopyButton from '../copy-button';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { on } from '@ember/modifier';
+
 import pipe from '../../helpers/pipe';
-import DatePicker from '../date-picker';
-import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from '../loading-spinner';
-import { faCopy, faXmark } from '@fortawesome/free-solid-svg-icons';
 import BigSaveCancelButtons from '../big-save-cancel-buttons';
+import CopyButton from '../copy-button';
+import DatePicker from '../date-picker';
+import LoadingSpinner from '../loading-spinner';
 
 export default class UserProfileApiTokenComponent extends Component {
   @service flashMessages;

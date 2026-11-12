@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/school/vocabularies-expanded';
 import VocabulariesExpanded from 'frontend/components/school/vocabularies-expanded';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/school/vocabularies-expanded';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/vocabularies-expanded', function (hooks) {
   setupRenderingTest(hooks);

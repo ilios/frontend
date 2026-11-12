@@ -1,8 +1,8 @@
-import Component from '@glimmer/component';
 import { guidFor } from '@ember/object/internals';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
 import { faClock, faStar, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
 
 export default class PublicationStatusComponent extends Component {
   id = guidFor(this);

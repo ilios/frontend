@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, triggerEvent } from '@ember/test-helpers';
 import mouseHoverToggle from 'frontend/modifiers/mouse-hover-toggle';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Modifier | mouse-hover-toggle', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,22 +1,23 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
-import sortableByPosition from '../utils/sortable-by-position';
-import { action } from '@ember/object';
-import { TrackedAsyncData } from 'ember-async-data';
-import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import { eq } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
-import FadeText from './fade-text';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
-  faSpinner,
-  faCheck,
   faArrowRotateLeft,
+  faCheck,
+  faSpinner,
   faUpDownLeftRight,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
+import { eq } from 'ember-truth-helpers';
+
+import sortableByPosition from '../utils/sortable-by-position';
 import BigSaveCancelButtons from './big-save-cancel-buttons';
+import FadeText from './fade-text';
 
 export default class ObjectiveSortManagerComponent extends Component {
   @tracked totalObjectivesToSave;

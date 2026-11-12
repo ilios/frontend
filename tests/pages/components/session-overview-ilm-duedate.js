@@ -1,4 +1,5 @@
-import { create, clickable, isVisible, text } from 'ember-cli-page-object';
+import { clickable, create, isVisible, text } from 'ember-cli-page-object';
+
 import datePicker from './date-picker';
 import timePicker from './time-picker';
 

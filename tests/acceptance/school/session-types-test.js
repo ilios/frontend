@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
 import { currentURL } from '@ember/test-helpers';
+import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/school';
+import { module, test } from 'qunit';
 
 // @todo flesh out test coverage - the full CRUD, read-only mode, etc [ST 2023/09/18]
 module('Acceptance | School - Session Types', function (hooks) {

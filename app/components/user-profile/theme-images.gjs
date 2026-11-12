@@ -1,5 +1,5 @@
-import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
+import Component from '@glimmer/component';
 
 export default class ThemeImages extends Component {
   get colorSchemes() {

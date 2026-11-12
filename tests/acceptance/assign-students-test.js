@@ -1,8 +1,8 @@
 import { currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/assign-students';
 import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Acceptance | assign students', function (hooks) {
   setupApplicationTest(hooks);

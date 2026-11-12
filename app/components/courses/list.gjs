@@ -1,19 +1,20 @@
-import Component from '@glimmer/component';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import SortableTh from '../sortable-th';
-import { eq, or } from 'ember-truth-helpers';
-import { fn } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
-import sortBy from '../../helpers/sort-by';
-import ListItem from './list-item';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import { eq, or } from 'ember-truth-helpers';
+
 import includes from '../../helpers/includes';
-import ResponsiveTd from '../responsive-td';
+import sortBy from '../../helpers/sort-by';
 import scrollIntoView from '../../modifiers/scroll-into-view';
-import { on } from '@ember/modifier';
+import ResponsiveTd from '../responsive-td';
+import SortableTh from '../sortable-th';
+import ListItem from './list-item';
 
 export default class CoursesListComponent extends Component {
   @service intl;

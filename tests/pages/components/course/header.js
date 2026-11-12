@@ -1,14 +1,15 @@
 import {
   blurrable,
-  create,
   clickable,
+  create,
   fillable,
-  text,
   isPresent,
+  text,
   value,
 } from 'ember-cli-page-object';
-import publicationMenu from './publication-menu';
+
 import publicationStatus from '../publication-status';
+import publicationMenu from './publication-menu';
 const definition = {
   scope: '[data-test-course-header]',
   title: {

@@ -1,14 +1,15 @@
+import { registerDestructor } from '@ember/destroyable';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCircleExclamation, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
-import { registerDestructor } from '@ember/destroyable';
-import { action } from '@ember/object';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+
 import toggle from '../helpers/toggle';
-import { faCircleExclamation, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class ConnectionStatusComponent extends Component {
   @tracked isOnline = true;

@@ -1,6 +1,7 @@
-import { create, isPresent, clickable } from 'ember-cli-page-object';
-import newSingle from './new-single';
+import { clickable,create, isPresent } from 'ember-cli-page-object';
+
 import newMultiple from './new-multiple';
+import newSingle from './new-single';
 
 const definition = {
   single: newSingle,

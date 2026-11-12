@@ -1,16 +1,17 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import scrollIntoView from '../../modifiers/scroll-into-view';
-import { LinkTo } from '@ember/routing';
-import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import hasManyLength from '../../helpers/has-many-length';
 import { hash } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faArrowRotateLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+
+import hasManyLength from '../../helpers/has-many-length';
+import scrollIntoView from '../../modifiers/scroll-into-view';
 
 export default class CoursePublicationCheckComponent extends Component {
   @service router;

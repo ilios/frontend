@@ -1,4 +1,5 @@
 import { create, text } from 'ember-cli-page-object';
+
 import copy from './copy-button';
 
 const definition = {

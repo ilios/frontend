@@ -1,13 +1,14 @@
 import {
   clickable,
-  create,
   collection,
+  create,
   fillable,
   isHidden,
   isVisible,
   property,
   text,
 } from 'ember-cli-page-object';
+
 import { hasFocus } from '../../helpers';
 import list from './list';
 import newCourse from './new';

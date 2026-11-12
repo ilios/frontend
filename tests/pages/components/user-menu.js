@@ -1,4 +1,5 @@
-import { create, collection, triggerable } from 'ember-cli-page-object';
+import { collection, create, triggerable } from 'ember-cli-page-object';
+
 import linkToWithAction from './link-to-with-action';
 
 export default create({

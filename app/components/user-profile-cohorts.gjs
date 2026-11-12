@@ -1,24 +1,25 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
-import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import { or, not } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { fn } from '@ember/helper';
-import UserProfileCohortsManager from './user-profile-cohorts-manager';
-import set from 'ember-set-helper/helpers/set';
-import UserProfileCohortsDetails from './user-profile-cohorts-details';
 import {
-  faSpinner,
-  faCheck,
   faArrowRotateLeft,
+  faCheck,
   faPenToSquare,
+  faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task, timeout } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { not,or } from 'ember-truth-helpers';
+
 import BigSaveCancelButtons from './big-save-cancel-buttons';
+import UserProfileCohortsDetails from './user-profile-cohorts-details';
+import UserProfileCohortsManager from './user-profile-cohorts-manager';
 
 export default class UserProfileCohortsComponent extends Component {
   @service currentUser;

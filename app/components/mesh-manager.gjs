@@ -1,22 +1,23 @@
-import Component from '@glimmer/component';
+import { array,fn, uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
-import { action } from '@ember/object';
-import { mapBy, sortBy } from '../utils/array-helpers';
-import { uniqueId, fn, array } from '@ember/helper';
+import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import MeshDescriptorLastTreeNumber from './mesh-descriptor-last-tree-number';
-import LoadingSpinner from './loading-spinner';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { and, lte } from 'ember-truth-helpers';
+
 import includes from '../helpers/includes';
 import join from '../helpers/join';
 import mapBy0 from '../helpers/map-by';
-import perform from 'ember-concurrency/helpers/perform';
 import focus from '../modifiers/focus';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { mapBy, sortBy } from '../utils/array-helpers';
+import LoadingSpinner from './loading-spinner';
+import MeshDescriptorLastTreeNumber from './mesh-descriptor-last-tree-number';
 
 const DEBOUNCE_TIMEOUT = 250;
 const MIN_INPUT = 3;

@@ -1,7 +1,7 @@
 import {
-  create,
   clickable,
   collection,
+  create,
   hasClass,
   isPresent,
   notHasClass,

@@ -1,4 +1,4 @@
-import Model, { belongsTo, hasMany, attr } from '@ember-data/model';
+import Model, { attr,belongsTo, hasMany } from '@ember-data/model';
 import { filter } from 'rsvp';
 
 export default class Vocabulary extends Model {

@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { LinkTo } from '@ember/routing';
-import t from 'ember-intl/helpers/t';
-import GlobalSearchTags from './global-search-tags';
 import { array } from '@ember/helper';
-import { gt } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
-import set from 'ember-set-helper/helpers/set';
+import { LinkTo } from '@ember/routing';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { gt } from 'ember-truth-helpers';
+
+import GlobalSearchTags from './global-search-tags';
 
 export default class CourseSearchResultComponent extends Component {
   @tracked showMore = false;

@@ -1,22 +1,23 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { concat,uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { findById, sortBy } from '../../utils/array-helpers';
-import { uniqueId, concat } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
 import { eq, not } from 'ember-truth-helpers';
-import sortBy0 from '../../helpers/sort-by';
-import ToggleYesno from '../toggle-yesno';
-import LoadingSpinner from '../loading-spinner';
-import YupValidationMessage from '../yup-validation-message';
-import YupValidations from '../../classes/yup-validations';
 import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
+import sortBy0 from '../../helpers/sort-by';
+import { findById, sortBy } from '../../utils/array-helpers';
+import LoadingSpinner from '../loading-spinner';
+import ToggleYesno from '../toggle-yesno';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class SchoolSessionTypeFormComponent extends Component {
   @service store;

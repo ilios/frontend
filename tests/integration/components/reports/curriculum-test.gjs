@@ -1,14 +1,14 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import Curriculum from 'frontend/components/reports/curriculum';
+import noop from 'frontend/helpers/noop';
+import { setupAuthentication,setupRenderingTest } from 'frontend/tests/helpers';
 import { buildSchoolsFromData } from 'frontend/tests/helpers/curriculum-report';
 import { setupMSW } from 'frontend/tests/msw';
-import currentAcademicYear from 'frontend/utils/current-academic-year';
 import { component } from 'frontend/tests/pages/components/reports/curriculum';
-import Curriculum from 'frontend/components/reports/curriculum';
-import { array } from '@ember/helper';
-import noop from 'frontend/helpers/noop';
+import currentAcademicYear from 'frontend/utils/current-academic-year';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/curriculum', function (hooks) {
   setupRenderingTest(hooks);

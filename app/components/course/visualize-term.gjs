@@ -1,13 +1,14 @@
+import { array, concat } from '@ember/helper';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { eq } from 'ember-truth-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
-import { array, concat } from '@ember/helper';
-import { pageTitle } from 'ember-page-title';
 import add from 'ember-math-helpers/helpers/add';
+import { pageTitle } from 'ember-page-title';
+import { eq } from 'ember-truth-helpers';
+
 import Breadcrumbs from '../breadcrumbs';
 import VisualizeTermGraph from './visualize-term-graph';
 

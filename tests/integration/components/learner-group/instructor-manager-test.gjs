@@ -1,13 +1,13 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/learner-group/instructor-manager';
 import InstructorManager from 'frontend/components/learner-group/instructor-manager';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
+import { component } from 'frontend/tests/pages/components/learner-group/instructor-manager';
 import { HttpResponse } from 'msw';
+import { module, test } from 'qunit';
 
 module('Integration | Component | learner-group/instructor-manager', function (hooks) {
   setupRenderingTest(hooks);

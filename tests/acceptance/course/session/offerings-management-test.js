@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/session';
+import { module, test } from 'qunit';
 
 module('Acceptance | Session - Offering Management', function (hooks) {
   setupApplicationTest(hooks);

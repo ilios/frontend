@@ -1,6 +1,7 @@
 import { clickable, create, fillable, hasClass, isVisible, text } from 'ember-cli-page-object';
-import yesNoToggle from '../toggle-yesno';
+
 import ilmDueDateAndTime from '../session-overview-ilm-duedate';
+import yesNoToggle from '../toggle-yesno';
 
 const definition = {
   ilmHours: {

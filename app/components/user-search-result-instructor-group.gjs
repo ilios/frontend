@@ -1,7 +1,8 @@
-import { not } from 'ember-truth-helpers';
-import includes from '../helpers/includes';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { not } from 'ember-truth-helpers';
+
+import includes from '../helpers/includes';
 <template>
   {{#if (not (includes @group @currentlyActiveInstructorGroups))}}
     <li class="active" data-test-result>

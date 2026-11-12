@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/school/institutional-information-details';
 import InstitutionalInformationDetails from 'frontend/components/school/institutional-information-details';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/school/institutional-information-details';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/institutional-information-details', function (hooks) {
   setupRenderingTest(hooks);

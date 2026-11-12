@@ -1,12 +1,13 @@
-import t from 'ember-intl/helpers/t';
-import sortBy from '../../helpers/sort-by';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import UserNameInfo from '../user-name-info';
+import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
+
+import sortBy from '../../helpers/sort-by';
+import UserNameInfo from '../user-name-info';
 import UserSearch from '../user-search';
 import UserStatus from '../user-status';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 <template>
   <section

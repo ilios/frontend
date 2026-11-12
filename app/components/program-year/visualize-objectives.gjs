@@ -1,10 +1,11 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
 import t from 'ember-intl/helpers/t';
-import Breadcrumbs from '../breadcrumbs';
 import { pageTitle } from 'ember-page-title';
+
+import Breadcrumbs from '../breadcrumbs';
 import VisualizerProgramYearObjectives from '../visualizer-program-year-objectives';
 
 export default class CourseVisualizeProgramYearObjectivesComponent extends Component {

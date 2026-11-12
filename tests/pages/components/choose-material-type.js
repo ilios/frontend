@@ -1,4 +1,4 @@
-import { create, collection, triggerable } from 'ember-cli-page-object';
+import { collection, create, triggerable } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-choose-material-type]',

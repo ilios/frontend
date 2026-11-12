@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
 import Service from '@ember/service';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/ilios-navigation';
 import IliosNavigation from 'frontend/components/ilios-navigation';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/ilios-navigation';
+import { module, test } from 'qunit';
 
 module('Integration | Component | ilios-navigation', function (hooks) {
   setupRenderingTest(hooks);

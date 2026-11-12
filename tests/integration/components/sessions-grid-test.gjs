@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import Service from '@ember/service';
 import { click, render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/sessions-grid';
 import SessionsGrid from 'frontend/components/sessions-grid';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/sessions-grid';
+import { module, test } from 'qunit';
 
 module('Integration | Component | sessions-grid', function (hooks) {
   setupRenderingTest(hooks);

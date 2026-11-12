@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { settled, render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
-import { component } from 'frontend/tests/pages/components/session/overview';
+import { render,settled } from '@ember/test-helpers';
 import Overview from 'frontend/components/session/overview';
+import { setupAuthentication,setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/session/overview';
+import { module, test } from 'qunit';
 
 module('Integration | Component | session/overview', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,23 +1,24 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
-import { uniqueId, fn } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
+import { fn,uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
 import { and, eq, gt, not, or } from 'ember-truth-helpers';
+
 import includes from '../../helpers/includes';
-import SortableTh from '../sortable-th';
+import pick from '../../helpers/pick';
 import sortBy from '../../helpers/sort-by';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import LoadingSpinner from '../loading-spinner';
+import SortableTh from '../sortable-th';
 import UserNameInfo from '../user-name-info';
 import UserStatus from '../user-status';
-import LoadingSpinner from '../loading-spinner';
-import perform from 'ember-concurrency/helpers/perform';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupCohortUserManagerComponent extends Component {
   @service currentUser;

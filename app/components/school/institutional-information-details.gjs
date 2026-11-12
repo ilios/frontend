@@ -1,6 +1,6 @@
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
 <template>
   <div
     class="school-institutional-information-details"

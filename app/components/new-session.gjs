@@ -1,21 +1,22 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
-import { findBy } from '../utils/array-helpers';
-import YupValidations from '../classes/yup-validations';
-import { string } from 'yup';
 import { uniqueId } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import focus from '../modifiers/focus';
-import YupValidationMessage from './yup-validation-message';
-import isArray from 'ember-truth-helpers/helpers/is-array';
-import sortBy from '../helpers/sort-by';
-import { eq } from 'ember-truth-helpers';
-import LoadingSpinner from './loading-spinner';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import { eq } from 'ember-truth-helpers';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+import { string } from 'yup';
+
+import YupValidations from '../classes/yup-validations';
+import sortBy from '../helpers/sort-by';
+import focus from '../modifiers/focus';
+import { findBy } from '../utils/array-helpers';
+import LoadingSpinner from './loading-spinner';
+import YupValidationMessage from './yup-validation-message';
 
 export default class NewSessionComponent extends Component {
   @service store;

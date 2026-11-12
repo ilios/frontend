@@ -1,4 +1,4 @@
-import { isPresent, create, hasClass, text } from 'ember-cli-page-object';
+import { create, hasClass, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-taxonomy-manager-terms-list-item]',

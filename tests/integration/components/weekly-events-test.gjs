@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/weekly-events';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import WeeklyEvents from 'frontend/components/weekly-events';
-import { array } from '@ember/helper';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/weekly-events';
+import { module, test } from 'qunit';
 
 module('Integration | Component | weekly events', function (hooks) {
   setupRenderingTest(hooks);

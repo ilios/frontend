@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
+import VisualizeInstructorTermGraph from 'frontend/components/course/visualize-instructor-term-graph';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/course/visualize-instructor-term-graph';
-import VisualizeInstructorTermGraph from 'frontend/components/course/visualize-instructor-term-graph';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course/visualize-instructor-term-graph', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/global-search-tags';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import GlobalSearchTags from 'frontend/components/global-search-tags';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/global-search-tags';
+import { module, test } from 'qunit';
 
 module('Integration | Component | global-search-tags', function (hooks) {
   setupRenderingTest(hooks);

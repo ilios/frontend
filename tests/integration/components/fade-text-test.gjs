@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/fade-text';
 import FadeText from 'frontend/components/fade-text';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/fade-text';
+import { module, test } from 'qunit';
 
 module('Integration | Component | fade-text', function (hooks) {
   setupRenderingTest(hooks);

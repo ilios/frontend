@@ -1,8 +1,7 @@
 import { collection, create, hasClass, isPresent, property, text } from 'ember-cli-page-object';
 
-import learningMaterials from './week-glance/learning-material-list';
-
 import truncateText from './truncate-text';
+import learningMaterials from './week-glance/learning-material-list';
 
 const definition = {
   scope: '[data-test-week-glance-event]',

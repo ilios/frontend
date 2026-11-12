@@ -1,6 +1,7 @@
+import { getOwner } from '@ember/application';
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { getOwner } from '@ember/application';
+
 import { getValueFromHtml } from '../utils/html-server-variables';
 
 export default class ServerVariablesService extends Service {

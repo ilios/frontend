@@ -1,16 +1,17 @@
+import { ensureSafeComponent } from '@embroider/util';
 import Component from '@glimmer/component';
+
+import CompetencyComponent from './subject/competency';
 import CourseComponent from './subject/course';
-import SessionComponent from './subject/session';
-import ProgramComponent from './subject/program';
-import ProgramYearComponent from './subject/program-year';
 import InstructorComponent from './subject/instructor';
 import InstructorGroupComponent from './subject/instructor-group';
 import LearningMaterialComponent from './subject/learning-material';
-import CompetencyComponent from './subject/competency';
 import MeshTermComponent from './subject/mesh-term';
-import TermComponent from './subject/term';
+import ProgramComponent from './subject/program';
+import ProgramYearComponent from './subject/program-year';
+import SessionComponent from './subject/session';
 import SessionTypeComponent from './subject/session-type';
-import { ensureSafeComponent } from '@embroider/util';
+import TermComponent from './subject/term';
 
 export default class ReportsSubjectResultsComponent extends Component {
   get subjectComponent() {

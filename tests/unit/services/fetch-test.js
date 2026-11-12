@@ -1,8 +1,8 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
+import { authenticateSession } from 'ember-simple-auth/test-support';
 import { setupTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
-import { authenticateSession } from 'ember-simple-auth/test-support';
+import { module, test } from 'qunit';
 
 module('Unit | Service | fetch', function (hooks) {
   setupTest(hooks);

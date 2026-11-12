@@ -1,9 +1,10 @@
-import Component from '@glimmer/component';
-import { DateTime } from 'luxon';
 import { action } from '@ember/object';
+import Component from '@glimmer/component';
 import isArray from 'ember-truth-helpers/helpers/is-array';
-import MonthlyCalendar from './monthly-calendar';
+import { DateTime } from 'luxon';
+
 import IliosCalendarMultidayEvents from './ilios-calendar-multiday-events';
+import MonthlyCalendar from './monthly-calendar';
 
 export default class IliosCalendarMonthComponent extends Component {
   get ilmPreWorkEvents() {

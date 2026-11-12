@@ -1,6 +1,6 @@
-import { uniqueId, fn } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
+import { fn,uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
 <template>
   {{#let (uniqueId) as |templateId|}}
     <div data-test-school-session-attributes-manager ...attributes>

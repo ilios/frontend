@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/course/publication-menu';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMSW } from 'frontend/tests/msw';
 import PublicationMenu from 'frontend/components/course/publication-menu';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/publication-menu';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course/publication-menu', function (hooks) {
   setupRenderingTest(hooks);

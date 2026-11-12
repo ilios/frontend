@@ -1,7 +1,8 @@
 import { create } from 'ember-cli-page-object';
+
+import courseAssociations from './course-associations';
 import header from './header';
 import users from './users';
-import courseAssociations from './course-associations';
 
 const definition = {
   scope: '[data-test-instructor-group-root]',

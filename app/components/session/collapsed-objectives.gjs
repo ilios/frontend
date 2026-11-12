@@ -1,13 +1,14 @@
+import { get } from '@ember/helper';
+import { on } from '@ember/modifier';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBan, faCaretRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import { get } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { eq, gte } from 'ember-truth-helpers';
+
 import LoadingSpinner from '../loading-spinner';
-import { faBan, faCaretRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionCollapsedObjectivesComponent extends Component {
   @cached

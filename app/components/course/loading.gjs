@@ -1,8 +1,9 @@
-import BackToCourses from './back-to-courses';
-import animateLoading from '../../modifiers/animate-loading';
-import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faSquarePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus,faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
+
+import animateLoading from '../../modifiers/animate-loading';
+import BackToCourses from './back-to-courses';
 <template>
   <BackToCourses />
 

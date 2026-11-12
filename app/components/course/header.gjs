@@ -1,22 +1,23 @@
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { service } from '@ember/service';
-import YupValidations from '../../classes/yup-validations';
-import YupValidationMessage from '../yup-validation-message';
-import { string } from 'yup';
-import EditableField from '../editable-field';
 import perform from 'ember-concurrency/helpers/perform';
-import set from 'ember-set-helper/helpers/set';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
+import set from 'ember-set-helper/helpers/set';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
 import pick from '../../helpers/pick';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import PublicationMenu from './publication-menu';
-import PublicationStatus from '../publication-status';
 import focus from '../../modifiers/focus';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
+import EditableField from '../editable-field';
+import PublicationStatus from '../publication-status';
+import YupValidationMessage from '../yup-validation-message';
+import PublicationMenu from './publication-menu';
 
 export default class CourseHeaderComponent extends Component {
   @service iliosConfig;

@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/click-choice-buttons';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import ClickChoiceButtons from 'frontend/components/click-choice-buttons';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/click-choice-buttons';
+import { module, test } from 'qunit';
 
 module('Integration | Component | click choice buttons', function (hooks) {
   setupRenderingTest(hooks);

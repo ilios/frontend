@@ -1,5 +1,5 @@
 import { helper } from '@ember/component/helper';
-import { isHTMLSafe, htmlSafe as _htmlSafe } from '@ember/template';
+import { htmlSafe as _htmlSafe,isHTMLSafe } from '@ember/template';
 
 export function htmlSafe([string]) {
   if (isHTMLSafe(string)) {

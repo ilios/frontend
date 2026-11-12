@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupTest } from 'frontend/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
+import { setupTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Unit | Service | reporting', function (hooks) {
   setupTest(hooks);

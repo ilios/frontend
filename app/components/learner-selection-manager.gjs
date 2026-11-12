@@ -1,5 +1,6 @@
-import SelectedLearners from './selected-learners';
 import t from 'ember-intl/helpers/t';
+
+import SelectedLearners from './selected-learners';
 import UserSearch from './user-search';
 <template>
   <div class="learner-selection-manager" data-test-learner-selection-manager>

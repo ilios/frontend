@@ -1,5 +1,6 @@
-import Loader from '../components/course/loader';
 import set from 'ember-set-helper/helpers/set';
+
+import Loader from '../components/course/loader';
 <template>
   <Loader
     @course={{@model}}

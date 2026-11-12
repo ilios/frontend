@@ -1,24 +1,25 @@
-import Component from '@glimmer/component';
-import { task, timeout } from 'ember-concurrency';
-import { cleanQuery } from '../../utils/query-utils';
-import { cached, tracked } from '@glimmer/tracking';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
-import SortableTh from '../sortable-th';
-import { eq, or } from 'ember-truth-helpers';
-import { fn } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import sortBy from '../../helpers/sort-by';
-import includes from '../../helpers/includes';
-import capitalize from '../../helpers/capitalize';
-import formatDate from 'ember-intl/helpers/format-date';
-import { pageTitle } from 'ember-page-title';
-import LoadingSpinner from '../loading-spinner';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+import { pageTitle } from 'ember-page-title';
+import { eq, or } from 'ember-truth-helpers';
+
+import capitalize from '../../helpers/capitalize';
+import includes from '../../helpers/includes';
+import sortBy from '../../helpers/sort-by';
+import { cleanQuery } from '../../utils/query-utils';
+import LoadingSpinner from '../loading-spinner';
+import SortableTh from '../sortable-th';
 
 const DEBOUNCE_DELAY = 250;
 

@@ -1,8 +1,8 @@
 import {
   attribute,
+  clickable,
   collection,
   create,
-  clickable,
   hasClass,
   isPresent,
   isVisible,

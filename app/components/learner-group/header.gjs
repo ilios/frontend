@@ -1,24 +1,25 @@
+import { array, hash } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { array, hash } from '@ember/helper';
-import { service } from '@ember/service';
-import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import EditableField from '../editable-field';
-import { eq } from 'ember-truth-helpers';
-import t from 'ember-intl/helpers/t';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
-import { LinkTo } from '@ember/routing';
-import reverse from '../../helpers/reverse';
-import YupValidations from '../../classes/yup-validations';
-import YupValidationMessage from '../yup-validation-message';
+import { eq } from 'ember-truth-helpers';
 import { string } from 'yup';
-import Breadcrumbs from '../breadcrumbs';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
+import reverse from '../../helpers/reverse';
 import focus from '../../modifiers/focus';
+import Breadcrumbs from '../breadcrumbs';
+import EditableField from '../editable-field';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class LearnerGroupHeaderComponent extends Component {
   @service intl;

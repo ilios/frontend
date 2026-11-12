@@ -1,30 +1,6 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
-import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { findById, sortBy } from '../../utils/array-helpers';
 import { on } from '@ember/modifier';
-import set from 'ember-set-helper/helpers/set';
-import { and, not } from 'ember-truth-helpers';
-import LoadingSpinner from '../loading-spinner';
-import t from 'ember-intl/helpers/t';
-import EditableField from '../editable-field';
-import perform from 'ember-concurrency/helpers/perform';
-import HtmlEditor from '../html-editor';
-import ObjectiveListItemCompetency from './objective-list-item-competency';
-import ObjectiveListItemTerms from '../objective-list-item-terms';
-import ObjectiveListItemDescriptors from './objective-list-item-descriptors';
-import ManageObjectiveCompetency from './manage-objective-competency';
-import ManageObjectiveDescriptors from './manage-objective-descriptors';
-import ObjectiveListItemExpanded from './objective-list-item-expanded';
-import TaxonomyManager from '../taxonomy-manager';
-import YupValidations from '../../classes/yup-validations';
-import YupValidationMessage from '../yup-validation-message';
-import { string } from 'yup';
-import striptags from 'striptags';
-import FadeText from '../fade-text';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faCaretDown,
@@ -33,6 +9,31 @@ import {
   faToggleOn,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { and, not } from 'ember-truth-helpers';
+import striptags from 'striptags';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import { findById, sortBy } from '../../utils/array-helpers';
+import EditableField from '../editable-field';
+import FadeText from '../fade-text';
+import HtmlEditor from '../html-editor';
+import LoadingSpinner from '../loading-spinner';
+import ObjectiveListItemTerms from '../objective-list-item-terms';
+import TaxonomyManager from '../taxonomy-manager';
+import YupValidationMessage from '../yup-validation-message';
+import ManageObjectiveCompetency from './manage-objective-competency';
+import ManageObjectiveDescriptors from './manage-objective-descriptors';
+import ObjectiveListItemCompetency from './objective-list-item-competency';
+import ObjectiveListItemDescriptors from './objective-list-item-descriptors';
+import ObjectiveListItemExpanded from './objective-list-item-expanded';
 
 export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;

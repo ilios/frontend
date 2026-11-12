@@ -1,15 +1,16 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { capitalize } from '@ember/string';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBan,faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { capitalize } from '@ember/string';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { fn } from '@ember/helper';
-import SessionAttributesManager from './session-attributes-manager';
-import { faCaretDown, faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
+
 import BigSaveCancelButtons from '../big-save-cancel-buttons';
+import SessionAttributesManager from './session-attributes-manager';
 
 export default class SchoolSessionAttributesExpandedComponent extends Component {
   @tracked flippedShowSessionAttendanceRequired = false;

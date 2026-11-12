@@ -1,16 +1,17 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
-import { sortBy } from '../utils/array-helpers';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
 import { modifier } from 'ember-modifier';
 import { DateTime } from 'luxon';
-import LoadingSpinner from './loading-spinner';
-import t from 'ember-intl/helpers/t';
-import formatDate from 'ember-intl/helpers/format-date';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import WeeklyCalendarEvent from './weekly-calendar-event';
+
 import Event from '../classes/event';
+import { sortBy } from '../utils/array-helpers';
+import LoadingSpinner from './loading-spinner';
+import WeeklyCalendarEvent from './weekly-calendar-event';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;

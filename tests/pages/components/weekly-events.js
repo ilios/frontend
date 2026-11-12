@@ -1,4 +1,5 @@
 import { clickable, collection, create, text } from 'ember-cli-page-object';
+
 import weekGlance from './week-glance';
 
 const definition = {

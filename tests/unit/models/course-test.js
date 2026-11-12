@@ -1,5 +1,5 @@
+import { freezeDateAt, setupTest, unfreezeDate,waitForResource } from 'frontend/tests/helpers';
 import { module, test } from 'qunit';
-import { setupTest, waitForResource, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 
 module('Unit | Model | Course', function (hooks) {
   setupTest(hooks);

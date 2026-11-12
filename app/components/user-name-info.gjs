@@ -1,15 +1,16 @@
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
-import { service } from '@ember/service';
-import { guidFor } from '@ember/object/internals';
-import { and } from 'ember-truth-helpers';
-import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
+import { and } from 'ember-truth-helpers';
+
+import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
 import IliosTooltip from './ilios-tooltip';
-import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserNameInfoComponent extends Component {
   @service iliosConfig;

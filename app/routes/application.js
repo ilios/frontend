@@ -2,10 +2,11 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
-import { launchWorker } from '../utils/launch-worker';
 import translationsForEnUs from 'virtual:ember-intl/translations/en-us';
 import translationsForEs from 'virtual:ember-intl/translations/es';
 import translationsForFr from 'virtual:ember-intl/translations/fr';
+
+import { launchWorker } from '../utils/launch-worker';
 
 export default class AuthenticatedRoute extends Route {
   @service currentUser;

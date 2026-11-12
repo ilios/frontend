@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import DetailTermsList from 'frontend/components/detail-terms-list';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/detail-terms-list';
-import DetailTermsList from 'frontend/components/detail-terms-list';
+import { module, test } from 'qunit';
 
 module('Integration | Component | detail terms list', function (hooks) {
   setupRenderingTest(hooks);

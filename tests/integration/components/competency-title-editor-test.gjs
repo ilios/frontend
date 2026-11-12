@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import CompetencyTitleEditor from 'frontend/components/school/competency-title-editor';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/school/competency-title-editor';
-import CompetencyTitleEditor from 'frontend/components/school/competency-title-editor';
+import { module, test } from 'qunit';
 
 module('Integration | Component | competency title editor', function (hooks) {
   setupRenderingTest(hooks);

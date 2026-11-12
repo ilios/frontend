@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
+import CompetencyListItem from 'frontend/components/program-year/competency-list-item';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/program-year/competency-list-item';
-import CompetencyListItem from 'frontend/components/program-year/competency-list-item';
-import { array } from '@ember/helper';
+import { module, test } from 'qunit';
 
 module('Integration | Component | program-year/competency-list-item', function (hooks) {
   setupRenderingTest(hooks);

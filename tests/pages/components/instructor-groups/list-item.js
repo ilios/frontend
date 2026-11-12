@@ -1,4 +1,4 @@
-import { create, clickable, isVisible, text } from 'ember-cli-page-object';
+import { clickable, create, isVisible, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-instructor-groups-list-item]',

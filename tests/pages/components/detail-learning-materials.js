@@ -2,20 +2,21 @@ import {
   attribute,
   clickable,
   clickOnText,
-  create,
   collection,
+  create,
   fillable,
   isVisible,
   text,
   value,
 } from 'ember-cli-page-object';
-import meshManager from './mesh-manager';
-import search from './learningmaterial-search';
-import newLearningMaterial from './new-learningmaterial';
-import datePicker from './date-picker';
-import timePicker from './time-picker';
-import items from './detail-learning-materials-item';
+
 import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from '../helpers';
+import datePicker from './date-picker';
+import items from './detail-learning-materials-item';
+import search from './learningmaterial-search';
+import meshManager from './mesh-manager';
+import newLearningMaterial from './new-learningmaterial';
+import timePicker from './time-picker';
 
 const definition = {
   scope: '[data-test-detail-learning-materials]',

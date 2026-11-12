@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/new-learningmaterial';
-import { setupMSW } from 'frontend/tests/msw';
-import NewLearningmaterial from 'frontend/components/new-learningmaterial';
 import { array } from '@ember/helper';
+import { render } from '@ember/test-helpers';
+import NewLearningmaterial from 'frontend/components/new-learningmaterial';
 import noop from 'frontend/helpers/noop';
+import { setupAuthentication,setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/new-learningmaterial';
+import { module, test } from 'qunit';
 
 // @todo flesh this integration test out [ST 2020/09/02]
 module('Integration | Component | new learningmaterial', function (hooks) {

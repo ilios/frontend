@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { fillIn, render, waitFor, settled, find } from '@ember/test-helpers';
+import { fillIn, find,render, settled, waitFor } from '@ember/test-helpers';
 import WaitSaving from 'frontend/components/wait-saving';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | wait saving', function (hooks) {
   setupRenderingTest(hooks);

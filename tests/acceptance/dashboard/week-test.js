@@ -1,15 +1,15 @@
 import { currentRouteName } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { module, test } from 'qunit';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
 import {
-  setupAuthentication,
   freezeDateAt,
-  unfreezeDate,
   setupApplicationTest,
+  setupAuthentication,
   takeScreenshot,
+  unfreezeDate,
 } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/dashboard-week';
-import { a11yAudit } from 'ember-a11y-testing/test-support';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   setupApplicationTest(hooks);

@@ -1,6 +1,6 @@
-import { eq } from 'ember-truth-helpers';
-import t from 'ember-intl/helpers/t';
 import { concat } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
+import { eq } from 'ember-truth-helpers';
 <template>
   {{#if @tags}}
     <div class="global-search-tags" data-test-global-search-tags>

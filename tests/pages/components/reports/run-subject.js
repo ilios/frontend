@@ -1,6 +1,7 @@
 import { create } from 'ember-cli-page-object';
-import header from './subject-header';
+
 import results from './results';
+import header from './subject-header';
 
 const definition = {
   header,

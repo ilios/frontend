@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
 import { currentURL } from '@ember/test-helpers';
+import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/events';
 import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Acceptance | Event', function (hooks) {
   setupApplicationTest(hooks);

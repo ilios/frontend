@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import FilterTags from 'frontend/components/dashboard/filter-tags';
 import { array } from '@ember/helper';
+import { render } from '@ember/test-helpers';
+import FilterTags from 'frontend/components/dashboard/filter-tags';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { module, test } from 'qunit';
 
 module('Integration | Component | dashboard/filter-tags', function (hooks) {
   setupRenderingTest(hooks);

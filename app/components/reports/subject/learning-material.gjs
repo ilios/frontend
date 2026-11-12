@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { pluralize } from 'ember-inflector';
-import { camelize } from '@ember/string';
 import { action } from '@ember/object';
-import SubjectHeader from '../subject-header';
+import { service } from '@ember/service';
+import { camelize } from '@ember/string';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { pluralize } from 'ember-inflector';
 import t from 'ember-intl/helpers/t';
-import SubjectDownload from '../subject-download';
+
 import LoadingSpinner from '../../loading-spinner';
+import SubjectDownload from '../subject-download';
+import SubjectHeader from '../subject-header';
 
 export default class ReportsSubjectLearningMaterialComponent extends Component {
   @service graphql;

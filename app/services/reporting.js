@@ -1,5 +1,6 @@
 import Service, { service } from '@ember/service';
 import { dasherize } from '@ember/string';
+
 import getUserNameForGraphUser from '../utils/get-user-name-for-graph-user';
 
 const subjectTranslations = {

@@ -1,9 +1,10 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
+import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { sortBy } from '../utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
+
+import { sortBy } from '../utils/array-helpers';
 import LoadingSpinner from './loading-spinner';
 
 export default class DetailCohortListComponent extends Component {

@@ -1,12 +1,12 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 
-import { resolve } from 'rsvp';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, click } from '@ember/test-helpers';
-import { on } from '@ember/modifier';
-import pipe from 'frontend/helpers/pipe';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { click,render } from '@ember/test-helpers';
+import pipe from 'frontend/helpers/pipe';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
+import { resolve } from 'rsvp';
 
 module('Integration | Helper | pipe', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,6 +1,7 @@
-import { on } from '@ember/modifier';
-import noop from '../helpers/noop';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+
+import noop from '../helpers/noop';
 <template>
   <div class="click-choice-buttons" data-test-click-choice-buttons>
     <button

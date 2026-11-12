@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/instructor-group/header';
 import Header from 'frontend/components/instructor-group/header';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/instructor-group/header';
+import { module, test } from 'qunit';
 
 module('Integration | Component | instructor-group/header', function (hooks) {
   setupRenderingTest(hooks);

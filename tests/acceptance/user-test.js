@@ -1,13 +1,13 @@
-import { click, fillIn, currentURL, triggerEvent, visit } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { click, currentURL, fillIn, triggerEvent, visit } from '@ember/test-helpers';
 import {
-  setupAuthentication,
   freezeDateAt,
-  unfreezeDate,
   setupApplicationTest,
+  setupAuthentication,
   takeScreenshot,
+  unfreezeDate,
 } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/user';
+import { module, test } from 'qunit';
 
 module('Acceptance | User', function (hooks) {
   setupApplicationTest(hooks);

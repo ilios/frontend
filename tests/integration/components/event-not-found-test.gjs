@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/event-not-found';
 import EventNotFound from 'frontend/components/event-not-found';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/event-not-found';
+import { module, test } from 'qunit';
 
 module('Integration | Component | event-not-found', function (hooks) {
   setupRenderingTest(hooks);

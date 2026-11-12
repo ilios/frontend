@@ -1,15 +1,16 @@
+import { action } from '@ember/object';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import SearchBox from './search-box';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { and, eq, gt } from 'ember-truth-helpers';
-import UserSearchResultUser from './user-search-result-user';
+
+import SearchBox from './search-box';
 import UserSearchResultInstructorGroup from './user-search-result-instructor-group';
+import UserSearchResultUser from './user-search-result-user';
 
 export default class UserSearchComponent extends Component {
   @service store;

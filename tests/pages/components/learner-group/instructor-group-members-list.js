@@ -1,4 +1,4 @@
-import { create, collection } from 'ember-cli-page-object';
+import { collection,create } from 'ember-cli-page-object';
 import userNameInfo from 'frontend/tests/pages/components/user-name-info';
 
 const definition = {

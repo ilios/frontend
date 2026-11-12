@@ -1,20 +1,21 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { sortBy } from '../../../../utils/array-helpers';
-import { guidFor } from '@ember/object/internals';
-import t from 'ember-intl/helpers/t';
-import load from 'ember-async-data/helpers/load';
+import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import load from 'ember-async-data/helpers/load';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+
+import { sortBy } from '../../../../utils/array-helpers';
 import LoadingSpinner from '../../../loading-spinner';
 import SearchInput from './search/input';
-import perform from 'ember-concurrency/helpers/perform';
-import isArray from 'ember-truth-helpers/helpers/is-array';
-import { fn } from '@ember/helper';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectNewLearningMaterialComponent extends Component {
   @service store;

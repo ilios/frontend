@@ -1,7 +1,8 @@
 import { collection, create, text } from 'ember-cli-page-object';
-import c from './filter-checkbox';
+
 import cohortsFilter from './cohort-calendar-filter';
 import coursesFilter from './courses-calendar-filter';
+import c from './filter-checkbox';
 import selectedVocabulary from './selected-vocabulary';
 
 const definition = {

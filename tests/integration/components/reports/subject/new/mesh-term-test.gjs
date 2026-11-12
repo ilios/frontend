@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import MeshTerm from 'frontend/components/reports/subject/new/mesh-term';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/mesh-term';
-import MeshTerm from 'frontend/components/reports/subject/new/mesh-term';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/subject/new/mesh-term', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,4 +1,5 @@
-import { clickable, create, collection, isHidden, isPresent } from 'ember-cli-page-object';
+import { clickable, collection, create, isHidden, isPresent } from 'ember-cli-page-object';
+
 import fadeText from '../fade-text';
 
 const definition = {

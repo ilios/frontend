@@ -1,4 +1,5 @@
 import { create, text } from 'ember-cli-page-object';
+
 import breadcrumbs from '../breadcrumbs';
 
 const definition = create({

@@ -1,4 +1,5 @@
-import { clickable, create, isPresent, isVisible, fillable, text } from 'ember-cli-page-object';
+import { clickable, create, fillable, isPresent, isVisible, text } from 'ember-cli-page-object';
+
 import newTermForm from './vocabulary-new-term';
 import termsList from './vocabulary-terms-list';
 

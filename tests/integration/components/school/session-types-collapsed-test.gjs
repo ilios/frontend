@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/school/session-types-collapsed';
 import SessionTypesCollapsed from 'frontend/components/school/session-types-collapsed';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/school/session-types-collapsed';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/session-types-collapsed', function (hooks) {
   setupRenderingTest(hooks);

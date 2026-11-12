@@ -1,13 +1,13 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/dashboard/courses-calendar-filter';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { DateTime } from 'luxon';
 import CoursesCalendarFilter from 'frontend/components/dashboard/courses-calendar-filter';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/dashboard/courses-calendar-filter';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | dashboard/courses-calendar-filter', function (hooks) {
   setupRenderingTest(hooks);

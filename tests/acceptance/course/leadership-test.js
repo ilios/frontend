@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
-import { setupApplicationTest, takeScreenshot, setupAuthentication } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/course';
+import { module, test } from 'qunit';
 
 module('Acceptance | Course - Leadership', function (hooks) {
   setupApplicationTest(hooks);

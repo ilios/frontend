@@ -1,9 +1,10 @@
-import { isEmpty } from '@ember/utils';
 import { get } from '@ember/object';
 import Service, { service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 import { DateTime } from 'luxon';
-import { decodedJwtHasLtiAudienceClaims, jwtDecode } from '../utils/jwt-utils';
+
 import { uniqueValues } from '../utils/array-helpers';
+import { decodedJwtHasLtiAudienceClaims, jwtDecode } from '../utils/jwt-utils';
 
 export default class CurrentUserService extends Service {
   @service store;

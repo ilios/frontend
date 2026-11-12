@@ -1,13 +1,14 @@
-import Component from '@glimmer/component';
+import { fn } from '@ember/helper';
 import { service } from '@ember/service';
-import { sortBy } from '../utils/array-helpers';
+import Component from '@glimmer/component';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
 import { modifier } from 'ember-modifier';
 import { DateTime } from 'luxon';
-import LoadingSpinner from './loading-spinner';
-import t from 'ember-intl/helpers/t';
-import formatDate from 'ember-intl/helpers/format-date';
+
+import { sortBy } from '../utils/array-helpers';
 import DailyCalendarEvent from './daily-calendar-event';
-import { fn } from '@ember/helper';
+import LoadingSpinner from './loading-spinner';
 
 export default class DailyCalendarComponent extends Component {
   @service intl;

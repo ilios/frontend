@@ -1,4 +1,4 @@
-import { create, collection, text } from 'ember-cli-page-object';
+import { collection, create, text } from 'ember-cli-page-object';
 
 import header from './header';
 

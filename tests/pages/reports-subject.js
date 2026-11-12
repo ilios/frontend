@@ -1,4 +1,5 @@
 import { create, visitable } from 'ember-cli-page-object';
+
 import report from './components/reports/subject';
 
 const page = {

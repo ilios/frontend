@@ -1,22 +1,23 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import { TrackedAsyncData } from 'ember-async-data';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import { uniqueId } from '@ember/helper';
-import pick from '../../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
-import perform from 'ember-concurrency/helpers/perform';
-import focus from '../../modifiers/focus';
-import LoadingSpinner from '../loading-spinner';
-import YupValidationMessage from '../yup-validation-message';
-import ToggleYesno from '../toggle-yesno';
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
+import focus from '../../modifiers/focus';
+import LoadingSpinner from '../loading-spinner';
+import ToggleYesno from '../toggle-yesno';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class SchoolVocabularyNewTermComponent extends Component {
   @service store;

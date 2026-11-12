@@ -1,12 +1,12 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { typeOf } from '@ember/utils';
-import { htmlSafe } from '@ember/template';
-import { action } from '@ember/object';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { htmlSafe } from '@ember/template';
+import { typeOf } from '@ember/utils';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAnglesDown, faAnglesUp, faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import t from 'ember-intl/helpers/t';
 
 export default class TruncateTextComponent extends Component {
   @tracked expanded = false;

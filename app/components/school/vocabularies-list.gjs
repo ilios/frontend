@@ -1,18 +1,19 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { filterBy, sortBy } from '../../utils/array-helpers';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { and, eq } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import perform from 'ember-concurrency/helpers/perform';
+
 import scrollIntoView from '../../modifiers/scroll-into-view';
-import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { filterBy, sortBy } from '../../utils/array-helpers';
 
 export default class SchoolVocabulariesListComponent extends Component {
   @service store;

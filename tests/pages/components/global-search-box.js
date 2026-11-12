@@ -1,4 +1,5 @@
 import { clickable, create, fillable, triggerable, value } from 'ember-cli-page-object';
+
 import { hasFocus } from '../helpers';
 
 const definition = {

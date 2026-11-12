@@ -1,4 +1,5 @@
 import { clickable, create, isVisible } from 'ember-cli-page-object';
+
 import selectedLearners from './selected-learners';
 import search from './user-search';
 

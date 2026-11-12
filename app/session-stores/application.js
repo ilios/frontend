@@ -1,7 +1,7 @@
+import { assert } from '@ember/debug';
 import BaseStore from 'ember-simple-auth/session-stores/base';
 import CookieStore from 'ember-simple-auth/session-stores/cookie';
 import EphemeralStore from 'ember-simple-auth/session-stores/ephemeral';
-import { assert } from '@ember/debug';
 
 /**
  * Custom Ember Simple Auth Store

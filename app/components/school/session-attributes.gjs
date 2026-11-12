@@ -1,6 +1,7 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
+import Component from '@glimmer/component';
 import { task } from 'ember-concurrency';
+
 import SessionAttributesCollapsed from './session-attributes-collapsed';
 import SessionAttributesExpanded from './session-attributes-expanded';
 

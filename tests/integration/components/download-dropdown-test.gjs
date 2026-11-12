@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import noop from 'frontend/helpers/noop';
-import { component } from 'frontend/tests/pages/components/download-dropdown';
 import DownloadDropdown from 'frontend/components/download-dropdown';
+import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/download-dropdown';
+import { module, test } from 'qunit';
 
 module('Integration | Component | download-dropdown', function (hooks) {
   setupRenderingTest(hooks);

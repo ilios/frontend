@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/mesh-manager';
-import { setupMSW } from 'frontend/tests/msw';
 import MeshManager from 'frontend/components/mesh-manager';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/mesh-manager';
+import { module, test } from 'qunit';
 
 module('Integration | Component | mesh-manager', function (hooks) {
   setupRenderingTest(hooks);

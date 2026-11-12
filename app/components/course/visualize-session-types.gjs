@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
-import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
 import { pageTitle } from 'ember-page-title';
+import set from 'ember-set-helper/helpers/set';
+
+import pick from '../../helpers/pick';
 import Breadcrumbs from '../breadcrumbs';
 import VisualizeSessionTypesGraph from './visualize-session-types-graph';
 

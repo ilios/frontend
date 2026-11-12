@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
 import { array, fn, uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { eq, or } from 'ember-truth-helpers';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import SortableTh from '../sortable-th';
+
 import sortBy from '../../helpers/sort-by';
 import { mapBy, uniqueValues } from '../../utils/array-helpers';
-import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import SortableTh from '../sortable-th';
 
 export default class InstructorGroupCourseAssociationsComponent extends Component {
   @service iliosConfig;

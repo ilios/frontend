@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/single-event-objective-list';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import SingleEventObjectiveList from 'frontend/components/single-event-objective-list';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/single-event-objective-list';
+import { module, test } from 'qunit';
 
 module('Integration | Component | ilios calendar single event objective list', function (hooks) {
   setupRenderingTest(hooks);

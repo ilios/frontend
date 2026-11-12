@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/pending-single-user-update';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import PendingSingleUserUpdate from 'frontend/components/pending-single-user-update';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/pending-single-user-update';
+import { module, test } from 'qunit';
 
 module('Integration | Component | pending single user update', function (hooks) {
   setupRenderingTest(hooks);

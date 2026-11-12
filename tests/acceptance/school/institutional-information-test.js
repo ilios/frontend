@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/school';
+import { module, test } from 'qunit';
 
 module('Acceptance | School - Institutional Information', function (hooks) {
   setupApplicationTest(hooks);

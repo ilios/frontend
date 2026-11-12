@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/program-year/competencies';
 import Competencies from 'frontend/components/program-year/competencies';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/program-year/competencies';
+import { module, test } from 'qunit';
 
 module('Integration | Component | program-year/competencies', function (hooks) {
   setupRenderingTest(hooks);

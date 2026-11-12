@@ -1,19 +1,20 @@
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import sortableByPosition from '../utils/sortable-by-position';
 import { TrackedAsyncData } from 'ember-async-data';
-import add from 'ember-math-helpers/helpers/add';
-import PublicationStatus from './publication-status';
-import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
-import { sortBy as sortArrayBy } from '../utils/array-helpers';
+import t from 'ember-intl/helpers/t';
+import add from 'ember-math-helpers/helpers/add';
 import { and } from 'ember-truth-helpers';
-import sortBy from '../helpers/sort-by';
-import DetailTermsList from './detail-terms-list';
-import ObjectiveList from './course/objective-list';
+
 import removeHtmlTags from '../helpers/remove-html-tags';
+import sortBy from '../helpers/sort-by';
+import { sortBy as sortArrayBy } from '../utils/array-helpers';
+import sortableByPosition from '../utils/sortable-by-position';
+import ObjectiveList from './course/objective-list';
+import DetailTermsList from './detail-terms-list';
 import PrintCourseSession from './print-course-session';
+import PublicationStatus from './publication-status';
 
 export default class PrintCourseComponent extends Component {
   @service store;

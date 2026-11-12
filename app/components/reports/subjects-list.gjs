@@ -1,24 +1,25 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
-import { TrackedAsyncData } from 'ember-async-data';
-import { action } from '@ember/object';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
-import ExpandCollapseButton from '../expand-collapse-button';
-import NewSubject from './new-subject';
-import perform from 'ember-concurrency/helpers/perform';
-import { LinkTo } from '@ember/routing';
 import { hash } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import SubjectResults from './subject-results';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
 import { and } from 'ember-truth-helpers';
-import Table from './table';
+
+import pick from '../../helpers/pick';
+import ExpandCollapseButton from '../expand-collapse-button';
 import ListLoading from './list-loading';
-import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
+import NewSubject from './new-subject';
+import SubjectResults from './subject-results';
+import Table from './table';
 
 export default class ReportsSubjectsListComponent extends Component {
   @service store;

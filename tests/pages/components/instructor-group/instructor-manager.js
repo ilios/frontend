@@ -1,4 +1,4 @@
-import { collection, clickable, create, text } from 'ember-cli-page-object';
+import { clickable, collection, create, text } from 'ember-cli-page-object';
 import userNameInfo from 'frontend/tests/pages/components/user-name-info';
 import userSearch from 'frontend/tests/pages/components/user-search';
 import userStatus from 'frontend/tests/pages/components/user-status';

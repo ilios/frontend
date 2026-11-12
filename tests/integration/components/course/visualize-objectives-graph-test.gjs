@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
+import VisualizeObjectivesGraph from 'frontend/components/course/visualize-objectives-graph';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/course/visualize-objectives-graph';
-import VisualizeObjectivesGraph from 'frontend/components/course/visualize-objectives-graph';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course/visualize-objectives-graph', function (hooks) {
   setupRenderingTest(hooks);

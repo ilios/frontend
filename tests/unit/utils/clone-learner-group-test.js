@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import cloneLearnerGroup from 'frontend/utils/clone-learner-group';
 import { module, test } from 'qunit';
+import RSVP from 'rsvp';
 
 const { resolve } = RSVP;
 

@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { component } from 'frontend/tests/pages/components/single-event-learningmaterial-list';
-import { setupMSW } from 'frontend/tests/msw';
 import SingleEventLearningmaterialList from 'frontend/components/single-event-learningmaterial-list';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/single-event-learningmaterial-list';
+import { module, test } from 'qunit';
 
 module('Integration | Component | single-event-learningmaterial-list', function (hooks) {
   setupRenderingTest(hooks);

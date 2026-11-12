@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { component } from 'frontend/tests/pages/components/week-glance-event';
-import { setupMSW } from 'frontend/tests/msw';
 import WeekGlanceEvent from 'frontend/components/week-glance-event';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/week-glance-event';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 const today = DateTime.fromObject({ hour: 8 });
 

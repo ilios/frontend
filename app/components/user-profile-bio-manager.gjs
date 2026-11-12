@@ -1,24 +1,25 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { concat,uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { uniqueId, concat } from '@ember/helper';
-import includes from '../helpers/includes';
-import pick from '../helpers/pick';
+import { faRotate,faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
 import { eq, not } from 'ember-truth-helpers';
-import YupValidations from '../classes/yup-validations';
-import YupValidationMessage from './yup-validation-message';
-import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
-import { faSpinner, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { string } from 'yup';
+
+import YupValidations from '../classes/yup-validations';
+import includes from '../helpers/includes';
+import pick from '../helpers/pick';
 import BigSaveCancelButtons from './big-save-cancel-buttons';
+import YupValidationMessage from './yup-validation-message';
 
 export default class UserProfileBioManagerComponent extends Component {
   @service intl;

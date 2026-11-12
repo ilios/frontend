@@ -1,25 +1,26 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { next } from '@ember/runloop';
+import { service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { isEmpty } from '@ember/utils';
-import { action } from '@ember/object';
-import { service } from '@ember/service';
-import { next } from '@ember/runloop';
+import { TrackedAsyncData } from 'ember-async-data';
 import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 import { DateTime } from 'luxon';
 import { filter } from 'rsvp';
-import escapeRegExp from '../utils/escape-reg-exp';
-import { sortBy } from '../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
+
 import includes from '../helpers/includes';
-import SessionsGridSessionRow from './sessions-grid-session-row';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import perform from 'ember-concurrency/helpers/perform';
+import scrollIntoView from '../modifiers/scroll-into-view';
+import { sortBy } from '../utils/array-helpers';
+import escapeRegExp from '../utils/escape-reg-exp';
 import LoadingSpinner from './loading-spinner';
-import { fn } from '@ember/helper';
 import SessionsGridLastUpdated from './sessions-grid-last-updated';
 import SessionsGridOfferingTable from './sessions-grid-offering-table';
-import scrollIntoView from '../modifiers/scroll-into-view';
+import SessionsGridSessionRow from './sessions-grid-session-row';
 
 export default class SessionsGridComponent extends Component {
   @service router;

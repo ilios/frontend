@@ -7,6 +7,7 @@ import {
   text,
   triggerable,
 } from 'ember-cli-page-object';
+
 import { hasFocus } from '../helpers';
 import fadeText from './fade-text.js';
 

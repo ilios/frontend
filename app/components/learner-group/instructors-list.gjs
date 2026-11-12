@@ -1,5 +1,6 @@
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+
 import sortBy from '../../helpers/sort-by';
 import UserNameInfo from '../user-name-info';
 import UserStatus from '../user-status';

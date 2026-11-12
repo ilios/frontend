@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import t from 'ember-intl/helpers/t';
-import HtmlEditor from './html-editor';
-import { or } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from './loading-spinner';
-import YupValidations from '../classes/yup-validations';
-import YupValidationMessage from './yup-validation-message';
-import { string } from 'yup';
+import t from 'ember-intl/helpers/t';
+import { or } from 'ember-truth-helpers';
 import striptags from 'striptags';
+import { string } from 'yup';
+
+import YupValidations from '../classes/yup-validations';
+import HtmlEditor from './html-editor';
+import LoadingSpinner from './loading-spinner';
+import YupValidationMessage from './yup-validation-message';
 
 export default class NewObjectiveComponent extends Component {
   @service intl;

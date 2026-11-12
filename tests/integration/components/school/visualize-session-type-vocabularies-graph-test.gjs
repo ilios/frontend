@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
+import VisualizeSessionTypeVocabulariesGraph from 'frontend/components/school/visualize-session-type-vocabularies-graph';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/school/visualize-session-type-vocabularies-graph';
-import VisualizeSessionTypeVocabulariesGraph from 'frontend/components/school/visualize-session-type-vocabularies-graph';
+import { module, test } from 'qunit';
 
 module(
   'Integration | Component | school/visualize-session-type-vocabularies-graph',

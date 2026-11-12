@@ -1,12 +1,13 @@
-import { defineConfig } from 'vite';
-import { extensions, classicEmberSupport, ember } from '@embroider/vite';
-import { babel } from '@rollup/plugin-babel';
-import preloadFonts from './lib/preload-fonts.mjs';
-import noscript from './lib/noscript.mjs';
-import loadingAnimation from './lib/loading-animation.mjs';
-import errorHandler from './lib/error-handler.mjs';
-import newVersion from './lib/new-version.mjs';
 import { loadTranslations } from '@ember-intl/vite';
+import { classicEmberSupport, ember,extensions } from '@embroider/vite';
+import { babel } from '@rollup/plugin-babel';
+import { defineConfig } from 'vite';
+
+import errorHandler from './lib/error-handler.mjs';
+import loadingAnimation from './lib/loading-animation.mjs';
+import newVersion from './lib/new-version.mjs';
+import noscript from './lib/noscript.mjs';
+import preloadFonts from './lib/preload-fonts.mjs';
 
 export default defineConfig({
   css: {

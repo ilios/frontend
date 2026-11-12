@@ -1,15 +1,16 @@
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import sortableByPosition from '../../utils/sortable-by-position';
-import { findById } from '../../utils/array-helpers';
-import ObjectiveSortManager from '../objective-sort-manager';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
 import { and, gt, not } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
 import isArray from 'ember-truth-helpers/helpers/is-array';
+
+import { findById } from '../../utils/array-helpers';
+import sortableByPosition from '../../utils/sortable-by-position';
+import ObjectiveSortManager from '../objective-sort-manager';
 import ObjectiveListItem from './objective-list-item';
 import ObjectiveListLoading from './objective-list-loading';
 

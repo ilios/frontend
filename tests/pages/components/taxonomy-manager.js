@@ -8,6 +8,7 @@ import {
   property,
   text,
 } from 'ember-cli-page-object';
+
 import detailTermsList from './detail-terms-list';
 
 const definition = {

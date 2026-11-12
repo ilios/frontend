@@ -1,5 +1,6 @@
 import { camelize } from '@ember/string';
 import { pluralize } from 'ember-inflector';
+
 import { getTypeFor } from '../relationships';
 
 // Transforms @msw/data records into JSON:API format compatible with Ember Data

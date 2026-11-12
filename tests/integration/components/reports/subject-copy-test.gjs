@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/reports/subject-copy';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import SubjectCopy from 'frontend/components/reports/subject-copy';
+import { setupAuthentication,setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
+import { component } from 'frontend/tests/pages/components/reports/subject-copy';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/subject-copy', function (hooks) {
   setupRenderingTest(hooks);

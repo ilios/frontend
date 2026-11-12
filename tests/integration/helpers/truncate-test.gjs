@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
 import { htmlSafe } from '@ember/template';
+import { render } from '@ember/test-helpers';
+import { setupRenderingTest } from 'ember-qunit';
 import truncate from 'frontend/helpers/truncate';
+import { module, test } from 'qunit';
 
 module('Integration | Helper | {{truncate}}', function (hooks) {
   setupRenderingTest(hooks);

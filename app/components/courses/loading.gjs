@@ -1,12 +1,13 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import ToggleButtons from '../toggle-buttons';
-import t from 'ember-intl/helpers/t';
-import noop from '../../helpers/noop';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import sortBy from '../../helpers/sort-by';
-import LoadingList from './loading-list';
 import { faBuildingColumns, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
+
+import noop from '../../helpers/noop';
+import sortBy from '../../helpers/sort-by';
+import ToggleButtons from '../toggle-buttons';
+import LoadingList from './loading-list';
 
 export default class CoursesLoadingComponent extends Component {
   @service store;

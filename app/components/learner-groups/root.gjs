@@ -1,32 +1,33 @@
-import Component from '@glimmer/component';
-import { DateTime } from 'luxon';
-import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
-import { TrackedAsyncData } from 'ember-async-data';
-import { findById, findBy, sortBy } from '../../utils/array-helpers';
-import cloneLearnerGroup from '../../utils/clone-learner-group';
-import { task } from 'ember-concurrency';
-import { action } from '@ember/object';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { eq, gt, not } from 'ember-truth-helpers';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
-import sortBy0 from '../../helpers/sort-by';
-import perform from 'ember-concurrency/helpers/perform';
-import ExpandCollapseButton from '../expand-collapse-button';
-import set from 'ember-set-helper/helpers/set';
-import New from '../learner-group/new';
+import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
-import List from '../learner-group/list';
-import Loading from './loading';
-import WaitSaving from '../wait-saving';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faBuildingColumns,
   faCalendar,
   faSquareUpRight,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { eq, gt, not } from 'ember-truth-helpers';
+import { DateTime } from 'luxon';
+
+import pick from '../../helpers/pick';
+import sortBy0 from '../../helpers/sort-by';
+import { findBy, findById, sortBy } from '../../utils/array-helpers';
+import cloneLearnerGroup from '../../utils/clone-learner-group';
+import ExpandCollapseButton from '../expand-collapse-button';
+import List from '../learner-group/list';
+import New from '../learner-group/new';
+import WaitSaving from '../wait-saving';
+import Loading from './loading';
 
 export default class LearnerGroupsRootComponent extends Component {
   @service currentUser;

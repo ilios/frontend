@@ -1,12 +1,13 @@
+import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import ObjectiveSortManager from '../objective-sort-manager';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
 import { and, gt, not } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
 import isArray from 'ember-truth-helpers/helpers/is-array';
+
+import ObjectiveSortManager from '../objective-sort-manager';
 import ObjectiveListItem from './objective-list-item';
 import ObjectiveListLoading from './objective-list-loading';
 

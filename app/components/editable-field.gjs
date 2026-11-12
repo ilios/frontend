@@ -1,14 +1,14 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCheck,faPenToSquare, faSpinner, faUndo } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
-import { action } from '@ember/object';
-import { modifier } from 'ember-modifier';
-import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { fn } from '@ember/helper';
-import { faPenToSquare, faUndo, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { modifier } from 'ember-modifier';
 
 export default class EditableFieldComponent extends Component {
   @tracked isEditing = false;

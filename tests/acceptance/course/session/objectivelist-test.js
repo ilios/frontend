@@ -1,7 +1,6 @@
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/session';
+import { module, test } from 'qunit';
 
 module('Acceptance | Session - Objective List', function (hooks) {
   setupApplicationTest(hooks);

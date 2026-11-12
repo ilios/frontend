@@ -1,13 +1,13 @@
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
-import { not } from 'ember-truth-helpers';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
+import { not } from 'ember-truth-helpers';
 
 export default class ApiVersionNoticeComponent extends Component {
   @service apiVersion;

@@ -1,21 +1,22 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { DateTime } from 'luxon';
-import { mapBy } from '../../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
-import ToggleYesno from '../toggle-yesno';
-import set from 'ember-set-helper/helpers/set';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import { not } from 'ember-truth-helpers';
-import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { not } from 'ember-truth-helpers';
+import { DateTime } from 'luxon';
+
+import Event from '../../classes/event';
+import { mapBy } from '../../utils/array-helpers';
 import IliosCalendarWeek from '../ilios-calendar-week';
 import LoadingSpinner from '../loading-spinner';
-import Event from '../../classes/event';
-import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
+import ToggleYesno from '../toggle-yesno';
 
 export default class LearnerGroupCalendarComponent extends Component {
   @service localeDays;

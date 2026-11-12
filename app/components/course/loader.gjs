@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import load from 'ember-async-data/helpers/load';
-import Details from './details';
-import BackToCourses from './back-to-courses';
-import animateLoading from '../../modifiers/animate-loading';
-import Header from './header';
-import Overview from './overview';
-import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import load from 'ember-async-data/helpers/load';
+import t from 'ember-intl/helpers/t';
+
+import animateLoading from '../../modifiers/animate-loading';
+import BackToCourses from './back-to-courses';
+import Details from './details';
+import Header from './header';
+import Overview from './overview';
 
 export default class CourseLoaderComponent extends Component {
   @service dataLoader;

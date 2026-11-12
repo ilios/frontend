@@ -1,8 +1,8 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import page from 'frontend/tests/pages/learner-groups';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import learnerGroupPage from 'frontend/tests/pages/learner-group';
+import page from 'frontend/tests/pages/learner-groups';
+import { module, test } from 'qunit';
 
 module('Acceptance | Learner Groups', function (hooks) {
   setupApplicationTest(hooks);

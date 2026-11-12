@@ -1,6 +1,6 @@
 import Service, { service } from '@ember/service';
-import queryString from 'query-string';
 import { waitForFetch } from '@ember/test-waiters';
+import queryString from 'query-string';
 
 export default class Fetch extends Service {
   @service flashMessages;

@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupAuthentication, setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { DateTime } from 'luxon';
-import { component } from 'frontend/tests/pages/components/offering-manager';
-import noop from 'frontend/helpers/noop';
 import OfferingManager from 'frontend/components/offering-manager';
+import noop from 'frontend/helpers/noop';
+import { setupAuthentication, setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/offering-manager';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | offering-manager', function (hooks) {
   setupRenderingTest(hooks);

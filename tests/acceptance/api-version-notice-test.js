@@ -1,13 +1,13 @@
 import { visit, waitFor } from '@ember/test-helpers';
-import { module, test } from 'qunit';
 import {
-  setupAuthentication,
   freezeDateAt,
-  unfreezeDate,
   setupApplicationTest,
+  setupAuthentication,
   takeScreenshot,
+  unfreezeDate,
 } from 'frontend/tests/helpers';
 import { component } from 'frontend/tests/pages/components/api-version-notice';
+import { module, test } from 'qunit';
 
 module('Acceptance | API Version Check', function (hooks) {
   setupApplicationTest(hooks);

@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupTest, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
-import { setupIntl, setLocale } from 'ember-intl/test-support';
+import { setLocale,setupIntl } from 'ember-intl/test-support';
+import { freezeDateAt, setupTest, unfreezeDate } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Unit | Service | locale-days', function (hooks) {
   setupTest(hooks);

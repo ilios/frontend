@@ -1,21 +1,22 @@
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { eq } from 'ember-truth-helpers';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
-import EditableField from '../editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import YupValidationMessage from '../yup-validation-message';
-import { LinkTo } from '@ember/routing';
-import Breadcrumbs from '../breadcrumbs';
+import { eq } from 'ember-truth-helpers';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
 import focus from '../../modifiers/focus';
+import Breadcrumbs from '../breadcrumbs';
+import EditableField from '../editable-field';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class InstructorGroupHeaderComponent extends Component {
   @service store;

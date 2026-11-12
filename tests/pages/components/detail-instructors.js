@@ -1,7 +1,8 @@
 import { clickable, create, text } from 'ember-cli-page-object';
+
 import instructorSelectionManager from './instructor-selection-manager';
-import selectedInstructors from './selected-instructors';
 import selectedInstructorGroups from './selected-instructor-groups';
+import selectedInstructors from './selected-instructors';
 
 const definition = {
   scope: '[data-test-detail-instructors]',

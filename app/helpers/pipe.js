@@ -1,5 +1,6 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 import { helper } from '@ember/component/helper';
+
 import isPromise from '../utils/is-promise';
 
 export function invokeFunction(acc, curr) {

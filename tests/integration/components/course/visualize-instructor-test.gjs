@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { DateTime } from 'luxon';
-import { component } from 'frontend/tests/pages/components/course/visualize-instructor';
 import VisualizeInstructor from 'frontend/components/course/visualize-instructor';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/visualize-instructor';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course/visualize-instructor', function (hooks) {
   setupRenderingTest(hooks);
