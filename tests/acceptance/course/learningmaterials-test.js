@@ -117,6 +117,8 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(currentRouteName(), 'course.index');
 
+    await takeScreenshot(assert);
+    assert.strictEqual(page.details.learningMaterials.title, 'Learning Materials (4)');
     assert.strictEqual(page.details.learningMaterials.materials.items.length, 4);
 
     assert.strictEqual(
@@ -200,6 +202,8 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(currentRouteName(), 'course.index');
 
+    await takeScreenshot(assert);
+    assert.strictEqual(page.details.learningMaterials.title, 'Learning Materials (4)');
     assert.strictEqual(page.details.learningMaterials.materials.items.length, 4);
 
     assert.strictEqual(
@@ -281,13 +285,17 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.materials.items.length, 4);
     assert.ok(page.details.learningMaterials.search.isVisible);
+    await takeScreenshot(assert, 'list LMs');
     await page.details.learningMaterials.createNew();
     await page.details.learningMaterials.pickNew('Web Link');
+
     assert.notOk(
       page.details.learningMaterials.search.isVisible,
       'search box is hidden while new group are being added',
     );
 
+    await takeScreenshot(assert, 'add new link LM');
+    assert.strictEqual(page.details.learningMaterials.title, 'New Learning Material');
     await page.details.learningMaterials.newLearningMaterial.displayName.set(testTitle);
     assert.strictEqual(
       page.details.learningMaterials.newLearningMaterial.owningUser.userNameInfo.fullName,
@@ -317,6 +325,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.materials.items.length, 4);
     assert.ok(page.details.learningMaterials.search.isVisible);
+    await takeScreenshot(assert, 'list LMs');
     await page.details.learningMaterials.createNew();
     await page.details.learningMaterials.pickNew('Citation');
     assert.notOk(
@@ -324,6 +333,8 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       'search box is hidden while new group are being added',
     );
 
+    await takeScreenshot(assert, 'add new citation LM');
+    assert.strictEqual(page.details.learningMaterials.title, 'New Learning Material');
     await page.details.learningMaterials.newLearningMaterial.displayName.set(testTitle);
     assert.strictEqual(
       page.details.learningMaterials.newLearningMaterial.owningUser.userNameInfo.fullName,
@@ -361,8 +372,10 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     assert.ok(page.details.learningMaterials.search.isVisible);
     await page.details.learningMaterials.createNew();
     await page.details.learningMaterials.pickNew('Citation');
+    assert.strictEqual(page.details.learningMaterials.title, 'New Learning Material');
     await page.details.learningMaterials.newLearningMaterial.cancel();
 
+    assert.strictEqual(page.details.learningMaterials.title, 'Learning Materials (4)');
     assert.strictEqual(page.details.learningMaterials.materials.items.length, 4);
   });
 

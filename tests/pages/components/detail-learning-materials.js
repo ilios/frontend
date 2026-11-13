@@ -19,6 +19,7 @@ import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from '../help
 
 const definition = {
   scope: '[data-test-detail-learning-materials]',
+  title: text('[data-test-learningmaterials-header-title]'),
   search,
   createNew: clickable(
     '.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-toggle]',
