@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/detail-learning-materials';
@@ -48,6 +48,8 @@ module('Integration | Component | detail learning materials', function (hooks) {
         />
       </template>,
     );
+    await takeComponentScreenshot(assert);
+    assert.strictEqual(component.title, 'Learning Materials (1)');
     assert.strictEqual(component.materials.items.length, 1);
     assert.ok(component.materials.items[0].typeIcon.isCitation);
     assert.strictEqual(component.materials.headers.length, 7);
