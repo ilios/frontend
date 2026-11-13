@@ -24,7 +24,7 @@ class RadReporter {
       this.todo++;
       this.out.write('T');
     } else {
-      this.failedTestIds.push(data.originalResultObj.testId);
+      this.failedTestIds.push(data.originalResultObj.testId ?? false);
       this.failedTestNames.push(data.name);
       this.out.write(styleText('red', 'F'));
     }
@@ -62,6 +62,7 @@ class RadReporter {
     this.out.write(styleText('red', `${this.failedTestIds.length} test(s) failed\n`));
 
     const query = this.failedTestIds
+      .filter(Boolean)
       .map((testId) => `testId=${encodeURIComponent(testId)}`)
       .join('&');
 
