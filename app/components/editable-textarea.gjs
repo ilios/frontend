@@ -27,7 +27,9 @@ export default class EditableTextareaComponent extends Component {
   saveData = task({ drop: true }, async () => {
     await timeout(1);
     await this.args.save();
-    this.isEditing = false;
+    if (!this.args.saveDisabled) {
+      this.isEditing = false;
+    }
   });
 
   closeEditor = task({ drop: true }, async () => {
@@ -53,6 +55,7 @@ export default class EditableTextareaComponent extends Component {
                 <SaveButton
                   class="done text"
                   @isSaving={{this.saveData.isRunning}}
+                  @saveDisabled={{@saveDisabled}}
                   {{on "click" (perform this.saveData)}}
                   data-test-save
                 >

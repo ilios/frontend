@@ -68,6 +68,22 @@ module('Integration | Component | editable textarea', function (hooks) {
     assert.verifySteps(['close called']);
   });
 
+  test('save and cancel disabled while saving', async function (assert) {
+    this.set('save', () => {
+      assert.step('save called');
+      assert.ok(component.saveDisabled);
+      assert.ok(component.cancelDisabled);
+    });
+    await render(
+      <template>
+        <EditableTextarea @value="<p>test</p>" @save={{this.save}} @close={{(noop)}} />
+      </template>,
+    );
+    await component.editable.edit();
+    await component.save();
+    assert.verifySteps(['save called']);
+  });
+
   test('it renders :default block content (e.g. validation messages) when editing', async function (assert) {
     const text = 'extra content';
 

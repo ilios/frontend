@@ -1,4 +1,4 @@
-import { clickable, create, isPresent, text } from 'ember-cli-page-object';
+import { clickable, create, isPresent, property, text } from 'ember-cli-page-object';
 import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from '../helpers';
 
 const definition = {
@@ -17,6 +17,8 @@ const definition = {
     value: pageObjectQuillEditorValue('[data-test-html-editor]'),
     set: pageObjectFillInQuillEditor('[data-test-html-editor]'),
   },
+  saveDisabled: property('disabled', '[data-test-save]'),
+  cancelDisabled: property('disabled', '[data-test-cancel]'),
   save: clickable('[data-test-save]'),
   cancel: clickable('[data-test-cancel]'),
 };

@@ -1,9 +1,9 @@
-import { eq } from 'ember-truth-helpers';
+import { eq, or } from 'ember-truth-helpers';
 import LoadingSpinner from './loading-spinner';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 <template>
-  <button type="button" disabled={{@isSaving}} ...attributes>
+  <button type="button" disabled={{or @isSaving @saveDisabled}} ...attributes>
     {{#if @isSaving}}
       {{#if (eq @saveProgressPercent 100)}}
         <FaIcon @icon={{faCheck}} />

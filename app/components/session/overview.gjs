@@ -510,8 +510,8 @@ export default class SessionOverviewComponent extends Component {
                     <EditableTextarea
                       @value={{this.description}}
                       @update={{this.changeDescription}}
-                      @isSaveDisabled={{this.validations.errors.description}}
                       @save={{perform this.saveDescription}}
+                      @saveDisabled={{this.validations.errors.description}}
                       @close={{this.revertDescriptionChanges}}
                       @clickPrompt={{t "general.clickToEdit"}}
                     >
@@ -544,8 +544,8 @@ export default class SessionOverviewComponent extends Component {
                     <EditableTextarea
                       @value={{this.instructionalNotes}}
                       @update={{this.changeInstructionalNotes}}
-                      @isSaveDisabled={{this.validations.errors.instructionalNotes}}
                       @save={{perform this.saveInstructionalNotes}}
+                      @saveDisabled={{this.validations.errors.instructionalNotes}}
                       @close={{this.revertInstructionalNotesChanges}}
                       @clickPrompt={{t "general.clickToEdit"}}
                     >

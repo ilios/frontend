@@ -314,6 +314,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
               @value={{this.description}}
               @update={{this.changeDescription}}
               @save={{perform this.saveDescriptionChanges}}
+              @saveDisabled={{this.validations.errors.descriptionWithoutMarkup}}
               @close={{this.revertDescriptionChanges}}
             >
               <:default>
