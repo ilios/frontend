@@ -193,11 +193,13 @@ export default class DetailLearningMaterialsComponent extends Component {
       data-test-detail-learning-materials
     >
       <div class="detail-learningmaterials-header">
-        <div class="title" id={{this.titleId}}>
+        <div class="title" id={{this.titleId}} data-test-learningmaterials-header-title>
           {{#if this.isManaging}}
             <span class="specific-title">
               {{t "general.learningMaterialManageTitle"}}
             </span>
+          {{else if this.displayAddNewForm}}
+            {{t "general.newLearningMaterial"}}
           {{else}}
             {{t "general.learningMaterials"}}
             ({{@subject.learningMaterials.length}})
