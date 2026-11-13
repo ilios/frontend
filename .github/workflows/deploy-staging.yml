@@ -21,12 +21,17 @@ jobs:
           node-version: 26
           cache: pnpm
       - run: pnpm install
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_STAGING_DEPLOY_ARN }}
+          aws-region: ${{ vars.AWS_DEPLOY_REGION }}
+          allowed-account-ids: ${{ vars.AWS_ACCOUNT_ID }}
+          role-duration-seconds: 900
+          role-session-name: deploy-staging-${{ github.run_id }}-${{ github.run_attempt }}
+          unset-current-credentials: true
       - name: Ember CLI Deploy
         timeout-minutes: 30
         run: pnpm run deploy:staging
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - uses: act10ns/slack@v2
         if: failure()
         env:
