@@ -21,12 +21,17 @@ jobs:
           node-version: 26
           cache: pnpm
       - run: pnpm install
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_PRODUCTION_DEPLOY_ARN }}
+          aws-region: ${{ vars.AWS_DEPLOY_REGION }}
+          allowed-account-ids: ${{ vars.AWS_ACCOUNT_ID }}
+          role-duration-seconds: 900
+          role-session-name: deploy-production-${{ github.run_id }}-${{ github.run_attempt }}
+          unset-current-credentials: true
       - name: Ember CLI Deploy
         timeout-minutes: 30
         run: pnpm run deploy:production
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Install Sentry CLI
         run: pnpm install -g @sentry/cli
       - name: Create Sentry release
