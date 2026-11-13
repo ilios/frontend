@@ -82,7 +82,9 @@
       ul,
       ol {
         /* stylelint-disable-next-line property-disallowed-list */
-        line-height: calc(4px + 1ex); // match Session description view
+        // Session description uses `calc(4px + 1ex)`
+        // but we need extra 1ex when viewed on WaaG to match
+        line-height: calc(4px + 2ex);
         margin-block-start: 1em;
         margin-block-end: 1em;
       }
