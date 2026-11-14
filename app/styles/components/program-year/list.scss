@@ -16,6 +16,18 @@
   .list {
     @include m.main-list-box-table;
 
+    a {
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: none;
+
+        span {
+          text-decoration: underline;
+        }
+      }
+    }
+
     .default-message {
       display: inline-block;
       padding: 1em 0;

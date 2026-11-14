@@ -132,7 +132,7 @@ export default class ProgramYearListItemComponent extends Component {
         <td class="text-left" colspan="2">
           <LinkTo @route="program-year" @models={{array this.program @programYear}} data-test-link>
             <FaIcon @icon={{faSquareUpRight}} />
-            {{this.academicYear}}
+            <span>{{this.academicYear}}</span>
           </LinkTo>
         </td>
         <td class="text-left" data-test-title>
