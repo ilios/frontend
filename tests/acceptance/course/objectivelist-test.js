@@ -290,6 +290,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
       'course objective 0',
     );
     await page.details.objectives.objectiveList.objectives[0].description.openEditor();
+    await takeScreenshot(assert);
     await page.details.objectives.objectiveList.objectives[0].description.edit(newDescription);
     await page.details.objectives.objectiveList.objectives[0].description.save();
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);

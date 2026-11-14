@@ -320,6 +320,24 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.notOk(page.details.objectives.objectiveList.objectives[2].meshDescriptors.isVisible);
   });
 
+  test('edit objective title', async function (assert) {
+    const newDescription = 'test new title';
+    await this.server.create('school-config', {
+      school: this.school,
+      name: 'showMeSH',
+      value: 'true',
+    });
+    await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
+    await page.details.objectives.objectiveList.objectives[0].description.openEditor();
+    await takeScreenshot(assert);
+    await page.details.objectives.objectiveList.objectives[0].description.edit(newDescription);
+    await page.details.objectives.objectiveList.objectives[0].description.save();
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
+      newDescription,
+    );
+  });
+
   test('manage MeSH terms', async function (assert) {
     await this.server.create('school-config', {
       school: this.school,

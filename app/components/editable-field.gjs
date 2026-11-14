@@ -69,7 +69,7 @@ export default class EditableFieldComponent extends Component {
     >
       <span class="content">
         {{#if this.isEditing}}
-          <span class="editor">
+          <span class="editor" data-test-editor>
             {{yield
               this.keyboard
               this.saveData.isRunning
@@ -109,11 +109,7 @@ export default class EditableFieldComponent extends Component {
             {{on "click" (fn this.setIsEditing true)}}
           >
             {{#if this.hasVisibleValue}}
-              {{#if (has-block "value")}}
-                {{yield to="value"}}
-              {{else}}
-                {{@value}}
-              {{/if}}
+              {{@value}}
             {{else}}
               {{#if @clickPrompt}}
                 {{@clickPrompt}}
@@ -122,7 +118,6 @@ export default class EditableFieldComponent extends Component {
               {{/if}}
             {{/if}}
           </button>
-          {{yield to="postValue"}}
         {{/if}}
       </span>
     </div>

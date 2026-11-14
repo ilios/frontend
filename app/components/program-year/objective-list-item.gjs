@@ -10,9 +10,8 @@ import set from 'ember-set-helper/helpers/set';
 import { and, not } from 'ember-truth-helpers';
 import LoadingSpinner from '../loading-spinner';
 import t from 'ember-intl/helpers/t';
-import EditableField from '../editable-field';
+import EditableTextarea from '../editable-textarea';
 import perform from 'ember-concurrency/helpers/perform';
-import HtmlEditor from '../html-editor';
 import ObjectiveListItemCompetency from './objective-list-item-competency';
 import ObjectiveListItemTerms from '../objective-list-item-terms';
 import ObjectiveListItemDescriptors from './objective-list-item-descriptors';
@@ -311,17 +310,14 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
           as |ft|
         >
           {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
-            <EditableField
+            <EditableTextarea
               @value={{this.description}}
+              @update={{this.changeDescription}}
               @save={{perform this.saveDescriptionChanges}}
+              @saveDisabled={{this.validations.errors.descriptionWithoutMarkup}}
               @close={{this.revertDescriptionChanges}}
             >
               <:default>
-                <HtmlEditor
-                  @content={{this.description}}
-                  @update={{this.changeDescription}}
-                  @autofocus={{true}}
-                />
                 <YupValidationMessage
                   @description={{t "general.description"}}
                   @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
@@ -334,7 +330,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
               <:postValue>
                 {{ft.controls}}
               </:postValue>
-            </EditableField>
+            </EditableTextarea>
           {{else}}
             {{ft.text preserveLinks=true}}
             {{ft.controls}}

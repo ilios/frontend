@@ -14,6 +14,9 @@ const definition = {
   scope: '[data-test-editable-field]',
   value: text(),
   hasEditIcon: isVisible('[data-test-edit-icon]'),
+  editor: {
+    scope: '[data-test-editor]',
+  },
   editable: {
     scope: '[data-test-edit]',
     edit: clickable(),
