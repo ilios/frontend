@@ -3,44 +3,51 @@
 .new-learningmaterial {
   margin-left: 0;
   min-height: 25vh;
-  @include m.ilios-form;
 
-  .item {
-    @include m.ilios-form-item;
+  .form {
+    @include m.ilios-form;
+    background-color: light-dark(var(--white), var(--dark-grey));
+    border: 1px solid light-dark(var(--lightest-grey), var(--grey));
+    margin: 0.5rem 0;
+    padding: 1rem;
 
-    &.status.owner {
-      display: flex;
-      flex-direction: row;
-      gap: 1em;
+    .item {
+      @include m.ilios-form-item;
 
-      div {
+      &.status.owner {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        gap: 1em;
+
+        div {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
+      &.copyright,
+      &.copyright-rationale,
+      &.accessibility,
+      &.accessibility-rationale {
+        margin-top: 1em;
+
+        #lm-copyright-permissions-text,
+        #lm-accessibility-permissions-text {
+          margin: 0;
+        }
       }
     }
 
-    &.copyright,
-    &.copyright-rationale,
-    &.accessibility,
-    &.accessibility-rationale {
-      margin-top: 1em;
-
-      #lm-copyright-permissions-text,
-      #lm-accessibility-permissions-text {
-        margin: 0;
-      }
+    .buttons {
+      @include m.ilios-form-buttons;
     }
-  }
 
-  .buttons {
-    @include m.ilios-form-buttons;
-  }
-
-  input,
-  textarea {
-    &.error {
-      border: 1px solid light-dark(var(--red), var(--lighter-red));
-      outline-color: light-dark(var(--red), var(--lighter-red));
+    input,
+    textarea {
+      &.error {
+        border: 1px solid light-dark(var(--red), var(--lighter-red));
+        outline-color: light-dark(var(--red), var(--lighter-red));
+      }
     }
   }
 }
