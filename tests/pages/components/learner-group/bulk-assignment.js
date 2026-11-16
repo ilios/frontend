@@ -11,6 +11,7 @@ import userNameInfo from 'frontend/tests/pages/components/user-name-info';
 
 const definition = {
   scope: '[data-test-learner-group-bulk-assignment]',
+  hasChooseFileButton: isVisible('[data-test-learner-group-upload-data] [data-test-user-upload]'),
   validUploadedUsers: collection('[data-test-upload-data-valid-users] tbody tr', {
     isValid: hasClass('fa-check', 'svg', { scope: 'td:nth-of-type(1)' }),
     hasWarning: isVisible('[data-test-warning]', { scope: 'td:nth-of-type(1)' }),
@@ -56,6 +57,7 @@ const definition = {
 
   canSubmitFinalData: isVisible('[data-test-finalize-users-submit]'),
   submitFinalData: clickable('[data-test-finalize-users-submit]'),
+  cancel: clickable('[data-test-learner-group-upload-data] [data-test-cancel]'),
 };
 
 export default definition;
