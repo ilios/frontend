@@ -16,6 +16,7 @@ import babelParser from '@babel/eslint-parser/experimental-worker';
 import js from '@eslint/js';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import compat from 'eslint-plugin-compat';
 import ember from 'eslint-plugin-ember/recommended';
 import n from 'eslint-plugin-n';
 import qunit from 'eslint-plugin-qunit';
@@ -33,6 +34,7 @@ export default defineConfig([
   eslintConfigPrettier,
   ember.configs.base,
   ember.configs.gjs,
+  compat.configs['flat/recommended'],
   /**
    * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options
    */
