@@ -188,7 +188,9 @@ export default class LeadershipExpandedComponent extends Component {
           >
             {{t "general.leadership"}}
             ({{this.count}})
-            <FaIcon @icon={{faCaretDown}} />
+            {{#if this.count}}
+              <FaIcon @icon={{faCaretDown}} />
+            {{/if}}
           </button>
         {{/if}}
         <div class="actions">
@@ -201,7 +203,8 @@ export default class LeadershipExpandedComponent extends Component {
           {{/if}}
         </div>
       </div>
-      <div class="leadership-expanded-content">
+
+      <div class="leadership-expanded-content{{unless this.count ' empty'}}">
         {{#if @isManaging}}
           <LeadershipManager
             @directors={{this.directors}}
@@ -217,7 +220,7 @@ export default class LeadershipExpandedComponent extends Component {
             @removeStudentAdvisor={{this.removeStudentAdvisor}}
             @addStudentAdvisor={{this.addStudentAdvisor}}
           />
-        {{else}}
+        {{else if this.count}}
           <LeadershipList
             @directors={{this.directors}}
             @administrators={{this.administrators}}

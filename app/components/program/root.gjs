@@ -2,6 +2,7 @@ import { fn } from '@ember/helper';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import { pageTitle } from 'ember-page-title';
+import { eq, or } from 'ember-truth-helpers';
 
 import hasManyLength from '../../helpers/has-many-length';
 import LeadershipCollapsed from '../leadership-collapsed';
@@ -19,7 +20,7 @@ import Overview from './overview';
     </div>
     <Header @program={{@program}} @canUpdate={{@canUpdate}} />
     <Overview @program={{@program}} @canUpdate={{@canUpdate}} />
-    {{#if @leadershipDetails}}
+    {{#if (or (eq @program.directors.length 0) @leadershipDetails)}}
       <LeadershipExpanded
         @model={{@program}}
         @editable={{@canUpdate}}
