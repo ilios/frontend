@@ -3,6 +3,10 @@
 .course-summary-header {
   padding-left: 0.8rem;
 
+  .overview-header {
+    justify-content: space-between;
+  }
+
   h2.overview-title {
     @include m.ilios-heading-h3;
   }
