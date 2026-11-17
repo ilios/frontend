@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import MeshDescriptorLastTreeNumber from 'frontend/components/mesh-descriptor-last-tree-number';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/mesh-descriptor-last-tree-number';
-import MeshDescriptorLastTreeNumber from 'frontend/components/mesh-descriptor-last-tree-number';
+import { module, test } from 'qunit';
 
 module('Integration | Component | mesh-descriptor-last-tree-number', function (hooks) {
   setupRenderingTest(hooks);

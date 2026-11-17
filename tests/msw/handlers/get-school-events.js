@@ -1,5 +1,6 @@
-import { http, HttpResponse } from 'msw';
 import { DateTime } from 'luxon';
+import { http, HttpResponse } from 'msw';
+
 import { db } from '../db.js';
 
 // School events with date range filtering

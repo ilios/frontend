@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { component } from 'frontend/tests/pages/components/detail-competencies';
 import DetailCompetencies from 'frontend/components/detail-competencies';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/detail-competencies';
+import { module, test } from 'qunit';
 
 module('Integration | Component | detail-competencies', function (hooks) {
   setupRenderingTest(hooks);

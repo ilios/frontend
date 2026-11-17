@@ -1,8 +1,8 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
+import pageTitle from 'ember-page-title/helpers/page-title';
+import set from 'ember-set-helper/helpers/set';
 import BackToAdminDashboard from 'frontend/components/back-to-admin-dashboard';
 import IliosUsers from 'frontend/components/ilios-users';
-import set from 'ember-set-helper/helpers/set';
 <template>
   {{pageTitle (t "general.admin") " | " (t "general.users") prepend=false}}
   <BackToAdminDashboard />

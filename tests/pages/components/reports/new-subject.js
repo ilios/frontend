@@ -1,15 +1,16 @@
 import {
   clickable,
-  create,
   collection,
+  create,
   fillable,
   isPresent,
   property,
   text,
 } from 'ember-cli-page-object';
-import meshTerm from './subject/new/mesh-term';
-import instructor from './subject/new/instructor';
+
 import course from './subject/new/course';
+import instructor from './subject/new/instructor';
+import meshTerm from './subject/new/mesh-term';
 import session from './subject/new/session';
 
 const definition = {

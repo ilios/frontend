@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import SessionType from 'frontend/components/reports/subject/session-type';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/session-type';
-import SessionType from 'frontend/components/reports/subject/session-type';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/subject/session-type', function (hooks) {
   setupRenderingTest(hooks);

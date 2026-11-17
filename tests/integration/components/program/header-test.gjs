@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
+import { render } from '@ember/test-helpers';
+import Header from 'frontend/components/program/header';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
-import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program/header';
-import Header from 'frontend/components/program/header';
+import { module, test } from 'qunit';
 
 module('Integration | Component | program/header', function (hooks) {
   setupRenderingTest(hooks);

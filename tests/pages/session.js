@@ -1,4 +1,5 @@
 import { create, visitable } from 'ember-cli-page-object';
+
 import details from './components/session-details';
 
 export default create({

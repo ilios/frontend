@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/ilios-header';
-import { setupMSW } from 'frontend/tests/msw';
 import pageTitle from 'ember-page-title/helpers/page-title';
 import IliosHeader from 'frontend/components/ilios-header';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/ilios-header';
+import { module, test } from 'qunit';
 
 module('Integration | Component | ilios-header', function (hooks) {
   setupRenderingTest(hooks);

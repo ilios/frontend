@@ -12,16 +12,15 @@
  *     npx eslint --inspect-config
  *
  */
-import globals from 'globals';
+import babelParser from '@babel/eslint-parser/experimental-worker';
 import js from '@eslint/js';
 import { defineConfig, globalIgnores } from 'eslint/config';
-
-import ember from 'eslint-plugin-ember/recommended';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import qunit from 'eslint-plugin-qunit';
+import ember from 'eslint-plugin-ember/recommended';
 import n from 'eslint-plugin-n';
-
-import babelParser from '@babel/eslint-parser/experimental-worker';
+import qunit from 'eslint-plugin-qunit';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import globals from 'globals';
 
 const esmParserOptions = {
   ecmaFeatures: { modules: true },
@@ -41,6 +40,9 @@ export default defineConfig([
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
     rules: {
       'no-duplicate-imports': 'error',
       'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
@@ -55,6 +57,8 @@ export default defineConfig([
           ],
         },
       ],
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
     },
   },
   {

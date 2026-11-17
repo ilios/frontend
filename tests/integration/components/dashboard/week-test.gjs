@@ -1,11 +1,11 @@
 import Service from '@ember/service';
-import { DateTime } from 'luxon';
-import { module, test } from 'qunit';
-import { setupRenderingTest, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import Week from 'frontend/components/dashboard/week';
+import { freezeDateAt, setupRenderingTest, unfreezeDate } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/dashboard/week';
-import Week from 'frontend/components/dashboard/week';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | dashboard/week', function (hooks) {
   setupRenderingTest(hooks);

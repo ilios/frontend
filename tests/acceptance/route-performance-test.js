@@ -1,13 +1,13 @@
 import { currentRouteName, visit } from '@ember/test-helpers';
-import { module, test } from 'qunit';
 import {
-  setupAuthentication,
   freezeDateAt,
-  unfreezeDate,
   setupApplicationTest,
+  setupAuthentication,
+  unfreezeDate,
 } from 'frontend/tests/helpers';
-import { DateTime } from 'luxon';
 import { graphQL } from 'frontend/tests/helpers/curriculum-report';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Acceptance | performance', function (hooks) {
   setupApplicationTest(hooks);

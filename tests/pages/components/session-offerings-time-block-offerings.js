@@ -1,4 +1,5 @@
 import { collection, create } from 'ember-cli-page-object';
+
 import offeringManager from './offering-manager';
 
 const definition = {

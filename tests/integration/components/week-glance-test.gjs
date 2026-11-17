@@ -1,14 +1,14 @@
 import Service from '@ember/service';
-import { DateTime } from 'luxon';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, settled, click } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/week-glance';
+import { click,render, settled } from '@ember/test-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
+import formatDate from 'ember-intl/helpers/format-date';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
 import WeekGlance from 'frontend/components/week-glance';
-import formatDate from 'ember-intl/helpers/format-date';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/week-glance';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | week-glance', function (hooks) {
   setupRenderingTest(hooks);

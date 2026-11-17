@@ -1,9 +1,10 @@
+import { pluralize,singularize } from 'ember-inflector';
 import { http, HttpResponse } from 'msw';
-import { singularize, pluralize } from 'ember-inflector';
-import { db, validateRecordData, modelsWithStringIds, filterByParams } from '../db.js';
+
+import { db, filterByParams,modelsWithStringIds, validateRecordData } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
-import { extractRelationshipsInUpdate, createFromPostData } from './helpers.js';
+import { createFromPostData,extractRelationshipsInUpdate } from './helpers.js';
 
 // Create generic CRUD handlers for a model
 export function createCrudHandlers(modelName, apiRoute) {

@@ -6,6 +6,7 @@ import {
   hasClass,
   notHasClass,
 } from 'ember-cli-page-object';
+
 import userNameInfo from './user-name-info';
 import userStatus from './user-status';
 

@@ -1,20 +1,21 @@
-import Component from '@glimmer/component';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
-import PapaParse from 'papaparse';
-import { task, timeout } from 'ember-concurrency';
-import createDownloadFile from '../../../utils/create-download-file';
-import { DateTime } from 'luxon';
+import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { chunk } from '../../../utils/array-helpers';
-import Header from './header';
-import noop from '../../../helpers/noop';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import add from 'ember-math-helpers/helpers/add';
 import t from 'ember-intl/helpers/t';
+import add from 'ember-math-helpers/helpers/add';
+import { DateTime } from 'luxon';
+import PapaParse from 'papaparse';
+
+import noop from '../../../helpers/noop';
 import sortBy from '../../../helpers/sort-by';
+import { chunk } from '../../../utils/array-helpers';
+import createDownloadFile from '../../../utils/create-download-file';
 import getUserNameForGraphUser from '../../../utils/get-user-name-for-graph-user';
-import { LinkTo } from '@ember/routing';
+import Header from './header';
 
 export default class ReportsCurriculumInstructionalTimeComponent extends Component {
   @service router;

@@ -1,9 +1,9 @@
-import { service } from '@ember/service';
-import Component from '@glimmer/component';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
 
 export default class BackLinkComponent extends Component {
   @service intl;

@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
+import List from 'frontend/components/programs/list';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/programs/list';
-import List from 'frontend/components/programs/list';
-import { array } from '@ember/helper';
+import { module, test } from 'qunit';
 
 module('Integration | Component | programs/list', function (hooks) {
   setupRenderingTest(hooks);

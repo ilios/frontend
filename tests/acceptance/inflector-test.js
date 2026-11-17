@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
+import { pluralize,singularize } from 'ember-inflector';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import { singularize, pluralize } from 'ember-inflector';
+import { module, test } from 'qunit';
 
 module('Acceptance | inflector', function (hooks) {
   setupApplicationTest(hooks);

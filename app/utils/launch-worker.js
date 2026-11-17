@@ -1,5 +1,5 @@
-import config from 'frontend/config/environment';
 import { isTesting } from '@embroider/macros';
+import config from 'frontend/config/environment';
 
 export async function launchWorker() {
   if (

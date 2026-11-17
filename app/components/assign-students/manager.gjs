@@ -1,23 +1,24 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { action } from '@ember/object';
-import { DateTime } from 'luxon';
-import { cached, tracked } from '@glimmer/tracking';
-import { findById } from '../../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
-import sortBy from '../../helpers/sort-by';
-import { and, eq, gt, lt, not, or } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
-import perform from 'ember-concurrency/helpers/perform';
-import LoadingSpinner from '../loading-spinner';
-import includes from '../../helpers/includes';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
-import UserNameInfo from '../user-name-info';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { and, eq, gt, lt, not, or } from 'ember-truth-helpers';
+import { DateTime } from 'luxon';
+
+import includes from '../../helpers/includes';
+import pick from '../../helpers/pick';
+import sortBy from '../../helpers/sort-by';
+import { findById } from '../../utils/array-helpers';
+import LoadingSpinner from '../loading-spinner';
 import SortableTh from '../sortable-th';
+import UserNameInfo from '../user-name-info';
 
 export default class AssignStudentsManagerComponent extends Component {
   @service store;

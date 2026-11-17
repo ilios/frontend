@@ -1,19 +1,20 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faClock, faEye, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { or } from 'ember-truth-helpers';
+
+import sortBy from '../helpers/sort-by';
+import scrollIntoView from '../modifiers/scroll-into-view';
 import LmTypeIcon from './lm-type-icon';
 import UserNameInfo from './user-name-info';
-import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import sortBy from '../helpers/sort-by';
-import { or } from 'ember-truth-helpers';
-import set from 'ember-set-helper/helpers/set';
-import perform from 'ember-concurrency/helpers/perform';
-import scrollIntoView from '../modifiers/scroll-into-view';
-import { faClock, faEye, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailLearningMaterialsItemComponent extends Component {
   @tracked showRemoveConfirmation = false;

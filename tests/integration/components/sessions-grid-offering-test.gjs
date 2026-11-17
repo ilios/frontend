@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
+import SessionsGridOffering from 'frontend/components/sessions-grid-offering';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
-import SessionsGridOffering from 'frontend/components/sessions-grid-offering';
 import { component } from 'frontend/tests/pages/components/sessions-grid-offering';
+import { module, test } from 'qunit';
 
 module('Integration | Component | sessions-grid-offering', function (hooks) {
   setupRenderingTest(hooks);

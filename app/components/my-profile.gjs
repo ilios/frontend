@@ -1,11 +1,12 @@
 import t from 'ember-intl/helpers/t';
-import UserProfileRoles from './user-profile-roles';
+
 import sortBy from '../helpers/sort-by';
-import UserProfilePermissions from './user-profile-permissions';
 import LearnerGroups from './user-profile/learner-groups';
-import ThemeChooser from './user-profile/theme-chooser';
 import LocaleChooser from './user-profile/locale-chooser';
+import ThemeChooser from './user-profile/theme-chooser';
 import TokenMaintenance from './user-profile/token-maintenance';
+import UserProfilePermissions from './user-profile-permissions';
+import UserProfileRoles from './user-profile-roles';
 
 <template>
   <div class="my-profile main-section" ...attributes data-test-my-profile>

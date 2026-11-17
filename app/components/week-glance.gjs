@@ -1,20 +1,21 @@
-import { service } from '@ember/service';
-import Component from '@glimmer/component';
-import { isNone } from '@ember/utils';
-import { DateTime } from 'luxon';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import scrollIntoView from '../modifiers/scroll-into-view';
-import { gt, notEq } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import optional from '../helpers/optional';
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
+import { isNone } from '@ember/utils';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown,faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import formatDate from 'ember-intl/helpers/format-date';
 import t from 'ember-intl/helpers/t';
+import { gt, notEq } from 'ember-truth-helpers';
+import { DateTime } from 'luxon';
+
+import optional from '../helpers/optional';
+import scrollIntoView from '../modifiers/scroll-into-view';
 import LoadingSpinner from './loading-spinner';
 import WeekGlanceEvent from './week-glance-event';
-import formatDate from 'ember-intl/helpers/format-date';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class WeeklyGlanceComponent extends Component {
   @service userEvents;

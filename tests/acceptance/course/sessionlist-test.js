@@ -1,15 +1,15 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
+import {
+  freezeDateAt,
+  setupApplicationTest,
+  setupAuthentication,
+  takeScreenshot,
+  unfreezeDate,
+} from 'frontend/tests/helpers';
+import sessionPage from 'frontend/tests/pages/session';
+import page from 'frontend/tests/pages/sessions';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import {
-  setupAuthentication,
-  freezeDateAt,
-  unfreezeDate,
-  setupApplicationTest,
-  takeScreenshot,
-} from 'frontend/tests/helpers';
-import page from 'frontend/tests/pages/sessions';
-import sessionPage from 'frontend/tests/pages/session';
 
 module('Acceptance | Course - Session List', function (hooks) {
   setupApplicationTest(hooks);

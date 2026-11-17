@@ -1,7 +1,8 @@
 import { http, HttpResponse } from 'msw';
+
+import { createModel } from '../create-model.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { createFromPostData } from './helpers.js';
-import { createModel } from '../create-model.js';
 
 // Program year creation with auto-cohort creation
 // Overrides the generic POST /api/programyears handler

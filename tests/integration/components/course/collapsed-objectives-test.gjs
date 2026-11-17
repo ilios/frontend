@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/course/collapsed-objectives';
-import { setupMSW } from 'frontend/tests/msw';
 import CollapsedObjectives from 'frontend/components/course/collapsed-objectives';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/collapsed-objectives';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course/collapsed-objectives', function (hooks) {
   setupRenderingTest(hooks);

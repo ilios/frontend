@@ -1,4 +1,4 @@
-import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
+import Model, { attr,belongsTo, hasMany } from '@ember-data/model';
 
 export default class CohortModel extends Model {
   @attr('string')

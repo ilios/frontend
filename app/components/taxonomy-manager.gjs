@@ -1,21 +1,22 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { task, timeout } from 'ember-concurrency';
-import { filter } from 'rsvp';
-import escapeRegExp from '../utils/escape-reg-exp';
-import { uniqueId } from '@ember/helper';
-import DetailTermsList from './detail-terms-list';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import { eq } from 'ember-truth-helpers';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import { eq } from 'ember-truth-helpers';
+import { filter } from 'rsvp';
+
 import sortBy from '../helpers/sort-by';
-import ListItem from './taxonomy-manager-terms-list-item';
+import escapeRegExp from '../utils/escape-reg-exp';
+import DetailTermsList from './detail-terms-list';
 import List from './taxonomy-manager-terms-list';
+import ListItem from './taxonomy-manager-terms-list-item';
 
 export default class TaxonomyManagerComponent extends Component {
   @service store;

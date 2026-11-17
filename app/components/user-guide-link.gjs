@@ -1,6 +1,6 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
 <template>
   <div class="user-guide-link" data-test-user-guide-link>
     <a

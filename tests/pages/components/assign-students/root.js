@@ -1,4 +1,5 @@
 import { collection, create, fillable, property, value } from 'ember-cli-page-object';
+
 import manager from './manager';
 
 const definition = {

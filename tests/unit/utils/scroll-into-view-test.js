@@ -1,7 +1,7 @@
 import { settled } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import scrollIntoView from 'frontend/utils/scroll-into-view';
 import { setPreferReducedMotion } from 'frontend/tests/helpers';
+import scrollIntoView from 'frontend/utils/scroll-into-view';
+import { module, test } from 'qunit';
 
 module('Unit | Utility | scroll into view', function (hooks) {
   hooks.beforeEach(function () {

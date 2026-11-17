@@ -1,23 +1,24 @@
+import { array, fn } from '@ember/helper';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
-import { sortBy } from '../../utils/array-helpers';
 import { task } from 'ember-concurrency';
-import { service } from '@ember/service';
-import t from 'ember-intl/helpers/t';
-import ExpandCollapseButton from '../expand-collapse-button';
-import set from 'ember-set-helper/helpers/set';
-import { eq, or, not } from 'ember-truth-helpers';
-import New from './new';
 import perform from 'ember-concurrency/helpers/perform';
-import { LinkTo } from '@ember/routing';
-import { array, fn } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
-import ListItem from './list-item';
+import set from 'ember-set-helper/helpers/set';
+import { eq, not,or } from 'ember-truth-helpers';
+
+import { sortBy } from '../../utils/array-helpers';
+import ExpandCollapseButton from '../expand-collapse-button';
 import SortableTh from '../sortable-th';
-import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
+import ListItem from './list-item';
+import New from './new';
 
 export default class ProgramYearListComponent extends Component {
   @service store;

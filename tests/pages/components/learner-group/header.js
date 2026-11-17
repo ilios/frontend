@@ -3,9 +3,9 @@ import {
   create,
   fillable,
   hasClass,
+  isPresent,
   text,
   value,
-  isPresent,
 } from 'ember-cli-page-object';
 import breadcrumbs from 'frontend/tests/pages/components/breadcrumbs';
 

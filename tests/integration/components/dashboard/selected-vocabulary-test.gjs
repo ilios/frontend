@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/dashboard/selected-vocabulary';
 import SelectedVocabulary from 'frontend/components/dashboard/selected-vocabulary';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/dashboard/selected-vocabulary';
+import { module, test } from 'qunit';
 
 module('Integration | Component | dashboard/selected-vocabulary', function (hooks) {
   setupRenderingTest(hooks);

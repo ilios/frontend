@@ -1,7 +1,7 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
-import Root from 'frontend/components/instructor-group/root';
+import pageTitle from 'ember-page-title/helpers/page-title';
 import set from 'ember-set-helper/helpers/set';
+import Root from 'frontend/components/instructor-group/root';
 <template>
   {{pageTitle (t "general.instructorGroups")}}
   <Root

@@ -1,29 +1,8 @@
-import Component from '@glimmer/component';
+import { concat,fn, get } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action, set } from '@ember/object';
 import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
-import { task, timeout } from 'ember-concurrency';
-import { modifier } from 'ember-modifier';
-import { TrackedAsyncData } from 'ember-async-data';
-import { mapBy, sortBy } from '../utils/array-helpers';
-import OfferingForm from './offering-form';
-import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
-import { fn, get, concat } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import { and, eq } from 'ember-truth-helpers';
-import includes from '../helpers/includes';
-import IliosTooltip from './ilios-tooltip';
-import mapBy0 from '../helpers/map-by';
-import join from '../helpers/join';
-import reverse from '../helpers/reverse';
-import FadeText from './fade-text';
-import TruncateText from './truncate-text';
-import OfferingUrlDisplay from './offering-url-display';
-import UserStatus from './user-status';
-import UserNameInfo from './user-name-info';
-import { on } from '@ember/modifier';
-import set0 from 'ember-set-helper/helpers/set';
 import {
   faPenToSquare,
   faTrash,
@@ -31,7 +10,29 @@ import {
   faUserPlus,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task, timeout } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
+import { modifier } from 'ember-modifier';
+import set0 from 'ember-set-helper/helpers/set';
+import { and, eq } from 'ember-truth-helpers';
+
+import includes from '../helpers/includes';
+import join from '../helpers/join';
+import mapBy0 from '../helpers/map-by';
+import reverse from '../helpers/reverse';
+import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
 import scrollIntoView from '../modifiers/scroll-into-view';
+import { mapBy, sortBy } from '../utils/array-helpers';
+import FadeText from './fade-text';
+import IliosTooltip from './ilios-tooltip';
+import OfferingForm from './offering-form';
+import OfferingUrlDisplay from './offering-url-display';
+import TruncateText from './truncate-text';
+import UserNameInfo from './user-name-info';
+import UserStatus from './user-status';
 
 export default class OfferingManagerComponent extends Component {
   @service intl;

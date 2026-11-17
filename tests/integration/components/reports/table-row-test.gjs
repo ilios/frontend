@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/reports/table-row';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import TableRow from 'frontend/components/reports/table-row';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupAuthentication,setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/reports/table-row';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/table-row', function (hooks) {
   setupRenderingTest(hooks);

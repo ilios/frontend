@@ -1,4 +1,5 @@
 import { clickable, create, isPresent, text } from 'ember-cli-page-object';
+
 import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from '../helpers';
 
 const definition = {

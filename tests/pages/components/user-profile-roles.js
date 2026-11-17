@@ -1,6 +1,7 @@
 import { clickable, create, property, text } from 'ember-cli-page-object';
-import yesNo from './yes-no';
 import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
+
+import yesNo from './yes-no';
 
 const definition = {
   scope: '[data-test-user-profile-roles]',

@@ -1,4 +1,4 @@
-import { create, collection, isPresent, hasClass, text, value } from 'ember-cli-page-object';
+import { collection, create, hasClass, isPresent, text, value } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-unassigned-students-summary]',

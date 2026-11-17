@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
 import { array } from '@ember/helper';
+import { render } from '@ember/test-helpers';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import ListItem from 'frontend/components/taxonomy-manager-terms-list-item';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/taxonomy-manager-terms-list-item';
-import ListItem from 'frontend/components/taxonomy-manager-terms-list-item';
-import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { module, test } from 'qunit';
 
 module('Integration | Component | taxonomy manager terms list item', function (hooks) {
   setupRenderingTest(hooks);

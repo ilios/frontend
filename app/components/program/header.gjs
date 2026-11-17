@@ -1,16 +1,17 @@
+import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
-import EditableField from '../editable-field';
 import perform from 'ember-concurrency/helpers/perform';
-import set from 'ember-set-helper/helpers/set';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
+import set from 'ember-set-helper/helpers/set';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
 import pick from '../../helpers/pick';
-import YupValidationMessage from '../yup-validation-message';
 import focus from '../../modifiers/focus';
+import EditableField from '../editable-field';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class ProgramHeaderComponent extends Component {
   @tracked title;

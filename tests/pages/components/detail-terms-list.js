@@ -1,4 +1,5 @@
 import { clickable, collection, create, text } from 'ember-cli-page-object';
+
 import listItem from './detail-terms-list-item';
 
 const definition = {

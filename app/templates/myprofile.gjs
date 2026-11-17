@@ -1,7 +1,7 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
-import MyProfile from 'frontend/components/my-profile';
+import pageTitle from 'ember-page-title/helpers/page-title';
 import set from 'ember-set-helper/helpers/set';
+import MyProfile from 'frontend/components/my-profile';
 <template>
   {{pageTitle (t "general.myProfile")}}
   <MyProfile

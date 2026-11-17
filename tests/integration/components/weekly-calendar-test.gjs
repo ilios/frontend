@@ -1,15 +1,15 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { setupMSW } from 'frontend/tests/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { setLocale } from 'ember-intl/test-support';
-import { component } from 'frontend/tests/pages/components/weekly-calendar';
-import WeeklyCalendar from 'frontend/components/weekly-calendar';
 import Event from 'frontend/classes/event';
-import { array } from '@ember/helper';
+import WeeklyCalendar from 'frontend/components/weekly-calendar';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/weekly-calendar';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | weekly-calendar', function (hooks) {
   setupRenderingTest(hooks);

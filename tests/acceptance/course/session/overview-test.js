@@ -1,8 +1,8 @@
 import { currentRouteName } from '@ember/test-helpers';
+import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
+import page from 'frontend/tests/pages/session';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
-import page from 'frontend/tests/pages/session';
 
 module('Acceptance | Session - Overview', function (hooks) {
   setupApplicationTest(hooks);

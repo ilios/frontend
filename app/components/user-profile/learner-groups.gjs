@@ -1,9 +1,10 @@
 import load from 'ember-async-data/helpers/load';
 import t from 'ember-intl/helpers/t';
 import { gt } from 'ember-truth-helpers';
+
 import sortBy from '../../helpers/sort-by';
-import LearnerGroup from './learner-group';
 import LoadingSpinner from '../loading-spinner';
+import LearnerGroup from './learner-group';
 <template>
   {{#let (load @user.learnerGroups) as |learnerGroups|}}
     <div

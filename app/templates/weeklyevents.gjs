@@ -1,6 +1,7 @@
+import set from 'ember-set-helper/helpers/set';
+
 import BackLink from '../components/back-link';
 import WeeklyEvents from '../components/weekly-events';
-import set from 'ember-set-helper/helpers/set';
 <template>
   {{#if @controller.showBackLink}}
     <BackLink />

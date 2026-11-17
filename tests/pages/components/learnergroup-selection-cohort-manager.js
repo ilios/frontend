@@ -1,4 +1,5 @@
 import { collection, create, text } from 'ember-cli-page-object';
+
 import learnergroupTree from './learnergroup-tree';
 
 const definition = {

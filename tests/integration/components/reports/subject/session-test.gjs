@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
 import { click, render } from '@ember/test-helpers';
+import Session from 'frontend/components/reports/subject/session';
+import { setupAuthentication,setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/session';
 import { component as headerComponent } from 'frontend/tests/pages/components/reports/subject-header';
-import Session from 'frontend/components/reports/subject/session';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/subject/session', function (hooks) {
   setupRenderingTest(hooks);

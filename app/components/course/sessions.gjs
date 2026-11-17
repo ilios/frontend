@@ -1,26 +1,27 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
+import { array, fn,get } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { mapBy } from '../../utils/array-helpers';
-import animateLoading from '../../modifiers/animate-loading';
-import t from 'ember-intl/helpers/t';
-import ExpandCollapseButton from '../expand-collapse-button';
-import toggle from '../../helpers/toggle';
-import { and, gt } from 'ember-truth-helpers';
-import { LinkTo } from '@ember/routing';
-import NewSession from '../new-session';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
-import { array, get, fn } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { on } from '@ember/modifier';
-import SessionsGridHeaderRow from '../sessions-grid-header-row';
+import { and, gt } from 'ember-truth-helpers';
+
+import toggle from '../../helpers/toggle';
+import animateLoading from '../../modifiers/animate-loading';
+import { mapBy } from '../../utils/array-helpers';
+import ExpandCollapseButton from '../expand-collapse-button';
+import NewSession from '../new-session';
 import SessionsGrid from '../sessions-grid';
+import SessionsGridHeaderRow from '../sessions-grid-header-row';
 import SessionsGridLoading from '../sessions-grid-loading';
-import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_DELAY = 250;
 

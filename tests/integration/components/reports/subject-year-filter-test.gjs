@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import SubjectYearFilter from 'frontend/components/reports/subject-year-filter';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject-year-filter';
-import SubjectYearFilter from 'frontend/components/reports/subject-year-filter';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/subject-year-filter', function (hooks) {
   setupRenderingTest(hooks);

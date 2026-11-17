@@ -1,4 +1,5 @@
 import { on } from '@ember/modifier';
+
 import htmlSafe from '../../helpers/html-safe';
 import removeHtmlTags from '../../helpers/remove-html-tags';
 <template>

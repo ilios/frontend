@@ -1,4 +1,4 @@
-import { create, isVisible, fillable, triggerable, text, value } from 'ember-cli-page-object';
+import { create, fillable, isVisible, text, triggerable, value } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-new-vocabulary-form]',

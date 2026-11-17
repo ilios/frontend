@@ -1,9 +1,10 @@
-import t from 'ember-intl/helpers/t';
-import sortBy from '../../helpers/sort-by';
-import FilterCheckbox from './filter-checkbox';
-import includes from '../../helpers/includes';
 import { fn } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
+
+import includes from '../../helpers/includes';
+import sortBy from '../../helpers/sort-by';
 import LoadingSpinner from '../loading-spinner';
+import FilterCheckbox from './filter-checkbox';
 <template>
   <div
     class="calendar-filter-list large-filter-list dashboard-cohort-calendar-filter"

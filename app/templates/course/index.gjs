@@ -1,5 +1,6 @@
-import Sessions from '../../components/course/sessions';
 import set from 'ember-set-helper/helpers/set';
+
+import Sessions from '../../components/course/sessions';
 <template>
   <Sessions
     @course={{@controller.model}}

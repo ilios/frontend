@@ -1,13 +1,13 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { LinkTo } from '@ember/routing';
-import t from 'ember-intl/helpers/t';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import { pageTitle } from 'ember-page-title';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearHeaderComponent extends Component {
   @service iliosConfig;

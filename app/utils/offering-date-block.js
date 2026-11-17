@@ -1,6 +1,7 @@
-import { DateTime } from 'luxon';
-import { sortBy } from './array-helpers';
 import { deprecate } from '@ember/debug';
+import { DateTime } from 'luxon';
+
+import { sortBy } from './array-helpers';
 
 class OfferingBlock {
   offerings = [];

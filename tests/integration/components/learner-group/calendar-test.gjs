@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
+import { render } from '@ember/test-helpers';
+import Calendar from 'frontend/components/learner-group/calendar';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
-import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/learner-group/calendar';
 import { DateTime } from 'luxon';
-import Calendar from 'frontend/components/learner-group/calendar';
+import { module, test } from 'qunit';
 
 module('Integration | Component | learner-group/calendar', function (hooks) {
   setupRenderingTest(hooks);

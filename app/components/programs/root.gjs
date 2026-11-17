@@ -1,22 +1,23 @@
-import Component from '@glimmer/component';
+import { on } from '@ember/modifier';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBuildingColumns, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById } from '../../utils/array-helpers';
 import { task } from 'ember-concurrency';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { eq, gt, not } from 'ember-truth-helpers';
+import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
+import set from 'ember-set-helper/helpers/set';
+import { eq, gt, not } from 'ember-truth-helpers';
+
 import pick from '../../helpers/pick';
 import sortBy from '../../helpers/sort-by';
+import { findById } from '../../utils/array-helpers';
 import ExpandCollapseButton from '../expand-collapse-button';
-import set from 'ember-set-helper/helpers/set';
 import New from '../program/new';
-import perform from 'ember-concurrency/helpers/perform';
-import { LinkTo } from '@ember/routing';
 import List from './list';
-import { faBuildingColumns, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramRootComponent extends Component {
   @service currentUser;

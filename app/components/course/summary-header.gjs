@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
+import { hash } from '@ember/helper';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faPrint, faShuffle } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { LinkTo } from '@ember/routing';
-import { hash } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+
 import PublicationStatus from '../publication-status';
-import { faPrint, faShuffle } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseSummaryHeaderComponent extends Component {
   @service permissionChecker;

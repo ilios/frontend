@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import Service from '@ember/service';
-import { component } from 'frontend/tests/pages/components/instructor-groups/root';
+import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import Root from 'frontend/components/instructor-groups/root';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/instructor-groups/root';
+import { module, test } from 'qunit';
 
 module('Integration | Component | instructor-groups/root', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { render } from '@ember/test-helpers';
+import { array } from '@ember/helper';
 import Service from '@ember/service';
-import { component } from 'frontend/tests/pages/components/courses/list';
+import { render } from '@ember/test-helpers';
 import List from 'frontend/components/courses/list';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/courses/list';
+import { module, test } from 'qunit';
 
 module('Integration | Component | courses/list', function (hooks) {
   setupRenderingTest(hooks);

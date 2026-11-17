@@ -1,11 +1,12 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
+import { fn,uniqueId } from '@ember/helper';
 import { action } from '@ember/object';
-import { uniqueId, fn } from '@ember/helper';
-import { eq, or } from 'ember-truth-helpers';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
 import t from 'ember-intl/helpers/t';
-import SortableTh from '../sortable-th';
+import { eq, or } from 'ember-truth-helpers';
+
 import sortBy from '../../helpers/sort-by';
+import SortableTh from '../sortable-th';
 import UserNameInfo from '../user-name-info';
 import UserStatus from '../user-status';
 

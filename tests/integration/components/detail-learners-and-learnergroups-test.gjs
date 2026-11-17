@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { click, render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/detail-learners-and-learner-groups';
-import DetailLearnersAndLearnerGroups from 'frontend/components/detail-learners-and-learner-groups';
 import { array } from '@ember/helper';
+import { click, render } from '@ember/test-helpers';
+import DetailLearnersAndLearnerGroups from 'frontend/components/detail-learners-and-learner-groups';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
+import { component } from 'frontend/tests/pages/components/detail-learners-and-learner-groups';
+import { module, test } from 'qunit';
 
 module('Integration | Component | detail-learners-and-learner-groups', function (hooks) {
   setupRenderingTest(hooks);

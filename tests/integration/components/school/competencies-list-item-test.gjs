@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/school/competencies-list-item';
 import CompetenciesListItem from 'frontend/components/school/competencies-list-item';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/school/competencies-list-item';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/competencies-list-item', function (hooks) {
   setupRenderingTest(hooks);

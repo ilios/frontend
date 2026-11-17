@@ -1,24 +1,25 @@
+import { uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
-import { uniqueId } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
-import ExpandCollapseButton from '../expand-collapse-button';
-import { on } from '@ember/modifier';
-import focus from '../../modifiers/focus';
-import pick from '../../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
-import YupValidationMessage from '../yup-validation-message';
-import LoadingSpinner from '../loading-spinner';
-import { LinkTo } from '@ember/routing';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
 import sortBy from '../../helpers/sort-by';
-import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
+import focus from '../../modifiers/focus';
+import ExpandCollapseButton from '../expand-collapse-button';
+import LoadingSpinner from '../loading-spinner';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class SchoolsRootComponent extends Component {
   @service currentUser;

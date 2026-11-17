@@ -1,17 +1,18 @@
-import LeadershipExpanded from '../leadership-expanded';
 import { fn, get } from '@ember/helper';
-import LeadershipCollapsed from '../leadership-collapsed';
-import hasManyLength from '../../helpers/has-many-length';
 import { eq, not, or } from 'ember-truth-helpers';
-import Objectives from './objectives';
-import CollapsedObjectives from './collapsed-objectives';
-import DetailLearningMaterials from '../detail-learning-materials';
-import DetailCompetencies from '../detail-competencies';
+
+import hasManyLength from '../../helpers/has-many-length';
 import CollapsedCompetencies from '../collapsed-competencies';
-import DetailTaxonomies from '../detail-taxonomies';
 import CollapsedTaxonomies from '../collapsed-taxonomies';
-import DetailMesh from '../detail-mesh';
 import DetailCohorts from '../detail-cohorts';
+import DetailCompetencies from '../detail-competencies';
+import DetailLearningMaterials from '../detail-learning-materials';
+import DetailMesh from '../detail-mesh';
+import DetailTaxonomies from '../detail-taxonomies';
+import LeadershipCollapsed from '../leadership-collapsed';
+import LeadershipExpanded from '../leadership-expanded';
+import CollapsedObjectives from './collapsed-objectives';
+import Objectives from './objectives';
 <template>
   <div>
     {{#if @courseLeadershipDetails}}

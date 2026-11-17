@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, waitFor } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import Service from '@ember/service';
-import { defer } from 'rsvp';
+import { render, waitFor } from '@ember/test-helpers';
 import Loader from 'frontend/components/course/loader';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { module, test } from 'qunit';
+import { defer } from 'rsvp';
 
 module('Integration | Component | course/loader', function (hooks) {
   setupRenderingTest(hooks);

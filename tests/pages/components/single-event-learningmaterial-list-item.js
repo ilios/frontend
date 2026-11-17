@@ -1,4 +1,5 @@
 import { create, isPresent, property, text } from 'ember-cli-page-object';
+
 import typeIcon from './lm-type-icon';
 import userMaterialStatus from './user-material-status';
 

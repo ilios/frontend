@@ -1,10 +1,11 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { DateTime } from 'luxon';
 import { deprecate } from '@ember/debug';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
 import isArray from 'ember-truth-helpers/helpers/is-array';
-import DailyCalendar from './daily-calendar';
+import { DateTime } from 'luxon';
+
 import noop from '../helpers/noop';
+import DailyCalendar from './daily-calendar';
 import IliosCalendarMultidayEvents from './ilios-calendar-multiday-events';
 
 export default class IliosCalendarDayComponent extends Component {

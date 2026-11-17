@@ -1,5 +1,5 @@
-import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, skip } from 'qunit';
 
 module('Integration | Component | dashboard/calendar', function (hooks) {
   setupRenderingTest(hooks);

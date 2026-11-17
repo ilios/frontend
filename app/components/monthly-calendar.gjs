@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { service } from '@ember/service';
-import { sortBy } from '../utils/array-helpers';
-import { DateTime } from 'luxon';
-import LoadingSpinner from './loading-spinner';
-import t from 'ember-intl/helpers/t';
-import formatDate from 'ember-intl/helpers/format-date';
 import { concat, fn } from '@ember/helper';
 import { on } from '@ember/modifier';
-import slice from '../helpers/slice';
-import IliosCalendarEventMonth from './ilios-calendar-event-month';
-import { gt } from 'ember-truth-helpers';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAnglesDown, faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+import { gt } from 'ember-truth-helpers';
+import { DateTime } from 'luxon';
+
+import slice from '../helpers/slice';
+import { sortBy } from '../utils/array-helpers';
+import IliosCalendarEventMonth from './ilios-calendar-event-month';
+import LoadingSpinner from './loading-spinner';
 
 export default class MonthlyCalendarComponent extends Component {
   @service intl;

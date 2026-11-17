@@ -1,9 +1,9 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import page from 'frontend/tests/pages/reports';
-import { setupApplicationTest, takeScreenshot, setupAuthentication } from 'frontend/tests/helpers';
-import currentAcademicYear from 'frontend/utils/current-academic-year';
+import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
 import { graphQL } from 'frontend/tests/helpers/curriculum-report';
+import page from 'frontend/tests/pages/reports';
+import currentAcademicYear from 'frontend/utils/current-academic-year';
+import { module, test } from 'qunit';
 
 module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   setupApplicationTest(hooks);

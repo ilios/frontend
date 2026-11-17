@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/link-to-with-action';
 import LinkToWithAction from 'frontend/components/link-to-with-action';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/link-to-with-action';
+import { module, test } from 'qunit';
 
 module('Integration | Component | link-to-with-action', function (hooks) {
   setupRenderingTest(hooks);

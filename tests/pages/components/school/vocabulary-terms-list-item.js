@@ -1,6 +1,7 @@
 import { clickable, create, isPresent, text } from 'ember-cli-page-object';
-import newSubTermForm from './vocabulary-new-sub-term';
+
 import editTermForm from './vocabulary-edit-term';
+import newSubTermForm from './vocabulary-new-sub-term';
 
 const definition = {
   scope: '[data-test-school-vocabulary-terms-list-item]',

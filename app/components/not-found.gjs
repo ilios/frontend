@@ -1,7 +1,7 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
 
 export default class NotFoundComponent extends Component {
   @service router;

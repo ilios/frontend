@@ -1,13 +1,13 @@
-import { DateTime } from 'luxon';
-import { module, test } from 'qunit';
 import {
-  setupAuthentication,
   freezeDateAt,
-  unfreezeDate,
   setupApplicationTest,
+  setupAuthentication,
   takeScreenshot,
+  unfreezeDate,
 } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/session';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Acceptance | Session - Offerings', function (hooks) {
   setupApplicationTest(hooks);

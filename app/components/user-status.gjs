@@ -1,6 +1,6 @@
-import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faUserXmark } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
 
 <template>
   {{#unless @user.enabled}}

@@ -1,5 +1,5 @@
-import { get } from '@ember/object';
 import { assert } from '@ember/debug';
+import { get } from '@ember/object';
 
 const ASC_SUFFIX = ':asc';
 const DESC_SUFFIX = ':desc';

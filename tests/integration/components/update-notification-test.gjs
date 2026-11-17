@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
 import Service from '@ember/service';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import UpdateNotification from 'frontend/components/update-notification';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | update notification', function (hooks) {
   setupRenderingTest(hooks);

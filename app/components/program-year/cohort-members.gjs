@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
 import { fn, uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { eq, or } from 'ember-truth-helpers';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+
+import sortBy from '../../helpers/sort-by';
 import SortableTh from '../sortable-th';
 import UserNameInfo from '../user-name-info';
-import sortBy from '../../helpers/sort-by';
-import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import UserStatus from '../user-status';
 
 export default class ProgramYearCohortMembersComponent extends Component {

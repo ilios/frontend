@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import VisualizeVocabularies from 'frontend/components/course/visualize-vocabularies';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/course/visualize-vocabularies';
-import VisualizeVocabularies from 'frontend/components/course/visualize-vocabularies';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course/visualize-vocabularies', function (hooks) {
   setupRenderingTest(hooks);

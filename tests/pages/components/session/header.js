@@ -1,4 +1,5 @@
 import { clickable, create, fillable, isPresent, text } from 'ember-cli-page-object';
+
 import publicationStatus from '../publication-status';
 import publicationMenu from './publication-menu';
 

@@ -1,16 +1,17 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
-import t from 'ember-intl/helpers/t';
-import ConnectionStatus from 'frontend/components/connection-status';
-import ApiVersionNotice from '../components/api-version-notice';
-import UpdateNotification from 'frontend/components/update-notification';
-import IliosHeader from 'frontend/components/ilios-header';
 import { LinkTo } from '@ember/routing';
-import IliosNavigation from 'frontend/components/ilios-navigation';
+import t from 'ember-intl/helpers/t';
+import pageTitle from 'ember-page-title/helpers/page-title';
+import set from 'ember-set-helper/helpers/set';
+import ConnectionStatus from 'frontend/components/connection-status';
 import ErrorDisplay from 'frontend/components/error-display';
 import FlashMessages from 'frontend/components/flash-messages';
-import set from 'ember-set-helper/helpers/set';
+import IliosHeader from 'frontend/components/ilios-header';
+import IliosNavigation from 'frontend/components/ilios-navigation';
+import UpdateNotification from 'frontend/components/update-notification';
 import IliosLogo from 'frontend/images/ilios-logo.svg';
 import Sunburst from 'frontend/images/sunburst.svg';
+
+import ApiVersionNotice from '../components/api-version-notice';
 
 <template>
   {{pageTitle (t "general.ilios") separator=" " front=true}}

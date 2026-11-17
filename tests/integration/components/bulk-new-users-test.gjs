@@ -1,21 +1,21 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import {
+  click,
+  find,
+  findAll,
   render,
   settled,
-  click,
-  findAll,
-  find,
   triggerEvent,
-  waitUntil,
   waitFor,
+  waitUntil,
 } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { HttpResponse } from 'msw';
-import { setupMSW } from 'frontend/tests/msw';
 import BulkNewUsers from 'frontend/components/bulk-new-users';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { DateTime } from 'luxon';
+import { HttpResponse } from 'msw';
+import { module, test } from 'qunit';
 
 module('Integration | Component | bulk new users', function (hooks) {
   setupRenderingTest(hooks);

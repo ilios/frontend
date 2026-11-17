@@ -1,9 +1,9 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/api-version-notice';
 import ApiVersionNotice from 'frontend/components/api-version-notice';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/api-version-notice';
+import { module, test } from 'qunit';
 
 module('Integration | Component | api-version-notice', function (hooks) {
   setupRenderingTest(hooks);

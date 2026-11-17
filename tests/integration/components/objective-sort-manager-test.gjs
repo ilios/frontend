@@ -1,9 +1,9 @@
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, click, findAll } from '@ember/test-helpers';
-import { module, skip, test } from 'qunit';
-import { setupMSW } from 'frontend/tests/msw';
+import { click, findAll,render } from '@ember/test-helpers';
 import ObjectiveSortManager from 'frontend/components/objective-sort-manager';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { module, skip, test } from 'qunit';
 
 module('Integration | Component | objective sort manager', function (hooks) {
   setupRenderingTest(hooks);

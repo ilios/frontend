@@ -1,15 +1,15 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { setupMSW } from 'frontend/tests/msw';
-import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { component } from 'frontend/tests/pages/components/daily-calendar';
-import { setLocale } from 'ember-intl/test-support';
-import DailyCalendar from 'frontend/components/daily-calendar';
-import Event from 'frontend/classes/event';
 import { array } from '@ember/helper';
+import { render } from '@ember/test-helpers';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
+import { setLocale } from 'ember-intl/test-support';
+import Event from 'frontend/classes/event';
+import DailyCalendar from 'frontend/components/daily-calendar';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/daily-calendar';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | daily-calendar', function (hooks) {
   setupRenderingTest(hooks);

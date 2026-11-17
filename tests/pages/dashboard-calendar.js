@@ -1,4 +1,5 @@
 import { create, visitable } from 'ember-cli-page-object';
+
 import calendar from './components/dashboard/calendar';
 import navigation from './components/dashboard/navigation';
 

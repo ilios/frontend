@@ -1,17 +1,18 @@
+import { uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { findBy, mapBy } from '../../utils/array-helpers';
+import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import { uniqueId } from '@ember/helper';
-import { on } from '@ember/modifier';
-import focus from '../../modifiers/focus';
+import set from 'ember-set-helper/helpers/set';
+import { eq } from 'ember-truth-helpers';
+
 import includes from '../../helpers/includes';
 import pick from '../../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
 import sortBy from '../../helpers/sort-by';
-import { eq } from 'ember-truth-helpers';
-import perform from 'ember-concurrency/helpers/perform';
+import focus from '../../modifiers/focus';
+import { findBy, mapBy } from '../../utils/array-helpers';
 import LoadingSpinner from '../loading-spinner';
 
 export default class ProgramYearNewComponent extends Component {

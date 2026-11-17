@@ -1,13 +1,13 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { not } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import formatDate from 'ember-intl/helpers/format-date';
-import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
 import { faCalendarCheck, faCalendarMinus, faFlask } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+import { not } from 'ember-truth-helpers';
 
 export default class IliosCalendarMultidayEventComponent extends Component {
   get isIlm() {

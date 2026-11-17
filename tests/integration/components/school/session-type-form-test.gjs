@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/school/session-type-form';
 import SessionTypeForm from 'frontend/components/school/session-type-form';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/school/session-type-form';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/session-type-form', function (hooks) {
   setupRenderingTest(hooks);

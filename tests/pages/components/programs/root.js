@@ -1,14 +1,15 @@
 import {
   clickable,
-  create,
   collection,
+  create,
   fillable,
   isVisible,
   text,
   value,
 } from 'ember-cli-page-object';
-import list from './list';
+
 import newProgramForm from '../program/new';
+import list from './list';
 
 const definition = {
   scope: '[data-test-programs]',

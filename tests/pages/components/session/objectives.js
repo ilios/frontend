@@ -1,6 +1,7 @@
 import { clickable, create, text } from 'ember-cli-page-object';
-import objectiveList from './objective-list';
+
 import newObjective from './../new-objective';
+import objectiveList from './objective-list';
 
 const definition = {
   scope: '[data-test-session-objectives]',

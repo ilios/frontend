@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/course-search-result';
 import CourseSearchResult from 'frontend/components/course-search-result';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/course-search-result';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course-search-result', function (hooks) {
   setupRenderingTest(hooks);

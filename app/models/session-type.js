@@ -1,7 +1,7 @@
-import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { htmlSafe } from '@ember/template';
-import { TrackedAsyncData } from 'ember-async-data';
+import Model, { attr,belongsTo, hasMany } from '@ember-data/model';
 import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SessionType extends Model {
   @attr('string')

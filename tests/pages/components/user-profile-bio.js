@@ -1,4 +1,5 @@
 import { create } from 'ember-cli-page-object';
+
 import bioDetails from './user-profile-bio-details';
 import bioManager from './user-profile-bio-manager';
 

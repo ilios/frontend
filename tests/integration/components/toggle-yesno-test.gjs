@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { component } from 'frontend/tests/pages/components/toggle-yesno';
 import ToggleYesno from 'frontend/components/toggle-yesno';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/toggle-yesno';
+import { module, test } from 'qunit';
 
 module('Integration | Component | toggle yesno', function (hooks) {
   setupRenderingTest(hooks);

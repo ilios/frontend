@@ -1,21 +1,22 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { cached } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
-import { action } from '@ember/object';
-import { findById } from '../../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
-import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { and, not } from 'ember-truth-helpers';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import { and, not } from 'ember-truth-helpers';
+
+import { findById } from '../../utils/array-helpers';
 import ExpandCollapseButton from '../expand-collapse-button';
 import SessionTypeForm from './session-type-form';
 import SessionTypeManager from './session-type-manager';
 import SessionTypesList from './session-types-list';
-import { faCaretDown, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolSessionTypesExpandedComponent extends Component {
   @service store;

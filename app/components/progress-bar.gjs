@@ -1,5 +1,5 @@
-import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
+import Component from '@glimmer/component';
 import { or } from 'ember-truth-helpers';
 
 export default class ProgressBarComponent extends Component {

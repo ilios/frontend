@@ -1,4 +1,5 @@
 import { collection, create } from 'ember-cli-page-object';
+
 import searchBox from './search-box';
 import userSearchResult from './user-search-result';
 const definition = {

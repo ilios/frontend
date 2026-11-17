@@ -1,17 +1,18 @@
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
-import InstructorManager from './instructor-manager';
+
 import sortBy from '../../helpers/sort-by';
+import BigSaveCancelButtons from '../big-save-cancel-buttons';
 import UserNameInfo from '../user-name-info';
 import UserStatus from '../user-status';
-import BigSaveCancelButtons from '../big-save-cancel-buttons';
+import InstructorManager from './instructor-manager';
 
 export default class InstructorGroupUsersComponent extends Component {
   @tracked usersBuffer = [];

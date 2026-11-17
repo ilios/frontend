@@ -1,4 +1,4 @@
-import { create, collection, text } from 'ember-cli-page-object';
+import { collection, create, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-user-profile-learner-groups]',

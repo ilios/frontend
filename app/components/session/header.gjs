@@ -1,18 +1,19 @@
+import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
 import { task } from 'ember-concurrency';
-import EditableField from '../editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
+import focus from '../../modifiers/focus';
+import EditableField from '../editable-field';
+import PublicationStatus from '../publication-status';
 import YupValidationMessage from '../yup-validation-message';
 import PublicationMenu from './publication-menu';
-import PublicationStatus from '../publication-status';
-import focus from '../../modifiers/focus';
 
 export default class SessionHeaderComponent extends Component {
   @tracked title;

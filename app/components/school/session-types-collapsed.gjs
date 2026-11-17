@@ -1,11 +1,12 @@
-import Component from '@glimmer/component';
-import { cached } from '@glimmer/tracking';
-import { filterBy } from '../../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+
+import { filterBy } from '../../utils/array-helpers';
 
 export default class SchoolSessionTypesCollapsedComponent extends Component {
   @cached

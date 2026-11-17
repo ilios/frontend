@@ -1,9 +1,9 @@
 import {
-  create,
   clickable,
+  create,
   fillable,
-  isVisible,
   isPresent,
+  isVisible,
   text,
   value,
 } from 'ember-cli-page-object';

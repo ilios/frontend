@@ -1,5 +1,6 @@
 import Service from '@ember/service';
 import { DateTime } from 'luxon';
+
 import { uniqueValues } from '../utils/array-helpers';
 
 /**

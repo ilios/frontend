@@ -1,7 +1,7 @@
-import { currentURL, currentRouteName } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupApplicationTest, takeScreenshot, setupAuthentication } from 'frontend/tests/helpers';
+import { currentRouteName,currentURL } from '@ember/test-helpers';
+import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/course';
+import { module, test } from 'qunit';
 
 module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);

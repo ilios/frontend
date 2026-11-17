@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import { hash } from 'rsvp';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import { or } from 'ember-truth-helpers';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import InstructorSelectionManager from './instructor-selection-manager';
-import SelectedInstructors from './selected-instructors';
-import SelectedInstructorGroups from './selected-instructor-groups';
+import t from 'ember-intl/helpers/t';
+import { or } from 'ember-truth-helpers';
+import { hash } from 'rsvp';
+
 import BigSaveCancelButtons from './big-save-cancel-buttons';
+import InstructorSelectionManager from './instructor-selection-manager';
+import SelectedInstructorGroups from './selected-instructor-groups';
+import SelectedInstructors from './selected-instructors';
 
 export default class DetailInstructorsComponent extends Component {
   @service currentUser;

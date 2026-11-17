@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { OfferingTimeBlock } from 'frontend/utils/offering-date-block';
-import { component } from 'frontend/tests/pages/components/session-offerings-time-block-offerings';
 import SessionOfferingsTimeBlockOfferings from 'frontend/components/session-offerings-time-block-offerings';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/session-offerings-time-block-offerings';
+import { OfferingTimeBlock } from 'frontend/utils/offering-date-block';
+import { module, test } from 'qunit';
 
 module('Integration | Component | session-offerings-time-block-offerings', function (hooks) {
   setupRenderingTest(hooks);

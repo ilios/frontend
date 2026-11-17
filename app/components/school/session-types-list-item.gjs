@@ -1,15 +1,7 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
+import { concat,fn } from '@ember/helper';
 import { on } from '@ember/modifier';
-import { fn, concat } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { and, eq, not } from 'ember-truth-helpers';
-import set from 'ember-set-helper/helpers/set';
 import { LinkTo } from '@ember/routing';
-import perform from 'ember-concurrency/helpers/perform';
-import scrollIntoView from '../../modifiers/scroll-into-view';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faBan,
   faChartColumn,
@@ -17,6 +9,15 @@ import {
   faPenToSquare,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { and, eq, not } from 'ember-truth-helpers';
+
+import scrollIntoView from '../../modifiers/scroll-into-view';
 
 export default class SchoolSessionTypesListItemComponent extends Component {
   @tracked showRemoveConfirmation = false;

@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw';
+
 import { db } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';

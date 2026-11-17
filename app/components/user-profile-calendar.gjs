@@ -1,16 +1,17 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { DateTime } from 'luxon';
-import { tracked, cached } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
-import { sortBy } from '../utils/array-helpers';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached,tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import IliosCalendarWeek from './ilios-calendar-week';
+import { DateTime } from 'luxon';
+
 import Event from '../classes/event';
-import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
+import { sortBy } from '../utils/array-helpers';
+import IliosCalendarWeek from './ilios-calendar-week';
 
 export default class UserProfileCalendarComponent extends Component {
   @service fetch;

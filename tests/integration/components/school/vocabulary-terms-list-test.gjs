@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/school/vocabulary-terms-list';
-import { setupMSW } from 'frontend/tests/msw';
 import VocabularyTermsList from 'frontend/components/school/vocabulary-terms-list';
 import noop from 'frontend/helpers/noop';
 import noopTask from 'frontend/helpers/noop-task';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/school/vocabulary-terms-list';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/vocabulary-terms-list', function (hooks) {
   setupRenderingTest(hooks);

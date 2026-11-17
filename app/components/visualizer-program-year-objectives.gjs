@@ -1,17 +1,18 @@
-import Component from '@glimmer/component';
-import { htmlSafe } from '@ember/template';
-import { filter } from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
-import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { filterBy, uniqueValues } from '../utils/array-helpers';
+import { htmlSafe } from '@ember/template';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { or } from 'ember-truth-helpers';
-import SimpleChart from 'ember-simple-charts/components/simple-chart';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import truncate from '../helpers/truncate';
+import SimpleChart from 'ember-simple-charts/components/simple-chart';
+import { or } from 'ember-truth-helpers';
+import { filter } from 'rsvp';
+
 import join from '../helpers/join';
+import truncate from '../helpers/truncate';
+import { filterBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerProgramYearObjectivesComponent extends Component {
   @service intl;

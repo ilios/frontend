@@ -1,20 +1,21 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { action } from '@ember/object';
-import { htmlSafe } from '@ember/template';
-import { DateTime } from 'luxon';
-import { guidFor } from '@ember/object/internals';
-import colorChange from '../utils/color-change';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+import { service } from '@ember/service';
+import { htmlSafe } from '@ember/template';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faExclamation } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import Color from 'color';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { DateTime } from 'luxon';
+
 import noop from '../helpers/noop';
 import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
-import set from 'ember-set-helper/helpers/set';
+import colorChange from '../utils/color-change';
 import IliosTooltip from './ilios-tooltip';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import formatDate from 'ember-intl/helpers/format-date';
-import Color from 'color';
-import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class IliosCalendarEventMonthComponent extends Component {
   @service calendarEventTooltip;

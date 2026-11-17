@@ -1,19 +1,20 @@
+import { uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
+import { isBlank } from '@ember/utils';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { service } from '@ember/service';
-import { isBlank } from '@ember/utils';
-import { uniqueId } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import pick from '../../helpers/pick';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
-import YupValidationMessage from '../yup-validation-message';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
 import BigSaveCancelButtons from '../big-save-cancel-buttons';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class SchoolEmailsEditorComponent extends Component {
   @service intl;

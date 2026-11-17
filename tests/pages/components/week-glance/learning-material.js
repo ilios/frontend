@@ -1,4 +1,5 @@
 import { attribute, create, isPresent, text } from 'ember-cli-page-object';
+
 import typeIcon from '../lm-type-icon';
 
 const definition = {

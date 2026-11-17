@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { action } from '@ember/object';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import UserSearch from '../../../user-search';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+
+import UserSearch from '../../../user-search';
 
 export default class ReportsSubjectNewInstructorComponent extends Component {
   @service store;

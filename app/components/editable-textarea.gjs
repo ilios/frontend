@@ -1,14 +1,15 @@
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
-import { action } from '@ember/object';
-import { on } from '@ember/modifier';
-import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
-import onKey from 'ember-keyboard/modifiers/on-key';
 import t from 'ember-intl/helpers/t';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import onKey from 'ember-keyboard/modifiers/on-key';
+import set from 'ember-set-helper/helpers/set';
+
 import HtmlEditor from './html-editor';
 import SaveButton from './save-button';
 

@@ -1,7 +1,7 @@
 import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faCaretRight, faBan, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faBan, faCaretRight, faCheck } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
 <template>
   <section
     class="school-learning-material-attributes-collapsed"

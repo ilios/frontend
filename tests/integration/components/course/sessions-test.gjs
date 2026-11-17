@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/course/sessions';
+import { render } from '@ember/test-helpers';
 import Sessions from 'frontend/components/course/sessions';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/sessions';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course/sessions', function (hooks) {
   setupRenderingTest(hooks);

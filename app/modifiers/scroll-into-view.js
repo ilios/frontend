@@ -1,5 +1,6 @@
-import Modifier from 'ember-modifier';
 import { registerDestructor } from '@ember/destroyable';
+import Modifier from 'ember-modifier';
+
 import { default as scroll } from '../utils/scroll-into-view';
 
 export default class ScrollIntoView extends Modifier {

@@ -1,6 +1,6 @@
+import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import { filter } from 'rsvp';
-import Route from '@ember/routing/route';
 
 export default class UsersRoute extends Route {
   @service currentUser;

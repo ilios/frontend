@@ -1,5 +1,6 @@
-import { service } from '@ember/service';
 import Route from '@ember/routing/route';
+import { service } from '@ember/service';
+
 import { findById } from '../utils/array-helpers';
 
 export default class SessionRoute extends Route {

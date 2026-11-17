@@ -1,7 +1,8 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
-import t from 'ember-intl/helpers/t';
-import NotFound from '../components/not-found';
 import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+import pageTitle from 'ember-page-title/helpers/page-title';
+
+import NotFound from '../components/not-found';
 <template>
   {{pageTitle (t "general.error")}}
   <div class="full-screen-error main-section">

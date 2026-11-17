@@ -1,4 +1,5 @@
 import { create, text } from 'ember-cli-page-object';
+
 import selectedTermTree from './selected-term-tree';
 
 const definition = {

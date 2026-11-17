@@ -1,5 +1,5 @@
-import JSONAPISerializer from '@ember-data/serializer/json-api';
 import { camelize } from '@ember/string';
+import JSONAPISerializer from '@ember-data/serializer/json-api';
 import { pluralize } from 'ember-inflector';
 
 export default class ApplicationSerializer extends JSONAPISerializer {

@@ -1,4 +1,4 @@
-import { create, fillable, collection, attribute, isPresent, text } from 'ember-cli-page-object';
+import { attribute, collection, create, fillable, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   filterByTitle: fillable('[data-test-subject-results]'),

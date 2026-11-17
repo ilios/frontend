@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
-import { component } from 'frontend/tests/pages/components/editable-textarea';
 import EditableTextarea from 'frontend/components/editable-textarea';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/editable-textarea';
+import { module, test } from 'qunit';
 
 module('Integration | Component | editable textarea', function (hooks) {
   setupRenderingTest(hooks);

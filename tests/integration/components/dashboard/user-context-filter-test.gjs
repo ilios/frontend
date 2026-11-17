@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
+import UserContextFilter from 'frontend/components/dashboard/user-context-filter';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
-import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'frontend/tests/pages/components/dashboard/user-context-filter';
-import UserContextFilter from 'frontend/components/dashboard/user-context-filter';
+import { module, test } from 'qunit';
 
 module('Integration | Component | dashboard/user-context-filter', function (hooks) {
   setupRenderingTest(hooks);

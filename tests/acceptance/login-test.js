@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { visit, currentURL } from '@ember/test-helpers';
-import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { currentURL,visit } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Acceptance | login', function (hooks) {
   setupApplicationTest(hooks);

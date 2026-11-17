@@ -1,11 +1,11 @@
+import { setRunOptions } from 'ember-a11y-testing/test-support';
+import { setupIntl } from 'ember-intl/test-support';
 import {
   setupApplicationTest as upstreamSetupApplicationTest,
   setupRenderingTest as upstreamSetupRenderingTest,
   setupTest as upstreamSetupTest,
 } from 'ember-qunit';
 import { setupMSW } from 'frontend/tests/msw';
-import { setupIntl } from 'ember-intl/test-support';
-import { setRunOptions } from 'ember-a11y-testing/test-support';
 import translationsForEnUs from 'virtual:ember-intl/translations/en-us';
 import translationsForEs from 'virtual:ember-intl/translations/es';
 import translationsForFr from 'virtual:ember-intl/translations/fr';
@@ -75,10 +75,9 @@ function setupTest(hooks, options) {
 }
 
 export { setupApplicationTest, setupRenderingTest, setupTest };
-export { takeScreenshot, takeComponentScreenshot } from './take-screenshot';
-
-export { default as setupAuthentication } from './setup-authentication';
-export { default as waitForResource } from './wait-for-resource';
+export { default as jwtEncode } from './jwt-encode';
 export { freezeDateAt, unfreezeDate } from './mockdate';
 export { default as setPreferReducedMotion } from './set-prefer-reduced-motion';
-export { default as jwtEncode } from './jwt-encode';
+export { default as setupAuthentication } from './setup-authentication';
+export { takeComponentScreenshot,takeScreenshot } from './take-screenshot';
+export { default as waitForResource } from './wait-for-resource';

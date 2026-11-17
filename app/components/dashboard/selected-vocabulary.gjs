@@ -1,9 +1,10 @@
+import { fn } from '@ember/helper';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { fn } from '@ember/helper';
-import inViewport from '../../modifiers/in-viewport';
+
 import sortBy from '../../helpers/sort-by';
+import inViewport from '../../modifiers/in-viewport';
 import SelectedTermTree from './selected-term-tree';
 
 export default class DashboardSelectedVocabularyComponent extends Component {

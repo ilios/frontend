@@ -1,10 +1,10 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import SummaryHeader from 'frontend/components/course/summary-header';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/course/summary-header';
-import SummaryHeader from 'frontend/components/course/summary-header';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course summary header', function (hooks) {
   setupRenderingTest(hooks);

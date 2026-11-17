@@ -1,15 +1,16 @@
+import { fn } from '@ember/helper';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { fn } from '@ember/helper';
-import { eq, or } from 'ember-truth-helpers';
-import t from 'ember-intl/helpers/t';
-import { LinkTo } from '@ember/routing';
 import { TrackedAsyncData } from 'ember-async-data';
-import UserStatus from './user-status';
-import UserNameInfo from './user-name-info';
-import SortableTh from './sortable-th';
+import t from 'ember-intl/helpers/t';
+import { eq, or } from 'ember-truth-helpers';
+
 import LoadingSpinner from './loading-spinner';
+import SortableTh from './sortable-th';
+import UserNameInfo from './user-name-info';
+import UserStatus from './user-status';
 
 export default class UserListComponent extends Component {
   get sortedAscending() {

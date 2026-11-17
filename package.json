@@ -132,6 +132,7 @@
     "eslint-plugin-ember": "^12.7.5",
     "eslint-plugin-n": "^17.24.0",
     "eslint-plugin-qunit": "^8.2.6",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
     "file-saver": "^2.0.5",
     "flatpickr": "^4.6.13",
     "globals": "^16.5.0",

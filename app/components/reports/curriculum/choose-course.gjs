@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { eq, gt } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import pick from '../../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
+import { eq, gt } from 'ember-truth-helpers';
+
+import includes from '../../../helpers/includes';
+import pick from '../../../helpers/pick';
 import sortBy from '../../../helpers/sort-by';
 import { sortBy as uSortBy } from '../../../utils/array-helpers';
-import { fn } from '@ember/helper';
-import includes from '../../../helpers/includes';
-import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsCurriculumChooseCourseComponent extends Component {
   @service iliosConfig;

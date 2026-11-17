@@ -1,13 +1,14 @@
+import { get } from '@ember/helper';
+import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { task } from 'ember-concurrency';
-import includes from '../../helpers/includes';
-import { get } from '@ember/helper';
-import mapBy from '../../helpers/map-by';
-import { and, not } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
+import { and, not } from 'ember-truth-helpers';
+
+import includes from '../../helpers/includes';
+import mapBy from '../../helpers/map-by';
 import sortBy from '../../helpers/sort-by';
 
 export default class ProgramYearManagedCompetencyListItemComponent extends Component {

@@ -1,17 +1,18 @@
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
-import EditableField from '../editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import YupValidationMessage from '../yup-validation-message';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
 import focus from '../../modifiers/focus';
+import EditableField from '../editable-field';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class SchoolCompetencyTitleEditorComponent extends Component {
   @tracked title;

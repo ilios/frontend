@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
+import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { service } from '@ember/service';
 
 export default class ProgramYearIndexController extends Controller {
   @service schoolConfig;

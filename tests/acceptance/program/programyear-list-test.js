@@ -1,8 +1,8 @@
 import { currentRouteName } from '@ember/test-helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
+import page from 'frontend/tests/pages/program';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import page from 'frontend/tests/pages/program';
 
 module('Acceptance | Program - ProgramYear List', function (hooks) {
   setupApplicationTest(hooks);

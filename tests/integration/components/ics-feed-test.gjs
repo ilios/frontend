@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/ics-feed';
 import IcsFeed from 'frontend/components/ics-feed';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/ics-feed';
+import { module, test } from 'qunit';
 
 module('Integration | Component | ics feed', function (hooks) {
   setupRenderingTest(hooks);

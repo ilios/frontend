@@ -1,12 +1,13 @@
-import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import DetailTermsList from './detail-terms-list';
-import noop from '../helpers/noop';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+
+import noop from '../helpers/noop';
 import BigSaveCancelButtons from './big-save-cancel-buttons';
+import DetailTermsList from './detail-terms-list';
 
 export default class ObjectiveListItemTermsComponent extends Component {
   @cached

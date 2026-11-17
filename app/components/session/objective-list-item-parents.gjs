@@ -1,9 +1,10 @@
-import Component from '@glimmer/component';
-import sortableByPosition from '../../utils/sortable-by-position';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FadeText from '../fade-text';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
+
+import sortableByPosition from '../../utils/sortable-by-position';
 import BigSaveCancelButtons from '../big-save-cancel-buttons';
+import FadeText from '../fade-text';
 
 export default class SessionObjectiveListItemParentsComponent extends Component {
   get parentTitles() {

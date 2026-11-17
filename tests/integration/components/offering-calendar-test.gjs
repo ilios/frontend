@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
 import { array } from '@ember/helper';
-import { setupMSW } from 'frontend/tests/msw';
-import { DateTime } from 'luxon';
+import { render } from '@ember/test-helpers';
 import OfferingCalendar from 'frontend/components/offering-calendar';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/offering-calendar';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | offering-calendar', function (hooks) {
   setupRenderingTest(hooks);

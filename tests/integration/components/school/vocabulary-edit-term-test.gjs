@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/school/vocabulary-edit-term';
-import { setupMSW } from 'frontend/tests/msw';
 import VocabularyEditTerm from 'frontend/components/school/vocabulary-edit-term';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/school/vocabulary-edit-term';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/vocabulary-edit-term', function (hooks) {
   setupRenderingTest(hooks);

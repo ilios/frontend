@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/user-name-info';
-import { setupMSW } from 'frontend/tests/msw';
 import UserNameInfo from 'frontend/components/user-name-info';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/user-name-info';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user-name-info', function (hooks) {
   setupRenderingTest(hooks);

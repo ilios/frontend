@@ -1,6 +1,7 @@
-import { module, test } from 'qunit';
-import { setupApplicationTest, takeScreenshot, setupAuthentication } from 'frontend/tests/helpers';
 import { triggerEvent, waitFor } from '@ember/test-helpers';
+import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
+
 import page from '../../pages/learner-group';
 
 module('Acceptance | learner-group/bulk-assignment', function (hooks) {

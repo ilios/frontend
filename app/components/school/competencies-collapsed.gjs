@@ -1,11 +1,12 @@
+import { on } from '@ember/modifier';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+
 import sortBy from '../../helpers/sort-by';
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesCollapsedComponent extends Component {
   @tracked competenciesRelationship;

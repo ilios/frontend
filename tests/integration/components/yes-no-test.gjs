@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/yes-no';
 import YesNo from 'frontend/components/yes-no';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/yes-no';
+import { module, test } from 'qunit';
 
 module('Integration | Component | yes-no', function (hooks) {
   setupRenderingTest(hooks);

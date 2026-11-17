@@ -1,6 +1,7 @@
+import random from 'ember-math-helpers/helpers/random';
+
 import repeat from '../../helpers/repeat';
 import truncate from '../../helpers/truncate';
-import random from 'ember-math-helpers/helpers/random';
 <template>
   {{! template-lint-disable no-unused-block-params }}
   {{#each (repeat @count)}}

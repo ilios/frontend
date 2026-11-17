@@ -1,12 +1,13 @@
 import {
   attribute,
-  create,
   clickable,
+  create,
   fillable,
-  text,
   isVisible,
+  text,
   value,
 } from 'ember-cli-page-object';
+
 import datePicker from '../date-picker';
 
 const definition = {

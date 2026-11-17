@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+
 import sortBy from '../helpers/sort-by';
 import UserNameInfo from './user-name-info';
 

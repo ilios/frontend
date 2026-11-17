@@ -1,5 +1,6 @@
-import { service } from '@ember/service';
 import Route from '@ember/routing/route';
+import { service } from '@ember/service';
+
 import { loadQuillEditor } from '../utils/load-quill-editor';
 
 export default class CourseRoute extends Route {

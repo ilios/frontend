@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/user-status';
-import { setupMSW } from 'frontend/tests/msw';
 import UserStatus from 'frontend/components/user-status';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/user-status';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user-status', function (hooks) {
   setupRenderingTest(hooks);

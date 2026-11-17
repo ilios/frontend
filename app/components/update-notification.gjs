@@ -1,7 +1,7 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
 import { on } from '@ember/modifier';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 

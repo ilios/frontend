@@ -1,6 +1,6 @@
-import Modifier from 'ember-modifier';
-import { service } from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
+import { service } from '@ember/service';
+import Modifier from 'ember-modifier';
 
 export default class AnimateLoadingModifier extends Modifier {
   @service loadingOpacityTracker;

@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/user-search-result';
 import UserSearchResultInstructorGroup from 'frontend/components/user-search-result-instructor-group';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/user-search-result';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user-search-result-instructor-group', function (hooks) {
   setupRenderingTest(hooks);

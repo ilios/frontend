@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class UserProfileLearnerGroupComponent extends Component {
   @cached

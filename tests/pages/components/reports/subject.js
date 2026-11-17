@@ -1,15 +1,16 @@
 import {
   attribute,
   clickable,
-  create,
   collection,
+  create,
   fillable,
   isPresent,
   text,
   value,
 } from 'ember-cli-page-object';
-import academicYears from './subject-year-filter';
+
 import copy from './subject-copy';
+import academicYears from './subject-year-filter';
 
 const definition = {
   scope: '[data-test-reports-subject]',

@@ -1,13 +1,13 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { DateTime } from 'luxon';
-import { render } from '@ember/test-helpers';
+import { array } from '@ember/helper';
 import Service from '@ember/service';
-import { component } from 'frontend/tests/pages/components/sessions-grid-session-row';
+import { render } from '@ember/test-helpers';
 import SessionsGridSessionRow from 'frontend/components/sessions-grid-session-row';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/sessions-grid-session-row';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | sessions-grid-session-row', function (hooks) {
   setupRenderingTest(hooks);

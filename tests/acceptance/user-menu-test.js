@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
 import { setupApplicationTest, setupAuthentication } from 'frontend/tests/helpers';
 import dashboardPage from 'frontend/tests/pages/dashboard';
 import myprofilePage from 'frontend/tests/pages/my-profile';
+import { module, test } from 'qunit';
 
 module('Acceptance | user menu', function (hooks) {
   setupApplicationTest(hooks);

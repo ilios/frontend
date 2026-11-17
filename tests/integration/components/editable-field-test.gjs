@@ -1,13 +1,13 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { on } from '@ember/modifier';
 import { render } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
-import { component } from 'frontend/tests/pages/components/editable-field';
-import EditableField from 'frontend/components/editable-field';
-import { on } from '@ember/modifier';
-import pick from 'frontend/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
+import EditableField from 'frontend/components/editable-field';
 import noop from 'frontend/helpers/noop';
+import pick from 'frontend/helpers/pick';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/editable-field';
+import { module, test } from 'qunit';
 
 module('Integration | Component | editable field', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,14 +1,14 @@
 import Service from '@ember/service';
-import { resolve } from 'rsvp';
-import { module, test } from 'qunit';
-import { setupRenderingTest, freezeDateAt, unfreezeDate } from 'frontend/tests/helpers';
-import { render, click, find, findAll, fillIn, blur as emberBlur } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { setupMSW } from 'frontend/tests/msw';
-import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
+import { blur as emberBlur,click, fillIn, find, findAll, render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import Rollover from 'frontend/components/course/rollover';
 import noop from 'frontend/helpers/noop';
+import { freezeDateAt, setupRenderingTest, unfreezeDate } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { formatJsonApi } from 'frontend/tests/msw/utils/json-api-formatter.js';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
+import { resolve } from 'rsvp';
 
 module('Integration | Component | course/rollover', function (hooks) {
   setupRenderingTest(hooks);

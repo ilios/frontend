@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
-import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/components/course/publish-all-sessions';
+import { module, test } from 'qunit';
 
 module('Acceptance | Course - Publish All Sessions', function (hooks) {
   setupApplicationTest(hooks);

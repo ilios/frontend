@@ -1,8 +1,9 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { sortBy } from '../../utils/array-helpers';
 import t from 'ember-intl/helpers/t';
+
+import { sortBy } from '../../utils/array-helpers';
 import CompetenciesListItem from './competencies-list-item';
 
 export default class SchoolCompetenciesListComponent extends Component {

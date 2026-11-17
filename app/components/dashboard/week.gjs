@@ -1,15 +1,16 @@
+import { fn, hash } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { DateTime } from 'luxon';
-import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import { LinkTo } from '@ember/routing';
-import { fn, hash } from '@ember/helper';
+import { DateTime } from 'luxon';
+
 import inViewport from '../../modifiers/in-viewport';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import WeekGlance from '../week-glance';
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardWeekComponent extends Component {
   @tracked displayBackToTop = false;

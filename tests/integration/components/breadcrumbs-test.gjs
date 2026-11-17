@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { eq } from 'ember-truth-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
+import { eq } from 'ember-truth-helpers';
 import Breadcrumbs from 'frontend/components/breadcrumbs';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/breadcrumbs';
+import { module, test } from 'qunit';
 
 module('Integration | Component | breadcrumbs', function (hooks) {
   setupRenderingTest(hooks);

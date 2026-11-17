@@ -1,17 +1,18 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
-import { findBy, mapBy, uniqueValues } from '../../utils/array-helpers';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import BulkGroupMatcher from './bulk-group-matcher';
-import sortBy from '../../helpers/sort-by';
-import { and, gt } from 'ember-truth-helpers';
-import BulkFinalizeUsers from './bulk-finalize-users';
-import UploadData from './upload-data';
 import set from 'ember-set-helper/helpers/set';
+import { and, gt } from 'ember-truth-helpers';
+
+import sortBy from '../../helpers/sort-by';
+import { findBy, mapBy, uniqueValues } from '../../utils/array-helpers';
+import BulkFinalizeUsers from './bulk-finalize-users';
+import BulkGroupMatcher from './bulk-group-matcher';
+import UploadData from './upload-data';
 
 export default class LearnerGroupBulkAssignmentComponent extends Component {
   @service store;

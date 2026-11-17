@@ -1,12 +1,13 @@
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { task, timeout } from 'ember-concurrency';
-import { service } from '@ember/service';
-import { findBy } from '../../utils/array-helpers';
-import t from 'ember-intl/helpers/t';
-import UserNameInfo from '../user-name-info';
-import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+
+import { findBy } from '../../utils/array-helpers';
 import LoadingSpinner from '../loading-spinner';
+import UserNameInfo from '../user-name-info';
 
 export default class LearnerGroupBulkFinalizeUsersComponent extends Component {
   @service flashMessages;

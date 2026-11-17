@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/pagination-links';
-import PaginationLinks from 'frontend/components/pagination-links';
 import set from 'ember-set-helper/helpers/set';
+import PaginationLinks from 'frontend/components/pagination-links';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/pagination-links';
+import { module, test } from 'qunit';
 
 module('Integration | Component | pagination-links', function (hooks) {
   setupRenderingTest(hooks);

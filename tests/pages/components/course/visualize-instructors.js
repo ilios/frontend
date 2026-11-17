@@ -1,6 +1,7 @@
 import { create, fillable, text, value } from 'ember-cli-page-object';
-import instructorsChart from './visualize-instructors-graph';
+
 import breadcrumbs from '../breadcrumbs';
+import instructorsChart from './visualize-instructors-graph';
 
 const definition = create({
   scope: '[data-test-course-visualize-instructors]',

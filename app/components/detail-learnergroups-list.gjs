@@ -1,7 +1,8 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
+import { filter } from 'rsvp';
+
 import { mapBy, uniqueValues } from '../utils/array-helpers';
 import DetailLearnergroupsListItem from './detail-learnergroups-list-item';
 import LoadingSpinner from './loading-spinner';

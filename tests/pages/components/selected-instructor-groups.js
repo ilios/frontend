@@ -1,4 +1,5 @@
 import { clickable, collection, create, isVisible, text } from 'ember-cli-page-object';
+
 import members from './selected-instructor-group-members';
 const definition = {
   scope: '[data-test-selected-instructor-groups]',

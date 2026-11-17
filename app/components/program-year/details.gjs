@@ -1,16 +1,17 @@
-import LeadershipExpanded from '../leadership-expanded';
 import { fn } from '@ember/helper';
-import LeadershipCollapsed from '../leadership-collapsed';
-import hasManyLength from '../../helpers/has-many-length';
 import { eq, or } from 'ember-truth-helpers';
-import Competencies from './competencies';
+
+import hasManyLength from '../../helpers/has-many-length';
 import CollapsedCompetencies from '../collapsed-competencies';
-import Objectives from './objectives';
-import CollapsedObjectives from './collapsed-objectives';
-import DetailTaxonomies from '../detail-taxonomies';
 import CollapsedTaxonomies from '../collapsed-taxonomies';
-import CourseAssociations from './course-associations';
+import DetailTaxonomies from '../detail-taxonomies';
+import LeadershipCollapsed from '../leadership-collapsed';
+import LeadershipExpanded from '../leadership-expanded';
 import CohortMembers from './cohort-members';
+import CollapsedObjectives from './collapsed-objectives';
+import Competencies from './competencies';
+import CourseAssociations from './course-associations';
+import Objectives from './objectives';
 
 <template>
   <div class="programyear-details" data-test-program-year-details ...attributes>

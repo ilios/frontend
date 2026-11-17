@@ -1,4 +1,4 @@
-import { clickable, create, text, isPresent } from 'ember-cli-page-object';
+import { clickable, create, isPresent,text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-institutional-information-details]',

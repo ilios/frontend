@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
 import {
-  setupAuthentication,
   freezeDateAt,
-  unfreezeDate,
   setupApplicationTest,
+  setupAuthentication,
+  unfreezeDate,
 } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/weeklyevents';
 import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Acceptance | Weekly events', function (hooks) {
   setupApplicationTest(hooks);

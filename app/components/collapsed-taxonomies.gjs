@@ -1,11 +1,12 @@
-import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { get } from '@ember/helper';
-import intersect from '../helpers/intersect';
-import hasManyIds from '../helpers/has-many-ids';
-import LoadingSpinner from './loading-spinner';
+import { on } from '@ember/modifier';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
+
+import hasManyIds from '../helpers/has-many-ids';
+import intersect from '../helpers/intersect';
+import LoadingSpinner from './loading-spinner';
 <template>
   <section class="collapsed-taxonomies" data-test-collapsed-taxonomies>
     <div>

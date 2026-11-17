@@ -1,4 +1,4 @@
-import { create, clickable, text } from 'ember-cli-page-object';
+import { clickable, create, text } from 'ember-cli-page-object';
 import { findOne } from 'ember-cli-page-object/extend';
 import { getter } from 'ember-cli-page-object/macros';
 

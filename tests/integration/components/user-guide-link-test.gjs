@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
-import { component } from 'frontend/tests/pages/components/user-guide-link';
 import UserGuideLink from 'frontend/components/user-guide-link';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/user-guide-link';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user-guide-link', function (hooks) {
   setupRenderingTest(hooks);

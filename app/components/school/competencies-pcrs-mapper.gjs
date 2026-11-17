@@ -1,8 +1,9 @@
-import sortBy from '../../helpers/sort-by';
-import includes from '../../helpers/includes';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+
+import includes from '../../helpers/includes';
 import pcrsUriToNumber from '../../helpers/pcrs-uri-to-number';
+import sortBy from '../../helpers/sort-by';
 <template>
   <section
     class="school-competencies-pcrs-mapper"

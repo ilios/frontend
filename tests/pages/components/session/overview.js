@@ -7,10 +7,11 @@ import {
   property,
   text,
 } from 'ember-cli-page-object';
+
 import { pageObjectFillInQuillEditor } from '../../helpers';
-import postrequisiteEditor from './postrequisite-editor';
-import ilm from './ilm';
 import publicationStatus from '../publication-status';
+import ilm from './ilm';
+import postrequisiteEditor from './postrequisite-editor';
 import publicationMenu from './publication-menu';
 
 const definition = {

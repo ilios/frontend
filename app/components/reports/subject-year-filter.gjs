@@ -1,13 +1,14 @@
-import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
-import isEmpty from 'ember-truth-helpers/helpers/is-empty';
-import sortBy from '../../helpers/sort-by';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
 import { eq } from 'ember-truth-helpers';
+import isEmpty from 'ember-truth-helpers/helpers/is-empty';
+
+import pick from '../../helpers/pick';
+import sortBy from '../../helpers/sort-by';
 
 export default class ReportsSubjectYearFilterComponent extends Component {
   @service store;

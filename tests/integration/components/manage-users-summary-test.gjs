@@ -1,8 +1,8 @@
-import { module, skip, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, findAll, find, fillIn, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
 import Service from '@ember/service';
+import { fillIn, find, findAll, render, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
 import ManageUsersSummary from 'frontend/components/manage-users-summary';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, skip, test } from 'qunit';
 
 module('Integration | Component | manage-users-summary', function (hooks) {
   setupRenderingTest(hooks);

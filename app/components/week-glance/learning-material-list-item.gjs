@@ -1,12 +1,13 @@
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import UserMaterialStatus from '../user-material-status';
-import { and, eq, not } from 'ember-truth-helpers';
-import LmIcons from '../lm-icons';
 import { concat } from '@ember/helper';
-import TruncateText from '../truncate-text';
-import TimedReleaseSchedule from '../timed-release-schedule';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faClock, faDownload } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
+import { and, eq, not } from 'ember-truth-helpers';
+
+import LmIcons from '../lm-icons';
+import TimedReleaseSchedule from '../timed-release-schedule';
+import TruncateText from '../truncate-text';
+import UserMaterialStatus from '../user-material-status';
 <template>
   <li class="week-glance-learning-material-list-item" ...attributes>
     {{#if @lm.isBlanked}}

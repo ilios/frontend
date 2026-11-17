@@ -1,4 +1,5 @@
 import { collection, create, isHidden, text } from 'ember-cli-page-object';
+
 import item from './detail-learnergroups-list-item';
 
 const definition = {

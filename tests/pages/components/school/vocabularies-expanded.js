@@ -1,7 +1,8 @@
 import { clickable, create, text } from 'ember-cli-page-object';
-import vocabularyManager from './vocabulary-manager';
-import vocabulariesList from './vocabularies-list';
+
 import newVocabularyForm from './new-vocabulary-form';
+import vocabulariesList from './vocabularies-list';
+import vocabularyManager from './vocabulary-manager';
 
 const definition = {
   scope: '[data-test-school-vocabularies-expanded]',

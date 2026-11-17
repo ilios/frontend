@@ -1,20 +1,21 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import { hash } from 'rsvp';
-import { uniqueValues } from '../utils/array-helpers';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import { or } from 'ember-truth-helpers';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import LearnergroupSelectionManager from './learnergroup-selection-manager';
+import t from 'ember-intl/helpers/t';
+import { or } from 'ember-truth-helpers';
+import { hash } from 'rsvp';
+
+import { uniqueValues } from '../utils/array-helpers';
+import BigSaveCancelButtons from './big-save-cancel-buttons';
 import LearnerSelectionManager from './learner-selection-manager';
+import LearnergroupSelectionManager from './learnergroup-selection-manager';
 import SelectedLearnerGroups from './selected-learner-groups';
 import SelectedLearners from './selected-learners';
-import BigSaveCancelButtons from './big-save-cancel-buttons';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @service currentUser;

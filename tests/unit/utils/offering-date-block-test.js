@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
 import { setupTest } from 'frontend/tests/helpers';
-import { DateTime } from 'luxon';
 import {
   OfferingBlock,
   OfferingDateBlock,
   OfferingTimeBlock,
 } from 'frontend/utils/offering-date-block';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Unit | Utility | offering-date-block', function (hooks) {
   setupTest(hooks);

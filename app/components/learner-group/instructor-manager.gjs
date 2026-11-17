@@ -1,16 +1,17 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faArrowRotateLeft, faCheck, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+
 import sortBy from '../../helpers/sort-by';
 import UserNameInfo from '../user-name-info';
-import InstructorGroupMembersList from './instructor-group-members-list';
 import UserSearch from '../user-search';
 import UserStatus from '../user-status';
-import { faArrowRotateLeft, faCheck, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
+import InstructorGroupMembersList from './instructor-group-members-list';
 
 export default class LearnerGroupInstructorManagerComponent extends Component {
   @tracked instructors = [];

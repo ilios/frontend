@@ -1,11 +1,11 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { eq, gt } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
 import { faAngleLeft, faAngleRight, faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
+import { eq, gt } from 'ember-truth-helpers';
 
 export default class PaginationLinksComponent extends Component {
   get disablePrev() {

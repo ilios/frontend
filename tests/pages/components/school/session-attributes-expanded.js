@@ -1,6 +1,7 @@
 import { clickable, create, hasClass, text } from 'ember-cli-page-object';
-import manager from './session-attributes-manager';
 import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
+
+import manager from './session-attributes-manager';
 
 const definition = {
   scope: '[data-test-school-session-attributes-expanded]',

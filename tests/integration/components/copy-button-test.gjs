@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/copy-button';
 import CopyButton from 'frontend/components/copy-button';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/copy-button';
+import { module, test } from 'qunit';
 
 module('Integration | Component | copy-button', function (hooks) {
   setupRenderingTest(hooks);
