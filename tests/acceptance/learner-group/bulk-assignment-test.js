@@ -63,6 +63,19 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     await triggerEvent('[data-test-user-upload]', 'change', { files: [file] });
   };
 
+  test('actions are removed when in bulk upload mode', async function (assert) {
+    await page.visit({ learnerGroupId: 1 });
+    await takeScreenshot(assert, 'learnerGroupId 1 pre-bulk upload mode');
+    assert.ok(page.root.actions.buttons.toggle.isVisible);
+    assert.ok(page.root.actions.buttons.bulkAssignment.isVisible);
+    assert.ok(page.root.actions.buttons.manageUsers.isVisible);
+    await page.root.actions.buttons.bulkAssignment.click();
+    await takeScreenshot(assert, 'learnerGroupId 1 bulk upload mode');
+    assert.notOk(page.root.actions.buttons.toggle.isVisible);
+    assert.notOk(page.root.actions.buttons.bulkAssignment.isVisible);
+    assert.notOk(page.root.actions.buttons.manageUsers.isVisible);
+  });
+
   test('cancel upload', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await takeScreenshot(assert, 'learnerGroupId 1');

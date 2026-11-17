@@ -1,4 +1,4 @@
-import { fn,uniqueId } from '@ember/helper';
+import { fn, uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
@@ -14,7 +14,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { pageTitle } from 'ember-page-title';
 import set from 'ember-set-helper/helpers/set';
-import { and, eq, not, or } from 'ember-truth-helpers';
+import { and, eq, not } from 'ember-truth-helpers';
 import pad from 'pad';
 import { string } from 'yup';
 
@@ -643,7 +643,7 @@ export default class LearnerGroupRootComponent extends Component {
             />
           {{/if}}
           <div class="learner-group-overview-actions" data-test-overview-actions>
-            <h2 class="title" data-test-title>
+            <h2 class="title{{if @isBulkAssigning ' bulk-assignment'}}" data-test-title>
               {{#if @isEditing}}
                 {{t "general.manageGroupMembership"}}
               {{else if @isBulkAssigning}}
@@ -654,53 +654,55 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </h2>
             <div class="actions" data-test-buttons>
-              {{#if this.usersForMembersList.length}}
-                <input
-                  type="text"
-                  value={{this.filter}}
-                  placeholder={{t "general.filterByNameOrEmail"}}
-                  aria-label={{t "general.filterByNameOrEmail"}}
-                  {{on "input" (pick "target.value" (set this "filter"))}}
-                  data-test-filter
-                />
-              {{/if}}
-              {{#if (and this.usersForUserManager.length (or @isEditing @isBulkAssigning))}}
-                <button
-                  class="close"
-                  type="button"
-                  {{on "click" (pipe (fn @setIsEditing false) (fn @setIsBulkAssigning false))}}
-                  data-test-close
-                >
-                  {{t "general.close"}}
-                </button>
-              {{else}}
-                <ToggleButtons
-                  @firstOptionSelected={{not @showCalendar}}
-                  @firstLabel={{t "general.hideCalendar"}}
-                  @secondLabel={{t "general.showCalendar"}}
-                  @toggle={{@setShowCalendar}}
-                />
-                {{#if @canUpdate}}
-                  <button
-                    class="bulk-assign"
-                    type="button"
-                    data-test-activate-bulk-assign
-                    {{on "click" (fn @setIsBulkAssigning true)}}
-                  >
-                    {{t "general.uploadGroupAssignments"}}
-                  </button>
-                  <button
-                    class="manage{{unless this.usersForUserManager.length ' disabled'}}"
-                    type="button"
-                    disabled={{not this.usersForUserManager.length}}
-                    title={{unless this.usersForUserManager.length (t "general.noMembers")}}
-                    data-test-manage
-                    {{on "click" (fn @setIsEditing true)}}
-                  >
-                    {{t "general.manageMembers"}}
-                  </button>
+              {{#unless @isBulkAssigning}}
+                {{#if this.usersForMembersList.length}}
+                  <input
+                    type="text"
+                    value={{this.filter}}
+                    placeholder={{t "general.filterByNameOrEmail"}}
+                    aria-label={{t "general.filterByNameOrEmail"}}
+                    {{on "input" (pick "target.value" (set this "filter"))}}
+                    data-test-filter
+                  />
                 {{/if}}
-              {{/if}}
+                {{#if (and this.usersForUserManager.length @isEditing)}}
+                  <button
+                    class="close"
+                    type="button"
+                    {{on "click" (pipe (fn @setIsEditing false) (fn @setIsBulkAssigning false))}}
+                    data-test-close
+                  >
+                    {{t "general.close"}}
+                  </button>
+                {{else}}
+                  <ToggleButtons
+                    @firstOptionSelected={{not @showCalendar}}
+                    @firstLabel={{t "general.hideCalendar"}}
+                    @secondLabel={{t "general.showCalendar"}}
+                    @toggle={{@setShowCalendar}}
+                  />
+                  {{#if @canUpdate}}
+                    <button
+                      class="bulk-assign"
+                      type="button"
+                      data-test-activate-bulk-assign
+                      {{on "click" (fn @setIsBulkAssigning true)}}
+                    >
+                      {{t "general.uploadGroupAssignments"}}
+                    </button>
+                    <button
+                      class="manage{{unless this.usersForUserManager.length ' disabled'}}"
+                      type="button"
+                      disabled={{not this.usersForUserManager.length}}
+                      title={{unless this.usersForUserManager.length (t "general.noMembers")}}
+                      data-test-manage
+                      {{on "click" (fn @setIsEditing true)}}
+                    >
+                      {{t "general.manageMembers"}}
+                    </button>
+                  {{/if}}
+                {{/if}}
+              {{/unless}}
             </div>
           </div>
           {{#if @isBulkAssigning}}
