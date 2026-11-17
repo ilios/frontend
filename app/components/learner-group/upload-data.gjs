@@ -256,6 +256,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
           id="user-file"
           type="file"
           accept=".csv, .tsv, .txt"
+          disabled={{this.uploadData.isPending}}
           {{on "change" (pick "target.files" this.updateSelectedFile)}}
           data-test-user-upload
         />
