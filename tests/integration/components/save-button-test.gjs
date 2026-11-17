@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { on } from '@ember/modifier';
 import { click, render } from '@ember/test-helpers';
 import SaveButton from 'frontend/components/save-button';
-import { on } from '@ember/modifier';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | save-button', function (hooks) {
   setupRenderingTest(hooks);

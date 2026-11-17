@@ -2,12 +2,12 @@ import {
   attribute,
   collection,
   create,
+  fillable,
   isPresent,
   isVisible,
-  fillable,
   property,
-  triggerable,
   text,
+  triggerable,
   value,
 } from 'ember-cli-page-object';
 import yesNoToggle from 'frontend/tests/pages/components/toggle-yesno';

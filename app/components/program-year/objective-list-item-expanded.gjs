@@ -1,10 +1,11 @@
+import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { htmlSafe } from '@ember/template';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById } from '../../utils/array-helpers';
 import t from 'ember-intl/helpers/t';
+
 import sortBy from '../../helpers/sort-by';
+import { findById } from '../../utils/array-helpers';
 import LoadingSpinner from '../loading-spinner';
 
 export default class ProgramYearObjectiveListItemExpandedComponent extends Component {

@@ -1,6 +1,7 @@
 import { create, fillable, text, value } from 'ember-cli-page-object';
-import sessionTypesChart from './visualize-session-types-graph';
+
 import breadcrumbs from '../breadcrumbs';
+import sessionTypesChart from './visualize-session-types-graph';
 
 const definition = create({
   scope: '[data-test-course-visualize-session-types]',

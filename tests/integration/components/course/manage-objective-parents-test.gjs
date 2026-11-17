@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/course/manage-objective-parents';
-import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMSW } from 'frontend/tests/msw';
-import ManageObjectiveParents from 'frontend/components/course/manage-objective-parents';
 import { array } from '@ember/helper';
+import { render } from '@ember/test-helpers';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
+import ManageObjectiveParents from 'frontend/components/course/manage-objective-parents';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/course/manage-objective-parents';
+import { module, test } from 'qunit';
 
 module('Integration | Component | course/manage-objective-parents', function (hooks) {
   setupRenderingTest(hooks);

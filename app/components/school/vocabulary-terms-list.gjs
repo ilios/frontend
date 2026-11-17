@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
-import sortBy from '../../helpers/sort-by';
-import ListItem from './vocabulary-terms-list-item';
-import List from './vocabulary-terms-list';
 import add from 'ember-math-helpers/helpers/add';
+import { filter } from 'rsvp';
+
+import sortBy from '../../helpers/sort-by';
+import List from './vocabulary-terms-list';
+import ListItem from './vocabulary-terms-list-item';
 
 export default class SchoolVocabularyTermsListComponent extends Component {
   @cached

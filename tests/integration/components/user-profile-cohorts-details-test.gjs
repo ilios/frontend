@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
+import UserProfileCohortsDetails from 'frontend/components/user-profile-cohorts-details';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/user-profile-cohorts-details';
-import UserProfileCohortsDetails from 'frontend/components/user-profile-cohorts-details';
-import { array } from '@ember/helper';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user-profile-cohorts-details', function (hooks) {
   setupRenderingTest(hooks);

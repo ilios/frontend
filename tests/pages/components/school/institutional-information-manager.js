@@ -1,4 +1,4 @@
-import { create, fillable, text, isPresent, value } from 'ember-cli-page-object';
+import { create, fillable, isPresent, text, value } from 'ember-cli-page-object';
 import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
 
 const definition = {

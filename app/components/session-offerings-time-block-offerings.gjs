@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+
 import { sortBy } from '../utils/array-helpers';
 import OfferingManager from './offering-manager';
 

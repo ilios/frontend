@@ -1,11 +1,12 @@
-import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { DateTime } from 'luxon';
-import sortableByPosition from '../utils/sortable-by-position';
-import striptags from 'striptags';
-import { filter } from 'rsvp';
-import { TrackedAsyncData } from 'ember-async-data';
+import Model, { attr,belongsTo, hasMany } from '@ember-data/model';
 import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { DateTime } from 'luxon';
+import { filter } from 'rsvp';
+import striptags from 'striptags';
+
 import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
+import sortableByPosition from '../utils/sortable-by-position';
 
 export default class SessionModel extends Model {
   @attr('string')

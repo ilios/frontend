@@ -1,8 +1,9 @@
-import EventsBase from '../classes/events-base';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
-import { sortBy } from '../utils/array-helpers';
+
 import Event from '../classes/event';
+import EventsBase from '../classes/events-base';
+import { sortBy } from '../utils/array-helpers';
 
 export default class SchoolEvents extends EventsBase {
   @service store;

@@ -1,16 +1,17 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { guidFor } from '@ember/object/internals';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { guidFor } from '@ember/object/internals';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
-import set from 'ember-set-helper/helpers/set';
-import IliosTooltip from './ilios-tooltip';
 import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import set from 'ember-set-helper/helpers/set';
 import { eq, not, or } from 'ember-truth-helpers';
+
+import mouseHoverToggle from '../modifiers/mouse-hover-toggle';
+import IliosTooltip from './ilios-tooltip';
 
 export default class DetailTermsListItem extends Component {
   @tracked isHovering;

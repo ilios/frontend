@@ -1,4 +1,3 @@
-import BaseStore, { CacheHandler } from '@ember-data/store';
 import JSONAPICache from '@ember-data/json-api';
 import {
   adapterFor,
@@ -11,6 +10,7 @@ import {
 import { buildSchema, instantiateRecord, modelFor, teardownRecord } from '@ember-data/model/hooks';
 import RequestManager from '@ember-data/request';
 import Fetch from '@ember-data/request/fetch';
+import BaseStore, { CacheHandler } from '@ember-data/store';
 
 export default class StoreService extends BaseStore {
   adapterFor = adapterFor;

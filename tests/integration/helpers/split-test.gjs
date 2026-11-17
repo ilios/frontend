@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import split from 'frontend/helpers/split';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Helper | split', function (hooks) {
   setupRenderingTest(hooks);

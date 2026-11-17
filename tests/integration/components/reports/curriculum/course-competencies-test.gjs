@@ -1,13 +1,13 @@
-import { module, skip, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import CourseCompetencies from 'frontend/components/reports/curriculum/course-competencies';
+import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { graphQL } from 'frontend/tests/helpers/curriculum-report';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/course-competencies';
-import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { graphQL } from 'frontend/tests/helpers/curriculum-report';
-import CourseCompetencies from 'frontend/components/reports/curriculum/course-competencies';
-import { array } from '@ember/helper';
-import noop from 'frontend/helpers/noop';
+import { module, skip, test } from 'qunit';
 
 module('Integration | Component | reports/curriculum/course-competencies', function (hooks) {
   setupRenderingTest(hooks);

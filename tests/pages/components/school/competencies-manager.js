@@ -1,4 +1,5 @@
-import { collection, clickable, create, property } from 'ember-cli-page-object';
+import { clickable, collection, create, property } from 'ember-cli-page-object';
+
 import editor from './competency-title-editor';
 import newCompetency from './new-competency';
 

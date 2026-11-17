@@ -1,24 +1,25 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { DateTime } from 'luxon';
-import { task } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import YupValidations from '../../classes/yup-validations';
-import { number, string } from 'yup';
-import { uniqueId } from '@ember/helper';
-import focus from '../../modifiers/focus';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
-import YupValidationMessage from '../yup-validation-message';
-import isEmpty from 'ember-truth-helpers/helpers/is-empty';
-import { eq, not } from 'ember-truth-helpers';
-import add from 'ember-math-helpers/helpers/add';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import add from 'ember-math-helpers/helpers/add';
+import set from 'ember-set-helper/helpers/set';
+import { eq, not } from 'ember-truth-helpers';
+import isEmpty from 'ember-truth-helpers/helpers/is-empty';
+import { DateTime } from 'luxon';
+import { number, string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
+import focus from '../../modifiers/focus';
 import LoadingSpinner from '../loading-spinner';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class CoursesNewComponent extends Component {
   @service intl;

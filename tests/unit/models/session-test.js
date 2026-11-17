@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
 import { setupTest, waitForResource } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Unit | Model | Session', function (hooks) {
   setupTest(hooks);

@@ -1,12 +1,12 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, click } from '@ember/test-helpers';
+import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { click,render } from '@ember/test-helpers';
 import optional from 'frontend/helpers/optional';
 import pipe from 'frontend/helpers/pipe';
-import { fn } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Helper | optional', function (hooks) {
   setupRenderingTest(hooks);

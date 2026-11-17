@@ -1,15 +1,15 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
-  faLink,
-  faParagraph,
+  faFile,
+  faFileAudio,
   faFilePdf,
   faFilePowerpoint,
   faFileVideo,
-  faFileAudio,
-  faFile,
+  faLink,
+  faParagraph,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
 
 export default class LmTypeIconComponent extends Component {
   @service intl;

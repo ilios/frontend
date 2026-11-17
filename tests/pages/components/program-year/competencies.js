@@ -1,7 +1,8 @@
 import { clickable, collection, create, isPresent, text } from 'ember-cli-page-object';
-import managedCompetencyListItem from './managed-competency-list-item';
-import competencyListItem from './competency-list-item';
 import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
+
+import competencyListItem from './competency-list-item';
+import managedCompetencyListItem from './managed-competency-list-item';
 
 const definition = {
   scope: '[data-test-program-year-competencies]',

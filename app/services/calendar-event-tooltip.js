@@ -1,6 +1,6 @@
 import Service, { service } from '@ember/service';
-import { isBlank } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
+import { isBlank } from '@ember/utils';
 import { DateTime } from 'luxon';
 
 export default class CalendarEventTooltip extends Service {

@@ -1,11 +1,12 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import { pageTitle } from 'ember-page-title';
+
 import Breadcrumbs from '../breadcrumbs';
 import VisualizeVocabulariesGraph from './visualize-vocabularies-graph';
 

@@ -1,17 +1,18 @@
-import Component from '@glimmer/component';
-import { task } from 'ember-concurrency';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import SearchBox from './search-box';
-import { modifier } from 'ember-modifier';
-import t from 'ember-intl/helpers/t';
-import perform from 'ember-concurrency/helpers/perform';
-import includes from '../helpers/includes';
 import { on } from '@ember/modifier';
-import LmTypeIcon from './lm-type-icon';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
 import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+import { modifier } from 'ember-modifier';
+
+import includes from '../helpers/includes';
+import LmTypeIcon from './lm-type-icon';
 import LoadingSpinner from './loading-spinner';
+import SearchBox from './search-box';
 
 export default class LearningmaterialSearchComponent extends Component {
   @service store;

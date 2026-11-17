@@ -1,4 +1,4 @@
-import { create, collection, fillable, triggerable, isPresent } from 'ember-cli-page-object';
+import { collection, create, fillable, isPresent,triggerable } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-report-search-input]',

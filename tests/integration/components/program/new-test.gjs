@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/program/new';
 import New from 'frontend/components/program/new';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/program/new';
+import { module, test } from 'qunit';
 
 module('Integration | Component | program/new', function (hooks) {
   setupRenderingTest(hooks);

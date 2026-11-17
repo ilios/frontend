@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
+import Event from 'frontend/classes/event';
 import { setupTest } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
-import Event from 'frontend/classes/event';
+import { module, test } from 'qunit';
 
 module('Unit | Classes | Event', function (hooks) {
   setupTest(hooks);

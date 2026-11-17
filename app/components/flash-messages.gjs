@@ -1,6 +1,6 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { capitalize } from '@ember/string';
+import Component from '@glimmer/component';
 import FlashMessage from 'ember-cli-flash/components/flash-message';
 
 export default class FlashMessagesComponent extends Component {

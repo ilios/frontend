@@ -1,4 +1,5 @@
 import { attribute, create, text } from 'ember-cli-page-object';
+
 import vocabulariesChart from './visualize-session-type-vocabularies-graph';
 
 const definition = create({

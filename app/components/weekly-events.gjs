@@ -1,15 +1,16 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { DateTime } from 'luxon';
-import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import WeekGlance from './week-glance';
-import { not } from 'ember-truth-helpers';
-import includes from '../helpers/includes';
 import { fn } from '@ember/helper';
-import { pageTitle } from 'ember-page-title';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
+import { pageTitle } from 'ember-page-title';
+import { not } from 'ember-truth-helpers';
+import { DateTime } from 'luxon';
+
+import includes from '../helpers/includes';
+import WeekGlance from './week-glance';
 
 export default class WeeklyEventsComponent extends Component {
   get weeksInYear() {

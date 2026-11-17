@@ -1,21 +1,22 @@
-import Component from '@glimmer/component';
-import { task } from 'ember-concurrency';
-import { service } from '@ember/service';
-import { guidFor } from '@ember/object/internals';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import { eq, not, and } from 'ember-truth-helpers';
-import isEmpty from 'ember-truth-helpers/helpers/is-empty';
-import sortBy from '../../../helpers/sort-by';
-import CopyButton from '../../copy-button';
-import perform from 'ember-concurrency/helpers/perform';
-import mouseHoverToggle from '../../../modifiers/mouse-hover-toggle';
-import set from 'ember-set-helper/helpers/set';
-import LoadingSpinner from '../../loading-spinner';
-import IliosTooltip from '../../ilios-tooltip';
-import DownloadDropdown from 'frontend/components/download-dropdown';
+import { guidFor } from '@ember/object/internals';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCheck, faCopy, faDownload, faPlay } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { and,eq, not } from 'ember-truth-helpers';
+import isEmpty from 'ember-truth-helpers/helpers/is-empty';
+import DownloadDropdown from 'frontend/components/download-dropdown';
+
+import sortBy from '../../../helpers/sort-by';
+import mouseHoverToggle from '../../../modifiers/mouse-hover-toggle';
+import CopyButton from '../../copy-button';
+import IliosTooltip from '../../ilios-tooltip';
+import LoadingSpinner from '../../loading-spinner';
 
 export default class ReportsCurriculumHeaderComponent extends Component {
   @service flashMessages;

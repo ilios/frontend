@@ -1,12 +1,12 @@
-import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached, tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
-import { and, eq } from 'ember-truth-helpers';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import { and, eq } from 'ember-truth-helpers';
 
 export default class UserMaterialStatusComponent extends Component {
   @service store;

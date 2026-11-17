@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { click, render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/truncate-text';
-import TruncateText from 'frontend/components/truncate-text';
 import { on } from '@ember/modifier';
+import { click, render } from '@ember/test-helpers';
+import TruncateText from 'frontend/components/truncate-text';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/truncate-text';
+import { module, test } from 'qunit';
 
 module('Integration | Component | truncate-text', function (hooks) {
   setupRenderingTest(hooks);

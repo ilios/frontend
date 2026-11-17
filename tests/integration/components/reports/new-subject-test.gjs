@@ -1,11 +1,11 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
-import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/reports/new-subject';
 import NewSubject from 'frontend/components/reports/new-subject';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/reports/new-subject';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/new-subject', function (hooks) {
   setupRenderingTest(hooks);

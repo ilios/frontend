@@ -2,10 +2,10 @@
 
 import { A as emberArray } from '@ember/array';
 import { run } from '@ember/runloop';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import reverse from 'frontend/helpers/reverse';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Helper | reverse', function (hooks) {
   setupRenderingTest(hooks);

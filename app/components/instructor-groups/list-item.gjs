@@ -1,17 +1,18 @@
+import { on } from '@ember/modifier';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { LinkTo } from '@ember/routing';
-import { on } from '@ember/modifier';
-import set from 'ember-set-helper/helpers/set';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import ResponsiveTd from '../responsive-td';
-import t from 'ember-intl/helpers/t';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+
 import scrollIntoView from '../../modifiers/scroll-into-view';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import ResponsiveTd from '../responsive-td';
 
 export default class InstructorGroupsListItemComponent extends Component {
   @service permissionChecker;

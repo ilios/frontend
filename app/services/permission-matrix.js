@@ -1,4 +1,5 @@
 import Service, { service } from '@ember/service';
+
 import { mapBy } from '../utils/array-helpers';
 
 export default class PermissionMatrixService extends Service {

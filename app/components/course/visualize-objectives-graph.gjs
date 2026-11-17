@@ -1,29 +1,30 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { array,fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
-import { filter } from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faDownload, faFaceMeh, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import striptags from 'striptags';
-import PapaParse from 'papaparse';
-import { mapBy, sortBy, uniqueValues } from '../../utils/array-helpers';
-import createDownloadFile from '../../utils/create-download-file';
-import SimpleChart from 'ember-simple-charts/components/simple-chart';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { and, eq, not, or } from 'ember-truth-helpers';
-import sortBy0 from '../../helpers/sort-by';
-import { on } from '@ember/modifier';
-import SortableTh from '../sortable-th';
-import { fn, array } from '@ember/helper';
-import { LinkTo } from '@ember/routing';
-import notEq from 'ember-truth-helpers/helpers/not-eq';
 import sub_ from 'ember-math-helpers/helpers/sub';
+import SimpleChart from 'ember-simple-charts/components/simple-chart';
+import { and, eq, not, or } from 'ember-truth-helpers';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+import PapaParse from 'papaparse';
+import { filter } from 'rsvp';
+import striptags from 'striptags';
+
+import sortBy0 from '../../helpers/sort-by';
+import { mapBy, sortBy, uniqueValues } from '../../utils/array-helpers';
+import createDownloadFile from '../../utils/create-download-file';
 import LoadingSpinner from '../loading-spinner';
-import { faDownload, faFaceMeh, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import SortableTh from '../sortable-th';
 
 export default class CourseVisualizeObjectivesGraphComponent extends Component {
   @service router;

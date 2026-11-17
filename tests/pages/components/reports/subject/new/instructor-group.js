@@ -1,4 +1,4 @@
-import { create, collection, fillable, property } from 'ember-cli-page-object';
+import { collection, create, fillable, property } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-reports-subject-new-instructor-group]',

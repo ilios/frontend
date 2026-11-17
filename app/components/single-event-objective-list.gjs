@@ -1,12 +1,13 @@
+import { on } from '@ember/modifier';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown,faCaretRight, faIndent, faList } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { sortBy, uniqueValues } from '../utils/array-helpers';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faIndent, faList, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+
+import { sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class SingleEventObjectiveListComponent extends Component {
   @tracked groupByCompetencies = true;

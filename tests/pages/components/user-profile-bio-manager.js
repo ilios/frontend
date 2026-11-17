@@ -1,9 +1,9 @@
 import {
   clickable,
   create,
-  isPresent,
   fillable,
   hasClass,
+  isPresent,
   property,
   text,
   triggerable,

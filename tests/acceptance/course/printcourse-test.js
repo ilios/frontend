@@ -1,7 +1,7 @@
 import { find, findAll, visit } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Acceptance | Course - Print Course', function (hooks) {
   setupApplicationTest(hooks);

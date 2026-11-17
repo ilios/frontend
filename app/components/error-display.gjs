@@ -1,11 +1,11 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import formatTime from 'ember-intl/helpers/format-time';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
 import { not } from 'ember-truth-helpers';
-import formatTime from 'ember-intl/helpers/format-time';
 
 export default class ErrorDisplayComponent extends Component {
   @service intl;

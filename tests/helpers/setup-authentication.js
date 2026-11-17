@@ -1,5 +1,6 @@
-import { authenticateSession } from 'ember-simple-auth/test-support';
 import { getContext } from '@ember/test-helpers';
+import { authenticateSession } from 'ember-simple-auth/test-support';
+
 import jwtEncode from './jwt-encode';
 
 const defaultUserId = 100;

@@ -1,10 +1,11 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import { and, not } from 'ember-truth-helpers';
 import t from 'ember-intl/helpers/t';
+import { and, not } from 'ember-truth-helpers';
+
 import DetailTermsListItem from './detail-terms-list-item';
 
 export default class DetailTermsListComponent extends Component {

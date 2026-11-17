@@ -1,21 +1,22 @@
-import Component from '@glimmer/component';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
-import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import BackToCourses from './back-to-courses';
+import t from 'ember-intl/helpers/t';
+import { pageTitle } from 'ember-page-title';
+import { and } from 'ember-truth-helpers';
+
 import animateLoading from '../../modifiers/animate-loading';
 import scrollIntoView from '../../utils/scroll-into-view';
-import Header from './header';
-import { and } from 'ember-truth-helpers';
-import Overview from './overview';
+import BackToCourses from './back-to-courses';
 import Editing from './editing';
-import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { fn } from '@ember/helper';
-import { pageTitle } from 'ember-page-title';
-import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import Header from './header';
+import Overview from './overview';
 
 export default class CourseDetailsComponent extends Component {
   @service router;

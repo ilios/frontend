@@ -1,7 +1,7 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import formatDate from 'ember-intl/helpers/format-date';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
 <template>
   <div class="sessions-grid-last-updated">
     <FaIcon @icon={{faClockRotateLeft}} @title={{t "general.lastUpdate"}} />

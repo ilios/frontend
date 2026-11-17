@@ -1,10 +1,11 @@
-import sortBy from '../../helpers/sort-by';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
 import { eq, or } from 'ember-truth-helpers';
+
 import includes from '../../helpers/includes';
 import mapBy from '../../helpers/map-by';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
+import sortBy from '../../helpers/sort-by';
 <template>
   <section
     class="program-year-manage-objective-competency"

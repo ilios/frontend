@@ -1,5 +1,5 @@
-import { findOne } from 'ember-cli-page-object/extend';
 import { settled } from '@ember/test-helpers';
+import { findOne } from 'ember-cli-page-object/extend';
 
 export function flatpickrDatePicker(selector, options = {}) {
   return {

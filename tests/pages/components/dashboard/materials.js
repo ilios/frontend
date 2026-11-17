@@ -9,6 +9,7 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
+
 import controls from '../pagedlist-controls';
 import displayToggle from '../toggle-buttons';
 import materialListItem from './material-list-item';

@@ -1,8 +1,8 @@
 import { currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
-import page from 'frontend/tests/pages/users';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import userPage from 'frontend/tests/pages/user';
+import page from 'frontend/tests/pages/users';
+import { module, test } from 'qunit';
 
 module('Acceptance | Users', function (hooks) {
   setupApplicationTest(hooks);

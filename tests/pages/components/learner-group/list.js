@@ -1,4 +1,5 @@
-import { clickable, create, collection, hasClass, isPresent, text } from 'ember-cli-page-object';
+import { clickable, collection, create, hasClass, isPresent, text } from 'ember-cli-page-object';
+
 import listItem from './list-item';
 
 const definition = {

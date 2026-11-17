@@ -1,8 +1,8 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { htmlSafe } from '@ember/template';
-import { render, find } from '@ember/test-helpers';
+import { find,render } from '@ember/test-helpers';
+import { setupRenderingTest } from 'ember-qunit';
 import htmlSafe0 from 'frontend/helpers/html-safe';
+import { module, test } from 'qunit';
 
 module('Integration | Helper | {{html-safe}}', function (hooks) {
   setupRenderingTest(hooks);

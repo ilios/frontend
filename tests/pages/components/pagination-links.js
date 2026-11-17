@@ -1,4 +1,4 @@
-import { clickable, collection, create, property, isHidden } from 'ember-cli-page-object';
+import { clickable, collection, create, isHidden,property } from 'ember-cli-page-object';
 
 const definition = {
   prevIsHidden: isHidden('[data-test-prev]'),

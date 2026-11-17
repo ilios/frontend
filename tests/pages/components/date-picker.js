@@ -1,4 +1,5 @@
 import { create } from 'ember-cli-page-object';
+
 import { flatpickrDatePicker, flatpickrDateValue } from '../helpers';
 
 const definition = {

@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
 import {
-  setupApplicationTest,
-  takeScreenshot,
-  setupAuthentication,
   freezeDateAt,
+  setupApplicationTest,
+  setupAuthentication,
+  takeScreenshot,
   unfreezeDate,
 } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Acceptance | header', function (hooks) {
   setupApplicationTest(hooks);

@@ -1,14 +1,15 @@
-import Component from '@glimmer/component';
-import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { findById } from '../../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import sortBy from '../../helpers/sort-by';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+
+import sortBy from '../../helpers/sort-by';
+import { findById } from '../../utils/array-helpers';
 
 export default class DashboardFilterTagsComponent extends Component {
   @service store;

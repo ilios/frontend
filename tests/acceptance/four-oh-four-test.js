@@ -1,6 +1,6 @@
 import { currentRouteName, currentURL, visit } from '@ember/test-helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication, setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 
 module('Acceptance | FourOhFour', function (hooks) {
   setupApplicationTest(hooks);

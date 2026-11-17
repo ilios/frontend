@@ -1,22 +1,23 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
 import { uniqueId } from '@ember/helper';
-import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
-import set from 'ember-set-helper/helpers/set';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import focus from '../../modifiers/focus';
-import t from 'ember-intl/helpers/t';
 import {
-  faCaretRight,
   faCaretDown,
+  faCaretRight,
   faClock,
-  faStar,
   faCloud,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
+import { task, timeout } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+
+import focus from '../../modifiers/focus';
 
 export default class CoursePublicationMenuComponent extends Component {
   @service router;

@@ -1,6 +1,6 @@
 import Service from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 import { isTesting } from '@embroider/macros';
+import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import config from 'frontend/config/environment';
 

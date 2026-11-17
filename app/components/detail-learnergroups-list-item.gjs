@@ -1,12 +1,12 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faUniversalAccess, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
-import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import { faUniversalAccess, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailLearnergroupsListItemComponent extends Component {
   @cached

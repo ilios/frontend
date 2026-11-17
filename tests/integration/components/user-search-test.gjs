@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/user-search';
 import UserSearch from 'frontend/components/user-search';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import formatJsonApi from 'frontend/tests/msw/utils/json-api-formatter';
+import { component } from 'frontend/tests/pages/components/user-search';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user search', function (hooks) {
   setupRenderingTest(hooks);

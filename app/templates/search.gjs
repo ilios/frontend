@@ -1,7 +1,7 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
-import GlobalSearch from 'frontend/components/global-search';
+import pageTitle from 'ember-page-title/helpers/page-title';
 import set from 'ember-set-helper/helpers/set';
+import GlobalSearch from 'frontend/components/global-search';
 <template>
   {{pageTitle (t "general.search")}}
   <GlobalSearch

@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { component } from 'frontend/tests/pages/components/ilios-calendar-month';
-import IliosCalendarMonth from 'frontend/components/ilios-calendar-month';
-import Event from 'frontend/classes/event';
-import noop from 'frontend/helpers/noop';
 import { array } from '@ember/helper';
+import { render } from '@ember/test-helpers';
+import Event from 'frontend/classes/event';
+import IliosCalendarMonth from 'frontend/components/ilios-calendar-month';
+import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/ilios-calendar-month';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | ilios calendar month', function (hooks) {
   setupRenderingTest(hooks);

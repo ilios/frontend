@@ -1,24 +1,25 @@
-import Component from '@glimmer/component';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
-import { filter } from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
-import { cached, tracked } from '@glimmer/tracking';
-import { TrackedAsyncData } from 'ember-async-data';
-import PapaParse from 'papaparse';
-import createDownloadFile from '../../utils/create-download-file';
-import { action } from '@ember/object';
-import { and, eq, not, or } from 'ember-truth-helpers';
-import SimpleChart from 'ember-simple-charts/components/simple-chart';
-import perform from 'ember-concurrency/helpers/perform';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import LoadingSpinner from '../loading-spinner';
-import SortableTh from '../sortable-th';
-import { fn } from '@ember/helper';
-import sortBy from '../../helpers/sort-by';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import SimpleChart from 'ember-simple-charts/components/simple-chart';
+import { and, eq, not, or } from 'ember-truth-helpers';
+import PapaParse from 'papaparse';
+import { filter } from 'rsvp';
+
+import sortBy from '../../helpers/sort-by';
+import createDownloadFile from '../../utils/create-download-file';
+import LoadingSpinner from '../loading-spinner';
+import SortableTh from '../sortable-th';
 
 export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends Component {
   @service router;

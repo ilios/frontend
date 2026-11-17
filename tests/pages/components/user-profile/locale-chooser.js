@@ -1,4 +1,4 @@
-import { clickable, create, collection, hasClass, property, text } from 'ember-cli-page-object';
+import { clickable, collection, create, hasClass, property, text } from 'ember-cli-page-object';
 export default create({
   scope: '[data-test-locale-chooser]',
   title: text('[data-test-title]'),

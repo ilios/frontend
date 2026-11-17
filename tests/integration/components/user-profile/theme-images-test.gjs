@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import ThemeImages from 'frontend/components/user-profile/theme-images';
-import { component } from 'frontend/tests/pages/components/user-profile/theme-images';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import ThemeImages from 'frontend/components/user-profile/theme-images';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/user-profile/theme-images';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user-profile/theme-images', function (hooks) {
   setupRenderingTest(hooks);

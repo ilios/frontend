@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/flash-messages';
 import { setupIntl } from 'ember-intl/test-support';
 import FlashMessages from 'frontend/components/flash-messages';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/flash-messages';
+import { module, test } from 'qunit';
 
 module('Integration | Component | flash-messages', function (hooks) {
   setupRenderingTest(hooks);

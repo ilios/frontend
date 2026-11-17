@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, find } from '@ember/test-helpers';
+import { find,render } from '@ember/test-helpers';
 import ProgressBar from 'frontend/components/progress-bar';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | progress bar', function (hooks) {
   setupRenderingTest(hooks);

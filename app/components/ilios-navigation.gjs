@@ -1,14 +1,8 @@
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import set from 'ember-set-helper/helpers/set';
-import { not } from 'ember-truth-helpers';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { LinkTo } from '@ember/routing';
-import join from '../helpers/join';
 import { array } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faBars,
   faBook,
@@ -21,6 +15,13 @@ import {
   faRectangleList,
   faUserDoctor,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { not } from 'ember-truth-helpers';
+
+import join from '../helpers/join';
 
 export default class IliosNavigationComponent extends Component {
   @service currentUser;

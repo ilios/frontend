@@ -1,6 +1,7 @@
 import { create } from 'ember-cli-page-object';
-import calendar from './monthly-calendar';
+
 import multiday from './ilios-calendar-multiday-events';
+import calendar from './monthly-calendar';
 
 const definition = {
   scope: '[data-test-ilios-calendar-month]',

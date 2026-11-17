@@ -1,7 +1,7 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
+import EmberObject from '@ember/object';
 import asArray from 'frontend/utils/as-array';
 import { module, test } from 'qunit';
-import EmberObject from '@ember/object';
 
 module('Unit | Utility | as-array', function () {
   test('it works for [undefined]', function (assert) {

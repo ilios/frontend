@@ -1,11 +1,12 @@
-import t from 'ember-intl/helpers/t';
-import sortBy from '../helpers/sort-by';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import UserNameInfo from './user-name-info';
-import UserStatus from './user-status';
+import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
+
+import sortBy from '../helpers/sort-by';
+import UserNameInfo from './user-name-info';
+import UserStatus from './user-status';
 <template>
   <div class="selected-learners" data-test-selected-learners ...attributes>
     <label data-test-heading>

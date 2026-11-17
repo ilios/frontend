@@ -1,10 +1,10 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { deprecate } from '@ember/debug';
-import { DateTime } from 'luxon';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
+import { DateTime } from 'luxon';
 
 export default class TimePickerComponent extends Component {
   constructor() {

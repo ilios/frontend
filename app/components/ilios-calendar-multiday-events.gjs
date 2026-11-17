@@ -1,4 +1,5 @@
 import t from 'ember-intl/helpers/t';
+
 import IliosCalendarMultidayEvent from './ilios-calendar-multiday-event';
 <template>
   {{#if @events.length}}

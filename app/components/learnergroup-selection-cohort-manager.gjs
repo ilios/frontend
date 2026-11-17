@@ -1,8 +1,9 @@
-import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
+import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+
 import sortBy from '../helpers/sort-by';
 import LearnergroupTree from './learnergroup-tree';
 import LoadingSpinner from './loading-spinner';

@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import LeadershipList from 'frontend/components/leadership-list';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/leadership-list';
+import { module, test } from 'qunit';
 
 module('Integration | Component | leadership-list', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,8 +1,9 @@
+import { cancel, later } from '@ember/runloop';
 import { service } from '@ember/service';
 import Base from 'ember-simple-auth/authenticators/base';
-import { jwtDecode } from '../utils/jwt-utils';
-import { cancel, later } from '@ember/runloop';
 import { DateTime } from 'luxon';
+
+import { jwtDecode } from '../utils/jwt-utils';
 
 export default class IliosJWT extends Base {
   @service fetch;

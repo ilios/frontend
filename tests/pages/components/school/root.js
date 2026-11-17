@@ -1,4 +1,7 @@
-import { clickable, create, isPresent, fillable, text } from 'ember-cli-page-object';
+import { clickable, create, fillable, isPresent, text } from 'ember-cli-page-object';
+import leadershipCollapsed from 'frontend/tests/pages/components/leadership-collapsed';
+import leadershipExpanded from 'frontend/tests/pages/components/leadership-expanded';
+
 import competenciesCollapsed from './competencies-collapsed';
 import competenciesExpanded from './competencies-expanded';
 import emails from './emails';
@@ -11,8 +14,6 @@ import sessionTypesCollapsed from './session-types-collapsed';
 import sessionTypesExpanded from './session-types-expanded';
 import vocabulariesCollapsed from './vocabularies-collapsed';
 import vocabulariesExpanded from './vocabularies-expanded';
-import leadershipCollapsed from 'frontend/tests/pages/components/leadership-collapsed';
-import leadershipExpanded from 'frontend/tests/pages/components/leadership-expanded';
 
 const definition = {
   scope: '[data-test-school-root]',

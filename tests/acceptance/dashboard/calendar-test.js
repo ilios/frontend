@@ -1,14 +1,14 @@
-import { currentURL, currentRouteName } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { module, test } from 'qunit';
+import { currentRouteName,currentURL } from '@ember/test-helpers';
 import {
-  setupAuthentication,
   freezeDateAt,
-  unfreezeDate,
   setupApplicationTest,
+  setupAuthentication,
   takeScreenshot,
+  unfreezeDate,
 } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/dashboard-calendar';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Acceptance | Dashboard Calendar', function (hooks) {
   setupApplicationTest(hooks);

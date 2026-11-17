@@ -1,9 +1,9 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
 
 export default class ToggleYesnoComponent extends Component {
   get yes() {

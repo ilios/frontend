@@ -1,19 +1,20 @@
+import { uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
 import { TrackedAsyncData } from 'ember-async-data';
-import { uniqueId } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import focus from '../../modifiers/focus';
-import pick from '../../helpers/pick';
-import set from 'ember-set-helper/helpers/set';
+import { task } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import YupValidationMessage from '../yup-validation-message';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
+import focus from '../../modifiers/focus';
 import LoadingSpinner from '../loading-spinner';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class SchoolNewVocabularyFormComponent extends Component {
   @service intl;

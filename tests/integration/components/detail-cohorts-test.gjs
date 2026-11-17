@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, setupAuthentication } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import DetailCohorts from 'frontend/components/detail-cohorts';
+import { setupAuthentication,setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/detail-cohorts';
+import { module, test } from 'qunit';
 
 module('Integration | Component | detail cohorts', function (hooks) {
   setupRenderingTest(hooks);

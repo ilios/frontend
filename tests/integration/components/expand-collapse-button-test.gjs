@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, click } from '@ember/test-helpers';
+import { click,render } from '@ember/test-helpers';
 import ExpandCollapseButton from 'frontend/components/expand-collapse-button';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | expand collapse button', function (hooks) {
   setupRenderingTest(hooks);

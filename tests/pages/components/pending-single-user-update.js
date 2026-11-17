@@ -1,4 +1,4 @@
-import { create, clickable, collection, text, isPresent } from 'ember-cli-page-object';
+import { clickable, collection, create, isPresent,text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-pending-single-user-update]',

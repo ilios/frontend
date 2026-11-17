@@ -1,11 +1,11 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
+import { click, fillIn,find, render } from '@ember/test-helpers';
+import SessionCopy from 'frontend/components/session-copy';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, click, find, fillIn } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
 import { setupMSW } from 'frontend/tests/msw';
 import { findById } from 'frontend/utils/array-helpers';
-import SessionCopy from 'frontend/components/session-copy';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | session copy', function (hooks) {
   setupRenderingTest(hooks);

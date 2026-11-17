@@ -1,9 +1,10 @@
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import SingleEventLearningmaterialListItem from './single-event-learningmaterial-list-item';
-import { and, not } from 'ember-truth-helpers';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faFileSignature, faPersonChalkboard } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
+import { and, not } from 'ember-truth-helpers';
+
+import SingleEventLearningmaterialListItem from './single-event-learningmaterial-list-item';
 <template>
   <div
     class="single-event-learningmaterial-list"

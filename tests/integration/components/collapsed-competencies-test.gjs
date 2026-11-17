@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/collapsed-competencies';
 import CollapsedCompetencies from 'frontend/components/collapsed-competencies';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/collapsed-competencies';
+import { module, test } from 'qunit';
 
 module('Integration | Component | collapsed competencies', function (hooks) {
   setupRenderingTest(hooks);

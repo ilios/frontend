@@ -1,20 +1,21 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
-import PapaParse from 'papaparse';
-import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { TrackedAsyncData } from 'ember-async-data';
-import { filterBy, findBy, mapBy, uniqueValues } from '../../utils/array-helpers';
 import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import pick from '../../helpers/pick';
-import LoadingSpinner from '../loading-spinner';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import notEq from 'ember-truth-helpers/helpers/not-eq';
-import { and, eq, gt } from 'ember-truth-helpers';
-import perform from 'ember-concurrency/helpers/perform';
 import { faCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import { and, eq, gt } from 'ember-truth-helpers';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+import PapaParse from 'papaparse';
+
+import pick from '../../helpers/pick';
+import { filterBy, findBy, mapBy, uniqueValues } from '../../utils/array-helpers';
+import LoadingSpinner from '../loading-spinner';
 
 export default class LearnerGroupUploadDataComponent extends Component {
   @service store;

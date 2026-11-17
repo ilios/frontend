@@ -10,7 +10,6 @@ import {
   triggerable,
   value,
 } from 'ember-cli-page-object';
-
 import clickChoiceButtons from 'frontend/tests/pages/components/click-choice-buttons';
 
 const definition = {

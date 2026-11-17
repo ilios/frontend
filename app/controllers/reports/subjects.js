@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
-import { action } from '@ember/object';
 
 export default class ReportsSubjectsController extends Controller {
   queryParams = [

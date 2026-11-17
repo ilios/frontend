@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
-import { render, settled } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/global-search';
-import { setupMSW } from 'frontend/tests/msw';
 import Service from '@ember/service';
+import { render, settled } from '@ember/test-helpers';
+import set from 'ember-set-helper/helpers/set';
 import GlobalSearch from 'frontend/components/global-search';
 import noop from 'frontend/helpers/noop';
-import set from 'ember-set-helper/helpers/set';
+import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/global-search';
+import { module, test } from 'qunit';
 
 module('Integration | Component | global-search', function (hooks) {
   setupRenderingTest(hooks);

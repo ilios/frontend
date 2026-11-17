@@ -1,12 +1,13 @@
-import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import FilterCheckbox from './filter-checkbox';
-import includes from '../../helpers/includes';
 import { fn } from '@ember/helper';
-import sortBy from '../../helpers/sort-by';
-import SelectedTermTree from './selected-term-tree';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 import add from 'ember-math-helpers/helpers/add';
+
+import includes from '../../helpers/includes';
+import sortBy from '../../helpers/sort-by';
+import FilterCheckbox from './filter-checkbox';
+import SelectedTermTree from './selected-term-tree';
 
 export default class DashboardSelectedTermTreeComponent extends Component {
   @cached

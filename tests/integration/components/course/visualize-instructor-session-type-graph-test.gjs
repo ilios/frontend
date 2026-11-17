@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
+import VisualizeInstructorSessionTypeGraph from 'frontend/components/course/visualize-instructor-session-type-graph';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/course/visualize-instructor-session-type-graph';
-import VisualizeInstructorSessionTypeGraph from 'frontend/components/course/visualize-instructor-session-type-graph';
 import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module(
   'Integration | Component | course/visualize-instructor-session-type-graph',

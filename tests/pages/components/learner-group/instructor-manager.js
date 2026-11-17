@@ -1,6 +1,7 @@
 import { clickable, collection, create, fillable, hasClass, text } from 'ember-cli-page-object';
 import userNameInfo from 'frontend/tests/pages/components/user-name-info';
 import userStatus from 'frontend/tests/pages/components/user-status';
+
 import membersList from './instructor-group-members-list';
 
 const definition = {

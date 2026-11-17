@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/leadership-manager';
 import LeadershipManager from 'frontend/components/leadership-manager';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/leadership-manager';
+import { module, test } from 'qunit';
 
 module('Integration | Component | leadership-manager', function (hooks) {
   setupRenderingTest(hooks);

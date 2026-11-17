@@ -1,10 +1,10 @@
 import {
-  create,
   clickable,
+  create,
   fillable,
-  property,
   isPresent,
   isVisible,
+  property,
   text,
 } from 'ember-cli-page-object';
 

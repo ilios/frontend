@@ -1,6 +1,7 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
+import Component from '@glimmer/component';
 import { task } from 'ember-concurrency';
+
 import LearningMaterialAttributesCollapsed from './learning-material-attributes-collapsed';
 import LearningMaterialAttributesExpanded from './learning-material-attributes-expanded';
 

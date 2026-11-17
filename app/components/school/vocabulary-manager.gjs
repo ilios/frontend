@@ -1,29 +1,30 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { fn, hash } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
-import { filterBy, mapBy, sortBy } from '../../utils/array-helpers';
 import { isPresent } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { filter } from 'rsvp';
-import { fn, hash } from '@ember/helper';
-import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import EditableField from '../editable-field';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import pick from '../../helpers/pick';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
+import { not } from 'ember-truth-helpers';
+import { filter } from 'rsvp';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
+import focus from '../../modifiers/focus';
+import { filterBy, mapBy, sortBy } from '../../utils/array-helpers';
+import escapeRegExp from '../../utils/escape-reg-exp';
+import EditableField from '../editable-field';
+import ExpandCollapseButton from '../expand-collapse-button';
+import YupValidationMessage from '../yup-validation-message';
 import VocabularyNewTerm from './vocabulary-new-term';
 import VocabularyTermsList from './vocabulary-terms-list';
-import YupValidationMessage from '../yup-validation-message';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
-import focus from '../../modifiers/focus';
-import escapeRegExp from '../../utils/escape-reg-exp';
-import { not } from 'ember-truth-helpers';
-import ExpandCollapseButton from '../expand-collapse-button';
 
 export default class SchoolVocabularyManagerComponent extends Component {
   @service store;

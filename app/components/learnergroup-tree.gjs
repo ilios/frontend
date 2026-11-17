@@ -1,19 +1,20 @@
-import Component from '@glimmer/component';
+import { fn,uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import { uniqueId, fn } from '@ember/helper';
-import includes from '../helpers/includes';
-import escapeRegExp from '../utils/escape-reg-exp';
-import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faUniversalAccess } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import isArray from 'ember-truth-helpers/helpers/is-array';
+
+import includes from '../helpers/includes';
 import sortBy from '../helpers/sort-by';
+import escapeRegExp from '../utils/escape-reg-exp';
 import LearnergroupTree0 from './learnergroup-tree';
 import LoadingSpinner from './loading-spinner';
-import { faUniversalAccess } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnergroupTree extends Component {
   @service intl;

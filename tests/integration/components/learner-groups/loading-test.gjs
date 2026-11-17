@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'ember-qunit';
 import Loading from 'frontend/components/learner-groups/loading';
+import { module, test } from 'qunit';
 
 module('Integration | Component | learner-groups/loading', function (hooks) {
   setupRenderingTest(hooks);

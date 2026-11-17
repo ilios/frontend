@@ -1,5 +1,5 @@
-import { module, test } from 'qunit';
 import { setupTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Unit | Service | server variables', function (hooks) {
   setupTest(hooks);

@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { on } from '@ember/modifier';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/big-save-cancel-buttons';
 import BigSaveCancelButtons from 'frontend/components/big-save-cancel-buttons';
 import noop from 'frontend/helpers/noop';
 import noopTask from 'frontend/helpers/noop-task';
-import { on } from '@ember/modifier';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/big-save-cancel-buttons';
+import { module, test } from 'qunit';
 
 module('Integration | Component | big-save-cancel-buttons', function (hooks) {
   setupRenderingTest(hooks);

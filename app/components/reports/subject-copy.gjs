@@ -1,11 +1,11 @@
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import { LinkTo } from '@ember/routing';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectCopyComponent extends Component {
   @service reporting;

@@ -1,13 +1,13 @@
+import { concat,fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown,faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
+import { task, timeout } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { fn, concat } from '@ember/helper';
-import { faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class ChooseMaterialTypeComponent extends Component {
   @tracked isOpen = false;

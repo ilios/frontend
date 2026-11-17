@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import { TrackedAsyncData } from 'ember-async-data';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import perform from 'ember-concurrency/helpers/perform';
-import scrollIntoView from '../modifiers/scroll-into-view';
-import TaxonomyManager from './taxonomy-manager';
-import DetailTermsList from './detail-terms-list';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+
+import scrollIntoView from '../modifiers/scroll-into-view';
 import BigSaveCancelButtons from './big-save-cancel-buttons';
+import DetailTermsList from './detail-terms-list';
+import TaxonomyManager from './taxonomy-manager';
 
 export default class DetailTaxonomiesComponent extends Component {
   @service store;

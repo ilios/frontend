@@ -1,20 +1,21 @@
+import { array,concat } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { action } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
-import YupValidations from '../../classes/yup-validations';
-import { string } from 'yup';
-import t from 'ember-intl/helpers/t';
-import { concat, array } from '@ember/helper';
-import EditableField from '../editable-field';
 import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
-import { on } from '@ember/modifier';
-import pick from '../../helpers/pick';
-import YupValidationMessage from '../yup-validation-message';
 import { eq } from 'ember-truth-helpers';
+import { string } from 'yup';
+
+import YupValidations from '../../classes/yup-validations';
+import pick from '../../helpers/pick';
 import focus from '../../modifiers/focus';
+import EditableField from '../editable-field';
+import YupValidationMessage from '../yup-validation-message';
 
 export default class ProgramOverviewComponent extends Component {
   id = guidFor(this);

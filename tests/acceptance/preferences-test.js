@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { visit } from '@ember/test-helpers';
-import { setupAuthentication, setupApplicationTest } from 'frontend/tests/helpers';
 import Service from '@ember/service';
+import { visit } from '@ember/test-helpers';
+import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 class LocalStorageMock extends Service {
   locale = undefined;

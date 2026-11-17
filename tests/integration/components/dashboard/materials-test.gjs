@@ -1,13 +1,13 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { DateTime } from 'luxon';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/dashboard/materials';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import Materials from 'frontend/components/dashboard/materials';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/dashboard/materials';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | dashboard/materials', function (hooks) {
   setupRenderingTest(hooks);

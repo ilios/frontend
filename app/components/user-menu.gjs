@@ -1,18 +1,19 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
-import { TrackedAsyncData } from 'ember-async-data';
-import { uniqueId, hash } from '@ember/helper';
-import t from 'ember-intl/helpers/t';
+import { hash,uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown,faCaretRight, faUser } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
+import { task, timeout } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
+
 import focus from '../modifiers/focus';
 import LinkToWithAction from './link-to-with-action';
-import { faUser, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserMenuComponent extends Component {
   @service intl;

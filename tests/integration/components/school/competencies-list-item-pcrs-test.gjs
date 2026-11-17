@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/school/competencies-list-item-pcrs';
 import CompetenciesListItemPcrs from 'frontend/components/school/competencies-list-item-pcrs';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/school/competencies-list-item-pcrs';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/competencies-list-item-pcrs', function (hooks) {
   setupRenderingTest(hooks);

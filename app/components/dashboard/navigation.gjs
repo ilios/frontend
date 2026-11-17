@@ -1,9 +1,10 @@
-import Component from '@glimmer/component';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
-import { LinkTo } from '@ember/routing';
+
 import IcsFeed from '../ics-feed';
 
 export default class DashboardNavigationComponent extends Component {

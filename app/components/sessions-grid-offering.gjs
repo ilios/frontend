@@ -1,28 +1,29 @@
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { and, gt, gte, lt } from 'ember-truth-helpers';
-import OfferingForm from './offering-form';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import EditableField from './editable-field';
-import { on } from '@ember/modifier';
-import pick from '../helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import TruncateText from './truncate-text';
+import { and, gt, gte, lt } from 'ember-truth-helpers';
+import { string } from 'yup';
+
+import YupValidations from '../classes/yup-validations';
 import join from '../helpers/join';
 import mapBy from '../helpers/map-by';
+import pick from '../helpers/pick';
 import sortBy from '../helpers/sort-by';
 import truncate from '../helpers/truncate';
-import scrollIntoView from '../utils/scroll-into-view';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import YupValidations from '../classes/yup-validations';
-import YupValidationMessage from './yup-validation-message';
-import { string } from 'yup';
 import focus from '../modifiers/focus';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import scrollIntoView from '../utils/scroll-into-view';
+import EditableField from './editable-field';
+import OfferingForm from './offering-form';
+import TruncateText from './truncate-text';
+import YupValidationMessage from './yup-validation-message';
 
 export default class SessionsGridOfferingComponent extends Component {
   @tracked roomBuffer;

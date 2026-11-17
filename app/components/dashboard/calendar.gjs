@@ -1,25 +1,26 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { DateTime } from 'luxon';
-import { mapBy, sortBy } from '../../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
-import ToggleButtons from '../toggle-buttons';
-import t from 'ember-intl/helpers/t';
-import { and, not } from 'ember-truth-helpers';
-import UserContextFilter from './user-context-filter';
-import set from 'ember-set-helper/helpers/set';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { on } from '@ember/modifier';
-import sortBy0 from '../../helpers/sort-by';
-import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import { get } from '@ember/helper';
-import CalendarFilters from './calendar-filters';
-import isArray from 'ember-truth-helpers/helpers/is-array';
-import FilterTags from './filter-tags';
-import IliosCalendar from '../ilios-calendar';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { and, not } from 'ember-truth-helpers';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+import isEqual from 'ember-truth-helpers/helpers/is-equal';
+import { DateTime } from 'luxon';
+
+import sortBy0 from '../../helpers/sort-by';
+import { mapBy, sortBy } from '../../utils/array-helpers';
+import IliosCalendar from '../ilios-calendar';
+import ToggleButtons from '../toggle-buttons';
+import CalendarFilters from './calendar-filters';
+import FilterTags from './filter-tags';
+import UserContextFilter from './user-context-filter';
 
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;

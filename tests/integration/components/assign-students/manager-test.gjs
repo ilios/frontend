@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
+import Manager from 'frontend/components/assign-students/manager';
+import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/assign-students/manager';
 import { DateTime } from 'luxon';
-import Manager from 'frontend/components/assign-students/manager';
-import { array } from '@ember/helper';
-import noop from 'frontend/helpers/noop';
+import { module, test } from 'qunit';
 
 module('Integration | Component | assign-students/manager', function (hooks) {
   setupRenderingTest(hooks);

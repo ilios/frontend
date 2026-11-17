@@ -1,10 +1,10 @@
-import Component from '@glimmer/component';
-import { LinkTo } from '@ember/routing';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { LinkTo } from '@ember/routing';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
 
 export default class ReportsTableRowComponent extends Component {
   get showRemoveConfirmation() {

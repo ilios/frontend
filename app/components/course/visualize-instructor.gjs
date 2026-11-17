@@ -1,15 +1,16 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { filter } from 'rsvp';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import { mapBy } from '../../utils/array-helpers';
 import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
+import { filter } from 'rsvp';
+
+import { mapBy } from '../../utils/array-helpers';
 import Breadcrumbs from '../breadcrumbs';
-import VisualizeInstructorTermGraph from './visualize-instructor-term-graph';
 import VisualizeInstructorSessionTypeGraph from './visualize-instructor-session-type-graph';
+import VisualizeInstructorTermGraph from './visualize-instructor-term-graph';
 
 export default class CourseVisualizeInstructorComponent extends Component {
   @service iliosConfig;

@@ -1,4 +1,5 @@
 import { create } from 'ember-cli-page-object';
+
 import collapsed from './session-attributes-collapsed';
 import expanded from './session-attributes-expanded';
 

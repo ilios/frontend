@@ -1,17 +1,18 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { cached } from '@glimmer/tracking';
-import { TrackedAsyncData } from 'ember-async-data';
-import includes from '../../helpers/includes';
-import { LinkTo } from '@ember/routing';
-import formatDate from 'ember-intl/helpers/format-date';
-import LoadingSpinner from '../loading-spinner';
-import PublicationStatus from '../publication-status';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faLock, faLockOpen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+
+import includes from '../../helpers/includes';
+import LoadingSpinner from '../loading-spinner';
+import PublicationStatus from '../publication-status';
 
 export default class CoursesListItemComponent extends Component {
   @service permissionChecker;

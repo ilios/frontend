@@ -1,6 +1,7 @@
-import SelectedInstructors from './selected-instructors';
-import SelectedInstructorGroups from './selected-instructor-groups';
 import t from 'ember-intl/helpers/t';
+
+import SelectedInstructorGroups from './selected-instructor-groups';
+import SelectedInstructors from './selected-instructors';
 import UserSearch from './user-search';
 <template>
   <section class="instructor-selection-manager" data-test-instructor-selection-manager>

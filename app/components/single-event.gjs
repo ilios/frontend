@@ -1,39 +1,40 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
-import { DateTime } from 'luxon';
-import { findById } from '../utils/array-helpers';
-import createTypedLearningMaterialProxy from '../utils/create-typed-learning-material-proxy';
-import { TrackedAsyncData } from 'ember-async-data';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import { and, eq, gt, not } from 'ember-truth-helpers';
-import { LinkTo } from '@ember/routing';
 import { array, get } from '@ember/helper';
-import objectAt from '../helpers/object-at';
-import formatDate from 'ember-intl/helpers/format-date';
-import OfferingUrlDisplay from './offering-url-display';
 import { on } from '@ember/modifier';
-import set from 'ember-set-helper/helpers/set';
-import SingleEventLearningmaterialList from './single-event-learningmaterial-list';
-import SingleEventObjectiveList from './single-event-objective-list';
-import NotFound from './not-found';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
-import { pageTitle } from 'ember-page-title';
+import { isEmpty } from '@ember/utils';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
 import {
   faBoxArchive,
   faCalendarCheck,
   faCalendarMinus,
+  faCaretDown,
+  faCaretRight,
   faCircleExclamation,
   faClock,
   faFileSignature,
   faFlask,
-  faCaretRight,
-  faCaretDown,
 } from '@fortawesome/free-solid-svg-icons';
-import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+import { pageTitle } from 'ember-page-title';
+import set from 'ember-set-helper/helpers/set';
+import { and, eq, gt, not } from 'ember-truth-helpers';
+import { DateTime } from 'luxon';
+
+import objectAt from '../helpers/object-at';
+import { findById } from '../utils/array-helpers';
+import createTypedLearningMaterialProxy from '../utils/create-typed-learning-material-proxy';
+import NotFound from './not-found';
+import OfferingUrlDisplay from './offering-url-display';
+import SingleEventLearningmaterialList from './single-event-learningmaterial-list';
+import SingleEventObjectiveList from './single-event-objective-list';
 
 export default class SingleEventComponent extends Component {
   @service currentUser;

@@ -7,6 +7,7 @@ import {
   isPresent,
   text,
 } from 'ember-cli-page-object';
+
 import userStatus from './user-status';
 
 const definition = {

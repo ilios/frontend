@@ -1,26 +1,27 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import scrollIntoView from '../modifiers/scroll-into-view';
-import { LinkTo } from '@ember/routing';
-import t from 'ember-intl/helpers/t';
-import Overview from './session/overview';
-import LeadershipExpanded from './leadership-expanded';
 import { fn } from '@ember/helper';
-import LeadershipCollapsed from './leadership-collapsed';
-import hasManyLength from '../helpers/has-many-length';
-import DetailLearnersAndLearnerGroups from './detail-learners-and-learner-groups';
-import DetailInstructors from './detail-instructors';
-import { eq, or } from 'ember-truth-helpers';
-import Objectives from './session/objectives';
-import CollapsedObjectives from './session/collapsed-objectives';
-import DetailLearningMaterials from './detail-learning-materials';
-import DetailTaxonomies from './detail-taxonomies';
-import CollapsedTaxonomies from './collapsed-taxonomies';
-import DetailMesh from './detail-mesh';
-import SessionOfferings from './session-offerings';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
 import { pageTitle } from 'ember-page-title';
+import { eq, or } from 'ember-truth-helpers';
+
+import hasManyLength from '../helpers/has-many-length';
+import scrollIntoView from '../modifiers/scroll-into-view';
+import CollapsedTaxonomies from './collapsed-taxonomies';
+import DetailInstructors from './detail-instructors';
+import DetailLearnersAndLearnerGroups from './detail-learners-and-learner-groups';
+import DetailLearningMaterials from './detail-learning-materials';
+import DetailMesh from './detail-mesh';
+import DetailTaxonomies from './detail-taxonomies';
+import LeadershipCollapsed from './leadership-collapsed';
+import LeadershipExpanded from './leadership-expanded';
+import CollapsedObjectives from './session/collapsed-objectives';
+import Objectives from './session/objectives';
+import Overview from './session/overview';
+import SessionOfferings from './session-offerings';
 
 export default class SessionDetailsComponent extends Component {
   @service schoolConfig;

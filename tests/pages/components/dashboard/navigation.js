@@ -1,4 +1,5 @@
 import { attribute, create, hasClass } from 'ember-cli-page-object';
+
 import icsFeed from './../ics-feed';
 
 const definition = {

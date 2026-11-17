@@ -1,14 +1,15 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBan,faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { fn } from '@ember/helper';
-import LearningMaterialAttributesManager from './learning-material-attributes-manager';
-import { faCaretDown, faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
+
 import BigSaveCancelButtons from '../big-save-cancel-buttons';
+import LearningMaterialAttributesManager from './learning-material-attributes-manager';
 
 export default class SchoolLearningMaterialAttributesExpandedComponent extends Component {
   @tracked accessibilityRequired = this.args.accessibilityRequired || false;

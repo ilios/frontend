@@ -1,11 +1,11 @@
-import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import { selectFiles } from 'ember-file-upload/test-support';
-import { setupMSW } from 'frontend/tests/msw';
-import Service from '@ember/service';
 import LearningMaterialUploader from 'frontend/components/learning-material-uploader';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { module, skip,test } from 'qunit';
 
 module('Integration | Component | learning-material-uploader', function (hooks) {
   setupRenderingTest(hooks);

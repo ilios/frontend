@@ -1,4 +1,4 @@
-import { count, create, text, isPresent } from 'ember-cli-page-object';
+import { count, create, isPresent,text } from 'ember-cli-page-object';
 const definition = {
   scope: '[data-test-course-summary-header]',
   title: text('[data-test-title]'),

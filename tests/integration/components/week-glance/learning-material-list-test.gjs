@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import LearningMaterialList from 'frontend/components/week-glance/learning-material-list';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/week-glance/learning-material-list';
 import createTypedLearningMaterialProxy from 'frontend/utils/create-typed-learning-material-proxy';
-import { setupMSW } from 'frontend/tests/msw';
-import LearningMaterialList from 'frontend/components/week-glance/learning-material-list';
+import { module, test } from 'qunit';
 
 module('Integration | Component | week-glance/learning-material-list', function (hooks) {
   setupRenderingTest(hooks);

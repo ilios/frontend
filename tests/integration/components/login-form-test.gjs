@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'frontend/tests/pages/components/login-form';
 import LoginForm from 'frontend/components/login-form';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/login-form';
+import { module, test } from 'qunit';
 
 module('Integration | Component | login-form', function (hooks) {
   setupRenderingTest(hooks);

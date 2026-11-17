@@ -1,16 +1,17 @@
+import { on } from '@ember/modifier';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
-import createDownloadFile from '../../utils/create-download-file';
-import PapaParse from 'papaparse';
 import { TrackedAsyncData } from 'ember-async-data';
-import { not } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
+import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
-import { faCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { not } from 'ember-truth-helpers';
+import PapaParse from 'papaparse';
+
+import createDownloadFile from '../../utils/create-download-file';
 
 export default class ReportsSubjectDownloadComponent extends Component {
   @service reporting;

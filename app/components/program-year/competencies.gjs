@@ -1,23 +1,24 @@
-import Component from '@glimmer/component';
-import { filter } from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
-import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached, tracked } from '@glimmer/tracking';
-import { uniqueValues } from '../../utils/array-helpers';
-import { action } from '@ember/object';
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import sortBy from '../../helpers/sort-by';
-import ManagedCompetencyListItem from './managed-competency-list-item';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task, timeout } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
 import { or } from 'ember-truth-helpers';
+import { filter } from 'rsvp';
+
 import includes from '../../helpers/includes';
 import mapBy from '../../helpers/map-by';
-import CompetencyListItem from './competency-list-item';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import sortBy from '../../helpers/sort-by';
+import { uniqueValues } from '../../utils/array-helpers';
 import BigSaveCancelButtons from '../big-save-cancel-buttons';
+import CompetencyListItem from './competency-list-item';
+import ManagedCompetencyListItem from './managed-competency-list-item';
 
 export default class ProgramYearCompetenciesComponent extends Component {
   @service flashMessages;

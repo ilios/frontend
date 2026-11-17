@@ -1,8 +1,8 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
 import { setupTest } from 'frontend/tests/helpers';
-import { DateTime } from 'luxon';
 import { setupMSW } from 'frontend/tests/msw';
+import { DateTime } from 'luxon';
+import { module, test } from 'qunit';
 
 module('Integration | Service | school events', function (hooks) {
   setupTest(hooks);

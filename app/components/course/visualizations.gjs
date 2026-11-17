@@ -1,16 +1,17 @@
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import { pageTitle } from 'ember-page-title';
+
 import Breadcrumbs from '../breadcrumbs';
+import VisualizeInstructorsGraph from './visualize-instructors-graph';
 import VisualizeObjectivesGraph from './visualize-objectives-graph';
 import VisualizeSessionTypesGraph from './visualize-session-types-graph';
 import VisualizeVocabulariesGraph from './visualize-vocabularies-graph';
-import VisualizeInstructorsGraph from './visualize-instructors-graph';
 
 export default class CourseVisualizationsComponent extends Component {
   @service iliosConfig;

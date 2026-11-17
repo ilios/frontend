@@ -1,11 +1,11 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { array } from '@ember/helper';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/program-year/managed-competency-list-item';
 import ManagedCompetencyListItem from 'frontend/components/program-year/managed-competency-list-item';
 import noop from 'frontend/helpers/noop';
-import { array } from '@ember/helper';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/program-year/managed-competency-list-item';
+import { module, test } from 'qunit';
 
 module('Integration | Component | program-year/managed-competency-list-item', function (hooks) {
   setupRenderingTest(hooks);

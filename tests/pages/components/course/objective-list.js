@@ -1,4 +1,5 @@
-import { create, collection, isVisible } from 'ember-cli-page-object';
+import { collection, create, isVisible } from 'ember-cli-page-object';
+
 import objectiveListItem from './objective-list-item';
 
 const definition = {

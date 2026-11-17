@@ -1,6 +1,7 @@
 import { clickable, create, isVisible, property, text } from 'ember-cli-page-object';
-import userNameInfo from './user-name-info';
+
 import typeIcon from './lm-type-icon';
+import userNameInfo from './user-name-info';
 
 const definition = {
   scope: '[data-test-detail-learning-materials-item]',

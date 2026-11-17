@@ -1,10 +1,10 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import UserMaterialStatus from 'frontend/components/user-material-status';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/user-material-status';
-import UserMaterialStatus from 'frontend/components/user-material-status';
+import { module, test } from 'qunit';
 
 module('Integration | Component | user-material-status', function (hooks) {
   setupRenderingTest(hooks);

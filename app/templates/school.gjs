@@ -1,7 +1,7 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
-import Root from 'frontend/components/school/root';
+import pageTitle from 'ember-page-title/helpers/page-title';
 import set from 'ember-set-helper/helpers/set';
+import Root from 'frontend/components/school/root';
 <template>
   {{pageTitle (t "general.schools")}}
   <Root

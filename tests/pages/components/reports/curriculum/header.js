@@ -1,4 +1,4 @@
-import { clickable, create, collection, fillable, property, text } from 'ember-cli-page-object';
+import { clickable, collection, create, fillable, property, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-reports-curriculum-header]',

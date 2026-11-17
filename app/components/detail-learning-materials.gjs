@@ -1,27 +1,28 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
-import { guidFor } from '@ember/object/internals';
+import { array,fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
+import { guidFor } from '@ember/object/internals';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { and, gt, not } from 'ember-truth-helpers';
+
 import { mapBy } from '../utils/array-helpers';
 import scrollIntoView from '../utils/scroll-into-view';
 import sortableByPosition from '../utils/sortable-by-position';
-import t from 'ember-intl/helpers/t';
-import LearningmaterialSearch from './learningmaterial-search';
-import perform from 'ember-concurrency/helpers/perform';
-import { on } from '@ember/modifier';
-import { fn, array } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { and, gt, not } from 'ember-truth-helpers';
 import ChooseMaterialType from './choose-material-type';
-import LearningmaterialManager from './learningmaterial-manager';
-import LearningMaterialsSortManager from './learning-materials-sort-manager';
-import set from 'ember-set-helper/helpers/set';
-import NewLearningmaterial from './new-learningmaterial';
 import DetailLearningMaterialsItem from './detail-learning-materials-item';
-import { faMinus } from '@fortawesome/free-solid-svg-icons';
+import LearningMaterialsSortManager from './learning-materials-sort-manager';
+import LearningmaterialManager from './learningmaterial-manager';
+import LearningmaterialSearch from './learningmaterial-search';
+import NewLearningmaterial from './new-learningmaterial';
 
 export default class DetailLearningMaterialsComponent extends Component {
   @service currentUser;

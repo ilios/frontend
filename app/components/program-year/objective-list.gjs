@@ -1,27 +1,28 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
-import { task, timeout } from 'ember-concurrency';
-import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { mapBy, uniqueValues } from '../../utils/array-helpers';
-import sortableByPosition from '../../utils/sortable-by-position';
-import ObjectiveSortManager from '../objective-sort-manager';
-import set from 'ember-set-helper/helpers/set';
-import { and, gt, not } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
-import perform from 'ember-concurrency/helpers/perform';
+import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import isArray from 'ember-truth-helpers/helpers/is-array';
-import ObjectiveListItem from './objective-list-item';
-import ObjectiveListLoading from './objective-list-loading';
-import LoadingSpinner from '../loading-spinner';
 import {
   faCaretDown,
   faCaretRight,
-  faSpinner,
   faDownload,
+  faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { task, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import set from 'ember-set-helper/helpers/set';
+import { and, gt, not } from 'ember-truth-helpers';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+
+import { mapBy, uniqueValues } from '../../utils/array-helpers';
+import sortableByPosition from '../../utils/sortable-by-position';
+import LoadingSpinner from '../loading-spinner';
+import ObjectiveSortManager from '../objective-sort-manager';
+import ObjectiveListItem from './objective-list-item';
+import ObjectiveListLoading from './objective-list-loading';
 
 export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;

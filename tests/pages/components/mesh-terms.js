@@ -1,4 +1,5 @@
 import { clickable, collection, text } from 'ember-cli-page-object';
+
 import meshManager from './mesh-manager';
 
 export default {

@@ -1,4 +1,5 @@
-import { clickable, create, collection, hasClass } from 'ember-cli-page-object';
+import { clickable, collection, create, hasClass } from 'ember-cli-page-object';
+
 import listItem from './list-item';
 import newProgramYear from './new';
 

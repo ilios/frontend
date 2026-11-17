@@ -1,7 +1,7 @@
+import set from 'ember-set-helper/helpers/set';
+import Details from 'frontend/components/program-year/details';
 import Header from 'frontend/components/program-year/header';
 import Overview from 'frontend/components/program-year/overview';
-import Details from 'frontend/components/program-year/details';
-import set from 'ember-set-helper/helpers/set';
 <template>
   <Header @programYear={{@model}} />
   <Overview @programYear={{@model}} @canUpdate={{@controller.canUpdate}} />

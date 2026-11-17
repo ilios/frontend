@@ -1,4 +1,4 @@
-import { create, collection, clickable, hasClass, text } from 'ember-cli-page-object';
+import { clickable, collection, create, hasClass, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-program-year-collapsed-objectives]',

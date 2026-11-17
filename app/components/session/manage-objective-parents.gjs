@@ -1,8 +1,9 @@
-import sortByPosition from '../../helpers/sort-by-position';
-import ManageObjectiveParentsItem from './manage-objective-parents-item';
-import includes from '../../helpers/includes';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
+
+import includes from '../../helpers/includes';
+import sortByPosition from '../../helpers/sort-by-position';
+import ManageObjectiveParentsItem from './manage-objective-parents-item';
 <template>
   <section class="session-manage-objective-parents" data-test-session-manage-objective-parents>
     {{#if @courseObjectives.length}}

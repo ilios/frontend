@@ -1,16 +1,17 @@
-import Component from '@glimmer/component';
-import { DateTime } from 'luxon';
-import { ensureSafeComponent } from '@embroider/util';
-import IliosCalendarDay from './ilios-calendar-day';
-import IliosCalendarWeek from './ilios-calendar-week';
-import IliosCalendarMonth from './ilios-calendar-month';
+import { concat,hash } from '@ember/helper';
 import { LinkTo } from '@ember/routing';
-import { hash, concat } from '@ember/helper';
 import { service } from '@ember/service';
+import { ensureSafeComponent } from '@embroider/util';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
 import t from 'ember-intl/helpers/t';
 import { eq } from 'ember-truth-helpers';
-import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
+import { DateTime } from 'luxon';
+
+import IliosCalendarDay from './ilios-calendar-day';
+import IliosCalendarMonth from './ilios-calendar-month';
+import IliosCalendarWeek from './ilios-calendar-week';
 
 export default class IliosCalendarComponent extends Component {
   @service intl;

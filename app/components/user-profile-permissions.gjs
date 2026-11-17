@@ -1,30 +1,31 @@
-import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { service } from '@ember/service';
-import { DateTime } from 'luxon';
-import { filter } from 'rsvp';
-import { TrackedAsyncData } from 'ember-async-data';
-import { findById, sortBy, uniqueValues } from '../utils/array-helpers';
-import t from 'ember-intl/helpers/t';
-import LoadingSpinner from './loading-spinner';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { on } from '@ember/modifier';
-import pick from '../helpers/pick';
-import sortBy0 from '../helpers/sort-by';
-import { eq, not } from 'ember-truth-helpers';
-import reverse from '../helpers/reverse';
-import YesNo from './yes-no';
-import set from 'ember-set-helper/helpers/set';
-import add from 'ember-math-helpers/helpers/add';
-import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faBuildingColumns,
   faCalendar,
-  faCaretRight,
   faCaretDown,
+  faCaretRight,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import add from 'ember-math-helpers/helpers/add';
+import set from 'ember-set-helper/helpers/set';
+import { eq, not } from 'ember-truth-helpers';
+import { DateTime } from 'luxon';
+import { filter } from 'rsvp';
+
+import pick from '../helpers/pick';
+import reverse from '../helpers/reverse';
+import sortBy0 from '../helpers/sort-by';
+import { findById, sortBy, uniqueValues } from '../utils/array-helpers';
+import LoadingSpinner from './loading-spinner';
+import YesNo from './yes-no';
 
 export default class UserProfilePermissionsComponent extends Component {
   @service store;

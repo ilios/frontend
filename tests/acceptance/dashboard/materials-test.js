@@ -1,14 +1,14 @@
+import { a11yAudit } from 'ember-a11y-testing/test-support';
+import {
+  freezeDateAt,
+  setupApplicationTest,
+  setupAuthentication,
+  takeScreenshot,
+  unfreezeDate,
+} from 'frontend/tests/helpers';
+import page from 'frontend/tests/pages/dashboard-materials';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import {
-  setupAuthentication,
-  freezeDateAt,
-  unfreezeDate,
-  setupApplicationTest,
-  takeScreenshot,
-} from 'frontend/tests/helpers';
-import { a11yAudit } from 'ember-a11y-testing/test-support';
-import page from 'frontend/tests/pages/dashboard-materials';
 
 module('Acceptance | Dashboard Materials', function (hooks) {
   setupApplicationTest(hooks);

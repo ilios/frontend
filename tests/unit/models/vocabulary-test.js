@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
-import { setupTest } from 'frontend/tests/helpers';
 import { pluralize } from 'ember-inflector';
+import { setupTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Unit | Model | vocabulary', function (hooks) {
   setupTest(hooks);

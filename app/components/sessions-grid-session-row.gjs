@@ -1,17 +1,8 @@
-import Component from '@glimmer/component';
-import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import includes from '../helpers/includes';
+import { array,fn } from '@ember/helper';
 import { on } from '@ember/modifier';
-import { fn, array } from '@ember/helper';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { and, eq, not } from 'ember-truth-helpers';
-import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import truncate from '../helpers/truncate';
-import formatDate from 'ember-intl/helpers/format-date';
-import PublicationStatus from './publication-status';
+import { service } from '@ember/service';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import {
   faArrowRightToBracket,
   faCaretDown,
@@ -20,6 +11,16 @@ import {
   faTrash,
   faUserClock,
 } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import formatDate from 'ember-intl/helpers/format-date';
+import t from 'ember-intl/helpers/t';
+import { and, eq, not } from 'ember-truth-helpers';
+
+import includes from '../helpers/includes';
+import truncate from '../helpers/truncate';
+import PublicationStatus from './publication-status';
 
 export default class SessionsGridSessionRowComponent extends Component {
   @service permissionChecker;

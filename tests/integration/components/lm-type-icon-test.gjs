@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import LmTypeIcon from 'frontend/components/lm-type-icon';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { component } from 'frontend/tests/pages/components/lm-type-icon';
 import createTypedLearningMaterialProxy from 'frontend/utils/create-typed-learning-material-proxy';
-import LmTypeIcon from 'frontend/components/lm-type-icon';
+import { module, test } from 'qunit';
 
 module('Integration | Component | lm type icon', function (hooks) {
   setupRenderingTest(hooks);

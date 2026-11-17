@@ -1,5 +1,5 @@
-import Service, { service } from '@ember/service';
 import { getOwner } from '@ember/owner';
+import Service, { service } from '@ember/service';
 
 export default class ApiVersionService extends Service {
   @service iliosConfig;

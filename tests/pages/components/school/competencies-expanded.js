@@ -1,7 +1,8 @@
 import { clickable, create, text } from 'ember-cli-page-object';
-import competenciesManager from './competencies-manager';
-import competenciesList from './competencies-list';
 import bigSaveCancelButtons from 'frontend/tests/pages/components/big-save-cancel-buttons';
+
+import competenciesList from './competencies-list';
+import competenciesManager from './competencies-manager';
 
 const definition = {
   scope: '[data-test-school-competencies-expanded]',

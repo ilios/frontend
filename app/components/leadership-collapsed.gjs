@@ -1,8 +1,8 @@
-import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
-import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
 
 export default class LeadershipCollapsedComponent extends Component {
   get count() {

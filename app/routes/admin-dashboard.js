@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
-import { filter } from 'rsvp';
 import { service } from '@ember/service';
+import { filter } from 'rsvp';
 
 export default class AdminDashboardRoute extends Route {
   @service store;

@@ -1,4 +1,5 @@
 import { create } from 'ember-cli-page-object';
+
 import collapsed from './learning-material-attributes-collapsed';
 import expanded from './learning-material-attributes-expanded';
 

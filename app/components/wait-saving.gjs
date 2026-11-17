@@ -1,10 +1,11 @@
-import Component from '@glimmer/component';
-import { guidFor } from '@ember/object/internals';
-import focusTrap from 'ember-focus-trap/modifiers/focus-trap';
 import { hash } from '@ember/helper';
-import PulseLoader from './pulse-loader';
+import { guidFor } from '@ember/object/internals';
+import Component from '@glimmer/component';
+import focusTrap from 'ember-focus-trap/modifiers/focus-trap';
 import t from 'ember-intl/helpers/t';
+
 import ProgressBar from './progress-bar';
+import PulseLoader from './pulse-loader';
 
 export default class WaitSavingComponent extends Component {
   get contentId() {

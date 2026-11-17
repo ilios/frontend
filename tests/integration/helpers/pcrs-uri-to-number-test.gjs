@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import pcrsUriToNumber from 'frontend/helpers/pcrs-uri-to-number';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Helper | pcrs-uri-to-number', function (hooks) {
   setupRenderingTest(hooks);

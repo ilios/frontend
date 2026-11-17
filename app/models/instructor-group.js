@@ -1,7 +1,8 @@
-import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { uniqueValues } from '../utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
+import Model, { attr,belongsTo, hasMany } from '@ember-data/model';
 import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+
+import { uniqueValues } from '../utils/array-helpers';
 
 export default class InstructorGroupModel extends Model {
   @attr('string')

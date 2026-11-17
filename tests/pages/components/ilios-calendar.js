@@ -1,8 +1,9 @@
 import { attribute, collection, create, isHidden } from 'ember-cli-page-object';
+
 import daily from './daily-calendar';
-import weekly from './weekly-calendar';
-import monthly from './monthly-calendar';
 import icsFeed from './ics-feed';
+import monthly from './monthly-calendar';
+import weekly from './weekly-calendar';
 
 const definition = {
   scope: '[data-test-ilios-calendar]',

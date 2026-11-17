@@ -1,12 +1,13 @@
 import { clickable, create, hasClass, isPresent, isVisible, text } from 'ember-cli-page-object';
+
 import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from '../../helpers';
 import fadeText from '../fade-text';
+import selectedTerms from '../objective-list-item-terms';
+import taxonomyManager from '../taxonomy-manager';
 import meshManager from './manage-objective-descriptors';
 import parentManager from './manage-objective-parents';
 import meshDescriptors from './objective-list-item-descriptors';
 import parents from './objective-list-item-parents';
-import selectedTerms from '../objective-list-item-terms';
-import taxonomyManager from '../taxonomy-manager';
 
 const definition = {
   scope: '[data-test-session-objective-list-item]',

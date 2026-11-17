@@ -1,12 +1,12 @@
-import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
-import { DateTime } from 'luxon';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/single-event';
+import { render } from '@ember/test-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import SingleEvent from 'frontend/components/single-event';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/single-event';
+import { DateTime } from 'luxon';
+import { module, skip,test } from 'qunit';
 
 module('Integration | Component | ilios calendar single event', function (hooks) {
   setupRenderingTest(hooks);

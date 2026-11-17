@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import LearningmaterialSearch from 'frontend/components/learningmaterial-search';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/learningmaterial-search';
-import LearningmaterialSearch from 'frontend/components/learningmaterial-search';
+import { module, test } from 'qunit';
 
 module('Integration | Component | learningmaterial search', function (hooks) {
   setupRenderingTest(hooks);

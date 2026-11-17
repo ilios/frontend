@@ -1,10 +1,11 @@
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { cleanQuery } from '../../../../../utils/query-utils';
-import { action } from '@ember/object';
-import SearchBox from '../../../../search-box';
 import t from 'ember-intl/helpers/t';
 import { and, gt, not } from 'ember-truth-helpers';
+
+import { cleanQuery } from '../../../../../utils/query-utils';
+import SearchBox from '../../../../search-box';
 
 export default class ReportsSubjectNewSearchInputComponent extends Component {
   @tracked showMoreInputPrompt;

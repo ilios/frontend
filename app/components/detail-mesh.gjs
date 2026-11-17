@@ -1,14 +1,15 @@
+import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
-import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import MeshManager from './mesh-manager';
+
 import sortBy from '../helpers/sort-by';
-import MeshDescriptorLastTreeNumber from './mesh-descriptor-last-tree-number';
 import BigSaveCancelButtons from './big-save-cancel-buttons';
+import MeshDescriptorLastTreeNumber from './mesh-descriptor-last-tree-number';
+import MeshManager from './mesh-manager';
 
 export default class DetailMeshComponent extends Component {
   @tracked isManaging = false;

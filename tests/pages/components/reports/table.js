@@ -1,4 +1,5 @@
 import { clickable, collection, create, hasClass } from 'ember-cli-page-object';
+
 import tableRow from './table-row';
 
 const definition = {

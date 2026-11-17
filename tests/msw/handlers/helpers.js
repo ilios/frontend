@@ -1,6 +1,7 @@
-import { HttpResponse } from 'msw';
 import { singularize } from 'ember-inflector';
-import { db, getRelatedRecord, validateRecordData, modelsWithStringIds } from '../db.js';
+import { HttpResponse } from 'msw';
+
+import { db, getRelatedRecord, modelsWithStringIds,validateRecordData } from '../db.js';
 import { getIdentityManager } from '../utils/identity-managers.js';
 
 async function extractRelationshipsInUpdate(modelName, data, attrs) {
@@ -55,4 +56,4 @@ async function createFromPostData(modelName, data) {
   return await db[modelName].create(attrs);
 }
 
-export { extractRelationshipsInUpdate, createFromPostData };
+export { createFromPostData,extractRelationshipsInUpdate };

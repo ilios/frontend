@@ -1,7 +1,7 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { action } from '@ember/object';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
 
 export default class LinkToWithActionComponent extends Component {
   @service router;

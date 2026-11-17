@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, find, render } from '@ember/test-helpers';
 import SortableTh from 'frontend/components/sortable-th';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | sortable th', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,5 +1,5 @@
+import { jsonApiUtcNormalizeDate,jsonApiUtcSerializeDate } from '../utils/json-api-utc-date';
 import ApplicationSerializer from './application';
-import { jsonApiUtcSerializeDate, jsonApiUtcNormalizeDate } from '../utils/json-api-utc-date';
 
 export default class CourseSerializer extends ApplicationSerializer {
   serialize(snapshot, options) {

@@ -1,12 +1,13 @@
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
+import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import sortBy from '../../helpers/sort-by';
-import { fn } from '@ember/helper';
+
 import pcrsUriToNumber from '../../helpers/pcrs-uri-to-number';
+import sortBy from '../../helpers/sort-by';
 import BigSaveCancelButtons from '../big-save-cancel-buttons';
 
 export default class SchoolCompetenciesListItemPcrsComponent extends Component {

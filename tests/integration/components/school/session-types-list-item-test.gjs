@@ -1,10 +1,10 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMSW } from 'frontend/tests/msw';
-import { component } from 'frontend/tests/pages/components/school/session-types-list-item';
 import SessionTypesListItem from 'frontend/components/school/session-types-list-item';
 import noop from 'frontend/helpers/noop';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupMSW } from 'frontend/tests/msw';
+import { component } from 'frontend/tests/pages/components/school/session-types-list-item';
+import { module, test } from 'qunit';
 
 module('Integration | Component | school/session-types-list-item', function (hooks) {
   setupRenderingTest(hooks);

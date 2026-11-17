@@ -1,6 +1,6 @@
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
 <template>
   <section class="school-emails" data-test-school-emails ...attributes>
     <div class="header">

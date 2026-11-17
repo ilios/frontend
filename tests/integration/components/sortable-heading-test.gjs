@@ -1,7 +1,7 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, find, render } from '@ember/test-helpers';
 import SortableHeading from 'frontend/components/sortable-heading';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Integration | Component | sortable heading', function (hooks) {
   setupRenderingTest(hooks);

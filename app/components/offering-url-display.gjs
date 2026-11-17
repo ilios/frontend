@@ -1,13 +1,14 @@
+import { hash } from '@ember/helper';
+import { guidFor } from '@ember/object/internals';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { task, timeout } from 'ember-concurrency';
-import { guidFor } from '@ember/object/internals';
-import t from 'ember-intl/helpers/t';
-import CopyButton from './copy-button';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import t from 'ember-intl/helpers/t';
+
+import CopyButton from './copy-button';
 import IliosTooltip from './ilios-tooltip';
-import { hash } from '@ember/helper';
-import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 
 export default class OfferingUrlDisplayComponent extends Component {
   get copyButtonId() {

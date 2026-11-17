@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { component } from 'frontend/tests/pages/components/date-picker';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import DatePicker from 'frontend/components/date-picker';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { component } from 'frontend/tests/pages/components/date-picker';
+import { module, test } from 'qunit';
 
 module('Integration | Component | date-picker', function (hooks) {
   setupRenderingTest(hooks);

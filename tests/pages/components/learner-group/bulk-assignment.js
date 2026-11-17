@@ -1,13 +1,12 @@
 import {
   clickable,
-  create,
   collection,
+  create,
   fillable,
   hasClass,
   isVisible,
   text,
 } from 'ember-cli-page-object';
-
 import userNameInfo from 'frontend/tests/pages/components/user-name-info';
 
 const definition = {

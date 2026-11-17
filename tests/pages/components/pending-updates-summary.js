@@ -1,10 +1,10 @@
 import {
   attribute,
   clickable,
-  create,
   collection,
-  hasClass,
+  create,
   fillable,
+  hasClass,
   isPresent,
   text,
   value,

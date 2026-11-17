@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
-import { setupTest } from 'frontend/tests/helpers';
 import Controller from 'frontend/controllers/dashboard/calendar';
+import { setupTest } from 'frontend/tests/helpers';
+import { module, test } from 'qunit';
 
 module('Unit | Controller | dashboard/calendar', function (hooks) {
   setupTest(hooks);

@@ -1,15 +1,15 @@
 import {
   chunk,
+  filterBy,
   findBy,
   findById,
-  filterBy,
   mapBy,
   sortBy,
   uniqueBy,
   uniqueById,
   uniqueValues,
 } from 'frontend/utils/array-helpers';
-import { module, test, skip } from 'qunit';
+import { module, skip,test } from 'qunit';
 
 function getDogs() {
   return [

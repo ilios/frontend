@@ -1,8 +1,8 @@
-import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
 import { fn, uniqueId } from '@ember/helper';
+import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import t from 'ember-intl/helpers/t';
 <template>
   <div class="user-profile-bio-details" data-test-user-profile-bio-details ...attributes>
     <div class="user-profile-bio-header">

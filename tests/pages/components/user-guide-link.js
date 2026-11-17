@@ -1,4 +1,4 @@
-import { create, attribute } from 'ember-cli-page-object';
+import { attribute,create } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-user-guide-link]',

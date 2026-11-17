@@ -1,6 +1,6 @@
+import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
 import { task } from 'ember-concurrency';
-import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 
 export default class CopyButtonComponent extends Component {

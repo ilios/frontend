@@ -1,9 +1,9 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
+import Competency from 'frontend/components/reports/subject/competency';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { setupMSW } from 'frontend/tests/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/competency';
-import Competency from 'frontend/components/reports/subject/competency';
+import { module, test } from 'qunit';
 
 module('Integration | Component | reports/subject/competency', function (hooks) {
   setupRenderingTest(hooks);

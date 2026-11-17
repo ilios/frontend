@@ -1,15 +1,16 @@
+import { fn } from '@ember/helper';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import { mapBy, sortBy } from '../../utils/array-helpers';
-import CoursesCalendarFilter from './courses-calendar-filter';
 import t from 'ember-intl/helpers/t';
-import FilterCheckbox from './filter-checkbox';
+
 import includes from '../../helpers/includes';
-import { fn } from '@ember/helper';
+import { mapBy, sortBy } from '../../utils/array-helpers';
 import LoadingSpinner from '../loading-spinner';
 import CohortCalendarFilter from './cohort-calendar-filter';
+import CoursesCalendarFilter from './courses-calendar-filter';
+import FilterCheckbox from './filter-checkbox';
 import TermsCalendarFilter from './terms-calendar-filter';
 
 export default class DashboardCalendarFiltersComponent extends Component {
