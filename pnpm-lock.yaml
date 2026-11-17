@@ -204,7 +204,7 @@ importers:
         version: 5.9.1(@babel/core@7.29.13(supports-color@8.1.1))(supports-color@8.1.1)
       '@ember-data/request-utils':
         specifier: 5.9.1
-        version: 5.9.1(@babel/core@7.29.13(supports-color@8.1.1))(ember-inflector@7.0.0(@babel/core@7.29.13(supports-color@8.1.1)))(supports-color@8.1.1)
+        version: 5.9.1(@babel/core@7.29.13(supports-color@8.1.1))(ember-inflector@6.0.0(@babel/core@7.29.13(supports-color@8.1.1)))(supports-color@8.1.1)
       '@ember-data/serializer':
         specifier: 5.9.1
         version: 5.9.1(@babel/core@7.29.13(supports-color@8.1.1))(supports-color@8.1.1)
@@ -386,8 +386,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(@babel/core@7.29.13(supports-color@8.1.1))
       ember-inflector:
-        specifier: ^7.0.0
-        version: 7.0.0(@babel/core@7.29.13(supports-color@8.1.1))
+        specifier: ^6.0.0
+        version: 6.0.0(@babel/core@7.29.13(supports-color@8.1.1))
       ember-intl:
         specifier: ^9.1.0
         version: 9.4.0(@babel/core@7.29.13(supports-color@8.1.1))(@ember/test-helpers@5.8.0(@babel/core@7.29.13(supports-color@8.1.1)))
@@ -3716,8 +3716,8 @@ packages:
     resolution: {integrity: sha512-zGPvt934h08gxdemIZz29XRn4cdwn51UxlodKtDkiahGrEpiSQ6qH8nvXGwDhQvZsf8zGumnXqcmDYYA5oFomQ==}
     engines: {node: '>= 22.*', pnpm: '>= 10'}
 
-  ember-inflector@7.0.0:
-    resolution: {integrity: sha512-dHnlYfxBnpiRMZUgrYpdcQ/kGGMCuVh3KhHhJ0TU2PPJY7TB+3XqUWCf7ihppxkbRf1igLVRietYK2v0OXzm8Q==}
+  ember-inflector@6.0.0:
+    resolution: {integrity: sha512-g6trqBhQHRwlq9bBmoyxhAl0tD0/CaTKK0xWPUgi3BfxFOgGG1bbiwAx+tjyiAkLzDqU+ihyjtT+sd41y6K1hA==}
 
   ember-intl@9.4.0:
     resolution: {integrity: sha512-PrydRUP5U8QM48TkMquIceEaBTzjR2uiSqlRrZMcMb1SRZ0sYRuHds/AEndjbiDMNfkWnnfVedOJ1MrPkFMkqw==}
@@ -8354,13 +8354,13 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@ember-data/request-utils@5.9.1(@babel/core@7.29.13(supports-color@8.1.1))(ember-inflector@7.0.0(@babel/core@7.29.13(supports-color@8.1.1)))(supports-color@8.1.1)':
+  '@ember-data/request-utils@5.9.1(@babel/core@7.29.13(supports-color@8.1.1))(ember-inflector@6.0.0(@babel/core@7.29.13(supports-color@8.1.1)))(supports-color@8.1.1)':
     dependencies:
       '@embroider/macros': 1.21.4(@babel/core@7.29.13(supports-color@8.1.1))(supports-color@8.1.1)
       '@warp-drive/core': 5.9.1(@babel/core@7.29.13(supports-color@8.1.1))(supports-color@8.1.1)
       '@warp-drive/utilities': 5.9.1(@babel/core@7.29.13(supports-color@8.1.1))(@warp-drive/core@5.9.1(@babel/core@7.29.13(supports-color@8.1.1))(supports-color@8.1.1))(supports-color@8.1.1)
     optionalDependencies:
-      ember-inflector: 7.0.0(@babel/core@7.29.13(supports-color@8.1.1))
+      ember-inflector: 6.0.0(@babel/core@7.29.13(supports-color@8.1.1))
     transitivePeerDependencies:
       - '@babel/core'
       - '@glint/template'
@@ -11317,7 +11317,7 @@ snapshots:
     transitivePeerDependencies:
       - '@babel/core'
 
-  ember-inflector@7.0.0(@babel/core@7.29.13(supports-color@8.1.1)):
+  ember-inflector@6.0.0(@babel/core@7.29.13(supports-color@8.1.1)):
     dependencies:
       '@embroider/addon-shim': 1.11.0
       decorator-transforms: 2.4.0(@babel/core@7.29.13(supports-color@8.1.1))

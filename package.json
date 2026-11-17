@@ -110,7 +110,7 @@
     "ember-exam": "^10.2.0",
     "ember-file-upload": "^10.1.0",
     "ember-focus-trap": "^2.0.0",
-    "ember-inflector": "^7.0.0",
+    "ember-inflector": "^6.0.0",
     "ember-intl": "^9.1.0",
     "ember-keyboard": "^10.0.0",
     "ember-load-initializers": "^3.0.1",
