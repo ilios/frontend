@@ -1,0 +1,16 @@
+input[type="file"] {
+  border-radius: 3px;
+  cursor: pointer;
+  min-width: 15em;
+
+  &:disabled {
+    cursor: default;
+
+    &::file-selector-button {
+      background-color: light-dark(var(--grey), var(--light-grey));
+      border-color: light-dark(var(--grey), var(--light-grey));
+      color: light-dark(var(--white), var(--black));
+      cursor: default;
+    }
+  }
+}
