@@ -990,7 +990,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.notOk(component.actions.buttons.toggle.isVisible);
     assert.notOk(component.actions.buttons.bulkAssignment.isVisible);
     assert.notOk(component.actions.buttons.manageUsers.isVisible);
-    assert.ok(component.actions.buttons.close.isVisible);
+    assert.notOk(component.actions.buttons.close.isVisible);
     assert.ok(component.bulkAssignment.isVisible);
     assert.strictEqual(component.actions.title, 'Upload Group Assignments');
   });

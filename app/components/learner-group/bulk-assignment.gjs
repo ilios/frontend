@@ -125,6 +125,7 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
           @learnerGroup={{@learnerGroup}}
           @sendValidUsers={{set this "validUsers"}}
           @sendMatchedGroups={{set this "matchedGroups"}}
+          @done={{@done}}
         />
       {{/if}}
     </div>

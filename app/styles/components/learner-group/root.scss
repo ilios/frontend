@@ -31,6 +31,10 @@
       .title {
         @include m.detail-container-header;
         @include m.detail-container-title;
+
+        &.bulk-assignment {
+          margin: 0.75rem 0;
+        }
       }
 
       .actions {

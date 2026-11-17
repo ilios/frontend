@@ -406,6 +406,11 @@ export default class LearnerGroupUploadDataComponent extends Component {
           </button>
         </p>
       {{/if}}
+      <div class="form">
+        <button type="button" class="cancel text" {{on "click" @done}} data-test-cancel>
+          {{t "general.cancel"}}
+        </button>
+      </div>
     </div>
   </template>
 }

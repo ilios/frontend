@@ -9,6 +9,10 @@
     flex-direction: column;
     gap: 0.5rem;
 
+    button.cancel {
+      margin-top: 0.5em;
+    }
+
     .loading-file {
       display: flex;
       padding: 1rem;
