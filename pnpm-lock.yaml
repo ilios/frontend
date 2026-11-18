@@ -512,8 +512,8 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       sanitize-html:
-        specifier: ^2.18.0
-        version: 2.18.1
+        specifier: ^2.18.2
+        version: 2.18.2
       sass:
         specifier: ^1.106.1
         version: 1.108.1
@@ -6256,8 +6256,8 @@ packages:
     engines: {node: 10.* || >= 12.*}
     hasBin: true
 
-  sanitize-html@2.18.1:
-    resolution: {integrity: sha512-2X5lC8fYla8YaT8g73Nj+HcLWXan5dLyCWLgVvaOmfw7JI78IRsyNtIDytTHdn7hBQbIkCah7Zbmd5jabzeDig==}
+  sanitize-html@2.18.2:
+    resolution: {integrity: sha512-LTQVNHBeKB5qIae9x2J2Fw68ORnES++8vzYaG7DFT8P4GVCJFeHffHnRUzf5Mrxfx+4GweIvMRqkBPHHodaVNg==}
     engines: {node: '>=22.12.0'}
 
   sass@1.108.1:
@@ -14051,7 +14051,7 @@ snapshots:
       minimist: 1.2.8
       walker: 1.0.8
 
-  sanitize-html@2.18.1:
+  sanitize-html@2.18.2:
     dependencies:
       escape-string-regexp: 4.0.0
       htmlparser2: 12.0.0
