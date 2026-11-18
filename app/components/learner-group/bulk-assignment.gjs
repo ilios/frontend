@@ -1,4 +1,3 @@
-import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
@@ -61,24 +60,22 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
     this.matchedGroups = [...this.matchedGroups, { name: title, group: savedGroup }];
   }
 
-  @action
-  clear() {
-    this.validUsers = [];
-    this.matchedGroups = [];
-  }
   <template>
     <div
       class="learner-group-bulk-assignment"
       data-test-learner-group-bulk-assignment
       ...attributes
     >
+      <UploadData
+        @learnerGroup={{@learnerGroup}}
+        @sendValidUsers={{set this "validUsers"}}
+        @sendMatchedGroups={{set this "matchedGroups"}}
+        @unmatchedGroups={{this.unmatchedGroups}}
+        @done={{@done}}
+      />
       {{#if this.validUsers}}
         <p>
           {{t "general.usersSelected" count=this.validUsers.length}}
-          <br />
-          <button type="button" {{on "click" this.clear}}>
-            {{t "general.startOver"}}
-          </button>
         </p>
         {{#if this.unmatchedGroups.length}}
           <table
@@ -120,13 +117,6 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
             @done={{@done}}
           />
         {{/if}}
-      {{else}}
-        <UploadData
-          @learnerGroup={{@learnerGroup}}
-          @sendValidUsers={{set this "validUsers"}}
-          @sendMatchedGroups={{set this "matchedGroups"}}
-          @done={{@done}}
-        />
       {{/if}}
     </div>
   </template>
