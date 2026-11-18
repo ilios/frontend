@@ -32,6 +32,19 @@
     p:has(button) {
       margin: 0;
     }
+
+    thead,
+    tbody tr {
+      display: table;
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    tbody {
+      display: block;
+      max-height: 25em;
+      overflow-y: auto;
+    }
   }
 
   .group-matcher {
