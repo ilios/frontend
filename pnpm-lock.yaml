@@ -311,8 +311,8 @@ importers:
         specifier: ^4.29.3
         version: 4.29.5
       caniuse-db:
-        specifier: ^1.0.30001819
-        version: 1.0.30001823
+        specifier: ^1.0.30001826
+        version: 1.0.30001826
       color:
         specifier: ^5.0.3
         version: 5.0.3
@@ -2824,8 +2824,8 @@ packages:
     resolution: {integrity: sha512-RbsNrFyhwkx+6psk/0fK/Q9orOUr9VMxohGd8vTa4djf4TGLfblBgUfqZChrZuW0Q+mz2eBPFLusw9Jfukzmhg==}
     hasBin: true
 
-  caniuse-db@1.0.30001823:
-    resolution: {integrity: sha512-4XVv6lMclbawVQ2lVwznJlIK7SKbbaTe7IQ3jCSPPMbd93Rckrgsqc2LjD+jkUDP6SM1pH/PRCMFdkHpuW9puQ==}
+  caniuse-db@1.0.30001826:
+    resolution: {integrity: sha512-1vDf8WnZdrWhxDJTB11xd/EqirEDrJfTEIGIuILmG4VSFSsxP/+0KAB/ptjzsYiFqvzDVNF2VmJbSGHw/Lc2Hg==}
 
   caniuse-lite@1.0.30001823:
     resolution: {integrity: sha512-TQ5s/djDjNk1axreUW+4rULH+BmdCMLiJkhaXnO5wqivG7tITkSUj4ItIdzqdZHKaXcHAV8dhH3JxOM7/7bwqw==}
@@ -10218,7 +10218,7 @@ snapshots:
     dependencies:
       tmp: 0.0.28
 
-  caniuse-db@1.0.30001823: {}
+  caniuse-db@1.0.30001826: {}
 
   caniuse-lite@1.0.30001823: {}
 
