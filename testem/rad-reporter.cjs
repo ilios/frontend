@@ -24,7 +24,7 @@ class RadReporter {
       this.todo++;
       this.out.write('T');
     } else {
-      this.failedTestIds.push(data.originalResultObj.testId ?? false);
+      this.failedTestIds.push(data.originalResultObj?.testId ?? false);
       this.failedTestNames.push(data.name);
       this.out.write(styleText('red', 'F'));
     }
