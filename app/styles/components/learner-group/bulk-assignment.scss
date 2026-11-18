@@ -1,8 +1,10 @@
 @use "../../mixins" as m;
 
 .learner-group-bulk-assignment {
-  border-bottom: 1px dotted var(--orange);
-  padding: 1rem 0;
+  background-color: light-dark(var(--white), var(--dark-grey));
+  border: 1px solid light-dark(var(--lightest-grey), var(--grey));
+  margin-bottom: 1em;
+  padding: 1rem;
 
   .learner-group-upload-data {
     display: flex;
