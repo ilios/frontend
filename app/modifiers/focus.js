@@ -1,5 +1,5 @@
-import { modifier } from 'ember-modifier';
 import { scheduleOnce } from '@ember/runloop';
+import { modifier } from 'ember-modifier';
 
 /**
   The `{{focus}}` element modifier sets the focus its DOM element.
