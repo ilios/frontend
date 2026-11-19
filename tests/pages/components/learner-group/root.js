@@ -73,6 +73,9 @@ const definition = {
         scope: '[data-test-manage]',
         isDisabled: property('disabled'),
       },
+      cancel: {
+        scope: '[data-test-cancel]',
+      },
     },
   },
   bulkAssignment,

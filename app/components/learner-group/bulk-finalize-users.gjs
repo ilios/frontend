@@ -46,10 +46,8 @@ export default class LearnerGroupBulkFinalizeUsersComponent extends Component {
   });
   <template>
     <div class="bulk-finalize-users" data-test-learner-group-bulk-finalize-users ...attributes>
-      <h2>
-        {{t "general.finalResults"}}
-      </h2>
       <table class="ilios-table ilios-table-colors ilios-zebra-table" data-test-final-data>
+        <caption>{{t "general.finalResults"}}</caption>
         <thead>
           <tr>
             <th>

@@ -57,7 +57,6 @@ const definition = {
 
   canSubmitFinalData: isVisible('[data-test-finalize-users-submit]'),
   submitFinalData: clickable('[data-test-finalize-users-submit]'),
-  cancel: clickable('[data-test-learner-group-upload-data] [data-test-cancel]'),
 };
 
 export default definition;

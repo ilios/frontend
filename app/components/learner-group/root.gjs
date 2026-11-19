@@ -654,7 +654,18 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </h2>
             <div class="actions" data-test-buttons>
-              {{#unless @isBulkAssigning}}
+              {{#if @isBulkAssigning}}
+                <div class="form">
+                  <button
+                    type="button"
+                    class="cancel text"
+                    {{on "click" (fn @setIsBulkAssigning false)}}
+                    data-test-cancel
+                  >
+                    {{t "general.cancel"}}
+                  </button>
+                </div>
+              {{else}}
                 {{#if this.usersForMembersList.length}}
                   <input
                     type="text"
@@ -702,7 +713,7 @@ export default class LearnerGroupRootComponent extends Component {
                     </button>
                   {{/if}}
                 {{/if}}
-              {{/unless}}
+              {{/if}}
             </div>
           </div>
           {{#if @isBulkAssigning}}
