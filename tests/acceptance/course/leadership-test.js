@@ -1,5 +1,5 @@
 import { currentURL } from '@ember/test-helpers';
-import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/course';
 import { module, test } from 'qunit';
 
@@ -21,6 +21,18 @@ module('Acceptance | Course - Leadership', function (hooks) {
       administrators: [users[2], users[3]],
       studentAdvisors: [users[4], users[5]],
     });
+  });
+
+  test('expanded leadership when no leaders', async function (assert) {
+    const course = await this.server.create('course', {
+      year: 2013,
+      school: this.school,
+    });
+    await page.visit({ courseId: course.id, details: true });
+    await takeScreenshot(assert);
+
+    assert.strictEqual(page.details.leadershipExpanded.title, 'Leadership (0)');
+    assert.ok(page.details.leadershipExpanded.manage);
   });
 
   test('collapsed leadership', async function (assert) {
@@ -70,7 +82,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
     assert.strictEqual(studentAdvisors[1].text, '6 guy M. Mc6son');
   });
 
-  test('toggle between collapsed and expanded view modes', async function(assert) {
+  test('toggle between collapsed and expanded view modes', async function (assert) {
     await page.visit({ courseId: this.course.id, details: true });
 
     assert.notOk(currentURL().includes('courseLeadershipDetails=true'));

@@ -1,4 +1,4 @@
-import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/session';
 import { module, test } from 'qunit';
 
@@ -26,6 +26,23 @@ module('Acceptance | Session - Leadership', function (hooks) {
       studentAdvisors: [users[4]],
       sessionType,
     });
+  });
+
+  test('expanded leadership when no leaders', async function (assert) {
+    const course = await this.server.create('course', {
+      year: 2013,
+      school: this.school,
+    });
+    const sessionType = await this.server.create('session-type', { school: this.school });
+    const session = await this.server.create('session', {
+      course,
+      sessionType,
+    });
+    await page.visit({ courseId: course.id, sessionId: session.id });
+    await takeScreenshot(assert);
+
+    assert.strictEqual(page.details.leadershipExpanded.title, 'Leadership (0)');
+    assert.ok(page.details.leadershipExpanded.manage);
   });
 
   test('collapsed leadership', async function (assert) {
