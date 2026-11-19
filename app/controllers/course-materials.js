@@ -4,5 +4,5 @@ export default class CourseMaterialsController extends Controller {
   queryParams = ['courseSort', 'sessionSort'];
 
   courseSort = 'title';
-  sessionSort = 'firstOfferingDate';
+  sessionSort = 'session.firstOfferingDate';
 }
