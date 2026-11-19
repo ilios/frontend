@@ -18,6 +18,8 @@ export default async function (defaults) {
       // before upgrading to Ember Data 6.0
       DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false,
       DEPRECATE_TRACKING_PACKAGE: false,
+      // set to false to strip the deprecated code (thereby opting into the new behavior)
+      DEPRECATE_RELATIONSHIP_REMOTE_UPDATE_CLEARING_LOCAL_STATE: false,
     },
   });
 
