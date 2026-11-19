@@ -2,6 +2,7 @@ import { clickable, count, create, isVisible } from 'ember-cli-page-object';
 
 import collapsedCompetencies from '../collapsed-competencies';
 import collapsedTaxonomies from '../collapsed-taxonomies';
+import detailCompetencies from '../detail-competencies';
 import learningMaterials from '../detail-learning-materials';
 import taxonomies from '../detail-taxonomies';
 import leadershipCollapsed from '../leadership-collapsed';
@@ -28,4 +29,5 @@ export default create({
   collapsedTaxonomies,
   detailCohorts,
   collapsedCompetencies,
+  detailCompetencies,
 });

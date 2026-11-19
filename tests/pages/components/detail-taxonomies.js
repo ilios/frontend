@@ -6,6 +6,7 @@ import manager from './taxonomy-manager';
 export default {
   scope: '[data-test-detail-taxonomies]',
   title: text('.title'),
+  collapse: clickable('.title'),
   manage: clickable('.actions button'),
   save: clickable('.actions [data-test-save]'),
   cancel: clickable('.actions [data-test-cancel]'),

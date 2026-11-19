@@ -1,3 +1,4 @@
+import {currentURL} from "@ember/test-helpers";
 import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/course';
 import { module, test } from 'qunit';
@@ -83,6 +84,27 @@ module('Acceptance | Course - Terms', function (hooks) {
     assert.strictEqual(page.details.taxonomies.manager.availableTerms[1].name, 'term 1');
     assert.ok(page.details.taxonomies.manager.availableTerms[1].notSelected);
   });
+
+  test('toggle between collapsed and expanded view modes', async function(assert) {
+    await page.visit({ courseId: this.course.id, details: true });
+
+    assert.notOk(currentURL().includes('courseTaxonomyDetails=true'));
+    assert.ok(page.details.collapsedTaxonomies.isVisible);
+    assert.notOk(page.details.taxonomies.isVisible);
+
+    await page.details.collapsedTaxonomies.expand();
+
+    assert.ok(currentURL().includes('courseTaxonomyDetails=true'));
+    assert.notOk(page.details.collapsedTaxonomies.isVisible);
+    assert.ok(page.details.taxonomies.isVisible);
+
+    await page.details.taxonomies.collapse();
+
+    assert.notOk(currentURL().includes('courseTaxonomyDetails=true'));
+    assert.ok(page.details.collapsedTaxonomies.isVisible);
+    assert.notOk(page.details.taxonomies.isVisible);
+  });
+
 
   test('save term changes', async function (assert) {
     await page.visit({
