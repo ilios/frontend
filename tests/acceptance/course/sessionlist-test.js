@@ -382,12 +382,48 @@ module('Acceptance | Course - Session List', function (hooks) {
     );
   });
 
+  test('title filter', async function (assert) {
+    await page.visit({ courseId: this.course.id, details: true });
+    const { sessions } = page.courseSessions.sessionsGrid;
+    assert.notOk(currentURL().includes('filterSessionsBy'));
+    assert.strictEqual(sessions.length, 4);
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    assert.strictEqual(sessions[2].row.title, 'session 2');
+    assert.strictEqual(sessions[3].row.title, 'session3\\')
+
+    await page.courseSessions.filter('ess');
+
+    assert.ok(currentURL().includes('filterSessionsBy=ess'));
+    assert.strictEqual(sessions.length, 4);
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    assert.strictEqual(sessions[2].row.title, 'session 2');
+    assert.strictEqual(sessions[3].row.title, 'session3\\')
+
+    await page.courseSessions.filter('session3');
+
+    assert.ok(currentURL().includes('filterSessionsBy=session3'));
+    assert.strictEqual(sessions.length, 1);
+    assert.strictEqual(sessions[0].row.title, 'session3\\');
+
+    await page.courseSessions.filter('');
+
+    assert.notOk(currentURL().includes('filterSessionsBy'));
+    assert.strictEqual(sessions.length, 4);
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    assert.strictEqual(sessions[2].row.title, 'session 2');
+    assert.strictEqual(sessions[3].row.title, 'session3\\')
+  });
+
   test('title filter escapes regex', async function (assert) {
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(sessions[0].row.title, 'session 0');
     await page.courseSessions.filter('\\');
+    assert.ok(currentURL().includes(`filterSessionsBy=${encodeURIComponent('\\')}`));
     assert.strictEqual(sessions.length, 1);
     assert.strictEqual(sessions[0].row.title, 'session3\\');
   });
