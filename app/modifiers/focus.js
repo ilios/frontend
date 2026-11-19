@@ -1,3 +1,4 @@
+import { scheduleOnce } from '@ember/runloop';
 import { modifier } from 'ember-modifier';
 
 /**
@@ -18,6 +19,7 @@ export default modifier(function focus(element, positional /*, named*/) {
   // If no argument is provided, then the given element is focused on.
   // If an argument has been provided, then only set focus if that arg is truthy.
   if (!positional.length || !!positional[0]) {
-    element.focus();
+    // eslint-disable-next-line ember/no-runloop
+    scheduleOnce('afterRender', element, element?.focus);
   }
 });

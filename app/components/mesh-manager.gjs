@@ -9,6 +9,7 @@ import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
+import onKey from 'ember-keyboard/modifiers/on-key';
 import { and, lte } from 'ember-truth-helpers';
 
 import includes from '../helpers/includes';
@@ -64,13 +65,6 @@ export default class MeshManagerComponent extends Component {
       return;
     }
     this.args.add(term);
-  }
-
-  @action
-  keyUp({ key }) {
-    if ('Escape' === key) {
-      this.clear();
-    }
   }
 
   @action
@@ -177,7 +171,7 @@ export default class MeshManagerComponent extends Component {
               value={{this.query}}
               placeholder={{t "general.search"}}
               {{on "input" this.update}}
-              {{on "keyup" this.keyUp}}
+              {{onKey 'Escape' this.clear event='keyup'}}
             />
           </div>
         {{/if}}
