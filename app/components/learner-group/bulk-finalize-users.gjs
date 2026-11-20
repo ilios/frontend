@@ -12,27 +12,86 @@ import UserNameInfo from '../user-name-info';
 export default class LearnerGroupBulkFinalizeUsersComponent extends Component {
   @service flashMessages;
   @service intl;
+  @service fetch;
+  @service store;
 
   get finalData() {
     return this.args.users.map((obj) => {
-      let selectedGroup = this.args.learnerGroup;
+      const rhett = {
+        user: obj.userRecord,
+        learnerGroup: this.args.learnerGroup,
+      };
       if (obj.subGroupName) {
         const match = findBy(this.args.matchedGroups, 'name', obj.subGroupName);
         if (match) {
-          selectedGroup = match.group;
+          rhett.learnerGroup = match.group;
+        } else {
+          rhett.newGroupTitle = obj.subGroupName;
         }
       }
-      return {
-        user: obj.userRecord,
-        learnerGroup: selectedGroup,
-      };
+      return rhett;
     });
   }
 
-  save = task({ drop: true }, async () => {
-    await timeout(10);
+  get newGroupsWithUsers() {
+    return this.finalData
+      .filter((obj) => obj.newGroupTitle)
+      .reduce((groups, obj) => {
+        groups[obj.newGroupTitle] ??= [];
+        groups[obj.newGroupTitle].push(obj.user.id);
+        return groups;
+      }, {});
+  }
 
-    for (const { learnerGroup, user } of this.finalData) {
+  async putUsersInParentGroups(groups) {
+    const userIds = Object.values(groups).flat();
+    const users = await Promise.all(userIds.map((id) => this.store.findRecord('user', id)));
+    const groupsToSave = await this.args.learnerGroup.addUsersToGroupAndAllParents(users);
+    for (const group of groupsToSave) {
+      await group.save();
+    }
+  }
+
+  async saveNewGroups(groups) {
+    await this.putUsersInParentGroups(groups);
+    const data = Object.entries(groups).map(([title, userIds]) => ({
+      type: 'learnerGroup',
+      attributes: {
+        title,
+      },
+      relationships: {
+        users: {
+          data: userIds.map((id) => ({
+            type: 'user',
+            id,
+          })),
+        },
+        cohort: {
+          data: {
+            type: 'cohort',
+            id: this.args.learnerGroup.belongsTo('cohort').id(),
+          },
+        },
+        parent: {
+          data: {
+            type: 'learnerGroup',
+            id: this.args.learnerGroup.id,
+          },
+        },
+      },
+    }));
+    const newLearnerGroups = await this.fetch.postManyToApi(`learnergroups`, data);
+    this.store.pushPayload(newLearnerGroups);
+  }
+
+  save = task({ drop: true }, async () => {
+    await timeout(1);
+
+    await this.saveNewGroups(this.newGroupsWithUsers);
+
+    const existingGroupData = this.finalData.filter((obj) => obj.learnerGroup);
+
+    for (const { learnerGroup, user } of existingGroupData) {
       const groups = await learnerGroup.addUserToGroupAndAllParents(user);
       for (const group of groups) {
         await group.save();
@@ -71,7 +130,12 @@ export default class LearnerGroupBulkFinalizeUsersComponent extends Component {
                 {{obj.user.campusId}}
               </td>
               <td>
-                {{obj.learnerGroup.title}}
+                {{#if obj.newGroupTitle}}
+                  {{obj.newGroupTitle}}
+                  ({{t "general.createNewGroup"}})
+                {{else}}
+                  {{obj.learnerGroup.title}}
+                {{/if}}
               </td>
             </tr>
           {{/each}}

@@ -461,6 +461,85 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     assert.notOk((await subgGroup4.users).includes(user1));
   });
 
+  test('check addUsersToGroupAndAllParents', async function (assert) {
+    const learnerGroup = this.store.createRecord('learner-group', { id: '1' });
+    const groups = await waitForResource(learnerGroup, 'allParents');
+    assert.strictEqual(groups.length, 0);
+
+    const user1 = this.store.createRecord('user', { id: '1' });
+    const user2 = this.store.createRecord('user', { id: '2' });
+    const subGroup1 = this.store.createRecord('learner-group', {
+      id: '2',
+      parent: learnerGroup,
+      users: [user1, user2],
+    });
+    const subGroup2 = this.store.createRecord('learner-group', {
+      id: '3',
+      parent: subGroup1,
+    });
+    const subGroup3 = this.store.createRecord('learner-group', {
+      id: '4',
+      parent: subGroup2,
+    });
+    const subGroup4 = this.store.createRecord('learner-group', {
+      id: '5',
+      parent: subGroup1,
+    });
+
+    const groupsToAdd = await subGroup3.addUsersToGroupAndAllParents([user1, user2]);
+
+    assert.strictEqual(groupsToAdd.length, 3);
+    assert.deepEqual(
+      groupsToAdd.map(({ id }) => id),
+      ['1', '3', '4'],
+      'groups are added in the correct order, skipping groups that already have every user',
+    );
+
+    assert.ok((await learnerGroup.users).includes(user1));
+    assert.ok((await learnerGroup.users).includes(user2));
+    assert.ok((await subGroup1.users).includes(user1));
+    assert.ok((await subGroup1.users).includes(user2));
+    assert.ok((await subGroup2.users).includes(user1));
+    assert.ok((await subGroup2.users).includes(user2));
+    assert.ok((await subGroup3.users).includes(user1));
+    assert.ok((await subGroup3.users).includes(user2));
+    assert.notOk((await subGroup4.users).includes(user1));
+    assert.notOk((await subGroup4.users).includes(user2));
+  });
+
+  test('check addUsersToGroupAndAllParents when a group has only some of the users', async function (assert) {
+    const user1 = this.store.createRecord('user', { id: '1' });
+    const user2 = this.store.createRecord('user', { id: '2' });
+
+    const learnerGroup = this.store.createRecord('learner-group', { id: '1' });
+    const subGroup1 = this.store.createRecord('learner-group', {
+      id: '2',
+      parent: learnerGroup,
+      users: [user1],
+    });
+    const subGroup2 = this.store.createRecord('learner-group', {
+      id: '3',
+      parent: subGroup1,
+    });
+
+    const groupsToAdd = await subGroup2.addUsersToGroupAndAllParents([user1, user2]);
+
+    assert.strictEqual(groupsToAdd.length, 3);
+    assert.deepEqual(
+      groupsToAdd.map(({ id }) => id),
+      ['1', '2', '3'],
+      'a group that is missing any of the users is updated and returned',
+    );
+
+    assert.ok((await learnerGroup.users).includes(user1));
+    assert.ok((await learnerGroup.users).includes(user2));
+    assert.ok((await subGroup1.users).includes(user1));
+    assert.ok((await subGroup1.users).includes(user2));
+    assert.strictEqual((await subGroup1.users).length, 2, 'user1 is not duplicated in subGroup1');
+    assert.ok((await subGroup2.users).includes(user1));
+    assert.ok((await subGroup2.users).includes(user2));
+  });
+
   test('has no learners in group without learners and without subgroups', async function (assert) {
     const learnerGroup = this.store.createRecord('learner-group');
     const hasLearners = await waitForResource(learnerGroup, 'hasLearnersInGroupOrSubgroups');

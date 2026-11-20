@@ -345,28 +345,40 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
       campusId: '12345',
       cohorts: [this.cohort],
     });
-    const users = [['jackson', 'johnson', '12345', '123Test']];
+    await this.server.create('user', {
+      firstName: 'jasper',
+      lastName: 'johnson',
+      campusId: '123456',
+      cohorts: [this.cohort],
+    });
+    const users = [
+      ['jackson', 'johnson', '12345', '123Test'],
+      ['jasper', 'johnson', '123456', 'group 1 child 0'],
+    ];
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
 
     await triggerUpload(users);
     await waitFor('[data-test-upload-data-valid-users]');
-    assert.strictEqual(page.root.bulkAssignment.validUploadedUsers.length, 1);
+    assert.strictEqual(page.root.bulkAssignment.validUploadedUsers.length, 2);
     await page.root.bulkAssignment.confirmUploadedUsers();
-    assert.strictEqual(page.root.bulkAssignment.groupsToMatch.length, 1);
+    assert.strictEqual(page.root.bulkAssignment.groupsToMatch.length, 2);
     assert.strictEqual((await this.server.db.learnerGroup.all()).length, 3);
     assert.deepEqual(this.getUserIdsInGroup(1), []);
-    await page.root.bulkAssignment.groupsToMatch[0].createNewGroup();
-    assert.strictEqual((await this.server.db.learnerGroup.all()).length, 4);
-    assert.deepEqual(this.getUserIdsInGroup(2), []);
+    assert.deepEqual(page.root.bulkAssignment.groupsToMatch[0].selected, '(Create This Group)');
+    assert.deepEqual(page.root.bulkAssignment.groupsToMatch[1].selected, 'group 1 child 0');
 
-    assert.strictEqual(page.root.bulkAssignment.finalData.length, 1);
-    assert.strictEqual(page.root.bulkAssignment.finalData[0].groupName, '123Test');
+    assert.strictEqual(page.root.bulkAssignment.finalData.length, 2);
+    assert.strictEqual(
+      page.root.bulkAssignment.finalData[0].groupName,
+      '123Test (Create This Group)',
+    );
+    assert.strictEqual(page.root.bulkAssignment.finalData[1].groupName, 'group 1 child 0');
     assert.ok(page.root.bulkAssignment.canSubmitFinalData);
 
     await page.root.bulkAssignment.submitFinalData();
-    assert.deepEqual(this.getUserIdsInGroup(1), [2]);
-    assert.deepEqual(this.getUserIdsInGroup(2), []);
+    assert.deepEqual(this.getUserIdsInGroup(1), [2, 3]);
+    assert.deepEqual(this.getUserIdsInGroup(2), [3]);
     assert.deepEqual(this.getUserIdsInGroup(3), []);
     assert.deepEqual(this.getUserIdsInGroup(4), [2]);
     assert.strictEqual(

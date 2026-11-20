@@ -1,4 +1,4 @@
-import Model, { attr,belongsTo, hasMany } from '@ember-data/model';
+import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 
@@ -512,6 +512,33 @@ export default class LearnerGroup extends Model {
       groups.map(async (group) => {
         if (!group.hasMany('users').ids().includes(user.id)) {
           (await group.users).push(user);
+          return group;
+        }
+      }),
+    );
+
+    //remove groups that weren't updated (they're undefined in this array)
+    return groupMap.filter(Boolean);
+  }
+
+  /**
+   * Starting with the root add every user in the passed array into
+   * every single group in the tree
+   */
+  async addUsersToGroupAndAllParents(users) {
+    const allParents = await this.getAllParents();
+    const groups = [...allParents, this];
+    const userIds = users.map(({ id }) => id);
+
+    const groupMap = await Promise.all(
+      groups.map(async (group) => {
+        const groupUsersIds = group.hasMany('users').ids();
+        if (userIds.some((userId) => !groupUsersIds.includes(userId))) {
+          for (const user of users) {
+            if (!groupUsersIds.includes(user.id)) {
+              (await group.users).push(user);
+            }
+          }
           return group;
         }
       }),

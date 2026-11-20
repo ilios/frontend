@@ -89,6 +89,16 @@ export default class LearnerGroupUploadDataComponent extends Component {
   }
 
   async parseFile(proposedUsers) {
+    const proposedIds = proposedUsers.map(({ campusId }) => campusId);
+    let existingUsers = [];
+    if (proposedIds.length) {
+      existingUsers = await this.store.query('user', {
+        filters: {
+          campusId: proposedIds,
+          enabled: true,
+        },
+      });
+    }
     const cohort = await this.args.learnerGroup.cohort;
     const data = await Promise.all(
       proposedUsers.map(async ({ firstName, lastName, campusId, subGroupName }) => {
@@ -111,12 +121,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
         }
         let userRecord = null;
         if (errors.length === 0) {
-          const users = await this.store.query('user', {
-            filters: {
-              campusId,
-              enabled: true,
-            },
-          });
+          const users = existingUsers.filter((u) => u.campusId === campusId);
           if (users.length === 0) {
             errors.push(this.intl.t('general.couldNotFindUserCampusId', { campusId }));
           } else if (users.length > 1) {

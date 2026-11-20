@@ -5,7 +5,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
-import { and, gt } from 'ember-truth-helpers';
+import { gt } from 'ember-truth-helpers';
 
 import sortBy from '../../helpers/sort-by';
 import { findBy, mapBy, uniqueValues } from '../../utils/array-helpers';
@@ -101,7 +101,6 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
                   @groupName={{name}}
                   @setMatch={{this.addMatch}}
                   @unsetMatch={{this.removeMatch}}
-                  @createGroup={{this.createGroup}}
                   @matches={{this.matchedGroups}}
                   @groups={{sortBy "title" @learnerGroup.allDescendants}}
                 />
@@ -109,7 +108,7 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
             </tbody>
           </table>
         {{/if}}
-        {{#if (and this.allUnmatchedGroupsMatched (gt this.validUsers.length 0))}}
+        {{#if (gt this.validUsers.length 0)}}
           <BulkFinalizeUsers
             @users={{this.validUsers}}
             @matchedGroups={{this.matchedGroups}}
