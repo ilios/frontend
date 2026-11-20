@@ -378,7 +378,7 @@ export default class LearnerGroupsRootComponent extends Component {
           <input
             aria-label={{t "general.learnerGroupTitleFilterPlaceholder"}}
             value={{@titleFilter}}
-            {{on "input" (pick "target.value" @setTitleFilter)}}
+            {{on "input" (pick "target.value" @changeTitleFilter)}}
             placeholder={{t "general.learnerGroupTitleFilterPlaceholder"}}
             data-test-title-filter
           />

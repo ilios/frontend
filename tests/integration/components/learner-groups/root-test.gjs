@@ -251,8 +251,8 @@ module('Integration | Component | learner-groups/root', function (hooks) {
   test('title filter works', async function (assert) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
-    this.set('setTitleFilter', (titleFilter) => {
-      assert.step('setTitleFilter called');
+    this.set('changeTitleFilter', (titleFilter) => {
+      assert.step('changeTitleFilter called');
       assert.strictEqual(titleFilter, '3');
       this.set('titleFilter', titleFilter);
     });
@@ -261,7 +261,7 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       <template>
         <Root
           @schools={{this.schools}}
-          @setTitleFilter={{this.setTitleFilter}}
+          @changeTitleFilter={{this.changeTitleFilter}}
           @titleFilter={{this.titleFilter}}
           @sortBy="title"
           @setSortBy={{(noop)}}
@@ -273,11 +273,11 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     assert.strictEqual(component.list.items[0].title, 'learner group 2');
     assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
-    await component.setTitleFilter('3');
+    await component.changeTitleFilter('3');
     assert.strictEqual(component.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(component.list.items.length, 1);
     assert.strictEqual(component.list.items[0].title, 'learner group 3');
-    assert.verifySteps(['setTitleFilter called']);
+    assert.verifySteps(['changeTitleFilter called']);
   });
 
   test('sort', async function (assert) {

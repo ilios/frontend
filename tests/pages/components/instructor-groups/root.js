@@ -20,7 +20,7 @@ const definition = {
     select: fillable('select'),
     selectedSchool: value('select'),
   },
-  setTitleFilter: fillable('[data-test-title-filter] input'),
+  changeTitleFilter: fillable('[data-test-title-filter] input'),
   headerTitle: text('h2'),
   toggleNewInstructorGroupForm: clickable('[data-test-expand-collapse-button] button'),
   toggleNewInstructorGroupFormExists: isVisible('[data-test-expand-collapse-button]'),
