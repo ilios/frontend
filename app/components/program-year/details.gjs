@@ -15,7 +15,7 @@ import Objectives from './objectives';
 
 <template>
   <div class="programyear-details" data-test-program-year-details ...attributes>
-    {{#if @programYearLeadershipDetails}}
+    {{#if (or (eq @programYear.directors.length 0) @programYearLeadershipDetails)}}
       <LeadershipExpanded
         @model={{@programYear}}
         @editable={{@canUpdate}}

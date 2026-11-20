@@ -1,4 +1,4 @@
-import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program-year';
 import { module, test } from 'qunit';
 
@@ -20,6 +20,19 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
       directors: [users[2], users[3]],
     });
     await this.server.create('cohort', { programYear });
+  });
+
+  test('expanded leadership when no leaders', async function (assert) {
+    const program = await this.server.create('program', {
+      school: this.school,
+    });
+    const programYear = await this.server.create('program-year', {
+      program,
+    });
+    await page.visit({ programId: program.id, programYearId: programYear.id });
+    await takeScreenshot(assert);
+    assert.strictEqual(page.details.expandedLeadership.title, 'Leadership (0)');
+    assert.ok(page.details.expandedLeadership.manage);
   });
 
   test('collapsed leadership', async function (assert) {

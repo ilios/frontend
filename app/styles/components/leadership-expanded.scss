@@ -17,5 +17,9 @@
 
   .leadership-expanded-content {
     @include m.detail-container-content;
+
+    &.empty {
+      padding: 0;
+    }
   }
 }

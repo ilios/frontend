@@ -1,5 +1,5 @@
 import { currentURL } from '@ember/test-helpers';
-import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/school';
 import { module, test } from 'qunit';
 
@@ -21,6 +21,16 @@ module('Acceptance | School - Leadership', function (hooks) {
     await this.server.createList('user', 2, {
       school: this.school,
     });
+  });
+
+  test('expanded leadership when no leaders', async function (assert) {
+    const school = await this.server.create('school');
+    await page.visit({ schoolId: school.id });
+    assert.strictEqual(currentURL(), '/schools/2');
+    await takeScreenshot(assert);
+
+    assert.strictEqual(page.root.leadershipExpanded.title, 'Leadership (0)');
+    assert.ok(page.root.leadershipExpanded.manage);
   });
 
   test('collapsed leadership', async function (assert) {

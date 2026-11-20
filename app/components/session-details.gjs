@@ -82,6 +82,16 @@ export default class SessionDetailsComponent extends Component {
     );
   }
 
+  get leadershipCount() {
+    const administratorsCount = this.args.session.administrators
+      ? (this.args.session.administrators.length ?? 0)
+      : 0;
+    const studentAdvisorsCount = this.args.session.studentAdvisors
+      ? (this.args.session.studentAdvisors.length ?? 0)
+      : 0;
+    return administratorsCount + studentAdvisorsCount;
+  }
+
   <template>
     {{pageTitle " | Session: " @session.title}}
     <div class="back-to-session" {{scrollIntoView delay=10}}>
@@ -99,7 +109,7 @@ export default class SessionDetailsComponent extends Component {
         @showSupplemental={{this.showSupplemental}}
         @showAttendanceRequired={{this.showAttendanceRequired}}
       />
-      {{#if @sessionLeadershipDetails}}
+      {{#if (or (eq this.leadershipCount 0) @sessionLeadershipDetails)}}
         <LeadershipExpanded
           @model={{@session}}
           @editable={{@editable}}
