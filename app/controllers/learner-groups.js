@@ -5,9 +5,9 @@ import { task, timeout } from 'ember-concurrency';
 export default class LearnerGroupsController extends Controller {
   queryParams = ['program', 'programYear', 'school', 'filter', 'sortBy'];
 
-  @tracked programId;
-  @tracked programYearId;
-  @tracked schoolId;
+  @tracked program;
+  @tracked programYear;
+  @tracked school;
   @tracked filter;
   @tracked sortBy = 'title';
 
