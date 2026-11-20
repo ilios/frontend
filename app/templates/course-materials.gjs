@@ -7,7 +7,7 @@ import Materials from '../components/course/materials';
 import SummaryHeader from '../components/course/summary-header';
 <template>
   <div class="backtolink">
-    <LinkTo @route="course" @model={{@model}}>
+    <LinkTo @route="course" @model={{@model}} data-test-back-to-course>
       {{t "general.backToCourse"}}
     </LinkTo>
   </div>
