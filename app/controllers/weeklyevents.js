@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
 
 export default class WeeklyeventsController extends Controller {
   queryParams = ['year', 'expanded', 'week'];
-  year = DateTime.now().year;
+  @tracked year = DateTime.now().year;
   @tracked expanded = '';
   @tracked week = '';
 
