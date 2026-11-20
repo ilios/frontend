@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
 export default class SessionIndexController extends Controller {
   queryParams = [
@@ -8,10 +9,10 @@ export default class SessionIndexController extends Controller {
     'sessionManageLeadership',
     'addOffering',
   ];
-  sessionObjectiveDetails = false;
-  sessionTaxonomyDetails = false;
-  sessionLeadershipDetails = false;
-  sessionManageLeadership = false;
+  @tracked sessionObjectiveDetails = false;
+  @tracked sessionTaxonomyDetails = false;
+  @tracked sessionLeadershipDetails = false;
+  @tracked sessionManageLeadership = false;
   showNewOfferingForm = false;
-  addOffering = false;
+  @tracked addOffering = false;
 }

@@ -1,3 +1,4 @@
+import {currentURL} from "@ember/test-helpers";
 import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/session';
 import { module, test } from 'qunit';
@@ -309,5 +310,31 @@ module('Acceptance | Session - Objective List', function (hooks) {
       page.details.objectives.objectiveList.objectives[0].description.error,
       'Description is too short (minimum is 3 characters)',
     );
+  });
+
+  test('toggle between collapsed and expanded view modes', async function(assert) {
+    const course = await this.server.create('course', { year: 2013, school: this.school });
+    const session = await this.server.create('session', { course, sessionType: this.sessionType });
+    await this.server.create('session-objective', { session });
+    await page.visit({
+      courseId: course.id,
+      sessionId: session.id,
+    });
+
+    assert.notOk(currentURL().includes('sessionObjectiveDetails=true'));
+    assert.ok(page.details.collapsedObjectives.isVisible);
+    assert.notOk(page.details.objectives.isVisible);
+
+    await page.details.collapsedObjectives.expand();
+
+    assert.ok(currentURL().includes('sessionObjectiveDetails=true'));
+    assert.notOk(page.details.collapsedObjectives.isVisible);
+    assert.ok(page.details.objectives.isVisible);
+
+    await page.details.objectives.collapse();
+
+    assert.notOk(currentURL().includes('sessionObjectiveDetails=true'));
+    assert.ok(page.details.collapsedObjectives.isVisible);
+    assert.notOk(page.details.objectives.isVisible);
   });
 });

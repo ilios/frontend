@@ -1,3 +1,4 @@
+import { currentURL } from '@ember/test-helpers';
 import {
   freezeDateAt,
   setupApplicationTest,
@@ -105,6 +106,23 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.ok(page.details.offerings.header.isVisible);
     assert.strictEqual(page.details.offerings.top.title, 'Offerings (3)');
     assert.strictEqual(page.details.offerings.dateBlocks.length, 3);
+  });
+
+  test('toggle visibility of new offering form', async function (assert) {
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
+
+    assert.notOk(currentURL().includes('addOffering'));
+    assert.notOk(page.details.offerings.offeringForm.isVisible);
+
+    await page.details.offerings.top.createNew();
+
+    assert.ok(currentURL().includes('addOffering=true'));
+    assert.ok(page.details.offerings.offeringForm.isVisible);
+
+    await page.details.offerings.offeringForm.close();
+
+    assert.notOk(currentURL().includes('addOffering'));
+    assert.notOk(page.details.offerings.offeringForm.isVisible);
   });
 
   test('offering dates', async function (assert) {
