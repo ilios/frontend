@@ -3,10 +3,10 @@ import { tracked } from '@glimmer/tracking';
 export default class CourseIndexController extends Controller {
   queryParams = ['sortSessionsBy', 'filterSessionsBy', 'expandedSessions'];
 
-  filterSessionsBy = '';
   canCreateSession = false;
   canUpdateCourse = false;
 
+  @tracked filterSessionsBy = '';
   @tracked sortSessionsBy = null;
   @tracked expandedSessions = null;
 

@@ -76,6 +76,103 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.programYearFilter.text, 'cohort 0');
   });
 
+  test('filter by school', async function (assert) {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.create('learner-group', { cohort });
+
+    await page.visit();
+
+    assert.strictEqual(page.schoolFilter.schools.length, 2);
+    assert.strictEqual(page.schoolFilter.schools[0].text, 'school 0');
+    assert.strictEqual(page.schoolFilter.schools[1].text, 'school 1');
+    assert.strictEqual(page.schoolFilter.selectedSchoolTitle, 'school 0');
+    assert.notOk(currentURL().includes('school'));
+    assert.strictEqual(page.programFilter.text, 'None');
+    assert.strictEqual(page.programYearFilter.text, 'None');
+    assert.strictEqual(page.list.items.length, 0);
+
+    await page.schoolFilter.select(school.id);
+
+    assert.ok(currentURL().includes(`school=${school.id}`));
+    assert.strictEqual(page.programFilter.text, 'program 0');
+    assert.strictEqual(page.programYearFilter.text, 'cohort 0');
+    assert.strictEqual(page.list.items.length, 1);
+
+    await page.schoolFilter.select(this.school.id);
+
+    assert.ok(currentURL().includes(`school=${this.school.id}`));
+    assert.strictEqual(page.programFilter.text, 'None');
+    assert.strictEqual(page.programYearFilter.text, 'None');
+    assert.strictEqual(page.list.items.length, 0);
+  });
+
+  test('filter by program', async function (assert) {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.createList('learner-group', 2, { cohort });
+    const program2 = await this.server.create('program', { school });
+    const programYear2 = await this.server.create('program-year', { program: program2 });
+    const cohort2 = await this.server.create('cohort', { programYear: programYear2 });
+    await this.server.createList('learner-group', 3, { cohort: cohort2 });
+
+    await page.visit({ school: school.id });
+
+    assert.notOk(currentURL().includes('program'));
+    assert.strictEqual(page.programFilter.programs.length, 2);
+    assert.strictEqual(page.programFilter.selectedProgramTitle, 'program 1');
+    assert.strictEqual(page.programYearFilter.text, 'cohort 1');
+    assert.strictEqual(page.list.items.length, 3);
+
+    await page.programFilter.select(program.id);
+
+    assert.ok(currentURL().includes(`program=${program.id}`));
+    assert.strictEqual(page.programFilter.selectedProgramTitle, 'program 0');
+    assert.strictEqual(page.programYearFilter.text, 'cohort 0');
+    assert.strictEqual(page.list.items.length, 2);
+
+    await page.programFilter.select(program2.id);
+
+    assert.ok(currentURL().includes(`program=${program2.id}`));
+    assert.strictEqual(page.programFilter.selectedProgramTitle, 'program 1');
+    assert.strictEqual(page.programYearFilter.text, 'cohort 1');
+    assert.strictEqual(page.list.items.length, 3);
+  });
+
+  test('filter by program year', async function (assert) {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.createList('learner-group', 2, { cohort });
+    const programYear2 = await this.server.create('program-year', { program });
+    const cohort2 = await this.server.create('cohort', { programYear: programYear2 });
+    await this.server.createList('learner-group', 3, { cohort: cohort2 });
+
+    await page.visit({ school: school.id, program: program.id });
+
+    assert.notOk(currentURL().includes('programYear'));
+    assert.strictEqual(page.programYearFilter.programYears.length, 2);
+
+    assert.strictEqual(page.programYearFilter.selectedProgramYearTitle, 'cohort 1');
+    assert.strictEqual(page.list.items.length, 3);
+
+    await page.programYearFilter.select(programYear.id);
+
+    assert.ok(currentURL().includes(`programYear=${programYear.id}`));
+    assert.strictEqual(page.programYearFilter.selectedProgramYearTitle, 'cohort 0');
+    assert.strictEqual(page.list.items.length, 2);
+
+    await page.programYearFilter.select(programYear2.id);
+
+    assert.strictEqual(page.programYearFilter.selectedProgramYearTitle, 'cohort 1');
+    assert.strictEqual(page.list.items.length, 3);
+  });
+
   test('multiple options filter', async function (assert) {
     const program = await this.server.create('program', { school: this.school });
     const programYear = await this.server.create('program-year', { program });
