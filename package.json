@@ -121,7 +121,7 @@
     "ember-qunit": "^9.1.0",
     "ember-qunit-nice-errors": "^3.0.0",
     "ember-resolver": "^13.2.0",
-    "ember-set-helper": "^3.1.0",
+    "ember-set-helper": "^4.0.0",
     "ember-simple-auth": "^8.4.1",
     "ember-simple-charts": "^14.0.2",
     "ember-source": "~7.3.0",
