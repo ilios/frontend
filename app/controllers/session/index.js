@@ -13,6 +13,5 @@ export default class SessionIndexController extends Controller {
   @tracked sessionTaxonomyDetails = false;
   @tracked sessionLeadershipDetails = false;
   @tracked sessionManageLeadership = false;
-  showNewOfferingForm = false;
   @tracked addOffering = false;
 }
