@@ -1,3 +1,4 @@
+import { currentURL } from '@ember/test-helpers';
 import { setupApplicationTest,setupAuthentication } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/session';
 import { module, test } from 'qunit';
@@ -22,13 +23,13 @@ module('Acceptance | Session - Terms', function (hooks) {
       active: true,
     });
 
-    const course = await this.server.create('course', {
+    this.course = await this.server.create('course', {
       year: 2013,
       school,
     });
     const sessionType = await this.server.create('session-type', { school });
-    await this.server.create('session', {
-      course,
+    this.session = await this.server.create('session', {
+      course: this.course,
       sessionType,
       terms: [term1],
     });
@@ -82,6 +83,26 @@ module('Acceptance | Session - Terms', function (hooks) {
     assert.strictEqual(page.details.taxonomies.manager.availableTerms[1].name, 'term 1');
     assert.ok(page.details.taxonomies.manager.availableTerms[1].notSelected);
     await page.details.taxonomies.cancel();
+  });
+
+  test('toggle between collapsed and expanded view modes', async function(assert) {
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
+
+    assert.notOk(currentURL().includes('sessionTaxonomyDetails=true'));
+    assert.ok(page.details.collapsedTaxonomies.isVisible);
+    assert.notOk(page.details.taxonomies.isVisible);
+
+    await page.details.collapsedTaxonomies.expand();
+
+    assert.ok(currentURL().includes('sessionTaxonomyDetails=true'));
+    assert.notOk(page.details.collapsedTaxonomies.isVisible);
+    assert.ok(page.details.taxonomies.isVisible);
+
+    await page.details.taxonomies.collapse();
+
+    assert.notOk(currentURL().includes('sessionTaxonomyDetails=true'));
+    assert.ok(page.details.collapsedTaxonomies.isVisible);
+    assert.notOk(page.details.taxonomies.isVisible);
   });
 
   test('save term changes', async function (assert) {

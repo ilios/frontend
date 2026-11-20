@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class CoursePublishallController extends Controller {
   @service router;
@@ -13,11 +14,11 @@ export default class CoursePublishallController extends Controller {
     'sortUnpublishedBy',
   ];
 
-  expandCompleteSessions = false;
-  expandIncompleteSessions = false;
-  sortIncompleteBy = 'title';
-  sortCompleteBy = 'title';
-  sortUnpublishedBy = 'title';
+  @tracked expandCompleteSessions = false;
+  @tracked expandIncompleteSessions = false;
+  @tracked sortIncompleteBy = 'title';
+  @tracked sortCompleteBy = 'title';
+  @tracked sortUnpublishedBy = 'title';
 
   @action
   returnToList() {

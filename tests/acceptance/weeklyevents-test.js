@@ -1,3 +1,4 @@
+import { currentURL } from "@ember/test-helpers";
 import {
   freezeDateAt,
   setupApplicationTest,
@@ -49,5 +50,34 @@ module('Acceptance | Weekly events', function (hooks) {
     assert.deepEqual(page.weeklyEvents.weeks.length, 52);
     assert.deepEqual(page.weeklyEvents.weeks[0].title, 'January 3-9');
     assert.deepEqual(page.weeklyEvents.weeks[51].title, 'December 26 - January 1');
+  });
+
+  test('change years', async function (assert) {
+    const dt = DateTime.fromObject({ year: 2027, month: 7, day: 15 });
+    freezeDateAt(dt.toJSDate());
+    await page.visit();
+
+    assert.strictEqual(page.weeklyEvents.topNavigation.title, '2027');
+    assert.notOk(currentURL().includes('year'));
+
+    await page.weeklyEvents.topNavigation.nextYear.visit();
+
+    assert.strictEqual(page.weeklyEvents.topNavigation.title, '2028');
+    assert.ok(currentURL().includes('year=2028'));
+
+    await page.weeklyEvents.topNavigation.previousYear.visit();
+
+    assert.strictEqual(page.weeklyEvents.topNavigation.title, '2027');
+    assert.notOk(currentURL().includes('year'));
+
+    await page.weeklyEvents.topNavigation.previousYear.visit();
+
+    assert.strictEqual(page.weeklyEvents.topNavigation.title, '2026');
+    assert.ok(currentURL().includes('year=2026'));
+
+    await page.weeklyEvents.topNavigation.nextYear.visit();
+
+    assert.strictEqual(page.weeklyEvents.topNavigation.title, '2027');
+    assert.notOk(currentURL().includes('year'));
   });
 });

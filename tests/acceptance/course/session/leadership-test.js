@@ -1,3 +1,4 @@
+import { currentURL } from '@ember/test-helpers';
 import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/session';
 import { module, test } from 'qunit';
@@ -13,7 +14,7 @@ module('Acceptance | Session - Leadership', function (hooks) {
     await this.server.create('academic-year', { id: 2013 });
 
     const users = await this.server.createList('user', 5);
-    const course = await this.server.create('course', {
+    this.course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       directors: [users[0], users[1]],
@@ -21,7 +22,7 @@ module('Acceptance | Session - Leadership', function (hooks) {
     });
     const sessionType = await this.server.create('session-type', { school: this.school });
     this.session = await this.server.create('session', {
-      course,
+      course: this.course,
       administrators: [users[2], users[3]],
       studentAdvisors: [users[4]],
       sessionType,
@@ -81,6 +82,26 @@ module('Acceptance | Session - Leadership', function (hooks) {
     assert.strictEqual(administrators[1].text, '4 guy M. Mc4son');
     assert.strictEqual(studentAdvisors.length, 1);
     assert.strictEqual(studentAdvisors[0].text, '5 guy M. Mc5son');
+  });
+
+  test('toggle between collapsed and expanded view modes', async function(assert) {
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id });
+
+    assert.notOk(currentURL().includes('sessionLeadershipDetails=true'));
+    assert.ok(page.details.leadershipCollapsed.isVisible);
+    assert.notOk(page.details.leadershipExpanded.isVisible);
+
+    await page.details.leadershipCollapsed.expand();
+
+    assert.ok(currentURL().includes('sessionLeadershipDetails=true'));
+    assert.notOk(page.details.leadershipCollapsed.isVisible);
+    assert.ok(page.details.leadershipExpanded.isVisible);
+
+    await page.details.leadershipExpanded.collapse();
+
+    assert.notOk(currentURL().includes('sessionLeadershipDetails=true'));
+    assert.ok(page.details.leadershipCollapsed.isVisible);
+    assert.notOk(page.details.leadershipExpanded.isVisible);
   });
 
   test('search administrators', async function (assert) {
@@ -165,6 +186,26 @@ module('Acceptance | Session - Leadership', function (hooks) {
       '5 guy M. Mc5son user@example.edu',
     );
     assert.ok(manager.studentAdvisorSearch.results[5].isSelected);
+  });
+
+  test('toggle between view and edit modes', async function (assert) {
+    await page.visit({ courseId: this.course.id, sessionId: this.session.id, sessionLeadershipDetails: true });
+
+    assert.notOk(currentURL().includes('sessionManageLeadership=true'));
+    assert.ok(page.details.leadershipExpanded.leadershipList.isVisible);
+    assert.notOk(page.details.leadershipExpanded.leadershipManager.isVisible);
+
+    await page.details.leadershipExpanded.manage();
+
+    assert.ok(currentURL().includes('sessionManageLeadership=true'));
+    assert.notOk(page.details.leadershipExpanded.leadershipList.isVisible);
+    assert.ok(page.details.leadershipExpanded.leadershipManager.isVisible);
+
+    await page.details.leadershipExpanded.cancel();
+
+    assert.notOk(currentURL().includes('sessionManageLeadership=true'));
+    assert.ok(page.details.leadershipExpanded.leadershipList.isVisible);
+    assert.notOk(page.details.leadershipExpanded.leadershipManager.isVisible);
   });
 
   test('manage leadership', async function (assert) {

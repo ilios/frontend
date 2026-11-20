@@ -6,6 +6,7 @@ import objectiveList from './objective-list';
 const definition = {
   scope: '[data-test-session-objectives]',
   title: text('[data-test-title]'),
+  collapse: clickable('[data-test-title]'),
   createNew: clickable('[data-test-actions] [data-test-expand-collapse-button] button'),
   newObjective,
   objectiveList,
