@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 
 export default class CoursesController extends Controller {
   queryParams = [
@@ -19,7 +19,5 @@ export default class CoursesController extends Controller {
 
   changeTitleFilter = task({ restartable: true }, async (value) => {
     this.titleFilter = value;
-    await timeout(250);
-    return value;
   });
 }

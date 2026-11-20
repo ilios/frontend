@@ -14,7 +14,7 @@ import Root from 'frontend/components/learner-groups/root';
     @programYearId={{@controller.programYear}}
     @schools={{@controller.model}}
     @titleFilter={{@controller.filter}}
-    @setTitleFilter={{perform @controller.setTitleFilter}}
+    @changeTitleFilter={{perform @controller.changeTitleFilter}}
     @sortBy={{@controller.sortBy}}
     @setSortBy={{set @controller "sortBy"}}
   />

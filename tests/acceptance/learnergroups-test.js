@@ -254,28 +254,28 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items[1].title, firstLearnerGroup.title);
     assert.strictEqual(page.list.items[2].title, secondLearnerGroup.title);
 
-    await page.setTitleFilter('first');
+    await page.changeTitleFilter('first');
     assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, firstLearnerGroup.title);
 
-    await page.setTitleFilter('   first     ');
+    await page.changeTitleFilter('   first     ');
     assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, firstLearnerGroup.title);
 
-    await page.setTitleFilter('second');
+    await page.changeTitleFilter('second');
     assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, secondLearnerGroup.title);
 
-    await page.setTitleFilter('special');
+    await page.changeTitleFilter('special');
     assert.strictEqual(page.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(page.list.items.length, 2);
     assert.strictEqual(page.list.items[0].title, firstLearnerGroup.title);
     assert.strictEqual(page.list.items[1].title, secondLearnerGroup.title);
 
-    await page.setTitleFilter('');
+    await page.changeTitleFilter('');
     assert.strictEqual(page.headerTitle, 'Learner Groups (3)');
     assert.strictEqual(page.list.items.length, 3);
     assert.strictEqual(page.list.items[0].title, regularLearnerGroup.title);
@@ -508,7 +508,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items.length, 2);
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
     assert.strictEqual(page.list.items[1].title, 'yes\\no');
-    await page.setTitleFilter('\\');
+    await page.changeTitleFilter('\\');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, 'yes\\no');
   });

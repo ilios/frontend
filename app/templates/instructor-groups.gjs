@@ -6,7 +6,7 @@ import Root from 'frontend/components/instructor-groups/root';
 <template>
   {{pageTitle (t "general.instructorGroups")}}
   <Root
-    @setTitleFilter={{perform @controller.changeTitleFilter}}
+    @changeTitleFilter={{perform @controller.changeTitleFilter}}
     @titleFilter={{@controller.titleFilter}}
     @setSchoolId={{set @controller "schoolId"}}
     @schoolId={{@controller.schoolId}}

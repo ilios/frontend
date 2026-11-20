@@ -1,4 +1,4 @@
-import { currentRouteName,currentURL } from '@ember/test-helpers';
+import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/instructor-groups';
 import { module, test } from 'qunit';
@@ -84,33 +84,33 @@ module('Acceptance | Instructor Groups', function (hooks) {
       assert.strictEqual(page.list.items[2].title, firstInstructorGroup.title);
       assert.strictEqual(page.list.items[3].title, secondInstructorGroup.title);
 
-      await page.setTitleFilter('first');
+      await page.changeTitleFilter('first');
       assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
 
-      await page.setTitleFilter('  first   ');
+      await page.changeTitleFilter('  first   ');
       assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
 
-      await page.setTitleFilter('second');
+      await page.changeTitleFilter('second');
       assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, secondInstructorGroup.title);
 
-      await page.setTitleFilter('special');
+      await page.changeTitleFilter('special');
       assert.strictEqual(page.headerTitle, 'Instructor Groups (2)');
       assert.strictEqual(page.list.items.length, 2);
       assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
       assert.strictEqual(page.list.items[1].title, secondInstructorGroup.title);
 
-      await page.setTitleFilter('\\');
+      await page.changeTitleFilter('\\');
       assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, regexInstructorGroup.title);
 
-      await page.setTitleFilter('');
+      await page.changeTitleFilter('');
       assert.strictEqual(page.headerTitle, 'Instructor Groups (4)');
       assert.strictEqual(page.list.items.length, 4);
       assert.strictEqual(page.list.items[0].title, regexInstructorGroup.title);
@@ -211,7 +211,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
       await page.visit();
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, 'yes\\no');
-      await page.setTitleFilter('\\');
+      await page.changeTitleFilter('\\');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, 'yes\\no');
     });
