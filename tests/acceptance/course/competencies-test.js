@@ -1,3 +1,4 @@
+import {currentURL} from "@ember/test-helpers";
 import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/course';
 import { module, test } from 'qunit';
@@ -55,6 +56,26 @@ module('Acceptance | Course - Competencies', function (hooks) {
     assert.strictEqual(page.details.collapsedCompetencies.headers[1].text, 'Competencies');
     assert.strictEqual(page.details.collapsedCompetencies.competencies[0].school, 'school 0');
     assert.strictEqual(page.details.collapsedCompetencies.competencies[0].count, '1');
+  });
+
+  test('toggle between collapsed and expanded view modes', async function(assert) {
+    await page.visit({ courseId: this.course.id, details: true });
+
+    assert.notOk(currentURL().includes('courseCompetencyDetails=true'));
+    assert.ok(page.details.collapsedCompetencies.isVisible);
+    assert.notOk(page.details.detailCompetencies.isVisible);
+
+    await page.details.collapsedCompetencies.expand();
+
+    assert.ok(currentURL().includes('courseCompetencyDetails=true'));
+    assert.notOk(page.details.collapsedCompetencies.isVisible);
+    assert.ok(page.details.detailCompetencies.isVisible);
+
+    await page.details.detailCompetencies.collapse();
+
+    assert.notOk(currentURL().includes('courseCompetencyDetails=true'));
+    assert.ok(page.details.collapsedCompetencies.isVisible);
+    assert.notOk(page.details.detailCompetencies.isVisible);
   });
 
   test('changing objective parent changes summary', async function (assert) {
