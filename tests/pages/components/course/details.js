@@ -9,6 +9,7 @@ import leadershipCollapsed from '../leadership-collapsed';
 import leadershipExpanded from '../leadership-expanded';
 import meshTerms from '../mesh-terms';
 import detailCohorts from './../detail-cohorts';
+import collapsedObjectives from './collapsed-objectives';
 import header from './header';
 import objectives from './objectives';
 import overview from './overview';
@@ -23,6 +24,7 @@ export default create({
   leadershipCollapsed,
   leadershipExpanded,
   objectives,
+  collapsedObjectives,
   learningMaterials,
   meshTerms,
   taxonomies,
