@@ -196,4 +196,70 @@ module('Acceptance | Users', function (hooks) {
     assert.ok(page.root.topPaginator.pagedlistControls.limit.options[6].selected);
     assert.ok(currentURL().includes('limit=1000'));
   });
+
+  test('toggle visibility of new user form', async function (assert) {
+    await page.visit();
+    assert.notOk(currentURL().includes('addUser'));
+    await page.root.showNewUserFormButton.click();
+    assert.strictEqual(currentURL(), '/users?addUser=true');
+    await page.root.newUserForm.cancel();
+    assert.notOk(currentURL().includes('addUser'));
+  });
+
+  test('toggle visibility of bulk users upload form', async function (assert) {
+    await page.visit();
+    assert.notOk(currentURL().includes('addUsers'));
+    await page.root.showBulkUsersFormButton.click();
+    assert.strictEqual(currentURL(), '/users?addUsers=true');
+    await page.root.newBulkUserForm.cancel();
+    assert.notOk(currentURL().includes('addUsers'));
+  });
+
+  test('sort users', async function (assert) {
+    await page.visit();
+    assert.notOk(currentURL().includes('sortBy'));
+
+    // the mock backend currently doesn't support sorting, so all we can currently test
+    // is that the sort params are correctly tracked in the URL.
+    // TODO: flesh out the mock backend route handler to support sorting on the users route. [ST 2026/11/23]
+
+    await page.root.userList.header.name.toggle();
+    assert.ok(currentURL().includes(`sortBy=${encodeURIComponent('fullName:desc')}`))
+    await page.root.userList.header.name.toggle();
+    assert.notOk(currentURL().includes('sortBy'));
+
+    await page.root.userList.header.campusId.toggle();
+    assert.ok(currentURL().includes('sortBy=campusId'));
+    await page.root.userList.header.campusId.toggle();
+    assert.ok(currentURL().includes(`sortBy=${encodeURIComponent('campusId:desc')}`))
+
+    await page.root.userList.header.email.toggle();
+    assert.ok(currentURL().includes('sortBy=email'));
+    await page.root.userList.header.email.toggle();
+    assert.ok(currentURL().includes(`sortBy=${encodeURIComponent('email:desc')}`))
+  });
+
+  test('directory search value is tracked in the URL', async function (assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    assert.ok(apiVersion);
+    this.server.get('/application/config', function () {
+      return {
+        config: {
+          type: 'form',
+          userSearchType: 'ldap',
+          apiVersion,
+        },
+      };
+    });
+
+    await page.visit();
+    assert.notOk(currentURL().includes('search'));
+
+    await page.root.showNewUserFormButton.click();
+    await page.root.newDirectoryUserForm.search.set('foo');
+    assert.ok(currentURL().includes('search=foo'));
+
+    await page.root.newDirectoryUserForm.search.set('');
+    assert.ok(currentURL().includes('search'));
+  });
 });
