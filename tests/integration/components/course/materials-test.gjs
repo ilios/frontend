@@ -81,19 +81,19 @@ module('Integration | Component | course/materials', function (hooks) {
     const session = await context.server.create('session', {
       title: 'session1title',
     });
-    context.server.create('session-learning-material', {
+    await context.server.create('session-learning-material', {
       session,
       learningMaterial: lm1,
     });
-    context.server.create('session-learning-material', {
+    await context.server.create('session-learning-material', {
       session,
       learningMaterial: lm2,
     });
-    context.server.create('session-learning-material', {
+    await context.server.create('session-learning-material', {
       session,
       learningMaterial: lm3,
     });
-    context.server.create('offering', {
+    await context.server.create('offering', {
       session,
       startDate: DateTime.fromObject({ year: 2020, month: 2, day: 2, hour: 12 }).toISO(),
       endDate: DateTime.fromObject({ year: 2020, month: 2, day: 2, hour: 14 }).toISO(),
