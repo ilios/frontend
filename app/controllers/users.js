@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class UsersController extends Controller {
   @service store;
@@ -17,13 +18,13 @@ export default class UsersController extends Controller {
       searchTerms: 'search',
     },
   ];
-  sortBy = 'fullName';
-  offset = 0;
-  limit = 25;
-  query = null;
-  showNewUserForm = false;
-  showBulkNewUserForm = false;
-  searchTerms = null;
+  @tracked sortBy = 'fullName';
+  @tracked offset = 0;
+  @tracked limit = 25;
+  @tracked query = null;
+  @tracked showNewUserForm = false;
+  @tracked showBulkNewUserForm = false;
+  @tracked searchTerms = null;
 
   @action
   transitionToUser(userId) {

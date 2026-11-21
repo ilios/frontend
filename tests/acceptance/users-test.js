@@ -2,7 +2,7 @@ import { currentURL } from '@ember/test-helpers';
 import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import userPage from 'frontend/tests/pages/user';
 import page from 'frontend/tests/pages/users';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 
 module('Acceptance | Users', function (hooks) {
   setupApplicationTest(hooks);
@@ -125,5 +125,30 @@ module('Acceptance | Users', function (hooks) {
     await userPage.manageUsersSummary.createNewUser();
     assert.strictEqual(page.root.search.value, '');
     assert.strictEqual(currentURL(), '/users?addUser=true');
+  });
+
+  skip('change number of users per page', async function (assert) {
+    // TODO: implement [ST 2026/11/20]
+    assert.ok(true);
+  });
+
+  skip('toggle visibility of new user form', async function (assert) {
+    // TODO: implement [ST 2026/11/20]
+    assert.ok(true);
+  });
+
+  skip('toggle visibility of bulk users upload form', async function (assert) {
+    // TODO: implement [ST 2026/11/20]
+    assert.ok(true);
+  });
+
+  skip('sort users', async function (assert) {
+    // TODO: implement [ST 2026/11/20]
+    assert.ok(true);
+  });
+
+  skip('search directory from new user form', async function (assert) {
+    // TODO: implement [ST 2026/11/20]
+    assert.ok(true);
   });
 });
