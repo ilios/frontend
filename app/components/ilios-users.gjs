@@ -189,6 +189,7 @@ export default class IliosUsersComponent extends Component {
             @searchForUsers={{this.searchForUsers}}
             @sortBy={{@sortBy}}
             @setSortBy={{@setSortBy}}
+            @limit={{@limit}}
           />
         </div>
         <div data-test-bottom-paged-list-controls>

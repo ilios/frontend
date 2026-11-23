@@ -126,4 +126,74 @@ module('Acceptance | Users', function (hooks) {
     assert.strictEqual(page.root.search.value, '');
     assert.strictEqual(currentURL(), '/users?addUser=true');
   });
+
+  test('change number of users per page', async function (assert) {
+    await page.visit();
+    assert.notOk(currentURL().includes('limit'));
+    assert.strictEqual(page.root.userList.users.length, 25);
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options.length, 7);
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[0].text, '10');
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[0].value, '10');
+    assert.notOk(page.root.topPaginator.pagedlistControls.limit.options[0].selected);
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[1].text, '25');
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[1].value, '25');
+    assert.ok(page.root.topPaginator.pagedlistControls.limit.options[1].selected);
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[2].text, '50');
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[2].value, '50');
+    assert.notOk(page.root.topPaginator.pagedlistControls.limit.options[2].selected);
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[3].text, '100');
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[3].value, '100');
+    assert.notOk(page.root.topPaginator.pagedlistControls.limit.options[3].selected);
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[4].text, '200');
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[4].value, '200');
+    assert.notOk(page.root.topPaginator.pagedlistControls.limit.options[4].selected);
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[5].text, '400');
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[5].value, '400');
+    assert.notOk(page.root.topPaginator.pagedlistControls.limit.options[5].selected);
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[6].text, '1000');
+    assert.strictEqual(page.root.topPaginator.pagedlistControls.limit.options[6].value, '1000');
+    assert.notOk(page.root.topPaginator.pagedlistControls.limit.options[6].selected);
+
+    await page.root.topPaginator.pagedlistControls.limit.set('10');
+
+    assert.strictEqual(page.root.userList.users.length, 10);
+    assert.ok(page.root.topPaginator.pagedlistControls.limit.options[0].selected);
+    assert.ok(currentURL().includes('limit=10'));
+
+    await page.root.topPaginator.pagedlistControls.limit.set('25');
+
+    assert.strictEqual(page.root.userList.users.length, 25);
+    assert.ok(page.root.topPaginator.pagedlistControls.limit.options[1].selected);
+    assert.notOk(currentURL().includes('limit'));
+
+    await page.root.topPaginator.pagedlistControls.limit.set('50');
+
+    assert.strictEqual(page.root.userList.users.length, 50);
+    assert.ok(page.root.topPaginator.pagedlistControls.limit.options[2].selected);
+    assert.ok(currentURL().includes('limit=50'));
+
+    await page.root.topPaginator.pagedlistControls.limit.set('100');
+
+    assert.strictEqual(page.root.userList.users.length, 91);
+    assert.ok(page.root.topPaginator.pagedlistControls.limit.options[3].selected);
+    assert.ok(currentURL().includes('limit=100'));
+
+    await page.root.topPaginator.pagedlistControls.limit.set('200');
+
+    assert.strictEqual(page.root.userList.users.length, 91);
+    assert.ok(page.root.topPaginator.pagedlistControls.limit.options[4].selected);
+    assert.ok(currentURL().includes('limit=200'));
+
+    await page.root.topPaginator.pagedlistControls.limit.set('400');
+
+    assert.strictEqual(page.root.userList.users.length, 91);
+    assert.ok(page.root.topPaginator.pagedlistControls.limit.options[5].selected);
+    assert.ok(currentURL().includes('limit=400'));
+
+    await page.root.topPaginator.pagedlistControls.limit.set('1000');
+
+    assert.strictEqual(page.root.userList.users.length, 91);
+    assert.ok(page.root.topPaginator.pagedlistControls.limit.options[6].selected);
+    assert.ok(currentURL().includes('limit=1000'));
+  });
 });
