@@ -5,8 +5,8 @@
   margin: 0.5rem;
   padding: 1rem;
 
-  h3 {
-    margin-bottom: 0.5rem;
+  & > .title {
+    @include m.ilios-heading-h4;
   }
 
   .form {

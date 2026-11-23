@@ -500,7 +500,7 @@ export default class NewDirectoryUserComponent extends Component {
             </div>
           </div>
         {{else}}
-          <h2>
+          <h2 class="title">
             {{t "general.newUser"}}
           </h2>
           <div class="new-directory-user-search-tools" data-test-search>
