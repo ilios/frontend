@@ -1,4 +1,4 @@
-import { setupApplicationTest, setupAuthentication,takeScreenshot } from 'frontend/tests/helpers';
+import { setupApplicationTest, setupAuthentication, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/course';
 import { module, test } from 'qunit';
 
@@ -7,6 +7,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = await this.server.create('school');
+    this.school = school;
     this.user = await setupAuthentication({ school, administeredSchools: [school] });
     const currentYear = new Date().getFullYear();
     await this.server.create('academic-year', { id: currentYear });
@@ -125,6 +126,46 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     assert.strictEqual(page.details.detailCohorts.list.cohorts[0].school, 'school 0');
     assert.strictEqual(page.details.detailCohorts.list.cohorts[0].program, 'program 0');
     assert.strictEqual(page.details.detailCohorts.list.cohorts[0].cohort, 'cohort 0');
+  });
+
+  test('add cohort using school filter', async function (assert) {
+    const currentYear = new Date().getFullYear();
+    const school2 = await this.server.create('school');
+    const program2 = await this.server.create('program', { school: school2, duration: 4 });
+    const cohort5 = await this.server.create('cohort');
+    await this.server.create('program-year', {
+      program: program2,
+      cohort: cohort5,
+      startYear: currentYear - program2.duration,
+    });
+    await setupAuthentication({
+      // different user than beforeEach hook to force school choice for this test
+      id: 1,
+      school: this.school,
+      administeredSchools: [this.school],
+      directedPrograms: [program2],
+    });
+
+    await page.visit({ courseId: this.course.id, details: true });
+    await page.details.detailCohorts.manage();
+    await takeScreenshot(assert);
+
+    assert.ok(page.details.detailCohorts.manager.schoolFilter.isPresent);
+    assert.strictEqual(page.details.detailCohorts.manager.selectableCohorts.length, 2);
+    await page.details.detailCohorts.manager.schoolFilter.select(school2.id);
+
+    assert.strictEqual(page.details.detailCohorts.manager.selectableCohorts.length, 1);
+    assert.strictEqual(
+      page.details.detailCohorts.manager.selectableCohorts[0].text,
+      'school 1 | program 1 | cohort 4',
+    );
+
+    await page.details.detailCohorts.manager.selectableCohorts[0].add();
+    await page.details.detailCohorts.save();
+
+    assert.strictEqual(page.details.detailCohorts.list.cohorts.length, 2);
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[0].school, 'school 0');
+    assert.strictEqual(page.details.detailCohorts.list.cohorts[1].school, 'school 1');
   });
 
   test('removing a cohort remove course objectives parents linked to that cohort', async function (assert) {

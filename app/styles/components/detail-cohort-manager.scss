@@ -5,6 +5,24 @@
     @include m.ilios-button-reset;
   }
 
+  .filters {
+    @include m.main-list-filters;
+    justify-content: flex-start;
+
+    @include m.for-tablet-and-up {
+      flex-direction: row;
+    }
+
+    .filter {
+      @include m.main-list-filter;
+
+      @include m.for-tablet-and-up {
+        align-content: center;
+        padding-bottom: 0;
+      }
+    }
+  }
+
   .selected-cohorts {
     @include m.ilios-removable-list;
   }
