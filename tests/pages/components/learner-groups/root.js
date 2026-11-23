@@ -39,7 +39,7 @@ const definition = {
     selectedProgramYearTitle: text('option:selected'),
     hasMany: isPresent('select'),
   },
-  setTitleFilter: fillable('[data-test-title-filter] input'),
+  changeTitleFilter: fillable('[data-test-title-filter] input'),
   headerTitle: text('h2'),
   toggleNewLearnerGroupForm: clickable('[data-test-expand-collapse-button] button'),
   toggleNewLearnerGroupFormExists: isVisible('[data-test-expand-collapse-button]'),
