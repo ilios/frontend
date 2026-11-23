@@ -42,15 +42,20 @@ export default class CourseSummaryHeaderComponent extends Component {
             @model={{@course}}
             @query={{hash unpublished=true}}
             class="print"
+            title={{t "general.printSummary"}}
             data-test-print
           >
-            <FaIcon @icon={{faPrint}} @title={{t "general.printSummary"}} @fixedWidth={{true}} />
+            <FaIcon @icon={{faPrint}} @fixedWidth={{true}} />
           </LinkTo>
           {{#if this.canRollover}}
-            <LinkTo @route="course.rollover" @model={{@course}} class="rollover" data-test-rollover>
+            <LinkTo
+              @route="course.rollover"
+              @model={{@course}} class="rollover"
+              title={{t "general.courseRollover"}}
+              data-test-rollover
+            >
               <FaIcon
                 @icon={{faShuffle}}
-                @title={{t "general.courseRollover"}}
                 @fixedWidth={{true}}
               />
             </LinkTo>

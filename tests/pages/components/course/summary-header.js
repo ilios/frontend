@@ -2,7 +2,6 @@ import { count, create, isPresent,text } from 'ember-cli-page-object';
 const definition = {
   scope: '[data-test-course-summary-header]',
   title: text('[data-test-title]'),
-  academicYear: text('[data-test-academic-year]'),
   actions: {
     scope: '[data-test-actions]',
     count: count('a'),
