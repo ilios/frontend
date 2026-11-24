@@ -17,7 +17,6 @@ import { filterBy, sortBy } from '../../utils/array-helpers';
 
 export default class SchoolVocabulariesListComponent extends Component {
   @service store;
-  @tracked newVocabulary;
   @tracked showRemovalConfirmationFor;
 
   scrollOpts = {
@@ -53,9 +52,6 @@ export default class SchoolVocabulariesListComponent extends Component {
 
   remove = task({ drop: true }, async (vocabulary) => {
     await vocabulary.destroyRecord();
-    if (this.newVocabulary === vocabulary) {
-      this.newVocabulary = null;
-    }
   });
   <template>
     <div class="school-vocabularies-list" data-test-school-vocabularies-list ...attributes>
