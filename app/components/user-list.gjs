@@ -27,11 +27,24 @@ export default class UserListComponent extends Component {
     );
   }
 
+  get limit() {
+    return this.args.limit ? parseInt(this.args.limit, 10) : 0;
+  }
+
   get sortedUsers() {
     if (this.args.users) {
       return this.args.users;
     }
-    return this.sortedUsersData.isResolved ? this.sortedUsersData.value : [];
+    // KLUDGE
+    // adjust for over-fetching in the results returned from the `IliosUserComponents::searchForUsers` task.
+    // if we're on the code path where we're getting the user data from there,
+    // then we must snip the over-fetched users off list before display.
+    // TODO: patch this properly upstream [ST 2026/11/23]
+    const rhett = this.sortedUsersData.isResolved ? this.sortedUsersData.value : [];
+    if (rhett.length > this.limit) {
+      return rhett.slice(0, this.limit);
+    }
+    return rhett;
   }
 
   get sortInfo() {
