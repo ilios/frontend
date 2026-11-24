@@ -3,7 +3,7 @@ import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faBuildingColumns, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBuildingColumns, faPlus, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -11,6 +11,7 @@ import t from 'ember-intl/helpers/t';
 import { eq, gt } from 'ember-truth-helpers';
 import { filter } from 'rsvp';
 
+import includes from '../helpers/includes';
 import pick from '../helpers/pick';
 import sortBy from '../helpers/sort-by';
 import { findById, mapBy } from '../utils/array-helpers';
@@ -89,30 +90,21 @@ export default class DetailCohortManagerComponent extends Component {
     return findById(this.availablePrograms, this.selectedProgramId) ?? this.bestDefaultProgram;
   }
 
-  get unselectedAvailableCohortProxies() {
-    if (!this.availableCohortProxies.length) {
-      return [];
-    }
-    const selectedCohorts = this.args.selectedCohorts || [];
-
-    return this.availableCohortProxies.filter((obj) => !selectedCohorts.includes(obj.cohort));
-  }
-
-  get filteredUnselectedCohortProxies() {
-    return this.unselectedAvailableCohortProxies.filter(
+  get filteredCohortProxies() {
+    return this.availableCohortProxies.filter(
       (obj) => obj.school === this.selectedSchool && obj.program === this.selectedProgram,
     );
   }
 
   /**
-   * All available cohorts, sorted by:
+   * All cohorts for the selected school+program, sorted by:
    *
    * 1. owning school's title, ascending
    * 2. owning program's title, ascending
    * 3. cohort title, descending
    */
   get sortedAvailableCohorts() {
-    const objects = this.filteredUnselectedCohortProxies.map((obj) => {
+    const objects = this.filteredCohortProxies.map((obj) => {
       const sortTitle = obj.school.get('title') + obj.program.get('title');
       const programEndYear = parseInt(obj.programYear.startYear) + obj.program.duration;
 
@@ -182,6 +174,22 @@ export default class DetailCohortManagerComponent extends Component {
   }
   <template>
     <section class="detail-cohort-manager" data-test-detail-cohort-manager>
+      {{#if @selectedCohorts.length}}
+        <ul class="selected-cohorts">
+          {{#each (sortBy "title" @selectedCohorts) as |cohort|}}
+            <li data-test-selected-cohort>
+              <button type="button" {{on "click" (fn @remove cohort)}}>
+                {{cohort.programYear.program.school.title}}
+                |
+                {{cohort.programYear.program.title}}
+                |
+                {{cohort.title}}
+                <FaIcon @icon={{faXmark}} class="remove" />
+              </button>
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
       {{#if this.isLoaded}}
         <div class="filters">
           <div class="filter">
@@ -224,34 +232,33 @@ export default class DetailCohortManagerComponent extends Component {
           </div>
         </div>
       {{/if}}
-      {{#if @selectedCohorts.length}}
-        <ul class="selected-cohorts">
-          {{#each (sortBy "title" @selectedCohorts) as |cohort|}}
-            <li data-test-selected-cohort>
-              <button type="button" {{on "click" (fn @remove cohort)}}>
-                {{cohort.programYear.program.school.title}}
-                |
-                {{cohort.programYear.program.title}}
-                |
-                {{cohort.title}}
-                <FaIcon @icon={{faXmark}} class="remove" />
-              </button>
-            </li>
-          {{/each}}
-        </ul>
-      {{/if}}
       <ul class="selectable-cohorts">
         {{#if this.isLoaded}}
           {{#each this.sortedAvailableCohorts as |cohort|}}
-            <li data-test-selectable-cohort>
-              <button type="button" {{on "click" (fn @add cohort)}}>
-                {{cohort.programYear.program.school.title}}
-                |
-                {{cohort.programYear.program.title}}
-                |
-                {{cohort.title}}
-              </button>
-            </li>
+            {{#let (includes cohort @selectedCohorts) as |isSelected|}}
+              <li data-test-selectable-cohort>
+                <button
+                  type="button"
+                  class="selected-cohorts-list-item{{if isSelected ' selected'}}"
+                  {{on "click" (if isSelected (fn @remove cohort) (fn @add cohort))}}
+                >
+                  <span data-test-title>
+                    {{cohort.programYear.program.school.title}}
+                    |
+                    {{cohort.programYear.program.title}}
+                    |
+                    {{cohort.title}}
+                  </span>
+                  <span class="actions">
+                    {{#if isSelected}}
+                      <FaIcon @icon={{faXmark}} class="remove" data-test-remove />
+                    {{else}}
+                      <FaIcon @icon={{faPlus}} class="add" data-test-add />
+                    {{/if}}
+                  </span>
+                </button>
+              </li>
+            {{/let}}
           {{/each}}
         {{else}}
           <li>

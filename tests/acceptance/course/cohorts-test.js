@@ -91,7 +91,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
       page.details.detailCohorts.manager.selectedCohorts[0].text,
       'school 0 | program 0 | cohort 0',
     );
-    assert.strictEqual(page.details.detailCohorts.manager.selectableCohorts.length, 2);
+    assert.strictEqual(page.details.detailCohorts.manager.selectableCohorts.length, 3);
     assert.strictEqual(
       page.details.detailCohorts.manager.selectableCohorts[0].text,
       'school 0 | program 0 | cohort 3',
@@ -99,6 +99,10 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     assert.strictEqual(
       page.details.detailCohorts.manager.selectableCohorts[1].text,
       'school 0 | program 0 | cohort 1',
+    );
+    assert.strictEqual(
+      page.details.detailCohorts.manager.selectableCohorts[2].text,
+      'school 0 | program 0 | cohort 0',
     );
   });
 
@@ -151,7 +155,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     await takeScreenshot(assert);
 
     assert.ok(page.details.detailCohorts.manager.schoolFilter.isPresent);
-    assert.strictEqual(page.details.detailCohorts.manager.selectableCohorts.length, 2);
+    assert.strictEqual(page.details.detailCohorts.manager.selectableCohorts.length, 3);
     await page.details.detailCohorts.manager.schoolFilter.select(school2.id);
 
     assert.strictEqual(page.details.detailCohorts.manager.selectableCohorts.length, 1);

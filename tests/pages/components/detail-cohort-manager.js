@@ -7,8 +7,9 @@ const definition = {
     text: text('button'),
   }),
   selectableCohorts: collection('[data-test-selectable-cohort]', {
-    add: clickable('button'),
-    text: text('button'),
+    add: clickable('[data-test-add]'),
+    remove: clickable('[data-test-remove]'),
+    text: text('[data-test-title]'),
   }),
   schoolFilter: {
     scope: '[data-test-school-filter]',
