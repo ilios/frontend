@@ -4,6 +4,24 @@ import userStatus from 'frontend/tests/pages/components/user-status';
 
 const definition = {
   scope: '[data-test-user-list]',
+  header: {
+    scope: '[data-test-user-list-header]',
+    name: {
+      scope: '[data-test-name]',
+      toggle: clickable('button'),
+    },
+    campusId: {
+      scope: '[data-test-campus-id]',
+      toggle: clickable('button'),
+    },
+    email: {
+      scope: '[data-test-email]',
+      toggle: clickable('button'),
+    },
+    school: {
+      scope: '[data-test-school]',
+    },
+  },
   users: collection('[data-test-user]', {
     viewUserDetails: clickable('[data-test-user-link]'),
     userStatus,

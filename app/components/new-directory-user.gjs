@@ -500,9 +500,9 @@ export default class NewDirectoryUserComponent extends Component {
             </div>
           </div>
         {{else}}
-          <h3>
+          <h2 class="title">
             {{t "general.newUser"}}
-          </h3>
+          </h2>
           <div class="new-directory-user-search-tools" data-test-search>
             <input
               aria-label={{t "general.search"}}

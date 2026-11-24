@@ -1,4 +1,10 @@
-import { clickable, create, fillable, value } from 'ember-cli-page-object';
+import {
+  clickable,
+  create,
+  fillable,
+  value,
+} from 'ember-cli-page-object';
+import newDirectoryUserForm from 'frontend/tests/pages/components/new-directory-user';
 import newUserForm from 'frontend/tests/pages/components/new-user';
 import pagedlistControls from 'frontend/tests/pages/components/pagedlist-controls';
 import userList from 'frontend/tests/pages/components/user-list';
@@ -21,11 +27,7 @@ const definition = {
     scope: '[data-test-show-bulk-new-user-form]',
   },
   newUserForm,
-  // @todo replace with page object. [ST 2020/12/02]
-  newDirectoryUserForm: {
-    scope: '.new-directory-user',
-    cancel: clickable('.buttons button.cancel'),
-  },
+  newDirectoryUserForm,
   // @todo replace with page object. [ST 2020/12/02]
   newBulkUserForm: {
     scope: '.bulk-new-users',

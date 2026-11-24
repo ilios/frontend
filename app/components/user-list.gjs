@@ -71,7 +71,7 @@ export default class UserListComponent extends Component {
       data-test-user-list
       ...attributes
     >
-      <thead>
+      <thead data-test-user-list-header>
         <tr>
           <SortableTh
             @align="left"
@@ -79,6 +79,7 @@ export default class UserListComponent extends Component {
             @sortedAscending={{this.sortedAscending}}
             @onClick={{fn this.setSortBy "fullName"}}
             @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
+            data-test-name
           >
             {{t "general.fullName"}}
           </SortableTh>
@@ -89,6 +90,7 @@ export default class UserListComponent extends Component {
             @sortedAscending={{this.sortedAscending}}
             @onClick={{fn this.setSortBy "campusId"}}
             @sortedBy={{or (eq @sortBy "campusId") (eq @sortBy "campusId:desc")}}
+            data-test-campus-id
           >
             {{t "general.campusId"}}
           </SortableTh>
@@ -99,10 +101,11 @@ export default class UserListComponent extends Component {
             @sortedAscending={{this.sortedAscending}}
             @onClick={{fn this.setSortBy "email"}}
             @sortedBy={{or (eq @sortBy "email") (eq @sortBy "email:desc")}}
+            data-test-email
           >
             {{t "general.email"}}
           </SortableTh>
-          <th colspan="2" class="hide-from-small-screen" data-test-user-list-school>{{t
+          <th colspan="2" class="hide-from-small-screen" data-test-school>{{t
               "general.primarySchool"
             }}</th>
         </tr>
