@@ -298,7 +298,7 @@ export default class CoursesRootComponent extends Component {
             <div class="saved-result" data-test-newly-saved-course>
               <LinkTo @route="course" @model={{this.newCourse}}>
                 <FaIcon @icon={{faSquareUpRight}} />
-                {{this.newCourse.title}}
+                <span>{{this.newCourse.title}}</span>
               </LinkTo>
               {{t "general.savedSuccessfully"}}
             </div>

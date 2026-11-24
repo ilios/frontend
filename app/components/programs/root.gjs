@@ -119,7 +119,7 @@ export default class ProgramRootComponent extends Component {
             <div class="saved-result">
               <LinkTo @route="program" @model={{this.newProgram}}>
                 <FaIcon @icon={{faSquareUpRight}} />
-                {{this.newProgram.title}}
+                <span>{{this.newProgram.title}}</span>
               </LinkTo>
               {{t "general.savedSuccessfully"}}
             </div>

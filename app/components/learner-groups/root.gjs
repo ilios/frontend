@@ -417,7 +417,7 @@ export default class LearnerGroupsRootComponent extends Component {
             <div class="saved-result">
               <LinkTo @route="learner-group" @model={{this.newLearnerGroup}}>
                 <FaIcon @icon={{faSquareUpRight}} />
-                {{this.newLearnerGroup.title}}
+                <span>{{this.newLearnerGroup.title}}</span>
               </LinkTo>
               {{t "general.savedSuccessfully"}}
             </div>

@@ -1,4 +1,4 @@
-import { array, fn,get } from '@ember/helper';
+import { array, fn, get } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
@@ -213,7 +213,7 @@ export default class CourseSessionsComponent extends Component {
             @models={{array @course this.saveSession.lastSuccessful.value}}
           >
             <FaIcon @icon={{faSquareUpRight}} />
-            {{get this.saveSession.lastSuccessful.value "title"}}
+            <span>{{get this.saveSession.lastSuccessful.value "title"}}</span>
           </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>
