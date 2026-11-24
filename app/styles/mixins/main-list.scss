@@ -74,6 +74,18 @@
   border: 1px solid light-dark(var(--green), var(--grey));
   margin: 1rem;
   padding: 1rem;
+
+  a {
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: none;
+
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 @mixin main-list-box-table() {
