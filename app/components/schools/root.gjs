@@ -174,7 +174,7 @@ export default class SchoolsRootComponent extends Component {
             <div class="savedschool" data-test-new-school>
               <LinkTo @route="school" @model={{this.newSchool}} data-test-link-to-new-school>
                 <FaIcon @icon={{faSquareUpRight}} />
-                {{this.newSchool.title}}
+                <span>{{this.newSchool.title}}</span>
               </LinkTo>
               {{t "general.savedSuccessfully"}}
             </div>

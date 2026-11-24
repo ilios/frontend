@@ -12,7 +12,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
 import set from 'ember-set-helper/helpers/set';
-import { eq, not,or } from 'ember-truth-helpers';
+import { eq, not, or } from 'ember-truth-helpers';
 
 import { sortBy } from '../../utils/array-helpers';
 import ExpandCollapseButton from '../expand-collapse-button';
@@ -189,11 +189,11 @@ export default class ProgramYearListComponent extends Component {
               <LinkTo @route="program-year" @models={{array @program this.savedProgramYear}}>
                 <FaIcon @icon={{faSquareUpRight}} />
                 {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                  {{this.savedProgramYear.startYear}}
-                  -
-                  {{add this.savedProgramYear.startYear 1}}
+                  <span>{{this.savedProgramYear.startYear}}
+                    -
+                    {{add this.savedProgramYear.startYear 1}}</span>
                 {{else}}
-                  {{this.savedProgramYear.startYear}}
+                  <span>{{this.savedProgramYear.startYear}}</span>
                 {{/if}}
               </LinkTo>
               {{t "general.savedSuccessfully"}}

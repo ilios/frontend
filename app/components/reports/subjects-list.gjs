@@ -212,7 +212,7 @@ export default class ReportsSubjectsListComponent extends Component {
                 data-test-report-title
               >
                 <FaIcon @icon={{faSquareUpRight}} />
-                {{this.newReport.title}}
+                <span>{{this.newReport.title}}</span>
               </LinkTo>
               {{t "general.savedSuccessfully"}}
             </div>
