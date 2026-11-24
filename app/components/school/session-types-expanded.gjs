@@ -158,7 +158,7 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
         {{#if @newSavedSessionType}}
           <div class="saved-result" data-test-saved-result>
             <button
-              class="link-button"
+              class="link-button link"
               type="button"
               {{on "click" (fn @setSchoolManagedSessionType @newSavedSessionType.id)}}
             >
