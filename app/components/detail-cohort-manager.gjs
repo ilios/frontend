@@ -26,72 +26,16 @@ export default class DetailCohortManagerComponent extends Component {
   @tracked selectedProgramId = null;
 
   @cached
-  get proxiesData() {
+  get cohortProxiesData() {
     return new TrackedAsyncData(this.loadCohorts(this.args.course));
   }
 
-  get isLoaded() {
-    return this.proxiesData.isResolved;
-  }
-
-  get availableCohortProxies() {
-    return this.proxiesData.isResolved ? this.proxiesData.value : [];
-  }
-
-  get availableSchools() {
-    const schools = this.availableCohortProxies.map((p) => p.school);
-    return [...new Map(schools.map((s) => [s.id, s])).values()].sort((a, b) =>
-      a.get('title').localeCompare(b.get('title')),
-    );
-  }
-
-  get selectedSchool() {
-    const id = this.selectedSchoolId ?? this.args.course.belongsTo('school').id();
-    return findById(this.availableSchools, id) ?? this.availableSchools[0];
-  }
-
-  get availablePrograms() {
-    const programs = this.availableCohortProxies
-      .filter((p) => p.school === this.selectedSchool)
-      .map((p) => p.program);
-    return [...new Map(programs.map((p) => [p.id, p])).values()].sort((a, b) =>
-      a.get('title').localeCompare(b.get('title')),
-    );
-  }
-
-  // rank programs by most-recent program year, then by cohort count
-  get bestDefaultProgram() {
-    const thisYear = new Date().getFullYear();
-    const schoolProxies = this.availableCohortProxies.filter(
-      (p) => p.school === this.selectedSchool,
-    );
-    const byProgram = schoolProxies.reduce((map, p) => {
-      const key = p.program.id;
-      if (!map.has(key)) map.set(key, []);
-      map.get(key).push(p);
-      return map;
-    }, new Map());
-    const ranked = [...byProgram.values()].map((proxies) => {
-      const program = proxies[0].program;
-      const minDistance = Math.min(
-        ...proxies.map((p) => thisYear - Number(p.programYear.startYear)),
-      );
-      return { program, minDistance, count: proxies.length };
-    });
-    ranked.sort((a, b) => {
-      if (a.minDistance !== b.minDistance) return a.minDistance - b.minDistance;
-      if (a.count !== b.count) return b.count - a.count;
-      return a.program.get('title').localeCompare(b.program.get('title'));
-    });
-    return ranked[0]?.program ?? null;
-  }
-
-  get selectedProgram() {
-    return findById(this.availablePrograms, this.selectedProgramId) ?? this.bestDefaultProgram;
+  get cohortProxies() {
+    return this.cohortProxiesData.isResolved ? this.cohortProxiesData.value : [];
   }
 
   get filteredCohortProxies() {
-    return this.availableCohortProxies.filter(
+    return this.cohortProxies.filter(
       (obj) => obj.school === this.selectedSchool && obj.program === this.selectedProgram,
     );
   }
@@ -103,7 +47,7 @@ export default class DetailCohortManagerComponent extends Component {
    * 2. owning program's title, ascending
    * 3. cohort title, descending
    */
-  get sortedAvailableCohorts() {
+  get sortedCohortProxies() {
     const objects = this.filteredCohortProxies.map((obj) => {
       const sortTitle = obj.school.get('title') + obj.program.get('title');
       const programEndYear = parseInt(obj.programYear.startYear) + obj.program.duration;
@@ -136,6 +80,51 @@ export default class DetailCohortManagerComponent extends Component {
     });
 
     return mapBy(objectsFiltered, 'cohort');
+  }
+
+  @cached
+  get schools() {
+    const schools = this.cohortProxies.map((p) => p.school);
+    return [...new Map(schools.map((s) => [s.id, s])).values()].sort((a, b) =>
+      a.get('title').localeCompare(b.get('title')),
+    );
+  }
+
+  get selectedSchool() {
+    const id = this.selectedSchoolId ?? this.args.course.belongsTo('school').id();
+    return findById(this.schools, id) ?? this.schools[0];
+  }
+
+  @cached
+  get programs() {
+    const programs = this.cohortProxies
+      .filter((p) => p.school === this.selectedSchool)
+      .map((p) => p.program);
+    return [...new Map(programs.map((p) => [p.id, p])).values()].sort((a, b) =>
+      a.get('title').localeCompare(b.get('title')),
+    );
+  }
+
+  @cached
+  get defaultSelectedProgramData() {
+    return new TrackedAsyncData(this.findBestDefaultProgram(this.programs));
+  }
+
+  get defaultSelectedProgram() {
+    return this.defaultSelectedProgramData.isResolved
+      ? this.defaultSelectedProgramData.value
+      : null;
+  }
+
+  get selectedProgram() {
+    if (!this.programs) {
+      return null;
+    }
+    if (this.selectedProgramId) {
+      return findById(this.programs, this.selectedProgramId);
+    }
+
+    return this.defaultSelectedProgram;
   }
 
   @action
@@ -172,6 +161,54 @@ export default class DetailCohortManagerComponent extends Component {
       return !!(await this.permissionChecker.canUpdateProgramYear(obj.programYear));
     });
   }
+
+  async findBestDefaultProgram(programs) {
+    if (!programs) {
+      return null;
+    }
+    const sortingPrograms = await Promise.all(
+      programs.map(async (program) => {
+        const thisYear = new Date().getFullYear();
+        const programYears = await program.programYears;
+        const sorters = await Promise.all(
+          programYears.map(async (programYear) => {
+            const groupCount = (await programYear.cohort).hasMany('learnerGroups').ids().length;
+            return {
+              distanceFromThisYear: thisYear - Number(programYear.startYear),
+              groupCount,
+            };
+          }),
+        );
+        return sorters.reduce(
+          (obj, sorter) => {
+            if (sorter.distanceFromThisYear < obj.distance) {
+              obj.distance = sorter.distanceFromThisYear;
+            }
+            obj.totalGroups += sorter.groupCount;
+            return obj;
+          },
+          {
+            title: program.title,
+            program,
+            totalGroups: 0,
+            distance: 100,
+          },
+        );
+      }),
+    );
+    const sorted = sortingPrograms.sort((a, b) => {
+      if (a.distance !== b.distance) {
+        return a.distance - b.distance;
+      }
+      if (a.totalGroups !== b.totalGroups) {
+        return b.totalGroups - a.totalGroups;
+      }
+
+      return a.title.localeCompare(b.title);
+    });
+
+    return sorted[0]?.program;
+  }
   <template>
     <section class="detail-cohort-manager" data-test-detail-cohort-manager>
       {{#if @selectedCohorts.length}}
@@ -190,17 +227,17 @@ export default class DetailCohortManagerComponent extends Component {
           {{/each}}
         </ul>
       {{/if}}
-      {{#if this.isLoaded}}
+      {{#if this.cohortProxiesData.isResolved}}
         <div class="filters">
           <div class="filter">
             <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
-            {{#if (gt this.availableSchools.length 1)}}
+            {{#if (gt this.schools.length 1)}}
               <select
                 {{on "change" (pick "target.value" this.setSchoolId)}}
                 aria-label={{t "general.schools"}}
                 data-test-school-filter
               >
-                {{#each this.availableSchools as |school|}}
+                {{#each this.schools as |school|}}
                   <option value={{school.id}} selected={{eq school.id this.selectedSchool.id}}>
                     {{school.title}}
                   </option>
@@ -212,29 +249,28 @@ export default class DetailCohortManagerComponent extends Component {
           </div>
           <div class="filter">
             <FaIcon @icon={{faUsers}} @fixedWidth={{true}} />
-            {{#if (gt this.availablePrograms.length 1)}}
+            {{#if (gt this.programs.length 1)}}
               <select
                 {{on "change" (pick "target.value" this.setProgramId)}}
                 aria-label={{t "general.programs"}}
                 data-test-program-filter
               >
-                {{#each this.availablePrograms as |program|}}
+                {{#each this.programs as |program|}}
                   <option value={{program.id}} selected={{eq program.id this.selectedProgram.id}}>
                     {{program.title}}
                   </option>
                 {{/each}}
               </select>
-            {{else if (eq this.availablePrograms.length 1)}}
+            {{else if (eq this.programs.length 1)}}
               {{this.selectedProgram.title}}
             {{else}}
               {{t "general.none"}}
             {{/if}}
           </div>
         </div>
-      {{/if}}
-      <ul class="selectable-cohorts">
-        {{#if this.isLoaded}}
-          {{#each this.sortedAvailableCohorts as |cohort|}}
+
+        <ul class="selectable-cohorts">
+          {{#each this.sortedCohortProxies as |cohort|}}
             {{#let (includes cohort @selectedCohorts) as |isSelected|}}
               <li data-test-selectable-cohort>
                 <button
@@ -260,12 +296,10 @@ export default class DetailCohortManagerComponent extends Component {
               </li>
             {{/let}}
           {{/each}}
-        {{else}}
-          <li>
-            <LoadingSpinner />
-          </li>
-        {{/if}}
-      </ul>
+        </ul>
+      {{else}}
+        <LoadingSpinner />
+      {{/if}}
     </section>
   </template>
 }
