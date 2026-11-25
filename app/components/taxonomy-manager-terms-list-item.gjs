@@ -42,12 +42,15 @@ export default class SelectableTermsListItemComponent extends Component {
   }
 
   @action
-  click() {
+  click(elem) {
     if (this.isSelected) {
       this.args.remove(this.args.term);
     } else {
       this.args.add(this.args.term);
     }
+    // when using mouse/touch, element needs to be blurred after triggering
+    // so that it doesn't maintain the active CSS style
+    elem.target.blur();
   }
   <template>
     {{#if (or this.isSelected (and @hasActiveParent @term.active))}}
