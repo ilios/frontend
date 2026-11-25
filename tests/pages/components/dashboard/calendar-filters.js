@@ -4,15 +4,12 @@ import cohortsFilter from './cohort-calendar-filter';
 import coursesFilter from './courses-calendar-filter';
 import c from './filter-checkbox';
 import selectedVocabulary from './selected-vocabulary';
+import sessionTypesFilter from './sessiontypes-calendar-filter';
 
 const definition = {
   scope: '[data-test-dashboard-calendar-filters]',
   coursesFilter,
-  sessionTypesFilter: {
-    scope: '[data-test-session-type-filter]',
-    title: text('h5'),
-    sessionTypes: collection('li', c),
-  },
+  sessionTypesFilter,
   vocabularyFilter: {
     scope: '[data-test-vocabulary-filter]',
     title: text('h5'),
