@@ -5,18 +5,65 @@
     @include m.ilios-button-reset;
   }
 
+  .filters {
+    @include m.main-list-filters;
+    justify-content: flex-start;
+    margin-top: 1rem;
+
+    @include m.for-tablet-and-up {
+      flex-direction: row;
+    }
+
+    .filter {
+      @include m.main-list-filter;
+
+      @include m.for-tablet-and-up {
+        align-content: center;
+        padding-bottom: 0;
+      }
+    }
+  }
+
   .selected-cohorts {
     @include m.ilios-removable-list;
   }
 
   .selectable-cohorts {
-    @include m.ilios-selectable-list;
-    background-color: light-dark(var(--white), var(--dark-grey));
-    border: 1px solid light-dark(var(--light-blue), var(--grey));
-    height: 10rem;
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-    overflow-y: scroll;
-    width: 80%;
+    @include m.ilios-list-reset;
+    margin-top: 1em;
+
+    .selected-cohorts-list-item {
+      @include m.ilios-button-reset;
+      border: 1px var(--lightest-grey) solid;
+      border-left-width: 4px;
+      border-radius: 4px;
+      display: block;
+      margin-top: 5px;
+      padding: 0.2em 0.4em 0.2em 0.6em;
+      text-align: left;
+      width: 100%;
+
+      &:focus,
+      &:hover {
+        background-color: light-dark(var(--brighter-green), var(--dark-green));
+        border-color: light-dark(var(--green), var(--lighter-green));
+        outline-color: light-dark(var(--green), var(--lighter-green));
+      }
+
+      &.selected {
+        background-color: light-dark(var(--lightest-grey), var(--grey));
+
+        &:focus,
+        &:hover {
+          background-color: light-dark(var(--lightest-red), var(--dark-red));
+          border-color: light-dark(var(--red), var(--lighter-red));
+          outline-color: light-dark(var(--red), var(--lighter-red));
+        }
+      }
+
+      .actions {
+        float: right;
+      }
+    }
   }
 }

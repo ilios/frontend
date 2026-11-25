@@ -1,15 +1,20 @@
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { action } from '@ember/object';
 import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBuildingColumns, faPlus, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import { eq, gt } from 'ember-truth-helpers';
 import { filter } from 'rsvp';
 
+import includes from '../helpers/includes';
+import pick from '../helpers/pick';
 import sortBy from '../helpers/sort-by';
-import { mapBy } from '../utils/array-helpers';
+import { findById, mapBy } from '../utils/array-helpers';
 import LoadingSpinner from './loading-spinner';
 
 export default class DetailCohortManagerComponent extends Component {
@@ -17,38 +22,33 @@ export default class DetailCohortManagerComponent extends Component {
   @service store;
   @service permissionChecker;
   @tracked filter = '';
+  @tracked selectedSchoolId = null;
+  @tracked selectedProgramId = null;
 
   @cached
-  get proxiesData() {
+  get cohortProxiesData() {
     return new TrackedAsyncData(this.loadCohorts(this.args.course));
   }
 
-  get isLoaded() {
-    return this.proxiesData.isResolved;
+  get cohortProxies() {
+    return this.cohortProxiesData.isResolved ? this.cohortProxiesData.value : [];
   }
 
-  get availableCohortProxies() {
-    return this.proxiesData.isResolved ? this.proxiesData.value : [];
-  }
-
-  get unselectedAvailableCohortProxies() {
-    if (!this.availableCohortProxies.length) {
-      return [];
-    }
-    const selectedCohorts = this.args.selectedCohorts || [];
-
-    return this.availableCohortProxies.filter((obj) => !selectedCohorts.includes(obj.cohort));
+  get filteredCohortProxies() {
+    return this.cohortProxies.filter(
+      (obj) => obj.school === this.selectedSchool && obj.program === this.selectedProgram,
+    );
   }
 
   /**
-   * All available cohorts, sorted by:
+   * All cohorts for the selected school+program, sorted by:
    *
    * 1. owning school's title, ascending
    * 2. owning program's title, ascending
    * 3. cohort title, descending
    */
-  get sortedAvailableCohorts() {
-    const objects = this.unselectedAvailableCohortProxies.map((obj) => {
+  get sortedCohortProxies() {
+    const objects = this.filteredCohortProxies.map((obj) => {
       const sortTitle = obj.school.get('title') + obj.program.get('title');
       const programEndYear = parseInt(obj.programYear.startYear) + obj.program.duration;
 
@@ -82,6 +82,62 @@ export default class DetailCohortManagerComponent extends Component {
     return mapBy(objectsFiltered, 'cohort');
   }
 
+  @cached
+  get schools() {
+    const schools = this.cohortProxies.map((p) => p.school);
+    return [...new Map(schools.map((s) => [s.id, s])).values()].sort((a, b) =>
+      a.get('title').localeCompare(b.get('title')),
+    );
+  }
+
+  get selectedSchool() {
+    const id = this.selectedSchoolId ?? this.args.course.belongsTo('school').id();
+    return findById(this.schools, id) ?? this.schools[0];
+  }
+
+  @cached
+  get programs() {
+    const programs = this.cohortProxies
+      .filter((p) => p.school === this.selectedSchool)
+      .map((p) => p.program);
+    return [...new Map(programs.map((p) => [p.id, p])).values()].sort((a, b) =>
+      a.get('title').localeCompare(b.get('title')),
+    );
+  }
+
+  @cached
+  get defaultSelectedProgramData() {
+    return new TrackedAsyncData(this.findBestDefaultProgram(this.programs));
+  }
+
+  get defaultSelectedProgram() {
+    return this.defaultSelectedProgramData.isResolved
+      ? this.defaultSelectedProgramData.value
+      : null;
+  }
+
+  get selectedProgram() {
+    if (!this.programs) {
+      return null;
+    }
+    if (this.selectedProgramId) {
+      return findById(this.programs, this.selectedProgramId);
+    }
+
+    return this.defaultSelectedProgram;
+  }
+
+  @action
+  setSchoolId(id) {
+    this.selectedSchoolId = id;
+    this.selectedProgramId = null;
+  }
+
+  @action
+  setProgramId(id) {
+    this.selectedProgramId = id;
+  }
+
   async loadCohorts(course) {
     const school = await course.school;
     const allCohorts = await this.store.findAll('cohort');
@@ -105,6 +161,54 @@ export default class DetailCohortManagerComponent extends Component {
       return !!(await this.permissionChecker.canUpdateProgramYear(obj.programYear));
     });
   }
+
+  async findBestDefaultProgram(programs) {
+    if (!programs) {
+      return null;
+    }
+    const sortingPrograms = await Promise.all(
+      programs.map(async (program) => {
+        const thisYear = new Date().getFullYear();
+        const programYears = await program.programYears;
+        const sorters = await Promise.all(
+          programYears.map(async (programYear) => {
+            const groupCount = (await programYear.cohort).hasMany('learnerGroups').ids().length;
+            return {
+              distanceFromThisYear: thisYear - Number(programYear.startYear),
+              groupCount,
+            };
+          }),
+        );
+        return sorters.reduce(
+          (obj, sorter) => {
+            if (sorter.distanceFromThisYear < obj.distance) {
+              obj.distance = sorter.distanceFromThisYear;
+            }
+            obj.totalGroups += sorter.groupCount;
+            return obj;
+          },
+          {
+            title: program.title,
+            program,
+            totalGroups: 0,
+            distance: 100,
+          },
+        );
+      }),
+    );
+    const sorted = sortingPrograms.sort((a, b) => {
+      if (a.distance !== b.distance) {
+        return a.distance - b.distance;
+      }
+      if (a.totalGroups !== b.totalGroups) {
+        return b.totalGroups - a.totalGroups;
+      }
+
+      return a.title.localeCompare(b.title);
+    });
+
+    return sorted[0]?.program;
+  }
   <template>
     <section class="detail-cohort-manager" data-test-detail-cohort-manager>
       {{#if @selectedCohorts.length}}
@@ -123,25 +227,79 @@ export default class DetailCohortManagerComponent extends Component {
           {{/each}}
         </ul>
       {{/if}}
-      <ul class="selectable-cohorts">
-        {{#if this.isLoaded}}
-          {{#each this.sortedAvailableCohorts as |cohort|}}
-            <li data-test-selectable-cohort>
-              <button type="button" {{on "click" (fn @add cohort)}}>
-                {{cohort.programYear.program.school.title}}
-                |
-                {{cohort.programYear.program.title}}
-                |
-                {{cohort.title}}
-              </button>
-            </li>
+      {{#if this.cohortProxiesData.isResolved}}
+        <div class="filters">
+          <div class="filter">
+            <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
+            {{#if (gt this.schools.length 1)}}
+              <select
+                {{on "change" (pick "target.value" this.setSchoolId)}}
+                aria-label={{t "general.schools"}}
+                data-test-school-filter
+              >
+                {{#each this.schools as |school|}}
+                  <option value={{school.id}} selected={{eq school.id this.selectedSchool.id}}>
+                    {{school.title}}
+                  </option>
+                {{/each}}
+              </select>
+            {{else}}
+              {{this.selectedSchool.title}}
+            {{/if}}
+          </div>
+          <div class="filter">
+            <FaIcon @icon={{faUsers}} @fixedWidth={{true}} />
+            {{#if (gt this.programs.length 1)}}
+              <select
+                {{on "change" (pick "target.value" this.setProgramId)}}
+                aria-label={{t "general.programs"}}
+                data-test-program-filter
+              >
+                {{#each this.programs as |program|}}
+                  <option value={{program.id}} selected={{eq program.id this.selectedProgram.id}}>
+                    {{program.title}}
+                  </option>
+                {{/each}}
+              </select>
+            {{else if (eq this.programs.length 1)}}
+              {{this.selectedProgram.title}}
+            {{else}}
+              {{t "general.none"}}
+            {{/if}}
+          </div>
+        </div>
+
+        <ul class="selectable-cohorts">
+          {{#each this.sortedCohortProxies as |cohort|}}
+            {{#let (includes cohort @selectedCohorts) as |isSelected|}}
+              <li data-test-selectable-cohort>
+                <button
+                  type="button"
+                  class="selected-cohorts-list-item{{if isSelected ' selected'}}"
+                  {{on "click" (if isSelected (fn @remove cohort) (fn @add cohort))}}
+                >
+                  <span data-test-title>
+                    {{cohort.programYear.program.school.title}}
+                    |
+                    {{cohort.programYear.program.title}}
+                    |
+                    {{cohort.title}}
+                  </span>
+                  <span class="actions">
+                    {{#if isSelected}}
+                      <FaIcon @icon={{faXmark}} class="remove" data-test-remove />
+                    {{else}}
+                      <FaIcon @icon={{faPlus}} class="add" data-test-add />
+                    {{/if}}
+                  </span>
+                </button>
+              </li>
+            {{/let}}
           {{/each}}
-        {{else}}
-          <li>
-            <LoadingSpinner />
-          </li>
-        {{/if}}
-      </ul>
+        </ul>
+      {{else}}
+        <LoadingSpinner />
+      {{/if}}
     </section>
   </template>
 }
