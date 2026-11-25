@@ -57,6 +57,23 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
     assert.ok(true, 'no a11y errors found!');
   });
 
+  test('it renders empty and is accessible', async function (assert) {
+    this.set('cohortProxies', []);
+    await render(
+      <template>
+        <CohortCalendarFilter
+          @cohortProxies={{this.cohortProxies}}
+          @add={{(noop)}}
+          @remove={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.cohorts.length, 0);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
   test('selected cohorts are checked', async function (assert) {
     this.set('cohortProxies', [
       {
