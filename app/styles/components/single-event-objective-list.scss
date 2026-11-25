@@ -8,7 +8,7 @@
   .display-mode-toggle-btn {
     &.active {
       background-color: light-dark(var(--green), var(--green));
-      color: light-dark(var(--black), var(--white));
+      color: light-dark(var(--white), var(--white));
     }
     &.disabled {
       cursor: default;
