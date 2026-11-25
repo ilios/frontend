@@ -7,10 +7,10 @@ import t from 'ember-intl/helpers/t';
 
 import includes from '../../helpers/includes';
 import { mapBy, sortBy } from '../../utils/array-helpers';
-import LoadingSpinner from '../loading-spinner';
 import CohortCalendarFilter from './cohort-calendar-filter';
 import CoursesCalendarFilter from './courses-calendar-filter';
 import FilterCheckbox from './filter-checkbox';
+import SessionTypesCalendarFilter from './sessiontypes-calendar-filter';
 import TermsCalendarFilter from './terms-calendar-filter';
 
 export default class DashboardCalendarFiltersComponent extends Component {
@@ -65,35 +65,12 @@ export default class DashboardCalendarFiltersComponent extends Component {
           @remove={{@removeCourseId}}
           @selectedCourseIds={{@selectedCourseIds}}
         />
-        <div
-          id="calendar-sessiontypefilter"
-          class="calendar-filter-list sessiontypefilter"
-          data-test-session-type-filter
-        >
-          <h2>
-            {{t "general.sessionTypes"}}
-          </h2>
-          <div class="filters">
-            {{#if this.sessionTypesLoaded}}
-              <ul>
-                {{#each this.sessionTypes as |type|}}
-                  <li class="clickable">
-                    <FilterCheckbox
-                      @checked={{includes type.id @selectedSessionTypeIds}}
-                      @add={{fn @addSessionTypeId type.id}}
-                      @remove={{fn @removeSessionTypeId type.id}}
-                      @targetId={{type.id}}
-                    >
-                      {{type.title}}
-                    </FilterCheckbox>
-                  </li>
-                {{/each}}
-              </ul>
-            {{else}}
-              <LoadingSpinner />
-            {{/if}}
-          </div>
-        </div>
+        <SessionTypesCalendarFilter
+          @school={{@school}}
+          @selectedIds={{@selectedSessionTypeIds}}
+          @add={{@addSessionTypeId}}
+          @remove={{@removeSessionTypeId}}
+        />
         <TermsCalendarFilter
           @addTermId={{@addTermId}}
           @removeTermId={{@removeTermId}}
@@ -101,35 +78,12 @@ export default class DashboardCalendarFiltersComponent extends Component {
           @vocabularies={{this.vocabularies}}
         />
       {{else}}
-        <div
-          id="calendar-sessiontypefilter"
-          class="calendar-filter-list sessiontypefilter"
-          data-test-session-type-filter
-        >
-          <h2>
-            {{t "general.sessionTypes"}}
-          </h2>
-          <div class="filters">
-            {{#if this.sessionTypesLoaded}}
-              <ul>
-                {{#each this.sessionTypes as |type|}}
-                  <li class="clickable" data-test-filter>
-                    <FilterCheckbox
-                      @checked={{includes type.id @selectedSessionTypeIds}}
-                      @add={{fn @addSessionTypeId type.id}}
-                      @remove={{fn @removeSessionTypeId type.id}}
-                      @targetId={{type.id}}
-                    >
-                      {{type.title}}
-                    </FilterCheckbox>
-                  </li>
-                {{/each}}
-              </ul>
-            {{else}}
-              <LoadingSpinner />
-            {{/if}}
-          </div>
-        </div>
+        <SessionTypesCalendarFilter
+          @school={{@school}}
+          @selectedIds={{@selectedSessionTypeIds}}
+          @add={{@addSessionTypeId}}
+          @remove={{@removeSessionTypeId}}
+        />
         <div
           id="calendar-courselevelfilter"
           class="calendar-filter-list courselevelfilter"
